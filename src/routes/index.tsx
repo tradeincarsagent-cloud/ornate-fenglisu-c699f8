@@ -138,7 +138,7 @@ function LandingPage() {
   }, [])
 
   return (
-    <>
+    <div className="overflow-x-hidden">
       {/* Lead Capture Modal */}
       {modalOpen && (
         <div
@@ -235,10 +235,10 @@ function LandingPage() {
 
       {/* Navigation */}
       <nav className="relative w-full bg-background/80 border-b border-outline-variant/30 shadow-sm">
-        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20">
-          <div className="flex items-center flex-shrink-0 gap-4">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop flex justify-between items-center h-20 gap-3 sm:gap-4">
+          <div className="flex items-center flex-shrink-0 min-w-0">
             <div className="logo-bezel rounded-lg p-1">
-              <img alt="Trade In Cars Agent Logo" className="h-8 sm:h-10 md:h-12 lg:h-16 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
+              <img alt="Trade In Cars Agent Logo" className="h-11 sm:h-10 md:h-12 lg:h-16 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
             </div>
           </div>
           <div className="hidden lg:flex items-center gap-8 mx-6">
@@ -247,8 +247,8 @@ function LandingPage() {
             <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#pricing">Pricing</a>
             <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#version-2">Version 2</a>
           </div>
-          <div className="flex items-center ml-auto">
-            <button className="engine-start-btn text-white px-4 sm:px-6 md:px-8 py-2 md:py-2.5 rounded-full font-bold text-xs md:text-sm active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter" onClick={() => scrollToSection('pricing')}>
+          <div className="flex items-center ml-auto flex-shrink-0">
+            <button className="engine-start-btn text-white px-3 sm:px-6 md:px-8 py-2 md:py-2.5 rounded-full font-bold text-[10px] sm:text-xs md:text-sm active:scale-95 transition-all flex items-center gap-1.5 sm:gap-2 uppercase tracking-[0.08em] sm:tracking-tighter whitespace-nowrap" onClick={() => scrollToSection('pricing')}>
               <span className="w-2 h-2 bg-white rounded-full"></span>
               <span className="whitespace-nowrap">Start Free Trial</span>
             </button>
@@ -265,7 +265,7 @@ function LandingPage() {
               <span className="font-label-caps text-[10px] md:text-xs text-primary tracking-[0.2em] uppercase font-bold">Latest Update: Version 2 Live</span>
             </div>
           </div>
-          <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10">
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 bg-surface-container px-4 py-1.5 rounded-full border border-outline-variant/30">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
@@ -309,7 +309,7 @@ function LandingPage() {
               </div>
             </div>
 
-            <div className="relative lg:flex items-center justify-center animate-float flex mt-10">
+            <div className="relative flex w-full items-center justify-center animate-float mt-12 lg:mt-0 px-2 sm:px-0">
               <div className="radar-container glass-card rounded-full p-2 glow-border">
                 <canvas className="absolute inset-0 w-full h-full rounded-full z-0" ref={canvasRef} width="438" height="438" />
                 <div className="radar-frame"></div>
@@ -318,21 +318,21 @@ function LandingPage() {
                   <div className="absolute bottom-1/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
                   <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-primary rounded-full animate-ping" style={{ animationDelay: '2.5s' }}></div>
                 </div>
-                <div className="absolute -right-8 top-1/4 z-30 w-56 glass-card p-4 rounded-xl border-l-4 border-primary translate-x-4">
+                <div className="absolute right-2 top-6 sm:-right-8 sm:top-1/4 z-30 w-40 sm:w-56 glass-card p-3 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-label-caps text-primary uppercase">New Alert</span>
-                    <span className="text-[10px] text-on-surface-variant">2m ago</span>
+                    <span className="text-[9px] sm:text-[10px] font-label-caps text-primary uppercase">New Alert</span>
+                    <span className="text-[9px] sm:text-[10px] text-on-surface-variant">2m ago</span>
                   </div>
-                  <p className="text-xs font-bold text-white mb-1">Audi RS6 Avant</p>
-                  <p className="text-[10px] text-primary">£84,900 • Under Market</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-white mb-1">Audi RS6 Avant</p>
+                  <p className="text-[9px] sm:text-[10px] text-primary">£84,900 • Under Market</p>
                 </div>
-                <div className="absolute -left-12 bottom-1/4 z-30 w-52 glass-card p-4 rounded-xl border-l-4 border-secondary -translate-x-4">
+                <div className="absolute left-2 bottom-6 sm:-left-12 sm:bottom-1/4 z-30 w-36 sm:w-52 glass-card p-3 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-label-caps text-secondary uppercase">Scanning...</span>
-                    <span className="material-symbols-outlined text-[12px] text-secondary">sync</span>
+                    <span className="text-[9px] sm:text-[10px] font-label-caps text-secondary uppercase">Scanning...</span>
+                    <span className="material-symbols-outlined text-[11px] sm:text-[12px] text-secondary">sync</span>
                   </div>
-                  <p className="text-xs font-bold text-white">Private Listing Detected</p>
-                  <p className="text-[10px] text-on-surface-variant">Matches "2018+ Prestige SUV"</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-white">Private Listing Detected</p>
+                  <p className="text-[9px] sm:text-[10px] text-on-surface-variant">Matches "2018+ Prestige SUV"</p>
                 </div>
               </div>
               <div className="absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full"></div>
@@ -343,7 +343,7 @@ function LandingPage() {
 
         {/* Proof Section */}
         <section className="py-12 bg-surface-container-lowest border-y border-outline-variant/10">
-          <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { icon: 'verified_user', title: 'Built for Independent Car Dealers', sub: 'Tailored for UK market dynamics' },
@@ -366,7 +366,7 @@ function LandingPage() {
 
         {/* Live Demo */}
         <section className="py-24 bg-surface" id="live-demo">
-          <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
             <div className="text-center mb-16">
               <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Live Opportunity Feed (Demo)</span>
               <h2 className="font-display-lg text-headline-lg mb-6">Real-Time Market Scanning</h2>
@@ -401,7 +401,7 @@ function LandingPage() {
 
         {/* Dashboard Preview */}
         <section className="py-24 bg-surface-container-low border-y border-outline-variant/10" id="dashboard-preview">
-          <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
             <div className="text-center mb-16">
               <h2 className="font-display-lg text-headline-lg text-on-surface mb-4">Dealer Dashboard Preview</h2>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">See how Trade in Cars Agent helps dealers track opportunities and manage vehicle sourcing.</p>
@@ -454,20 +454,20 @@ function LandingPage() {
 
         {/* Problem Section */}
         <section className="py-24 bg-surface-container-lowest">
-          <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop text-center mb-16">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">The Problem</span>
             <h2 className="font-display-lg text-headline-lg mb-6">Dealers Waste Hours Searching For Stock</h2>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
               The manual grind of scouring marketplaces, refreshing tabs, and missing prime stock to faster buyers is costing you thousands in lost margin every month.
             </p>
           </div>
-          <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {[
               { icon: 'timer_off', title: 'Wasted Man-Hours', desc: 'Stop paying skilled staff to manually scroll through lists. Let AI do the heavy lifting in seconds.' },
               { icon: 'notification_important', title: 'Missed Opportunities', desc: 'Top-tier stock sells in minutes. If you aren\'t the first to see it, you\'ve already lost the profit.' },
               { icon: 'psychology_alt', title: 'Decision Fatigue', desc: 'Processing thousands of listings daily leads to errors. Our AI filters for quality automatically.' },
             ].map(item => (
-              <div key={item.icon} className="p-8 glass-card rounded-2xl border-l-4 border-error/50">
+              <div key={item.icon} className="p-6 sm:p-8 glass-card rounded-2xl border-l-4 border-error/50">
                 <span className="material-symbols-outlined text-error text-4xl mb-6 block">{item.icon}</span>
                 <h3 className="font-headline-md text-headline-md mb-4">{item.title}</h3>
                 <p className="text-on-surface-variant leading-relaxed">{item.desc}</p>
@@ -478,7 +478,7 @@ function LandingPage() {
 
         {/* How It Works */}
         <section className="py-24 relative overflow-hidden" id="how-it-works">
-          <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
               <div className="max-w-xl">
                 <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Our Process</span>
@@ -515,12 +515,12 @@ function LandingPage() {
 
         {/* Features */}
         <section className="py-24 bg-surface-container" id="features">
-          <div className="max-w-container-max mx-auto px-margin-desktop mb-16">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop mb-16">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Technology</span>
             <h2 className="font-display-lg text-headline-lg">Engineered for Automotive Pro's</h2>
           </div>
-          <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-6 h-auto">
-            <div className="md:col-span-8 glass-card rounded-2xl p-10 flex flex-col justify-center relative overflow-hidden group min-h-[300px]">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-6 h-auto">
+            <div className="md:col-span-8 glass-card rounded-2xl p-6 sm:p-10 flex flex-col justify-center relative overflow-hidden group min-h-[260px] sm:min-h-[300px]">
               <div className="relative z-10">
                 <span className="material-symbols-outlined text-primary text-5xl mb-6 block">hub</span>
                 <h3 className="font-display-lg text-headline-md mb-4">AI Vehicle Finder</h3>
@@ -530,22 +530,22 @@ function LandingPage() {
                 <span className="material-symbols-outlined text-[120px] md:text-[240px]" style={{ fontVariationSettings: "'FILL' 1" }}>memory</span>
               </div>
             </div>
-            <div className="md:col-span-4 bg-primary-container rounded-2xl p-10 flex flex-col justify-end text-on-primary-container min-h-[300px]">
+            <div className="md:col-span-4 bg-primary-container rounded-2xl p-6 sm:p-10 flex flex-col justify-end text-on-primary-container min-h-[260px] sm:min-h-[300px]">
               <span className="material-symbols-outlined text-4xl mb-6 block">assessment</span>
               <h3 className="font-headline-md text-headline-md mb-2">Daily Opportunity Reports</h3>
               <p className="opacity-80">A consolidated morning briefing of the best deals found overnight, ready for your morning stand-up.</p>
             </div>
-            <div className="md:col-span-4 glass-card rounded-2xl p-10 min-h-[250px]">
+            <div className="md:col-span-4 glass-card rounded-2xl p-6 sm:p-10 min-h-[220px] sm:min-h-[250px]">
               <span className="material-symbols-outlined text-primary text-4xl mb-6 block">dashboard</span>
               <h3 className="font-headline-md text-headline-md mb-2">Dealer Dashboard</h3>
               <p className="text-on-surface-variant">Track your search history, ROI, and saved watchlists in one centralized high-tech hub.</p>
             </div>
-            <div className="md:col-span-4 glass-card rounded-2xl p-10 min-h-[250px]">
+            <div className="md:col-span-4 glass-card rounded-2xl p-6 sm:p-10 min-h-[220px] sm:min-h-[250px]">
               <span className="material-symbols-outlined text-primary text-4xl mb-6 block">notifications_active</span>
               <h3 className="font-headline-md text-headline-md mb-2">Email &amp; SMS Alerts</h3>
               <p className="text-on-surface-variant">Real-time push notifications so you're never tethered to your desk searching.</p>
             </div>
-            <div className="md:col-span-4 glass-card rounded-2xl p-10 border-t-4 border-primary min-h-[250px]">
+            <div className="md:col-span-4 glass-card rounded-2xl p-6 sm:p-10 border-t-4 border-primary min-h-[220px] sm:min-h-[250px]">
               <span className="material-symbols-outlined text-primary text-4xl mb-6 block">groups</span>
               <h3 className="font-headline-md text-headline-md mb-2">Group Management</h3>
               <p className="text-on-surface-variant">Manage multiple sites and different buyer criteria across your entire dealer group.</p>
@@ -555,7 +555,7 @@ function LandingPage() {
 
         {/* Pricing */}
         <section className="py-24 relative" id="pricing">
-          <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop text-center mb-16">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Pricing</span>
             <h2 className="font-display-lg text-headline-lg mb-4">Invest in Better Stock</h2>
             <div className="flex items-center justify-center gap-2 text-on-surface-variant mb-2">
@@ -566,9 +566,9 @@ function LandingPage() {
             </div>
             <p className="text-[11px] text-on-surface-variant/70 uppercase tracking-widest">No credit card required for trial.</p>
           </div>
-          <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch">
             {/* Starter */}
-            <div className="p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
+            <div className="p-6 sm:p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="mb-8">
                 <h4 className="font-headline-md text-headline-md mb-2">Starter</h4>
                 <div className="flex items-baseline gap-1">
@@ -587,7 +587,7 @@ function LandingPage() {
               <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95" onClick={openModal}>Choose Starter</button>
             </div>
             {/* Professional */}
-            <div className="p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
+            <div className="p-6 sm:p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Recommended</div>
               <div className="mb-8">
                 <h4 className="font-headline-md text-headline-md mb-2">Professional</h4>
@@ -612,7 +612,7 @@ function LandingPage() {
               <button className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95" onClick={openModal}>Start Free Trial</button>
             </div>
             {/* Dealer Group */}
-            <div className="p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
+            <div className="p-6 sm:p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="mb-8">
                 <h4 className="font-headline-md text-headline-md mb-2 text-secondary">Dealer Group</h4>
                 <div className="flex items-baseline gap-1">
@@ -635,7 +635,7 @@ function LandingPage() {
 
         {/* Roadmap */}
         <section className="py-24 bg-surface-container-lowest border-y border-outline-variant/10" id="version-2">
-          <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4">Product Roadmap</span>
               <h2 className="font-display-lg text-headline-lg mb-6">Built To Keep Getting Better</h2>
@@ -692,7 +692,7 @@ function LandingPage() {
                   ],
                 },
               ].map(phase => (
-                <div key={phase.version} className="bg-surface-container p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full">
+                <div key={phase.version} className="bg-surface-container p-6 sm:p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="font-headline-md text-headline-md">{phase.version}</h3>
                     <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${phase.statusClass}`}>{phase.status}</span>
@@ -710,7 +710,7 @@ function LandingPage() {
             </div>
 
             {/* Coming Soon highlights */}
-            <div className="mt-12 glass-card rounded-2xl p-8 border border-outline-variant/20">
+            <div className="mt-12 glass-card rounded-2xl p-6 sm:p-8 border border-outline-variant/20">
               <div className="flex items-center gap-3 mb-6">
                 <span className="material-symbols-outlined text-primary">auto_awesome</span>
                 <h3 className="font-headline-md text-headline-md">Coming Soon</h3>
@@ -736,10 +736,10 @@ function LandingPage() {
 
         {/* Final CTA */}
         <section className="py-24 bg-primary text-on-primary text-center">
-          <div className="max-w-3xl mx-auto px-margin-desktop">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-margin-desktop">
             <h2 className="font-display-lg text-display-lg mb-8">Ready To Find Better Stock While You Sleep?</h2>
             <div className="space-y-6">
-              <button className="engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest" onClick={() => scrollToSection('pricing')}>
+              <button className="engine-start-btn text-white px-8 sm:px-12 py-4 sm:py-6 rounded-full font-bold text-base sm:text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest" onClick={() => scrollToSection('pricing')}>
                 Start Free Trial Now
               </button>
               <p className="text-on-primary/80 flex items-center justify-center gap-2 font-medium">
@@ -754,7 +754,7 @@ function LandingPage() {
 
         {/* Static Lead Capture Footer Section */}
         <section className="py-24 bg-surface-container border-t border-outline-variant/20">
-          <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase">Get Started Today</span>
@@ -771,7 +771,7 @@ function LandingPage() {
                   ))}
                 </div>
               </div>
-              <div className="glass-card p-8 rounded-2xl glow-border">
+              <div className="glass-card p-6 sm:p-8 rounded-2xl glow-border">
                 <p className="text-on-surface-variant font-body-md mb-6 opacity-80 italic">Having trouble with the popup? Use this secure form below to request your free trial.</p>
                 <FooterForm />
               </div>
@@ -781,7 +781,7 @@ function LandingPage() {
       </main>
 
       <footer className="bg-surface-container-lowest w-full py-20 border-t border-outline-variant/20">
-        <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter">
           <div className="space-y-6">
             <div className="flex items-center mb-6">
               <div className="logo-bezel rounded-lg p-1">
@@ -793,7 +793,7 @@ function LandingPage() {
             </p>
             <p className="font-body-md text-body-md text-on-surface-variant">© 2024 Trade In Cars Agent. Your AI Car Buyer Working 24/7.</p>
           </div>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div className="flex flex-col gap-4">
               <span className="font-label-caps text-label-caps text-primary">PLATFORM</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#how-it-works">How It Works</a>
@@ -809,7 +809,7 @@ function LandingPage() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   )
 }
 

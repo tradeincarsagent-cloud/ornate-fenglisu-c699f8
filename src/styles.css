@@ -130,3 +130,13 @@ body {
 .logo-blend {
   mix-blend-mode: screen;
 }
+
+@media (max-width: 767px) {
+  .radar-container {
+    max-width: min(92vw, 340px);
+  }
+
+  .radar-frame {
+    inset: -12px;
+  }
+}
