@@ -238,7 +238,7 @@ function LandingPage() {
         <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20">
           <div className="flex items-center flex-shrink-0 gap-4">
             <div className="logo-bezel rounded-lg p-1">
-              <img alt="Trade In Cars Agent Logo" className="h-8 sm:h-10 md:h-12 lg:h-16 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
+              <img alt="Trade In Cars Agent Logo" className="h-10 md:h-12 lg:h-16 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
             </div>
           </div>
           <div className="hidden lg:flex items-center gap-8 mx-6">
@@ -309,7 +309,7 @@ function LandingPage() {
               </div>
             </div>
 
-            <div className="relative lg:flex items-center justify-center animate-float flex mt-10">
+            <div className="relative lg:flex items-center justify-center animate-float flex mt-10 overflow-hidden sm:overflow-visible">
               <div className="radar-container glass-card rounded-full p-2 glow-border">
                 <canvas className="absolute inset-0 w-full h-full rounded-full z-0" ref={canvasRef} width="438" height="438" />
                 <div className="radar-frame"></div>
@@ -318,7 +318,7 @@ function LandingPage() {
                   <div className="absolute bottom-1/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
                   <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-primary rounded-full animate-ping" style={{ animationDelay: '2.5s' }}></div>
                 </div>
-                <div className="absolute -right-8 top-1/4 z-30 w-56 glass-card p-4 rounded-xl border-l-4 border-primary translate-x-4">
+                <div className="absolute right-2 sm:-right-8 top-3 sm:top-1/4 z-30 w-36 sm:w-56 glass-card p-2 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[10px] font-label-caps text-primary uppercase">New Alert</span>
                     <span className="text-[10px] text-on-surface-variant">2m ago</span>
@@ -326,7 +326,7 @@ function LandingPage() {
                   <p className="text-xs font-bold text-white mb-1">Audi RS6 Avant</p>
                   <p className="text-[10px] text-primary">£84,900 • Under Market</p>
                 </div>
-                <div className="absolute -left-12 bottom-1/4 z-30 w-52 glass-card p-4 rounded-xl border-l-4 border-secondary -translate-x-4">
+                <div className="absolute left-2 sm:-left-12 bottom-3 sm:bottom-1/4 z-30 w-32 sm:w-52 glass-card p-2 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[10px] font-label-caps text-secondary uppercase">Scanning...</span>
                     <span className="material-symbols-outlined text-[12px] text-secondary">sync</span>
