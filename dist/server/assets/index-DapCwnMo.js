@@ -1,4 +1,4 @@
-import { jsxs, Fragment, jsx } from "react/jsx-runtime";
+import { jsxs, jsx } from "react/jsx-runtime";
 import { useState, useRef, useEffect } from "react";
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -129,7 +129,7 @@ function LandingPage() {
       });
     };
   }, []);
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
+  return /* @__PURE__ */ jsxs("div", { className: "overflow-x-hidden", children: [
     modalOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay overflow-y-auto", onClick: (e) => {
       if (e.target === e.currentTarget) closeModal();
     }, children: /* @__PURE__ */ jsxs("div", { className: "relative w-full max-w-2xl glass-card rounded-2xl p-8 md:p-10 glow-border modal-enter mx-auto my-8", children: [
@@ -197,15 +197,15 @@ function LandingPage() {
         /* @__PURE__ */ jsx("button", { className: "mt-10 border border-outline text-on-surface px-8 py-3 rounded-full hover:bg-surface-variant transition-all", onClick: closeModal, children: "Close" })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsx("nav", { className: "relative w-full bg-background/80 border-b border-outline-variant/30 shadow-sm", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20", children: [
-      /* @__PURE__ */ jsx("div", { className: "flex items-center flex-shrink-0 gap-4", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-8 sm:h-10 md:h-12 lg:h-16 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" }) }) }),
+    /* @__PURE__ */ jsx("nav", { className: "relative w-full bg-background/80 border-b border-outline-variant/30 shadow-sm", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop flex justify-between items-center h-20 gap-3 sm:gap-4", children: [
+      /* @__PURE__ */ jsx("div", { className: "flex items-center flex-shrink-0 min-w-0", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-11 sm:h-10 md:h-12 lg:h-16 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" }) }) }),
       /* @__PURE__ */ jsxs("div", { className: "hidden lg:flex items-center gap-8 mx-6", children: [
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#how-it-works", children: "How It Works" }),
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#features", children: "Features" }),
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#pricing", children: "Pricing" }),
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#version-2", children: "Version 2" })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "flex items-center ml-auto", children: /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-4 sm:px-6 md:px-8 py-2 md:py-2.5 rounded-full font-bold text-xs md:text-sm active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter", onClick: () => scrollToSection("pricing"), children: [
+      /* @__PURE__ */ jsx("div", { className: "flex items-center ml-auto flex-shrink-0", children: /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-3 sm:px-6 md:px-8 py-2 md:py-2.5 rounded-full font-bold text-[10px] sm:text-xs md:text-sm active:scale-95 transition-all flex items-center gap-1.5 sm:gap-2 uppercase tracking-[0.08em] sm:tracking-tighter whitespace-nowrap", onClick: () => scrollToSection("pricing"), children: [
         /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-white rounded-full" }),
         /* @__PURE__ */ jsx("span", { className: "whitespace-nowrap", children: "Start Free Trial" })
       ] }) })
@@ -216,7 +216,7 @@ function LandingPage() {
           /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#a3c9ff]" }),
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-[10px] md:text-xs text-primary tracking-[0.2em] uppercase font-bold", children: "Latest Update: Version 2 Live" })
         ] }) }),
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
             /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 bg-surface-container px-4 py-1.5 rounded-full border border-outline-variant/30", children: [
               /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-primary animate-pulse" }),
@@ -258,7 +258,7 @@ function LandingPage() {
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "relative lg:flex items-center justify-center animate-float flex mt-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "relative flex w-full items-center justify-center animate-float mt-12 lg:mt-0 px-2 sm:px-0", children: [
             /* @__PURE__ */ jsxs("div", { className: "radar-container glass-card rounded-full p-2 glow-border", children: [
               /* @__PURE__ */ jsx("canvas", { className: "absolute inset-0 w-full h-full rounded-full z-0", ref: canvasRef, width: "438", height: "438" }),
               /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
@@ -271,21 +271,21 @@ function LandingPage() {
                   animationDelay: "2.5s"
                 } })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "absolute -right-8 top-1/4 z-30 w-56 glass-card p-4 rounded-xl border-l-4 border-primary translate-x-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "absolute right-2 top-6 sm:-right-8 sm:top-1/4 z-30 w-40 sm:w-56 glass-card p-3 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4", children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-[10px] font-label-caps text-primary uppercase", children: "New Alert" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-[10px] text-on-surface-variant", children: "2m ago" })
+                  /* @__PURE__ */ jsx("span", { className: "text-[9px] sm:text-[10px] font-label-caps text-primary uppercase", children: "New Alert" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-[9px] sm:text-[10px] text-on-surface-variant", children: "2m ago" })
                 ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white mb-1", children: "Audi RS6 Avant" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[10px] text-primary", children: "£84,900 • Under Market" })
+                /* @__PURE__ */ jsx("p", { className: "text-[11px] sm:text-xs font-bold text-white mb-1", children: "Audi RS6 Avant" }),
+                /* @__PURE__ */ jsx("p", { className: "text-[9px] sm:text-[10px] text-primary", children: "£84,900 • Under Market" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "absolute -left-12 bottom-1/4 z-30 w-52 glass-card p-4 rounded-xl border-l-4 border-secondary -translate-x-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "absolute left-2 bottom-6 sm:-left-12 sm:bottom-1/4 z-30 w-36 sm:w-52 glass-card p-3 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4", children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-[10px] font-label-caps text-secondary uppercase", children: "Scanning..." }),
-                  /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-[12px] text-secondary", children: "sync" })
+                  /* @__PURE__ */ jsx("span", { className: "text-[9px] sm:text-[10px] font-label-caps text-secondary uppercase", children: "Scanning..." }),
+                  /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-[11px] sm:text-[12px] text-secondary", children: "sync" })
                 ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white", children: "Private Listing Detected" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[10px] text-on-surface-variant", children: 'Matches "2018+ Prestige SUV"' })
+                /* @__PURE__ */ jsx("p", { className: "text-[11px] sm:text-xs font-bold text-white", children: "Private Listing Detected" }),
+                /* @__PURE__ */ jsx("p", { className: "text-[9px] sm:text-[10px] text-on-surface-variant", children: 'Matches "2018+ Prestige SUV"' })
               ] })
             ] }),
             /* @__PURE__ */ jsx("div", { className: "absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full" }),
@@ -293,7 +293,7 @@ function LandingPage() {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("section", { className: "py-12 bg-surface-container-lowest border-y border-outline-variant/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [{
+      /* @__PURE__ */ jsx("section", { className: "py-12 bg-surface-container-lowest border-y border-outline-variant/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [{
         icon: "verified_user",
         title: "Built for Independent Car Dealers",
         sub: "Tailored for UK market dynamics"
@@ -312,7 +312,7 @@ function LandingPage() {
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-xs mt-1", children: item.sub })
         ] })
       ] }, item.icon)) }) }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface", id: "live-demo", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface", id: "live-demo", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Live Opportunity Feed (Demo)" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Real-Time Market Scanning" }),
@@ -343,7 +343,7 @@ function LandingPage() {
           ] })
         ] }, car.name)) })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-low border-y border-outline-variant/10", id: "dashboard-preview", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-low border-y border-outline-variant/10", id: "dashboard-preview", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-on-surface mb-4", children: "Dealer Dashboard Preview" }),
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "See how Trade in Cars Agent helps dealers track opportunities and manage vehicle sourcing." })
@@ -393,12 +393,12 @@ function LandingPage() {
         /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsx("button", { onClick: () => scrollToSection("dashboard-preview"), className: "border border-primary/50 text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95", children: "View Full Dashboard" }) })
       ] }) }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container-lowest", children: [
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop text-center mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "The Problem" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Dealers Waste Hours Searching For Stock" }),
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "The manual grind of scouring marketplaces, refreshing tabs, and missing prime stock to faster buyers is costing you thousands in lost margin every month." })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter", children: [{
+        /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter", children: [{
           icon: "timer_off",
           title: "Wasted Man-Hours",
           desc: "Stop paying skilled staff to manually scroll through lists. Let AI do the heavy lifting in seconds."
@@ -410,13 +410,13 @@ function LandingPage() {
           icon: "psychology_alt",
           title: "Decision Fatigue",
           desc: "Processing thousands of listings daily leads to errors. Our AI filters for quality automatically."
-        }].map((item) => /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl border-l-4 border-error/50", children: [
+        }].map((item) => /* @__PURE__ */ jsxs("div", { className: "p-6 sm:p-8 glass-card rounded-2xl border-l-4 border-error/50", children: [
           /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-error text-4xl mb-6 block", children: item.icon }),
           /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-4", children: item.title }),
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant leading-relaxed", children: item.desc })
         ] }, item.icon)) })
       ] }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 relative overflow-hidden", id: "how-it-works", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 relative overflow-hidden", id: "how-it-works", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-end mb-16 gap-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "max-w-xl", children: [
             /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Our Process" }),
@@ -461,12 +461,12 @@ function LandingPage() {
         ] })
       ] }) }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container", id: "features", children: [
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop mb-16", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Technology" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg", children: "Engineered for Automotive Pro's" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-6 h-auto", children: [
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-8 glass-card rounded-2xl p-10 flex flex-col justify-center relative overflow-hidden group min-h-[300px]", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-6 h-auto", children: [
+          /* @__PURE__ */ jsxs("div", { className: "md:col-span-8 glass-card rounded-2xl p-6 sm:p-10 flex flex-col justify-center relative overflow-hidden group min-h-[260px] sm:min-h-[300px]", children: [
             /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-5xl mb-6 block", children: "hub" }),
               /* @__PURE__ */ jsx("h3", { className: "font-display-lg text-headline-md mb-4", children: "AI Vehicle Finder" }),
@@ -476,22 +476,22 @@ function LandingPage() {
               fontVariationSettings: "'FILL' 1"
             }, children: "memory" }) })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 bg-primary-container rounded-2xl p-10 flex flex-col justify-end text-on-primary-container min-h-[300px]", children: [
+          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 bg-primary-container rounded-2xl p-6 sm:p-10 flex flex-col justify-end text-on-primary-container min-h-[260px] sm:min-h-[300px]", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-4xl mb-6 block", children: "assessment" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-2", children: "Daily Opportunity Reports" }),
             /* @__PURE__ */ jsx("p", { className: "opacity-80", children: "A consolidated morning briefing of the best deals found overnight, ready for your morning stand-up." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-10 min-h-[250px]", children: [
+          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-6 sm:p-10 min-h-[220px] sm:min-h-[250px]", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-4xl mb-6 block", children: "dashboard" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-2", children: "Dealer Dashboard" }),
             /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Track your search history, ROI, and saved watchlists in one centralized high-tech hub." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-10 min-h-[250px]", children: [
+          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-6 sm:p-10 min-h-[220px] sm:min-h-[250px]", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-4xl mb-6 block", children: "notifications_active" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-2", children: "Email & SMS Alerts" }),
             /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Real-time push notifications so you're never tethered to your desk searching." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-10 border-t-4 border-primary min-h-[250px]", children: [
+          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-6 sm:p-10 border-t-4 border-primary min-h-[220px] sm:min-h-[250px]", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-4xl mb-6 block", children: "groups" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-2", children: "Group Management" }),
             /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Manage multiple sites and different buyer criteria across your entire dealer group." })
@@ -499,7 +499,7 @@ function LandingPage() {
         ] })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 relative", id: "pricing", children: [
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop text-center mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Pricing" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4", children: "Invest in Better Stock" }),
           /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-2 text-on-surface-variant mb-2", children: [
@@ -508,8 +508,8 @@ function LandingPage() {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant/70 uppercase tracking-widest", children: "No credit card required for trial." })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch", children: [
-          /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch", children: [
+          /* @__PURE__ */ jsxs("div", { className: "p-6 sm:p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2", children: "Starter" }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
@@ -523,7 +523,7 @@ function LandingPage() {
             ] }, f)) }),
             /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95", onClick: openModal, children: "Choose Starter" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
+          /* @__PURE__ */ jsxs("div", { className: "p-6 sm:p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
             /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "Recommended" }),
             /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2", children: "Professional" }),
@@ -554,7 +554,7 @@ function LandingPage() {
             ] }, f.text)) }),
             /* @__PURE__ */ jsx("button", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95", onClick: openModal, children: "Start Free Trial" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
+          /* @__PURE__ */ jsxs("div", { className: "p-6 sm:p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2 text-secondary", children: "Dealer Group" }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
@@ -570,7 +570,7 @@ function LandingPage() {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center max-w-3xl mx-auto mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4", children: "Product Roadmap" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Built To Keep Getting Better" }),
@@ -594,7 +594,7 @@ function LandingPage() {
           statusClass: "bg-surface-bright text-on-surface-variant",
           icon: "rocket_launch",
           items: ["AI negotiation assistant", "Price prediction AI", "Profit estimator", "Vehicle history integration (HPI and similar services)", "Auction integrations", "Multi-language support", "Multi-user dealer accounts", "API integrations"]
-        }].map((phase) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full", children: [
+        }].map((phase) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-6 sm:p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-6", children: [
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: phase.version }),
             /* @__PURE__ */ jsx("span", { className: `text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${phase.statusClass}`, children: phase.status })
@@ -604,7 +604,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("span", { children: item })
           ] }, item)) })
         ] }, phase.version)) }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-12 glass-card rounded-2xl p-8 border border-outline-variant/20", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mt-12 glass-card rounded-2xl p-6 sm:p-8 border border-outline-variant/20", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "auto_awesome" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: "Coming Soon" })
@@ -633,17 +633,17 @@ function LandingPage() {
           ] }, item.text)) })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-4 sm:px-6 md:px-margin-desktop", children: [
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-8", children: "Ready To Find Better Stock While You Sleep?" }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: () => scrollToSection("pricing"), children: "Start Free Trial Now" }),
+          /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-8 sm:px-12 py-4 sm:py-6 rounded-full font-bold text-base sm:text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: () => scrollToSection("pricing"), children: "Start Free Trial Now" }),
           /* @__PURE__ */ jsxs("p", { className: "text-on-primary/80 flex items-center justify-center gap-2 font-medium", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
             "No credit card required for trial. Full access immediately."
           ] })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container border-t border-outline-variant/20", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-12 items-center", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container border-t border-outline-variant/20", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-12 items-center", children: [
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase", children: "Get Started Today" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Ready To Find Better Stock While You Sleep?" }),
@@ -653,19 +653,19 @@ function LandingPage() {
             /* @__PURE__ */ jsx("span", { children: item })
           ] }, item)) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "glass-card p-8 rounded-2xl glow-border", children: [
+        /* @__PURE__ */ jsxs("div", { className: "glass-card p-6 sm:p-8 rounded-2xl glow-border", children: [
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-body-md mb-6 opacity-80 italic", children: "Having trouble with the popup? Use this secure form below to request your free trial." }),
           /* @__PURE__ */ jsx(FooterForm, {})
         ] })
       ] }) }) })
     ] }),
-    /* @__PURE__ */ jsx("footer", { className: "bg-surface-container-lowest w-full py-20 border-t border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter", children: [
+    /* @__PURE__ */ jsx("footer", { className: "bg-surface-container-lowest w-full py-20 border-t border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
         /* @__PURE__ */ jsx("div", { className: "flex items-center mb-6", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" }) }) }),
         /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant max-w-sm", children: "The world's most advanced AI sourcing engine for independent and franchise car dealerships." }),
         /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "© 2024 Trade In Cars Agent. Your AI Car Buyer Working 24/7." })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary", children: "PLATFORM" }),
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#how-it-works", children: "How It Works" }),
