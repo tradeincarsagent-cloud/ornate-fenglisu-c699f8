@@ -58,6 +58,7 @@ body {
   scroll-behavior: smooth;
   margin: 0;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 .modal-overlay {
@@ -129,4 +130,10 @@ body {
 
 .logo-blend {
   mix-blend-mode: screen;
+}
+
+@media (max-width: 767px) {
+  .radar-container {
+    max-width: 300px;
+  }
 }
