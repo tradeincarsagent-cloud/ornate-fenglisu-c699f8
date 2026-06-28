@@ -162,7 +162,7 @@ function LandingPage() {
                     <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                     </svg>
-                    Join elite UK dealers using AI to source prime inventory.
+                    Join early users exploring AI-assisted vehicle sourcing.
                   </p>
                 </div>
                 <form className="space-y-6" onSubmit={handleFormSubmit}>
@@ -210,7 +210,7 @@ function LandingPage() {
                       Engine Start: Free Trial
                     </button>
                     <p className="text-center text-[11px] text-on-surface-variant mt-4 px-4 leading-relaxed">
-                      No credit card required for trial. We will only use your details to contact you about your Trade in Cars Agent trial.
+                      Card required. No charge today. Cancel anytime before your trial ends. We will only use your details to contact you about your Trade in Cars Agent trial.
                     </p>
                   </div>
                 </form>
@@ -280,7 +280,7 @@ function LandingPage() {
                 Save Hours Every Week.
               </h1>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                Trade In Cars Agent is your AI car buyer working 24/7, helping you discover vehicle opportunities that match your exact buying criteria before the competition.
+                Trade In Cars Agent is your AI vehicle finder working 24/7, helping you discover vehicle opportunities that match your exact buying criteria before the competition.
               </p>
               <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -296,7 +296,7 @@ function LandingPage() {
                   <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                   </svg>
-                  No credit card required for trial. Full access immediately.
+                  Card required. No charge today. Cancel anytime before your trial ends.
                 </p>
               </div>
               <div className="flex items-center gap-6 pt-8 border-t border-outline-variant/20">
@@ -305,7 +305,7 @@ function LandingPage() {
                   <div className="w-10 h-10 rounded-full border-2 border-background bg-surface-container-high flex items-center justify-center text-[10px] font-bold">SL</div>
                   <div className="w-10 h-10 rounded-full border-2 border-background bg-primary-container flex items-center justify-center text-[10px] font-bold">EM</div>
                 </div>
-                <p className="font-body-md text-body-md text-on-surface-variant">Trusted by <span className="text-on-surface font-bold">250+</span> leading UK dealerships</p>
+                <p className="font-body-md text-body-md text-on-surface-variant">Built for UK dealers, traders and sourcing professionals</p>
               </div>
             </div>
 
@@ -347,7 +347,7 @@ function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { icon: 'verified_user', title: 'Built for Independent Car Dealers', sub: 'Tailored for UK market dynamics' },
-                { icon: 'bolt', title: 'Find Vehicle Opportunities Faster', sub: 'Real-time AI-powered scanning' },
+                { icon: 'bolt', title: 'Find Vehicle Opportunities Faster', sub: 'AI-assisted vehicle sourcing workflow' },
                 { icon: 'schedule', title: 'Save Time and Focus on Selling', sub: 'Automate the manual search grind' },
               ].map(item => (
                 <div key={item.icon} className="flex items-center gap-4">
@@ -498,7 +498,7 @@ function LandingPage() {
               <div className="hidden md:block absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent z-0"></div>
               {[
                 { icon: 'rule', step: '1', title: 'Define Criteria', desc: 'Set your exact requirements: make, model, age, mileage, and price ceiling across all major platforms.' },
-                { icon: 'travel_explore', step: '2', title: 'AI Global Search', desc: 'Our engine scans thousands of private and trade listings every minute, analyzing descriptions for hidden value.' },
+                { icon: 'travel_explore', step: '2', title: 'AI-Assisted Vehicle Search', desc: 'Designed to search connected vehicle marketplaces and trusted sources as the platform develops.' },
                 { icon: 'notifications_active', step: '3', title: 'Instant Reports', desc: 'Receive curated reports or instant mobile alerts the second a matching vehicle goes live. Be the first caller.' },
               ].map(item => (
                 <div key={item.step} className="relative z-10 text-center">
@@ -564,7 +564,7 @@ function LandingPage() {
               </svg>
               <span>3-Day Free Trial. Cancel Anytime. All plans include full AI search.</span>
             </div>
-            <p className="text-[11px] text-on-surface-variant/70 uppercase tracking-widest">No credit card required for trial.</p>
+            <p className="text-[11px] text-on-surface-variant/70 uppercase tracking-widest">Card required. No charge today. Cancel anytime before your trial ends.</p>
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch">
             {/* Starter */}
@@ -584,7 +584,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95" onClick={openModal}>Choose Starter</button>
+              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95" onClick={openModal}>Start Free Trial</button>
             </div>
             {/* Professional */}
             <div className="p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
@@ -628,7 +628,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95" onClick={openModal}>Contact Sales</button>
+              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95" onClick={openModal}>Start Free Trial</button>
             </div>
           </div>
         </section>
@@ -746,7 +746,7 @@ function LandingPage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                 </svg>
-                No credit card required for trial. Full access immediately.
+                Card required. No charge today. Cancel anytime before your trial ends.
               </p>
             </div>
           </div>
@@ -760,10 +760,10 @@ function LandingPage() {
                 <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase">Get Started Today</span>
                 <h2 className="font-display-lg text-headline-lg text-white">Ready To Find Better Stock While You Sleep?</h2>
                 <p className="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
-                  Start your 3-day trial and let our AI agent find your next high-margin vehicles. Join elite UK dealers using AI to source prime inventory.
+                  Start your 3-day trial and let our AI vehicle finder find your next high-margin vehicles. Join early users exploring AI-assisted vehicle sourcing.
                 </p>
                 <div className="flex flex-col gap-4 pt-4">
-                  {['No credit card required for trial', 'Full access to all AI features', 'Cancel anytime during the 3 days'].map(item => (
+                  {['Card required. No charge today. Cancel anytime before your trial ends.', 'Full access to all AI features', 'Cancel anytime during the 3 days'].map(item => (
                     <div key={item} className="flex items-center gap-3 text-on-surface-variant">
                       <span className="material-symbols-outlined text-primary">check_circle</span>
                       <span>{item}</span>
@@ -789,15 +789,17 @@ function LandingPage() {
               </div>
             </div>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-sm">
-              The world's most advanced AI sourcing engine for independent and franchise car dealerships.
+              An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals.
             </p>
-            <p className="font-body-md text-body-md text-on-surface-variant">© 2024 Trade In Cars Agent. Your AI Car Buyer Working 24/7.</p>
+            <p className="font-body-md text-body-md text-on-surface-variant">© 2024 Trade In Cars Agent. Your AI Vehicle Finder Working 24/7.</p>
           </div>
           <div className="grid grid-cols-2 gap-8">
             <div className="flex flex-col gap-4">
               <span className="font-label-caps text-label-caps text-primary">PLATFORM</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#how-it-works">How It Works</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#pricing">Pricing</a>
+              {/* Remove this link before production launch. */}
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm" href="/dashboard">Developer Preview</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">API Docs</a>
             </div>
             <div className="flex flex-col gap-4">
