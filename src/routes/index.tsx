@@ -142,17 +142,18 @@ function LandingPage() {
       {/* Lead Capture Modal */}
       {modalOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay overflow-y-auto"
+          className="fixed inset-0 z-[100] flex items-start md:items-center justify-center p-4 modal-overlay overflow-y-auto"
           onClick={e => { if (e.target === e.currentTarget) closeModal() }}
         >
-          <div className="relative w-full max-w-2xl glass-card rounded-2xl p-8 md:p-10 glow-border modal-enter mx-auto my-8">
+          <div className="relative w-full max-w-2xl glass-card rounded-2xl glow-border modal-enter mx-auto my-8 max-h-[calc(100vh-4rem)] flex flex-col overflow-hidden">
             <button
-              className="absolute top-6 right-6 text-on-surface-variant hover:text-white transition-colors"
+              className="absolute top-6 right-6 z-20 text-on-surface-variant hover:text-white transition-colors"
               onClick={closeModal}
             >
               <span className="material-symbols-outlined text-3xl">close</span>
             </button>
 
+            <div className="overflow-y-auto min-h-0 p-8 md:p-10">
             {!submitted ? (
               <div>
                 <div className="mb-8">
@@ -229,16 +230,17 @@ function LandingPage() {
                 </button>
               </div>
             )}
+            </div>
           </div>
         </div>
       )}
 
       {/* Navigation */}
       <nav className="relative w-full bg-background/80 border-b border-outline-variant/30 shadow-sm">
-        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20 lg:h-24">
           <div className="flex items-center flex-shrink-0 gap-4">
             <div className="logo-bezel rounded-lg p-1">
-              <img alt="Trade In Cars Agent Logo" className="h-12 lg:h-16 w-auto max-w-[140px] sm:max-w-none object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
+              <img alt="Trade In Cars Agent Logo" className="h-16 lg:h-20 w-auto max-w-[190px] sm:max-w-none object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
             </div>
           </div>
           <div className="hidden lg:flex items-center gap-8 mx-6">
@@ -809,6 +811,10 @@ function LandingPage() {
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Contact Support</a>
             </div>
           </div>
+        </div>
+        {/* Remove this preview link before production launch. */}
+        <div className="max-w-container-max mx-auto px-margin-desktop mt-12 pt-8 border-t border-outline-variant/10 text-center">
+          <a className="font-body-md text-xs text-on-surface-variant hover:text-primary transition-all underline underline-offset-4" href="/dashboard">Dealer Command Centre Preview</a>
         </div>
       </footer>
     </>
