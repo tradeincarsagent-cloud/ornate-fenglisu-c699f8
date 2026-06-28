@@ -140,7 +140,7 @@ function LandingPage() {
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Start Your Free 3-Day Trial" }),
           /* @__PURE__ */ jsxs("p", { className: "text-on-surface-variant mt-2 flex items-center gap-2", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
-            "Join elite UK dealers using AI to source prime inventory."
+            "Join early users exploring AI-assisted vehicle sourcing."
           ] })
         ] }),
         /* @__PURE__ */ jsxs("form", { className: "space-y-6", onSubmit: handleFormSubmit, children: [
@@ -187,7 +187,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]" }),
               "Engine Start: Free Trial"
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "text-center text-[11px] text-on-surface-variant mt-4 px-4 leading-relaxed", children: "No credit card required for trial. We will only use your details to contact you about your Trade in Cars Agent trial." })
+            /* @__PURE__ */ jsx("p", { className: "text-center text-[11px] text-on-surface-variant mt-4 px-4 leading-relaxed", children: "Card required. No charge today. Cancel anytime before your trial ends. We will only use your details to contact you about your Trade in Cars Agent trial." })
           ] })
         ] })
       ] }) : /* @__PURE__ */ jsxs("div", { className: "text-center py-12", children: [
@@ -231,7 +231,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("br", {}),
               "Save Hours Every Week."
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI car buyer working 24/7, helping you discover vehicle opportunities that match your exact buying criteria before the competition." }),
+            /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI vehicle finder working 24/7, helping you discover vehicle opportunities that match your exact buying criteria before the competition." }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-4", children: [
                 /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: () => scrollToSection("pricing"), children: [
@@ -242,7 +242,7 @@ function LandingPage() {
               ] }),
               /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant flex items-center gap-2", children: [
                 /* @__PURE__ */ jsx("svg", { className: "w-4 h-4 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
-                "No credit card required for trial. Full access immediately."
+                "Card required. No charge today. Cancel anytime before your trial ends."
               ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6 pt-8 border-t border-outline-variant/20", children: [
@@ -251,11 +251,7 @@ function LandingPage() {
                 /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background bg-surface-container-high flex items-center justify-center text-[10px] font-bold", children: "SL" }),
                 /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background bg-primary-container flex items-center justify-center text-[10px] font-bold", children: "EM" })
               ] }),
-              /* @__PURE__ */ jsxs("p", { className: "font-body-md text-body-md text-on-surface-variant", children: [
-                "Trusted by ",
-                /* @__PURE__ */ jsx("span", { className: "text-on-surface font-bold", children: "250+" }),
-                " leading UK dealerships"
-              ] })
+              /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "Built for UK dealers, traders and sourcing professionals" })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "relative lg:flex items-center justify-center animate-float flex mt-10 overflow-visible", children: [
@@ -300,7 +296,7 @@ function LandingPage() {
       }, {
         icon: "bolt",
         title: "Find Vehicle Opportunities Faster",
-        sub: "Real-time AI-powered scanning"
+        sub: "AI-assisted vehicle sourcing workflow"
       }, {
         icon: "schedule",
         title: "Save Time and Focus on Selling",
@@ -440,8 +436,8 @@ function LandingPage() {
           }, {
             icon: "travel_explore",
             step: "2",
-            title: "AI Global Search",
-            desc: "Our engine scans thousands of private and trade listings every minute, analyzing descriptions for hidden value."
+            title: "AI-Assisted Vehicle Search",
+            desc: "Designed to search connected vehicle marketplaces and trusted sources as the platform develops."
           }, {
             icon: "notifications_active",
             step: "3",
@@ -506,7 +502,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
             /* @__PURE__ */ jsx("span", { children: "3-Day Free Trial. Cancel Anytime. All plans include full AI search." })
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant/70 uppercase tracking-widest", children: "No credit card required for trial." })
+          /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant/70 uppercase tracking-widest", children: "Card required. No charge today. Cancel anytime before your trial ends." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch", children: [
           /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
@@ -521,7 +517,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95", onClick: openModal, children: "Choose Starter" })
+            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95", onClick: openModal, children: "Start Free Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
             /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "Recommended" }),
@@ -566,7 +562,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95", onClick: openModal, children: "Contact Sales" })
+            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95", onClick: openModal, children: "Start Free Trial" })
           ] })
         ] })
       ] }),
@@ -639,7 +635,7 @@ function LandingPage() {
           /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: () => scrollToSection("pricing"), children: "Start Free Trial Now" }),
           /* @__PURE__ */ jsxs("p", { className: "text-on-primary/80 flex items-center justify-center gap-2 font-medium", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
-            "No credit card required for trial. Full access immediately."
+            "Card required. No charge today. Cancel anytime before your trial ends."
           ] })
         ] })
       ] }) }),
@@ -647,8 +643,8 @@ function LandingPage() {
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase", children: "Get Started Today" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Ready To Find Better Stock While You Sleep?" }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-lg", children: "Start your 3-day trial and let our AI agent find your next high-margin vehicles. Join elite UK dealers using AI to source prime inventory." }),
-          /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 pt-4", children: ["No credit card required for trial", "Full access to all AI features", "Cancel anytime during the 3 days"].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
+          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-lg", children: "Start your 3-day trial and let our AI vehicle finder find your next high-margin vehicles. Join early users exploring AI-assisted vehicle sourcing." }),
+          /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 pt-4", children: ["Card required. No charge today. Cancel anytime before your trial ends.", "Full access to all AI features", "Cancel anytime during the 3 days"].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "check_circle" }),
             /* @__PURE__ */ jsx("span", { children: item })
           ] }, item)) })
@@ -662,14 +658,15 @@ function LandingPage() {
     /* @__PURE__ */ jsx("footer", { className: "bg-surface-container-lowest w-full py-20 border-t border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
         /* @__PURE__ */ jsx("div", { className: "flex items-center mb-6", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" }) }) }),
-        /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant max-w-sm", children: "The world's most advanced AI sourcing engine for independent and franchise car dealerships." }),
-        /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "© 2024 Trade In Cars Agent. Your AI Car Buyer Working 24/7." })
+        /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant max-w-sm", children: "An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals." }),
+        /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "© 2024 Trade In Cars Agent. Your AI Vehicle Finder Working 24/7." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary", children: "PLATFORM" }),
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#how-it-works", children: "How It Works" }),
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#pricing", children: "Pricing" }),
+          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm", href: "/dashboard", children: "Developer Preview" }),
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "API Docs" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
