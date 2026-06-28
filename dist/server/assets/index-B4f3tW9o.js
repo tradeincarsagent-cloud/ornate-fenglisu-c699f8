@@ -198,7 +198,7 @@ function LandingPage() {
       ] })
     ] }) }),
     /* @__PURE__ */ jsx("nav", { className: "relative w-full bg-background/80 border-b border-outline-variant/30 shadow-sm", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop flex justify-between items-center h-20 gap-3 sm:gap-4", children: [
-      /* @__PURE__ */ jsx("div", { className: "flex items-center flex-shrink-0 min-w-0", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-11 sm:h-10 md:h-12 lg:h-16 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "flex items-center flex-shrink-0 min-w-0", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-12 sm:h-12 md:h-14 lg:h-16 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" }) }) }),
       /* @__PURE__ */ jsxs("div", { className: "hidden lg:flex items-center gap-8 mx-6", children: [
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#how-it-works", children: "How It Works" }),
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#features", children: "Features" }),
@@ -216,13 +216,13 @@ function LandingPage() {
           /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#a3c9ff]" }),
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-[10px] md:text-xs text-primary tracking-[0.2em] uppercase font-bold", children: "Latest Update: Version 2 Live" })
         ] }) }),
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10", children: [
-          /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10 pt-20 pb-10 lg:py-0", children: [
+          /* @__PURE__ */ jsxs("div", { className: "space-y-6 sm:space-y-8", children: [
             /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 bg-surface-container px-4 py-1.5 rounded-full border border-outline-variant/30", children: [
               /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-primary animate-pulse" }),
               /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest", children: "LIVE INVENTORY AGENT v1.0" })
             ] }),
-            /* @__PURE__ */ jsxs("h1", { className: "font-display-lg text-display-lg leading-tight text-on-surface", children: [
+            /* @__PURE__ */ jsxs("h1", { className: "font-display-lg text-headline-lg-mobile sm:text-headline-lg lg:text-display-lg leading-tight text-on-surface", children: [
               "Find More Stock.",
               " ",
               /* @__PURE__ */ jsx("svg", { className: "inline-block w-10 h-10 text-primary-container align-middle ml-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M13 10V3L4 14h7v7l9-11h-7z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
@@ -271,7 +271,7 @@ function LandingPage() {
                   animationDelay: "2.5s"
                 } })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "absolute right-2 top-6 sm:-right-8 sm:top-1/4 z-30 w-40 sm:w-56 glass-card p-3 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "absolute right-2 top-6 sm:-right-8 sm:top-1/4 z-30 w-36 sm:w-56 glass-card p-2.5 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4", children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
                   /* @__PURE__ */ jsx("span", { className: "text-[9px] sm:text-[10px] font-label-caps text-primary uppercase", children: "New Alert" }),
                   /* @__PURE__ */ jsx("span", { className: "text-[9px] sm:text-[10px] text-on-surface-variant", children: "2m ago" })
@@ -279,7 +279,7 @@ function LandingPage() {
                 /* @__PURE__ */ jsx("p", { className: "text-[11px] sm:text-xs font-bold text-white mb-1", children: "Audi RS6 Avant" }),
                 /* @__PURE__ */ jsx("p", { className: "text-[9px] sm:text-[10px] text-primary", children: "£84,900 • Under Market" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "absolute left-2 bottom-6 sm:-left-12 sm:bottom-1/4 z-30 w-36 sm:w-52 glass-card p-3 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "absolute left-2 bottom-6 sm:-left-12 sm:bottom-1/4 z-30 w-32 sm:w-52 glass-card p-2.5 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4", children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
                   /* @__PURE__ */ jsx("span", { className: "text-[9px] sm:text-[10px] font-label-caps text-secondary uppercase", children: "Scanning..." }),
                   /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-[11px] sm:text-[12px] text-secondary", children: "sync" })
@@ -634,7 +634,7 @@ function LandingPage() {
         ] })
       ] }) }),
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-4 sm:px-6 md:px-margin-desktop", children: [
-        /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-8", children: "Ready To Find Better Stock While You Sleep?" }),
+        /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg sm:text-display-lg mb-8", children: "Ready To Find Better Stock While You Sleep?" }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
           /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-8 sm:px-12 py-4 sm:py-6 rounded-full font-bold text-base sm:text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: () => scrollToSection("pricing"), children: "Start Free Trial Now" }),
           /* @__PURE__ */ jsxs("p", { className: "text-on-primary/80 flex items-center justify-center gap-2 font-medium", children: [

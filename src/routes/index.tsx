@@ -238,7 +238,7 @@ function LandingPage() {
         <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop flex justify-between items-center h-20 gap-3 sm:gap-4">
           <div className="flex items-center flex-shrink-0 min-w-0">
             <div className="logo-bezel rounded-lg p-1">
-              <img alt="Trade In Cars Agent Logo" className="h-11 sm:h-10 md:h-12 lg:h-16 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
+              <img alt="Trade In Cars Agent Logo" className="h-12 sm:h-12 md:h-14 lg:h-16 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
             </div>
           </div>
           <div className="hidden lg:flex items-center gap-8 mx-6">
@@ -265,13 +265,13 @@ function LandingPage() {
               <span className="font-label-caps text-[10px] md:text-xs text-primary tracking-[0.2em] uppercase font-bold">Latest Update: Version 2 Live</span>
             </div>
           </div>
-          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10">
-            <div className="space-y-8">
+          <div className="max-w-container-max mx-auto px-4 sm:px-6 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10 pt-20 pb-10 lg:py-0">
+            <div className="space-y-6 sm:space-y-8">
               <div className="inline-flex items-center gap-2 bg-surface-container px-4 py-1.5 rounded-full border border-outline-variant/30">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                 <span className="font-label-caps text-label-caps text-primary tracking-widest">LIVE INVENTORY AGENT v1.0</span>
               </div>
-              <h1 className="font-display-lg text-display-lg leading-tight text-on-surface">
+              <h1 className="font-display-lg text-headline-lg-mobile sm:text-headline-lg lg:text-display-lg leading-tight text-on-surface">
                 Find More Stock.{' '}
                 <svg className="inline-block w-10 h-10 text-primary-container align-middle ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
@@ -318,7 +318,7 @@ function LandingPage() {
                   <div className="absolute bottom-1/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
                   <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-primary rounded-full animate-ping" style={{ animationDelay: '2.5s' }}></div>
                 </div>
-                <div className="absolute right-2 top-6 sm:-right-8 sm:top-1/4 z-30 w-40 sm:w-56 glass-card p-3 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4">
+                <div className="absolute right-2 top-6 sm:-right-8 sm:top-1/4 z-30 w-36 sm:w-56 glass-card p-2.5 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[9px] sm:text-[10px] font-label-caps text-primary uppercase">New Alert</span>
                     <span className="text-[9px] sm:text-[10px] text-on-surface-variant">2m ago</span>
@@ -326,7 +326,7 @@ function LandingPage() {
                   <p className="text-[11px] sm:text-xs font-bold text-white mb-1">Audi RS6 Avant</p>
                   <p className="text-[9px] sm:text-[10px] text-primary">£84,900 • Under Market</p>
                 </div>
-                <div className="absolute left-2 bottom-6 sm:-left-12 sm:bottom-1/4 z-30 w-36 sm:w-52 glass-card p-3 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4">
+                <div className="absolute left-2 bottom-6 sm:-left-12 sm:bottom-1/4 z-30 w-32 sm:w-52 glass-card p-2.5 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[9px] sm:text-[10px] font-label-caps text-secondary uppercase">Scanning...</span>
                     <span className="material-symbols-outlined text-[11px] sm:text-[12px] text-secondary">sync</span>
@@ -737,7 +737,7 @@ function LandingPage() {
         {/* Final CTA */}
         <section className="py-24 bg-primary text-on-primary text-center">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-margin-desktop">
-            <h2 className="font-display-lg text-display-lg mb-8">Ready To Find Better Stock While You Sleep?</h2>
+            <h2 className="font-display-lg text-headline-lg sm:text-display-lg mb-8">Ready To Find Better Stock While You Sleep?</h2>
             <div className="space-y-6">
               <button className="engine-start-btn text-white px-8 sm:px-12 py-4 sm:py-6 rounded-full font-bold text-base sm:text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest" onClick={() => scrollToSection('pricing')}>
                 Start Free Trial Now
