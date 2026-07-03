@@ -12,6 +12,68 @@ function DashboardPage() {
     { icon: '🔔', title: 'Auctions Ending Today', value: '1' },
     { icon: '❤️', title: 'Saved Vehicles Updated', value: '5' },
   ]
+  const recentOpportunities = [
+    {
+      vehicle: 'BMW M3 Competition',
+      year: '2022',
+      askingPrice: '£31,995',
+      estimatedProfit: '£4,200',
+      distance: '42 miles',
+      source: 'Auto Trader',
+      confidence: 97,
+      status: 'New Today',
+    },
+    {
+      vehicle: 'Mercedes E220 AMG Line',
+      year: '2021',
+      askingPrice: '£18,995',
+      estimatedProfit: '£2,100',
+      distance: '18 miles',
+      source: 'Dealer Network',
+      confidence: 93,
+      status: 'Price Reduced',
+    },
+    {
+      vehicle: 'Ford Ranger Wildtrak',
+      year: '2023',
+      askingPrice: '£23,995',
+      estimatedProfit: '£3,600',
+      distance: '65 miles',
+      source: 'Facebook Marketplace',
+      confidence: 95,
+      status: 'New Listing',
+    },
+    {
+      vehicle: 'VW Golf R',
+      year: '2022',
+      askingPrice: '£29,750',
+      estimatedProfit: '£2,900',
+      distance: '32 miles',
+      source: 'Motorway',
+      confidence: 91,
+      status: 'Watch',
+    },
+    {
+      vehicle: 'Harley-Davidson Fat Boy',
+      year: '2020',
+      askingPrice: '£12,995',
+      estimatedProfit: '£1,800',
+      distance: '55 miles',
+      source: 'Dealer Stock',
+      confidence: 90,
+      status: 'New Today',
+    },
+  ]
+
+  const getConfidenceBadgeClasses = (confidence: number) => {
+    if (confidence >= 95) {
+      return 'bg-emerald-500/15 text-emerald-700 ring-emerald-500/30'
+    }
+    if (confidence >= 90) {
+      return 'bg-blue-500/15 text-blue-700 ring-blue-500/30'
+    }
+    return 'bg-amber-500/20 text-amber-800 ring-amber-500/30'
+  }
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -91,8 +153,62 @@ function DashboardPage() {
             </section>
 
             <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
-              <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
-              <p className="text-body-md font-body-md text-on-surface-variant">“Your latest AI search results will appear here.”</p>
+              <h2 className="mb-2 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
+              <p className="mb-6 text-body-md font-body-md text-on-surface-variant">
+                New vehicles matching your saved searches.
+              </p>
+              <div className="overflow-x-auto">
+                <table className="min-w-full border-separate border-spacing-0">
+                  <thead>
+                    <tr className="text-left text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Vehicle</th>
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Year</th>
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Asking Price</th>
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Estimated Profit</th>
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Distance</th>
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Source</th>
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Confidence</th>
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Status</th>
+                      <th className="border-b border-outline-variant/25 px-4 py-3">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {recentOpportunities.map((opportunity) => (
+                      <tr key={opportunity.vehicle} className="text-body-md font-body-md text-on-surface">
+                        <td className="border-b border-outline-variant/15 px-4 py-4">{opportunity.vehicle}</td>
+                        <td className="border-b border-outline-variant/15 px-4 py-4">{opportunity.year}</td>
+                        <td className="border-b border-outline-variant/15 px-4 py-4">{opportunity.askingPrice}</td>
+                        <td className="border-b border-outline-variant/15 px-4 py-4">{opportunity.estimatedProfit}</td>
+                        <td className="border-b border-outline-variant/15 px-4 py-4">{opportunity.distance}</td>
+                        <td className="border-b border-outline-variant/15 px-4 py-4">{opportunity.source}</td>
+                        <td className="border-b border-outline-variant/15 px-4 py-4">
+                          <span
+                            className={`inline-flex rounded-full px-2.5 py-1 text-label-caps font-label-caps tracking-wide ring-1 ${getConfidenceBadgeClasses(opportunity.confidence)}`}
+                          >
+                            {opportunity.confidence}%
+                          </span>
+                        </td>
+                        <td className="border-b border-outline-variant/15 px-4 py-4 text-on-surface-variant">
+                          {opportunity.status}
+                        </td>
+                        <td className="border-b border-outline-variant/15 px-4 py-4">
+                          <div className="flex flex-wrap gap-2">
+                            <button className="rounded-md bg-primary px-3 py-1.5 text-label-caps font-label-caps text-on-primary hover:opacity-90 transition-opacity">
+                              Review
+                            </button>
+                            <button className="rounded-md border border-outline-variant/40 bg-surface-container-high px-3 py-1.5 text-label-caps font-label-caps text-on-surface hover:border-primary/40 transition-colors">
+                              Save
+                            </button>
+                            <button className="rounded-md border border-outline-variant/40 bg-surface-container-high px-3 py-1.5 text-label-caps font-label-caps text-on-surface-variant hover:border-primary/40 transition-colors">
+                              Ignore
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </section>
           </main>
         </div>
