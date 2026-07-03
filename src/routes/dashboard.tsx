@@ -12,6 +12,36 @@ function DashboardPage() {
     { icon: '🔔', title: 'Auctions Ending Today', value: '1' },
     { icon: '❤️', title: 'Saved Vehicles Updated', value: '5' },
   ]
+  const radarSignals = [
+    {
+      title: 'BMW M4 Competition (2021)',
+      source: 'Auto Trader',
+      signal: 'Price dropped £1,250 in last 24h',
+      confidence: '96%',
+    },
+    {
+      title: 'Audi RS3 Saloon (2022)',
+      source: 'BCA Auction',
+      signal: 'Auction ends in 2h 14m',
+      confidence: '91%',
+    },
+    {
+      title: 'Mercedes A45 S (2020)',
+      source: 'Motorway',
+      signal: 'Seller just reduced reserve by £900',
+      confidence: '94%',
+    },
+  ]
+  const recentOpportunities = [
+    { vehicle: 'BMW M3 Competition', margin: '£4,200', status: 'Ready for review' },
+    { vehicle: 'Audi RS5 Coupe', margin: '£3,850', status: 'Seller contacted' },
+    { vehicle: 'Mercedes C63 S', margin: '£3,400', status: 'Awaiting history check' },
+  ]
+  const activeSearches = [
+    { name: 'Performance Saloons (2019+)', matches: '14', updated: '3 mins ago' },
+    { name: 'SUVs under £28k', matches: '9', updated: '11 mins ago' },
+    { name: 'Low-mileage hybrids', matches: '6', updated: '19 mins ago' },
+  ]
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -51,7 +81,7 @@ function DashboardPage() {
             </section>
 
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
-              <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">Today’s Best Opportunity</h2>
+              <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">AI Recommendation of the Day</h2>
               <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
@@ -90,9 +120,52 @@ function DashboardPage() {
               </div>
             </section>
 
+            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
+              <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                {radarSignals.map((signal) => (
+                  <article key={signal.title} className="rounded-xl bg-surface-container-high p-5">
+                    <p className="mb-2 text-body-md font-body-md text-on-surface">{signal.title}</p>
+                    <p className="mb-3 text-body-md font-body-md text-on-surface-variant">{signal.source}</p>
+                    <p className="mb-3 text-body-md font-body-md text-on-surface">{signal.signal}</p>
+                    <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">
+                      Confidence {signal.confidence}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
             <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
-              <p className="text-body-md font-body-md text-on-surface-variant">“Your latest AI search results will appear here.”</p>
+              <div className="space-y-3">
+                {recentOpportunities.map((opportunity) => (
+                  <article
+                    key={opportunity.vehicle}
+                    className="flex flex-col gap-2 rounded-xl bg-surface-container-high p-4 md:flex-row md:items-center md:justify-between"
+                  >
+                    <p className="text-body-md font-body-md text-on-surface">{opportunity.vehicle}</p>
+                    <p className="text-body-md font-body-md text-primary">{opportunity.margin}</p>
+                    <p className="text-body-md font-body-md text-on-surface-variant">{opportunity.status}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="dashboard-border mt-8 rounded-2xl bg-surface-container p-6 md:p-8">
+              <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">My Active Searches</h2>
+              <div className="space-y-3">
+                {activeSearches.map((search) => (
+                  <article
+                    key={search.name}
+                    className="flex flex-col gap-2 rounded-xl bg-surface-container-high p-4 md:flex-row md:items-center md:justify-between"
+                  >
+                    <p className="text-body-md font-body-md text-on-surface">{search.name}</p>
+                    <p className="text-body-md font-body-md text-primary">{search.matches} matches</p>
+                    <p className="text-body-md font-body-md text-on-surface-variant">Updated {search.updated}</p>
+                  </article>
+                ))}
+              </div>
             </section>
           </main>
         </div>
