@@ -131,7 +131,7 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
-const $$splitComponentImporter$1 = () => import("./dashboard-CUiO8Yup.js");
+const $$splitComponentImporter$1 = () => import("./dashboard-aj7vs9xg.js");
 const Route$1 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
