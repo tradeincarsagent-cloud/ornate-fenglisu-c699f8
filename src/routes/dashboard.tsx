@@ -50,8 +50,8 @@ function DashboardPage() {
               </div>
             </section>
 
-            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
-              <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">Today’s Best Opportunity</h2>
+            <section className="dashboard-border mb-8 rounded-2xl border-2 border-primary/35 bg-gradient-to-br from-primary-container/35 via-surface-container to-surface-container-high p-6 shadow-[0_0_40px_rgba(58,77,255,0.12)] md:p-8">
+              <h2 className="mb-6 text-headline-lg font-headline-lg text-primary">AI Recommendation of the Day</h2>
               <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
@@ -62,22 +62,38 @@ function DashboardPage() {
                   <p className="text-body-md font-body-md text-on-surface">2022</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Price</p>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Current Price</p>
                   <p className="text-body-md font-body-md text-on-surface">£31,995</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Estimated Profit</p>
-                  <p className="text-body-md font-body-md text-on-surface">£4,200</p>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Estimated Retail Value</p>
+                  <p className="text-body-md font-body-md text-on-surface">£36,250</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Confidence Score</p>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Estimated Gross Profit</p>
+                  <p className="text-body-md font-body-md text-on-surface">£4,255</p>
+                </div>
+                <div>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">AI Confidence</p>
                   <p className="text-body-md font-body-md text-on-surface">97%</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Recently reduced in price.</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Strong resale potential.</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Located only 42 miles away.</p>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Priority</p>
+                  <p className="text-body-md font-body-md text-primary">★★★★★ High Priority</p>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason for Recommendation</p>
+                  <ul className="space-y-1 text-body-md font-body-md text-on-surface-variant">
+                    <li>• Recently reduced in price</li>
+                    <li>• Below current market average</li>
+                    <li>• Strong dealer demand</li>
+                    <li>• Excellent resale potential</li>
+                    <li>• Located only 42 miles away</li>
+                  </ul>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Recommended Action</p>
+                  <p className="text-body-md font-body-md text-on-surface">Review this vehicle first today.</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-4">
@@ -85,9 +101,12 @@ function DashboardPage() {
                   Review Opportunity
                 </button>
                 <button className="rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface hover:border-primary/40 transition-colors">
-                  Save Vehicle
+                  Save to Watchlist
                 </button>
               </div>
+              <p className="mt-5 text-body-sm font-body-sm text-on-surface-variant">
+                AI recommendations are generated using pricing trends, vehicle demand and opportunity scoring. Live data will be connected in a future release.
+              </p>
             </section>
 
             <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
