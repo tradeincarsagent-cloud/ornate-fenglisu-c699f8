@@ -12,6 +12,50 @@ function DashboardPage() {
     { icon: '🔔', title: 'Auctions Ending Today', value: '1' },
     { icon: '❤️', title: 'Saved Vehicles Updated', value: '5' },
   ]
+  const activeSearches = [
+    {
+      vehicle: 'BMW M3 Competition',
+      budget: 'Up to £35,000',
+      radius: '200 miles',
+      lastScan: '3 minutes ago',
+      status: 'Monitoring',
+    },
+    {
+      vehicle: 'Mercedes E220 AMG Line',
+      budget: 'Up to £24,500',
+      radius: '150 miles',
+      lastScan: '11 minutes ago',
+      status: 'Monitoring',
+    },
+    {
+      vehicle: 'Ford Ranger Wildtrak',
+      budget: 'Up to £29,995',
+      radius: '100 miles',
+      lastScan: '18 minutes ago',
+      status: 'Monitoring',
+    },
+    {
+      vehicle: 'VW Golf R',
+      budget: 'Up to £27,000',
+      radius: '175 miles',
+      lastScan: '7 minutes ago',
+      status: 'Monitoring',
+    },
+    {
+      vehicle: 'Ford Transit Custom',
+      budget: 'Up to £21,000',
+      radius: '120 miles',
+      lastScan: '22 minutes ago',
+      status: 'Monitoring',
+    },
+    {
+      vehicle: 'Toyota Hilux Invincible',
+      budget: 'Up to £33,500',
+      radius: '250 miles',
+      lastScan: '5 minutes ago',
+      status: 'Monitoring',
+    },
+  ]
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -93,6 +137,78 @@ function DashboardPage() {
             <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
               <p className="text-body-md font-body-md text-on-surface-variant">“Your latest AI search results will appear here.”</p>
+            </section>
+
+            <section className="mt-8">
+              <div className="mb-6">
+                <h2 className="mb-2 text-headline-md font-headline-md text-on-surface">My Active Searches</h2>
+                <p className="text-body-md font-body-md text-on-surface-variant">
+                  Vehicles currently being monitored by Trade in Cars Agent.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+                {activeSearches.map((search) => (
+                  <article
+                    key={search.vehicle}
+                    className="dashboard-border rounded-2xl bg-surface-container-high p-6 shadow-[0_18px_45px_rgba(3,8,20,0.28)]"
+                  >
+                    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                          Vehicle Search
+                        </p>
+                        <h3 className="text-headline-sm font-headline-md text-on-surface">{search.vehicle}</h3>
+                      </div>
+                      <span className="inline-flex w-fit rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">
+                        {search.status}
+                      </span>
+                    </div>
+
+                    <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div>
+                        <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                          Maximum Budget
+                        </p>
+                        <p className="text-body-md font-body-md text-on-surface">{search.budget}</p>
+                      </div>
+                      <div>
+                        <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                          Search Radius
+                        </p>
+                        <p className="text-body-md font-body-md text-on-surface">{search.radius}</p>
+                      </div>
+                      <div>
+                        <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                          Last Scan
+                        </p>
+                        <p className="text-body-md font-body-md text-on-surface">{search.lastScan}</p>
+                      </div>
+                      <div>
+                        <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                          Status
+                        </p>
+                        <p className="text-body-md font-body-md text-on-surface">{search.status}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-3">
+                      <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40">
+                        Pause
+                      </button>
+                      <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40">
+                        Edit
+                      </button>
+                      <button className="rounded-lg bg-primary px-4 py-2 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90">
+                        Run Search Now
+                      </button>
+                      <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40">
+                        Delete
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </section>
           </main>
         </div>
