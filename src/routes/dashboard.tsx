@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -12,6 +13,29 @@ function DashboardPage() {
     { icon: '🔔', title: 'Auctions Ending Today', value: '1' },
     { icon: '❤️', title: 'Saved Vehicles Updated', value: '5' },
   ]
+  const recentOpportunities = [
+    { vehicle: 'Audi RS5 Sportback', source: 'Auto Trader', profit: '£3,850', priority: 'High' },
+    { vehicle: 'Range Rover Velar', source: 'PistonHeads', profit: '£2,400', priority: 'Medium' },
+    { vehicle: 'Mercedes A45 AMG', source: 'Motorway', profit: '£3,120', priority: 'High' },
+    { vehicle: 'Volkswagen Golf R', source: 'eBay Motors', profit: '£1,980', priority: 'Low' },
+    { vehicle: 'Porsche Macan S', source: 'Auto Trader', profit: '£4,450', priority: 'High' },
+  ]
+  const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
+  const [radarDetectionGlow, setRadarDetectionGlow] = useState(false)
+
+  useEffect(() => {
+    let nextOpportunityIndex = 0
+    const scanInterval = setInterval(() => {
+      setRadarDetectionGlow(true)
+      setHighlightedOpportunity(nextOpportunityIndex)
+      nextOpportunityIndex = (nextOpportunityIndex + 1) % recentOpportunities.length
+
+      setTimeout(() => setRadarDetectionGlow(false), 1100)
+      setTimeout(() => setHighlightedOpportunity(null), 1700)
+    }, 6200)
+
+    return () => clearInterval(scanInterval)
+  }, [recentOpportunities.length])
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -36,17 +60,91 @@ function DashboardPage() {
             <h1 className="mb-2 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
             <p className="mb-8 text-headline-md font-headline-md text-on-surface">Good Morning, Jonathan</p>
 
-            <section className="mb-8">
-              <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Morning Intelligence Brief</h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
-                {summaryCards.map((card) => (
-                  <article key={card.title} className="dashboard-border rounded-xl bg-surface-container-high p-5">
-                    <p className="mb-3 text-body-md font-body-md text-on-surface-variant">
-                      {card.icon} {card.title}
-                    </p>
-                    <p className="text-headline-lg font-headline-lg text-primary">{card.value}</p>
-                  </article>
-                ))}
+            <section className="mb-8 grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] xl:items-start">
+              <div>
+                <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Morning Intelligence Brief</h2>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+                  {summaryCards.map((card) => (
+                    <article key={card.title} className="dashboard-border rounded-xl bg-surface-container-high p-5">
+                      <p className="mb-3 text-body-md font-body-md text-on-surface-variant">
+                        {card.icon} {card.title}
+                      </p>
+                      <p className="text-headline-lg font-headline-lg text-primary">{card.value}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <article className="dashboard-border rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8">
+                <div className={`radar-glass-panel ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
+                  <div className="radar-container">
+                    <div className="radar-frame" />
+                    <div className="radar-scope">
+                      <div className="radar-ring radar-ring-1" />
+                      <div className="radar-ring radar-ring-2" />
+                      <div className="radar-ring radar-ring-3" />
+                      <div className="radar-crosshair radar-crosshair-horizontal" />
+                      <div className="radar-crosshair radar-crosshair-vertical" />
+                      <div className="radar-sweep" />
+                      <span className="radar-blip radar-blip-1" />
+                      <span className="radar-blip radar-blip-2" />
+                      <span className="radar-blip radar-blip-3" />
+                      <span className="radar-blip radar-blip-4" />
+                    </div>
+                  </div>
+
+                  <div className="mt-8 space-y-4">
+                    <h3 className="text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
+                    <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
+                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Status:</dt>
+                      <dd className="text-on-surface">🟢 Searching</dd>
+                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Sources Active:</dt>
+                      <dd className="text-on-surface">5</dd>
+                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Vehicles Checked Today:</dt>
+                      <dd className="text-on-surface">12,487</dd>
+                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Matches Found:</dt>
+                      <dd className="text-on-surface">27</dd>
+                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">High Priority Matches:</dt>
+                      <dd className="text-on-surface">3</dd>
+                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Last Scan:</dt>
+                      <dd className="text-on-surface">12 seconds ago</dd>
+                    </dl>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
+              <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
+              <p className="mb-6 text-body-md font-body-md text-on-surface-variant">
+                “Your latest AI search results will appear here.”
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[640px] border-separate border-spacing-y-2 text-left">
+                  <thead>
+                    <tr className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                      <th className="px-4 py-2">Vehicle</th>
+                      <th className="px-4 py-2">Source</th>
+                      <th className="px-4 py-2">Estimated Profit</th>
+                      <th className="px-4 py-2">Priority</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {recentOpportunities.map((opportunity, index) => (
+                      <tr
+                        key={opportunity.vehicle}
+                        className={`rounded-xl bg-surface-container-high transition-all ${
+                          highlightedOpportunity === index ? 'opportunity-row-highlight' : ''
+                        }`}
+                      >
+                        <td className="rounded-l-xl px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.vehicle}</td>
+                        <td className="px-4 py-3 text-body-md font-body-md text-on-surface-variant">{opportunity.source}</td>
+                        <td className="px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.profit}</td>
+                        <td className="rounded-r-xl px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.priority}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </section>
 
@@ -90,10 +188,6 @@ function DashboardPage() {
               </div>
             </section>
 
-            <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
-              <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
-              <p className="text-body-md font-body-md text-on-surface-variant">“Your latest AI search results will appear here.”</p>
-            </section>
           </main>
         </div>
       </div>
