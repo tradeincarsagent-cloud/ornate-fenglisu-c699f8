@@ -798,8 +798,6 @@ function LandingPage() {
               <span className="font-label-caps text-label-caps text-primary">PLATFORM</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#how-it-works">How It Works</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#pricing">Pricing</a>
-              {/* Remove this preview link before production launch. */}
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm" href="/dashboard">Dealer Command Centre Preview</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">API Docs</a>
             </div>
             <div className="flex flex-col gap-4">
@@ -809,6 +807,10 @@ function LandingPage() {
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Contact Support</a>
             </div>
           </div>
+        </div>
+        {/* TODO: Remove this preview link before production launch when authentication is enabled. */}
+        <div className="max-w-container-max mx-auto px-margin-desktop mt-12 pt-6 border-t border-outline-variant/10 text-center">
+          <a className="font-body-md text-body-md text-on-surface-variant/60 hover:text-primary transition-all" href="/dashboard">Dealer Command Centre Preview</a>
         </div>
       </footer>
     </>
