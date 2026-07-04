@@ -311,8 +311,8 @@ function LandingPage() {
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface", id: "live-demo", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Live Opportunity Feed (Demo)" }),
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Real-Time Market Scanning" }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "This is a live demonstration of how our AI identifies under-market opportunities across private and trade platforms in real-time." })
+          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Market Opportunity Preview" }),
+          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "This is a product demonstration showing how Trade in Cars Agent will present potential vehicle opportunities from connected marketplaces and trusted sources as the platform develops." })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-gutter", children: [{
           name: "BMW M3 2020",

@@ -369,9 +369,9 @@ function LandingPage() {
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="text-center mb-16">
               <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Live Opportunity Feed (Demo)</span>
-              <h2 className="font-display-lg text-headline-lg mb-6">Real-Time Market Scanning</h2>
+              <h2 className="font-display-lg text-headline-lg mb-6">Market Opportunity Preview</h2>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                This is a live demonstration of how our AI identifies under-market opportunities across private and trade platforms in real-time.
+                This is a product demonstration showing how Trade in Cars Agent will present potential vehicle opportunities from connected marketplaces and trusted sources as the platform develops.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
