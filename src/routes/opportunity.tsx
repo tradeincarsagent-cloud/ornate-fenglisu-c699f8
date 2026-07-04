@@ -77,6 +77,104 @@ function OpportunityPage() {
         </section>
 
         <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+          <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Buying Checklist</h2>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">✅</span>
+                <span className="text-body-md font-body-md text-on-surface">Market Price</span>
+              </div>
+              <div className="text-right">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Status</p>
+                <p className="mt-0.5 text-body-sm font-body-sm text-[#4ade80]">Excellent Value</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">✅</span>
+                <span className="text-body-md font-body-md text-on-surface">Estimated Profit</span>
+              </div>
+              <div className="text-right">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Status</p>
+                <p className="mt-0.5 text-body-sm font-body-sm text-[#4ade80]">High Profit Potential</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🟡</span>
+                <span className="text-body-md font-body-md text-on-surface">Vehicle History</span>
+              </div>
+              <div className="text-right">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Status</p>
+                <p className="mt-0.5 text-body-sm font-body-sm text-[#facc15]">History Check Recommended</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🟡</span>
+                <span className="text-body-md font-body-md text-on-surface">MOT History</span>
+              </div>
+              <div className="text-right">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Status</p>
+                <p className="mt-0.5 text-body-sm font-body-sm text-[#facc15]">Review Required</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🟡</span>
+                <span className="text-body-md font-body-md text-on-surface">Service History</span>
+              </div>
+              <div className="text-right">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Status</p>
+                <p className="mt-0.5 text-body-sm font-body-sm text-[#facc15]">Verify Records</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🟢</span>
+                <span className="text-body-md font-body-md text-on-surface">Mileage</span>
+              </div>
+              <div className="text-right">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Status</p>
+                <p className="mt-0.5 text-body-sm font-body-sm text-[#86efac]">Appears Consistent</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🟢</span>
+                <span className="text-body-md font-body-md text-on-surface">Seller Profile</span>
+              </div>
+              <div className="text-right">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Status</p>
+                <p className="mt-0.5 text-body-sm font-body-sm text-[#86efac]">Trusted Listing</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🔵</span>
+                <span className="text-body-md font-body-md text-on-surface">Estimated Days to Sell</span>
+              </div>
+              <div className="text-right">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Estimate</p>
+                <p className="mt-0.5 text-body-sm font-body-sm text-primary">9 Days</p>
+              </div>
+            </div>
+          </div>
+          <p className="mt-5 text-body-sm font-body-sm text-on-surface-variant/70 italic">
+            Complete vehicle history, MOT and verification services will be available through trusted data providers in a future release.
+          </p>
+        </section>
+
+        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+          <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">AI Buying Summary</h2>
+          <div className="rounded-xl border border-primary/30 bg-primary-container/20 px-6 py-5">
+            <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
+              This opportunity has been ranked as a <span className="font-semibold text-on-surface">BUY</span> because the asking price is below current market value, dealer demand is strong, and estimated resale margins are above average. Before purchasing, we recommend confirming MOT history, service records and vehicle history.
+            </p>
+          </div>
+        </section>
+
+        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Vehicle Information</h2>
           <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {vehicleInfo.map((item) => (

@@ -131,7 +131,7 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
-const $$splitComponentImporter$2 = () => import("./opportunity-CVUf0Kl4.js");
+const $$splitComponentImporter$2 = () => import("./opportunity-2wpr5Uf4.js");
 const Route$2 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
