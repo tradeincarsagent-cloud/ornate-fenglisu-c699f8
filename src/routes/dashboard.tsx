@@ -1,9 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
 })
+
+const AI_STATUS_MESSAGES = [
+  'Searching Auto Trader…',
+  'Searching Facebook Marketplace…',
+  'Searching Dealer Network…',
+  'Checking Auctions…',
+  'Analysing Opportunities…',
+  'Ranking Results…',
+]
 
 function DashboardPage() {
   const summaryCards = [
@@ -27,6 +36,10 @@ function DashboardPage() {
   ]
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false)
+  const [isLive, setIsLive] = useState(true)
+  const [statusMessageIndex, setStatusMessageIndex] = useState(0)
+  const [statusFading, setStatusFading] = useState(false)
+  const statusIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     let nextOpportunityIndex = 0
@@ -42,11 +55,37 @@ function DashboardPage() {
     return () => clearInterval(scanInterval)
   }, [recentOpportunities.length])
 
+  useEffect(() => {
+    if (!isLive) {
+      if (statusIntervalRef.current) clearInterval(statusIntervalRef.current)
+      return
+    }
+    statusIntervalRef.current = setInterval(() => {
+      setStatusFading(true)
+      setTimeout(() => {
+        setStatusMessageIndex((i) => (i + 1) % AI_STATUS_MESSAGES.length)
+        setStatusFading(false)
+      }, 400)
+    }, 3000)
+    return () => {
+      if (statusIntervalRef.current) clearInterval(statusIntervalRef.current)
+    }
+  }, [isLive])
+
   return (
     <div className="min-h-screen bg-background text-on-surface">
       <div className="mx-auto flex min-h-screen max-w-container-max">
         <aside className="hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col">
-          <p className="mb-8 text-headline-md font-headline-md text-primary">Trade in Cars Agent</p>
+          <div className="mb-8">
+            <div className="logo-bezel mb-3 rounded-lg p-1.5">
+              <img
+                alt="Trade In Cars Agent Logo"
+                className="h-10 w-auto object-contain logo-blend"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS"
+              />
+            </div>
+            <p className="text-headline-md font-headline-md text-primary">Trade in Cars Agent</p>
+          </div>
           <nav className="space-y-2">
             <div className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary">
               Dealer Command Centre
@@ -98,11 +137,31 @@ function DashboardPage() {
                     </div>
                   </div>
 
+                  <div className="mt-6 flex items-center justify-between">
+                    <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                      AI Search
+                    </span>
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={isLive}
+                      onClick={() => setIsLive((v) => !v)}
+                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${isLive ? 'bg-primary' : 'bg-outline-variant/40'}`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 rounded-full bg-on-primary shadow transition-transform ${isLive ? 'translate-x-5' : 'translate-x-0.5'}`}
+                      />
+                    </button>
+                    <span className={`text-body-md font-body-md ${isLive ? 'text-primary' : 'text-on-surface-variant'}`}>
+                      {isLive ? 'LIVE' : 'PAUSED'}
+                    </span>
+                  </div>
+
                   <div className="mt-8 space-y-4">
                     <h3 className="text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
                     <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
                       <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Status:</dt>
-                      <dd className="text-on-surface">🟢 Searching</dd>
+                      <dd className="text-on-surface">{isLive ? '🟢 Searching' : '⏸ Paused'}</dd>
                       <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Sources Active:</dt>
                       <dd className="text-on-surface">5</dd>
                       <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Vehicles Checked Today:</dt>
@@ -114,6 +173,18 @@ function DashboardPage() {
                       <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Last Scan:</dt>
                       <dd className="text-on-surface">12 seconds ago</dd>
                     </dl>
+
+                    <div className="mt-4 overflow-hidden rounded-lg border border-outline-variant/20 bg-surface-container px-4 py-3">
+                      <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+                        AI Status Feed
+                      </p>
+                      <p
+                        className="text-body-md font-body-md text-primary transition-opacity duration-400"
+                        style={{ opacity: statusFading ? 0 : 1 }}
+                      >
+                        {isLive ? AI_STATUS_MESSAGES[statusMessageIndex] : 'Search paused.'}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </article>
