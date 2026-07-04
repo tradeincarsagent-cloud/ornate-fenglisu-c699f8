@@ -15,8 +15,8 @@ const SEARCH_FREQUENCIES = [{
   label: "Daily",
   value: "daily"
 }];
-const ACTIVE_SOURCES = ["Auto Trader", "Dealer Network"];
-const COMING_SOON_SOURCES = ["Facebook Marketplace", "Auctions", "Private Sellers"];
+const PHASE_ONE_SOURCES = ["Auto Trader", "Dealer Network", "UK Public Vehicle Listings", "Dealer Websites", "Classified Vehicle Websites"];
+const PLANNED_INTEGRATIONS = ["Facebook Marketplace", "Auctions", "Private Sellers", "Trade Feeds", "Vehicle History Providers"];
 function CheckIcon() {
   return /* @__PURE__ */ jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "20 6 9 17 4 12" }) });
 }
@@ -29,19 +29,7 @@ function SearchBuilderPage() {
   const [maxBudget, setMaxBudget] = useState("");
   const [maxMileage, setMaxMileage] = useState("");
   const [minProfit, setMinProfit] = useState("");
-  const [activeSources, setActiveSources] = useState(/* @__PURE__ */ new Set(["Auto Trader", "Dealer Network"]));
   const [frequency, setFrequency] = useState(null);
-  const toggleSource = (source) => {
-    setActiveSources((prev) => {
-      const next = new Set(prev);
-      if (next.has(source)) {
-        next.delete(source);
-      } else {
-        next.add(source);
-      }
-      return next;
-    });
-  };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-on-surface", children: [
     /* @__PURE__ */ jsx("header", { className: "border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex max-w-container-max items-center justify-between", children: [
       /* @__PURE__ */ jsx("div", { className: "logo-bezel w-36 rounded-lg p-1 sm:w-44", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }),
@@ -115,21 +103,24 @@ function SearchBuilderPage() {
             /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "3" }),
             /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Search Sources" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-            ACTIVE_SOURCES.map((source) => {
-              const checked = activeSources.has(source);
-              return /* @__PURE__ */ jsxs("label", { className: "flex cursor-pointer items-center gap-4 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-4 transition-colors hover:border-primary/40", children: [
-                /* @__PURE__ */ jsx("span", { className: `flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 transition-colors ${checked ? "border-primary bg-primary text-on-primary" : "border-outline-variant/60 bg-transparent"}`, "aria-hidden": "true", children: checked && /* @__PURE__ */ jsx(CheckIcon, {}) }),
-                /* @__PURE__ */ jsx("input", { type: "checkbox", className: "sr-only", checked, onChange: () => toggleSource(source), "aria-label": source }),
+          /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Available / Phase 1" }),
+              /* @__PURE__ */ jsx("div", { className: "space-y-3", children: PHASE_ONE_SOURCES.map((source) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-5 py-4 shadow-sm shadow-primary/5", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-primary bg-primary text-on-primary", "aria-hidden": "true", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
                 /* @__PURE__ */ jsx("span", { className: "flex-1 text-body-md font-body-md text-on-surface", children: source }),
-                /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary", children: "Active" })
-              ] }, source);
-            }),
-            COMING_SOON_SOURCES.map((source) => /* @__PURE__ */ jsxs("div", { className: "flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-5 py-4 opacity-50", "aria-disabled": "true", children: [
-              /* @__PURE__ */ jsx("span", { className: "flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-outline-variant/40 bg-transparent", "aria-hidden": "true" }),
-              /* @__PURE__ */ jsx("span", { className: "flex-1 text-body-md font-body-md text-on-surface-variant", children: source }),
-              /* @__PURE__ */ jsx("span", { className: "rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant", children: "Coming Soon" })
-            ] }, source))
+                /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary", children: "Phase 1" })
+              ] }, source)) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Planned Integrations" }),
+              /* @__PURE__ */ jsx("div", { className: "space-y-3", children: PLANNED_INTEGRATIONS.map((source) => /* @__PURE__ */ jsxs("div", { className: "flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-5 py-4 opacity-60", "aria-disabled": "true", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-outline-variant/40 bg-transparent", "aria-hidden": "true" }),
+                /* @__PURE__ */ jsx("span", { className: "flex-1 text-body-md font-body-md text-on-surface-variant", children: source }),
+                /* @__PURE__ */ jsx("span", { className: "rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant", children: "Coming Soon" })
+              ] }, source)) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Trade in Cars Agent is being designed to search connected marketplaces, dealer sources and trusted public vehicle listings. Some integrations will be released in later platform phases." }) })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8", children: [

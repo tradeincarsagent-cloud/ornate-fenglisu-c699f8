@@ -18,8 +18,20 @@ const SEARCH_FREQUENCIES = [
   { label: 'Daily', value: 'daily' },
 ] as const
 
-const ACTIVE_SOURCES = ['Auto Trader', 'Dealer Network'] as const
-const COMING_SOON_SOURCES = ['Facebook Marketplace', 'Auctions', 'Private Sellers'] as const
+const PHASE_ONE_SOURCES = [
+  'Auto Trader',
+  'Dealer Network',
+  'UK Public Vehicle Listings',
+  'Dealer Websites',
+  'Classified Vehicle Websites',
+] as const
+const PLANNED_INTEGRATIONS = [
+  'Facebook Marketplace',
+  'Auctions',
+  'Private Sellers',
+  'Trade Feeds',
+  'Vehicle History Providers',
+] as const
 
 function CheckIcon() {
   return (
@@ -38,20 +50,7 @@ function SearchBuilderPage() {
   const [maxBudget, setMaxBudget] = useState('')
   const [maxMileage, setMaxMileage] = useState('')
   const [minProfit, setMinProfit] = useState('')
-  const [activeSources, setActiveSources] = useState<Set<string>>(new Set(['Auto Trader', 'Dealer Network']))
   const [frequency, setFrequency] = useState<string | null>(null)
-
-  const toggleSource = (source: string) => {
-    setActiveSources((prev) => {
-      const next = new Set(prev)
-      if (next.has(source)) {
-        next.delete(source)
-      } else {
-        next.add(source)
-      }
-      return next
-    })
-  }
 
   return (
     <div className="min-h-screen bg-background text-on-surface">
@@ -221,51 +220,50 @@ function SearchBuilderPage() {
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">3</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Search Sources</h2>
             </div>
-            <div className="space-y-3">
-              {/* Active sources */}
-              {ACTIVE_SOURCES.map((source) => {
-                const checked = activeSources.has(source)
-                return (
-                  <label
-                    key={source}
-                    className="flex cursor-pointer items-center gap-4 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-4 transition-colors hover:border-primary/40"
-                  >
-                    <span
-                      className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 transition-colors ${
-                        checked ? 'border-primary bg-primary text-on-primary' : 'border-outline-variant/60 bg-transparent'
-                      }`}
-                      aria-hidden="true"
+            <div className="space-y-6">
+              <div>
+                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Available / Phase 1</p>
+                <div className="space-y-3">
+                  {PHASE_ONE_SOURCES.map((source) => (
+                    <div
+                      key={source}
+                      className="flex items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-5 py-4 shadow-sm shadow-primary/5"
                     >
-                      {checked && <CheckIcon />}
-                    </span>
-                    <input
-                      type="checkbox"
-                      className="sr-only"
-                      checked={checked}
-                      onChange={() => toggleSource(source)}
-                      aria-label={source}
-                    />
-                    <span className="flex-1 text-body-md font-body-md text-on-surface">{source}</span>
-                    <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary">Active</span>
-                  </label>
-                )
-              })}
-
-              {/* Coming soon sources */}
-              {COMING_SOON_SOURCES.map((source) => (
-                <div
-                  key={source}
-                  className="flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-5 py-4 opacity-50"
-                  aria-disabled="true"
-                >
-                  <span
-                    className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-outline-variant/40 bg-transparent"
-                    aria-hidden="true"
-                  />
-                  <span className="flex-1 text-body-md font-body-md text-on-surface-variant">{source}</span>
-                  <span className="rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant">Coming Soon</span>
+                      <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-primary bg-primary text-on-primary" aria-hidden="true">
+                        <CheckIcon />
+                      </span>
+                      <span className="flex-1 text-body-md font-body-md text-on-surface">{source}</span>
+                      <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary">Phase 1</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              <div>
+                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Planned Integrations</p>
+                <div className="space-y-3">
+                  {PLANNED_INTEGRATIONS.map((source) => (
+                    <div
+                      key={source}
+                      className="flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-5 py-4 opacity-60"
+                      aria-disabled="true"
+                    >
+                      <span
+                        className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-outline-variant/40 bg-transparent"
+                        aria-hidden="true"
+                      />
+                      <span className="flex-1 text-body-md font-body-md text-on-surface-variant">{source}</span>
+                      <span className="rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant">Coming Soon</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+                <p className="text-body-md font-body-md text-on-surface-variant">
+                  Trade in Cars Agent is being designed to search connected marketplaces, dealer sources and trusted public vehicle listings. Some integrations will be released in later platform phases.
+                </p>
+              </div>
             </div>
           </section>
 
