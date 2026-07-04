@@ -156,24 +156,20 @@ function DashboardPage() {
         <div className="flex min-h-screen flex-1 flex-col">
           {/* ── Header ──────────────────────────────────────────────────── */}
           <header className="border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
-            {/* Mobile: hamburger + centred logo */}
+            {/* Mobile: logo left, hamburger right */}
             <div className="flex items-center justify-between lg:hidden">
+              <div className="logo-bezel w-44 rounded-lg p-1">
+                <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+              </div>
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high"
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high"
                 aria-label="Open navigation menu"
                 aria-expanded={sidebarOpen}
                 aria-controls="mobile-sidebar"
               >
                 <HamburgerIcon />
               </button>
-              <div className="flex flex-1 justify-center px-3">
-                <div className="logo-bezel w-44 rounded-lg p-1">
-                  <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
-                </div>
-              </div>
-              {/* Spacer keeps logo visually centred */}
-              <div className="h-10 w-10" aria-hidden="true" />
             </div>
             {/* Desktop: original label */}
             <p className="hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block">
@@ -189,16 +185,17 @@ function DashboardPage() {
             <section className="mb-10 space-y-8">
               <div>
                 <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Morning Intelligence Brief</h2>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                  {summaryCards.map((card) => (
+                <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-5">
+                  {summaryCards.map((card, index) => (
                     <article
                       key={card.title}
-                      className="dashboard-border flex min-h-[152px] flex-col justify-between rounded-xl bg-surface-container-high p-5 text-center"
+                      className={`dashboard-border flex flex-col justify-between rounded-xl bg-surface-container-high text-center min-h-20 p-3 md:min-h-[152px] md:p-5${index === 4 ? ' col-span-2 mx-auto w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
                     >
-                      <p className="text-body-md font-body-md text-on-surface-variant">
-                        {card.icon} {card.title}
+                      <p className="text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md">
+                        <span className="block">{card.icon}</span>
+                        <span>{card.title}</span>
                       </p>
-                      <p className="text-headline-lg font-headline-lg text-primary">{card.value}</p>
+                      <p className="mt-1 text-2xl font-bold text-primary md:text-headline-lg md:font-headline-lg md:mt-0">{card.value}</p>
                     </article>
                   ))}
                 </div>
