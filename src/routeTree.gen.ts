@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SearchBuilderRouteImport } from './routes/search-builder'
 import { Route as OpportunityRouteImport } from './routes/opportunity'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SearchBuilderRoute = SearchBuilderRouteImport.update({
+  id: '/search-builder',
+  path: '/search-builder',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OpportunityRoute = OpportunityRouteImport.update({
   id: '/opportunity',
   path: '/opportunity',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
+  '/search-builder': typeof SearchBuilderRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
+  '/search-builder': typeof SearchBuilderRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
+  '/search-builder': typeof SearchBuilderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/opportunity'
+  fullPaths: '/' | '/dashboard' | '/opportunity' | '/search-builder'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/opportunity'
-  id: '__root__' | '/' | '/dashboard' | '/opportunity'
+  to: '/' | '/dashboard' | '/opportunity' | '/search-builder'
+  id: '__root__' | '/' | '/dashboard' | '/opportunity' | '/search-builder'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   OpportunityRoute: typeof OpportunityRoute
+  SearchBuilderRoute: typeof SearchBuilderRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/search-builder': {
+      id: '/search-builder'
+      path: '/search-builder'
+      fullPath: '/search-builder'
+      preLoaderRoute: typeof SearchBuilderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/opportunity': {
       id: '/opportunity'
       path: '/opportunity'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   OpportunityRoute: OpportunityRoute,
+  SearchBuilderRoute: SearchBuilderRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

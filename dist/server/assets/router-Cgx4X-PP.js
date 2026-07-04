@@ -1,6 +1,6 @@
 import { createRootRoute, HeadContent, Scripts, createFileRoute, lazyRouteComponent, createRouter } from "@tanstack/react-router";
 import { jsxs, jsx } from "react/jsx-runtime";
-const Route$3 = createRootRoute({
+const Route$4 = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -131,6 +131,10 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
+const $$splitComponentImporter$3 = () => import("./search-builder-Bp1kUlmn.js");
+const Route$3 = createFileRoute("/search-builder")({
+  component: lazyRouteComponent($$splitComponentImporter$3, "component")
+});
 const $$splitComponentImporter$2 = () => import("./opportunity-CfwbvRit.js");
 const Route$2 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
@@ -139,31 +143,37 @@ const $$splitComponentImporter$1 = () => import("./dashboard-Bw3WlL8s.js");
 const Route$1 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-B7mh6HVq.js");
+const $$splitComponentImporter = () => import("./index-DNiIfxvU.js");
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
+});
+const SearchBuilderRoute = Route$3.update({
+  id: "/search-builder",
+  path: "/search-builder",
+  getParentRoute: () => Route$4
 });
 const OpportunityRoute = Route$2.update({
   id: "/opportunity",
   path: "/opportunity",
-  getParentRoute: () => Route$3
+  getParentRoute: () => Route$4
 });
 const DashboardRoute = Route$1.update({
   id: "/dashboard",
   path: "/dashboard",
-  getParentRoute: () => Route$3
+  getParentRoute: () => Route$4
 });
 const IndexRoute = Route.update({
   id: "/",
   path: "/",
-  getParentRoute: () => Route$3
+  getParentRoute: () => Route$4
 });
 const rootRouteChildren = {
   IndexRoute,
   DashboardRoute,
-  OpportunityRoute
+  OpportunityRoute,
+  SearchBuilderRoute
 };
-const routeTree = Route$3._addFileChildren(rootRouteChildren)._addFileTypes();
+const routeTree = Route$4._addFileChildren(rootRouteChildren)._addFileTypes();
 const getRouter = () => {
   const router = createRouter({
     routeTree,

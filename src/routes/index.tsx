@@ -801,6 +801,7 @@ function LandingPage() {
               {/* TODO: Remove preview links before production launch. */}
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm" href="/dashboard">Dealer Command Centre Preview</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm" href="/opportunity">AI Buying Report Preview</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm" href="/search-builder">AI Search Builder Preview</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">API Docs</a>
             </div>
             <div className="flex flex-col gap-4">
