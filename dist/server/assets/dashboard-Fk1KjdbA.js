@@ -86,11 +86,11 @@ function DashboardPage() {
       /* @__PURE__ */ jsxs("main", { className: "flex-1 px-6 py-8 md:px-10", children: [
         /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-primary", children: "Dealer Command Centre" }),
         /* @__PURE__ */ jsx("p", { className: "mb-8 text-headline-md font-headline-md text-on-surface", children: "Good Morning, Jonathan" }),
-        /* @__PURE__ */ jsxs("section", { className: "mb-8 grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] xl:items-start", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-10 space-y-8", children: [
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "Morning Intelligence Brief" }),
-            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5", children: summaryCards.map((card) => /* @__PURE__ */ jsxs("article", { className: "dashboard-border rounded-xl bg-surface-container-high p-5", children: [
-              /* @__PURE__ */ jsxs("p", { className: "mb-3 text-body-md font-body-md text-on-surface-variant", children: [
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5", children: summaryCards.map((card) => /* @__PURE__ */ jsxs("article", { className: "dashboard-border flex min-h-[152px] flex-col justify-between rounded-xl bg-surface-container-high p-5 text-center", children: [
+              /* @__PURE__ */ jsxs("p", { className: "text-body-md font-body-md text-on-surface-variant", children: [
                 card.icon,
                 " ",
                 card.title
@@ -98,7 +98,7 @@ function DashboardPage() {
               /* @__PURE__ */ jsx("p", { className: "text-headline-lg font-headline-lg text-primary", children: card.value })
             ] }, card.title)) })
           ] }),
-          /* @__PURE__ */ jsx("article", { className: "dashboard-border rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
+          /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
             /* @__PURE__ */ jsxs("div", { className: "radar-container", children: [
               /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
               /* @__PURE__ */ jsxs("div", { className: "radar-scope", children: [
@@ -124,7 +124,7 @@ function DashboardPage() {
                 } })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-4", children: [
+            /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-4 text-center", children: [
               /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
               /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
                 /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status:" }),
