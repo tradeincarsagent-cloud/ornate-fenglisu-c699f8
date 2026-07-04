@@ -1,11 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
+import { PlatformShell } from '../components/PlatformShell'
 
 export const Route = createFileRoute('/opportunity')({
   component: OpportunityPage,
 })
 
-const LOGO_SRC =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS'
 const VEHICLE_IMAGE_SRC = '/placeholder.png'
 
 const VEHICLE_OPPORTUNITY_ID = 'TCA-2026-00421'
@@ -38,27 +37,39 @@ function OpportunityPage() {
   ]
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-background px-4 py-8 text-on-surface sm:px-6 md:px-10">
+    <PlatformShell
+      navItems={[
+        { label: 'Dealer Command Centre', href: '/dashboard' },
+        { label: 'AI Search Builder', href: '/search-builder' },
+        { label: 'AI Buying Report', href: '/opportunity', active: true },
+      ]}
+    >
       <div className="mx-auto w-full max-w-container-max space-y-6 overflow-x-hidden">
         <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
-          {/* Logo + Return to Dashboard row */}
-          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <div className="logo-bezel w-36 rounded-lg p-1 sm:w-44">
-              <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+            <div>
+              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Trade In Cars Agent</p>
             </div>
-            <a
-              href="/dashboard"
-              className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary sm:w-auto"
-            >
-              Return to Dashboard
-            </a>
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <Link
+                to="/dashboard"
+                className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary sm:w-auto"
+              >
+                Return to Dashboard
+              </Link>
+              <Link
+                to="/search-builder"
+                className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-body-md font-body-md text-on-primary transition-all hover:brightness-110 sm:w-auto"
+              >
+                Create New AI Search
+              </Link>
+            </div>
           </div>
 
-          {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mt-4 flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant">
-            <a href="/dashboard" className="transition-colors hover:text-primary">
+            <Link to="/dashboard" className="transition-colors hover:text-primary">
               Dealer Command Centre
-            </a>
+            </Link>
             <ChevronRightIcon />
             <span className="text-on-surface">AI Buying Report</span>
           </nav>
@@ -334,18 +345,24 @@ function OpportunityPage() {
             <button className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
               Contact Seller
             </button>
-            <a
-              href="/dashboard"
+            <Link
+              to="/dashboard"
               className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface"
             >
               Return to Dashboard
-            </a>
+            </Link>
+            <Link
+              to="/search-builder"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-5 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
+            >
+              Create New AI Search
+            </Link>
             <button className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
               Explain Why
             </button>
           </div>
         </section>
       </div>
-    </main>
+    </PlatformShell>
   )
 }
