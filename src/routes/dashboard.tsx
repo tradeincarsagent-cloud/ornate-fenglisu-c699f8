@@ -5,6 +5,45 @@ export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
 })
 
+const LOGO_SRC =
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS'
+
+function HamburgerIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  )
+}
+
+function CloseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  )
+}
+
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      style={{ transition: 'transform 0.2s ease', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  )
+}
+
 function DashboardPage() {
   const summaryCards = [
     { icon: '🚗', title: 'New Vehicle Opportunities', value: '8' },
@@ -14,20 +53,25 @@ function DashboardPage() {
     { icon: '❤️', title: 'Saved Vehicles Updated', value: '5' },
   ]
   const recentOpportunities = [
-    { vehicle: 'Audi RS5 Sportback', source: 'Auto Trader', profit: '£3,850', priority: 'High' },
-    { vehicle: 'Range Rover Velar', source: 'PistonHeads', profit: '£2,400', priority: 'Medium' },
-    { vehicle: 'Mercedes A45 AMG', source: 'Motorway', profit: '£3,120', priority: 'High' },
-    { vehicle: 'Volkswagen Golf R', source: 'eBay Motors', profit: '£1,980', priority: 'Low' },
-    { vehicle: 'Porsche Macan S', source: 'Auto Trader', profit: '£4,450', priority: 'High' },
+    { vehicle: 'Audi RS5 Sportback', source: 'Auto Trader', price: '£37,500', profit: '£3,850', priority: 'High', confidence: '94%' },
+    { vehicle: 'Range Rover Velar', source: 'PistonHeads', price: '£29,950', profit: '£2,400', priority: 'Medium', confidence: '78%' },
+    { vehicle: 'Mercedes A45 AMG', source: 'Motorway', price: '£34,750', profit: '£3,120', priority: 'High', confidence: '91%' },
+    { vehicle: 'Volkswagen Golf R', source: 'eBay Motors', price: '£24,200', profit: '£1,980', priority: 'Low', confidence: '65%' },
+    { vehicle: 'Porsche Macan S', source: 'Auto Trader', price: '£42,000', profit: '£4,450', priority: 'High', confidence: '97%' },
   ]
   const activeSearches = [
     { name: 'Performance Saloons (2019+)', matches: '14', updated: '3 mins ago' },
     { name: 'SUVs under £28k', matches: '9', updated: '11 mins ago' },
     { name: 'Low-mileage hybrids', matches: '6', updated: '19 mins ago' },
   ]
+
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false)
   const [aiSearchLive, setAiSearchLive] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [expandedSearches, setExpandedSearches] = useState<Record<number, boolean>>(
+    () => Object.fromEntries(activeSearches.map((_, i) => [i, true])),
+  )
 
   useEffect(() => {
     if (!aiSearchLive) return
@@ -45,17 +89,61 @@ function DashboardPage() {
     return () => clearInterval(scanInterval)
   }, [recentOpportunities.length, aiSearchLive])
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSidebarOpen(false)
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [])
+
+  const toggleSearch = (index: number) => {
+    setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
+  }
+
   return (
     <div className="min-h-screen bg-background text-on-surface">
+      {/* ── Mobile sidebar backdrop ──────────────────────────────────────── */}
+      <div
+        className={`fixed inset-0 z-40 bg-black/70 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${sidebarOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        onClick={() => setSidebarOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* ── Mobile sidebar drawer ────────────────────────────────────────── */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        aria-label="Navigation menu"
+        aria-hidden={!sidebarOpen}
+      >
+        <div className="mb-6 flex items-center justify-between">
+          <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Menu</span>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high"
+            aria-label="Close menu"
+          >
+            <CloseIcon />
+          </button>
+        </div>
+        <div className="mb-8">
+          <div className="logo-bezel rounded-lg p-1">
+            <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+          </div>
+        </div>
+        <nav className="space-y-2">
+          <div className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary">
+            Dealer Command Centre
+          </div>
+        </nav>
+      </aside>
+
       <div className="mx-auto flex min-h-screen max-w-container-max">
+        {/* ── Desktop sidebar (unchanged) ──────────────────────────────── */}
         <aside className="hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col">
           <div className="mb-8">
             <div className="logo-bezel rounded-lg p-1">
-              <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS"
-                alt="Trade In Cars Agent Logo"
-                className="w-full h-auto object-contain logo-blend"
-              />
+              <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
             </div>
           </div>
           <nav className="space-y-2">
@@ -66,8 +154,29 @@ function DashboardPage() {
         </aside>
 
         <div className="flex min-h-screen flex-1 flex-col">
+          {/* ── Header ──────────────────────────────────────────────────── */}
           <header className="border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
-            <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
+            {/* Mobile: hamburger + centred logo */}
+            <div className="flex items-center justify-between lg:hidden">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high"
+                aria-label="Open navigation menu"
+                aria-expanded={sidebarOpen}
+                aria-controls="mobile-sidebar"
+              >
+                <HamburgerIcon />
+              </button>
+              <div className="flex flex-1 justify-center px-3">
+                <div className="logo-bezel w-44 rounded-lg p-1">
+                  <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+                </div>
+              </div>
+              {/* Spacer keeps logo visually centred */}
+              <div className="h-10 w-10" aria-hidden="true" />
+            </div>
+            {/* Desktop: original label */}
+            <p className="hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block">
               Trade in Cars Agent
             </p>
           </header>
@@ -76,6 +185,7 @@ function DashboardPage() {
             <h1 className="mb-2 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
             <p className="mb-8 text-headline-md font-headline-md text-on-surface">Good Morning, Jonathan</p>
 
+            {/* ── Morning Intelligence ─────────────────────────────────── */}
             <section className="mb-10 space-y-8">
               <div>
                 <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Morning Intelligence Brief</h2>
@@ -94,6 +204,7 @@ function DashboardPage() {
                 </div>
               </div>
 
+              {/* ── AI Search Radar (unchanged) ──────────────────────── */}
               <article className="dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8">
                 <div className={`radar-glass-panel ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
                   <div className="radar-container">
@@ -164,12 +275,15 @@ function DashboardPage() {
               </article>
             </section>
 
+            {/* ── Recent Opportunities ─────────────────────────────────── */}
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
               <p className="mb-6 text-body-md font-body-md text-on-surface-variant">
                 "Your latest AI search results will appear here."
               </p>
-              <div className="overflow-x-auto">
+
+              {/* Desktop table (unchanged, hidden on mobile) */}
+              <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[640px] border-separate border-spacing-y-2 text-left">
                   <thead>
                     <tr className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
@@ -196,10 +310,61 @@ function DashboardPage() {
                   </tbody>
                 </table>
               </div>
+
+              {/* Mobile cards (hidden on md+) */}
+              <div className="space-y-3 md:hidden">
+                {recentOpportunities.map((opportunity, index) => (
+                  <article
+                    key={opportunity.vehicle}
+                    className={`rounded-xl bg-surface-container-high p-4 transition-all ${
+                      highlightedOpportunity === index ? 'opportunity-row-highlight' : ''
+                    }`}
+                  >
+                    <div className="mb-3">
+                      <p className="text-body-md font-body-md font-medium text-on-surface">{opportunity.vehicle}</p>
+                      <p className="text-sm text-on-surface-variant">{opportunity.source}</p>
+                    </div>
+                    <div className="mb-4 grid grid-cols-3 gap-2 rounded-lg bg-surface-container p-3">
+                      <div className="text-center">
+                        <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Price</p>
+                        <p className="text-sm font-medium text-on-surface">{opportunity.price}</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Profit</p>
+                        <p className="text-sm font-medium text-primary">{opportunity.profit}</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Confidence</p>
+                        <p className="text-sm font-medium text-on-surface">{opportunity.confidence}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                        Review
+                      </button>
+                      <button className="flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
+                        Save
+                      </button>
+                      <button className="flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
+                        Dismiss
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </section>
 
+            {/* ── AI Recommendation ────────────────────────────────────── */}
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
               <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">AI Recommendation of the Day</h2>
+
+              {/* Mobile premium badge */}
+              <div className="mb-5 md:hidden">
+                <span className="rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
+                  ⭐ Today's AI Pick
+                </span>
+              </div>
+
               <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
@@ -228,27 +393,66 @@ function DashboardPage() {
                   <p className="text-body-md font-body-md text-on-surface-variant">Located only 42 miles away.</p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-4">
-                <button className="rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary hover:opacity-90 transition-opacity">
+
+              {/* Buttons: full-width stacked on mobile, inline on md+ */}
+              <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4">
+                <button className="w-full rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto">
                   Review Opportunity
                 </button>
-                <button className="rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface hover:border-primary/40 transition-colors">
+                <button className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto">
                   Save Vehicle
                 </button>
               </div>
             </section>
 
+            {/* ── My Active Searches ───────────────────────────────────── */}
             <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">My Active Searches</h2>
               <div className="space-y-3">
-                {activeSearches.map((search) => (
-                  <article
-                    key={search.name}
-                    className="flex flex-col gap-2 rounded-xl bg-surface-container-high p-4 md:flex-row md:items-center md:justify-between"
-                  >
-                    <p className="text-body-md font-body-md text-on-surface">{search.name}</p>
-                    <p className="text-body-md font-body-md text-primary">{search.matches} matches</p>
-                    <p className="text-body-md font-body-md text-on-surface-variant">Updated {search.updated}</p>
+                {activeSearches.map((search, index) => (
+                  <article key={search.name} className="rounded-xl bg-surface-container-high p-4">
+                    {/* Desktop layout (unchanged) */}
+                    <div className="hidden gap-2 md:flex md:flex-row md:items-center md:justify-between">
+                      <p className="text-body-md font-body-md text-on-surface">{search.name}</p>
+                      <p className="text-body-md font-body-md text-primary">{search.matches} matches</p>
+                      <p className="text-body-md font-body-md text-on-surface-variant">Updated {search.updated}</p>
+                    </div>
+
+                    {/* Mobile layout: collapsible card with action buttons */}
+                    <div className="md:hidden">
+                      <button
+                        onClick={() => toggleSearch(index)}
+                        className="flex w-full items-center justify-between gap-3"
+                        aria-expanded={expandedSearches[index]}
+                      >
+                        <div className="min-w-0 text-left">
+                          <p className="text-body-md font-body-md text-on-surface">{search.name}</p>
+                          <p className="mt-0.5 text-sm text-primary">
+                            {search.matches} matches · Updated {search.updated}
+                          </p>
+                        </div>
+                        <span className="flex-shrink-0 text-on-surface-variant">
+                          <ChevronIcon open={expandedSearches[index]} />
+                        </span>
+                      </button>
+
+                      {expandedSearches[index] && (
+                        <div className="mt-3 grid grid-cols-2 gap-2">
+                          <button className="rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                            Run Now
+                          </button>
+                          <button className="rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
+                            Edit
+                          </button>
+                          <button className="rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
+                            Pause
+                          </button>
+                          <button className="rounded-lg border border-red-500/30 bg-surface-container py-2.5 text-sm font-medium text-red-400 transition-colors hover:border-red-500/50">
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </article>
                 ))}
               </div>
