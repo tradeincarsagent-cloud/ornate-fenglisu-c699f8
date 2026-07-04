@@ -162,8 +162,8 @@ function DashboardPage() {
                 /* @__PURE__ */ jsx("p", { className: "text-headline-lg font-headline-lg text-primary", children: card.value })
               ] }, card.title)) })
             ] }),
-            /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
-              /* @__PURE__ */ jsxs("div", { className: "radar-container", children: [
+            /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
+              /* @__PURE__ */ jsxs("div", { className: "radar-container order-1", children: [
                 /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
                 /* @__PURE__ */ jsxs("div", { className: "radar-scope", children: [
                   /* @__PURE__ */ jsx("div", { className: "radar-ring radar-ring-1" }),
@@ -188,24 +188,8 @@ function DashboardPage() {
                   } })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-4 text-center", children: [
-                /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
-                /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
-                  /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status:" }),
-                  /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: aiSearchLive ? "🟢 Searching" : "⏸ Paused" }),
-                  /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Sources Active:" }),
-                  /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "5" }),
-                  /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicles Checked Today:" }),
-                  /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "12,487" }),
-                  /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Matches Found:" }),
-                  /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "27" }),
-                  /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "High Priority Matches:" }),
-                  /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "3" }),
-                  /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Last Scan:" }),
-                  /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "12 seconds ago" })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: `ai-switch-panel${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
+              /* @__PURE__ */ jsx("h3", { className: "order-2 mt-8 text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
+              /* @__PURE__ */ jsxs("div", { className: `ai-switch-panel order-3 md:order-4${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
                   setAiSearchLive((v) => !v);
@@ -226,6 +210,20 @@ function DashboardPage() {
                     /* @__PURE__ */ jsx("span", { className: "ai-switch-rocker-label", children: "PAUSED" })
                   ] })
                 ] })
+              ] }),
+              /* @__PURE__ */ jsxs("dl", { className: "order-4 md:order-3 mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
+                /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status:" }),
+                /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: aiSearchLive ? "🟢 Searching" : "⏸ Paused" }),
+                /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Sources Active:" }),
+                /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "5" }),
+                /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicles Checked Today:" }),
+                /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "12,487" }),
+                /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Matches Found:" }),
+                /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "27" }),
+                /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "High Priority Matches:" }),
+                /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "3" }),
+                /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Last Scan:" }),
+                /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "12 seconds ago" })
               ] })
             ] }) })
           ] }),
