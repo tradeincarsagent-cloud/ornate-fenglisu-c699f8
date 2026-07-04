@@ -141,9 +141,8 @@ function DashboardPage() {
       /* @__PURE__ */ jsxs("div", { className: "flex min-h-screen flex-1 flex-col", children: [
         /* @__PURE__ */ jsxs("header", { className: "border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between lg:hidden", children: [
-            /* @__PURE__ */ jsx("button", { onClick: () => setSidebarOpen(true), className: "flex h-10 w-10 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high", "aria-label": "Open navigation menu", "aria-expanded": sidebarOpen, "aria-controls": "mobile-sidebar", children: /* @__PURE__ */ jsx(HamburgerIcon, {}) }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-1 justify-center px-3", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel w-44 rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }) }),
-            /* @__PURE__ */ jsx("div", { className: "h-10 w-10", "aria-hidden": "true" })
+            /* @__PURE__ */ jsx("div", { className: "logo-bezel w-44 rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }),
+            /* @__PURE__ */ jsx("button", { onClick: () => setSidebarOpen(true), className: "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high", "aria-label": "Open navigation menu", "aria-expanded": sidebarOpen, "aria-controls": "mobile-sidebar", children: /* @__PURE__ */ jsx(HamburgerIcon, {}) })
           ] }),
           /* @__PURE__ */ jsx("p", { className: "hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block", children: "Trade in Cars Agent" })
         ] }),
@@ -153,13 +152,12 @@ function DashboardPage() {
           /* @__PURE__ */ jsxs("section", { className: "mb-10 space-y-8", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "Morning Intelligence Brief" }),
-              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5", children: summaryCards.map((card) => /* @__PURE__ */ jsxs("article", { className: "dashboard-border flex min-h-[152px] flex-col justify-between rounded-xl bg-surface-container-high p-5 text-center", children: [
-                /* @__PURE__ */ jsxs("p", { className: "text-body-md font-body-md text-on-surface-variant", children: [
-                  card.icon,
-                  " ",
-                  card.title
+              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-5", children: summaryCards.map((card, index) => /* @__PURE__ */ jsxs("article", { className: `dashboard-border flex flex-col justify-between rounded-xl bg-surface-container-high text-center min-h-20 p-3 md:min-h-[152px] md:p-5${index === 4 ? " col-span-2 mx-auto w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0" : ""}`, children: [
+                /* @__PURE__ */ jsxs("p", { className: "text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md", children: [
+                  /* @__PURE__ */ jsx("span", { className: "block", children: card.icon }),
+                  /* @__PURE__ */ jsx("span", { children: card.title })
                 ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-headline-lg font-headline-lg text-primary", children: card.value })
+                /* @__PURE__ */ jsx("p", { className: "mt-1 text-2xl font-bold text-primary md:text-headline-lg md:font-headline-lg md:mt-0", children: card.value })
               ] }, card.title)) })
             ] }),
             /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
