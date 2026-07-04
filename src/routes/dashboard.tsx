@@ -1,31 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { PlatformShell } from '../components/PlatformShell'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
 })
-
-const LOGO_SRC =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS'
-
-function HamburgerIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  )
-}
-
-function CloseIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  )
-}
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -68,7 +47,6 @@ function DashboardPage() {
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false)
   const [aiSearchLive, setAiSearchLive] = useState(true)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [expandedSearches, setExpandedSearches] = useState<Record<number, boolean>>(
     () => Object.fromEntries(activeSearches.map((_, i) => [i, true])),
   )
@@ -89,97 +67,27 @@ function DashboardPage() {
     return () => clearInterval(scanInterval)
   }, [recentOpportunities.length, aiSearchLive])
 
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSidebarOpen(false)
-    }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [])
-
   const toggleSearch = (index: number) => {
     setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
   }
 
   return (
-    <div className="min-h-screen bg-background text-on-surface">
-      {/* ── Mobile sidebar backdrop ──────────────────────────────────────── */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/70 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${sidebarOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
-        onClick={() => setSidebarOpen(false)}
-        aria-hidden="true"
-      />
-
-      {/* ── Mobile sidebar drawer ────────────────────────────────────────── */}
-      <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
-        aria-label="Navigation menu"
-        aria-hidden={!sidebarOpen}
-      >
-        <div className="mb-6 flex items-center justify-between">
-          <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Menu</span>
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high"
-            aria-label="Close menu"
-          >
-            <CloseIcon />
-          </button>
-        </div>
-        <div className="mb-8">
-          <div className="logo-bezel rounded-lg p-1">
-            <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
-          </div>
-        </div>
-        <nav className="space-y-2">
-          <div className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary">
-            Dealer Command Centre
-          </div>
-        </nav>
-      </aside>
-
-      <div className="mx-auto flex min-h-screen max-w-container-max">
-        {/* ── Desktop sidebar (unchanged) ──────────────────────────────── */}
-        <aside className="hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col">
-          <div className="mb-8">
-            <div className="logo-bezel rounded-lg p-1">
-              <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
-            </div>
-          </div>
-          <nav className="space-y-2">
-            <div className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary">
-              Dealer Command Centre
-            </div>
-          </nav>
-        </aside>
-
-        <div className="flex min-h-screen flex-1 flex-col">
-          {/* ── Header ──────────────────────────────────────────────────── */}
-          <header className="border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
-            {/* Mobile: logo left, hamburger right */}
-            <div className="flex items-center justify-between lg:hidden">
-              <div className="logo-bezel w-44 rounded-lg p-1">
-                <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
-              </div>
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high"
-                aria-label="Open navigation menu"
-                aria-expanded={sidebarOpen}
-                aria-controls="mobile-sidebar"
-              >
-                <HamburgerIcon />
-              </button>
-            </div>
-            {/* Desktop: original label */}
-            <p className="hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block">
-              Trade in Cars Agent
-            </p>
-          </header>
-
-          <main className="flex-1 px-6 py-8 md:px-10">
+    <PlatformShell
+      navItems={[
+        { label: 'Dealer Command Centre', href: '/dashboard', active: true },
+        { label: 'AI Search Builder', href: '/search-builder' },
+      ]}
+    >
             <h1 className="mb-2 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
             <p className="mb-8 text-headline-md font-headline-md text-on-surface">Good Morning, Jonathan</p>
+            <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                to="/search-builder"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
+              >
+                Create New AI Search
+              </Link>
+            </div>
 
             {/* ── Morning Intelligence ─────────────────────────────────── */}
             <section className="mb-10 space-y-8">
@@ -287,6 +195,7 @@ function DashboardPage() {
                       <th className="px-4 py-2">Source</th>
                       <th className="px-4 py-2">Estimated Profit</th>
                       <th className="px-4 py-2">Priority</th>
+                      <th className="px-4 py-2">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -300,7 +209,15 @@ function DashboardPage() {
                         <td className="rounded-l-xl px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.vehicle}</td>
                         <td className="px-4 py-3 text-body-md font-body-md text-on-surface-variant">{opportunity.source}</td>
                         <td className="px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.profit}</td>
-                        <td className="rounded-r-xl px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.priority}</td>
+                        <td className="px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.priority}</td>
+                        <td className="rounded-r-xl px-4 py-3">
+                          <Link
+                            to="/opportunity"
+                            className="inline-flex min-h-10 items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-on-primary transition-opacity hover:opacity-90"
+                          >
+                            Review
+                          </Link>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -335,9 +252,12 @@ function DashboardPage() {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                      <Link
+                        to="/opportunity"
+                        className="flex flex-1 items-center justify-center rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
+                      >
                         Review
-                      </button>
+                      </Link>
                       <button className="flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
                         Save
                       </button>
@@ -392,9 +312,12 @@ function DashboardPage() {
 
               {/* Buttons: full-width stacked on mobile, inline on md+ */}
               <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4">
-                <button className="w-full rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto">
+                <Link
+                  to="/opportunity"
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto"
+                >
                   Review Opportunity
-                </button>
+                </Link>
                 <button className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto">
                   Save Vehicle
                 </button>
@@ -453,9 +376,6 @@ function DashboardPage() {
                 ))}
               </div>
             </section>
-          </main>
-        </div>
-      </div>
-    </div>
+    </PlatformShell>
   )
 }

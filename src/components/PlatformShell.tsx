@@ -1,0 +1,135 @@
+import { Link } from '@tanstack/react-router'
+import { type ReactNode, useEffect, useState } from 'react'
+
+const LOGO_SRC =
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS'
+
+type PlatformNavItem = {
+  label: string
+  href: string
+  active?: boolean
+}
+
+function HamburgerIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  )
+}
+
+function CloseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  )
+}
+
+function PlatformNav({ items, onNavigate }: { items: PlatformNavItem[]; onNavigate?: () => void }) {
+  return (
+    <nav className="space-y-2">
+      {items.map((item) =>
+        item.active ? (
+          <div key={item.href} className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary">
+            {item.label}
+          </div>
+        ) : (
+          <Link
+            key={item.href}
+            to={item.href}
+            onClick={onNavigate}
+            className="block rounded-lg border border-transparent px-4 py-3 text-body-md font-body-md text-on-surface-variant transition-colors hover:border-primary/20 hover:bg-surface-container-high hover:text-on-surface"
+          >
+            {item.label}
+          </Link>
+        ),
+      )}
+    </nav>
+  )
+}
+
+export function PlatformShell({ children, navItems }: { children: ReactNode; navItems: PlatformNavItem[] }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  useEffect(() => {
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSidebarOpen(false)
+    }
+
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [])
+
+  return (
+    <div className="min-h-screen bg-background text-on-surface">
+      <div
+        className={`fixed inset-0 z-40 bg-black/70 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${sidebarOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        onClick={() => setSidebarOpen(false)}
+        aria-hidden="true"
+      />
+
+      <aside
+        id="mobile-sidebar"
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        aria-label="Navigation menu"
+        aria-hidden={!sidebarOpen}
+      >
+        <div className="mb-6 flex items-center justify-between">
+          <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Menu</span>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high"
+            aria-label="Close menu"
+          >
+            <CloseIcon />
+          </button>
+        </div>
+        <div className="mb-8">
+          <div className="logo-bezel rounded-lg p-1">
+            <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+          </div>
+        </div>
+        <PlatformNav items={navItems} onNavigate={() => setSidebarOpen(false)} />
+      </aside>
+
+      <div className="mx-auto flex min-h-screen max-w-container-max">
+        <aside className="hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col">
+          <div className="mb-8">
+            <div className="logo-bezel rounded-lg p-1">
+              <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+            </div>
+          </div>
+          <PlatformNav items={navItems} />
+        </aside>
+
+        <div className="flex min-h-screen flex-1 flex-col">
+          <header className="border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
+            <div className="flex items-center justify-between lg:hidden">
+              <div className="logo-bezel w-44 rounded-lg p-1">
+                <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+              </div>
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high"
+                aria-label="Open navigation menu"
+                aria-expanded={sidebarOpen}
+                aria-controls="mobile-sidebar"
+              >
+                <HamburgerIcon />
+              </button>
+            </div>
+            <p className="hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block">
+              Trade In Cars Agent
+            </p>
+          </header>
+
+          <main className="flex-1 px-6 py-8 md:px-10">{children}</main>
+        </div>
+      </div>
+    </div>
+  )
+}

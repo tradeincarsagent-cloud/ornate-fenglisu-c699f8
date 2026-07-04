@@ -1,12 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
+import { PlatformShell } from '../components/PlatformShell'
 
 export const Route = createFileRoute('/search-builder')({
   component: SearchBuilderPage,
 })
-
-const LOGO_SRC =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS'
 
 const VEHICLE_TYPES = ['Cars', 'Pick-ups', 'Vans & Light Commercials'] as const
 type VehicleType = (typeof VEHICLE_TYPES)[number]
@@ -51,25 +49,20 @@ function SearchBuilderPage() {
   const [maxMileage, setMaxMileage] = useState('')
   const [minProfit, setMinProfit] = useState('')
   const [frequency, setFrequency] = useState<string | null>(null)
+  const [missionCreated, setMissionCreated] = useState(false)
+
+  const selectedFrequency = SEARCH_FREQUENCIES.find((item) => item.value === frequency)?.label ?? 'Not selected'
+  const missionNameBase = [make.trim(), model.trim()].filter(Boolean).join(' ')
+  const missionName = missionNameBase || selectedVehicleType || 'Vehicle Search'
 
   return (
-    <div className="min-h-screen bg-background text-on-surface">
-      {/* ── Header ──────────────────────────────────────────────────────── */}
-      <header className="border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
-        <div className="mx-auto flex max-w-container-max items-center justify-between">
-          <div className="logo-bezel w-36 rounded-lg p-1 sm:w-44">
-            <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
-          </div>
-          <a
-            href="/dashboard"
-            className="flex items-center gap-2 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-2 text-body-md font-body-md text-on-surface-variant transition-colors hover:border-primary/40 hover:text-primary"
-          >
-            ← Dashboard
-          </a>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-container-max px-6 py-10 md:px-10">
+    <PlatformShell
+      navItems={[
+        { label: 'Dealer Command Centre', href: '/dashboard' },
+        { label: 'AI Search Builder', href: '/search-builder', active: true },
+      ]}
+    >
+      <div className="mx-auto max-w-container-max">
         {/* ── Page title ──────────────────────────────────────────────── */}
         <div className="mb-10">
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Builder</p>
@@ -307,17 +300,51 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 text-center md:p-10">
             <button
               type="button"
+              onClick={() => setMissionCreated(true)}
               className="mx-auto flex w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
             >
               <span>⚡</span>
-              Activate AI Search
+              Start AI Search Mission
             </button>
             <p className="mt-4 text-body-md font-body-md text-on-surface-variant">
               Live AI scanning will be available in a future platform release.
             </p>
           </section>
+
+          {missionCreated && (
+            <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-6 md:p-8" aria-live="polite">
+              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Created</p>
+              <h2 className="mt-2 text-headline-lg font-headline-lg text-on-surface">AI Search Mission Created</h2>
+              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Mission Name</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">{missionName}</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Status</p>
+                  <p className="mt-2 text-body-md font-body-md text-primary">Active</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Monitoring Frequency</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">{selectedFrequency}</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Search Sources</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">{PHASE_ONE_SOURCES.join(', ')}</p>
+                </div>
+              </div>
+              <div className="mt-6">
+                <Link
+                  to="/dashboard"
+                  className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
+                >
+                  Return to Dealer Command Centre
+                </Link>
+              </div>
+            </section>
+          )}
         </div>
-      </main>
-    </div>
+      </div>
+    </PlatformShell>
   )
 }
