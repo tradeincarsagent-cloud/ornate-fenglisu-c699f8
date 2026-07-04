@@ -4,6 +4,19 @@ export const Route = createFileRoute('/opportunity')({
   component: OpportunityPage,
 })
 
+const LOGO_SRC =
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS'
+
+const VEHICLE_OPPORTUNITY_ID = 'TCA-2026-00421'
+
+function ChevronRightIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  )
+}
+
 function OpportunityPage() {
   const keyMetrics = [
     { label: 'Confidence', value: '97%' },
@@ -26,17 +39,36 @@ function OpportunityPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-background px-4 py-8 text-on-surface sm:px-6 md:px-10">
       <div className="mx-auto w-full max-w-container-max space-y-6">
-        <header className="flex flex-col gap-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="space-y-2">
-            <h1 className="text-headline-lg font-headline-lg text-primary">AI Buying Report</h1>
-            <p className="text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant">Premium Opportunity Review</p>
+        <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+          {/* Logo + Return to Dashboard row */}
+          <div className="flex items-center justify-between gap-4">
+            <div className="logo-bezel w-36 rounded-lg p-1 sm:w-44">
+              <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+            </div>
+            <a
+              href="/dashboard"
+              className="inline-flex shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
+            >
+              Return to Dashboard
+            </a>
           </div>
-          <a
-            href="/dashboard"
-            className="inline-flex w-full items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary sm:w-auto"
-          >
-            Return to Dashboard
-          </a>
+
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="mt-4 flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant">
+            <a href="/dashboard" className="transition-colors hover:text-primary">
+              Dealer Command Centre
+            </a>
+            <ChevronRightIcon />
+            <span className="text-on-surface">AI Buying Report</span>
+          </nav>
+
+          {/* Page title + Opportunity ID */}
+          <div className="mt-3 space-y-1">
+            <h1 className="text-headline-lg font-headline-lg text-primary">AI Buying Report</h1>
+            <p className="text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant">
+              Vehicle Opportunity ID: <span className="font-semibold text-on-surface">{VEHICLE_OPPORTUNITY_ID}</span>
+            </p>
+          </div>
         </header>
 
         <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8">

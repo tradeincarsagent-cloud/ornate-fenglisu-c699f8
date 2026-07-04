@@ -1,4 +1,9 @@
 import { jsx, jsxs } from "react/jsx-runtime";
+const LOGO_SRC = "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS";
+const VEHICLE_OPPORTUNITY_ID = "TCA-2026-00421";
+function ChevronRightIcon() {
+  return /* @__PURE__ */ jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "9 18 15 12 9 6" }) });
+}
 function OpportunityPage() {
   const keyMetrics = [{
     label: "Confidence",
@@ -39,12 +44,23 @@ function OpportunityPage() {
     value: "Independent dealer"
   }];
   return /* @__PURE__ */ jsx("main", { className: "min-h-screen overflow-x-hidden bg-background px-4 py-8 text-on-surface sm:px-6 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-6", children: [
-    /* @__PURE__ */ jsxs("header", { className: "flex flex-col gap-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6 lg:flex-row lg:items-start lg:justify-between", children: [
-      /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-        /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "AI Buying Report" }),
-        /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant", children: "Premium Opportunity Review" })
+    /* @__PURE__ */ jsxs("header", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4", children: [
+        /* @__PURE__ */ jsx("div", { className: "logo-bezel w-36 rounded-lg p-1 sm:w-44", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }),
+        /* @__PURE__ */ jsx("a", { href: "/dashboard", className: "inline-flex shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "Return to Dashboard" })
       ] }),
-      /* @__PURE__ */ jsx("a", { href: "/dashboard", className: "inline-flex w-full items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary sm:w-auto", children: "Return to Dashboard" })
+      /* @__PURE__ */ jsxs("nav", { "aria-label": "Breadcrumb", className: "mt-4 flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant", children: [
+        /* @__PURE__ */ jsx("a", { href: "/dashboard", className: "transition-colors hover:text-primary", children: "Dealer Command Centre" }),
+        /* @__PURE__ */ jsx(ChevronRightIcon, {}),
+        /* @__PURE__ */ jsx("span", { className: "text-on-surface", children: "AI Buying Report" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-1", children: [
+        /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "AI Buying Report" }),
+        /* @__PURE__ */ jsxs("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant", children: [
+          "Vehicle Opportunity ID: ",
+          /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: VEHICLE_OPPORTUNITY_ID })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-5 text-headline-md font-headline-md text-on-surface", children: "AI Buying Verdict" }),
