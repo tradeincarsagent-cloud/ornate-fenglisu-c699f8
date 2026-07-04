@@ -39,6 +39,40 @@ function OpportunityPage() {
           </a>
         </header>
 
+        <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8">
+          <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Buying Verdict</h2>
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-stretch">
+            <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-primary/50 bg-primary-container px-8 py-8 text-center lg:min-w-[220px]">
+              <span className="text-4xl">🟢</span>
+              <p className="text-[42px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[56px]">BUY NOW</p>
+              <div className="grid grid-cols-2 gap-3 w-full mt-2">
+                <div className="rounded-xl border border-primary/30 bg-surface-container-high px-3 py-3 text-center">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Confidence</p>
+                  <p className="mt-1 text-body-lg font-semibold text-primary">97%</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Risk Level</p>
+                  <p className="mt-1 text-body-lg font-semibold text-[#4ade80]">LOW</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Est. Gross Profit</p>
+                  <p className="mt-1 text-body-md font-semibold text-on-surface">£4,255</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Days to Sell</p>
+                  <p className="mt-1 text-body-md font-semibold text-on-surface">9 Days</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-6 py-6">
+              <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
+                "This vehicle currently represents one of today's strongest buying opportunities based on market pricing, dealer demand and
+                estimated resale margin. We recommend reviewing vehicle history and service records before proceeding."
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_0.9fr]">
             <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-5 sm:p-6">
@@ -163,6 +197,42 @@ function OpportunityPage() {
           <p className="mt-5 text-body-sm font-body-sm text-on-surface-variant/70 italic">
             Complete vehicle history, MOT and verification services will be available through trusted data providers in a future release.
           </p>
+        </section>
+
+        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+          <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Negotiation Advice</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-5">
+            <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Suggested Opening Offer</p>
+              <p className="mt-2 text-body-lg font-semibold text-on-surface">£30,750</p>
+            </div>
+            <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Likely Acceptance Range</p>
+              <p className="mt-2 text-body-lg font-semibold text-on-surface">£31,250–£31,750</p>
+            </div>
+            <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Negotiation Confidence</p>
+              <p className="mt-2 text-body-lg font-semibold text-primary">84%</p>
+            </div>
+            <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 sm:col-span-2 lg:col-span-1">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Negotiation Advice</p>
+              <p className="mt-2 text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+                "This vehicle has been advertised for 18 days. Similar vehicles have recently sold below asking price. There may be room to
+                negotiate."
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col items-start gap-2">
+            <button
+              disabled
+              className="cursor-not-allowed rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant/50 opacity-50"
+            >
+              Future Feature: Simulate Deal
+            </button>
+            <p className="text-body-sm font-body-sm text-on-surface-variant/60 italic">
+              Interactive deal simulation will be available in a future release.
+            </p>
+          </div>
         </section>
 
         <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">

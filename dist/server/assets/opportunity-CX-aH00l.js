@@ -46,6 +46,34 @@ function OpportunityPage() {
       ] }),
       /* @__PURE__ */ jsx("a", { href: "/dashboard", className: "inline-flex w-full items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary sm:w-auto", children: "Return to Dashboard" })
     ] }),
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8", children: [
+      /* @__PURE__ */ jsx("h2", { className: "mb-5 text-headline-md font-headline-md text-on-surface", children: "AI Buying Verdict" }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-stretch", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center gap-4 rounded-2xl border border-primary/50 bg-primary-container px-8 py-8 text-center lg:min-w-[220px]", children: [
+          /* @__PURE__ */ jsx("span", { className: "text-4xl", children: "🟢" }),
+          /* @__PURE__ */ jsx("p", { className: "text-[42px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[56px]", children: "BUY NOW" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-3 w-full mt-2", children: [
+            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary/30 bg-surface-container-high px-3 py-3 text-center", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Confidence" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-lg font-semibold text-primary", children: "97%" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Risk Level" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-lg font-semibold text-[#4ade80]", children: "LOW" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Est. Gross Profit" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-semibold text-on-surface", children: "£4,255" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Days to Sell" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-semibold text-on-surface", children: "9 Days" })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "flex flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-6 py-6", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface-variant", children: `"This vehicle currently represents one of today's strongest buying opportunities based on market pricing, dealer demand and estimated resale margin. We recommend reviewing vehicle history and service records before proceeding."` }) })
+      ] })
+    ] }),
     /* @__PURE__ */ jsx("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_0.9fr]", children: [
       /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-5 sm:p-6", children: [
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant", children: "Target Vehicle" }),
@@ -153,6 +181,31 @@ function OpportunityPage() {
         ] })
       ] }),
       /* @__PURE__ */ jsx("p", { className: "mt-5 text-body-sm font-body-sm text-on-surface-variant/70 italic", children: "Complete vehicle history, MOT and verification services will be available through trusted data providers in a future release." })
+    ] }),
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+      /* @__PURE__ */ jsx("h2", { className: "mb-5 text-headline-md font-headline-md text-on-surface", children: "AI Negotiation Advice" }),
+      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-5", children: [
+        /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: "Suggested Opening Offer" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-lg font-semibold text-on-surface", children: "£30,750" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: "Likely Acceptance Range" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-lg font-semibold text-on-surface", children: "£31,250–£31,750" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: "Negotiation Confidence" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-lg font-semibold text-primary", children: "84%" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 sm:col-span-2 lg:col-span-1", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: "Negotiation Advice" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-sm font-body-sm text-on-surface-variant leading-relaxed", children: '"This vehicle has been advertised for 18 days. Similar vehicles have recently sold below asking price. There may be room to negotiate."' })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start gap-2", children: [
+        /* @__PURE__ */ jsx("button", { disabled: true, className: "cursor-not-allowed rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant/50 opacity-50", children: "Future Feature: Simulate Deal" }),
+        /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant/60 italic", children: "Interactive deal simulation will be available in a future release." })
+      ] })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "AI Buying Summary" }),
