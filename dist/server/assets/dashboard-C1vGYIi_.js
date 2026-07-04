@@ -1,5 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+const AI_STATUS_MESSAGES = ["Searching Auto Trader…", "Searching Facebook Marketplace…", "Searching Dealer Network…", "Checking Auctions…", "Analysing Opportunities…", "Ranking Results…"];
 function DashboardPage() {
   const summaryCards = [{
     icon: "🚗",
@@ -63,6 +64,10 @@ function DashboardPage() {
   }];
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false);
+  const [isLive, setIsLive] = useState(true);
+  const [statusMessageIndex, setStatusMessageIndex] = useState(0);
+  const [statusFading, setStatusFading] = useState(false);
+  const statusIntervalRef = useRef(null);
   useEffect(() => {
     let nextOpportunityIndex = 0;
     const scanInterval = setInterval(() => {
@@ -74,9 +79,28 @@ function DashboardPage() {
     }, 6200);
     return () => clearInterval(scanInterval);
   }, [recentOpportunities.length]);
+  useEffect(() => {
+    if (!isLive) {
+      if (statusIntervalRef.current) clearInterval(statusIntervalRef.current);
+      return;
+    }
+    statusIntervalRef.current = setInterval(() => {
+      setStatusFading(true);
+      setTimeout(() => {
+        setStatusMessageIndex((i) => (i + 1) % AI_STATUS_MESSAGES.length);
+        setStatusFading(false);
+      }, 400);
+    }, 3e3);
+    return () => {
+      if (statusIntervalRef.current) clearInterval(statusIntervalRef.current);
+    };
+  }, [isLive]);
   return /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-background text-on-surface", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex min-h-screen max-w-container-max", children: [
     /* @__PURE__ */ jsxs("aside", { className: "hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col", children: [
-      /* @__PURE__ */ jsx("p", { className: "mb-8 text-headline-md font-headline-md text-primary", children: "Trade in Cars Agent" }),
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx("div", { className: "logo-bezel mb-3 rounded-lg p-1.5", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-10 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" }) }),
+        /* @__PURE__ */ jsx("p", { className: "text-headline-md font-headline-md text-primary", children: "Trade in Cars Agent" })
+      ] }),
       /* @__PURE__ */ jsx("nav", { className: "space-y-2", children: /* @__PURE__ */ jsx("div", { className: "rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary", children: "Dealer Command Centre" }) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex min-h-screen flex-1 flex-col", children: [
@@ -112,11 +136,16 @@ function DashboardPage() {
                 /* @__PURE__ */ jsx("span", { className: "radar-blip radar-blip-4" })
               ] })
             ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-6 flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Search" }),
+              /* @__PURE__ */ jsx("button", { type: "button", role: "switch", "aria-checked": isLive, onClick: () => setIsLive((v) => !v), className: `relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${isLive ? "bg-primary" : "bg-outline-variant/40"}`, children: /* @__PURE__ */ jsx("span", { className: `inline-block h-4 w-4 rounded-full bg-on-primary shadow transition-transform ${isLive ? "translate-x-5" : "translate-x-0.5"}` }) }),
+              /* @__PURE__ */ jsx("span", { className: `text-body-md font-body-md ${isLive ? "text-primary" : "text-on-surface-variant"}`, children: isLive ? "LIVE" : "PAUSED" })
+            ] }),
             /* @__PURE__ */ jsxs("div", { className: "mt-8 space-y-4", children: [
               /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
               /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
                 /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status:" }),
-                /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "🟢 Searching" }),
+                /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: isLive ? "🟢 Searching" : "⏸ Paused" }),
                 /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Sources Active:" }),
                 /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "5" }),
                 /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicles Checked Today:" }),
@@ -127,6 +156,12 @@ function DashboardPage() {
                 /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "3" }),
                 /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Last Scan:" }),
                 /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "12 seconds ago" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-4 overflow-hidden rounded-lg border border-outline-variant/20 bg-surface-container px-4 py-3", children: [
+                /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Status Feed" }),
+                /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-primary transition-opacity duration-400", style: {
+                  opacity: statusFading ? 0 : 1
+                }, children: isLive ? AI_STATUS_MESSAGES[statusMessageIndex] : "Search paused." })
               ] })
             ] })
           ] }) })
