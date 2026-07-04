@@ -76,13 +76,16 @@ function DashboardPage() {
             <h1 className="mb-2 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
             <p className="mb-8 text-headline-md font-headline-md text-on-surface">Good Morning, Jonathan</p>
 
-            <section className="mb-8 grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] xl:items-start">
+            <section className="mb-10 space-y-8">
               <div>
                 <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Morning Intelligence Brief</h2>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   {summaryCards.map((card) => (
-                    <article key={card.title} className="dashboard-border rounded-xl bg-surface-container-high p-5">
-                      <p className="mb-3 text-body-md font-body-md text-on-surface-variant">
+                    <article
+                      key={card.title}
+                      className="dashboard-border flex min-h-[152px] flex-col justify-between rounded-xl bg-surface-container-high p-5 text-center"
+                    >
+                      <p className="text-body-md font-body-md text-on-surface-variant">
                         {card.icon} {card.title}
                       </p>
                       <p className="text-headline-lg font-headline-lg text-primary">{card.value}</p>
@@ -91,7 +94,7 @@ function DashboardPage() {
                 </div>
               </div>
 
-              <article className="dashboard-border rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8">
+              <article className="dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8">
                 <div className={`radar-glass-panel ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
                   <div className="radar-container">
                     <div className="radar-frame" />
@@ -109,7 +112,7 @@ function DashboardPage() {
                     </div>
                   </div>
 
-                  <div className="mt-8 space-y-4">
+                  <div className="mt-8 space-y-4 text-center">
                     <h3 className="text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
                     <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
                       <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Status:</dt>
