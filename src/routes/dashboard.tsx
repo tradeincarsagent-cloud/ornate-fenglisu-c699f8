@@ -206,44 +206,28 @@ function DashboardPage() {
 
               {/* ── AI Search Radar (unchanged) ──────────────────────── */}
               <article className="dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8">
-                <div className={`radar-glass-panel ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
-                  <div className="radar-container">
-                    <div className="radar-frame" />
-                    <div className="radar-scope">
-                      <div className="radar-ring radar-ring-1" />
-                      <div className="radar-ring radar-ring-2" />
-                      <div className="radar-ring radar-ring-3" />
-                      <div className="radar-crosshair radar-crosshair-horizontal" />
-                      <div className="radar-crosshair radar-crosshair-vertical" />
-                      <div className="radar-sweep" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                      <span className="radar-blip radar-blip-1" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                      <span className="radar-blip radar-blip-2" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                      <span className="radar-blip radar-blip-3" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                      <span className="radar-blip radar-blip-4" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                    </div>
+                <div className={`radar-glass-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
+                <div className="radar-container order-1">
+                  <div className="radar-frame" />
+                  <div className="radar-scope">
+                    <div className="radar-ring radar-ring-1" />
+                    <div className="radar-ring radar-ring-2" />
+                    <div className="radar-ring radar-ring-3" />
+                    <div className="radar-crosshair radar-crosshair-horizontal" />
+                    <div className="radar-crosshair radar-crosshair-vertical" />
+                    <div className="radar-sweep" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
+                    <span className="radar-blip radar-blip-1" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
+                    <span className="radar-blip radar-blip-2" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
+                    <span className="radar-blip radar-blip-3" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
+                    <span className="radar-blip radar-blip-4" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
                   </div>
+                </div>
 
-                  <div className="mt-8 space-y-4 text-center">
-                    <h3 className="text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
-                    <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
-                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Status:</dt>
-                      <dd className="text-on-surface">{aiSearchLive ? '🟢 Searching' : '⏸ Paused'}</dd>
-                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Sources Active:</dt>
-                      <dd className="text-on-surface">5</dd>
-                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Vehicles Checked Today:</dt>
-                      <dd className="text-on-surface">12,487</dd>
-                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Matches Found:</dt>
-                      <dd className="text-on-surface">27</dd>
-                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">High Priority Matches:</dt>
-                      <dd className="text-on-surface">3</dd>
-                      <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Last Scan:</dt>
-                      <dd className="text-on-surface">12 seconds ago</dd>
-                    </dl>
-                  </div>
+                <h3 className="order-2 mt-8 text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
 
-                  {/* Industrial Power Switch */}
-                  <div
-                    className={`ai-switch-panel${aiSearchLive ? ' ai-switch-panel-live' : ' ai-switch-panel-paused'}`}
+                {/* Industrial Power Switch — mobile: directly below radar; desktop: below stats */}
+                <div
+                  className={`ai-switch-panel order-3 md:order-4${aiSearchLive ? ' ai-switch-panel-live' : ' ai-switch-panel-paused'}`}
                     role="switch"
                     aria-checked={aiSearchLive}
                     tabIndex={0}
@@ -271,6 +255,21 @@ function DashboardPage() {
                       </div>
                     </div>
                   </div>
+
+                  <dl className="order-4 md:order-3 mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
+                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Status:</dt>
+                    <dd className="text-on-surface">{aiSearchLive ? '🟢 Searching' : '⏸ Paused'}</dd>
+                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Sources Active:</dt>
+                    <dd className="text-on-surface">5</dd>
+                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Vehicles Checked Today:</dt>
+                    <dd className="text-on-surface">12,487</dd>
+                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Matches Found:</dt>
+                    <dd className="text-on-surface">27</dd>
+                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">High Priority Matches:</dt>
+                    <dd className="text-on-surface">3</dd>
+                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Last Scan:</dt>
+                    <dd className="text-on-surface">12 seconds ago</dd>
+                  </dl>
                 </div>
               </article>
             </section>
