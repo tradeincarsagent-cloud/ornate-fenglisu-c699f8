@@ -6,6 +6,7 @@ export const Route = createFileRoute('/opportunity')({
 
 const LOGO_SRC =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS'
+const VEHICLE_IMAGE_SRC = '/placeholder.png'
 
 const VEHICLE_OPPORTUNITY_ID = 'TCA-2026-00421'
 
@@ -38,16 +39,16 @@ function OpportunityPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background px-4 py-8 text-on-surface sm:px-6 md:px-10">
-      <div className="mx-auto w-full max-w-container-max space-y-6">
+      <div className="mx-auto w-full max-w-container-max space-y-6 overflow-x-hidden">
         <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
           {/* Logo + Return to Dashboard row */}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div className="logo-bezel w-36 rounded-lg p-1 sm:w-44">
               <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
             </div>
             <a
               href="/dashboard"
-              className="inline-flex shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
+              className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary sm:w-auto"
             >
               Return to Dashboard
             </a>
@@ -74,10 +75,26 @@ function OpportunityPage() {
         <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Buying Verdict</h2>
           <div className="flex flex-col gap-5 lg:flex-row lg:items-stretch">
-            <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-primary/50 bg-primary-container px-8 py-8 text-center lg:min-w-[220px]">
-              <span className="text-4xl">🟢</span>
-              <p className="text-[42px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[56px]">BUY NOW</p>
-              <div className="grid grid-cols-2 gap-3 w-full mt-2">
+            <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-primary/50 bg-primary-container px-5 py-6 text-center sm:px-8 sm:py-8 lg:min-w-[320px]">
+              <div className="traffic-light-shell" aria-label="AI buying verdict traffic light">
+                <div className="traffic-light-lens traffic-light-lens-green-active" aria-hidden="true" />
+                <div className="traffic-light-lens" aria-hidden="true" />
+                <div className="traffic-light-lens" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-primary-container/80">Verdict</p>
+                <p className="mt-2 text-[34px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[46px]">BUY NOW</p>
+              </div>
+              <div className="w-full rounded-xl border border-outline-variant/35 bg-surface-container-high/70 px-4 py-3 text-left">
+                <p className="text-body-xs font-body-sm leading-relaxed text-on-surface-variant">
+                  <span className="font-semibold text-[#4ade80]">Green</span> = Strong buying opportunity
+                  <br />
+                  <span className="font-semibold text-[#f59e0b]">Amber</span> = Review further
+                  <br />
+                  <span className="font-semibold text-[#ef4444]">Red</span> = Pass / avoid
+                </p>
+              </div>
+              <div className="mt-1 grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
                 <div className="rounded-xl border border-primary/30 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Confidence</p>
                   <p className="mt-1 text-body-lg font-semibold text-primary">97%</p>
@@ -96,7 +113,7 @@ function OpportunityPage() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-6 py-6">
+            <div className="flex min-w-0 flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-5 py-5 sm:px-6 sm:py-6">
               <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
                 "This vehicle currently represents one of today's strongest buying opportunities based on market pricing, dealer demand and
                 estimated resale margin. We recommend reviewing vehicle history and service records before proceeding."
@@ -113,6 +130,9 @@ function OpportunityPage() {
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-body-lg font-body-lg text-on-surface">
                 <span>2022</span>
                 <span className="text-primary">£31,995</span>
+              </div>
+              <div className="mt-5 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container">
+                <img src={VEHICLE_IMAGE_SRC} alt="BMW M3 Competition opportunity vehicle" className="h-auto max-h-[280px] w-full object-cover" />
               </div>
             </div>
             <div className="rounded-2xl border border-primary/40 bg-primary-container p-5 sm:p-6">
@@ -145,7 +165,7 @@ function OpportunityPage() {
         <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Buying Checklist</h2>
           <div className="space-y-3">
-            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="text-xl">✅</span>
                 <span className="text-body-md font-body-md text-on-surface">Market Price</span>
@@ -155,7 +175,7 @@ function OpportunityPage() {
                 <p className="mt-0.5 text-body-sm font-body-sm text-[#4ade80]">Excellent Value</p>
               </div>
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="text-xl">✅</span>
                 <span className="text-body-md font-body-md text-on-surface">Estimated Profit</span>
@@ -165,7 +185,7 @@ function OpportunityPage() {
                 <p className="mt-0.5 text-body-sm font-body-sm text-[#4ade80]">High Profit Potential</p>
               </div>
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="text-xl">🟡</span>
                 <span className="text-body-md font-body-md text-on-surface">Vehicle History</span>
@@ -175,7 +195,7 @@ function OpportunityPage() {
                 <p className="mt-0.5 text-body-sm font-body-sm text-[#facc15]">History Check Recommended</p>
               </div>
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="text-xl">🟡</span>
                 <span className="text-body-md font-body-md text-on-surface">MOT History</span>
@@ -185,7 +205,7 @@ function OpportunityPage() {
                 <p className="mt-0.5 text-body-sm font-body-sm text-[#facc15]">Review Required</p>
               </div>
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="text-xl">🟡</span>
                 <span className="text-body-md font-body-md text-on-surface">Service History</span>
@@ -195,7 +215,7 @@ function OpportunityPage() {
                 <p className="mt-0.5 text-body-sm font-body-sm text-[#facc15]">Verify Records</p>
               </div>
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="text-xl">🟢</span>
                 <span className="text-body-md font-body-md text-on-surface">Mileage</span>
@@ -205,7 +225,7 @@ function OpportunityPage() {
                 <p className="mt-0.5 text-body-sm font-body-sm text-[#86efac]">Appears Consistent</p>
               </div>
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="text-xl">🟢</span>
                 <span className="text-body-md font-body-md text-on-surface">Seller Profile</span>
@@ -215,7 +235,7 @@ function OpportunityPage() {
                 <p className="mt-0.5 text-body-sm font-body-sm text-[#86efac]">Trusted Listing</p>
               </div>
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="text-xl">🔵</span>
                 <span className="text-body-md font-body-md text-on-surface">Estimated Days to Sell</span>
@@ -298,29 +318,29 @@ function OpportunityPage() {
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Dealer Notes</h2>
           <textarea
             placeholder="Add internal notes, call outcomes, valuation observations, and next actions..."
-            className="h-40 w-full resize-y rounded-xl border border-outline-variant/35 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-all placeholder:text-on-surface-variant/70 focus:border-primary/60"
+            className="h-44 w-full resize-y rounded-xl border border-outline-variant/35 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-all placeholder:text-on-surface-variant/70 focus:border-primary/60 sm:h-40"
           />
         </section>
 
         <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">Actions</h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
-            <button className="rounded-xl bg-primary px-5 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110">
+            <button className="min-h-11 rounded-xl bg-primary px-5 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110">
               Save Opportunity
             </button>
-            <button className="rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
+            <button className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
               Ignore
             </button>
-            <button className="rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
+            <button className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
               Contact Seller
             </button>
             <a
               href="/dashboard"
-              className="inline-flex items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface"
             >
               Return to Dashboard
             </a>
-            <button className="rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
+            <button className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
               Explain Why
             </button>
           </div>
