@@ -78,38 +78,7 @@ function DashboardPage() {
   }, [recentOpportunities.length, aiSearchLive]);
   return /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-background text-on-surface", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex min-h-screen max-w-container-max", children: [
     /* @__PURE__ */ jsxs("aside", { className: "hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
-        /* @__PURE__ */ jsxs("svg", { viewBox: "0 0 208 52", fill: "none", xmlns: "http://www.w3.org/2000/svg", className: "w-full", style: {
-          height: "52px",
-          display: "block"
-        }, "aria-label": "Trade in Cars Agent logo", children: [
-          /* @__PURE__ */ jsx("rect", { x: "0.5", y: "0.5", width: "207", height: "51", rx: "8", stroke: "rgba(20,147,255,0.32)", strokeWidth: "1", fill: "rgba(20,147,255,0.05)" }),
-          /* @__PURE__ */ jsx("rect", { x: "3.5", y: "3.5", width: "201", height: "45", rx: "6", stroke: "rgba(148,163,184,0.07)", strokeWidth: "0.5", fill: "none" }),
-          /* @__PURE__ */ jsx("circle", { cx: "9", cy: "9", r: "3", fill: "rgba(30,41,59,0.85)", stroke: "rgba(148,163,184,0.22)", strokeWidth: "0.8" }),
-          /* @__PURE__ */ jsx("path", { d: "M7.5 9 L10.5 9 M9 7.5 L9 10.5", stroke: "rgba(148,163,184,0.28)", strokeWidth: "0.6" }),
-          /* @__PURE__ */ jsx("circle", { cx: "199", cy: "9", r: "3", fill: "rgba(30,41,59,0.85)", stroke: "rgba(148,163,184,0.22)", strokeWidth: "0.8" }),
-          /* @__PURE__ */ jsx("path", { d: "M197.5 9 L200.5 9 M199 7.5 L199 10.5", stroke: "rgba(148,163,184,0.28)", strokeWidth: "0.6" }),
-          /* @__PURE__ */ jsx("circle", { cx: "9", cy: "43", r: "3", fill: "rgba(30,41,59,0.85)", stroke: "rgba(148,163,184,0.22)", strokeWidth: "0.8" }),
-          /* @__PURE__ */ jsx("path", { d: "M7.5 43 L10.5 43 M9 41.5 L9 44.5", stroke: "rgba(148,163,184,0.28)", strokeWidth: "0.6" }),
-          /* @__PURE__ */ jsx("circle", { cx: "199", cy: "43", r: "3", fill: "rgba(30,41,59,0.85)", stroke: "rgba(148,163,184,0.22)", strokeWidth: "0.8" }),
-          /* @__PURE__ */ jsx("path", { d: "M197.5 43 L200.5 43 M199 41.5 L199 44.5", stroke: "rgba(148,163,184,0.28)", strokeWidth: "0.6" }),
-          /* @__PURE__ */ jsx("path", { d: "M22 40 L22 33 Q22 31.5 23.5 31.5 L28 31.5 L33 21 Q34.5 17 39 17 L59 17 Q63.5 17 65 21 L70 31.5 L74.5 31.5 Q76 31.5 76 33 L76 40 Z", fill: "rgba(20,147,255,0.1)", stroke: "rgba(20,147,255,0.72)", strokeWidth: "1.3", strokeLinejoin: "round" }),
-          /* @__PURE__ */ jsx("path", { d: "M35.5 17 L38.5 10 Q40 8 43 8 L55 8 Q58 8 59.5 10 L62.5 17", fill: "rgba(20,147,255,0.07)", stroke: "rgba(20,147,255,0.62)", strokeWidth: "1.3", strokeLinejoin: "round" }),
-          /* @__PURE__ */ jsx("line", { x1: "49", y1: "8.5", x2: "49", y2: "17", stroke: "rgba(20,147,255,0.35)", strokeWidth: "0.8" }),
-          /* @__PURE__ */ jsx("circle", { cx: "33.5", cy: "40", r: "6", fill: "rgba(12,19,36,0.9)", stroke: "rgba(20,147,255,0.62)", strokeWidth: "1.3" }),
-          /* @__PURE__ */ jsx("circle", { cx: "33.5", cy: "40", r: "2", fill: "rgba(20,147,255,0.48)" }),
-          /* @__PURE__ */ jsx("circle", { cx: "64.5", cy: "40", r: "6", fill: "rgba(12,19,36,0.9)", stroke: "rgba(20,147,255,0.62)", strokeWidth: "1.3" }),
-          /* @__PURE__ */ jsx("circle", { cx: "64.5", cy: "40", r: "2", fill: "rgba(20,147,255,0.48)" }),
-          /* @__PURE__ */ jsx("line", { x1: "90", y1: "20", x2: "104", y2: "20", stroke: "rgba(20,147,255,0.62)", strokeWidth: "1.5", strokeLinecap: "round" }),
-          /* @__PURE__ */ jsx("path", { d: "M100 16 L104 20 L100 24", fill: "none", stroke: "rgba(20,147,255,0.62)", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }),
-          /* @__PURE__ */ jsx("line", { x1: "104", y1: "32", x2: "90", y2: "32", stroke: "rgba(20,147,255,0.62)", strokeWidth: "1.5", strokeLinecap: "round" }),
-          /* @__PURE__ */ jsx("path", { d: "M94 28 L90 32 L94 36", fill: "none", stroke: "rgba(20,147,255,0.62)", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }),
-          /* @__PURE__ */ jsx("line", { x1: "118", y1: "12", x2: "118", y2: "40", stroke: "rgba(148,163,184,0.13)", strokeWidth: "1" }),
-          /* @__PURE__ */ jsx("text", { x: "128", y: "26", fill: "rgba(20,147,255,0.92)", fontSize: "10", fontWeight: "700", fontFamily: "Inter, system-ui, -apple-system, sans-serif", letterSpacing: "2.5", children: "AI AGENT" }),
-          /* @__PURE__ */ jsx("text", { x: "128", y: "38", fill: "rgba(148,163,184,0.52)", fontSize: "7.5", fontFamily: "Inter, system-ui, -apple-system, sans-serif", letterSpacing: "2", children: "VEH. SOURCING" })
-        ] }),
-        /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md font-semibold tracking-wide text-primary", children: "Trade in Cars" })
-      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mb-8", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS", alt: "Trade In Cars Agent Logo", className: "w-full h-auto object-contain logo-blend" }) }) }),
       /* @__PURE__ */ jsx("nav", { className: "space-y-2", children: /* @__PURE__ */ jsx("div", { className: "rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary", children: "Dealer Command Centre" }) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex min-h-screen flex-1 flex-col", children: [
