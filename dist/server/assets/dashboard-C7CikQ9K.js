@@ -1,7 +1,7 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { P as PlatformShell } from "./PlatformShell-y8iLwbVH.js";
+import { P as PlatformShell } from "./PlatformShell-DqiuekGA.js";
 function ChevronIcon({
   open
 }) {
@@ -110,10 +110,31 @@ function DashboardPage() {
   }, {
     label: "AI Search Builder",
     href: "/search-builder"
+  }, {
+    label: "AI Buying Report",
+    href: "/opportunity"
+  }, {
+    label: "Future Features",
+    isSectionLabel: true
+  }, {
+    label: "Vehicle History & MOT",
+    disabled: true
+  }, {
+    label: "Watchlist",
+    disabled: true
+  }, {
+    label: "Settings",
+    disabled: true
+  }, {
+    label: "Subscription",
+    disabled: true
   }], children: [
     /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-primary", children: "Dealer Command Centre" }),
     /* @__PURE__ */ jsx("p", { className: "mb-8 text-headline-md font-headline-md text-on-surface", children: "Good Morning, Jonathan" }),
-    /* @__PURE__ */ jsx("div", { className: "mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap", children: /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Create New AI Search" }) }),
+    /* @__PURE__ */ jsxs("div", { className: "mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap", children: [
+      /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Create New AI Search" }),
+      /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "View AI Buying Report" })
+    ] }),
     /* @__PURE__ */ jsxs("section", { className: "mb-10 space-y-8", children: [
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "Morning Intelligence Brief" }),

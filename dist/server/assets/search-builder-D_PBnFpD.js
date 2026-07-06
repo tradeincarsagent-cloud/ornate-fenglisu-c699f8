@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { P as PlatformShell } from "./PlatformShell-y8iLwbVH.js";
+import { P as PlatformShell } from "./PlatformShell-DqiuekGA.js";
 const VEHICLE_TYPES = ["Cars", "Pick-ups", "Vans & Light Commercials"];
 const SEARCH_FREQUENCIES = [{
   label: "Every 15 Minutes",
@@ -42,6 +42,24 @@ function SearchBuilderPage() {
     label: "AI Search Builder",
     href: "/search-builder",
     active: true
+  }, {
+    label: "AI Buying Report",
+    href: "/opportunity"
+  }, {
+    label: "Future Features",
+    isSectionLabel: true
+  }, {
+    label: "Vehicle History & MOT",
+    disabled: true
+  }, {
+    label: "Watchlist",
+    disabled: true
+  }, {
+    label: "Settings",
+    disabled: true
+  }, {
+    label: "Subscription",
+    disabled: true
   }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-container-max", children: [
     /* @__PURE__ */ jsxs("div", { className: "mb-10", children: [
       /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Search Builder" }),
@@ -175,7 +193,10 @@ function SearchBuilderPage() {
             /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: PHASE_ONE_SOURCES.join(", ") })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "mt-6", children: /* @__PURE__ */ jsx(Link, { to: "/dashboard", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Return to Dealer Command Centre" }) })
+        /* @__PURE__ */ jsxs("div", { className: "mt-6 flex flex-col gap-3 sm:flex-row", children: [
+          /* @__PURE__ */ jsx(Link, { to: "/dashboard", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Return to Dealer Command Centre" }),
+          /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "View AI Buying Report" })
+        ] })
       ] })
     ] })
   ] }) });

@@ -76,6 +76,12 @@ function DashboardPage() {
       navItems={[
         { label: 'Dealer Command Centre', href: '/dashboard', active: true },
         { label: 'AI Search Builder', href: '/search-builder' },
+        { label: 'AI Buying Report', href: '/opportunity' },
+        { label: 'Future Features', isSectionLabel: true },
+        { label: 'Vehicle History & MOT', disabled: true },
+        { label: 'Watchlist', disabled: true },
+        { label: 'Settings', disabled: true },
+        { label: 'Subscription', disabled: true },
       ]}
     >
             <h1 className="mb-2 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
@@ -86,6 +92,12 @@ function DashboardPage() {
                 className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
               >
                 Create New AI Search
+              </Link>
+              <Link
+                to="/opportunity"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
+              >
+                View AI Buying Report
               </Link>
             </div>
 

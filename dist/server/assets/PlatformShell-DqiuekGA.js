@@ -16,8 +16,35 @@ function CloseIcon() {
   ] });
 }
 function PlatformNav({ items, onNavigate }) {
-  return /* @__PURE__ */ jsx("nav", { className: "space-y-2", children: items.map(
-    (item) => item.active ? /* @__PURE__ */ jsx("div", { className: "rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary", children: item.label }, item.href) : /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ jsx("nav", { className: "space-y-2", children: items.map((item, index) => {
+    if (item.isSectionLabel) {
+      return /* @__PURE__ */ jsx(
+        "p",
+        {
+          className: "mt-4 mb-1 px-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant/50",
+          children: item.label
+        },
+        `section-${index}`
+      );
+    }
+    if (item.disabled) {
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: "flex items-center justify-between rounded-lg border border-transparent px-4 py-3 text-body-md font-body-md text-on-surface-variant/40 cursor-not-allowed select-none",
+          "aria-disabled": "true",
+          children: [
+            /* @__PURE__ */ jsx("span", { children: item.label }),
+            /* @__PURE__ */ jsx("span", { className: "ml-2 rounded-full border border-outline-variant/30 bg-surface-container-high px-2 py-0.5 text-xs text-on-surface-variant/50", children: "Coming Soon" })
+          ]
+        },
+        item.href ?? item.label
+      );
+    }
+    if (item.active) {
+      return /* @__PURE__ */ jsx("div", { className: "rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary", children: item.label }, item.href);
+    }
+    return /* @__PURE__ */ jsx(
       Link,
       {
         to: item.href,
@@ -26,8 +53,8 @@ function PlatformNav({ items, onNavigate }) {
         children: item.label
       },
       item.href
-    )
-  ) });
+    );
+  }) });
 }
 function PlatformShell({ children, navItems }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);

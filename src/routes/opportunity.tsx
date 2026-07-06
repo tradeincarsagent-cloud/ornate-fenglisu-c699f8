@@ -42,6 +42,11 @@ function OpportunityPage() {
         { label: 'Dealer Command Centre', href: '/dashboard' },
         { label: 'AI Search Builder', href: '/search-builder' },
         { label: 'AI Buying Report', href: '/opportunity', active: true },
+        { label: 'Future Features', isSectionLabel: true },
+        { label: 'Vehicle History & MOT', disabled: true },
+        { label: 'Watchlist', disabled: true },
+        { label: 'Settings', disabled: true },
+        { label: 'Subscription', disabled: true },
       ]}
     >
       <div className="mx-auto w-full max-w-container-max space-y-6 overflow-x-hidden">

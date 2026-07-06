@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { P as PlatformShell } from "./PlatformShell-y8iLwbVH.js";
+import { P as PlatformShell } from "./PlatformShell-DqiuekGA.js";
 import "react";
 const VEHICLE_IMAGE_SRC = "/placeholder.png";
 const VEHICLE_OPPORTUNITY_ID = "TCA-2026-00421";
@@ -56,6 +56,21 @@ function OpportunityPage() {
     label: "AI Buying Report",
     href: "/opportunity",
     active: true
+  }, {
+    label: "Future Features",
+    isSectionLabel: true
+  }, {
+    label: "Vehicle History & MOT",
+    disabled: true
+  }, {
+    label: "Watchlist",
+    disabled: true
+  }, {
+    label: "Settings",
+    disabled: true
+  }, {
+    label: "Subscription",
+    disabled: true
   }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-6 overflow-x-hidden", children: [
     /* @__PURE__ */ jsxs("header", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center", children: [
