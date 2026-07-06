@@ -9,11 +9,20 @@ export const Route = createFileRoute('/dashboard')({
 
 type RadarContactType = 'car' | 'pickup' | 'van' | 'motorcycle'
 
+type MissionStatus = 'Monitoring' | 'Waiting' | 'Updating'
+
+const missionStatusConfig: Record<MissionStatus, { color: string; glow: string; label: string }> = {
+  Monitoring: { color: 'rgba(74, 222, 128, 0.9)', glow: 'rgba(74, 222, 128, 0.55)', label: 'Monitoring' },
+  Waiting: { color: 'rgba(251, 191, 36, 0.88)', glow: 'rgba(251, 191, 36, 0.5)', label: 'Waiting' },
+  Updating: { color: 'rgba(56, 189, 248, 0.9)', glow: 'rgba(56, 189, 248, 0.5)', label: 'Updating' },
+}
+
 type TimelineTemplate = {
   id: string
   message: string
   contactId: string
   opportunityIndex: number
+  missionIndex?: number
 }
 
 type TimelineEvent = TimelineTemplate & {
@@ -63,6 +72,7 @@ const timelineTemplates: TimelineTemplate[] = [
     message: 'Dealer Network search completed for Mercedes A45 AMG.',
     contactId: 'contact-3',
     opportunityIndex: 2,
+    missionIndex: 2,
   },
   {
     id: 'timeline-porsche-opportunity',
@@ -75,6 +85,7 @@ const timelineTemplates: TimelineTemplate[] = [
     message: 'AI Search Mission updated for Volkswagen Golf R.',
     contactId: 'contact-4',
     opportunityIndex: 3,
+    missionIndex: 0,
   },
 ]
 
@@ -126,13 +137,14 @@ function DashboardPage() {
     { label: 'Top Priority', value: featuredOpportunity.vehicle, detail: 'Highest estimated profit margin' },
   ]
   const recentOpportunities = dashboardRecentOpportunities
-  const activeSearches = [
-    { name: 'Performance Saloons (2019+)', matches: '14', updated: '3 mins ago' },
-    { name: 'SUVs under £28k', matches: '9', updated: '11 mins ago' },
-    { name: 'Low-mileage hybrids', matches: '6', updated: '19 mins ago' },
+  const activeSearches: Array<{ name: string; status: MissionStatus; lastScan: string; opportunities: number }> = [
+    { name: 'BMW M3 UK Search', status: 'Monitoring', lastScan: '2 minutes ago', opportunities: 3 },
+    { name: 'SUVs under £28k', status: 'Waiting', lastScan: '11 minutes ago', opportunities: 9 },
+    { name: 'Low-mileage hybrids', status: 'Updating', lastScan: '1 minute ago', opportunities: 6 },
   ]
 
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
+  const [highlightedMission, setHighlightedMission] = useState<number | null>(null)
   const [priorityContactId, setPriorityContactId] = useState<string | null>(null)
   const [contactIntensity, setContactIntensity] = useState<number[]>(() => radarContacts.map(() => 0.22))
   const [statusMessageIndex, setStatusMessageIndex] = useState(0)
@@ -218,11 +230,17 @@ function DashboardPage() {
       setRadarDetectionGlow(true)
       setHighlightedOpportunity(template.opportunityIndex)
       setActiveTimelineEventId(eventId)
+      if (template.missionIndex !== undefined) {
+        setHighlightedMission(template.missionIndex)
+      }
 
       schedule(() => setPriorityContactId(null), 1600)
       schedule(() => setRadarDetectionGlow(false), 1000)
       schedule(() => setHighlightedOpportunity(null), 1700)
       schedule(() => setActiveTimelineEventId(null), 1900)
+      if (template.missionIndex !== undefined) {
+        schedule(() => setHighlightedMission(null), 1700)
+      }
       schedule(runTimelineActivity, 11000 + Math.random() * 4000)
     }
 
@@ -655,52 +673,75 @@ function DashboardPage() {
             <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
               <div className="space-y-3">
-                {activeSearches.map((search, index) => (
-                  <article key={search.name} className="rounded-xl bg-surface-container-high p-4">
-                    {/* Desktop layout (unchanged) */}
-                    <div className="hidden gap-2 md:flex md:flex-row md:items-center md:justify-between">
-                      <p className="text-body-md font-body-md text-on-surface">{search.name}</p>
-                      <p className="text-body-md font-body-md text-primary">{search.matches} matches</p>
-                      <p className="text-body-md font-body-md text-on-surface-variant">Updated {search.updated}</p>
-                    </div>
-
-                    {/* Mobile layout: collapsible card with action buttons */}
-                    <div className="md:hidden">
-                      <button
-                        onClick={() => toggleSearch(index)}
-                        className="flex w-full items-center justify-between gap-3"
-                        aria-expanded={expandedSearches[index]}
-                      >
-                        <div className="min-w-0 text-left">
-                          <p className="text-body-md font-body-md text-on-surface">{search.name}</p>
-                          <p className="mt-0.5 text-sm text-primary">
-                            {search.matches} matches · Updated {search.updated}
-                          </p>
+                {activeSearches.map((search, index) => {
+                  const statusCfg = missionStatusConfig[search.status]
+                  return (
+                    <article
+                      key={search.name}
+                      className={`rounded-xl bg-surface-container-high p-4 transition-all ${highlightedMission === index ? 'mission-card-highlight' : ''}`}
+                    >
+                      {/* Desktop layout */}
+                      <div className="hidden md:grid md:grid-cols-[1fr_auto_auto_auto] md:items-center md:gap-6">
+                        <p className="text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="mission-status-dot"
+                            style={{ background: statusCfg.color, boxShadow: `0 0 6px ${statusCfg.glow}` }}
+                          />
+                          <span className="text-sm text-on-surface-variant">{statusCfg.label}</span>
                         </div>
-                        <span className="flex-shrink-0 text-on-surface-variant">
-                          <ChevronIcon open={expandedSearches[index]} />
-                        </span>
-                      </button>
+                        <p className="text-sm text-on-surface-variant">
+                          <span className="font-label-caps text-label-caps uppercase tracking-widest">Last Scan: </span>
+                          {search.lastScan}
+                        </p>
+                        <p className="text-sm font-semibold text-primary">{search.opportunities} Opportunities</p>
+                      </div>
 
-                      {expandedSearches[index] && (
-                        <div className="mt-3 grid grid-cols-2 gap-2">
-                          <button className="rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
-                            Run Now
-                          </button>
-                          <button className="rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
-                            Edit
-                          </button>
-                          <button className="rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
-                            Pause
-                          </button>
-                          <button className="rounded-lg border border-red-500/30 bg-surface-container py-2.5 text-sm font-medium text-red-400 transition-colors hover:border-red-500/50">
-                            Delete
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </article>
-                ))}
+                      {/* Mobile layout: collapsible card with action buttons */}
+                      <div className="md:hidden">
+                        <button
+                          onClick={() => toggleSearch(index)}
+                          className="flex w-full items-center justify-between gap-3"
+                          aria-expanded={expandedSearches[index]}
+                        >
+                          <div className="min-w-0 text-left">
+                            <div className="flex items-center gap-2">
+                              <span
+                                className="mission-status-dot flex-shrink-0"
+                                style={{ background: statusCfg.color, boxShadow: `0 0 6px ${statusCfg.glow}` }}
+                              />
+                              <p className="text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
+                            </div>
+                            <div className="mt-1.5 flex gap-4 pl-4">
+                              <p className="text-sm text-on-surface-variant">Last Scan: {search.lastScan}</p>
+                              <p className="text-sm font-semibold text-primary">{search.opportunities} Opp.</p>
+                            </div>
+                          </div>
+                          <span className="flex-shrink-0 text-on-surface-variant">
+                            <ChevronIcon open={expandedSearches[index]} />
+                          </span>
+                        </button>
+
+                        {expandedSearches[index] && (
+                          <div className="mt-3 grid grid-cols-2 gap-2">
+                            <button className="rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                              Run Now
+                            </button>
+                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
+                              Edit
+                            </button>
+                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
+                              Pause
+                            </button>
+                            <button className="rounded-lg border border-red-500/30 bg-surface-container py-2.5 text-sm font-medium text-red-400 transition-colors hover:border-red-500/50">
+                              Delete
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  )
+                })}
               </div>
             </section>
     </PlatformShell>
