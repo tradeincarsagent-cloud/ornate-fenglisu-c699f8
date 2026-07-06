@@ -1,6 +1,6 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-DqiuekGA.js";
 const radarContacts = [{
   id: "contact-1",
@@ -30,8 +30,68 @@ const radarContacts = [{
   vehicleType: "motorcycle",
   opportunityIndex: 3,
   angleDeg: 161.6
+}, {
+  id: "contact-5",
+  x: 0.18,
+  y: 0.33,
+  vehicleType: "car",
+  opportunityIndex: 4,
+  angleDeg: 208.1
 }];
 const aiStatusMessages = ["Searching UK Dealer Network…", "Scanning Auto Trader…", "Checking Dealer Websites…", "Analysing Price Changes…", "Ranking Opportunities…", "Monitoring Active Searches…"];
+const timelineTemplates = [{
+  id: "timeline-audi-rs5",
+  message: "Audi RS5 Sportback detected below market price.",
+  contactId: "contact-1",
+  opportunityIndex: 0
+}, {
+  id: "timeline-range-rover",
+  message: "Range Rover Velar price reduced by £850.",
+  contactId: "contact-2",
+  opportunityIndex: 1
+}, {
+  id: "timeline-mercedes-search",
+  message: "Dealer Network search completed for Mercedes A45 AMG.",
+  contactId: "contact-3",
+  opportunityIndex: 2
+}, {
+  id: "timeline-porsche-opportunity",
+  message: "New Porsche Macan S opportunity added to Recent Opportunities.",
+  contactId: "contact-5",
+  opportunityIndex: 4
+}, {
+  id: "timeline-golf-mission",
+  message: "AI Search Mission updated for Volkswagen Golf R.",
+  contactId: "contact-4",
+  opportunityIndex: 3
+}];
+const initialTimelineEvents = [{
+  ...timelineTemplates[0],
+  eventId: "timeline-seed-1",
+  time: "09:14"
+}, {
+  ...timelineTemplates[1],
+  eventId: "timeline-seed-2",
+  time: "09:11"
+}, {
+  ...timelineTemplates[2],
+  eventId: "timeline-seed-3",
+  time: "09:08"
+}, {
+  ...timelineTemplates[3],
+  eventId: "timeline-seed-4",
+  time: "09:05"
+}, {
+  ...timelineTemplates[4],
+  eventId: "timeline-seed-5",
+  time: "09:02"
+}];
+const activityTimeFormatter = new Intl.DateTimeFormat("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false
+});
+const counterFormatter = new Intl.NumberFormat("en-GB");
 function ChevronIcon({
   open
 }) {
@@ -117,7 +177,15 @@ function DashboardPage() {
   const [statusMessageIndex, setStatusMessageIndex] = useState(0);
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false);
   const [aiSearchLive, setAiSearchLive] = useState(true);
+  const [timelineEvents, setTimelineEvents] = useState(initialTimelineEvents);
+  const [activeTimelineEventId, setActiveTimelineEventId] = useState(null);
+  const [liveCounters, setLiveCounters] = useState({
+    vehiclesCheckedToday: 12487,
+    matchesFound: 27,
+    highPriorityMatches: 3
+  });
   const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
+  const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
     if (!aiSearchLive) return;
     const sweepDurationMs = 3600;
@@ -148,31 +216,71 @@ function DashboardPage() {
       setPriorityContactId(null);
       setRadarDetectionGlow(false);
       setHighlightedOpportunity(null);
+      setActiveTimelineEventId(null);
       return;
     }
+  }, [aiSearchLive]);
+  useEffect(() => {
+    if (!aiSearchLive) return;
     let cancelled = false;
     const timeoutIds = [];
     const schedule = (fn, ms) => {
       const id = window.setTimeout(fn, ms);
       timeoutIds.push(id);
     };
-    const runDetection = () => {
+    const runTimelineActivity = () => {
       if (cancelled) return;
-      const selected = radarContacts[Math.floor(Math.random() * radarContacts.length)];
-      setPriorityContactId(selected.id);
+      const template = timelineTemplates[timelineCursorRef.current];
+      const eventId = `${template.id}-${Date.now()}`;
+      timelineCursorRef.current = (timelineCursorRef.current + 1) % timelineTemplates.length;
+      setTimelineEvents((current) => [{
+        ...template,
+        eventId,
+        time: activityTimeFormatter.format(/* @__PURE__ */ new Date())
+      }, ...current].slice(0, 6));
+      setPriorityContactId(template.contactId);
       setRadarDetectionGlow(true);
-      setHighlightedOpportunity(selected.opportunityIndex % recentOpportunities.length);
+      setHighlightedOpportunity(template.opportunityIndex);
+      setActiveTimelineEventId(eventId);
       schedule(() => setPriorityContactId(null), 1600);
       schedule(() => setRadarDetectionGlow(false), 1e3);
       schedule(() => setHighlightedOpportunity(null), 1700);
-      schedule(runDetection, 15e3 + Math.random() * 5e3);
+      schedule(() => setActiveTimelineEventId(null), 1900);
+      schedule(runTimelineActivity, 11e3 + Math.random() * 4e3);
     };
-    schedule(runDetection, 15e3 + Math.random() * 5e3);
+    schedule(runTimelineActivity, 9e3);
     return () => {
       cancelled = true;
       timeoutIds.forEach((id) => window.clearTimeout(id));
     };
-  }, [recentOpportunities.length, aiSearchLive]);
+  }, [aiSearchLive]);
+  useEffect(() => {
+    if (!aiSearchLive) return;
+    let cancelled = false;
+    const timeoutIds = [];
+    const schedule = (fn, ms) => {
+      const id = window.setTimeout(fn, ms);
+      timeoutIds.push(id);
+    };
+    const advanceCounters = () => {
+      if (cancelled) return;
+      setLiveCounters((current) => {
+        const matchesIncrement = Math.random() > 0.42 ? 1 : 0;
+        const priorityIncrement = matchesIncrement > 0 && Math.random() > 0.76 ? 1 : 0;
+        return {
+          vehiclesCheckedToday: current.vehiclesCheckedToday + 8 + Math.floor(Math.random() * 17),
+          matchesFound: current.matchesFound + matchesIncrement,
+          highPriorityMatches: current.highPriorityMatches + priorityIncrement
+        };
+      });
+      schedule(advanceCounters, 4500 + Math.random() * 2500);
+    };
+    schedule(advanceCounters, 4200);
+    return () => {
+      cancelled = true;
+      timeoutIds.forEach((id) => window.clearTimeout(id));
+    };
+  }, [aiSearchLive]);
   useEffect(() => {
     if (!aiSearchLive) return;
     const statusRotation = setInterval(() => {
@@ -277,17 +385,38 @@ function DashboardPage() {
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Sources Active:" }),
           /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "5" }),
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicles Checked Today:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "12,487" }),
+          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: counterFormatter.format(liveCounters.vehiclesCheckedToday) }),
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Matches Found:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "27" }),
+          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: counterFormatter.format(liveCounters.matchesFound) }),
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "High Priority Matches:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "3" }),
+          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: counterFormatter.format(liveCounters.highPriorityMatches) }),
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Last Scan:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "12 seconds ago" })
+          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: aiSearchLive ? "Moments ago" : "Paused" })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "mt-5 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI status feed" }),
         /* @__PURE__ */ jsx("p", { className: "radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant", children: aiSearchLive ? aiStatusMessages[statusMessageIndex] : "Search paused — standing by…" }, aiSearchLive ? `status-${statusMessageIndex}` : "status-paused")
-      ] }) })
+      ] }) }),
+      /* @__PURE__ */ jsxs("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-2xl bg-surface-container p-6 md:p-8", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between", children: [
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "AI Activity Timeline" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant", children: "Live placeholder activity from the Dealer Command Centre AI operations flow." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "timeline-status-panel", children: [
+            /* @__PURE__ */ jsx("p", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Status" }),
+            /* @__PURE__ */ jsxs("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: [
+              /* @__PURE__ */ jsx("span", { className: "mr-2 text-emerald-400", children: "🟢" }),
+              "Operational"
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Monitoring 5 Active Search Missions" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "timeline-list mt-6", "aria-live": "polite", children: timelineEvents.map((event) => /* @__PURE__ */ jsxs("article", { className: `timeline-entry${activeTimelineEventId === event.eventId ? " timeline-entry-live" : ""}`, children: [
+          /* @__PURE__ */ jsx("p", { className: "timeline-entry-time", children: event.time }),
+          /* @__PURE__ */ jsx("div", { className: "timeline-entry-dot", "aria-hidden": "true" }),
+          /* @__PURE__ */ jsx("p", { className: "timeline-entry-message", children: event.message })
+        ] }, event.eventId)) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-6 text-headline-md font-headline-md text-on-surface", children: "AI Recommendation of the Day" }),
