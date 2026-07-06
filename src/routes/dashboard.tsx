@@ -84,7 +84,8 @@ function DashboardPage() {
 
     const sweepDurationMs = 3600
     const sweepHeadOffsetDeg = 60
-    const decayDegrees = 42
+    const sweepTrailDegrees = 128
+    const baseIntensity = 0.16
     const updateSweep = () => {
       const elapsed = Date.now() % sweepDurationMs
       const baseAngle = (elapsed / sweepDurationMs) * 360
@@ -92,14 +93,20 @@ function DashboardPage() {
 
       setContactIntensity(
         radarContacts.map((contact) => {
-          const delta = (sweepHeadAngle - contact.angleDeg + 360) % 360
-          return 0.2 + 0.8 * Math.exp(-delta / decayDegrees)
+          const trailingDelta = (sweepHeadAngle - contact.angleDeg + 360) % 360
+          if (trailingDelta > sweepTrailDegrees) return baseIntensity
+
+          const normalizedTrail = trailingDelta / sweepTrailDegrees
+          const trailFade = Math.exp(-normalizedTrail * 3.1)
+          const beamHitFlash = Math.exp(-((trailingDelta / 8) ** 2))
+          const nextIntensity = baseIntensity + trailFade * 0.66 + beamHitFlash * 0.24
+          return Math.min(1, nextIntensity)
         }),
       )
     }
 
     updateSweep()
-    const sweepInterval = setInterval(updateSweep, 90)
+    const sweepInterval = setInterval(updateSweep, 60)
     return () => clearInterval(sweepInterval)
   }, [aiSearchLive])
 
@@ -204,7 +211,9 @@ function DashboardPage() {
               {/* ── AI Search Radar ──────────────────────────────────── */}
               <article className="dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8">
                 <div className={`radar-glass-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
-                <div className="radar-container order-1">
+                <h3 className="text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
+
+                <div className="radar-container mt-6">
                   <div className="radar-frame" />
                   <div className="radar-scope">
                     <div className="radar-ring radar-ring-1" />
@@ -230,14 +239,8 @@ function DashboardPage() {
                   </div>
                 </div>
 
-                <h3 className="order-2 mt-8 text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
-                <p key={aiSearchLive ? `status-${statusMessageIndex}` : 'status-paused'} className="radar-status-message order-3 mt-2 text-center text-body-md font-body-md text-on-surface-variant">
-                  {aiSearchLive ? aiStatusMessages[statusMessageIndex] : 'Search paused — standing by…'}
-                </p>
-
-                {/* Industrial Power Switch — mobile: directly below radar; desktop: below stats */}
                 <div
-                  className={`ai-switch-panel order-4 md:order-5${aiSearchLive ? ' ai-switch-panel-live' : ' ai-switch-panel-paused'}`}
+                  className={`ai-switch-panel mt-8${aiSearchLive ? ' ai-switch-panel-live' : ' ai-switch-panel-paused'}`}
                     role="switch"
                     aria-checked={aiSearchLive}
                     tabIndex={0}
@@ -266,7 +269,7 @@ function DashboardPage() {
                     </div>
                   </div>
 
-                  <dl className="order-5 md:order-4 mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
+                  <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Status:</dt>
                     <dd className="text-on-surface">{aiSearchLive ? '🟢 Searching' : '⏸ Paused'}</dd>
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Sources Active:</dt>
@@ -280,16 +283,74 @@ function DashboardPage() {
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Last Scan:</dt>
                     <dd className="text-on-surface">12 seconds ago</dd>
                   </dl>
+
+                  <p className="mt-5 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+                    AI status feed
+                  </p>
+                  <p key={aiSearchLive ? `status-${statusMessageIndex}` : 'status-paused'} className="radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant">
+                    {aiSearchLive ? aiStatusMessages[statusMessageIndex] : 'Search paused — standing by…'}
+                  </p>
                 </div>
               </article>
+            </section>
+
+            {/* ── AI Recommendation ────────────────────────────────────── */}
+            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
+              <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">AI Recommendation of the Day</h2>
+
+              {/* Mobile premium badge */}
+              <div className="mb-5 md:hidden">
+                <span className="rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
+                  ⭐ Today's AI Pick
+                </span>
+              </div>
+
+              <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
+                  <p className="text-body-md font-body-md text-on-surface">BMW M3 Competition</p>
+                </div>
+                <div>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Year</p>
+                  <p className="text-body-md font-body-md text-on-surface">2022</p>
+                </div>
+                <div>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Price</p>
+                  <p className="text-body-md font-body-md text-on-surface">£31,995</p>
+                </div>
+                <div>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Estimated Profit</p>
+                  <p className="text-body-md font-body-md text-on-surface">£4,200</p>
+                </div>
+                <div>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Confidence Score</p>
+                  <p className="text-body-md font-body-md text-on-surface">97%</p>
+                </div>
+                <div>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>
+                  <p className="text-body-md font-body-md text-on-surface-variant">Recently reduced in price.</p>
+                  <p className="text-body-md font-body-md text-on-surface-variant">Strong resale potential.</p>
+                  <p className="text-body-md font-body-md text-on-surface-variant">Located only 42 miles away.</p>
+                </div>
+              </div>
+
+              {/* Buttons: full-width stacked on mobile, inline on md+ */}
+              <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4">
+                <Link
+                  to="/opportunity"
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto"
+                >
+                  Review Opportunity
+                </Link>
+                <button className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto">
+                  Save Vehicle
+                </button>
+              </div>
             </section>
 
             {/* ── Recent Opportunities ─────────────────────────────────── */}
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
-              <p className="mb-6 text-body-md font-body-md text-on-surface-variant">
-                "Your latest AI search results will appear here."
-              </p>
 
               {/* Desktop table (unchanged, hidden on mobile) */}
               <div className="hidden overflow-x-auto md:block">
@@ -372,60 +433,6 @@ function DashboardPage() {
                     </div>
                   </article>
                 ))}
-              </div>
-            </section>
-
-            {/* ── AI Recommendation ────────────────────────────────────── */}
-            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
-              <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">AI Recommendation of the Day</h2>
-
-              {/* Mobile premium badge */}
-              <div className="mb-5 md:hidden">
-                <span className="rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
-                  ⭐ Today's AI Pick
-                </span>
-              </div>
-
-              <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
-                  <p className="text-body-md font-body-md text-on-surface">BMW M3 Competition</p>
-                </div>
-                <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Year</p>
-                  <p className="text-body-md font-body-md text-on-surface">2022</p>
-                </div>
-                <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Price</p>
-                  <p className="text-body-md font-body-md text-on-surface">£31,995</p>
-                </div>
-                <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Estimated Profit</p>
-                  <p className="text-body-md font-body-md text-on-surface">£4,200</p>
-                </div>
-                <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Confidence Score</p>
-                  <p className="text-body-md font-body-md text-on-surface">97%</p>
-                </div>
-                <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Recently reduced in price.</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Strong resale potential.</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Located only 42 miles away.</p>
-                </div>
-              </div>
-
-              {/* Buttons: full-width stacked on mobile, inline on md+ */}
-              <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4">
-                <Link
-                  to="/opportunity"
-                  className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto"
-                >
-                  Review Opportunity
-                </Link>
-                <button className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto">
-                  Save Vehicle
-                </button>
               </div>
             </section>
 

@@ -122,18 +122,24 @@ function DashboardPage() {
     if (!aiSearchLive) return;
     const sweepDurationMs = 3600;
     const sweepHeadOffsetDeg = 60;
-    const decayDegrees = 42;
+    const sweepTrailDegrees = 128;
+    const baseIntensity = 0.16;
     const updateSweep = () => {
       const elapsed = Date.now() % sweepDurationMs;
       const baseAngle = elapsed / sweepDurationMs * 360;
       const sweepHeadAngle = (baseAngle + sweepHeadOffsetDeg) % 360;
       setContactIntensity(radarContacts.map((contact) => {
-        const delta = (sweepHeadAngle - contact.angleDeg + 360) % 360;
-        return 0.2 + 0.8 * Math.exp(-delta / decayDegrees);
+        const trailingDelta = (sweepHeadAngle - contact.angleDeg + 360) % 360;
+        if (trailingDelta > sweepTrailDegrees) return baseIntensity;
+        const normalizedTrail = trailingDelta / sweepTrailDegrees;
+        const trailFade = Math.exp(-normalizedTrail * 3.1);
+        const beamHitFlash = Math.exp(-((trailingDelta / 8) ** 2));
+        const nextIntensity = baseIntensity + trailFade * 0.66 + beamHitFlash * 0.24;
+        return Math.min(1, nextIntensity);
       }));
     };
     updateSweep();
-    const sweepInterval = setInterval(updateSweep, 90);
+    const sweepInterval = setInterval(updateSweep, 60);
     return () => clearInterval(sweepInterval);
   }, [aiSearchLive]);
   useEffect(() => {
@@ -224,7 +230,8 @@ function DashboardPage() {
         ] }, card.title)) })
       ] }),
       /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
-        /* @__PURE__ */ jsxs("div", { className: "radar-container order-1", children: [
+        /* @__PURE__ */ jsx("h3", { className: "text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
+        /* @__PURE__ */ jsxs("div", { className: "radar-container mt-6", children: [
           /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
           /* @__PURE__ */ jsxs("div", { className: "radar-scope", children: [
             /* @__PURE__ */ jsx("div", { className: "radar-ring radar-ring-1" }),
@@ -242,9 +249,7 @@ function DashboardPage() {
             } }, contact.id))
           ] })
         ] }),
-        /* @__PURE__ */ jsx("h3", { className: "order-2 mt-8 text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
-        /* @__PURE__ */ jsx("p", { className: "radar-status-message order-3 mt-2 text-center text-body-md font-body-md text-on-surface-variant", children: aiSearchLive ? aiStatusMessages[statusMessageIndex] : "Search paused — standing by…" }, aiSearchLive ? `status-${statusMessageIndex}` : "status-paused"),
-        /* @__PURE__ */ jsxs("div", { className: `ai-switch-panel order-4 md:order-5${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
+        /* @__PURE__ */ jsxs("div", { className: `ai-switch-panel mt-8${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             setAiSearchLive((v) => !v);
@@ -266,7 +271,7 @@ function DashboardPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("dl", { className: "order-5 md:order-4 mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
+        /* @__PURE__ */ jsxs("dl", { className: "mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status:" }),
           /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: aiSearchLive ? "🟢 Searching" : "⏸ Paused" }),
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Sources Active:" }),
@@ -279,12 +284,49 @@ function DashboardPage() {
           /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "3" }),
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Last Scan:" }),
           /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "12 seconds ago" })
-        ] })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-5 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI status feed" }),
+        /* @__PURE__ */ jsx("p", { className: "radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant", children: aiSearchLive ? aiStatusMessages[statusMessageIndex] : "Search paused — standing by…" }, aiSearchLive ? `status-${statusMessageIndex}` : "status-paused")
       ] }) })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8", children: [
+      /* @__PURE__ */ jsx("h2", { className: "mb-6 text-headline-md font-headline-md text-on-surface", children: "AI Recommendation of the Day" }),
+      /* @__PURE__ */ jsx("div", { className: "mb-5 md:hidden", children: /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary", children: "⭐ Today's AI Pick" }) }),
+      /* @__PURE__ */ jsxs("div", { className: "mb-8 grid grid-cols-1 gap-4 md:grid-cols-2", children: [
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicle" }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "BMW M3 Competition" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Year" }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "2022" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Price" }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "£31,995" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Estimated Profit" }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "£4,200" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Confidence Score" }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "97%" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Reason" }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Recently reduced in price." }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Strong resale potential." }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Located only 42 miles away." })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4", children: [
+        /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto", children: "Review Opportunity" }),
+        /* @__PURE__ */ jsx("button", { className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto", children: "Save Vehicle" })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "Recent Opportunities" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-6 text-body-md font-body-md text-on-surface-variant", children: '"Your latest AI search results will appear here."' }),
       /* @__PURE__ */ jsx("div", { className: "hidden overflow-x-auto md:block", children: /* @__PURE__ */ jsxs("table", { className: "w-full min-w-[640px] border-separate border-spacing-y-2 text-left", children: [
         /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: [
           /* @__PURE__ */ jsx("th", { className: "px-4 py-2", children: "Vehicle" }),
@@ -326,42 +368,6 @@ function DashboardPage() {
           /* @__PURE__ */ jsx("button", { className: "flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60", children: "Dismiss" })
         ] })
       ] }, opportunity.vehicle)) })
-    ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8", children: [
-      /* @__PURE__ */ jsx("h2", { className: "mb-6 text-headline-md font-headline-md text-on-surface", children: "AI Recommendation of the Day" }),
-      /* @__PURE__ */ jsx("div", { className: "mb-5 md:hidden", children: /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary", children: "⭐ Today's AI Pick" }) }),
-      /* @__PURE__ */ jsxs("div", { className: "mb-8 grid grid-cols-1 gap-4 md:grid-cols-2", children: [
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicle" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "BMW M3 Competition" })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Year" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "2022" })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Price" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "£31,995" })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Estimated Profit" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "£4,200" })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Confidence Score" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "97%" })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Reason" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Recently reduced in price." }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Strong resale potential." }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Located only 42 miles away." })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4", children: [
-        /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto", children: "Review Opportunity" }),
-        /* @__PURE__ */ jsx("button", { className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto", children: "Save Vehicle" })
-      ] })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "My Active Searches" }),
