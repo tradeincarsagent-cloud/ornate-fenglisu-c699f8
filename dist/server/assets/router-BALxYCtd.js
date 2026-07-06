@@ -131,15 +131,15 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
-const $$splitComponentImporter$3 = () => import("./search-builder-B1GNhwWt.js");
+const $$splitComponentImporter$3 = () => import("./search-builder-GvWMEGYn.js");
 const Route$3 = createFileRoute("/search-builder")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./opportunity-CZSv1N8S.js");
+const $$splitComponentImporter$2 = () => import("./opportunity-C5aKsu9N.js");
 const Route$2 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./dashboard-Dr_eovXR.js");
+const $$splitComponentImporter$1 = () => import("./dashboard-D31mtKre.js");
 const Route$1 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });

@@ -100,31 +100,18 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
   // Uses position:fixed to prevent iOS Safari from accumulating a displaced
   // scroll offset that gets stuck after the drawer closes.
   useEffect(() => {
-    if (sidebarOpen) {
-      const scrollY = window.scrollY
-      document.body.style.position = 'fixed'
-      document.body.style.top = `-${scrollY}px`
-      document.body.style.width = '100%'
-      document.body.style.overflowY = 'scroll'
-    } else {
-      const top = document.body.style.top
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      document.body.style.overflowY = ''
-      if (top) {
-        window.scrollTo(0, parseInt(top) * -1)
-      }
-    }
+    if (!sidebarOpen) return
+    const scrollY = window.scrollY
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${scrollY}px`
+    document.body.style.width = '100%'
+    document.body.style.overflowY = 'scroll'
     return () => {
-      const top = document.body.style.top
       document.body.style.position = ''
       document.body.style.top = ''
       document.body.style.width = ''
       document.body.style.overflowY = ''
-      if (top) {
-        window.scrollTo(0, parseInt(top) * -1)
-      }
+      window.scrollTo(0, scrollY)
     }
   }, [sidebarOpen])
 
@@ -160,7 +147,7 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
         <PlatformNav items={navItems} onNavigate={() => setSidebarOpen(false)} />
       </aside>
 
-      <div className="mx-auto flex min-h-screen max-w-container-max">
+      <div className="mx-auto flex lg:min-h-screen max-w-container-max">
         <aside className="hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col">
           <div className="mb-8">
             <div className="logo-bezel rounded-lg p-1">
