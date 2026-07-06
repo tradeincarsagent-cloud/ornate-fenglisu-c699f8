@@ -3,6 +3,23 @@ import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-DqiuekGA.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CuGw1k3x.js";
+const missionStatusConfig = {
+  Monitoring: {
+    color: "rgba(74, 222, 128, 0.9)",
+    glow: "rgba(74, 222, 128, 0.55)",
+    label: "Monitoring"
+  },
+  Waiting: {
+    color: "rgba(251, 191, 36, 0.88)",
+    glow: "rgba(251, 191, 36, 0.5)",
+    label: "Waiting"
+  },
+  Updating: {
+    color: "rgba(56, 189, 248, 0.9)",
+    glow: "rgba(56, 189, 248, 0.5)",
+    label: "Updating"
+  }
+};
 const radarContacts = [{
   id: "contact-1",
   x: 0.63,
@@ -54,7 +71,8 @@ const timelineTemplates = [{
   id: "timeline-mercedes-search",
   message: "Dealer Network search completed for Mercedes A45 AMG.",
   contactId: "contact-3",
-  opportunityIndex: 2
+  opportunityIndex: 2,
+  missionIndex: 2
 }, {
   id: "timeline-porsche-opportunity",
   message: "New Porsche Macan S opportunity added to Recent Opportunities.",
@@ -64,7 +82,8 @@ const timelineTemplates = [{
   id: "timeline-golf-mission",
   message: "AI Search Mission updated for Volkswagen Golf R.",
   contactId: "contact-4",
-  opportunityIndex: 3
+  opportunityIndex: 3,
+  missionIndex: 0
 }];
 const initialTimelineEvents = [{
   ...timelineTemplates[0],
@@ -142,19 +161,23 @@ function DashboardPage() {
   }];
   const recentOpportunities = dashboardRecentOpportunities;
   const activeSearches = [{
-    name: "Performance Saloons (2019+)",
-    matches: "14",
-    updated: "3 mins ago"
+    name: "BMW M3 UK Search",
+    status: "Monitoring",
+    lastScan: "2 minutes ago",
+    opportunities: 3
   }, {
     name: "SUVs under £28k",
-    matches: "9",
-    updated: "11 mins ago"
+    status: "Waiting",
+    lastScan: "11 minutes ago",
+    opportunities: 9
   }, {
     name: "Low-mileage hybrids",
-    matches: "6",
-    updated: "19 mins ago"
+    status: "Updating",
+    lastScan: "1 minute ago",
+    opportunities: 6
   }];
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
+  const [highlightedMission, setHighlightedMission] = useState(null);
   const [priorityContactId, setPriorityContactId] = useState(null);
   const [contactIntensity, setContactIntensity] = useState(() => radarContacts.map(() => 0.22));
   const [statusMessageIndex, setStatusMessageIndex] = useState(0);
@@ -226,10 +249,16 @@ function DashboardPage() {
       setRadarDetectionGlow(true);
       setHighlightedOpportunity(template.opportunityIndex);
       setActiveTimelineEventId(eventId);
+      if (template.missionIndex !== void 0) {
+        setHighlightedMission(template.missionIndex);
+      }
       schedule(() => setPriorityContactId(null), 1600);
       schedule(() => setRadarDetectionGlow(false), 1e3);
       schedule(() => setHighlightedOpportunity(null), 1700);
       schedule(() => setActiveTimelineEventId(null), 1900);
+      if (template.missionIndex !== void 0) {
+        schedule(() => setHighlightedMission(null), 1700);
+      }
       schedule(runTimelineActivity, 11e3 + Math.random() * 4e3);
     };
     schedule(runTimelineActivity, 9e3);
@@ -502,38 +531,59 @@ function DashboardPage() {
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "AI Search Missions" }),
-      /* @__PURE__ */ jsx("div", { className: "space-y-3", children: activeSearches.map((search, index) => /* @__PURE__ */ jsxs("article", { className: "rounded-xl bg-surface-container-high p-4", children: [
-        /* @__PURE__ */ jsxs("div", { className: "hidden gap-2 md:flex md:flex-row md:items-center md:justify-between", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: search.name }),
-          /* @__PURE__ */ jsxs("p", { className: "text-body-md font-body-md text-primary", children: [
-            search.matches,
-            " matches"
-          ] }),
-          /* @__PURE__ */ jsxs("p", { className: "text-body-md font-body-md text-on-surface-variant", children: [
-            "Updated ",
-            search.updated
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "md:hidden", children: [
-          /* @__PURE__ */ jsxs("button", { onClick: () => toggleSearch(index), className: "flex w-full items-center justify-between gap-3", "aria-expanded": expandedSearches[index], children: [
-            /* @__PURE__ */ jsxs("div", { className: "min-w-0 text-left", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: search.name }),
-              /* @__PURE__ */ jsxs("p", { className: "mt-0.5 text-sm text-primary", children: [
-                search.matches,
-                " matches · Updated ",
-                search.updated
-              ] })
+      /* @__PURE__ */ jsx("div", { className: "space-y-3", children: activeSearches.map((search, index) => {
+        const statusCfg = missionStatusConfig[search.status];
+        return /* @__PURE__ */ jsxs("article", { className: `rounded-xl bg-surface-container-high p-4 transition-all ${highlightedMission === index ? "mission-card-highlight" : ""}`, children: [
+          /* @__PURE__ */ jsxs("div", { className: "hidden md:grid md:grid-cols-[1fr_auto_auto_auto] md:items-center md:gap-6", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md font-medium text-on-surface", children: search.name }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("span", { className: "mission-status-dot", style: {
+                background: statusCfg.color,
+                boxShadow: `0 0 6px ${statusCfg.glow}`
+              } }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm text-on-surface-variant", children: statusCfg.label })
             ] }),
-            /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 text-on-surface-variant", children: /* @__PURE__ */ jsx(ChevronIcon, { open: expandedSearches[index] }) })
+            /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
+              /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps uppercase tracking-widest", children: "Last Scan: " }),
+              search.lastScan
+            ] }),
+            /* @__PURE__ */ jsxs("p", { className: "text-sm font-semibold text-primary", children: [
+              search.opportunities,
+              " Opportunities"
+            ] })
           ] }),
-          expandedSearches[index] && /* @__PURE__ */ jsxs("div", { className: "mt-3 grid grid-cols-2 gap-2", children: [
-            /* @__PURE__ */ jsx("button", { className: "rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),
-            /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40", children: "Edit" }),
-            /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60", children: "Pause" }),
-            /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-red-500/30 bg-surface-container py-2.5 text-sm font-medium text-red-400 transition-colors hover:border-red-500/50", children: "Delete" })
+          /* @__PURE__ */ jsxs("div", { className: "md:hidden", children: [
+            /* @__PURE__ */ jsxs("button", { onClick: () => toggleSearch(index), className: "flex w-full items-center justify-between gap-3", "aria-expanded": expandedSearches[index], children: [
+              /* @__PURE__ */ jsxs("div", { className: "min-w-0 text-left", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: {
+                    background: statusCfg.color,
+                    boxShadow: `0 0 6px ${statusCfg.glow}`
+                  } }),
+                  /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md font-medium text-on-surface", children: search.name })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "mt-1.5 flex gap-4 pl-4", children: [
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
+                    "Last Scan: ",
+                    search.lastScan
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm font-semibold text-primary", children: [
+                    search.opportunities,
+                    " Opp."
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 text-on-surface-variant", children: /* @__PURE__ */ jsx(ChevronIcon, { open: expandedSearches[index] }) })
+            ] }),
+            expandedSearches[index] && /* @__PURE__ */ jsxs("div", { className: "mt-3 grid grid-cols-2 gap-2", children: [
+              /* @__PURE__ */ jsx("button", { className: "rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),
+              /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40", children: "Edit" }),
+              /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60", children: "Pause" }),
+              /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-red-500/30 bg-surface-container py-2.5 text-sm font-medium text-red-400 transition-colors hover:border-red-500/50", children: "Delete" })
+            ] })
           ] })
-        ] })
-      ] }, search.name)) })
+        ] }, search.name);
+      }) })
     ] })
   ] });
 }
