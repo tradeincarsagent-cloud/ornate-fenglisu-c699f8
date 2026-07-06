@@ -45,15 +45,6 @@ const radarContacts: Array<{
   { id: 'contact-5', x: 0.18, y: 0.33, vehicleType: 'car', opportunityIndex: 4, angleDeg: 208.1 },
 ]
 
-const aiStatusMessages = [
-  'Searching UK Dealer Network…',
-  'Scanning Auto Trader…',
-  'Checking Dealer Websites…',
-  'Analysing Price Changes…',
-  'Ranking Opportunities…',
-  'Monitoring Active Searches…',
-]
-
 const timelineTemplates: TimelineTemplate[] = [
   {
     id: 'timeline-audi-rs5',
@@ -147,7 +138,6 @@ function DashboardPage() {
   const [highlightedMission, setHighlightedMission] = useState<number | null>(null)
   const [priorityContactId, setPriorityContactId] = useState<string | null>(null)
   const [contactIntensity, setContactIntensity] = useState<number[]>(() => radarContacts.map(() => 0.22))
-  const [statusMessageIndex, setStatusMessageIndex] = useState(0)
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false)
   const [aiSearchLive, setAiSearchLive] = useState(true)
   const [timelineEvents, setTimelineEvents] = useState(initialTimelineEvents)
@@ -284,24 +274,16 @@ function DashboardPage() {
     }
   }, [aiSearchLive])
 
-  useEffect(() => {
-    if (!aiSearchLive) return
-    const statusRotation = setInterval(() => {
-      setStatusMessageIndex((current) => (current + 1) % aiStatusMessages.length)
-    }, 3400)
-    return () => clearInterval(statusRotation)
-  }, [aiSearchLive])
-
   const toggleSearch = (index: number) => {
     setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
   }
 
   const operationsPanelItems = [
-    { label: 'Status', value: aiSearchLive ? '🟢 Searching' : '⏸ Paused' },
+    { label: 'Status', value: aiSearchLive ? 'Searching' : 'Paused', tone: aiSearchLive ? 'live' : 'paused' },
     { label: 'Sources Active', value: '5' },
     { label: 'Vehicles Checked Today', value: counterFormatter.format(liveCounters.vehiclesCheckedToday) },
     { label: 'Matches Found', value: counterFormatter.format(liveCounters.matchesFound) },
-    { label: 'High Priority Matches', value: counterFormatter.format(liveCounters.highPriorityMatches) },
+    { label: 'High Priority Matches', value: counterFormatter.format(liveCounters.highPriorityMatches), tone: 'accent' },
     { label: 'Last Scan', value: aiSearchLive ? 'Moments ago' : 'Paused' },
   ]
 
@@ -454,20 +436,35 @@ function DashboardPage() {
 
                   <section className="mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6">
                     <p className="text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85">AI Operations Panel</p>
-                    <dl className="mt-4 divide-y divide-outline-variant/20 rounded-xl border border-outline-variant/25 bg-surface-container-high/70">
-                      {operationsPanelItems.map((item) => (
-                        <div key={item.label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-5">
-                          <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</dt>
-                          <dd className="text-right text-body-md font-body-md tabular-nums text-on-surface">{item.value}</dd>
+                    <dl className="mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3">
+                      {operationsPanelItems.map((item, index) => (
+                        <div
+                          key={item.label}
+                          className={`flex min-h-[104px] flex-col justify-between gap-4 px-4 py-4 sm:px-5 ${
+                            index < operationsPanelItems.length - 1 ? 'border-b border-outline-variant/18' : ''
+                          } ${
+                            index % 2 === 0 ? 'sm:border-r sm:border-outline-variant/18' : ''
+                          } ${
+                            index >= operationsPanelItems.length - 2 ? 'sm:border-b-0' : ''
+                          } ${
+                            index % 3 !== 2 ? 'xl:border-r xl:border-outline-variant/18' : 'xl:border-r-0'
+                          } ${
+                            index >= operationsPanelItems.length - 3 ? 'xl:border-b-0' : ''
+                          }`}
+                        >
+                          <dt className="font-label-caps text-label-caps uppercase tracking-[0.18em] text-on-surface-variant/90">{item.label}</dt>
+                          <dd
+                            className={`flex items-center gap-2 text-[1.05rem] font-semibold tracking-[0.01em] text-on-surface ${
+                              item.tone === 'accent' ? 'text-primary' : ''
+                            }`}
+                          >
+                            {item.tone === 'live' ? <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.55)]" aria-hidden="true" /> : null}
+                            {item.tone === 'paused' ? <span className="h-2.5 w-2.5 rounded-full bg-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.45)]" aria-hidden="true" /> : null}
+                            <span className="tabular-nums">{item.value}</span>
+                          </dd>
                         </div>
                       ))}
                     </dl>
-                    <p className="mt-4 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
-                      AI status feed
-                    </p>
-                    <p key={aiSearchLive ? `status-${statusMessageIndex}` : 'status-paused'} className="radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant">
-                      {aiSearchLive ? aiStatusMessages[statusMessageIndex] : 'Search paused — standing by…'}
-                    </p>
                   </section>
 
                   <article className="dashboard-border mt-6 rounded-2xl bg-surface-container p-6 md:p-8">
@@ -485,7 +482,7 @@ function DashboardPage() {
                           <span className="mr-2 text-emerald-400">🟢</span>
                           Operational
                         </p>
-                        <p className="mt-1 text-sm text-on-surface-variant">Monitoring 5 Active Search Missions</p>
+                        <p className="mt-1 text-sm text-on-surface-variant">Monitoring 5 AI Search Missions</p>
                       </div>
                     </div>
 
