@@ -122,7 +122,23 @@ function PlatformShell({ children, navItems }) {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block", children: "Trade In Cars Agent" })
         ] }),
-        /* @__PURE__ */ jsx("main", { className: "flex-1 px-6 py-8 md:px-10", children })
+        /* @__PURE__ */ jsx("main", { className: "flex-1 px-6 py-8 md:px-10", children }),
+        /* @__PURE__ */ jsx("footer", { className: "border-t border-outline-variant/25 bg-surface-container-low px-6 py-4 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between", children: [
+          /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface", children: "Trade in Cars Agent" }),
+            /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Version 1.0 Beta" }),
+            /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant", children: [
+              "System Status: ",
+              /* @__PURE__ */ jsx("span", { className: "text-on-surface", children: "🟢 Operational" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("nav", { "aria-label": "Application footer links", className: "flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant", children: [
+            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Support" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Privacy" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Terms" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Contact" })
+          ] })
+        ] }) })
       ] })
     ] })
   ] });

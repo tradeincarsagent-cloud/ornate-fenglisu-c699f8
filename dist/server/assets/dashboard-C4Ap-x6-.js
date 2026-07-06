@@ -1,7 +1,7 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell } from "./PlatformShell-DqiuekGA.js";
+import { P as PlatformShell } from "./PlatformShell-DAVKrEm2.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CuGw1k3x.js";
 const missionStatusConfig = {
   Monitoring: {
@@ -307,6 +307,25 @@ function DashboardPage() {
       [index]: !prev[index]
     }));
   };
+  const operationsPanelItems = [{
+    label: "Status",
+    value: aiSearchLive ? "🟢 Searching" : "⏸ Paused"
+  }, {
+    label: "Sources Active",
+    value: "5"
+  }, {
+    label: "Vehicles Checked Today",
+    value: counterFormatter.format(liveCounters.vehiclesCheckedToday)
+  }, {
+    label: "Matches Found",
+    value: counterFormatter.format(liveCounters.matchesFound)
+  }, {
+    label: "High Priority Matches",
+    value: counterFormatter.format(liveCounters.highPriorityMatches)
+  }, {
+    label: "Last Scan",
+    value: aiSearchLive ? "Moments ago" : "Paused"
+  }];
   return /* @__PURE__ */ jsxs(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
     href: "/dashboard",
@@ -407,44 +426,37 @@ function DashboardPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("dl", { className: "mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
-          /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: aiSearchLive ? "🟢 Searching" : "⏸ Paused" }),
-          /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Sources Active:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: "5" }),
-          /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicles Checked Today:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: counterFormatter.format(liveCounters.vehiclesCheckedToday) }),
-          /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Matches Found:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: counterFormatter.format(liveCounters.matchesFound) }),
-          /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "High Priority Matches:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: counterFormatter.format(liveCounters.highPriorityMatches) }),
-          /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Last Scan:" }),
-          /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: aiSearchLive ? "Moments ago" : "Paused" })
+        /* @__PURE__ */ jsxs("section", { className: "mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85", children: "AI Operations Panel" }),
+          /* @__PURE__ */ jsx("dl", { className: "mt-4 divide-y divide-outline-variant/20 rounded-xl border border-outline-variant/25 bg-surface-container-high/70", children: operationsPanelItems.map((item) => /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-5", children: [
+            /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: item.label }),
+            /* @__PURE__ */ jsx("dd", { className: "text-right text-body-md font-body-md tabular-nums text-on-surface", children: item.value })
+          ] }, item.label)) }),
+          /* @__PURE__ */ jsx("p", { className: "mt-4 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI status feed" }),
+          /* @__PURE__ */ jsx("p", { className: "radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant", children: aiSearchLive ? aiStatusMessages[statusMessageIndex] : "Search paused — standing by…" }, aiSearchLive ? `status-${statusMessageIndex}` : "status-paused")
         ] }),
-        /* @__PURE__ */ jsx("p", { className: "mt-5 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI status feed" }),
-        /* @__PURE__ */ jsx("p", { className: "radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant", children: aiSearchLive ? aiStatusMessages[statusMessageIndex] : "Search paused — standing by…" }, aiSearchLive ? `status-${statusMessageIndex}` : "status-paused")
-      ] }) }),
-      /* @__PURE__ */ jsxs("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-2xl bg-surface-container p-6 md:p-8", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between", children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "AI Activity Timeline" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant", children: "Live placeholder activity from the Dealer Command Centre AI operations flow." })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "timeline-status-panel", children: [
-            /* @__PURE__ */ jsx("p", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Status" }),
-            /* @__PURE__ */ jsxs("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: [
-              /* @__PURE__ */ jsx("span", { className: "mr-2 text-emerald-400", children: "🟢" }),
-              "Operational"
+        /* @__PURE__ */ jsxs("article", { className: "dashboard-border mt-6 rounded-2xl bg-surface-container p-6 md:p-8", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "AI Activity Timeline" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant", children: "Live placeholder activity from the Dealer Command Centre AI operations flow." })
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Monitoring 5 Active Search Missions" })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "timeline-list mt-6", "aria-live": "polite", children: timelineEvents.map((event) => /* @__PURE__ */ jsxs("article", { className: `timeline-entry${activeTimelineEventId === event.eventId ? " timeline-entry-live" : ""}`, children: [
-          /* @__PURE__ */ jsx("p", { className: "timeline-entry-time", children: event.time }),
-          /* @__PURE__ */ jsx("div", { className: "timeline-entry-dot", "aria-hidden": "true" }),
-          /* @__PURE__ */ jsx("p", { className: "timeline-entry-message", children: event.message })
-        ] }, event.eventId)) })
-      ] })
+            /* @__PURE__ */ jsxs("div", { className: "timeline-status-panel", children: [
+              /* @__PURE__ */ jsx("p", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Status" }),
+              /* @__PURE__ */ jsxs("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: [
+                /* @__PURE__ */ jsx("span", { className: "mr-2 text-emerald-400", children: "🟢" }),
+                "Operational"
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Monitoring 5 Active Search Missions" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "timeline-list mt-6", "aria-live": "polite", children: timelineEvents.map((event) => /* @__PURE__ */ jsxs("article", { className: `timeline-entry${activeTimelineEventId === event.eventId ? " timeline-entry-live" : ""}`, children: [
+            /* @__PURE__ */ jsx("p", { className: "timeline-entry-time", children: event.time }),
+            /* @__PURE__ */ jsx("div", { className: "timeline-entry-dot", "aria-hidden": "true" }),
+            /* @__PURE__ */ jsx("p", { className: "timeline-entry-message", children: event.message })
+          ] }, event.eventId)) })
+        ] })
+      ] }) })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-6 text-headline-md font-headline-md text-on-surface", children: "AI Recommendation of the Day" }),
