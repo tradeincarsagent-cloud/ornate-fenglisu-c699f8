@@ -127,19 +127,6 @@ function DashboardPage() {
     title: "Saved Vehicles Updated",
     value: "5"
   }];
-  const dailyBriefingStats = [{
-    label: "Vehicles Checked",
-    value: "18,462"
-  }, {
-    label: "Matching Opportunities",
-    value: "24"
-  }, {
-    label: "Automatically Rejected",
-    value: "19"
-  }, {
-    label: "Recommended Reviews",
-    value: "5"
-  }];
   const recentOpportunities = dashboardRecentOpportunities;
   const activeSearches = [{
     name: "Performance Saloons (2019+)",
@@ -307,28 +294,24 @@ function DashboardPage() {
     /* @__PURE__ */ jsx("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
         /* @__PURE__ */ jsx("p", { className: "text-xs font-semibold uppercase tracking-[0.18em] text-primary/90", children: "AI Daily Briefing" }),
-        /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Good Morning Jonathan" }),
-        /* @__PURE__ */ jsx("p", { className: "text-body-md text-on-surface-variant", children: "Here’s what I’ve been working on since your last visit." })
+        /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Good Morning Jonathan," })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "grid gap-3 sm:grid-cols-2 xl:grid-cols-4", children: dailyBriefingStats.map((stat) => /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-3", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-xs uppercase tracking-[0.1em] text-on-surface-variant", children: stat.label }),
-        /* @__PURE__ */ jsx("p", { className: "mt-2 text-headline-md font-headline-md text-primary", children: stat.value })
-      ] }, stat.label)) }),
-      /* @__PURE__ */ jsxs("div", { className: "grid gap-3 lg:grid-cols-2", children: [
-        /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-primary/30 bg-primary/10 px-4 py-3", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-xs uppercase tracking-[0.1em] text-primary/90", children: "Today’s Top Recommendation" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-title-lg font-title-lg text-on-surface", children: featuredOpportunity.vehicle })
+      /* @__PURE__ */ jsx("div", { className: "rounded-2xl border border-outline-variant/35 bg-surface/50 p-5 text-body-md text-on-surface-variant", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3 leading-relaxed", children: [
+        /* @__PURE__ */ jsx("p", { children: "Since your last visit I have analysed 18,462 vehicle listings across your connected search sources." }),
+        /* @__PURE__ */ jsx("p", { children: "I found 24 potential matches." }),
+        /* @__PURE__ */ jsx("p", { children: "After applying your buying criteria, I rejected 19 automatically and identified 5 vehicles that deserve your attention today." }),
+        /* @__PURE__ */ jsxs("p", { children: [
+          "Your strongest opportunity remains ",
+          /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: featuredOpportunity.vehicle }),
+          "."
         ] }),
-        /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-3", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-xs uppercase tracking-[0.1em] text-on-surface-variant", children: "Recommended Action" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: "Review this vehicle before reviewing other opportunities." })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-xs tracking-[0.08em] text-on-surface-variant", children: "Last AI Update: 08:42 Today" })
+        /* @__PURE__ */ jsx("p", { children: "I recommend reviewing this vehicle first because it currently offers the highest estimated profit margin." })
+      ] }) }),
+      /* @__PURE__ */ jsx("p", { className: "text-xs tracking-[0.08em] text-on-surface-variant", children: "Estimated reading time: 15 seconds" })
     ] }) }),
     /* @__PURE__ */ jsxs("div", { className: "mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap", children: [
-      /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Create New AI Search" }),
-      /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "View AI Buying Report" })
+      /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Review Top Opportunity" }),
+      /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "Create New Search" })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "mb-10 space-y-8", children: [
       /* @__PURE__ */ jsxs("div", { children: [

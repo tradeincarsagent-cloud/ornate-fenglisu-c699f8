@@ -120,12 +120,6 @@ function DashboardPage() {
     { icon: '🔔', title: 'Auctions Ending Today', value: '1' },
     { icon: '❤️', title: 'Saved Vehicles Updated', value: '5' },
   ]
-  const dailyBriefingStats = [
-    { label: 'Vehicles Checked', value: '18,462' },
-    { label: 'Matching Opportunities', value: '24' },
-    { label: 'Automatically Rejected', value: '19' },
-    { label: 'Recommended Reviews', value: '5' },
-  ]
   const recentOpportunities = dashboardRecentOpportunities
   const activeSearches = [
     { name: 'Performance Saloons (2019+)', matches: '14', updated: '3 mins ago' },
@@ -295,50 +289,39 @@ function DashboardPage() {
               <div className="flex flex-col gap-6">
                 <div className="space-y-2">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/90">AI Daily Briefing</p>
-                  <h2 className="text-headline-md font-headline-md text-on-surface">Good Morning Jonathan</h2>
-                  <p className="text-body-md text-on-surface-variant">Here’s what I’ve been working on since your last visit.</p>
+                  <h2 className="text-headline-md font-headline-md text-on-surface">Good Morning Jonathan,</h2>
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                  {dailyBriefingStats.map((stat) => (
-                    <article
-                      key={stat.label}
-                      className="rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-3"
-                    >
-                      <p className="text-xs uppercase tracking-[0.1em] text-on-surface-variant">{stat.label}</p>
-                      <p className="mt-2 text-headline-md font-headline-md text-primary">{stat.value}</p>
-                    </article>
-                  ))}
-                </div>
-
-                <div className="grid gap-3 lg:grid-cols-2">
-                  <article className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3">
-                    <p className="text-xs uppercase tracking-[0.1em] text-primary/90">Today’s Top Recommendation</p>
-                    <p className="mt-2 text-title-lg font-title-lg text-on-surface">{featuredOpportunity.vehicle}</p>
-                  </article>
-                  <article className="rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-3">
-                    <p className="text-xs uppercase tracking-[0.1em] text-on-surface-variant">Recommended Action</p>
-                    <p className="mt-2 text-body-md font-body-md text-on-surface">
-                      Review this vehicle before reviewing other opportunities.
+                <div className="rounded-2xl border border-outline-variant/35 bg-surface/50 p-5 text-body-md text-on-surface-variant">
+                  <div className="space-y-3 leading-relaxed">
+                    <p>Since your last visit I have analysed 18,462 vehicle listings across your connected search sources.</p>
+                    <p>I found 24 potential matches.</p>
+                    <p>
+                      After applying your buying criteria, I rejected 19 automatically and identified 5 vehicles that deserve your
+                      attention today.
                     </p>
-                  </article>
+                    <p>
+                      Your strongest opportunity remains <span className="font-semibold text-on-surface">{featuredOpportunity.vehicle}</span>.
+                    </p>
+                    <p>I recommend reviewing this vehicle first because it currently offers the highest estimated profit margin.</p>
+                  </div>
                 </div>
 
-                <p className="text-xs tracking-[0.08em] text-on-surface-variant">Last AI Update: 08:42 Today</p>
+                <p className="text-xs tracking-[0.08em] text-on-surface-variant">Estimated reading time: 15 seconds</p>
               </div>
             </section>
             <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
-                to="/search-builder"
+                to="/opportunity"
                 className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
               >
-                Create New AI Search
+                Review Top Opportunity
               </Link>
               <Link
-                to="/opportunity"
+                to="/search-builder"
                 className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
               >
-                View AI Buying Report
+                Create New Search
               </Link>
             </div>
 
