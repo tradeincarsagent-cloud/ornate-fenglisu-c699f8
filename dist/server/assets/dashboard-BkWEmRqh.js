@@ -2,6 +2,36 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-DqiuekGA.js";
+const radarContacts = [{
+  id: "contact-1",
+  x: 0.63,
+  y: 0.24,
+  vehicleType: "car",
+  opportunityIndex: 0,
+  angleDeg: 35.8
+}, {
+  id: "contact-2",
+  x: 0.29,
+  y: 0.61,
+  vehicleType: "pickup",
+  opportunityIndex: 1,
+  angleDeg: 239.7
+}, {
+  id: "contact-3",
+  x: 0.74,
+  y: 0.47,
+  vehicleType: "van",
+  opportunityIndex: 2,
+  angleDeg: 85.2
+}, {
+  id: "contact-4",
+  x: 0.57,
+  y: 0.7,
+  vehicleType: "motorcycle",
+  opportunityIndex: 3,
+  angleDeg: 161.6
+}];
+const aiStatusMessages = ["Searching UK Dealer Network…", "Scanning Auto Trader…", "Checking Dealer Websites…", "Analysing Price Changes…", "Ranking Opportunities…", "Monitoring Active Searches…"];
 function ChevronIcon({
   open
 }) {
@@ -82,21 +112,68 @@ function DashboardPage() {
     updated: "19 mins ago"
   }];
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
+  const [priorityContactId, setPriorityContactId] = useState(null);
+  const [contactIntensity, setContactIntensity] = useState(() => radarContacts.map(() => 0.22));
+  const [statusMessageIndex, setStatusMessageIndex] = useState(0);
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false);
   const [aiSearchLive, setAiSearchLive] = useState(true);
   const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
   useEffect(() => {
     if (!aiSearchLive) return;
-    let nextOpportunityIndex = 0;
-    const scanInterval = setInterval(() => {
+    const sweepDurationMs = 3600;
+    const sweepHeadOffsetDeg = 60;
+    const decayDegrees = 42;
+    const updateSweep = () => {
+      const elapsed = Date.now() % sweepDurationMs;
+      const baseAngle = elapsed / sweepDurationMs * 360;
+      const sweepHeadAngle = (baseAngle + sweepHeadOffsetDeg) % 360;
+      setContactIntensity(radarContacts.map((contact) => {
+        const delta = (sweepHeadAngle - contact.angleDeg + 360) % 360;
+        return 0.2 + 0.8 * Math.exp(-delta / decayDegrees);
+      }));
+    };
+    updateSweep();
+    const sweepInterval = setInterval(updateSweep, 90);
+    return () => clearInterval(sweepInterval);
+  }, [aiSearchLive]);
+  useEffect(() => {
+    if (!aiSearchLive) {
+      setContactIntensity(radarContacts.map(() => 0.22));
+      setPriorityContactId(null);
+      setRadarDetectionGlow(false);
+      setHighlightedOpportunity(null);
+      return;
+    }
+    let cancelled = false;
+    const timeoutIds = [];
+    const schedule = (fn, ms) => {
+      const id = window.setTimeout(fn, ms);
+      timeoutIds.push(id);
+    };
+    const runDetection = () => {
+      if (cancelled) return;
+      const selected = radarContacts[Math.floor(Math.random() * radarContacts.length)];
+      setPriorityContactId(selected.id);
       setRadarDetectionGlow(true);
-      setHighlightedOpportunity(nextOpportunityIndex);
-      nextOpportunityIndex = (nextOpportunityIndex + 1) % recentOpportunities.length;
-      setTimeout(() => setRadarDetectionGlow(false), 1100);
-      setTimeout(() => setHighlightedOpportunity(null), 1700);
-    }, 6200);
-    return () => clearInterval(scanInterval);
+      setHighlightedOpportunity(selected.opportunityIndex % recentOpportunities.length);
+      schedule(() => setPriorityContactId(null), 1600);
+      schedule(() => setRadarDetectionGlow(false), 1e3);
+      schedule(() => setHighlightedOpportunity(null), 1700);
+      schedule(runDetection, 15e3 + Math.random() * 5e3);
+    };
+    schedule(runDetection, 15e3 + Math.random() * 5e3);
+    return () => {
+      cancelled = true;
+      timeoutIds.forEach((id) => window.clearTimeout(id));
+    };
   }, [recentOpportunities.length, aiSearchLive]);
+  useEffect(() => {
+    if (!aiSearchLive) return;
+    const statusRotation = setInterval(() => {
+      setStatusMessageIndex((current) => (current + 1) % aiStatusMessages.length);
+    }, 3400);
+    return () => clearInterval(statusRotation);
+  }, [aiSearchLive]);
   const toggleSearch = (index) => {
     setExpandedSearches((prev) => ({
       ...prev,
@@ -158,22 +235,16 @@ function DashboardPage() {
             /* @__PURE__ */ jsx("div", { className: "radar-sweep", style: {
               animationPlayState: aiSearchLive ? "running" : "paused"
             } }),
-            /* @__PURE__ */ jsx("span", { className: "radar-blip radar-blip-1", style: {
-              animationPlayState: aiSearchLive ? "running" : "paused"
-            } }),
-            /* @__PURE__ */ jsx("span", { className: "radar-blip radar-blip-2", style: {
-              animationPlayState: aiSearchLive ? "running" : "paused"
-            } }),
-            /* @__PURE__ */ jsx("span", { className: "radar-blip radar-blip-3", style: {
-              animationPlayState: aiSearchLive ? "running" : "paused"
-            } }),
-            /* @__PURE__ */ jsx("span", { className: "radar-blip radar-blip-4", style: {
-              animationPlayState: aiSearchLive ? "running" : "paused"
-            } })
+            radarContacts.map((contact, index) => /* @__PURE__ */ jsx("span", { className: `radar-contact${priorityContactId === contact.id ? " radar-contact-priority" : ""}`, "data-vehicle-type": contact.vehicleType, style: {
+              top: `${contact.y * 100}%`,
+              left: `${contact.x * 100}%`,
+              "--radar-contact-intensity": `${contactIntensity[index] ?? 0.22}`
+            } }, contact.id))
           ] })
         ] }),
         /* @__PURE__ */ jsx("h3", { className: "order-2 mt-8 text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
-        /* @__PURE__ */ jsxs("div", { className: `ai-switch-panel order-3 md:order-4${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
+        /* @__PURE__ */ jsx("p", { className: "radar-status-message order-3 mt-2 text-center text-body-md font-body-md text-on-surface-variant", children: aiSearchLive ? aiStatusMessages[statusMessageIndex] : "Search paused — standing by…" }, aiSearchLive ? `status-${statusMessageIndex}` : "status-paused"),
+        /* @__PURE__ */ jsxs("div", { className: `ai-switch-panel order-4 md:order-5${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             setAiSearchLive((v) => !v);
@@ -195,7 +266,7 @@ function DashboardPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("dl", { className: "order-4 md:order-3 mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
+        /* @__PURE__ */ jsxs("dl", { className: "order-5 md:order-4 mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant", children: [
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status:" }),
           /* @__PURE__ */ jsx("dd", { className: "text-on-surface", children: aiSearchLive ? "🟢 Searching" : "⏸ Paused" }),
           /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "Sources Active:" }),
