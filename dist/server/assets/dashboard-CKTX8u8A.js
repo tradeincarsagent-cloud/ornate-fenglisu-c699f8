@@ -105,6 +105,7 @@ const initialTimelineEvents = [{
   eventId: "timeline-seed-5",
   time: "09:02"
 }];
+const aiStatusMessages = ["Searching UK Dealer Network…", "Scanning Auto Trader…", "Checking Dealer Websites…", "Monitoring Price Drops…", "Analysing New Listings…", "Ranking Opportunities…", "Updating Search Missions…"];
 const activityTimeFormatter = new Intl.DateTimeFormat("en-GB", {
   hour: "2-digit",
   minute: "2-digit",
@@ -192,6 +193,8 @@ function DashboardPage() {
   const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
   const [openMoreMenu, setOpenMoreMenu] = useState(null);
   const [recAction, setRecAction] = useState(null);
+  const [activeAiStatusMessage, setActiveAiStatusMessage] = useState(aiStatusMessages[0]);
+  const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
     if (!aiSearchLive) return;
@@ -292,6 +295,34 @@ function DashboardPage() {
     return () => {
       cancelled = true;
       timeoutIds.forEach((id) => window.clearTimeout(id));
+    };
+  }, [aiSearchLive]);
+  useEffect(() => {
+    if (!aiSearchLive) {
+      setActiveAiStatusMessage("Monitoring paused — awaiting resume…");
+      setAiStatusMessageVisible(true);
+      return;
+    }
+    let messageIndex = 0;
+    let fadeTimeoutId = null;
+    setActiveAiStatusMessage(aiStatusMessages[0]);
+    setAiStatusMessageVisible(true);
+    const intervalId = window.setInterval(() => {
+      setAiStatusMessageVisible(false);
+      if (fadeTimeoutId !== null) {
+        window.clearTimeout(fadeTimeoutId);
+      }
+      fadeTimeoutId = window.setTimeout(() => {
+        messageIndex = (messageIndex + 1) % aiStatusMessages.length;
+        setActiveAiStatusMessage(aiStatusMessages[messageIndex]);
+        setAiStatusMessageVisible(true);
+      }, 220);
+    }, 3800);
+    return () => {
+      window.clearInterval(intervalId);
+      if (fadeTimeoutId !== null) {
+        window.clearTimeout(fadeTimeoutId);
+      }
     };
   }, [aiSearchLive]);
   const toggleSearch = (index) => {
@@ -445,7 +476,7 @@ function DashboardPage() {
                 /* @__PURE__ */ jsx("span", { className: "mr-2 text-emerald-400", children: "🟢" }),
                 "Operational"
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Monitoring 5 AI Search Missions" })
+              /* @__PURE__ */ jsx("p", { className: "radar-status-message mt-1 min-h-[1.35rem] text-sm text-on-surface-variant", children: /* @__PURE__ */ jsx("span", { className: `block transition-opacity duration-200 ${aiStatusMessageVisible ? "opacity-100" : "opacity-0"}`, children: activeAiStatusMessage }) })
             ] })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "timeline-list mt-6", "aria-live": "polite", children: timelineEvents.map((event) => /* @__PURE__ */ jsxs("article", { className: `timeline-entry${activeTimelineEventId === event.eventId ? " timeline-entry-live" : ""}`, children: [
