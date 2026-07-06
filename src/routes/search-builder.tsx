@@ -68,9 +68,9 @@ function SearchBuilderPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto max-w-container-max">
+      <div className="mx-auto w-full max-w-container-max overflow-x-hidden">
         {/* ── Page title ──────────────────────────────────────────────── */}
-        <div className="mb-10">
+        <div className="mb-6 md:mb-10">
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Builder</p>
           <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">Create an AI Search in Under 60 Seconds</h1>
           <p className="text-body-md font-body-md text-on-surface-variant">Configure your search criteria and let the AI find matching vehicles 24/7.</p>
@@ -78,7 +78,7 @@ function SearchBuilderPage() {
 
         <div className="space-y-8">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8">
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-6 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">1</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Vehicle Type</h2>
@@ -114,7 +114,7 @@ function SearchBuilderPage() {
           </section>
 
           {/* ── Section 2: Vehicle Details ───────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8">
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-6 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">2</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Vehicle Details</h2>
@@ -214,7 +214,7 @@ function SearchBuilderPage() {
           </section>
 
           {/* ── Section 3: Search Sources ────────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8">
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-6 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">3</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Search Sources</h2>
@@ -267,7 +267,7 @@ function SearchBuilderPage() {
           </section>
 
           {/* ── Section 4: Search Frequency ──────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8">
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-6 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">4</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Search Frequency</h2>
@@ -303,7 +303,7 @@ function SearchBuilderPage() {
           </section>
 
           {/* ── Section 5: Activate ──────────────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 text-center md:p-10">
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-10">
             <button
               type="button"
               onClick={() => setMissionCreated(true)}
@@ -318,7 +318,7 @@ function SearchBuilderPage() {
           </section>
 
           {missionCreated && (
-            <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-6 md:p-8" aria-live="polite">
+            <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8" aria-live="polite">
               <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Created</p>
               <h2 className="mt-2 text-headline-lg font-headline-lg text-on-surface">AI Search Mission Created</h2>
               <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">

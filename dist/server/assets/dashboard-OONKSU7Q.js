@@ -1,4 +1,4 @@
-import { jsxs, jsx } from "react/jsx-runtime";
+import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-DAVKrEm2.js";
@@ -320,7 +320,7 @@ function DashboardPage() {
     label: "Last Scan",
     value: aiSearchLive ? "Moments ago" : "Paused"
   }];
-  return /* @__PURE__ */ jsxs(PlatformShell, { navItems: [{
+  return /* @__PURE__ */ jsx(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
     href: "/dashboard",
     active: true
@@ -345,7 +345,7 @@ function DashboardPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max overflow-x-hidden", children: [
     /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-primary", children: "Dealer Command Centre" }),
     /* @__PURE__ */ jsx("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
@@ -378,7 +378,7 @@ function DashboardPage() {
           /* @__PURE__ */ jsx("p", { className: "mt-1 text-2xl font-bold text-primary md:text-headline-lg md:font-headline-lg md:mt-0", children: card.value })
         ] }, card.title)) })
       ] }),
-      /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
+      /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
         /* @__PURE__ */ jsx("h3", { className: "text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
         /* @__PURE__ */ jsxs("div", { className: "radar-container mt-6", children: [
           /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
@@ -431,7 +431,7 @@ function DashboardPage() {
             ] })
           ] }, item.label)) })
         ] }),
-        /* @__PURE__ */ jsxs("article", { className: "dashboard-border mt-6 rounded-2xl bg-surface-container p-6 md:p-8", children: [
+        /* @__PURE__ */ jsxs("article", { className: "dashboard-border mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "AI Activity Timeline" }),
@@ -454,7 +454,7 @@ function DashboardPage() {
         ] })
       ] }) })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-6 text-headline-md font-headline-md text-on-surface", children: "AI Recommendation of the Day" }),
       /* @__PURE__ */ jsx("div", { className: "mb-5 md:hidden", children: /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary", children: "⭐ Today's AI Pick" }) }),
       /* @__PURE__ */ jsxs("div", { className: "mb-8 grid grid-cols-1 gap-4 md:grid-cols-2", children: [
@@ -487,7 +487,7 @@ function DashboardPage() {
         /* @__PURE__ */ jsx("h3", { className: "mb-2 text-body-md font-body-md font-medium text-on-surface", children: "Why TICA Recommends This" }),
         /* @__PURE__ */ jsx("ul", { className: "list-disc space-y-1 pl-5 text-sm text-on-surface-variant", children: recommendationEvidencePoints.map((point) => /* @__PURE__ */ jsx("li", { children: point }, point)) })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-3 md:grid-cols-4", children: [
+      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4", children: [
         /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Review Opportunity" }),
         /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("saved"), className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40", children: "Save Opportunity" }),
         /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("dismissed"), className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error", children: "Dismiss" }),
@@ -497,7 +497,7 @@ function DashboardPage() {
       recAction === "dismissed" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "✓ Opportunity dismissed (placeholder)" }),
       recAction === "reminded" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-tertiary", children: "✓ Reminder scheduled (placeholder)" })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "Recent Opportunities" }),
       /* @__PURE__ */ jsx("div", { className: "hidden overflow-x-auto md:block", children: /* @__PURE__ */ jsxs("table", { className: "w-full min-w-[640px] border-separate border-spacing-y-2 text-left", children: [
         /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: [
@@ -541,7 +541,7 @@ function DashboardPage() {
         ] })
       ] }, opportunity.vehicle)) })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "AI Search Missions" }),
       /* @__PURE__ */ jsx("div", { className: "space-y-3", children: activeSearches.map((search, index) => {
         const statusCfg = missionStatusConfig[search.status];
@@ -597,7 +597,7 @@ function DashboardPage() {
         ] }, search.name);
       }) })
     ] })
-  ] });
+  ] }) });
 }
 export {
   DashboardPage as component
