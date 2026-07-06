@@ -378,14 +378,21 @@ body {
 }
 
 @media (max-width: 767px) {
+  /* Hide the vertical connector line — replaced by stacked layout */
   .timeline-list::before {
-    left: 4.35rem;
+    display: none;
   }
 
+  /* Stack time above message; hide the dot blip */
   .timeline-entry {
-    grid-template-columns: 3.45rem 1rem minmax(0, 1fr);
-    gap: 0.75rem;
-    padding: 0.9rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.85rem 1rem;
+  }
+
+  .timeline-entry-dot {
+    display: none;
   }
 
   .timeline-status-panel {

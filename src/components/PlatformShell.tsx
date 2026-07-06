@@ -96,16 +96,35 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
     return () => document.removeEventListener('keydown', handler)
   }, [])
 
-  // Lock body scroll while the mobile drawer is open so that iOS Safari
-  // does not accumulate a displaced scroll position that gets stuck after closing.
+  // Lock body scroll while the mobile drawer is open.
+  // Uses position:fixed to prevent iOS Safari from accumulating a displaced
+  // scroll offset that gets stuck after the drawer closes.
   useEffect(() => {
     if (sidebarOpen) {
-      document.body.style.overflow = 'hidden'
+      const scrollY = window.scrollY
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.style.overflowY = 'scroll'
     } else {
-      document.body.style.overflow = ''
+      const top = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflowY = ''
+      if (top) {
+        window.scrollTo(0, parseInt(top) * -1)
+      }
     }
     return () => {
-      document.body.style.overflow = ''
+      const top = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflowY = ''
+      if (top) {
+        window.scrollTo(0, parseInt(top) * -1)
+      }
     }
   }, [sidebarOpen])
 
