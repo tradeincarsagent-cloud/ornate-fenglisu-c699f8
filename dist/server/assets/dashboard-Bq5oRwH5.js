@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell } from "./PlatformShell-DAVKrEm2.js";
+import { P as PlatformShell } from "./PlatformShell-DpkJ6TRS.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CuGw1k3x.js";
 const missionStatusConfig = {
   Monitoring: {
@@ -422,7 +422,7 @@ function DashboardPage() {
         ] }),
         /* @__PURE__ */ jsxs("section", { className: "mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6", children: [
           /* @__PURE__ */ jsx("p", { className: "text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85", children: "AI Operations Panel" }),
-          /* @__PURE__ */ jsx("dl", { className: "mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3", children: operationsPanelItems.map((item, index) => /* @__PURE__ */ jsxs("div", { className: `flex min-h-[104px] flex-col justify-between gap-4 px-4 py-4 sm:px-5 ${index < operationsPanelItems.length - 1 ? "border-b border-outline-variant/18" : ""} ${index % 2 === 0 ? "sm:border-r sm:border-outline-variant/18" : ""} ${index >= operationsPanelItems.length - 2 ? "sm:border-b-0" : ""} ${index % 3 !== 2 ? "xl:border-r xl:border-outline-variant/18" : "xl:border-r-0"} ${index >= operationsPanelItems.length - 3 ? "xl:border-b-0" : ""}`, children: [
+          /* @__PURE__ */ jsx("dl", { className: "mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3", children: operationsPanelItems.map((item, index) => /* @__PURE__ */ jsxs("div", { className: `flex min-h-[72px] flex-col justify-between gap-3 px-4 py-3 sm:min-h-[104px] sm:gap-4 sm:px-5 sm:py-4 ${index < operationsPanelItems.length - 1 ? "border-b border-outline-variant/18" : ""} ${index % 2 === 0 ? "sm:border-r sm:border-outline-variant/18" : ""} ${index >= operationsPanelItems.length - 2 ? "sm:border-b-0" : ""} ${index % 3 !== 2 ? "xl:border-r xl:border-outline-variant/18" : "xl:border-r-0"} ${index >= operationsPanelItems.length - 3 ? "xl:border-b-0" : ""}`, children: [
             /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-[0.18em] text-on-surface-variant/90", children: item.label }),
             /* @__PURE__ */ jsxs("dd", { className: `flex items-center gap-2 text-[1.05rem] font-semibold tracking-[0.01em] text-on-surface ${item.tone === "accent" ? "text-primary" : ""}`, children: [
               item.tone === "live" ? /* @__PURE__ */ jsx("span", { className: "h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.55)]", "aria-hidden": "true" }) : null,
@@ -574,7 +574,7 @@ function DashboardPage() {
                   } }),
                   /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md font-medium text-on-surface", children: search.name })
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "mt-1.5 flex gap-4 pl-4", children: [
+                /* @__PURE__ */ jsxs("div", { className: "mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 pl-4", children: [
                   /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
                     "Last Scan: ",
                     search.lastScan

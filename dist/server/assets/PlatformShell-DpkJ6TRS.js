@@ -65,6 +65,16 @@ function PlatformShell({ children, navItems }) {
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, []);
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [sidebarOpen]);
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-on-surface", children: [
     /* @__PURE__ */ jsx(
       "div",
@@ -78,7 +88,7 @@ function PlatformShell({ children, navItems }) {
       "aside",
       {
         id: "mobile-sidebar",
-        className: `fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`,
+        className: `fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`,
         "aria-label": "Navigation menu",
         "aria-hidden": !sidebarOpen,
         children: [
@@ -104,7 +114,7 @@ function PlatformShell({ children, navItems }) {
         /* @__PURE__ */ jsx("div", { className: "mb-8", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }) }),
         /* @__PURE__ */ jsx(PlatformNav, { items: navItems })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex min-h-screen flex-1 flex-col", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-1 flex-col", children: [
         /* @__PURE__ */ jsxs("header", { className: "border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between lg:hidden", children: [
             /* @__PURE__ */ jsx("div", { className: "logo-bezel w-44 rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }),
