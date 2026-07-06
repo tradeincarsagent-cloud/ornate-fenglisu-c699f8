@@ -60,14 +60,14 @@ function SearchBuilderPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-container-max", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mb-10", children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max overflow-x-hidden", children: [
+    /* @__PURE__ */ jsxs("div", { className: "mb-6 md:mb-10", children: [
       /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Search Builder" }),
       /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "Create an AI Search in Under 60 Seconds" }),
       /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Configure your search criteria and let the AI find matching vehicles 24/7." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
-      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8", children: [
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-center gap-3", children: [
           /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "1" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Vehicle Type" })
@@ -81,7 +81,7 @@ function SearchBuilderPage() {
           ] }, type);
         }) })
       ] }),
-      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8", children: [
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-center gap-3", children: [
           /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "2" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Vehicle Details" })
@@ -123,7 +123,7 @@ function SearchBuilderPage() {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8", children: [
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-center gap-3", children: [
           /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "3" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Search Sources" })
@@ -148,7 +148,7 @@ function SearchBuilderPage() {
           /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Trade in Cars Agent is being designed to search connected marketplaces, dealer sources and trusted public vehicle listings. Some integrations will be released in later platform phases." }) })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8", children: [
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-center gap-3", children: [
           /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "4" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Search Frequency" })
@@ -165,14 +165,14 @@ function SearchBuilderPage() {
           ] }, value);
         }) })
       ] }),
-      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-6 text-center md:p-10", children: [
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-10", children: [
         /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setMissionCreated(true), className: "mx-auto flex w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]", children: [
           /* @__PURE__ */ jsx("span", { children: "⚡" }),
           "Start AI Search Mission"
         ] }),
         /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-md font-body-md text-on-surface-variant", children: "Live AI scanning will be available in a future platform release." })
       ] }),
-      missionCreated && /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-6 md:p-8", "aria-live": "polite", children: [
+      missionCreated && /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8", "aria-live": "polite", children: [
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Created" }),
         /* @__PURE__ */ jsx("h2", { className: "mt-2 text-headline-lg font-headline-lg text-on-surface", children: "AI Search Mission Created" }),
         /* @__PURE__ */ jsxs("div", { className: "mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2", children: [

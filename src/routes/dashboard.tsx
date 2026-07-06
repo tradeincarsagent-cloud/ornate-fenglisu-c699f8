@@ -307,6 +307,7 @@ function DashboardPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
+      <div className="mx-auto w-full max-w-container-max overflow-x-hidden">
             <h1 className="mb-2 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6">
               <div className="flex flex-col gap-6">
@@ -381,7 +382,7 @@ function DashboardPage() {
               </div>
 
               {/* ── AI Search Radar ──────────────────────────────────── */}
-              <article className="dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8">
+              <article className="dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8">
                 <div className={`radar-glass-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
                 <h3 className="text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
 
@@ -474,7 +475,7 @@ function DashboardPage() {
                     </dl>
                   </section>
 
-                  <article className="dashboard-border mt-6 rounded-2xl bg-surface-container p-6 md:p-8">
+                  <article className="dashboard-border mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
                     <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                       <div>
                         <h3 className="text-headline-md font-headline-md text-on-surface">AI Activity Timeline</h3>
@@ -511,7 +512,7 @@ function DashboardPage() {
             </section>
 
             {/* ── AI Recommendation ────────────────────────────────────── */}
-            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
+            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">AI Recommendation of the Day</h2>
 
               {/* Mobile premium badge */}
@@ -559,8 +560,8 @@ function DashboardPage() {
                 </ul>
               </div>
 
-              {/* Buttons: 2-column grid on mobile, 4-column on md+ for even spacing */}
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              {/* Buttons: 1-column on mobile, 2-col on sm, 4-column on md+ */}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
                 <Link
                   to="/opportunity"
                   className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
@@ -600,7 +601,7 @@ function DashboardPage() {
             </section>
 
             {/* ── Recent Opportunities ─────────────────────────────────── */}
-            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8">
+            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
 
               {/* Desktop table (unchanged, hidden on mobile) */}
@@ -688,7 +689,7 @@ function DashboardPage() {
             </section>
 
             {/* ── AI Search Missions ───────────────────────────────────── */}
-            <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
+            <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
               <div className="space-y-3">
                 {activeSearches.map((search, index) => {
@@ -762,6 +763,7 @@ function DashboardPage() {
                 })}
               </div>
             </section>
+      </div>
     </PlatformShell>
   )
 }
