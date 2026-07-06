@@ -188,11 +188,14 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
                   System Status: <span className="text-on-surface">🟢 Operational</span>
                 </p>
               </div>
-              <nav aria-label="Application footer links" className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-on-surface-variant">
-                <a href="#" className="whitespace-nowrap transition-colors hover:text-primary">Support</a>
-                <a href="#" className="whitespace-nowrap transition-colors hover:text-primary">Privacy</a>
-                <a href="#" className="whitespace-nowrap transition-colors hover:text-primary">Terms</a>
-                <a href="#" className="whitespace-nowrap transition-colors hover:text-primary">Contact</a>
+              <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-center gap-y-1 text-xs text-on-surface-variant sm:justify-end">
+                <a href="#" className="whitespace-nowrap px-2 py-1 transition-colors hover:text-primary">Support</a>
+                <span aria-hidden="true" className="text-outline-variant/50">•</span>
+                <a href="#" className="whitespace-nowrap px-2 py-1 transition-colors hover:text-primary">Privacy</a>
+                <span aria-hidden="true" className="text-outline-variant/50">•</span>
+                <a href="#" className="whitespace-nowrap px-2 py-1 transition-colors hover:text-primary">Terms</a>
+                <span aria-hidden="true" className="text-outline-variant/50">•</span>
+                <a href="#" className="whitespace-nowrap px-2 py-1 transition-colors hover:text-primary">Contact</a>
               </nav>
             </div>
           </footer>

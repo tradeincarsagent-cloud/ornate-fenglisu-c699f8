@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell } from "./PlatformShell-I7_sbTZ6.js";
+import { P as PlatformShell } from "./PlatformShell-DPBDYTPk.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CuGw1k3x.js";
 const missionStatusConfig = {
   Monitoring: {
@@ -190,6 +190,7 @@ function DashboardPage() {
     highPriorityMatches: 3
   });
   const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
+  const [openMoreMenu, setOpenMoreMenu] = useState(null);
   const [recAction, setRecAction] = useState(null);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
@@ -298,6 +299,7 @@ function DashboardPage() {
       ...prev,
       [index]: !prev[index]
     }));
+    setOpenMoreMenu(null);
   };
   const operationsPanelItems = [{
     label: "Status",
@@ -541,6 +543,7 @@ function DashboardPage() {
         ] })
       ] }, opportunity.vehicle)) })
     ] }),
+    openMoreMenu !== null && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-10 md:hidden", onClick: () => setOpenMoreMenu(null), "aria-hidden": "true" }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "AI Search Missions" }),
       /* @__PURE__ */ jsx("div", { className: "space-y-3", children: activeSearches.map((search, index) => {
@@ -587,11 +590,19 @@ function DashboardPage() {
               ] }),
               /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 text-on-surface-variant", children: /* @__PURE__ */ jsx(ChevronIcon, { open: expandedSearches[index] }) })
             ] }),
-            expandedSearches[index] && /* @__PURE__ */ jsxs("div", { className: "mt-3 grid grid-cols-2 gap-2", children: [
-              /* @__PURE__ */ jsx("button", { className: "rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),
-              /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40", children: "Edit" }),
-              /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60", children: "Pause" }),
-              /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-red-500/30 bg-surface-container py-2.5 text-sm font-medium text-red-400 transition-colors hover:border-red-500/50", children: "Delete" })
+            expandedSearches[index] && /* @__PURE__ */ jsxs("div", { className: "mt-3 flex gap-2", children: [
+              /* @__PURE__ */ jsx("button", { className: "flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),
+              /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                /* @__PURE__ */ jsx("button", { onClick: (e) => {
+                  e.stopPropagation();
+                  setOpenMoreMenu(openMoreMenu === index ? null : index);
+                }, className: "rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40", "aria-haspopup": "true", "aria-expanded": openMoreMenu === index, children: "More" }),
+                openMoreMenu === index && /* @__PURE__ */ jsxs("div", { className: "absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg", children: [
+                  /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Edit" }),
+                  /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Pause" }),
+                  /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Delete" })
+                ] })
+              ] })
             ] })
           ] })
         ] }, search.name);

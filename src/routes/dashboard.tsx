@@ -157,6 +157,7 @@ function DashboardPage() {
   const [expandedSearches, setExpandedSearches] = useState<Record<number, boolean>>(
     () => Object.fromEntries(activeSearches.map((_, i) => [i, true])),
   )
+  const [openMoreMenu, setOpenMoreMenu] = useState<number | null>(null)
   const [recAction, setRecAction] = useState<'saved' | 'dismissed' | 'reminded' | null>(null)
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
@@ -283,6 +284,7 @@ function DashboardPage() {
 
   const toggleSearch = (index: number) => {
     setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
+    setOpenMoreMenu(null)
   }
 
   const operationsPanelItems = [
@@ -689,6 +691,9 @@ function DashboardPage() {
             </section>
 
             {/* ── AI Search Missions ───────────────────────────────────── */}
+            {openMoreMenu !== null && (
+              <div className="fixed inset-0 z-10 md:hidden" onClick={() => setOpenMoreMenu(null)} aria-hidden="true" />
+            )}
             <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
               <div className="space-y-3">
@@ -742,19 +747,27 @@ function DashboardPage() {
                         </button>
 
                         {expandedSearches[index] && (
-                          <div className="mt-3 grid grid-cols-2 gap-2">
-                            <button className="rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                          <div className="mt-3 flex gap-2">
+                            <button className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
                               Run Now
                             </button>
-                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
-                              Edit
-                            </button>
-                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
-                              Pause
-                            </button>
-                            <button className="rounded-lg border border-red-500/30 bg-surface-container py-2.5 text-sm font-medium text-red-400 transition-colors hover:border-red-500/50">
-                              Delete
-                            </button>
+                            <div className="relative">
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setOpenMoreMenu(openMoreMenu === index ? null : index) }}
+                                className="rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40"
+                                aria-haspopup="true"
+                                aria-expanded={openMoreMenu === index}
+                              >
+                                More
+                              </button>
+                              {openMoreMenu === index && (
+                                <div className="absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg">
+                                  <button className="w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Edit</button>
+                                  <button className="w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Pause</button>
+                                  <button className="w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Delete</button>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         )}
                       </div>
