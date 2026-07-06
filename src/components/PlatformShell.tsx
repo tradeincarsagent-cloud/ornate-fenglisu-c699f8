@@ -96,6 +96,19 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
     return () => document.removeEventListener('keydown', handler)
   }, [])
 
+  // Lock body scroll while the mobile drawer is open so that iOS Safari
+  // does not accumulate a displaced scroll position that gets stuck after closing.
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [sidebarOpen])
+
   return (
     <div className="min-h-screen bg-background text-on-surface">
       <div
@@ -106,7 +119,7 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
 
       <aside
         id="mobile-sidebar"
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
         aria-label="Navigation menu"
         aria-hidden={!sidebarOpen}
       >
@@ -138,7 +151,7 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
           <PlatformNav items={navItems} />
         </aside>
 
-        <div className="flex min-h-screen flex-1 flex-col">
+        <div className="flex flex-1 flex-col">
           <header className="border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
             <div className="flex items-center justify-between lg:hidden">
               <div className="logo-bezel w-44 rounded-lg p-1">

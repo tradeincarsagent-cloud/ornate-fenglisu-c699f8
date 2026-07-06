@@ -448,7 +448,7 @@ function DashboardPage() {
                       {operationsPanelItems.map((item, index) => (
                         <div
                           key={item.label}
-                          className={`flex min-h-[104px] flex-col justify-between gap-4 px-4 py-4 sm:px-5 ${
+                          className={`flex min-h-[72px] flex-col justify-between gap-3 px-4 py-3 sm:min-h-[104px] sm:gap-4 sm:px-5 sm:py-4 ${
                             index < operationsPanelItems.length - 1 ? 'border-b border-outline-variant/18' : ''
                           } ${
                             index % 2 === 0 ? 'sm:border-r sm:border-outline-variant/18' : ''
@@ -731,7 +731,7 @@ function DashboardPage() {
                               />
                               <p className="text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
                             </div>
-                            <div className="mt-1.5 flex gap-4 pl-4">
+                            <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 pl-4">
                               <p className="text-sm text-on-surface-variant">Last Scan: {search.lastScan}</p>
                               <p className="text-sm font-semibold text-primary">{search.opportunities} Opp.</p>
                             </div>
