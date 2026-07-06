@@ -296,6 +296,15 @@ function DashboardPage() {
     setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
   }
 
+  const operationsPanelItems = [
+    { label: 'Status', value: aiSearchLive ? '🟢 Searching' : '⏸ Paused' },
+    { label: 'Sources Active', value: '5' },
+    { label: 'Vehicles Checked Today', value: counterFormatter.format(liveCounters.vehiclesCheckedToday) },
+    { label: 'Matches Found', value: counterFormatter.format(liveCounters.matchesFound) },
+    { label: 'High Priority Matches', value: counterFormatter.format(liveCounters.highPriorityMatches) },
+    { label: 'Last Scan', value: aiSearchLive ? 'Moments ago' : 'Paused' },
+  ]
+
   return (
     <PlatformShell
       navItems={[
@@ -443,60 +452,56 @@ function DashboardPage() {
                     </div>
                   </div>
 
-                  <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
-                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Status:</dt>
-                    <dd className="text-on-surface">{aiSearchLive ? '🟢 Searching' : '⏸ Paused'}</dd>
-                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Sources Active:</dt>
-                    <dd className="text-on-surface">5</dd>
-                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Vehicles Checked Today:</dt>
-                    <dd className="text-on-surface">{counterFormatter.format(liveCounters.vehiclesCheckedToday)}</dd>
-                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Matches Found:</dt>
-                    <dd className="text-on-surface">{counterFormatter.format(liveCounters.matchesFound)}</dd>
-                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">High Priority Matches:</dt>
-                    <dd className="text-on-surface">{counterFormatter.format(liveCounters.highPriorityMatches)}</dd>
-                    <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Last Scan:</dt>
-                    <dd className="text-on-surface">{aiSearchLive ? 'Moments ago' : 'Paused'}</dd>
-                  </dl>
-
-                  <p className="mt-5 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
-                    AI status feed
-                  </p>
-                  <p key={aiSearchLive ? `status-${statusMessageIndex}` : 'status-paused'} className="radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant">
-                    {aiSearchLive ? aiStatusMessages[statusMessageIndex] : 'Search paused — standing by…'}
-                  </p>
-                </div>
-              </article>
-
-              <article className="dashboard-border mx-auto w-full max-w-5xl rounded-2xl bg-surface-container p-6 md:p-8">
-                <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                  <div>
-                    <h3 className="text-headline-md font-headline-md text-on-surface">AI Activity Timeline</h3>
-                    <p className="mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant">
-                      Live placeholder activity from the Dealer Command Centre AI operations flow.
+                  <section className="mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6">
+                    <p className="text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85">AI Operations Panel</p>
+                    <dl className="mt-4 divide-y divide-outline-variant/20 rounded-xl border border-outline-variant/25 bg-surface-container-high/70">
+                      {operationsPanelItems.map((item) => (
+                        <div key={item.label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-5">
+                          <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</dt>
+                          <dd className="text-right text-body-md font-body-md tabular-nums text-on-surface">{item.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                    <p className="mt-4 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+                      AI status feed
                     </p>
-                  </div>
-
-                  <div className="timeline-status-panel">
-                    <p className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">AI Status</p>
-                    <p className="mt-2 text-body-md font-body-md text-on-surface">
-                      <span className="mr-2 text-emerald-400">🟢</span>
-                      Operational
+                    <p key={aiSearchLive ? `status-${statusMessageIndex}` : 'status-paused'} className="radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant">
+                      {aiSearchLive ? aiStatusMessages[statusMessageIndex] : 'Search paused — standing by…'}
                     </p>
-                    <p className="mt-1 text-sm text-on-surface-variant">Monitoring 5 Active Search Missions</p>
-                  </div>
-                </div>
+                  </section>
 
-                <div className="timeline-list mt-6" aria-live="polite">
-                  {timelineEvents.map((event) => (
-                    <article
-                      key={event.eventId}
-                      className={`timeline-entry${activeTimelineEventId === event.eventId ? ' timeline-entry-live' : ''}`}
-                    >
-                      <p className="timeline-entry-time">{event.time}</p>
-                      <div className="timeline-entry-dot" aria-hidden="true" />
-                      <p className="timeline-entry-message">{event.message}</p>
-                    </article>
-                  ))}
+                  <article className="dashboard-border mt-6 rounded-2xl bg-surface-container p-6 md:p-8">
+                    <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                      <div>
+                        <h3 className="text-headline-md font-headline-md text-on-surface">AI Activity Timeline</h3>
+                        <p className="mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant">
+                          Live placeholder activity from the Dealer Command Centre AI operations flow.
+                        </p>
+                      </div>
+
+                      <div className="timeline-status-panel">
+                        <p className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">AI Status</p>
+                        <p className="mt-2 text-body-md font-body-md text-on-surface">
+                          <span className="mr-2 text-emerald-400">🟢</span>
+                          Operational
+                        </p>
+                        <p className="mt-1 text-sm text-on-surface-variant">Monitoring 5 Active Search Missions</p>
+                      </div>
+                    </div>
+
+                    <div className="timeline-list mt-6" aria-live="polite">
+                      {timelineEvents.map((event) => (
+                        <article
+                          key={event.eventId}
+                          className={`timeline-entry${activeTimelineEventId === event.eventId ? ' timeline-entry-live' : ''}`}
+                        >
+                          <p className="timeline-entry-time">{event.time}</p>
+                          <div className="timeline-entry-dot" aria-hidden="true" />
+                          <p className="timeline-entry-message">{event.message}</p>
+                        </article>
+                      ))}
+                    </div>
+                  </article>
                 </div>
               </article>
             </section>

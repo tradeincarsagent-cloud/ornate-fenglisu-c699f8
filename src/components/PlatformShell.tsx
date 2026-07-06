@@ -160,6 +160,23 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
           </header>
 
           <main className="flex-1 px-6 py-8 md:px-10">{children}</main>
+          <footer className="border-t border-outline-variant/25 bg-surface-container-low px-6 py-4 md:px-10">
+            <div className="mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <p className="text-body-sm font-body-sm text-on-surface">Trade in Cars Agent</p>
+                <p className="text-xs text-on-surface-variant">Version 1.0 Beta</p>
+                <p className="text-xs text-on-surface-variant">
+                  System Status: <span className="text-on-surface">🟢 Operational</span>
+                </p>
+              </div>
+              <nav aria-label="Application footer links" className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant">
+                <a href="#" className="transition-colors hover:text-primary">Support</a>
+                <a href="#" className="transition-colors hover:text-primary">Privacy</a>
+                <a href="#" className="transition-colors hover:text-primary">Terms</a>
+                <a href="#" className="transition-colors hover:text-primary">Contact</a>
+              </nav>
+            </div>
+          </footer>
         </div>
       </div>
     </div>
