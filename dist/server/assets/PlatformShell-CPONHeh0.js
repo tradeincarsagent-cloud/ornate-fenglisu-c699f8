@@ -66,31 +66,18 @@ function PlatformShell({ children, navItems }) {
     return () => document.removeEventListener("keydown", handler);
   }, []);
   useEffect(() => {
-    if (sidebarOpen) {
-      const scrollY = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
-      document.body.style.overflowY = "scroll";
-    } else {
-      const top = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.overflowY = "";
-      if (top) {
-        window.scrollTo(0, parseInt(top) * -1);
-      }
-    }
+    if (!sidebarOpen) return;
+    const scrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+    document.body.style.overflowY = "scroll";
     return () => {
-      const top = document.body.style.top;
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.width = "";
       document.body.style.overflowY = "";
-      if (top) {
-        window.scrollTo(0, parseInt(top) * -1);
-      }
+      window.scrollTo(0, scrollY);
     };
   }, [sidebarOpen]);
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-on-surface", children: [
@@ -127,7 +114,7 @@ function PlatformShell({ children, navItems }) {
         ]
       }
     ),
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto flex min-h-screen max-w-container-max", children: [
+    /* @__PURE__ */ jsxs("div", { className: "mx-auto flex lg:min-h-screen max-w-container-max", children: [
       /* @__PURE__ */ jsxs("aside", { className: "hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col", children: [
         /* @__PURE__ */ jsx("div", { className: "mb-8", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }) }),
         /* @__PURE__ */ jsx(PlatformNav, { items: navItems })
