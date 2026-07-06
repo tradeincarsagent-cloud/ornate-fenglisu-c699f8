@@ -665,7 +665,7 @@ function DashboardPage() {
                         <p className="text-sm font-medium text-primary">{opportunity.estimatedProfitDisplay}</p>
                       </div>
                       <div className="text-center">
-                        <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Confidence</p>
+                        <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Conf.</p>
                         <p className="text-sm font-medium text-on-surface">{opportunity.confidenceDisplay}</p>
                       </div>
                     </div>

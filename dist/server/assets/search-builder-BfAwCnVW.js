@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { P as PlatformShell } from "./PlatformShell-CPONHeh0.js";
+import { P as PlatformShell } from "./PlatformShell-DvCu7zvm.js";
 const VEHICLE_TYPES = ["Cars", "Pick-ups", "Vans & Light Commercials"];
 const SEARCH_FREQUENCIES = [{
   label: "Every 15 Minutes",
@@ -134,7 +134,7 @@ function SearchBuilderPage() {
             /* @__PURE__ */ jsx("div", { className: "space-y-3", children: PHASE_ONE_SOURCES.map((source) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-5 py-4 shadow-sm shadow-primary/5", children: [
               /* @__PURE__ */ jsx("span", { className: "flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-primary bg-primary text-on-primary", "aria-hidden": "true", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
               /* @__PURE__ */ jsx("span", { className: "flex-1 text-body-md font-body-md text-on-surface", children: source }),
-              /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary", children: "Phase 1" })
+              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary", children: "Phase 1" })
             ] }, source)) })
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
@@ -142,7 +142,7 @@ function SearchBuilderPage() {
             /* @__PURE__ */ jsx("div", { className: "space-y-3", children: PLANNED_INTEGRATIONS.map((source) => /* @__PURE__ */ jsxs("div", { className: "flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-5 py-4 opacity-60", "aria-disabled": "true", children: [
               /* @__PURE__ */ jsx("span", { className: "flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-outline-variant/40 bg-transparent", "aria-hidden": "true" }),
               /* @__PURE__ */ jsx("span", { className: "flex-1 text-body-md font-body-md text-on-surface-variant", children: source }),
-              /* @__PURE__ */ jsx("span", { className: "rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant", children: "Coming Soon" })
+              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant", children: "Coming Soon" })
             ] }, source)) })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Trade in Cars Agent is being designed to search connected marketplaces, dealer sources and trusted public vehicle listings. Some integrations will be released in later platform phases." }) })
