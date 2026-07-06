@@ -168,6 +168,13 @@ function DashboardPage() {
     highPriorityMatches: 3
   });
   const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
+  const [completedTasks, setCompletedTasks] = useState({});
+  const toggleTask = (index) => {
+    setCompletedTasks((prev) => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
     if (!aiSearchLive) return;
@@ -320,6 +327,52 @@ function DashboardPage() {
         /* @__PURE__ */ jsx("button", { type: "button", disabled: true, title: "Voice AI briefing coming in a future release.", className: "inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-2 text-sm font-medium text-on-surface-variant opacity-70", children: "🎤 Hear Today’s Briefing" })
       ] })
     ] }) }),
+    /* @__PURE__ */ jsxs("section", { className: "mb-8 rounded-2xl border border-outline-variant/30 bg-surface-container-high/60 p-5 backdrop-blur-sm md:p-6", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center justify-between", children: [
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "text-xs font-semibold uppercase tracking-[0.18em] text-primary/90", children: "Daily Workflow" }),
+          /* @__PURE__ */ jsx("h2", { className: "mt-1 text-headline-sm font-headline-sm text-on-surface", children: "Today's Action Plan" })
+        ] }),
+        /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant", children: [
+          "Est. completion: ",
+          /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: "12 min" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("ol", { className: "space-y-3", children: [
+        /* @__PURE__ */ jsxs("li", { className: `flex items-start gap-4 rounded-xl border p-4 transition-colors ${completedTasks[0] ? "border-outline-variant/20 bg-surface/30 opacity-60" : "border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"}`, children: [
+          /* @__PURE__ */ jsx("input", { type: "checkbox", id: "action-task-0", checked: !!completedTasks[0], onChange: () => toggleTask(0), className: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary", "aria-label": "Mark 'Review BMW M3 Competition' as complete" }),
+          /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
+            /* @__PURE__ */ jsx("label", { htmlFor: "action-task-0", className: `cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[0] ? "line-through" : ""}`, children: "Review BMW M3 Competition" }),
+            /* @__PURE__ */ jsxs("dl", { className: "mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant", children: [
+              /* @__PURE__ */ jsx("dt", { className: "font-semibold uppercase tracking-widest", children: "Estimated Profit:" }),
+              /* @__PURE__ */ jsx("dd", { className: "font-semibold text-primary", children: "£4,255" }),
+              /* @__PURE__ */ jsx("dt", { className: "font-semibold uppercase tracking-widest", children: "Status:" }),
+              /* @__PURE__ */ jsx("dd", { children: /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary", children: "High Priority" }) })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("li", { className: `flex items-start gap-4 rounded-xl border p-4 transition-colors ${completedTasks[1] ? "border-outline-variant/20 bg-surface/30 opacity-60" : "border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"}`, children: [
+          /* @__PURE__ */ jsx("input", { type: "checkbox", id: "action-task-1", checked: !!completedTasks[1], onChange: () => toggleTask(1), className: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary", "aria-label": "Mark 'Contact Seller' as complete" }),
+          /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
+            /* @__PURE__ */ jsx("label", { htmlFor: "action-task-1", className: `cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[1] ? "line-through" : ""}`, children: "Contact Seller" }),
+            /* @__PURE__ */ jsxs("dl", { className: "mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant", children: [
+              /* @__PURE__ */ jsx("dt", { className: "font-semibold uppercase tracking-widest", children: "Reason:" }),
+              /* @__PURE__ */ jsx("dd", { children: "Vehicle listed for 18 days." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("li", { className: `flex items-start gap-4 rounded-xl border p-4 transition-colors ${completedTasks[2] ? "border-outline-variant/20 bg-surface/30 opacity-60" : "border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"}`, children: [
+          /* @__PURE__ */ jsx("input", { type: "checkbox", id: "action-task-2", checked: !!completedTasks[2], onChange: () => toggleTask(2), className: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary", "aria-label": "Mark 'Verify Vehicle History & MOT' as complete" }),
+          /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
+            /* @__PURE__ */ jsx("label", { htmlFor: "action-task-2", className: `cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[2] ? "line-through" : ""}`, children: "Verify Vehicle History & MOT" }),
+            /* @__PURE__ */ jsxs("dl", { className: "mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant", children: [
+              /* @__PURE__ */ jsx("dt", { className: "font-semibold uppercase tracking-widest", children: "Status:" }),
+              /* @__PURE__ */ jsx("dd", { children: "Recommended before purchase." })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] }),
     /* @__PURE__ */ jsxs("div", { className: "mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap", children: [
       /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Review Top Opportunity" }),
       /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "Create New Search" })
