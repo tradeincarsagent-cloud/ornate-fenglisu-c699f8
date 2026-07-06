@@ -1,10 +1,35 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
 })
+
+type RadarContactType = 'car' | 'pickup' | 'van' | 'motorcycle'
+
+const radarContacts: Array<{
+  id: string
+  x: number
+  y: number
+  vehicleType: RadarContactType
+  opportunityIndex: number
+  angleDeg: number
+}> = [
+  { id: 'contact-1', x: 0.63, y: 0.24, vehicleType: 'car', opportunityIndex: 0, angleDeg: 35.8 },
+  { id: 'contact-2', x: 0.29, y: 0.61, vehicleType: 'pickup', opportunityIndex: 1, angleDeg: 239.7 },
+  { id: 'contact-3', x: 0.74, y: 0.47, vehicleType: 'van', opportunityIndex: 2, angleDeg: 85.2 },
+  { id: 'contact-4', x: 0.57, y: 0.7, vehicleType: 'motorcycle', opportunityIndex: 3, angleDeg: 161.6 },
+]
+
+const aiStatusMessages = [
+  'Searching UK Dealer Network…',
+  'Scanning Auto Trader…',
+  'Checking Dealer Websites…',
+  'Analysing Price Changes…',
+  'Ranking Opportunities…',
+  'Monitoring Active Searches…',
+]
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -45,6 +70,9 @@ function DashboardPage() {
   ]
 
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
+  const [priorityContactId, setPriorityContactId] = useState<string | null>(null)
+  const [contactIntensity, setContactIntensity] = useState<number[]>(() => radarContacts.map(() => 0.22))
+  const [statusMessageIndex, setStatusMessageIndex] = useState(0)
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false)
   const [aiSearchLive, setAiSearchLive] = useState(true)
   const [expandedSearches, setExpandedSearches] = useState<Record<number, boolean>>(
@@ -54,18 +82,70 @@ function DashboardPage() {
   useEffect(() => {
     if (!aiSearchLive) return
 
-    let nextOpportunityIndex = 0
-    const scanInterval = setInterval(() => {
+    const sweepDurationMs = 3600
+    const sweepHeadOffsetDeg = 60
+    const decayDegrees = 42
+    const updateSweep = () => {
+      const elapsed = Date.now() % sweepDurationMs
+      const baseAngle = (elapsed / sweepDurationMs) * 360
+      const sweepHeadAngle = (baseAngle + sweepHeadOffsetDeg) % 360
+
+      setContactIntensity(
+        radarContacts.map((contact) => {
+          const delta = (sweepHeadAngle - contact.angleDeg + 360) % 360
+          return 0.2 + 0.8 * Math.exp(-delta / decayDegrees)
+        }),
+      )
+    }
+
+    updateSweep()
+    const sweepInterval = setInterval(updateSweep, 90)
+    return () => clearInterval(sweepInterval)
+  }, [aiSearchLive])
+
+  useEffect(() => {
+    if (!aiSearchLive) {
+      setContactIntensity(radarContacts.map(() => 0.22))
+      setPriorityContactId(null)
+      setRadarDetectionGlow(false)
+      setHighlightedOpportunity(null)
+      return
+    }
+
+    let cancelled = false
+    const timeoutIds: number[] = []
+    const schedule = (fn: () => void, ms: number) => {
+      const id = window.setTimeout(fn, ms)
+      timeoutIds.push(id)
+    }
+
+    const runDetection = () => {
+      if (cancelled) return
+      const selected = radarContacts[Math.floor(Math.random() * radarContacts.length)]
+      setPriorityContactId(selected.id)
       setRadarDetectionGlow(true)
-      setHighlightedOpportunity(nextOpportunityIndex)
-      nextOpportunityIndex = (nextOpportunityIndex + 1) % recentOpportunities.length
+      setHighlightedOpportunity(selected.opportunityIndex % recentOpportunities.length)
 
-      setTimeout(() => setRadarDetectionGlow(false), 1100)
-      setTimeout(() => setHighlightedOpportunity(null), 1700)
-    }, 6200)
+      schedule(() => setPriorityContactId(null), 1600)
+      schedule(() => setRadarDetectionGlow(false), 1000)
+      schedule(() => setHighlightedOpportunity(null), 1700)
+      schedule(runDetection, 15000 + Math.random() * 5000)
+    }
 
-    return () => clearInterval(scanInterval)
+    schedule(runDetection, 15000 + Math.random() * 5000)
+    return () => {
+      cancelled = true
+      timeoutIds.forEach((id) => window.clearTimeout(id))
+    }
   }, [recentOpportunities.length, aiSearchLive])
+
+  useEffect(() => {
+    if (!aiSearchLive) return
+    const statusRotation = setInterval(() => {
+      setStatusMessageIndex((current) => (current + 1) % aiStatusMessages.length)
+    }, 3400)
+    return () => clearInterval(statusRotation)
+  }, [aiSearchLive])
 
   const toggleSearch = (index: number) => {
     setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
@@ -121,7 +201,7 @@ function DashboardPage() {
                 </div>
               </div>
 
-              {/* ── AI Search Radar (unchanged) ──────────────────────── */}
+              {/* ── AI Search Radar ──────────────────────────────────── */}
               <article className="dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-6 backdrop-blur-sm md:p-8">
                 <div className={`radar-glass-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
                 <div className="radar-container order-1">
@@ -133,18 +213,31 @@ function DashboardPage() {
                     <div className="radar-crosshair radar-crosshair-horizontal" />
                     <div className="radar-crosshair radar-crosshair-vertical" />
                     <div className="radar-sweep" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                    <span className="radar-blip radar-blip-1" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                    <span className="radar-blip radar-blip-2" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                    <span className="radar-blip radar-blip-3" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
-                    <span className="radar-blip radar-blip-4" style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }} />
+                    {radarContacts.map((contact, index) => (
+                      <span
+                        key={contact.id}
+                        className={`radar-contact${priorityContactId === contact.id ? ' radar-contact-priority' : ''}`}
+                        data-vehicle-type={contact.vehicleType}
+                        style={
+                          {
+                            top: `${contact.y * 100}%`,
+                            left: `${contact.x * 100}%`,
+                            '--radar-contact-intensity': `${contactIntensity[index] ?? 0.22}`,
+                          } as CSSProperties
+                        }
+                      />
+                    ))}
                   </div>
                 </div>
 
                 <h3 className="order-2 mt-8 text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
+                <p key={aiSearchLive ? `status-${statusMessageIndex}` : 'status-paused'} className="radar-status-message order-3 mt-2 text-center text-body-md font-body-md text-on-surface-variant">
+                  {aiSearchLive ? aiStatusMessages[statusMessageIndex] : 'Search paused — standing by…'}
+                </p>
 
                 {/* Industrial Power Switch — mobile: directly below radar; desktop: below stats */}
                 <div
-                  className={`ai-switch-panel order-3 md:order-4${aiSearchLive ? ' ai-switch-panel-live' : ' ai-switch-panel-paused'}`}
+                  className={`ai-switch-panel order-4 md:order-5${aiSearchLive ? ' ai-switch-panel-live' : ' ai-switch-panel-paused'}`}
                     role="switch"
                     aria-checked={aiSearchLive}
                     tabIndex={0}
@@ -173,7 +266,7 @@ function DashboardPage() {
                     </div>
                   </div>
 
-                  <dl className="order-4 md:order-3 mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
+                  <dl className="order-5 md:order-4 mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-body-md font-body-md text-on-surface-variant">
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Status:</dt>
                     <dd className="text-on-surface">{aiSearchLive ? '🟢 Searching' : '⏸ Paused'}</dd>
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Sources Active:</dt>
