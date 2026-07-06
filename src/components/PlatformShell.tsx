@@ -6,8 +6,10 @@ const LOGO_SRC =
 
 type PlatformNavItem = {
   label: string
-  href: string
+  href?: string
   active?: boolean
+  disabled?: boolean
+  isSectionLabel?: boolean
 }
 
 function HamburgerIcon() {
@@ -32,22 +34,52 @@ function CloseIcon() {
 function PlatformNav({ items, onNavigate }: { items: PlatformNavItem[]; onNavigate?: () => void }) {
   return (
     <nav className="space-y-2">
-      {items.map((item) =>
-        item.active ? (
-          <div key={item.href} className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary">
-            {item.label}
-          </div>
-        ) : (
+      {items.map((item, index) => {
+        if (item.isSectionLabel) {
+          return (
+            <p
+              key={`section-${index}`}
+              className="mt-4 mb-1 px-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant/50"
+            >
+              {item.label}
+            </p>
+          )
+        }
+
+        if (item.disabled) {
+          return (
+            <div
+              key={item.href ?? item.label}
+              className="flex items-center justify-between rounded-lg border border-transparent px-4 py-3 text-body-md font-body-md text-on-surface-variant/40 cursor-not-allowed select-none"
+              aria-disabled="true"
+            >
+              <span>{item.label}</span>
+              <span className="ml-2 rounded-full border border-outline-variant/30 bg-surface-container-high px-2 py-0.5 text-xs text-on-surface-variant/50">
+                Coming Soon
+              </span>
+            </div>
+          )
+        }
+
+        if (item.active) {
+          return (
+            <div key={item.href} className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary">
+              {item.label}
+            </div>
+          )
+        }
+
+        return (
           <Link
             key={item.href}
-            to={item.href}
+            to={item.href!}
             onClick={onNavigate}
             className="block rounded-lg border border-transparent px-4 py-3 text-body-md font-body-md text-on-surface-variant transition-colors hover:border-primary/20 hover:bg-surface-container-high hover:text-on-surface"
           >
             {item.label}
           </Link>
-        ),
-      )}
+        )
+      })}
     </nav>
   )
 }
