@@ -56,7 +56,6 @@ const radarContacts = [{
   opportunityIndex: 4,
   angleDeg: 208.1
 }];
-const aiStatusMessages = ["Searching UK Dealer Network…", "Scanning Auto Trader…", "Checking Dealer Websites…", "Analysing Price Changes…", "Ranking Opportunities…", "Monitoring Active Searches…"];
 const timelineTemplates = [{
   id: "timeline-audi-rs5",
   message: "Audi RS5 Sportback detected below market price.",
@@ -180,7 +179,6 @@ function DashboardPage() {
   const [highlightedMission, setHighlightedMission] = useState(null);
   const [priorityContactId, setPriorityContactId] = useState(null);
   const [contactIntensity, setContactIntensity] = useState(() => radarContacts.map(() => 0.22));
-  const [statusMessageIndex, setStatusMessageIndex] = useState(0);
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false);
   const [aiSearchLive, setAiSearchLive] = useState(true);
   const [timelineEvents, setTimelineEvents] = useState(initialTimelineEvents);
@@ -294,13 +292,6 @@ function DashboardPage() {
       timeoutIds.forEach((id) => window.clearTimeout(id));
     };
   }, [aiSearchLive]);
-  useEffect(() => {
-    if (!aiSearchLive) return;
-    const statusRotation = setInterval(() => {
-      setStatusMessageIndex((current) => (current + 1) % aiStatusMessages.length);
-    }, 3400);
-    return () => clearInterval(statusRotation);
-  }, [aiSearchLive]);
   const toggleSearch = (index) => {
     setExpandedSearches((prev) => ({
       ...prev,
@@ -309,7 +300,8 @@ function DashboardPage() {
   };
   const operationsPanelItems = [{
     label: "Status",
-    value: aiSearchLive ? "🟢 Searching" : "⏸ Paused"
+    value: aiSearchLive ? "Searching" : "Paused",
+    tone: aiSearchLive ? "live" : "paused"
   }, {
     label: "Sources Active",
     value: "5"
@@ -321,7 +313,8 @@ function DashboardPage() {
     value: counterFormatter.format(liveCounters.matchesFound)
   }, {
     label: "High Priority Matches",
-    value: counterFormatter.format(liveCounters.highPriorityMatches)
+    value: counterFormatter.format(liveCounters.highPriorityMatches),
+    tone: "accent"
   }, {
     label: "Last Scan",
     value: aiSearchLive ? "Moments ago" : "Paused"
@@ -428,12 +421,14 @@ function DashboardPage() {
         ] }),
         /* @__PURE__ */ jsxs("section", { className: "mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6", children: [
           /* @__PURE__ */ jsx("p", { className: "text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85", children: "AI Operations Panel" }),
-          /* @__PURE__ */ jsx("dl", { className: "mt-4 divide-y divide-outline-variant/20 rounded-xl border border-outline-variant/25 bg-surface-container-high/70", children: operationsPanelItems.map((item) => /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-5", children: [
-            /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: item.label }),
-            /* @__PURE__ */ jsx("dd", { className: "text-right text-body-md font-body-md tabular-nums text-on-surface", children: item.value })
-          ] }, item.label)) }),
-          /* @__PURE__ */ jsx("p", { className: "mt-4 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI status feed" }),
-          /* @__PURE__ */ jsx("p", { className: "radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant", children: aiSearchLive ? aiStatusMessages[statusMessageIndex] : "Search paused — standing by…" }, aiSearchLive ? `status-${statusMessageIndex}` : "status-paused")
+          /* @__PURE__ */ jsx("dl", { className: "mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3", children: operationsPanelItems.map((item, index) => /* @__PURE__ */ jsxs("div", { className: `flex min-h-[104px] flex-col justify-between gap-4 px-4 py-4 sm:px-5 ${index < operationsPanelItems.length - 1 ? "border-b border-outline-variant/18" : ""} ${index % 2 === 0 ? "sm:border-r sm:border-outline-variant/18" : ""} ${index >= operationsPanelItems.length - 2 ? "sm:border-b-0" : ""} ${index % 3 !== 2 ? "xl:border-r xl:border-outline-variant/18" : "xl:border-r-0"} ${index >= operationsPanelItems.length - 3 ? "xl:border-b-0" : ""}`, children: [
+            /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-[0.18em] text-on-surface-variant/90", children: item.label }),
+            /* @__PURE__ */ jsxs("dd", { className: `flex items-center gap-2 text-[1.05rem] font-semibold tracking-[0.01em] text-on-surface ${item.tone === "accent" ? "text-primary" : ""}`, children: [
+              item.tone === "live" ? /* @__PURE__ */ jsx("span", { className: "h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.55)]", "aria-hidden": "true" }) : null,
+              item.tone === "paused" ? /* @__PURE__ */ jsx("span", { className: "h-2.5 w-2.5 rounded-full bg-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.45)]", "aria-hidden": "true" }) : null,
+              /* @__PURE__ */ jsx("span", { className: "tabular-nums", children: item.value })
+            ] })
+          ] }, item.label)) })
         ] }),
         /* @__PURE__ */ jsxs("article", { className: "dashboard-border mt-6 rounded-2xl bg-surface-container p-6 md:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between", children: [
@@ -447,7 +442,7 @@ function DashboardPage() {
                 /* @__PURE__ */ jsx("span", { className: "mr-2 text-emerald-400", children: "🟢" }),
                 "Operational"
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Monitoring 5 Active Search Missions" })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Monitoring 5 AI Search Missions" })
             ] })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "timeline-list mt-6", "aria-live": "polite", children: timelineEvents.map((event) => /* @__PURE__ */ jsxs("article", { className: `timeline-entry${activeTimelineEventId === event.eventId ? " timeline-entry-live" : ""}`, children: [
