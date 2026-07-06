@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
+import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -111,6 +112,7 @@ function ChevronIcon({ open }: { open: boolean }) {
 }
 
 function DashboardPage() {
+  const { dashboardRecentOpportunities, featuredOpportunity } = opportunityIntelligencePlaceholder
   const summaryCards = [
     { icon: '🚗', title: 'New Vehicle Opportunities', value: '8' },
     { icon: '📉', title: 'Price Drops', value: '2' },
@@ -124,13 +126,7 @@ function DashboardPage() {
     { label: 'Automatically Rejected', value: '19' },
     { label: 'Recommended Reviews', value: '5' },
   ]
-  const recentOpportunities = [
-    { vehicle: 'Audi RS5 Sportback', source: 'Auto Trader', price: '£37,500', profit: '£3,850', priority: 'High', confidence: '94%' },
-    { vehicle: 'Range Rover Velar', source: 'PistonHeads', price: '£29,950', profit: '£2,400', priority: 'Medium', confidence: '78%' },
-    { vehicle: 'Mercedes A45 AMG', source: 'Motorway', price: '£34,750', profit: '£3,120', priority: 'High', confidence: '91%' },
-    { vehicle: 'Volkswagen Golf R', source: 'eBay Motors', price: '£24,200', profit: '£1,980', priority: 'Low', confidence: '65%' },
-    { vehicle: 'Porsche Macan S', source: 'Auto Trader', price: '£42,000', profit: '£4,450', priority: 'High', confidence: '97%' },
-  ]
+  const recentOpportunities = dashboardRecentOpportunities
   const activeSearches = [
     { name: 'Performance Saloons (2019+)', matches: '14', updated: '3 mins ago' },
     { name: 'SUVs under £28k', matches: '9', updated: '11 mins ago' },
@@ -318,7 +314,7 @@ function DashboardPage() {
                 <div className="grid gap-3 lg:grid-cols-2">
                   <article className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3">
                     <p className="text-xs uppercase tracking-[0.1em] text-primary/90">Today’s Top Recommendation</p>
-                    <p className="mt-2 text-title-lg font-title-lg text-on-surface">BMW M3 Competition</p>
+                    <p className="mt-2 text-title-lg font-title-lg text-on-surface">{featuredOpportunity.vehicle}</p>
                   </article>
                   <article className="rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-3">
                     <p className="text-xs uppercase tracking-[0.1em] text-on-surface-variant">Recommended Action</p>
@@ -499,29 +495,29 @@ function DashboardPage() {
               <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
-                  <p className="text-body-md font-body-md text-on-surface">BMW M3 Competition</p>
+                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.vehicle}</p>
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Year</p>
-                  <p className="text-body-md font-body-md text-on-surface">2022</p>
+                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.year}</p>
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Price</p>
-                  <p className="text-body-md font-body-md text-on-surface">£31,995</p>
+                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.listPriceDisplay}</p>
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Estimated Profit</p>
-                  <p className="text-body-md font-body-md text-on-surface">£4,200</p>
+                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.dashboardEstimatedProfitDisplay}</p>
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Confidence Score</p>
-                  <p className="text-body-md font-body-md text-on-surface">97%</p>
+                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.confidenceDisplay}</p>
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Recently reduced in price.</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Strong resale potential.</p>
-                  <p className="text-body-md font-body-md text-on-surface-variant">Located only 42 miles away.</p>
+                  {featuredOpportunity.dashboardReasonLines.map((reason) => (
+                    <p key={reason} className="text-body-md font-body-md text-on-surface-variant">{reason}</p>
+                  ))}
                 </div>
               </div>
 
@@ -565,7 +561,7 @@ function DashboardPage() {
                       >
                         <td className="rounded-l-xl px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.vehicle}</td>
                         <td className="px-4 py-3 text-body-md font-body-md text-on-surface-variant">{opportunity.source}</td>
-                        <td className="px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.profit}</td>
+                        <td className="px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.estimatedProfitDisplay}</td>
                         <td className="px-4 py-3 text-body-md font-body-md text-on-surface">{opportunity.priority}</td>
                         <td className="rounded-r-xl px-4 py-3">
                           <Link
@@ -597,15 +593,15 @@ function DashboardPage() {
                     <div className="mb-4 grid grid-cols-3 gap-2 rounded-lg bg-surface-container p-3">
                       <div className="text-center">
                         <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Price</p>
-                        <p className="text-sm font-medium text-on-surface">{opportunity.price}</p>
+                        <p className="text-sm font-medium text-on-surface">{opportunity.priceDisplay}</p>
                       </div>
                       <div className="text-center">
                         <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Profit</p>
-                        <p className="text-sm font-medium text-primary">{opportunity.profit}</p>
+                        <p className="text-sm font-medium text-primary">{opportunity.estimatedProfitDisplay}</p>
                       </div>
                       <div className="text-center">
                         <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Confidence</p>
-                        <p className="text-sm font-medium text-on-surface">{opportunity.confidence}</p>
+                        <p className="text-sm font-medium text-on-surface">{opportunity.confidenceDisplay}</p>
                       </div>
                     </div>
                     <div className="flex gap-2">

@@ -2,6 +2,7 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-DqiuekGA.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CuGw1k3x.js";
 const radarContacts = [{
   id: "contact-1",
   x: 0.63,
@@ -101,6 +102,10 @@ function ChevronIcon({
   }, children: /* @__PURE__ */ jsx("polyline", { points: "6 9 12 15 18 9" }) });
 }
 function DashboardPage() {
+  const {
+    dashboardRecentOpportunities,
+    featuredOpportunity
+  } = opportunityIntelligencePlaceholder;
   const summaryCards = [{
     icon: "🚗",
     title: "New Vehicle Opportunities",
@@ -135,42 +140,7 @@ function DashboardPage() {
     label: "Recommended Reviews",
     value: "5"
   }];
-  const recentOpportunities = [{
-    vehicle: "Audi RS5 Sportback",
-    source: "Auto Trader",
-    price: "£37,500",
-    profit: "£3,850",
-    priority: "High",
-    confidence: "94%"
-  }, {
-    vehicle: "Range Rover Velar",
-    source: "PistonHeads",
-    price: "£29,950",
-    profit: "£2,400",
-    priority: "Medium",
-    confidence: "78%"
-  }, {
-    vehicle: "Mercedes A45 AMG",
-    source: "Motorway",
-    price: "£34,750",
-    profit: "£3,120",
-    priority: "High",
-    confidence: "91%"
-  }, {
-    vehicle: "Volkswagen Golf R",
-    source: "eBay Motors",
-    price: "£24,200",
-    profit: "£1,980",
-    priority: "Low",
-    confidence: "65%"
-  }, {
-    vehicle: "Porsche Macan S",
-    source: "Auto Trader",
-    price: "£42,000",
-    profit: "£4,450",
-    priority: "High",
-    confidence: "97%"
-  }];
+  const recentOpportunities = dashboardRecentOpportunities;
   const activeSearches = [{
     name: "Performance Saloons (2019+)",
     matches: "14",
@@ -347,7 +317,7 @@ function DashboardPage() {
       /* @__PURE__ */ jsxs("div", { className: "grid gap-3 lg:grid-cols-2", children: [
         /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-primary/30 bg-primary/10 px-4 py-3", children: [
           /* @__PURE__ */ jsx("p", { className: "text-xs uppercase tracking-[0.1em] text-primary/90", children: "Today’s Top Recommendation" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-title-lg font-title-lg text-on-surface", children: "BMW M3 Competition" })
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-title-lg font-title-lg text-on-surface", children: featuredOpportunity.vehicle })
         ] }),
         /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-3", children: [
           /* @__PURE__ */ jsx("p", { className: "text-xs uppercase tracking-[0.1em] text-on-surface-variant", children: "Recommended Action" }),
@@ -458,29 +428,27 @@ function DashboardPage() {
       /* @__PURE__ */ jsxs("div", { className: "mb-8 grid grid-cols-1 gap-4 md:grid-cols-2", children: [
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicle" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "BMW M3 Competition" })
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.vehicle })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Year" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "2022" })
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.year })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Price" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "£31,995" })
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.listPriceDisplay })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Estimated Profit" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "£4,200" })
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.dashboardEstimatedProfitDisplay })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Confidence Score" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: "97%" })
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.confidenceDisplay })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Reason" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Recently reduced in price." }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Strong resale potential." }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Located only 42 miles away." })
+          featuredOpportunity.dashboardReasonLines.map((reason) => /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: reason }, reason))
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4", children: [
@@ -501,7 +469,7 @@ function DashboardPage() {
         /* @__PURE__ */ jsx("tbody", { children: recentOpportunities.map((opportunity, index) => /* @__PURE__ */ jsxs("tr", { className: `rounded-xl bg-surface-container-high transition-all ${highlightedOpportunity === index ? "opportunity-row-highlight" : ""}`, children: [
           /* @__PURE__ */ jsx("td", { className: "rounded-l-xl px-4 py-3 text-body-md font-body-md text-on-surface", children: opportunity.vehicle }),
           /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-body-md font-body-md text-on-surface-variant", children: opportunity.source }),
-          /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-body-md font-body-md text-on-surface", children: opportunity.profit }),
+          /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-body-md font-body-md text-on-surface", children: opportunity.estimatedProfitDisplay }),
           /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-body-md font-body-md text-on-surface", children: opportunity.priority }),
           /* @__PURE__ */ jsx("td", { className: "rounded-r-xl px-4 py-3", children: /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-10 items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-on-primary transition-opacity hover:opacity-90", children: "Review" }) })
         ] }, opportunity.vehicle)) })
@@ -514,15 +482,15 @@ function DashboardPage() {
         /* @__PURE__ */ jsxs("div", { className: "mb-4 grid grid-cols-3 gap-2 rounded-lg bg-surface-container p-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
             /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs uppercase tracking-widest text-on-surface-variant", children: "Price" }),
-            /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface", children: opportunity.price })
+            /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface", children: opportunity.priceDisplay })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
             /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs uppercase tracking-widest text-on-surface-variant", children: "Profit" }),
-            /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-primary", children: opportunity.profit })
+            /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-primary", children: opportunity.estimatedProfitDisplay })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
             /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs uppercase tracking-widest text-on-surface-variant", children: "Confidence" }),
-            /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface", children: opportunity.confidence })
+            /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface", children: opportunity.confidenceDisplay })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
