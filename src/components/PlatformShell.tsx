@@ -159,13 +159,13 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
 
         <div className="flex flex-1 flex-col">
           <header className="border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
-            <div className="flex items-center justify-between lg:hidden">
-              <div className="logo-bezel w-44 rounded-lg p-1">
+            <div className="relative flex items-center lg:hidden">
+              <div className="mx-auto logo-bezel w-44 rounded-lg p-1">
                 <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
               </div>
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high"
+                className="absolute right-0 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container-high"
                 aria-label="Open navigation menu"
                 aria-expanded={sidebarOpen}
                 aria-controls="mobile-sidebar"
