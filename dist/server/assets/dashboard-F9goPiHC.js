@@ -169,6 +169,7 @@ function DashboardPage() {
   });
   const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
   const [completedTasks, setCompletedTasks] = useState({});
+  const [recAction, setRecAction] = useState(null);
   const toggleTask = (index) => {
     setCompletedTasks((prev) => ({
       ...prev,
@@ -500,8 +501,13 @@ function DashboardPage() {
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4", children: [
         /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto", children: "Review Opportunity" }),
-        /* @__PURE__ */ jsx("button", { className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto", children: "Save Vehicle" })
-      ] })
+        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("saved"), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto", children: "Save Opportunity" }),
+        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("dismissed"), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error md:w-auto", children: "Dismiss" }),
+        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("reminded"), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-tertiary/40 md:w-auto", children: "Remind Me Tomorrow" })
+      ] }),
+      recAction === "saved" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-primary", children: "✓ Saved to Watchlist (placeholder)" }),
+      recAction === "dismissed" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "✓ Opportunity dismissed (placeholder)" }),
+      recAction === "reminded" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-tertiary", children: "✓ Reminder scheduled (placeholder)" })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "Recent Opportunities" }),

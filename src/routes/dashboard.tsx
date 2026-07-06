@@ -149,6 +149,7 @@ function DashboardPage() {
     () => Object.fromEntries(activeSearches.map((_, i) => [i, true])),
   )
   const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({})
+  const [recAction, setRecAction] = useState<'saved' | 'dismissed' | 'reminded' | null>(null)
 
   const toggleTask = (index: number) => {
     setCompletedTasks((prev) => ({ ...prev, [index]: !prev[index] }))
@@ -645,10 +646,36 @@ function DashboardPage() {
                 >
                   Review Opportunity
                 </Link>
-                <button className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto">
-                  Save Vehicle
+                <button
+                  onClick={() => setRecAction('saved')}
+                  className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto"
+                >
+                  Save Opportunity
+                </button>
+                <button
+                  onClick={() => setRecAction('dismissed')}
+                  className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error md:w-auto"
+                >
+                  Dismiss
+                </button>
+                <button
+                  onClick={() => setRecAction('reminded')}
+                  className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-tertiary/40 md:w-auto"
+                >
+                  Remind Me Tomorrow
                 </button>
               </div>
+
+              {/* Placeholder feedback */}
+              {recAction === 'saved' && (
+                <p className="mt-4 text-body-sm font-body-sm text-primary">✓ Saved to Watchlist (placeholder)</p>
+              )}
+              {recAction === 'dismissed' && (
+                <p className="mt-4 text-body-sm font-body-sm text-on-surface-variant">✓ Opportunity dismissed (placeholder)</p>
+              )}
+              {recAction === 'reminded' && (
+                <p className="mt-4 text-body-sm font-body-sm text-tertiary">✓ Reminder scheduled (placeholder)</p>
+              )}
             </section>
 
             {/* ── Recent Opportunities ─────────────────────────────────── */}
