@@ -147,11 +147,11 @@ function PlatformShell({ children, navItems }) {
               /* @__PURE__ */ jsx("span", { className: "text-on-surface", children: "🟢 Operational" })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("nav", { "aria-label": "Application footer links", className: "flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant", children: [
-            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Support" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Privacy" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Terms" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Contact" })
+          /* @__PURE__ */ jsxs("nav", { "aria-label": "Application footer links", className: "flex flex-wrap gap-x-4 gap-y-2 text-xs text-on-surface-variant", children: [
+            /* @__PURE__ */ jsx("a", { href: "#", className: "whitespace-nowrap transition-colors hover:text-primary", children: "Support" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "whitespace-nowrap transition-colors hover:text-primary", children: "Privacy" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "whitespace-nowrap transition-colors hover:text-primary", children: "Terms" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "whitespace-nowrap transition-colors hover:text-primary", children: "Contact" })
           ] })
         ] }) })
       ] })

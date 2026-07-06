@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell } from "./PlatformShell-CPONHeh0.js";
+import { P as PlatformShell } from "./PlatformShell-DvCu7zvm.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CuGw1k3x.js";
 const missionStatusConfig = {
   Monitoring: {
@@ -530,7 +530,7 @@ function DashboardPage() {
             /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-primary", children: opportunity.estimatedProfitDisplay })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-            /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs uppercase tracking-widest text-on-surface-variant", children: "Confidence" }),
+            /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs uppercase tracking-widest text-on-surface-variant", children: "Conf." }),
             /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface", children: opportunity.confidenceDisplay })
           ] })
         ] }),

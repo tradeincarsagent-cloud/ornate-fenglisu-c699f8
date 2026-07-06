@@ -232,7 +232,7 @@ function SearchBuilderPage() {
                         <CheckIcon />
                       </span>
                       <span className="flex-1 text-body-md font-body-md text-on-surface">{source}</span>
-                      <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary">Phase 1</span>
+                      <span className="flex-shrink-0 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary">Phase 1</span>
                     </div>
                   ))}
                 </div>
@@ -252,7 +252,7 @@ function SearchBuilderPage() {
                         aria-hidden="true"
                       />
                       <span className="flex-1 text-body-md font-body-md text-on-surface-variant">{source}</span>
-                      <span className="rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant">Coming Soon</span>
+                      <span className="flex-shrink-0 rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant">Coming Soon</span>
                     </div>
                   ))}
                 </div>
