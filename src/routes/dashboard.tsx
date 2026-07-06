@@ -148,12 +148,8 @@ function DashboardPage() {
   const [expandedSearches, setExpandedSearches] = useState<Record<number, boolean>>(
     () => Object.fromEntries(activeSearches.map((_, i) => [i, true])),
   )
-  const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({})
   const [recAction, setRecAction] = useState<'saved' | 'dismissed' | 'reminded' | null>(null)
 
-  const toggleTask = (index: number) => {
-    setCompletedTasks((prev) => ({ ...prev, [index]: !prev[index] }))
-  }
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
 
   useEffect(() => {
@@ -331,117 +327,6 @@ function DashboardPage() {
                   </button>
                 </div>
               </div>
-            </section>
-
-            {/* ── Today's Action Plan ──────────────────────────────────── */}
-            <section className="mb-8 rounded-2xl border border-outline-variant/30 bg-surface-container-high/60 p-5 backdrop-blur-sm md:p-6">
-              <div className="mb-4 flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/90">Daily Workflow</p>
-                  <h2 className="mt-1 text-headline-sm font-headline-sm text-on-surface">Today's Action Plan</h2>
-                </div>
-                <p className="text-xs text-on-surface-variant">
-                  Est. completion: <span className="font-semibold text-on-surface">12 min</span>
-                </p>
-              </div>
-
-              <ol className="space-y-3">
-                {/* Task 1 */}
-                <li
-                  className={`flex items-start gap-4 rounded-xl border p-4 transition-colors ${
-                    completedTasks[0]
-                      ? 'border-outline-variant/20 bg-surface/30 opacity-60'
-                      : 'border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    id="action-task-0"
-                    checked={!!completedTasks[0]}
-                    onChange={() => toggleTask(0)}
-                    className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary"
-                    aria-label="Mark 'Review BMW M3 Competition' as complete"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <label
-                      htmlFor="action-task-0"
-                      className={`cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[0] ? 'line-through' : ''}`}
-                    >
-                      Review BMW M3 Competition
-                    </label>
-                    <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant">
-                      <dt className="font-semibold uppercase tracking-widest">Estimated Profit:</dt>
-                      <dd className="font-semibold text-primary">£4,255</dd>
-                      <dt className="font-semibold uppercase tracking-widest">Status:</dt>
-                      <dd>
-                        <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary">
-                          High Priority
-                        </span>
-                      </dd>
-                    </dl>
-                  </div>
-                </li>
-
-                {/* Task 2 */}
-                <li
-                  className={`flex items-start gap-4 rounded-xl border p-4 transition-colors ${
-                    completedTasks[1]
-                      ? 'border-outline-variant/20 bg-surface/30 opacity-60'
-                      : 'border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    id="action-task-1"
-                    checked={!!completedTasks[1]}
-                    onChange={() => toggleTask(1)}
-                    className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary"
-                    aria-label="Mark 'Contact Seller' as complete"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <label
-                      htmlFor="action-task-1"
-                      className={`cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[1] ? 'line-through' : ''}`}
-                    >
-                      Contact Seller
-                    </label>
-                    <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant">
-                      <dt className="font-semibold uppercase tracking-widest">Reason:</dt>
-                      <dd>Vehicle listed for 18 days.</dd>
-                    </dl>
-                  </div>
-                </li>
-
-                {/* Task 3 */}
-                <li
-                  className={`flex items-start gap-4 rounded-xl border p-4 transition-colors ${
-                    completedTasks[2]
-                      ? 'border-outline-variant/20 bg-surface/30 opacity-60'
-                      : 'border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    id="action-task-2"
-                    checked={!!completedTasks[2]}
-                    onChange={() => toggleTask(2)}
-                    className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary"
-                    aria-label="Mark 'Verify Vehicle History & MOT' as complete"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <label
-                      htmlFor="action-task-2"
-                      className={`cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[2] ? 'line-through' : ''}`}
-                    >
-                      Verify Vehicle History &amp; MOT
-                    </label>
-                    <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant">
-                      <dt className="font-semibold uppercase tracking-widest">Status:</dt>
-                      <dd>Recommended before purchase.</dd>
-                    </dl>
-                  </div>
-                </li>
-              </ol>
             </section>
 
             <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -638,29 +523,29 @@ function DashboardPage() {
                 </div>
               </div>
 
-              {/* Buttons: full-width stacked on mobile, inline on md+ */}
-              <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4">
+              {/* Buttons: 2-column grid on mobile, 4-column on md+ for even spacing */}
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                 <Link
                   to="/opportunity"
-                  className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto"
+                  className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
                 >
                   Review Opportunity
                 </Link>
                 <button
                   onClick={() => setRecAction('saved')}
-                  className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto"
+                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40"
                 >
                   Save Opportunity
                 </button>
                 <button
                   onClick={() => setRecAction('dismissed')}
-                  className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error md:w-auto"
+                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error"
                 >
                   Dismiss
                 </button>
                 <button
                   onClick={() => setRecAction('reminded')}
-                  className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-tertiary/40 md:w-auto"
+                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-tertiary/40"
                 >
                   Remind Me Tomorrow
                 </button>
@@ -766,9 +651,9 @@ function DashboardPage() {
               </div>
             </section>
 
-            {/* ── My Active Searches ───────────────────────────────────── */}
+            {/* ── AI Search Missions ───────────────────────────────────── */}
             <section className="dashboard-border rounded-2xl bg-surface-container p-6 md:p-8">
-              <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">My Active Searches</h2>
+              <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
               <div className="space-y-3">
                 {activeSearches.map((search, index) => (
                   <article key={search.name} className="rounded-xl bg-surface-container-high p-4">

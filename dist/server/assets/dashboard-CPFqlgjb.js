@@ -168,14 +168,7 @@ function DashboardPage() {
     highPriorityMatches: 3
   });
   const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
-  const [completedTasks, setCompletedTasks] = useState({});
   const [recAction, setRecAction] = useState(null);
-  const toggleTask = (index) => {
-    setCompletedTasks((prev) => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-  };
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
     if (!aiSearchLive) return;
@@ -328,52 +321,6 @@ function DashboardPage() {
         /* @__PURE__ */ jsx("button", { type: "button", disabled: true, title: "Voice AI briefing coming in a future release.", className: "inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-2 text-sm font-medium text-on-surface-variant opacity-70", children: "🎤 Hear Today’s Briefing" })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsxs("section", { className: "mb-8 rounded-2xl border border-outline-variant/30 bg-surface-container-high/60 p-5 backdrop-blur-sm md:p-6", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center justify-between", children: [
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "text-xs font-semibold uppercase tracking-[0.18em] text-primary/90", children: "Daily Workflow" }),
-          /* @__PURE__ */ jsx("h2", { className: "mt-1 text-headline-sm font-headline-sm text-on-surface", children: "Today's Action Plan" })
-        ] }),
-        /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant", children: [
-          "Est. completion: ",
-          /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: "12 min" })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs("ol", { className: "space-y-3", children: [
-        /* @__PURE__ */ jsxs("li", { className: `flex items-start gap-4 rounded-xl border p-4 transition-colors ${completedTasks[0] ? "border-outline-variant/20 bg-surface/30 opacity-60" : "border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"}`, children: [
-          /* @__PURE__ */ jsx("input", { type: "checkbox", id: "action-task-0", checked: !!completedTasks[0], onChange: () => toggleTask(0), className: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary", "aria-label": "Mark 'Review BMW M3 Competition' as complete" }),
-          /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
-            /* @__PURE__ */ jsx("label", { htmlFor: "action-task-0", className: `cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[0] ? "line-through" : ""}`, children: "Review BMW M3 Competition" }),
-            /* @__PURE__ */ jsxs("dl", { className: "mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant", children: [
-              /* @__PURE__ */ jsx("dt", { className: "font-semibold uppercase tracking-widest", children: "Estimated Profit:" }),
-              /* @__PURE__ */ jsx("dd", { className: "font-semibold text-primary", children: "£4,255" }),
-              /* @__PURE__ */ jsx("dt", { className: "font-semibold uppercase tracking-widest", children: "Status:" }),
-              /* @__PURE__ */ jsx("dd", { children: /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary", children: "High Priority" }) })
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("li", { className: `flex items-start gap-4 rounded-xl border p-4 transition-colors ${completedTasks[1] ? "border-outline-variant/20 bg-surface/30 opacity-60" : "border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"}`, children: [
-          /* @__PURE__ */ jsx("input", { type: "checkbox", id: "action-task-1", checked: !!completedTasks[1], onChange: () => toggleTask(1), className: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary", "aria-label": "Mark 'Contact Seller' as complete" }),
-          /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
-            /* @__PURE__ */ jsx("label", { htmlFor: "action-task-1", className: `cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[1] ? "line-through" : ""}`, children: "Contact Seller" }),
-            /* @__PURE__ */ jsxs("dl", { className: "mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant", children: [
-              /* @__PURE__ */ jsx("dt", { className: "font-semibold uppercase tracking-widest", children: "Reason:" }),
-              /* @__PURE__ */ jsx("dd", { children: "Vehicle listed for 18 days." })
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("li", { className: `flex items-start gap-4 rounded-xl border p-4 transition-colors ${completedTasks[2] ? "border-outline-variant/20 bg-surface/30 opacity-60" : "border-outline-variant/35 bg-surface/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"}`, children: [
-          /* @__PURE__ */ jsx("input", { type: "checkbox", id: "action-task-2", checked: !!completedTasks[2], onChange: () => toggleTask(2), className: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-primary", "aria-label": "Mark 'Verify Vehicle History & MOT' as complete" }),
-          /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
-            /* @__PURE__ */ jsx("label", { htmlFor: "action-task-2", className: `cursor-pointer text-sm font-semibold text-on-surface ${completedTasks[2] ? "line-through" : ""}`, children: "Verify Vehicle History & MOT" }),
-            /* @__PURE__ */ jsxs("dl", { className: "mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-xs text-on-surface-variant", children: [
-              /* @__PURE__ */ jsx("dt", { className: "font-semibold uppercase tracking-widest", children: "Status:" }),
-              /* @__PURE__ */ jsx("dd", { children: "Recommended before purchase." })
-            ] })
-          ] })
-        ] })
-      ] })
-    ] }),
     /* @__PURE__ */ jsxs("div", { className: "mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap", children: [
       /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Review Top Opportunity" }),
       /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "Create New Search" })
@@ -499,11 +446,11 @@ function DashboardPage() {
           featuredOpportunity.dashboardReasonLines.map((reason) => /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: reason }, reason))
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-4", children: [
-        /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 md:w-auto", children: "Review Opportunity" }),
-        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("saved"), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40 md:w-auto", children: "Save Opportunity" }),
-        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("dismissed"), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error md:w-auto", children: "Dismiss" }),
-        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("reminded"), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-tertiary/40 md:w-auto", children: "Remind Me Tomorrow" })
+      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-3 md:grid-cols-4", children: [
+        /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Review Opportunity" }),
+        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("saved"), className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40", children: "Save Opportunity" }),
+        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("dismissed"), className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error", children: "Dismiss" }),
+        /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("reminded"), className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-tertiary/40", children: "Remind Me Tomorrow" })
       ] }),
       recAction === "saved" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-primary", children: "✓ Saved to Watchlist (placeholder)" }),
       recAction === "dismissed" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "✓ Opportunity dismissed (placeholder)" }),
@@ -554,7 +501,7 @@ function DashboardPage() {
       ] }, opportunity.vehicle)) })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-6 md:p-8", children: [
-      /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "My Active Searches" }),
+      /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "AI Search Missions" }),
       /* @__PURE__ */ jsx("div", { className: "space-y-3", children: activeSearches.map((search, index) => /* @__PURE__ */ jsxs("article", { className: "rounded-xl bg-surface-container-high p-4", children: [
         /* @__PURE__ */ jsxs("div", { className: "hidden gap-2 md:flex md:flex-row md:items-center md:justify-between", children: [
           /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: search.name }),
