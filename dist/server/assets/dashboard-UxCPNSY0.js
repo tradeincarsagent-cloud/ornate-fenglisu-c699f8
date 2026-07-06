@@ -127,6 +127,19 @@ function DashboardPage() {
     title: "Saved Vehicles Updated",
     value: "5"
   }];
+  const dailyBriefingCards = [{
+    label: "Listings Analysed",
+    value: "18,462",
+    detail: "Across your connected search sources"
+  }, {
+    label: "Matches Found",
+    value: "24",
+    detail: "5 passed your buying criteria today"
+  }, {
+    label: "Top Priority",
+    value: featuredOpportunity.vehicle,
+    detail: "Highest estimated profit margin"
+  }];
   const recentOpportunities = dashboardRecentOpportunities;
   const activeSearches = [{
     name: "Performance Saloons (2019+)",
@@ -294,20 +307,18 @@ function DashboardPage() {
     /* @__PURE__ */ jsx("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
         /* @__PURE__ */ jsx("p", { className: "text-xs font-semibold uppercase tracking-[0.18em] text-primary/90", children: "AI Daily Briefing" }),
-        /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Good Morning Jonathan," })
+        /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Good Morning Jonathan," }),
+        /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant", children: "5 vehicles need attention today. Start with your strongest profit opportunity." })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "rounded-2xl border border-outline-variant/35 bg-surface/50 p-5 text-body-md text-on-surface-variant", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3 leading-relaxed", children: [
-        /* @__PURE__ */ jsx("p", { children: "Since your last visit I have analysed 18,462 vehicle listings across your connected search sources." }),
-        /* @__PURE__ */ jsx("p", { children: "I found 24 potential matches." }),
-        /* @__PURE__ */ jsx("p", { children: "After applying your buying criteria, I rejected 19 automatically and identified 5 vehicles that deserve your attention today." }),
-        /* @__PURE__ */ jsxs("p", { children: [
-          "Your strongest opportunity remains ",
-          /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: featuredOpportunity.vehicle }),
-          "."
-        ] }),
-        /* @__PURE__ */ jsx("p", { children: "I recommend reviewing this vehicle first because it currently offers the highest estimated profit margin." })
-      ] }) }),
-      /* @__PURE__ */ jsx("p", { className: "text-xs tracking-[0.08em] text-on-surface-variant", children: "Estimated reading time: 15 seconds" })
+      /* @__PURE__ */ jsx("div", { className: "grid gap-3 md:grid-cols-3", children: dailyBriefingCards.map((card) => /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/35 bg-surface/55 p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/85", children: card.label }),
+        /* @__PURE__ */ jsx("p", { className: "mt-2 text-lg font-semibold text-on-surface", children: card.value }),
+        /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: card.detail })
+      ] }, card.label)) }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-xs tracking-[0.08em] text-on-surface-variant", children: "Voice AI briefing coming in a future release." }),
+        /* @__PURE__ */ jsx("button", { type: "button", disabled: true, title: "Voice AI briefing coming in a future release.", className: "inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-2 text-sm font-medium text-on-surface-variant opacity-70", children: "🎤 Hear Today’s Briefing" })
+      ] })
     ] }) }),
     /* @__PURE__ */ jsxs("div", { className: "mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap", children: [
       /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Review Top Opportunity" }),
