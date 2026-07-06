@@ -118,6 +118,12 @@ function DashboardPage() {
     { icon: '🔔', title: 'Auctions Ending Today', value: '1' },
     { icon: '❤️', title: 'Saved Vehicles Updated', value: '5' },
   ]
+  const dailyBriefingStats = [
+    { label: 'Vehicles Checked', value: '18,462' },
+    { label: 'Matching Opportunities', value: '24' },
+    { label: 'Automatically Rejected', value: '19' },
+    { label: 'Recommended Reviews', value: '5' },
+  ]
   const recentOpportunities = [
     { vehicle: 'Audi RS5 Sportback', source: 'Auto Trader', price: '£37,500', profit: '£3,850', priority: 'High', confidence: '94%' },
     { vehicle: 'Range Rover Velar', source: 'PistonHeads', price: '£29,950', profit: '£2,400', priority: 'Medium', confidence: '78%' },
@@ -289,7 +295,42 @@ function DashboardPage() {
       ]}
     >
             <h1 className="mb-2 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
-            <p className="mb-8 text-headline-md font-headline-md text-on-surface">Good Morning, Jonathan</p>
+            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6">
+              <div className="flex flex-col gap-6">
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/90">AI Daily Briefing</p>
+                  <h2 className="text-headline-md font-headline-md text-on-surface">Good Morning Jonathan</h2>
+                  <p className="text-body-md text-on-surface-variant">Here’s what I’ve been working on since your last visit.</p>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                  {dailyBriefingStats.map((stat) => (
+                    <article
+                      key={stat.label}
+                      className="rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-3"
+                    >
+                      <p className="text-xs uppercase tracking-[0.1em] text-on-surface-variant">{stat.label}</p>
+                      <p className="mt-2 text-headline-md font-headline-md text-primary">{stat.value}</p>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="grid gap-3 lg:grid-cols-2">
+                  <article className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3">
+                    <p className="text-xs uppercase tracking-[0.1em] text-primary/90">Today’s Top Recommendation</p>
+                    <p className="mt-2 text-title-lg font-title-lg text-on-surface">BMW M3 Competition</p>
+                  </article>
+                  <article className="rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-3">
+                    <p className="text-xs uppercase tracking-[0.1em] text-on-surface-variant">Recommended Action</p>
+                    <p className="mt-2 text-body-md font-body-md text-on-surface">
+                      Review this vehicle before reviewing other opportunities.
+                    </p>
+                  </article>
+                </div>
+
+                <p className="text-xs tracking-[0.08em] text-on-surface-variant">Last AI Update: 08:42 Today</p>
+              </div>
+            </section>
             <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 to="/search-builder"
