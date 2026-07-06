@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 
 export const Route = createFileRoute('/dashboard')({
@@ -7,6 +7,18 @@ export const Route = createFileRoute('/dashboard')({
 })
 
 type RadarContactType = 'car' | 'pickup' | 'van' | 'motorcycle'
+
+type TimelineTemplate = {
+  id: string
+  message: string
+  contactId: string
+  opportunityIndex: number
+}
+
+type TimelineEvent = TimelineTemplate & {
+  eventId: string
+  time: string
+}
 
 const radarContacts: Array<{
   id: string
@@ -20,6 +32,7 @@ const radarContacts: Array<{
   { id: 'contact-2', x: 0.29, y: 0.61, vehicleType: 'pickup', opportunityIndex: 1, angleDeg: 239.7 },
   { id: 'contact-3', x: 0.74, y: 0.47, vehicleType: 'van', opportunityIndex: 2, angleDeg: 85.2 },
   { id: 'contact-4', x: 0.57, y: 0.7, vehicleType: 'motorcycle', opportunityIndex: 3, angleDeg: 161.6 },
+  { id: 'contact-5', x: 0.18, y: 0.33, vehicleType: 'car', opportunityIndex: 4, angleDeg: 208.1 },
 ]
 
 const aiStatusMessages = [
@@ -30,6 +43,55 @@ const aiStatusMessages = [
   'Ranking Opportunities…',
   'Monitoring Active Searches…',
 ]
+
+const timelineTemplates: TimelineTemplate[] = [
+  {
+    id: 'timeline-audi-rs5',
+    message: 'Audi RS5 Sportback detected below market price.',
+    contactId: 'contact-1',
+    opportunityIndex: 0,
+  },
+  {
+    id: 'timeline-range-rover',
+    message: 'Range Rover Velar price reduced by £850.',
+    contactId: 'contact-2',
+    opportunityIndex: 1,
+  },
+  {
+    id: 'timeline-mercedes-search',
+    message: 'Dealer Network search completed for Mercedes A45 AMG.',
+    contactId: 'contact-3',
+    opportunityIndex: 2,
+  },
+  {
+    id: 'timeline-porsche-opportunity',
+    message: 'New Porsche Macan S opportunity added to Recent Opportunities.',
+    contactId: 'contact-5',
+    opportunityIndex: 4,
+  },
+  {
+    id: 'timeline-golf-mission',
+    message: 'AI Search Mission updated for Volkswagen Golf R.',
+    contactId: 'contact-4',
+    opportunityIndex: 3,
+  },
+]
+
+const initialTimelineEvents: TimelineEvent[] = [
+  { ...timelineTemplates[0], eventId: 'timeline-seed-1', time: '09:14' },
+  { ...timelineTemplates[1], eventId: 'timeline-seed-2', time: '09:11' },
+  { ...timelineTemplates[2], eventId: 'timeline-seed-3', time: '09:08' },
+  { ...timelineTemplates[3], eventId: 'timeline-seed-4', time: '09:05' },
+  { ...timelineTemplates[4], eventId: 'timeline-seed-5', time: '09:02' },
+]
+
+const activityTimeFormatter = new Intl.DateTimeFormat('en-GB', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+})
+
+const counterFormatter = new Intl.NumberFormat('en-GB')
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -75,9 +137,17 @@ function DashboardPage() {
   const [statusMessageIndex, setStatusMessageIndex] = useState(0)
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false)
   const [aiSearchLive, setAiSearchLive] = useState(true)
+  const [timelineEvents, setTimelineEvents] = useState(initialTimelineEvents)
+  const [activeTimelineEventId, setActiveTimelineEventId] = useState<string | null>(null)
+  const [liveCounters, setLiveCounters] = useState({
+    vehiclesCheckedToday: 12487,
+    matchesFound: 27,
+    highPriorityMatches: 3,
+  })
   const [expandedSearches, setExpandedSearches] = useState<Record<number, boolean>>(
     () => Object.fromEntries(activeSearches.map((_, i) => [i, true])),
   )
+  const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
 
   useEffect(() => {
     if (!aiSearchLive) return
@@ -116,8 +186,13 @@ function DashboardPage() {
       setPriorityContactId(null)
       setRadarDetectionGlow(false)
       setHighlightedOpportunity(null)
+      setActiveTimelineEventId(null)
       return
     }
+  }, [aiSearchLive])
+
+  useEffect(() => {
+    if (!aiSearchLive) return
 
     let cancelled = false
     const timeoutIds: number[] = []
@@ -126,25 +201,67 @@ function DashboardPage() {
       timeoutIds.push(id)
     }
 
-    const runDetection = () => {
+    const runTimelineActivity = () => {
       if (cancelled) return
-      const selected = radarContacts[Math.floor(Math.random() * radarContacts.length)]
-      setPriorityContactId(selected.id)
+      const template = timelineTemplates[timelineCursorRef.current]
+      const eventId = `${template.id}-${Date.now()}`
+      timelineCursorRef.current = (timelineCursorRef.current + 1) % timelineTemplates.length
+
+      setTimelineEvents((current) => [
+        { ...template, eventId, time: activityTimeFormatter.format(new Date()) },
+        ...current,
+      ].slice(0, 6))
+      setPriorityContactId(template.contactId)
       setRadarDetectionGlow(true)
-      setHighlightedOpportunity(selected.opportunityIndex % recentOpportunities.length)
+      setHighlightedOpportunity(template.opportunityIndex)
+      setActiveTimelineEventId(eventId)
 
       schedule(() => setPriorityContactId(null), 1600)
       schedule(() => setRadarDetectionGlow(false), 1000)
       schedule(() => setHighlightedOpportunity(null), 1700)
-      schedule(runDetection, 15000 + Math.random() * 5000)
+      schedule(() => setActiveTimelineEventId(null), 1900)
+      schedule(runTimelineActivity, 11000 + Math.random() * 4000)
     }
 
-    schedule(runDetection, 15000 + Math.random() * 5000)
+    schedule(runTimelineActivity, 9000)
     return () => {
       cancelled = true
       timeoutIds.forEach((id) => window.clearTimeout(id))
     }
-  }, [recentOpportunities.length, aiSearchLive])
+  }, [aiSearchLive])
+
+  useEffect(() => {
+    if (!aiSearchLive) return
+
+    let cancelled = false
+    const timeoutIds: number[] = []
+    const schedule = (fn: () => void, ms: number) => {
+      const id = window.setTimeout(fn, ms)
+      timeoutIds.push(id)
+    }
+
+    const advanceCounters = () => {
+      if (cancelled) return
+      setLiveCounters((current) => {
+        const matchesIncrement = Math.random() > 0.42 ? 1 : 0
+        const priorityIncrement = matchesIncrement > 0 && Math.random() > 0.76 ? 1 : 0
+
+        return {
+          vehiclesCheckedToday: current.vehiclesCheckedToday + 8 + Math.floor(Math.random() * 17),
+          matchesFound: current.matchesFound + matchesIncrement,
+          highPriorityMatches: current.highPriorityMatches + priorityIncrement,
+        }
+      })
+
+      schedule(advanceCounters, 4500 + Math.random() * 2500)
+    }
+
+    schedule(advanceCounters, 4200)
+    return () => {
+      cancelled = true
+      timeoutIds.forEach((id) => window.clearTimeout(id))
+    }
+  }, [aiSearchLive])
 
   useEffect(() => {
     if (!aiSearchLive) return
@@ -275,13 +392,13 @@ function DashboardPage() {
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Sources Active:</dt>
                     <dd className="text-on-surface">5</dd>
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Vehicles Checked Today:</dt>
-                    <dd className="text-on-surface">12,487</dd>
+                    <dd className="text-on-surface">{counterFormatter.format(liveCounters.vehiclesCheckedToday)}</dd>
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Matches Found:</dt>
-                    <dd className="text-on-surface">27</dd>
+                    <dd className="text-on-surface">{counterFormatter.format(liveCounters.matchesFound)}</dd>
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">High Priority Matches:</dt>
-                    <dd className="text-on-surface">3</dd>
+                    <dd className="text-on-surface">{counterFormatter.format(liveCounters.highPriorityMatches)}</dd>
                     <dt className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Last Scan:</dt>
-                    <dd className="text-on-surface">12 seconds ago</dd>
+                    <dd className="text-on-surface">{aiSearchLive ? 'Moments ago' : 'Paused'}</dd>
                   </dl>
 
                   <p className="mt-5 text-center font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
@@ -290,6 +407,39 @@ function DashboardPage() {
                   <p key={aiSearchLive ? `status-${statusMessageIndex}` : 'status-paused'} className="radar-status-message mt-2 text-center text-body-md font-body-md text-on-surface-variant">
                     {aiSearchLive ? aiStatusMessages[statusMessageIndex] : 'Search paused — standing by…'}
                   </p>
+                </div>
+              </article>
+
+              <article className="dashboard-border mx-auto w-full max-w-5xl rounded-2xl bg-surface-container p-6 md:p-8">
+                <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                  <div>
+                    <h3 className="text-headline-md font-headline-md text-on-surface">AI Activity Timeline</h3>
+                    <p className="mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant">
+                      Live placeholder activity from the Dealer Command Centre AI operations flow.
+                    </p>
+                  </div>
+
+                  <div className="timeline-status-panel">
+                    <p className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">AI Status</p>
+                    <p className="mt-2 text-body-md font-body-md text-on-surface">
+                      <span className="mr-2 text-emerald-400">🟢</span>
+                      Operational
+                    </p>
+                    <p className="mt-1 text-sm text-on-surface-variant">Monitoring 5 Active Search Missions</p>
+                  </div>
+                </div>
+
+                <div className="timeline-list mt-6" aria-live="polite">
+                  {timelineEvents.map((event) => (
+                    <article
+                      key={event.eventId}
+                      className={`timeline-entry${activeTimelineEventId === event.eventId ? ' timeline-entry-live' : ''}`}
+                    >
+                      <p className="timeline-entry-time">{event.time}</p>
+                      <div className="timeline-entry-dot" aria-hidden="true" />
+                      <p className="timeline-entry-message">{event.message}</p>
+                    </article>
+                  ))}
                 </div>
               </article>
             </section>
