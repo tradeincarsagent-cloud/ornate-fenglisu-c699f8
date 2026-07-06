@@ -133,6 +133,13 @@ function DashboardPage() {
     { name: 'SUVs under £28k', status: 'Waiting', lastScan: '11 minutes ago', opportunities: 9 },
     { name: 'Low-mileage hybrids', status: 'Updating', lastScan: '1 minute ago', opportunities: 6 },
   ]
+  const recommendationEvidencePoints = [
+    'Estimated market value is above current asking price.',
+    'Strong dealer demand in recent comparables.',
+    'Mileage is below average for this model year.',
+    'Estimated resale margin is above your target.',
+    'Recently listed with competitive pricing.',
+  ]
 
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
   const [highlightedMission, setHighlightedMission] = useState<number | null>(null)
@@ -541,6 +548,15 @@ function DashboardPage() {
                     <p key={reason} className="text-body-md font-body-md text-on-surface-variant">{reason}</p>
                   ))}
                 </div>
+              </div>
+
+              <div className="mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+                <h3 className="mb-2 text-body-md font-body-md font-medium text-on-surface">Why TICA Recommends This</h3>
+                <ul className="list-disc space-y-1 pl-5 text-sm text-on-surface-variant">
+                  {recommendationEvidencePoints.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
               </div>
 
               {/* Buttons: 2-column grid on mobile, 4-column on md+ for even spacing */}
