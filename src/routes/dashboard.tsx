@@ -120,6 +120,11 @@ function DashboardPage() {
     { icon: '🔔', title: 'Auctions Ending Today', value: '1' },
     { icon: '❤️', title: 'Saved Vehicles Updated', value: '5' },
   ]
+  const dailyBriefingCards = [
+    { label: 'Listings Analysed', value: '18,462', detail: 'Across your connected search sources' },
+    { label: 'Matches Found', value: '24', detail: '5 passed your buying criteria today' },
+    { label: 'Top Priority', value: featuredOpportunity.vehicle, detail: 'Highest estimated profit margin' },
+  ]
   const recentOpportunities = dashboardRecentOpportunities
   const activeSearches = [
     { name: 'Performance Saloons (2019+)', matches: '14', updated: '3 mins ago' },
@@ -290,24 +295,35 @@ function DashboardPage() {
                 <div className="space-y-2">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/90">AI Daily Briefing</p>
                   <h2 className="text-headline-md font-headline-md text-on-surface">Good Morning Jonathan,</h2>
+                  <p className="text-sm text-on-surface-variant">5 vehicles need attention today. Start with your strongest profit opportunity.</p>
                 </div>
 
-                <div className="rounded-2xl border border-outline-variant/35 bg-surface/50 p-5 text-body-md text-on-surface-variant">
-                  <div className="space-y-3 leading-relaxed">
-                    <p>Since your last visit I have analysed 18,462 vehicle listings across your connected search sources.</p>
-                    <p>I found 24 potential matches.</p>
-                    <p>
-                      After applying your buying criteria, I rejected 19 automatically and identified 5 vehicles that deserve your
-                      attention today.
-                    </p>
-                    <p>
-                      Your strongest opportunity remains <span className="font-semibold text-on-surface">{featuredOpportunity.vehicle}</span>.
-                    </p>
-                    <p>I recommend reviewing this vehicle first because it currently offers the highest estimated profit margin.</p>
-                  </div>
+                <div className="grid gap-3 md:grid-cols-3">
+                  {dailyBriefingCards.map((card) => (
+                    <article
+                      key={card.label}
+                      className="rounded-2xl border border-outline-variant/35 bg-surface/55 p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
+                    >
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/85">{card.label}</p>
+                      <p className="mt-2 text-lg font-semibold text-on-surface">{card.value}</p>
+                      <p className="mt-1 text-sm text-on-surface-variant">{card.detail}</p>
+                    </article>
+                  ))}
                 </div>
 
-                <p className="text-xs tracking-[0.08em] text-on-surface-variant">Estimated reading time: 15 seconds</p>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-xs tracking-[0.08em] text-on-surface-variant">
+                    Voice AI briefing coming in a future release.
+                  </p>
+                  <button
+                    type="button"
+                    disabled
+                    title="Voice AI briefing coming in a future release."
+                    className="inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/35 bg-surface/40 px-4 py-2 text-sm font-medium text-on-surface-variant opacity-70"
+                  >
+                    🎤 Hear Today’s Briefing
+                  </button>
+                </div>
               </div>
             </section>
             <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
