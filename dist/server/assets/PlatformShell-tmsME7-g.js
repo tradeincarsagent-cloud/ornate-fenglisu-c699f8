@@ -67,24 +67,16 @@ function PlatformShell({ children, navItems }) {
   }, []);
   useEffect(() => {
     if (!sidebarOpen) return;
-    const scrollY = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = "100%";
-    document.body.style.overflowY = "scroll";
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.overflowY = "";
-      window.scrollTo(0, scrollY);
+      document.documentElement.style.overflow = "";
     };
   }, [sidebarOpen]);
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-on-surface", children: [
     /* @__PURE__ */ jsx(
       "div",
       {
-        className: `fixed inset-0 z-40 bg-black/70 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${sidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"}`,
+        className: `fixed inset-0 z-40 bg-black/70 transition-opacity duration-300 lg:hidden ${sidebarOpen ? "opacity-100 backdrop-blur-sm" : "pointer-events-none opacity-0"}`,
         onClick: () => setSidebarOpen(false),
         "aria-hidden": "true"
       }
