@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
+import { TicaShield } from '../components/TicaShield'
 
 export const Route = createFileRoute('/search-builder')({
   component: SearchBuilderPage,
@@ -72,7 +73,10 @@ function SearchBuilderPage() {
       <div className="mx-auto w-full max-w-container-max overflow-x-hidden">
         {/* ── Page title ──────────────────────────────────────────────── */}
         <div className="mb-6 md:mb-10">
-          <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Builder</p>
+          <div className="mb-2 flex items-start justify-between gap-4">
+            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Builder</p>
+            <TicaShield />
+          </div>
           <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">Create an AI Search in Under 60 Seconds</h1>
           <p className="text-body-md font-body-md text-on-surface-variant">Configure your search criteria and let the AI find matching vehicles 24/7.</p>
         </div>
