@@ -98,6 +98,18 @@ const aiStatusMessages = [
   'Updating Search Missions…',
 ]
 
+const topOpportunityComparison = [
+  { vehicle: 'BMW M3 Competition', opportunityScore: 94, estimatedProfit: '£4,255', ticaDecision: 'BUY' },
+  { vehicle: 'BMW M3 Competition', opportunityScore: 89, estimatedProfit: '£3,620', ticaDecision: 'REVIEW' },
+  { vehicle: 'BMW M3 Competition', opportunityScore: 74, estimatedProfit: '£1,980', ticaDecision: 'PASS' },
+] as const
+
+const topOpportunityReasons = [
+  'Highest opportunity score across this comparison set.',
+  'Strongest estimated profit among available options.',
+  'Aligned with current BUY threshold in the TICA model.',
+]
+
 const activityTimeFormatter = new Intl.DateTimeFormat('en-GB', {
   hour: '2-digit',
   minute: '2-digit',
@@ -660,6 +672,41 @@ function DashboardPage() {
                 <div className="border-t border-outline-variant/20 pt-3">
                   <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">TICA Decision</p>
                   <p className="text-body-md font-body-md font-semibold text-on-surface">🟢 BUY</p>
+                </div>
+              </div>
+
+              <div className="mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+                <h3 className="mb-4 text-body-md font-body-md font-medium text-on-surface">Top Opportunity Comparison</h3>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-left text-sm text-on-surface">
+                    <thead className="border-b border-outline-variant/30 text-xs uppercase tracking-widest text-on-surface-variant">
+                      <tr>
+                        <th className="px-0 py-2 font-label-caps">Vehicle</th>
+                        <th className="px-0 py-2 font-label-caps">Opportunity Score</th>
+                        <th className="px-0 py-2 font-label-caps">Estimated Profit</th>
+                        <th className="px-0 py-2 font-label-caps">TICA Decision</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {topOpportunityComparison.map((row, index) => (
+                        <tr key={`${row.vehicle}-${row.opportunityScore}-${index}`} className="border-b border-outline-variant/20 last:border-b-0">
+                          <td className="py-2 pr-3">{row.vehicle}</td>
+                          <td className="py-2 pr-3">{row.opportunityScore}</td>
+                          <td className="py-2 pr-3">{row.estimatedProfit}</td>
+                          <td className="py-2 font-semibold">{row.ticaDecision}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="mt-4 border-t border-outline-variant/20 pt-4">
+                  <h4 className="mb-2 text-sm font-semibold text-on-surface">Why the top vehicle ranks first</h4>
+                  <ul className="space-y-1.5 text-sm text-on-surface-variant">
+                    {topOpportunityReasons.map((reason) => (
+                      <li key={reason}>• {reason}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
