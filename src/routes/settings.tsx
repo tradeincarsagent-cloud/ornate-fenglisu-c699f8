@@ -74,30 +74,37 @@ const DEALER_PROFILE_FIELDS: Array<{
   { key: 'currentStockCapacity', label: 'Current Stock Capacity', placeholder: 'e.g. 85', type: 'number' },
 ]
 
-const BUYING_STYLE_OPTIONS: Array<{ id: BuyingStyle; label: string; description: string }> = [
+const BUYING_STYLE_OPTIONS: Array<{
+  id: BuyingStyle
+  label: string
+  description: string
+  badge?: string
+}> = [
   {
     id: 'aggressiveBuyer',
     label: 'Aggressive Buyer',
-    description: 'Prioritises speed and volume, accepts tighter margins to secure stock quickly.',
+    description: 'Moves quickly on high-potential stock to win more buying opportunities.',
   },
   {
     id: 'balancedBuyer',
     label: 'Balanced Buyer',
-    description: 'Balances margin, risk, and stock turn for steady and sustainable growth.',
+    description: 'Balances speed, margin, and risk for steady buying decisions.',
+    badge: 'Recommended',
   },
   {
     id: 'conservativeBuyer',
     label: 'Conservative Buyer',
-    description: 'Focuses on lower-risk stock with stronger confidence and margin protection.',
+    description: 'Focuses on lower-risk vehicles with stronger margin protection.',
   },
 ]
 
 const LEARNING_ITEMS = [
-  'Preferred Vehicle Types',
-  'Buying Budget',
-  'Preferred Profit Margin',
-  'Typical Buying Locations',
   'Buying Style',
+  'Preferred Vehicle Types',
+  'Average Buying Budget',
+  'Preferred Profit Margin',
+  'Buying Locations',
+  'Seasonal Buying Trends',
 ]
 
 const LEARNING_PROGRESS = 82
@@ -334,7 +341,7 @@ function SettingsPage() {
         <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
           <h2 className="mb-1 text-title-md font-title-md text-on-surface">Buying Style</h2>
           <p className="mb-5 text-sm text-on-surface-variant">
-            Choose one placeholder profile so TICA can learn your preferred buying posture.
+            Choose one premium placeholder profile so TICA can learn your preferred buying posture.
           </p>
 
           <div role="radiogroup" aria-label="Buying Style" className="grid gap-4 md:grid-cols-3">
@@ -347,14 +354,29 @@ function SettingsPage() {
                   role="radio"
                   aria-checked={selected}
                   onClick={() => handleBuyingStyleChange(option.id)}
-                  className={`rounded-xl border p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  className={`rounded-2xl border p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                     selected
-                      ? 'border-primary/50 bg-primary/10'
-                      : 'border-outline-variant/25 bg-surface-container-high/50 hover:bg-surface-container-high'
+                      ? 'border-primary/50 bg-linear-to-br from-primary/10 via-surface-container-high to-surface-container shadow-[0_12px_32px_rgba(0,0,0,0.08)]'
+                      : 'border-outline-variant/25 bg-linear-to-br from-surface-container-high/80 to-surface-container hover:border-outline-variant/40 hover:bg-surface-container-high'
                   }`}
                 >
-                  <p className="text-sm font-semibold text-on-surface">{option.label}</p>
-                  <p className="mt-2 text-xs text-on-surface-variant">{option.description}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-on-surface">{option.label}</p>
+                      <p className="mt-2 text-xs leading-5 text-on-surface-variant">{option.description}</p>
+                    </div>
+                    {option.badge && (
+                      <span className="rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[11px] font-semibold text-primary">
+                        {option.badge}
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-4 flex items-center justify-between text-xs">
+                    <span className="text-on-surface-variant">{selected ? 'Selected buying posture' : 'Tap to select'}</span>
+                    <span className={`font-semibold ${selected ? 'text-primary' : 'text-on-surface-variant'}`}>
+                      {selected ? 'Active' : 'Inactive'}
+                    </span>
+                  </div>
                 </button>
               )
             })}
@@ -362,29 +384,19 @@ function SettingsPage() {
         </section>
 
         <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
-          <h2 className="mb-1 text-title-md font-title-md text-on-surface">TICA Learning</h2>
-          <p className="mb-5 text-sm text-on-surface-variant">
-            The more you use TICA, the better it understands your buying habits and future recommendations.
-          </p>
-
-          <div className="space-y-3">
-            {LEARNING_ITEMS.map((item) => (
-              <div
-                key={item}
-                className="flex items-center justify-between rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-4 py-3"
-              >
-                <span className="text-sm font-medium text-on-surface">{item}</span>
-                <span className="text-sm font-semibold text-green-600">✅ Learned</span>
+          <div className="rounded-2xl border border-primary/15 bg-linear-to-br from-primary/5 via-surface-container-high/60 to-surface-container p-5">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h2 className="text-title-md font-title-md text-on-surface">TICA Learning</h2>
+                <p className="mt-1 text-sm text-on-surface-variant">Learning Progress</p>
               </div>
-            ))}
-          </div>
-
-          <div className="mt-6 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4">
-            <div className="mb-2 flex items-center justify-between gap-3">
-              <p className="text-sm font-semibold text-on-surface">Learning Progress</p>
-              <p className="text-sm font-semibold text-on-surface">{LEARNING_PROGRESS}%</p>
+              <div className="rounded-xl border border-primary/15 bg-surface-container px-4 py-3 text-right">
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-on-surface-variant">Progress</p>
+                <p className="mt-1 text-2xl font-semibold text-on-surface">{LEARNING_PROGRESS}%</p>
+              </div>
             </div>
-            <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface-container">
+
+            <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-surface-container">
               <div
                 className="h-full rounded-full bg-primary transition-[width]"
                 style={{ width: `${LEARNING_PROGRESS}%` }}
@@ -395,19 +407,52 @@ function SettingsPage() {
                 aria-valuenow={LEARNING_PROGRESS}
               />
             </div>
-          </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setProfileReviewRequested(true)}
-              className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-            >
-              Review My Buying Profile
-            </button>
-            {profileReviewRequested && (
-              <p className="text-xs text-on-surface-variant">Placeholder only — no backend actions yet.</p>
-            )}
+            <div className="mt-5 space-y-3">
+              {LEARNING_ITEMS.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center justify-between rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-4 py-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary"
+                    >
+                      ✓
+                    </span>
+                    <span className="text-sm font-medium text-on-surface">{item}</span>
+                  </div>
+                  <span className="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">
+                    Placeholder
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setProfileReviewRequested(true)}
+                className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
+                Review My Buying Profile
+              </button>
+              {profileReviewRequested && (
+                <p className="text-xs text-on-surface-variant">Placeholder only — no backend actions yet.</p>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5">
+            <h2 className="text-title-md font-title-md text-on-surface">TICA Promise</h2>
+            <div className="mt-3 space-y-2 text-sm leading-6 text-on-surface-variant">
+              <p>TICA will never automatically purchase a vehicle.</p>
+              <p>Every recommendation is designed to help you make better buying decisions.</p>
+              <p className="font-semibold text-on-surface">You remain in complete control.</p>
+            </div>
           </div>
         </section>
 
