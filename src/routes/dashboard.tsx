@@ -203,6 +203,11 @@ function DashboardPage() {
     decisionModel.factors.timeOnMarket.summary,
     decisionModel.factors.vehicleHistory.summary,
   ]
+  const recommendationCautionPoints = [
+    'Vehicle history has not yet been verified.',
+    'Service history should be confirmed.',
+    'Seller response time is currently unknown.',
+  ]
 
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
   const [highlightedMission, setHighlightedMission] = useState<number | null>(null)
@@ -659,12 +664,18 @@ function DashboardPage() {
               <div className="mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
                 <h3 className="mb-3 text-body-md font-body-md font-medium text-on-surface">Why TICA Chose This Vehicle</h3>
                 <ul className="mb-4 space-y-2 text-sm text-on-surface-variant">
-                  <li>🟢 Asking price is below estimated market value.</li>
-                  <li>🟢 Dealer demand is above average.</li>
-                  <li>🟢 Estimated resale margin exceeds target.</li>
-                  <li>🟡 Vehicle history check still recommended.</li>
-                  <li>🟢 Recently listed with competitive pricing.</li>
+                  {recommendationEvidencePoints.map((point, index) => (
+                    <li key={point}>{index === recommendationEvidencePoints.length - 1 ? '🟡' : '🟢'} {point}</li>
+                  ))}
                 </ul>
+                <div className="mb-3 border-t border-outline-variant/20 pt-3">
+                  <h4 className="mb-2 text-body-sm font-body-sm font-medium text-on-surface">Things to Consider</h4>
+                  <ul className="space-y-1.5 text-sm text-on-surface-variant">
+                    {recommendationCautionPoints.map((point) => (
+                      <li key={point}>⚠ {point}</li>
+                    ))}
+                  </ul>
+                </div>
                 <div className="mb-3 border-t border-outline-variant/20 pt-3">
                   <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Opportunity Score</p>
                   <p className="text-headline-sm font-headline-sm text-on-surface">94 / 100</p>
