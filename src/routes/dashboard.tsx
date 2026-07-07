@@ -135,7 +135,7 @@ function DashboardPage() {
   const dailyBriefingCards = [
     { label: 'Listings Analysed', value: '18,462', detail: 'Across your connected search sources' },
     { label: 'Matches Found', value: '24', detail: '5 passed your buying criteria today' },
-    { label: 'Top Priority', value: featuredOpportunity.vehicle, detail: 'Highest estimated profit margin' },
+    { label: 'Top Priority', value: featuredOpportunity.vehicle, detail: featuredOpportunity.scoring.estimatedProfitScore.status },
   ]
   const recentOpportunities = dashboardRecentOpportunities
   const activeSearches: Array<{
@@ -184,11 +184,11 @@ function DashboardPage() {
     },
   ]
   const recommendationEvidencePoints = [
-    'Estimated market value is above current asking price.',
-    'Strong dealer demand in recent comparables.',
-    'Mileage is below average for this model year.',
-    'Estimated resale margin is above your target.',
-    'Recently listed with competitive pricing.',
+    featuredOpportunity.scoring.marketPriceScore.summary,
+    featuredOpportunity.scoring.dealerDemandScore.summary,
+    featuredOpportunity.scoring.mileageScore.summary,
+    featuredOpportunity.scoring.estimatedProfitScore.summary,
+    featuredOpportunity.scoring.timeOnMarketScore.summary,
   ]
 
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
@@ -633,7 +633,7 @@ function DashboardPage() {
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Confidence Score</p>
-                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.confidenceDisplay}</p>
+                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.scoring.overallOpportunityScore.displayValue}</p>
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>

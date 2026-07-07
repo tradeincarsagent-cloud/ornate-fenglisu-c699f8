@@ -5,6 +5,7 @@ export type OpportunityScoreCategory =
   | 'timeOnMarketScore'
   | 'mileageScore'
   | 'vehicleHistoryScore'
+  | 'motScore'
   | 'sellerReputationScore'
   | 'distanceScore'
   | 'overallOpportunityScore'
@@ -19,6 +20,8 @@ export type OpportunityScore = {
   tone: OpportunityScoreTone
   summary: string
 }
+
+export type OpportunityBuyingVerdict = 'BUY' | 'REVIEW' | 'PASS'
 
 export type OpportunityChecklistItem = {
   label: string
@@ -53,7 +56,7 @@ export type FeaturedOpportunity = {
   daysToSellDisplay: string
   confidenceDisplay: string
   demandRatingDisplay: string
-  verdict: string
+  verdict: OpportunityBuyingVerdict
   verdictDisplay: string
   heroImageSrc: string
   heroImageAlt: string
@@ -75,12 +78,106 @@ export type FeaturedOpportunity = {
 
 /**
  * Hidden frontend-only placeholder for the future Opportunity Intelligence Engine.
+ * “This is the placeholder foundation for the future TICA Opportunity Intelligence Engine.”
  *
  * The current dashboard and AI Buying Report must read opportunity scoring placeholders
  * from this central structure so future AI/data integrations replace one engine rather
  * than scattered page-level constants. This file should stay internal and must not drive
  * any new visible UI until the real scoring engine is connected.
  */
+const bmwM3CompetitionScoring: Record<OpportunityScoreCategory, OpportunityScore> = {
+  // Market Price Score: placeholder signal for how far the asking price sits below modeled retail market value.
+  marketPriceScore: {
+    label: 'Market Price Score',
+    score: 98,
+    displayValue: '98 / 100',
+    status: 'Excellent Value',
+    tone: 'positive',
+    summary: 'Asking price remains comfortably below projected forecourt value.',
+  },
+  // Estimated Profit Score: placeholder projection for gross margin after acquisition and prep assumptions.
+  estimatedProfitScore: {
+    label: 'Estimated Profit Score',
+    score: 96,
+    displayValue: '96 / 100',
+    status: 'High Profit Potential',
+    tone: 'positive',
+    summary: 'Projected resale margin stays above the current target threshold.',
+  },
+  // Dealer Demand Score: placeholder demand model for likely buyer interest across dealer inventory channels.
+  dealerDemandScore: {
+    label: 'Dealer Demand Score',
+    score: 95,
+    displayValue: '95 / 100',
+    status: 'Strong Dealer Demand',
+    tone: 'positive',
+    summary: 'Comparable performance stock continues to show strong retail pull-through.',
+  },
+  // Time on Market Score: placeholder velocity signal for how quickly the vehicle is expected to sell.
+  timeOnMarketScore: {
+    label: 'Time on Market Score',
+    score: 91,
+    displayValue: '91 / 100',
+    status: 'Fast Retail Velocity',
+    tone: 'positive',
+    summary: 'Modeled stock-turn timing remains comfortably inside the current target window.',
+  },
+  // Mileage Score: placeholder fit check for whether mileage aligns with age, segment, and retail expectations.
+  mileageScore: {
+    label: 'Mileage Score',
+    score: 88,
+    displayValue: '88 / 100',
+    status: 'Mileage Looks Healthy',
+    tone: 'positive',
+    summary: 'Mileage appears aligned with age and premium performance segment expectations.',
+  },
+  // Vehicle History Score: placeholder risk signal for future provider-backed history and verification checks.
+  vehicleHistoryScore: {
+    label: 'Vehicle History Score',
+    score: 71,
+    displayValue: '71 / 100',
+    status: 'Verification Recommended',
+    tone: 'warning',
+    summary: 'History is provisionally acceptable but still awaits provider-backed validation.',
+  },
+  // MOT Score: placeholder compliance and test-history signal until live MOT integrations are connected.
+  motScore: {
+    label: 'MOT Score',
+    score: 74,
+    displayValue: '74 / 100',
+    status: 'MOT Review Recommended',
+    tone: 'warning',
+    summary: 'Recent MOT timeline appears usable, but advisory trends still need provider verification.',
+  },
+  // Seller Reputation Score: placeholder trust signal for source quality, listing consistency, and seller behavior.
+  sellerReputationScore: {
+    label: 'Seller Reputation Score',
+    score: 86,
+    displayValue: '86 / 100',
+    status: 'Trusted Listing',
+    tone: 'positive',
+    summary: 'Seller profile currently matches the stronger end of internal trust heuristics.',
+  },
+  // Distance Score: placeholder logistics signal for collection effort and operational convenience.
+  distanceScore: {
+    label: 'Distance Score',
+    score: 84,
+    displayValue: '84 / 100',
+    status: 'Operationally Convenient',
+    tone: 'positive',
+    summary: 'Vehicle is close enough to support efficient inspection and collection planning.',
+  },
+  // Overall Opportunity Score: placeholder roll-up that future AI integrations should own centrally.
+  overallOpportunityScore: {
+    label: 'Overall Opportunity Score',
+    score: 97,
+    displayValue: '97 / 100',
+    status: 'Top Priority Opportunity',
+    tone: 'positive',
+    summary: 'Central weighted opportunity score keeps this vehicle at the top of the queue.',
+  },
+}
+
 export const opportunityIntelligencePlaceholder: {
   featuredOpportunity: FeaturedOpportunity
   dashboardRecentOpportunities: DashboardOpportunity[]
@@ -123,8 +220,8 @@ export const opportunityIntelligencePlaceholder: {
     checklist: [
       { label: 'Market Price', icon: '✅', statusLabel: 'Excellent Value', tone: 'positive' },
       { label: 'Estimated Profit', icon: '✅', statusLabel: 'High Profit Potential', tone: 'positive' },
-      { label: 'Vehicle History', icon: '🟡', statusLabel: 'History Check Recommended', tone: 'warning' },
-      { label: 'MOT History', icon: '🟡', statusLabel: 'Review Required', tone: 'warning' },
+      { label: 'Vehicle History', icon: '🟡', statusLabel: bmwM3CompetitionScoring.vehicleHistoryScore.status, tone: 'warning' },
+      { label: 'MOT History', icon: '🟡', statusLabel: bmwM3CompetitionScoring.motScore.status, tone: 'warning' },
       { label: 'Service History', icon: '🟡', statusLabel: 'Verify Records', tone: 'warning' },
       { label: 'Mileage', icon: '🟢', statusLabel: 'Appears Consistent', tone: 'positive' },
       { label: 'Seller Profile', icon: '🟢', statusLabel: 'Trusted Listing', tone: 'positive' },
@@ -139,89 +236,7 @@ export const opportunityIntelligencePlaceholder: {
       { label: 'Location', value: 'Manchester' },
       { label: 'Seller Type', value: 'Independent dealer' },
     ],
-    scoring: {
-      // Market Price Score: placeholder signal for how far the asking price sits below modeled retail market value.
-      marketPriceScore: {
-        label: 'Market Price Score',
-        score: 98,
-        displayValue: '98 / 100',
-        status: 'Excellent Value',
-        tone: 'positive',
-        summary: 'Asking price remains comfortably below projected forecourt value.',
-      },
-      // Estimated Profit Score: placeholder projection for gross margin after acquisition and prep assumptions.
-      estimatedProfitScore: {
-        label: 'Estimated Profit Score',
-        score: 96,
-        displayValue: '96 / 100',
-        status: 'High Profit Potential',
-        tone: 'positive',
-        summary: 'Projected resale margin stays above the current target threshold.',
-      },
-      // Dealer Demand Score: placeholder demand model for likely buyer interest across dealer inventory channels.
-      dealerDemandScore: {
-        label: 'Dealer Demand Score',
-        score: 95,
-        displayValue: '95 / 100',
-        status: 'Strong Dealer Demand',
-        tone: 'positive',
-        summary: 'Comparable performance stock continues to show strong retail pull-through.',
-      },
-      // Time on Market Score: placeholder velocity signal for how quickly the vehicle is expected to sell.
-      timeOnMarketScore: {
-        label: 'Time on Market Score',
-        score: 91,
-        displayValue: '91 / 100',
-        status: 'Fast Retail Velocity',
-        tone: 'positive',
-        summary: 'Modeled stock-turn timing remains comfortably inside the current target window.',
-      },
-      // Mileage Score: placeholder fit check for whether mileage aligns with age, segment, and retail expectations.
-      mileageScore: {
-        label: 'Mileage Score',
-        score: 88,
-        displayValue: '88 / 100',
-        status: 'Mileage Looks Healthy',
-        tone: 'positive',
-        summary: 'Mileage appears aligned with age and premium performance segment expectations.',
-      },
-      // Vehicle History Score: placeholder risk signal for future provider-backed history and verification checks.
-      vehicleHistoryScore: {
-        label: 'Vehicle History Score',
-        score: 71,
-        displayValue: '71 / 100',
-        status: 'Verification Recommended',
-        tone: 'warning',
-        summary: 'History is provisionally acceptable but still awaits provider-backed validation.',
-      },
-      // Seller Reputation Score: placeholder trust signal for source quality, listing consistency, and seller behavior.
-      sellerReputationScore: {
-        label: 'Seller Reputation Score',
-        score: 86,
-        displayValue: '86 / 100',
-        status: 'Trusted Listing',
-        tone: 'positive',
-        summary: 'Seller profile currently matches the stronger end of internal trust heuristics.',
-      },
-      // Distance Score: placeholder logistics signal for collection effort and operational convenience.
-      distanceScore: {
-        label: 'Distance Score',
-        score: 84,
-        displayValue: '84 / 100',
-        status: 'Operationally Convenient',
-        tone: 'positive',
-        summary: 'Vehicle is close enough to support efficient inspection and collection planning.',
-      },
-      // Overall Opportunity Score: placeholder roll-up that future AI integrations should own centrally.
-      overallOpportunityScore: {
-        label: 'Overall Opportunity Score',
-        score: 97,
-        displayValue: '97 / 100',
-        status: 'Top Priority Opportunity',
-        tone: 'positive',
-        summary: 'Central weighted opportunity score keeps this vehicle at the top of the queue.',
-      },
-    },
+    scoring: bmwM3CompetitionScoring,
   },
   dashboardRecentOpportunities: [
     {

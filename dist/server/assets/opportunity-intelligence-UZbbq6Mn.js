@@ -1,3 +1,38 @@
+const bmwM3CompetitionScoring = {
+  // Market Price Score: placeholder signal for how far the asking price sits below modeled retail market value.
+  marketPriceScore: {
+    summary: "Asking price remains comfortably below projected forecourt value."
+  },
+  // Estimated Profit Score: placeholder projection for gross margin after acquisition and prep assumptions.
+  estimatedProfitScore: {
+    status: "High Profit Potential",
+    summary: "Projected resale margin stays above the current target threshold."
+  },
+  // Dealer Demand Score: placeholder demand model for likely buyer interest across dealer inventory channels.
+  dealerDemandScore: {
+    summary: "Comparable performance stock continues to show strong retail pull-through."
+  },
+  // Time on Market Score: placeholder velocity signal for how quickly the vehicle is expected to sell.
+  timeOnMarketScore: {
+    summary: "Modeled stock-turn timing remains comfortably inside the current target window."
+  },
+  // Mileage Score: placeholder fit check for whether mileage aligns with age, segment, and retail expectations.
+  mileageScore: {
+    summary: "Mileage appears aligned with age and premium performance segment expectations."
+  },
+  // Vehicle History Score: placeholder risk signal for future provider-backed history and verification checks.
+  vehicleHistoryScore: {
+    status: "Verification Recommended"
+  },
+  // MOT Score: placeholder compliance and test-history signal until live MOT integrations are connected.
+  motScore: {
+    status: "MOT Review Recommended"
+  },
+  // Overall Opportunity Score: placeholder roll-up that future AI integrations should own centrally.
+  overallOpportunityScore: {
+    displayValue: "97 / 100"
+  }
+};
 const opportunityIntelligencePlaceholder = {
   featuredOpportunity: {
     id: "TCA-2026-00421",
@@ -32,8 +67,8 @@ const opportunityIntelligencePlaceholder = {
     checklist: [
       { label: "Market Price", icon: "✅", statusLabel: "Excellent Value", tone: "positive" },
       { label: "Estimated Profit", icon: "✅", statusLabel: "High Profit Potential", tone: "positive" },
-      { label: "Vehicle History", icon: "🟡", statusLabel: "History Check Recommended", tone: "warning" },
-      { label: "MOT History", icon: "🟡", statusLabel: "Review Required", tone: "warning" },
+      { label: "Vehicle History", icon: "🟡", statusLabel: bmwM3CompetitionScoring.vehicleHistoryScore.status, tone: "warning" },
+      { label: "MOT History", icon: "🟡", statusLabel: bmwM3CompetitionScoring.motScore.status, tone: "warning" },
       { label: "Service History", icon: "🟡", statusLabel: "Verify Records", tone: "warning" },
       { label: "Mileage", icon: "🟢", statusLabel: "Appears Consistent", tone: "positive" },
       { label: "Seller Profile", icon: "🟢", statusLabel: "Trusted Listing", tone: "positive" },
@@ -48,12 +83,7 @@ const opportunityIntelligencePlaceholder = {
       { label: "Location", value: "Manchester" },
       { label: "Seller Type", value: "Independent dealer" }
     ],
-    scoring: {
-      // Overall Opportunity Score: placeholder roll-up that future AI integrations should own centrally.
-      overallOpportunityScore: {
-        displayValue: "97 / 100"
-      }
-    }
+    scoring: bmwM3CompetitionScoring
   },
   dashboardRecentOpportunities: [
     {
