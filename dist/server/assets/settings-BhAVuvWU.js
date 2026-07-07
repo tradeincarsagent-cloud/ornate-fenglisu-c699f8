@@ -180,6 +180,13 @@ function SettingsPage() {
     /* @__PURE__ */ jsxs("header", { children: [
       /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Settings" }),
       /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "TICA Preferences" }),
+      /* @__PURE__ */ jsxs("div", { className: "mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-surface-container-high/70 px-3 py-1.5", children: [
+        /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "text-sm", children: "🛡" }),
+        /* @__PURE__ */ jsxs("div", { className: "leading-tight", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface", children: "TICA Trusted AI" }),
+          /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant", children: "Dealer Always in Control." })
+        ] })
+      ] }),
       /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Teach TICA how you like to buy vehicles." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4", children: [
@@ -271,14 +278,6 @@ function SettingsPage() {
       /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-wrap items-center gap-3", children: [
         /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setProfileReviewRequested(true), className: "rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Review My Buying Profile" }),
         profileReviewRequested && /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Placeholder only — no backend actions yet." })
-      ] })
-    ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-primary/20 bg-primary/5 p-5", children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-title-md font-title-md text-on-surface", children: "TICA Promise" }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-2 text-sm leading-6 text-on-surface-variant", children: [
-        /* @__PURE__ */ jsx("p", { children: "TICA will never automatically purchase a vehicle." }),
-        /* @__PURE__ */ jsx("p", { children: "Every recommendation is designed to help you make better buying decisions." }),
-        /* @__PURE__ */ jsx("p", { className: "font-semibold text-on-surface", children: "You remain in complete control." })
       ] })
     ] }) }),
     /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 pb-4", children: [
