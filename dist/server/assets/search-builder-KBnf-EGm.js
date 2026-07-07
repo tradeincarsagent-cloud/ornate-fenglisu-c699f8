@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-DNmb_f48.js";
 const VEHICLE_TYPES = ["Cars", "Pick-ups", "Vans & Light Commercials"];
 const SEARCH_FREQUENCIES = [{
   label: "Every 15 Minutes",
@@ -65,7 +65,10 @@ function SearchBuilderPage() {
     disabled: true
   }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max overflow-x-hidden", children: [
     /* @__PURE__ */ jsxs("div", { className: "mb-6 md:mb-10", children: [
-      /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Search Builder" }),
+      /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-start justify-between gap-4", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Search Builder" }),
+        /* @__PURE__ */ jsx(TicaShield, {})
+      ] }),
       /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "Create an AI Search in Under 60 Seconds" }),
       /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Configure your search criteria and let the AI find matching vehicles 24/7." })
     ] }),

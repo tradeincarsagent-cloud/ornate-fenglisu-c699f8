@@ -18,6 +18,22 @@ html {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
+/* ── TICA Shield popup fade animation ───────────────────────────────── */
+.tica-popup {
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+}
+.tica-popup--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.tica-popup--hidden {
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+}
+
 .glass-card {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   border: 1px solid rgba(148, 163, 184, 0.1);

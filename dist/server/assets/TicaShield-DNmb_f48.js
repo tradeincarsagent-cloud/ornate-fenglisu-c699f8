@@ -1,6 +1,6 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 const LOGO_SRC = "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS";
 function HamburgerIcon() {
   return /* @__PURE__ */ jsxs("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", children: [
@@ -147,6 +147,113 @@ function PlatformShell({ children, navItems }) {
     ] })
   ] });
 }
+const TICA_SHIELD_SRC = "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f";
+function TicaShield() {
+  const [open, setOpen] = useState(false);
+  const [popupPos, setPopupPos] = useState(null);
+  const containerRef = useRef(null);
+  const updatePopupPos = () => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setPopupPos({
+      top: rect.bottom + 8,
+      // right offset from viewport right edge
+      right: window.innerWidth - rect.right
+    });
+  };
+  const handleOpen = () => {
+    updatePopupPos();
+    setOpen(true);
+  };
+  useEffect(() => {
+    if (!open) return;
+    const handleOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutside);
+    document.addEventListener("touchstart", handleOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
+    };
+  }, [open]);
+  return /* @__PURE__ */ jsxs(
+    "div",
+    {
+      ref: containerRef,
+      className: "relative -mr-[22px] flex-shrink-0",
+      onMouseEnter: handleOpen,
+      onMouseLeave: () => setOpen(false),
+      children: [
+        /* @__PURE__ */ jsxs(
+          "button",
+          {
+            type: "button",
+            "aria-label": "TICA Trusted Buying AI trust mark",
+            "aria-expanded": open,
+            onClick: () => {
+              if (!open) {
+                handleOpen();
+              } else {
+                setOpen(false);
+              }
+            },
+            className: "flex flex-col items-center gap-1.5 rounded-xl p-1 transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60",
+            children: [
+              /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: TICA_SHIELD_SRC,
+                  alt: "TICA Trusted Buying AI shield",
+                  className: "h-auto w-14 sm:w-[4.5rem] md:w-24",
+                  decoding: "async"
+                }
+              ),
+              /* @__PURE__ */ jsx("span", { className: "text-center text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant/70", children: "Trusted AI" })
+            ]
+          }
+        ),
+        popupPos && /* @__PURE__ */ jsx(
+          "div",
+          {
+            role: "tooltip",
+            "aria-hidden": !open,
+            style: { top: popupPos.top, right: popupPos.right },
+            className: [
+              "tica-popup",
+              "fixed z-[9999] w-64",
+              "rounded-2xl border border-white/10",
+              "bg-zinc-900/85 backdrop-blur-xl",
+              "shadow-[0_12px_48px_rgba(0,0,0,0.65)]",
+              "p-6",
+              open ? "tica-popup--visible" : "tica-popup--hidden"
+            ].join(" "),
+            children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 text-center", children: [
+              /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: TICA_SHIELD_SRC,
+                  alt: "TICA Trusted Buying AI shield",
+                  className: "h-auto w-32",
+                  decoding: "async"
+                }
+              ),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-1.5", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-sm font-bold tracking-wide text-white", children: "🛡 TICA Trusted Buying AI" }),
+                /* @__PURE__ */ jsx("p", { className: "text-[11px] text-zinc-400 leading-snug", children: "Certified by the TICA Decision Engine" }),
+                /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold text-primary/90 tracking-wide", children: "Recommends. You Decide." })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "w-full rounded-xl border border-primary/20 bg-primary/5 px-4 py-3", children: /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "AI Certified Recommendation" }) })
+            ] })
+          }
+        )
+      ]
+    }
+  );
+}
 export {
-  PlatformShell as P
+  PlatformShell as P,
+  TicaShield as T
 };
