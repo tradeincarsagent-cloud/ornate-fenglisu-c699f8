@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-D1AGnSaY.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-Ck6DAaho.js";
 const VEHICLE_TYPES = ["Cars", "Pick-ups", "Vans & Light Commercials"];
 const SEARCH_FREQUENCIES = [{
   label: "Every 15 Minutes",
@@ -63,7 +63,7 @@ function SearchBuilderPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max overflow-x-hidden", children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max", children: [
     /* @__PURE__ */ jsxs("div", { className: "mb-6 md:mb-10", children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-start justify-between gap-4", children: [
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Search Builder" }),

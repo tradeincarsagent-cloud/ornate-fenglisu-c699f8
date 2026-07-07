@@ -434,7 +434,7 @@ function DashboardPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max overflow-x-hidden">
+      <div className="mx-auto w-full max-w-container-max">
             <div className="mb-4 flex items-start justify-between gap-4">
               <h1 className="text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
               <TicaShield />

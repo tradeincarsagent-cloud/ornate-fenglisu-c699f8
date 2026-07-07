@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-D1AGnSaY.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-Ck6DAaho.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 const missionStatusConfig = {
   Monitoring: {
@@ -434,7 +434,7 @@ function DashboardPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max overflow-x-hidden", children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max", children: [
     /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-start justify-between gap-4", children: [
       /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "Dealer Command Centre" }),
       /* @__PURE__ */ jsx(TicaShield, {})

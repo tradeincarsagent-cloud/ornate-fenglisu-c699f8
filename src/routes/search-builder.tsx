@@ -70,7 +70,7 @@ function SearchBuilderPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max overflow-x-hidden">
+      <div className="mx-auto w-full max-w-container-max">
         {/* ── Page title ──────────────────────────────────────────────── */}
         <div className="mb-6 md:mb-10">
           <div className="mb-2 flex items-start justify-between gap-4">
