@@ -247,6 +247,7 @@ function DashboardPage() {
   )
   const [openMoreMenu, setOpenMoreMenu] = useState<number | null>(null)
   const [recAction, setRecAction] = useState<'saved' | 'dismissed' | 'reminded' | null>(null)
+  const [opportunityHistoryOpen, setOpportunityHistoryOpen] = useState(false)
   const [activeAiStatusMessage, setActiveAiStatusMessage] = useState(aiStatusMessages[0])
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true)
 
@@ -749,6 +750,61 @@ function DashboardPage() {
                     ))}
                   </ul>
                 </div>
+              </div>
+
+              {/* ── Opportunity History ───────────────────────────────── */}
+              <div className="mb-6 rounded-xl border border-outline-variant/30 bg-surface-container-high">
+                <button
+                  type="button"
+                  onClick={() => setOpportunityHistoryOpen((v) => !v)}
+                  className="flex w-full items-center justify-between px-4 py-3 text-left"
+                >
+                  <span className="text-body-md font-body-md font-medium text-on-surface">Opportunity History</span>
+                  <span className="text-xs text-on-surface-variant" aria-hidden="true">
+                    {opportunityHistoryOpen ? '▲' : '▼'}
+                  </span>
+                </button>
+
+                {opportunityHistoryOpen && (
+                  <div className="border-t border-outline-variant/20 px-4 pb-4 pt-3">
+                    {/* AI Confidence Trend */}
+                    <div className="mb-4 flex items-center gap-3 rounded-lg border border-primary/20 bg-surface-container px-3 py-2">
+                      <span className="text-xs uppercase tracking-widest text-on-surface-variant">AI Confidence Trend</span>
+                      <span className="ml-auto text-sm font-semibold text-on-surface">
+                        <span className="text-on-surface-variant">87%</span>
+                        {' → '}
+                        <span className="text-primary">94%</span>
+                      </span>
+                    </div>
+
+                    {/* Timeline */}
+                    <ol className="relative space-y-4 border-l border-outline-variant/30 pl-5">
+                      {/* Yesterday */}
+                      <li className="relative">
+                        <span className="absolute -left-[11px] top-1 block h-2.5 w-2.5 rounded-full border border-outline-variant/40 bg-surface-container-high" />
+                        <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-on-surface-variant">Yesterday</p>
+                        <p className="text-xs text-on-surface-variant">
+                          Opportunity Score: <span className="font-semibold text-on-surface">89</span>
+                        </p>
+                      </li>
+
+                      {/* Today */}
+                      <li className="relative">
+                        <span className="absolute -left-[11px] top-1 block h-2.5 w-2.5 rounded-full border border-primary/50 bg-primary/20" />
+                        <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-on-surface-variant">Today</p>
+                        <p className="mb-1.5 text-xs text-on-surface-variant">
+                          Opportunity Score: <span className="font-semibold text-on-surface">94</span>
+                        </p>
+                        <p className="mb-1 text-xs font-medium text-on-surface">Changes detected:</p>
+                        <ul className="space-y-0.5 text-xs text-on-surface-variant">
+                          <li>✓ Asking price reduced by £1,200</li>
+                          <li>✓ Dealer demand increased</li>
+                          <li>✓ Confidence improved</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </div>
+                )}
               </div>
 
               {/* Buttons: 1-column on mobile, 2-col on sm, 4-column on md+ */}
