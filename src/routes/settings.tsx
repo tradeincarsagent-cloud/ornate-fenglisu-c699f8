@@ -92,6 +92,16 @@ const BUYING_STYLE_OPTIONS: Array<{ id: BuyingStyle; label: string; description:
   },
 ]
 
+const LEARNING_ITEMS = [
+  'Preferred Vehicle Types',
+  'Buying Budget',
+  'Preferred Profit Margin',
+  'Typical Buying Locations',
+  'Buying Style',
+]
+
+const LEARNING_PROGRESS = 82
+
 function PrioritySelector({
   value,
   onChange,
@@ -123,9 +133,13 @@ function PrioritySelector({
             disabled={disabled}
             onClick={() => onChange(option.id)}
             className={`rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-              selected
-                ? 'bg-primary/15 text-on-surface'
-                : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+              option.id === 'off'
+                ? selected
+                  ? 'bg-red-500/15 text-red-700'
+                  : 'text-red-600 hover:bg-red-500/10 hover:text-red-700'
+                : selected
+                  ? 'bg-primary/15 text-on-surface'
+                  : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
             } ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
           >
             {option.label}
@@ -159,6 +173,7 @@ function SettingsPage() {
     currentStockCapacity: '',
   })
   const [buyingStyle, setBuyingStyle] = useState<BuyingStyle>('balancedBuyer')
+  const [profileReviewRequested, setProfileReviewRequested] = useState(false)
 
   const [saved, setSaved] = useState(false)
 
@@ -343,6 +358,56 @@ function SettingsPage() {
                 </button>
               )
             })}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+          <h2 className="mb-1 text-title-md font-title-md text-on-surface">TICA Learning</h2>
+          <p className="mb-5 text-sm text-on-surface-variant">
+            The more you use TICA, the better it understands your buying habits and future recommendations.
+          </p>
+
+          <div className="space-y-3">
+            {LEARNING_ITEMS.map((item) => (
+              <div
+                key={item}
+                className="flex items-center justify-between rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-4 py-3"
+              >
+                <span className="text-sm font-medium text-on-surface">{item}</span>
+                <span className="text-sm font-semibold text-green-600">✅ Learned</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4">
+            <div className="mb-2 flex items-center justify-between gap-3">
+              <p className="text-sm font-semibold text-on-surface">Learning Progress</p>
+              <p className="text-sm font-semibold text-on-surface">{LEARNING_PROGRESS}%</p>
+            </div>
+            <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface-container">
+              <div
+                className="h-full rounded-full bg-primary transition-[width]"
+                style={{ width: `${LEARNING_PROGRESS}%` }}
+                aria-label="Learning Progress"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={LEARNING_PROGRESS}
+              />
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setProfileReviewRequested(true)}
+              className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              Review My Buying Profile
+            </button>
+            {profileReviewRequested && (
+              <p className="text-xs text-on-surface-variant">Placeholder only — no backend actions yet.</p>
+            )}
           </div>
         </section>
 
