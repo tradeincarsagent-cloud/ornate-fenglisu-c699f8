@@ -2,7 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CzHRShk1.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-DFzXb8ub.js";
 const missionStatusConfig = {
   Monitoring: {
     color: "rgba(74, 222, 128, 0.9)",
@@ -195,7 +195,6 @@ function DashboardPage() {
     nextScan: "19 minutes",
     progress: 61
   }];
-  const recommendationEvidencePoints = [decisionModel.factors.overallOpportunityScore.summary, decisionModel.factors.dealerDemand.summary, decisionModel.factors.estimatedProfit.summary, decisionModel.factors.timeOnMarket.summary, decisionModel.factors.vehicleHistory.summary];
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
   const [highlightedMission, setHighlightedMission] = useState(null);
   const [priorityContactId, setPriorityContactId] = useState(null);
@@ -536,8 +535,22 @@ function DashboardPage() {
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
-        /* @__PURE__ */ jsx("h3", { className: "mb-2 text-body-md font-body-md font-medium text-on-surface", children: "Why TICA Recommends This" }),
-        /* @__PURE__ */ jsx("ul", { className: "list-disc space-y-1 pl-5 text-sm text-on-surface-variant", children: recommendationEvidencePoints.map((point) => /* @__PURE__ */ jsx("li", { children: point }, point)) })
+        /* @__PURE__ */ jsx("h3", { className: "mb-3 text-body-md font-body-md font-medium text-on-surface", children: "Why TICA Chose This Vehicle" }),
+        /* @__PURE__ */ jsxs("ul", { className: "mb-4 space-y-2 text-sm text-on-surface-variant", children: [
+          /* @__PURE__ */ jsx("li", { children: "🟢 Asking price is below estimated market value." }),
+          /* @__PURE__ */ jsx("li", { children: "🟢 Dealer demand is above average." }),
+          /* @__PURE__ */ jsx("li", { children: "🟢 Estimated resale margin exceeds target." }),
+          /* @__PURE__ */ jsx("li", { children: "🟡 Vehicle history check still recommended." }),
+          /* @__PURE__ */ jsx("li", { children: "🟢 Recently listed with competitive pricing." })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "mb-3 border-t border-outline-variant/20 pt-3", children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Opportunity Score" }),
+          /* @__PURE__ */ jsx("p", { className: "text-headline-sm font-headline-sm text-on-surface", children: "94 / 100" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "border-t border-outline-variant/20 pt-3", children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "TICA Decision" }),
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md font-semibold text-on-surface", children: "🟢 BUY" })
+        ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4", children: [
         /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Review Opportunity" }),

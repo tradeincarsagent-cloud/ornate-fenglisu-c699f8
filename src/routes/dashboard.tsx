@@ -645,12 +645,22 @@ function DashboardPage() {
               </div>
 
               <div className="mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                <h3 className="mb-2 text-body-md font-body-md font-medium text-on-surface">Why TICA Recommends This</h3>
-                <ul className="list-disc space-y-1 pl-5 text-sm text-on-surface-variant">
-                  {recommendationEvidencePoints.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
+                <h3 className="mb-3 text-body-md font-body-md font-medium text-on-surface">Why TICA Chose This Vehicle</h3>
+                <ul className="mb-4 space-y-2 text-sm text-on-surface-variant">
+                  <li>🟢 Asking price is below estimated market value.</li>
+                  <li>🟢 Dealer demand is above average.</li>
+                  <li>🟢 Estimated resale margin exceeds target.</li>
+                  <li>🟡 Vehicle history check still recommended.</li>
+                  <li>🟢 Recently listed with competitive pricing.</li>
                 </ul>
+                <div className="mb-3 border-t border-outline-variant/20 pt-3">
+                  <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Opportunity Score</p>
+                  <p className="text-headline-sm font-headline-sm text-on-surface">94 / 100</p>
+                </div>
+                <div className="border-t border-outline-variant/20 pt-3">
+                  <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">TICA Decision</p>
+                  <p className="text-body-md font-body-md font-semibold text-on-surface">🟢 BUY</p>
+                </div>
               </div>
 
               {/* Buttons: 1-column on mobile, 2-col on sm, 4-column on md+ */}

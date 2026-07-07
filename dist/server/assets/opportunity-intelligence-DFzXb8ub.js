@@ -18,20 +18,7 @@ const bmwM3DecisionModel = {
   recommendedActionDisplay: "BUY NOW",
   factors: {
     overallOpportunityScore: {
-      displayValue: "97 / 100",
-      summary: "Highest-weight roll-up opportunity score remains very strong."
-    },
-    estimatedProfit: {
-      summary: "Projected margin is comfortably above internal targets."
-    },
-    vehicleHistory: {
-      summary: "Usable profile with advisory flags that still require verification."
-    },
-    dealerDemand: {
-      summary: "Demand signals remain strong for this segment and specification."
-    },
-    timeOnMarket: {
-      summary: "Stock-turn expectations support rapid resale."
+      displayValue: "97 / 100"
     }
   }
 };
