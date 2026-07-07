@@ -2,6 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
+import { T as TicaShield } from "./TicaShield-DjhzFjnj.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 const missionStatusConfig = {
   Monitoring: {
@@ -435,7 +436,10 @@ function DashboardPage() {
     label: "Subscription",
     disabled: true
   }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max overflow-x-hidden", children: [
-    /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-primary", children: "Dealer Command Centre" }),
+    /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-start justify-between gap-4", children: [
+      /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "Dealer Command Centre" }),
+      /* @__PURE__ */ jsx(TicaShield, {})
+    ] }),
     /* @__PURE__ */ jsx("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
         /* @__PURE__ */ jsx("p", { className: "text-xs font-semibold uppercase tracking-[0.18em] text-primary/90", children: "AI Daily Briefing" }),
@@ -545,7 +549,7 @@ function DashboardPage() {
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Today's Best Buy" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-6 text-sm text-on-surface-variant", children: "Chosen by TICA" }),
+      /* @__PURE__ */ jsx("p", { className: "mb-6 max-w-[20rem] text-sm text-on-surface-variant", children: "Certified by the TICA Decision Engine." }),
       /* @__PURE__ */ jsx("div", { className: "mb-5 md:hidden", children: /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary", children: "⭐ Today's AI Pick" }) }),
       /* @__PURE__ */ jsxs("div", { className: "mb-8 grid grid-cols-1 gap-4 md:grid-cols-2", children: [
         /* @__PURE__ */ jsxs("div", { children: [
