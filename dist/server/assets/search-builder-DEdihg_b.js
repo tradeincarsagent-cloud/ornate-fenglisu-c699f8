@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { P as PlatformShell } from "./PlatformShell-tmsME7-g.js";
+import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
 const VEHICLE_TYPES = ["Cars", "Pick-ups", "Vans & Light Commercials"];
 const SEARCH_FREQUENCIES = [{
   label: "Every 15 Minutes",
