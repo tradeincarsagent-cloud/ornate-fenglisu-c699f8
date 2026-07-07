@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
+import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
 
 export const Route = createFileRoute('/opportunity')({
@@ -46,6 +47,13 @@ function OpportunityPage() {
     >
       <div className="mx-auto w-full max-w-container-max space-y-6 overflow-x-hidden">
         <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+          <TicaShield
+            className="mb-5 flex flex-col items-start gap-3"
+            imageClassName="h-auto w-32 sm:w-40"
+            title="TICA Certified Recommendation"
+            titleClassName="text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary"
+          />
+          {/* Future exported PDF buying reports should reuse this shield as the official TICA certification mark. */}
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center">
             <div>
               <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Trade In Cars Agent</p>

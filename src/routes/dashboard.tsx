@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
+import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
 
 export const Route = createFileRoute('/dashboard')({
@@ -645,8 +646,14 @@ function DashboardPage() {
 
             {/* ── AI Recommendation ────────────────────────────────────── */}
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Today's Best Buy</h2>
-              <p className="mb-6 text-sm text-on-surface-variant">Chosen by TICA</p>
+              <TicaShield
+                className="absolute right-4 top-4 flex max-w-[5rem] flex-col items-center gap-2 sm:max-w-[7rem]"
+                imageClassName="h-auto w-full"
+                caption="TICA Decision Engine Certified"
+                captionClassName="text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant"
+              />
+              <h2 className="mb-1 pr-24 text-headline-md font-headline-md text-on-surface sm:pr-32">Today's Best Buy</h2>
+              <p className="mb-6 max-w-[20rem] pr-24 text-sm text-on-surface-variant sm:pr-32">Certified by the TICA Decision Engine.</p>
 
               {/* Mobile premium badge */}
               <div className="mb-5 md:hidden">
