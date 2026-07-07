@@ -1,24 +1,7 @@
 const bmwM3CompetitionScoring = {
-  // Market Price Score: placeholder signal for how far the asking price sits below modeled retail market value.
-  marketPriceScore: {
-    summary: "Asking price remains comfortably below projected forecourt value."
-  },
   // Estimated Profit Score: placeholder projection for gross margin after acquisition and prep assumptions.
   estimatedProfitScore: {
-    status: "High Profit Potential",
-    summary: "Projected resale margin stays above the current target threshold."
-  },
-  // Dealer Demand Score: placeholder demand model for likely buyer interest across dealer inventory channels.
-  dealerDemandScore: {
-    summary: "Comparable performance stock continues to show strong retail pull-through."
-  },
-  // Time on Market Score: placeholder velocity signal for how quickly the vehicle is expected to sell.
-  timeOnMarketScore: {
-    summary: "Modeled stock-turn timing remains comfortably inside the current target window."
-  },
-  // Mileage Score: placeholder fit check for whether mileage aligns with age, segment, and retail expectations.
-  mileageScore: {
-    summary: "Mileage appears aligned with age and premium performance segment expectations."
+    status: "High Profit Potential"
   },
   // Vehicle History Score: placeholder risk signal for future provider-backed history and verification checks.
   vehicleHistoryScore: {
@@ -27,10 +10,29 @@ const bmwM3CompetitionScoring = {
   // MOT Score: placeholder compliance and test-history signal until live MOT integrations are connected.
   motScore: {
     status: "MOT Review Recommended"
-  },
-  // Overall Opportunity Score: placeholder roll-up that future AI integrations should own centrally.
-  overallOpportunityScore: {
-    displayValue: "97 / 100"
+  }
+};
+const bmwM3DecisionModel = {
+  weightedDecisionScoreDisplay: "89 / 100",
+  recommendedAction: "BUY",
+  recommendedActionDisplay: "BUY NOW",
+  factors: {
+    overallOpportunityScore: {
+      displayValue: "97 / 100",
+      summary: "Highest-weight roll-up opportunity score remains very strong."
+    },
+    estimatedProfit: {
+      summary: "Projected margin is comfortably above internal targets."
+    },
+    vehicleHistory: {
+      summary: "Usable profile with advisory flags that still require verification."
+    },
+    dealerDemand: {
+      summary: "Demand signals remain strong for this segment and specification."
+    },
+    timeOnMarket: {
+      summary: "Stock-turn expectations support rapid resale."
+    }
   }
 };
 const opportunityIntelligencePlaceholder = {
@@ -45,8 +47,7 @@ const opportunityIntelligencePlaceholder = {
     daysToSellDisplay: "9 Days",
     confidenceDisplay: "97%",
     demandRatingDisplay: "★★★★★",
-    verdict: "BUY",
-    verdictDisplay: "BUY NOW",
+    decisionModel: bmwM3DecisionModel,
     heroImageSrc: "/placeholder.png",
     heroImageAlt: "BMW M3 Competition opportunity vehicle",
     dashboardEstimatedProfitDisplay: "£4,200",

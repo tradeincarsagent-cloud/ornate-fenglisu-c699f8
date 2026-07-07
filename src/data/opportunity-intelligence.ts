@@ -21,7 +21,37 @@ export type OpportunityScore = {
   summary: string
 }
 
-export type OpportunityBuyingVerdict = 'BUY' | 'REVIEW' | 'PASS'
+export type OpportunityBuyingVerdict = 'BUY' | 'REVIEW' | 'WATCH' | 'PASS'
+
+export type TicaDecisionCategory = 'BUY' | 'REVIEW' | 'WATCH' | 'PASS'
+
+export type TicaDecisionFactorKey =
+  | 'overallOpportunityScore'
+  | 'estimatedProfit'
+  | 'vehicleHistory'
+  | 'dealerDemand'
+  | 'timeOnMarket'
+  | 'sellerReputation'
+  | 'missionPriority'
+  | 'budgetMatch'
+  | 'availability'
+
+export type TicaDecisionFactor = {
+  label: string
+  weight: number
+  score: number
+  displayValue: string
+  summary: string
+}
+
+export type TicaDecisionModel = {
+  decisionCategories: TicaDecisionCategory[]
+  weightedDecisionScore: number
+  weightedDecisionScoreDisplay: string
+  recommendedAction: TicaDecisionCategory
+  recommendedActionDisplay: string
+  factors: Record<TicaDecisionFactorKey, TicaDecisionFactor>
+}
 
 export type OpportunityChecklistItem = {
   label: string
@@ -58,6 +88,7 @@ export type FeaturedOpportunity = {
   demandRatingDisplay: string
   verdict: OpportunityBuyingVerdict
   verdictDisplay: string
+  decisionModel: TicaDecisionModel
   heroImageSrc: string
   heroImageAlt: string
   dashboardEstimatedProfitDisplay: string
@@ -178,6 +209,87 @@ const bmwM3CompetitionScoring: Record<OpportunityScoreCategory, OpportunityScore
   },
 }
 
+const ticaDecisionCategories: TicaDecisionCategory[] = ['BUY', 'REVIEW', 'WATCH', 'PASS']
+
+/**
+ * The TICA Decision Engine converts AI analysis into recommended dealer actions.
+ * Internal placeholder architecture only: this sits after the Opportunity Intelligence
+ * Engine and must not be exposed as a new user-facing interface until live intelligence
+ * and API integrations are connected.
+ */
+const bmwM3DecisionModel: TicaDecisionModel = {
+  decisionCategories: ticaDecisionCategories,
+  weightedDecisionScore: 89,
+  weightedDecisionScoreDisplay: '89 / 100',
+  recommendedAction: 'BUY',
+  recommendedActionDisplay: 'BUY NOW',
+  factors: {
+    overallOpportunityScore: {
+      label: 'Overall Opportunity Score',
+      weight: 0.22,
+      score: 97,
+      displayValue: '97 / 100',
+      summary: 'Highest-weight roll-up opportunity score remains very strong.',
+    },
+    estimatedProfit: {
+      label: 'Estimated Profit',
+      weight: 0.18,
+      score: 94,
+      displayValue: '94 / 100',
+      summary: 'Projected margin is comfortably above internal targets.',
+    },
+    vehicleHistory: {
+      label: 'Vehicle History',
+      weight: 0.14,
+      score: 71,
+      displayValue: '71 / 100',
+      summary: 'Usable profile with advisory flags that still require verification.',
+    },
+    dealerDemand: {
+      label: 'Dealer Demand',
+      weight: 0.12,
+      score: 95,
+      displayValue: '95 / 100',
+      summary: 'Demand signals remain strong for this segment and specification.',
+    },
+    timeOnMarket: {
+      label: 'Time on Market',
+      weight: 0.1,
+      score: 91,
+      displayValue: '91 / 100',
+      summary: 'Stock-turn expectations support rapid resale.',
+    },
+    sellerReputation: {
+      label: 'Seller Reputation',
+      weight: 0.09,
+      score: 86,
+      displayValue: '86 / 100',
+      summary: 'Seller trust profile is positive against current placeholder heuristics.',
+    },
+    missionPriority: {
+      label: 'Mission Priority',
+      weight: 0.07,
+      score: 90,
+      displayValue: '90 / 100',
+      summary: 'Vehicle aligns well with current mission focus and sourcing targets.',
+    },
+    budgetMatch: {
+      label: 'Budget Match',
+      weight: 0.05,
+      score: 88,
+      displayValue: '88 / 100',
+      summary: 'Acquisition range fits the active budget strategy.',
+    },
+    availability: {
+      label: 'Availability',
+      weight: 0.03,
+      score: 82,
+      displayValue: '82 / 100',
+      summary: 'Listing remains available with acceptable response expectations.',
+    },
+  },
+}
+
 export const opportunityIntelligencePlaceholder: {
   featuredOpportunity: FeaturedOpportunity
   dashboardRecentOpportunities: DashboardOpportunity[]
@@ -194,8 +306,9 @@ export const opportunityIntelligencePlaceholder: {
     daysToSellDisplay: '9 Days',
     confidenceDisplay: '97%',
     demandRatingDisplay: '★★★★★',
-    verdict: 'BUY',
-    verdictDisplay: 'BUY NOW',
+    verdict: bmwM3DecisionModel.recommendedAction,
+    verdictDisplay: bmwM3DecisionModel.recommendedActionDisplay,
+    decisionModel: bmwM3DecisionModel,
     heroImageSrc: '/placeholder.png',
     heroImageAlt: 'BMW M3 Competition opportunity vehicle',
     dashboardEstimatedProfitDisplay: '£4,200',

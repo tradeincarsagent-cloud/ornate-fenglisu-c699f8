@@ -2,7 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-UZbbq6Mn.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CzHRShk1.js";
 const missionStatusConfig = {
   Monitoring: {
     color: "rgba(74, 222, 128, 0.9)",
@@ -128,6 +128,7 @@ function DashboardPage() {
     dashboardRecentOpportunities,
     featuredOpportunity
   } = opportunityIntelligencePlaceholder;
+  const decisionModel = featuredOpportunity.decisionModel;
   const summaryCards = [{
     icon: "🚗",
     title: "New Vehicle Opportunities",
@@ -194,7 +195,7 @@ function DashboardPage() {
     nextScan: "19 minutes",
     progress: 61
   }];
-  const recommendationEvidencePoints = [featuredOpportunity.scoring.marketPriceScore.summary, featuredOpportunity.scoring.dealerDemandScore.summary, featuredOpportunity.scoring.mileageScore.summary, featuredOpportunity.scoring.estimatedProfitScore.summary, featuredOpportunity.scoring.timeOnMarketScore.summary];
+  const recommendationEvidencePoints = [decisionModel.factors.overallOpportunityScore.summary, decisionModel.factors.dealerDemand.summary, decisionModel.factors.estimatedProfit.summary, decisionModel.factors.timeOnMarket.summary, decisionModel.factors.vehicleHistory.summary];
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
   const [highlightedMission, setHighlightedMission] = useState(null);
   const [priorityContactId, setPriorityContactId] = useState(null);
@@ -527,7 +528,7 @@ function DashboardPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Confidence Score" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.scoring.overallOpportunityScore.displayValue })
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: decisionModel.weightedDecisionScoreDisplay })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Reason" }),

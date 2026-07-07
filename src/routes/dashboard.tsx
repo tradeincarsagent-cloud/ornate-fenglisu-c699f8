@@ -125,6 +125,7 @@ function ChevronIcon({ open }: { open: boolean }) {
 
 function DashboardPage() {
   const { dashboardRecentOpportunities, featuredOpportunity } = opportunityIntelligencePlaceholder
+  const decisionModel = featuredOpportunity.decisionModel
   const summaryCards = [
     { icon: '🚗', title: 'New Vehicle Opportunities', value: '8' },
     { icon: '📉', title: 'Price Drops', value: '2' },
@@ -184,11 +185,11 @@ function DashboardPage() {
     },
   ]
   const recommendationEvidencePoints = [
-    featuredOpportunity.scoring.marketPriceScore.summary,
-    featuredOpportunity.scoring.dealerDemandScore.summary,
-    featuredOpportunity.scoring.mileageScore.summary,
-    featuredOpportunity.scoring.estimatedProfitScore.summary,
-    featuredOpportunity.scoring.timeOnMarketScore.summary,
+    decisionModel.factors.overallOpportunityScore.summary,
+    decisionModel.factors.dealerDemand.summary,
+    decisionModel.factors.estimatedProfit.summary,
+    decisionModel.factors.timeOnMarket.summary,
+    decisionModel.factors.vehicleHistory.summary,
   ]
 
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
@@ -633,7 +634,7 @@ function DashboardPage() {
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Confidence Score</p>
-                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.scoring.overallOpportunityScore.displayValue}</p>
+                  <p className="text-body-md font-body-md text-on-surface">{decisionModel.weightedDecisionScoreDisplay}</p>
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>
