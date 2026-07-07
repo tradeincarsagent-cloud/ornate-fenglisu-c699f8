@@ -135,11 +135,11 @@ const $$splitComponentImporter$3 = () => import("./search-builder-DEdihg_b.js");
 const Route$3 = createFileRoute("/search-builder")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./opportunity-D5sbqWvg.js");
+const $$splitComponentImporter$2 = () => import("./opportunity-BS0F5ii-.js");
 const Route$2 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./dashboard-D35Ua4Ua.js");
+const $$splitComponentImporter$1 = () => import("./dashboard-DFhqJi7Y.js");
 const Route$1 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });

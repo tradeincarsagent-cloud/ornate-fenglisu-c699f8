@@ -2,7 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-DFzXb8ub.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CzHRShk1.js";
 const missionStatusConfig = {
   Monitoring: {
     color: "rgba(74, 222, 128, 0.9)",
@@ -212,6 +212,8 @@ function DashboardPage() {
     nextScan: "19 minutes",
     progress: 61
   }];
+  const recommendationEvidencePoints = [decisionModel.factors.overallOpportunityScore.summary, decisionModel.factors.dealerDemand.summary, decisionModel.factors.estimatedProfit.summary, decisionModel.factors.timeOnMarket.summary, decisionModel.factors.vehicleHistory.summary];
+  const recommendationCautionPoints = ["Vehicle history has not yet been verified.", "Service history should be confirmed.", "Seller response time is currently unknown."];
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
   const [highlightedMission, setHighlightedMission] = useState(null);
   const [priorityContactId, setPriorityContactId] = useState(null);
@@ -553,12 +555,17 @@ function DashboardPage() {
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
         /* @__PURE__ */ jsx("h3", { className: "mb-3 text-body-md font-body-md font-medium text-on-surface", children: "Why TICA Chose This Vehicle" }),
-        /* @__PURE__ */ jsxs("ul", { className: "mb-4 space-y-2 text-sm text-on-surface-variant", children: [
-          /* @__PURE__ */ jsx("li", { children: "🟢 Asking price is below estimated market value." }),
-          /* @__PURE__ */ jsx("li", { children: "🟢 Dealer demand is above average." }),
-          /* @__PURE__ */ jsx("li", { children: "🟢 Estimated resale margin exceeds target." }),
-          /* @__PURE__ */ jsx("li", { children: "🟡 Vehicle history check still recommended." }),
-          /* @__PURE__ */ jsx("li", { children: "🟢 Recently listed with competitive pricing." })
+        /* @__PURE__ */ jsx("ul", { className: "mb-4 space-y-2 text-sm text-on-surface-variant", children: recommendationEvidencePoints.map((point, index) => /* @__PURE__ */ jsxs("li", { children: [
+          index === recommendationEvidencePoints.length - 1 ? "🟡" : "🟢",
+          " ",
+          point
+        ] }, point)) }),
+        /* @__PURE__ */ jsxs("div", { className: "mb-3 border-t border-outline-variant/20 pt-3", children: [
+          /* @__PURE__ */ jsx("h4", { className: "mb-2 text-body-sm font-body-sm font-medium text-on-surface", children: "Things to Consider" }),
+          /* @__PURE__ */ jsx("ul", { className: "space-y-1.5 text-sm text-on-surface-variant", children: recommendationCautionPoints.map((point) => /* @__PURE__ */ jsxs("li", { children: [
+            "⚠ ",
+            point
+          ] }, point)) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "mb-3 border-t border-outline-variant/20 pt-3", children: [
           /* @__PURE__ */ jsx("p", { className: "mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Opportunity Score" }),
