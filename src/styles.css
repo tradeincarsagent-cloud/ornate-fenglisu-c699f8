@@ -2,6 +2,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 .material-symbols-outlined {
@@ -55,10 +56,8 @@ body {
   background-color: #0c1324;
   color: #dce1fb;
   font-family: 'Inter', sans-serif;
-  scroll-behavior: smooth;
   margin: 0;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 .modal-overlay {
