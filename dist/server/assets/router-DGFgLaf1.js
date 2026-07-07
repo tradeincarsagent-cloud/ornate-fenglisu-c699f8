@@ -1,6 +1,6 @@
 import { createRootRoute, HeadContent, Scripts, createFileRoute, lazyRouteComponent, createRouter } from "@tanstack/react-router";
 import { jsxs, jsx } from "react/jsx-runtime";
-const Route$4 = createRootRoute({
+const Route$5 = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -131,15 +131,19 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
-const $$splitComponentImporter$3 = () => import("./search-builder-DEdihg_b.js");
+const $$splitComponentImporter$4 = () => import("./settings-CBfWpMRA.js");
+const Route$4 = createFileRoute("/settings")({
+  component: lazyRouteComponent($$splitComponentImporter$4, "component")
+});
+const $$splitComponentImporter$3 = () => import("./search-builder-DcXlqFuY.js");
 const Route$3 = createFileRoute("/search-builder")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./opportunity-Dod_gnBo.js");
+const $$splitComponentImporter$2 = () => import("./opportunity-2mVUT4_O.js");
 const Route$2 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./dashboard-Dk8mpyN5.js");
+const $$splitComponentImporter$1 = () => import("./dashboard-Bb5AbQeQ.js");
 const Route$1 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
@@ -147,33 +151,39 @@ const $$splitComponentImporter = () => import("./index-CfdQQT29.js");
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
+const SettingsRoute = Route$4.update({
+  id: "/settings",
+  path: "/settings",
+  getParentRoute: () => Route$5
+});
 const SearchBuilderRoute = Route$3.update({
   id: "/search-builder",
   path: "/search-builder",
-  getParentRoute: () => Route$4
+  getParentRoute: () => Route$5
 });
 const OpportunityRoute = Route$2.update({
   id: "/opportunity",
   path: "/opportunity",
-  getParentRoute: () => Route$4
+  getParentRoute: () => Route$5
 });
 const DashboardRoute = Route$1.update({
   id: "/dashboard",
   path: "/dashboard",
-  getParentRoute: () => Route$4
+  getParentRoute: () => Route$5
 });
 const IndexRoute = Route.update({
   id: "/",
   path: "/",
-  getParentRoute: () => Route$4
+  getParentRoute: () => Route$5
 });
 const rootRouteChildren = {
   IndexRoute,
   DashboardRoute,
   OpportunityRoute,
-  SearchBuilderRoute
+  SearchBuilderRoute,
+  SettingsRoute
 };
-const routeTree = Route$4._addFileChildren(rootRouteChildren)._addFileTypes();
+const routeTree = Route$5._addFileChildren(rootRouteChildren)._addFileTypes();
 const getRouter = () => {
   const router = createRouter({
     routeTree,

@@ -417,6 +417,12 @@ function DashboardPage() {
     label: "AI Buying Report",
     href: "/opportunity"
   }, {
+    label: "Settings",
+    isSectionLabel: true
+  }, {
+    label: "Notification Preferences",
+    href: "/settings"
+  }, {
     label: "Future Features",
     isSectionLabel: true
   }, {
@@ -424,9 +430,6 @@ function DashboardPage() {
     disabled: true
   }, {
     label: "Watchlist",
-    disabled: true
-  }, {
-    label: "Settings",
     disabled: true
   }, {
     label: "Subscription",
