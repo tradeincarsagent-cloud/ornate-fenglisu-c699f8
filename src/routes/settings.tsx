@@ -46,7 +46,7 @@ const EVENTS: Array<{ id: NotificationEvent; label: string; description: string 
   },
 ]
 
-function ToggleSwitch({
+function RockerSwitch({
   checked,
   onChange,
   id,
@@ -65,19 +65,37 @@ function ToggleSwitch({
       aria-checked={checked}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-        disabled
-          ? 'cursor-not-allowed opacity-40'
-          : checked
-            ? 'bg-primary'
-            : 'bg-surface-container-high'
-      }`}
+      className={`inline-flex h-10 flex-shrink-0 overflow-hidden rounded-lg border transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+        disabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'
+      } ${checked ? 'border-green-500/40' : 'border-outline-variant/40'}`}
     >
+      {/* OFF segment */}
       <span
-        className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-md ring-0 transition-transform duration-200 ${
-          checked ? 'translate-x-5' : 'translate-x-0.5'
+        aria-hidden="true"
+        className={`flex min-w-[3rem] items-center justify-center px-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 ${
+          checked
+            ? 'bg-surface-container-low/60 text-on-surface-variant/30'
+            : 'bg-surface-container text-on-surface-variant'
         }`}
+      >
+        OFF
+      </span>
+      {/* Separator */}
+      <span
+        aria-hidden="true"
+        className={`w-px flex-shrink-0 transition-colors duration-200 ${checked ? 'bg-green-500/30' : 'bg-outline-variant/30'}`}
       />
+      {/* ON segment */}
+      <span
+        aria-hidden="true"
+        className={`flex min-w-[3rem] items-center justify-center px-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 ${
+          checked
+            ? 'bg-green-500/[0.18] text-green-400'
+            : 'bg-surface-container-low/60 text-on-surface-variant/30'
+        }`}
+      >
+        ON
+      </span>
     </button>
   )
 }
@@ -181,7 +199,7 @@ function SettingsPage() {
                       {channel.description}
                     </p>
                   </div>
-                  <ToggleSwitch
+                  <RockerSwitch
                     id={`channel-${channel.id}`}
                     checked={channelPrefs[channel.id]}
                     onChange={(v) => handleChannelChange(channel.id, v)}
@@ -213,7 +231,7 @@ function SettingsPage() {
                   </label>
                   <p className="mt-0.5 text-xs text-on-surface-variant">{event.description}</p>
                 </div>
-                <ToggleSwitch
+                <RockerSwitch
                   id={`event-${event.id}`}
                   checked={eventPrefs[event.id]}
                   onChange={(v) => handleEventChange(event.id, v)}
