@@ -22,16 +22,40 @@ html {
 
 /* Brand blue: #1493ff = rgba(20, 147, 255, …) */
 
-/* Always-on permanent soft ambient glow wrapper */
+/* Slow attention-pulse: runs until the user opens the popup for the first time */
+@keyframes tica-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 14px 5px rgba(20, 147, 255, 0.38),
+      0 0 32px 10px rgba(20, 147, 255, 0.16);
+  }
+  50% {
+    box-shadow:
+      0 0 24px 10px rgba(20, 147, 255, 0.65),
+      0 0 54px 20px rgba(20, 147, 255, 0.28);
+  }
+}
+
+/* Always-on permanent ambient glow — clearly visible, not cartoon */
 .tica-shield-glow {
   border-radius: 0.875rem;
-  box-shadow: 0 0 10px 3px rgba(20, 147, 255, 0.20);
+  box-shadow:
+    0 0 14px 5px rgba(20, 147, 255, 0.38),
+    0 0 32px 10px rgba(20, 147, 255, 0.16);
   transition: box-shadow 0.35s ease;
 }
 
-/* Hover / tap: gently brighter glow before popup appears */
+/* Repeating pulse active until the popup has been opened once */
+.tica-shield-glow.tica-shield-pulsing {
+  animation: tica-glow-pulse 2.8s ease-in-out infinite;
+}
+
+/* Hover / tap: brighter glow, pauses animation */
 .tica-shield-glow.tica-shield-hovered {
-  box-shadow: 0 0 20px 7px rgba(20, 147, 255, 0.42);
+  animation: none;
+  box-shadow:
+    0 0 24px 10px rgba(20, 147, 255, 0.65),
+    0 0 54px 20px rgba(20, 147, 255, 0.28);
 }
 
 /* Subtle blue text glow for "TICA Certified™" label */

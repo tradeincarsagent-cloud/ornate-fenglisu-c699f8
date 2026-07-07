@@ -152,6 +152,7 @@ function TicaShield() {
   const [open, setOpen] = useState(false);
   const [popupPos, setPopupPos] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [hasOpened, setHasOpened] = useState(false);
   const containerRef = useRef(null);
   const updatePopupPos = () => {
     if (!containerRef.current) return;
@@ -164,6 +165,7 @@ function TicaShield() {
   const handleOpen = () => {
     updatePopupPos();
     setOpen(true);
+    setHasOpened(true);
   };
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -211,7 +213,11 @@ function TicaShield() {
             },
             className: "flex flex-col items-center gap-1.5 rounded-xl p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60",
             children: [
-              /* @__PURE__ */ jsx("div", { className: ["tica-shield-glow", isHovered ? "tica-shield-hovered" : ""].join(" "), children: /* @__PURE__ */ jsx(
+              /* @__PURE__ */ jsx("div", { className: [
+                "tica-shield-glow",
+                !hasOpened && !isHovered ? "tica-shield-pulsing" : "",
+                isHovered ? "tica-shield-hovered" : ""
+              ].join(" ").trim(), children: /* @__PURE__ */ jsx(
                 "img",
                 {
                   src: TICA_SHIELD_SRC,
