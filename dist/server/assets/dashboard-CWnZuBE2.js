@@ -245,6 +245,7 @@ function DashboardPage() {
   const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
   const [openMoreMenu, setOpenMoreMenu] = useState(null);
   const [recAction, setRecAction] = useState(null);
+  const [opportunityHistoryOpen, setOpportunityHistoryOpen] = useState(false);
   const [activeAiStatusMessage, setActiveAiStatusMessage] = useState(aiStatusMessages[0]);
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
@@ -623,6 +624,46 @@ function DashboardPage() {
             "• ",
             reason
           ] }, reason)) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "mb-6 rounded-xl border border-outline-variant/30 bg-surface-container-high", children: [
+        /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setOpportunityHistoryOpen((v) => !v), className: "flex w-full items-center justify-between px-4 py-3 text-left", children: [
+          /* @__PURE__ */ jsx("span", { className: "text-body-md font-body-md font-medium text-on-surface", children: "Opportunity History" }),
+          /* @__PURE__ */ jsx("span", { className: "text-xs text-on-surface-variant", "aria-hidden": "true", children: opportunityHistoryOpen ? "▲" : "▼" })
+        ] }),
+        opportunityHistoryOpen && /* @__PURE__ */ jsxs("div", { className: "border-t border-outline-variant/20 px-4 pb-4 pt-3", children: [
+          /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center gap-3 rounded-lg border border-primary/20 bg-surface-container px-3 py-2", children: [
+            /* @__PURE__ */ jsx("span", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "AI Confidence Trend" }),
+            /* @__PURE__ */ jsxs("span", { className: "ml-auto text-sm font-semibold text-on-surface", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "87%" }),
+              " → ",
+              /* @__PURE__ */ jsx("span", { className: "text-primary", children: "94%" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("ol", { className: "relative space-y-4 border-l border-outline-variant/30 pl-5", children: [
+            /* @__PURE__ */ jsxs("li", { className: "relative", children: [
+              /* @__PURE__ */ jsx("span", { className: "absolute -left-[11px] top-1 block h-2.5 w-2.5 rounded-full border border-outline-variant/40 bg-surface-container-high" }),
+              /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs font-semibold uppercase tracking-widest text-on-surface-variant", children: "Yesterday" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant", children: [
+                "Opportunity Score: ",
+                /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: "89" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("li", { className: "relative", children: [
+              /* @__PURE__ */ jsx("span", { className: "absolute -left-[11px] top-1 block h-2.5 w-2.5 rounded-full border border-primary/50 bg-primary/20" }),
+              /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs font-semibold uppercase tracking-widest text-on-surface-variant", children: "Today" }),
+              /* @__PURE__ */ jsxs("p", { className: "mb-1.5 text-xs text-on-surface-variant", children: [
+                "Opportunity Score: ",
+                /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: "94" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs font-medium text-on-surface", children: "Changes detected:" }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-0.5 text-xs text-on-surface-variant", children: [
+                /* @__PURE__ */ jsx("li", { children: "✓ Asking price reduced by £1,200" }),
+                /* @__PURE__ */ jsx("li", { children: "✓ Dealer demand increased" }),
+                /* @__PURE__ */ jsx("li", { children: "✓ Confidence improved" })
+              ] })
+            ] })
+          ] })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4", children: [
