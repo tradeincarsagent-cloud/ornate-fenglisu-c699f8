@@ -8,9 +8,17 @@ export const Route = createFileRoute('/settings')({
 
 type NotificationChannel = 'email' | 'push' | 'sms'
 type NotificationEvent = 'bestBuy' | 'opportunityScore' | 'estimatedProfit' | 'priceReduction' | 'vehicleHistory'
+type PriorityLevel = 'highPriority' | 'dailySummary' | 'off'
+type BuyingPreferenceKey =
+  | 'preferredVehicleTypes'
+  | 'minimumExpectedProfit'
+  | 'maximumMileage'
+  | 'maximumVehicleAge'
+  | 'preferredSearchArea'
 
-type ChannelPrefs = Record<NotificationChannel, boolean>
-type EventPrefs = Record<NotificationEvent, boolean>
+type ChannelPrefs = Record<NotificationChannel, PriorityLevel>
+type EventPrefs = Record<NotificationEvent, PriorityLevel>
+type BuyingPrefs = Record<BuyingPreferenceKey, string>
 
 const CHANNELS: Array<{ id: NotificationChannel; label: string; description: string; badge?: string }> = [
   { id: 'email', label: 'Email Notifications', description: 'Receive alerts to your registered email address.' },
@@ -46,84 +54,106 @@ const EVENTS: Array<{ id: NotificationEvent; label: string; description: string 
   },
 ]
 
-function RockerSwitch({
-  checked,
+const PRIORITY_OPTIONS: Array<{ id: PriorityLevel; label: string }> = [
+  { id: 'highPriority', label: '🟢 High Priority Only' },
+  { id: 'dailySummary', label: '🟡 Daily Summary' },
+  { id: 'off', label: '⚪ Off' },
+]
+
+const BUYING_PREFERENCE_FIELDS: Array<{
+  key: BuyingPreferenceKey
+  label: string
+  placeholder: string
+  type?: 'text' | 'number'
+}> = [
+  { key: 'preferredVehicleTypes', label: 'Preferred Vehicle Types', placeholder: 'e.g. Hatchback, SUV, Van' },
+  { key: 'minimumExpectedProfit', label: 'Minimum Expected Profit', placeholder: 'e.g. 1200', type: 'number' },
+  { key: 'maximumMileage', label: 'Maximum Mileage', placeholder: 'e.g. 90000', type: 'number' },
+  { key: 'maximumVehicleAge', label: 'Maximum Vehicle Age', placeholder: 'e.g. 8', type: 'number' },
+  { key: 'preferredSearchArea', label: 'Preferred Search Area', placeholder: 'e.g. Midlands + 80 miles' },
+]
+
+function PrioritySelector({
+  value,
   onChange,
   id,
   disabled,
 }: {
-  checked: boolean
-  onChange: (value: boolean) => void
+  value: PriorityLevel
+  onChange: (value: PriorityLevel) => void
   id: string
   disabled?: boolean
 }) {
   return (
-    <button
-      type="button"
-      role="switch"
+    <div
       id={id}
-      aria-checked={checked}
-      disabled={disabled}
-      onClick={() => onChange(!checked)}
-      className={`inline-flex h-10 flex-shrink-0 overflow-hidden rounded-lg border transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-        disabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'
-      } ${checked ? 'border-green-500/40' : 'border-outline-variant/40'}`}
+      role="radiogroup"
+      aria-disabled={disabled}
+      className={`grid w-full max-w-[18rem] grid-cols-1 gap-1 rounded-xl border border-outline-variant/30 bg-surface-container p-1 sm:grid-cols-3 ${
+        disabled ? 'opacity-50' : ''
+      }`}
     >
-      {/* OFF segment */}
-      <span
-        aria-hidden="true"
-        className={`flex min-w-[3rem] items-center justify-center px-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 ${
-          checked
-            ? 'bg-surface-container-low/60 text-on-surface-variant/30'
-            : 'bg-surface-container text-on-surface-variant'
-        }`}
-      >
-        OFF
-      </span>
-      {/* Separator */}
-      <span
-        aria-hidden="true"
-        className={`w-px flex-shrink-0 transition-colors duration-200 ${checked ? 'bg-green-500/30' : 'bg-outline-variant/30'}`}
-      />
-      {/* ON segment */}
-      <span
-        aria-hidden="true"
-        className={`flex min-w-[3rem] items-center justify-center px-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 ${
-          checked
-            ? 'bg-green-500/[0.18] text-green-400'
-            : 'bg-surface-container-low/60 text-on-surface-variant/30'
-        }`}
-      >
-        ON
-      </span>
-    </button>
+      {PRIORITY_OPTIONS.map((option) => {
+        const selected = value === option.id
+        return (
+          <button
+            key={option.id}
+            type="button"
+            role="radio"
+            aria-checked={selected}
+            disabled={disabled}
+            onClick={() => onChange(option.id)}
+            className={`rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+              selected
+                ? 'bg-primary/15 text-on-surface'
+                : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+            } ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+          >
+            {option.label}
+          </button>
+        )
+      })}
+    </div>
   )
 }
 
 function SettingsPage() {
   const [channelPrefs, setChannelPrefs] = useState<ChannelPrefs>({
-    email: true,
-    push: false,
-    sms: false,
+    email: 'highPriority',
+    push: 'dailySummary',
+    sms: 'off',
   })
 
   const [eventPrefs, setEventPrefs] = useState<EventPrefs>({
-    bestBuy: true,
-    opportunityScore: true,
-    estimatedProfit: false,
-    priceReduction: true,
-    vehicleHistory: true,
+    bestBuy: 'highPriority',
+    opportunityScore: 'dailySummary',
+    estimatedProfit: 'dailySummary',
+    priceReduction: 'highPriority',
+    vehicleHistory: 'off',
+  })
+
+  const [buyingPrefs, setBuyingPrefs] = useState<BuyingPrefs>({
+    preferredVehicleTypes: '',
+    minimumExpectedProfit: '',
+    maximumMileage: '',
+    maximumVehicleAge: '',
+    preferredSearchArea: '',
   })
 
   const [saved, setSaved] = useState(false)
 
-  function handleChannelChange(id: NotificationChannel, value: boolean) {
+  function handleChannelChange(id: NotificationChannel, value: PriorityLevel) {
     setChannelPrefs((prev) => ({ ...prev, [id]: value }))
     setSaved(false)
   }
 
-  function handleEventChange(id: NotificationEvent, value: boolean) {
+  function handleEventChange(id: NotificationEvent, value: PriorityLevel) {
     setEventPrefs((prev) => ({ ...prev, [id]: value }))
+    setSaved(false)
+  }
+
+  function handleBuyingPrefChange(id: BuyingPreferenceKey, value: string) {
+    setBuyingPrefs((prev) => ({ ...prev, [id]: value }))
     setSaved(false)
   }
 
@@ -138,7 +168,7 @@ function SettingsPage() {
         { label: 'AI Search Builder', href: '/search-builder' },
         { label: 'AI Buying Report', href: '/opportunity' },
         { label: 'Settings', isSectionLabel: true },
-        { label: 'Notification Preferences', href: '/settings', active: true },
+        { label: 'TICA Preferences', href: '/settings', active: true },
         { label: 'Future Features', isSectionLabel: true },
         { label: 'Vehicle History & MOT', disabled: true },
         { label: 'Watchlist', disabled: true },
@@ -146,36 +176,33 @@ function SettingsPage() {
       ]}
     >
       <div className="mx-auto w-full max-w-container-max space-y-8 overflow-x-hidden">
-        {/* Page header */}
         <header>
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Settings</p>
-          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">Notification Preferences</h1>
+          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">TICA Preferences</h1>
           <p className="text-body-md font-body-md text-on-surface-variant">
-            Control how and when Trade In Cars Agent alerts you to new opportunities. All notifications are currently in
-            placeholder mode — no messages will be sent until connected.
+            Teach TICA how you like to buy vehicles.
           </p>
         </header>
 
-        {/* Placeholder notice */}
         <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4">
-          <span className="mt-0.5 text-lg" aria-hidden="true">🔔</span>
+          <span className="mt-0.5 text-lg" aria-hidden="true">🧠</span>
           <div>
-            <p className="text-sm font-semibold text-on-surface">Preparing for Intelligent Notifications</p>
+            <p className="text-sm font-semibold text-on-surface">Teach mode is active</p>
             <p className="mt-0.5 text-sm text-on-surface-variant">
-              Your preferences will be saved and applied when notification services are connected. Push and SMS channels
-              are coming in a future release.
+              These controls are placeholders for now. Use them to define how TICA should prioritize opportunities and
+              where to focus your buying strategy.
             </p>
           </div>
         </div>
 
-        {/* Notification Channels */}
         <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
           <h2 className="mb-1 text-title-md font-title-md text-on-surface">Notification Channels</h2>
-          <p className="mb-5 text-sm text-on-surface-variant">Choose how you want to receive alerts.</p>
+          <p className="mb-5 text-sm text-on-surface-variant">
+            Tell TICA the urgency level for each channel.
+          </p>
 
           <div className="space-y-4">
             {CHANNELS.map((channel) => {
-              const isDisabled = channel.id !== 'email'
               return (
                 <div
                   key={channel.id}
@@ -185,7 +212,7 @@ function SettingsPage() {
                     <div className="flex flex-wrap items-center gap-2">
                       <label
                         htmlFor={`channel-${channel.id}`}
-                        className={`text-sm font-semibold ${isDisabled ? 'text-on-surface-variant/60' : 'text-on-surface'} cursor-pointer`}
+                        className="cursor-pointer text-sm font-semibold text-on-surface"
                       >
                         {channel.label}
                       </label>
@@ -195,15 +222,12 @@ function SettingsPage() {
                         </span>
                       )}
                     </div>
-                    <p className={`mt-0.5 text-xs ${isDisabled ? 'text-on-surface-variant/40' : 'text-on-surface-variant'}`}>
-                      {channel.description}
-                    </p>
+                    <p className="mt-0.5 text-xs text-on-surface-variant">{channel.description}</p>
                   </div>
-                  <RockerSwitch
+                  <PrioritySelector
                     id={`channel-${channel.id}`}
-                    checked={channelPrefs[channel.id]}
+                    value={channelPrefs[channel.id]}
                     onChange={(v) => handleChannelChange(channel.id, v)}
-                    disabled={isDisabled}
                   />
                 </div>
               )
@@ -211,10 +235,11 @@ function SettingsPage() {
           </div>
         </section>
 
-        {/* Notify me when */}
         <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
-          <h2 className="mb-1 text-title-md font-title-md text-on-surface">Notify Me When…</h2>
-          <p className="mb-5 text-sm text-on-surface-variant">Select the events that should trigger a notification.</p>
+          <h2 className="mb-1 text-title-md font-title-md text-on-surface">Opportunity Notification Rules</h2>
+          <p className="mb-5 text-sm text-on-surface-variant">
+            Set how urgently TICA should surface each signal.
+          </p>
 
           <div className="space-y-4">
             {EVENTS.map((event) => (
@@ -231,9 +256,9 @@ function SettingsPage() {
                   </label>
                   <p className="mt-0.5 text-xs text-on-surface-variant">{event.description}</p>
                 </div>
-                <RockerSwitch
+                <PrioritySelector
                   id={`event-${event.id}`}
-                  checked={eventPrefs[event.id]}
+                  value={eventPrefs[event.id]}
                   onChange={(v) => handleEventChange(event.id, v)}
                 />
               </div>
@@ -241,12 +266,36 @@ function SettingsPage() {
           </div>
         </section>
 
-        {/* Save */}
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+          <h2 className="mb-1 text-title-md font-title-md text-on-surface">Buying Preferences</h2>
+          <p className="mb-5 text-sm text-on-surface-variant">
+            Placeholder controls to shape how TICA searches and evaluates stock.
+          </p>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {BUYING_PREFERENCE_FIELDS.map((field) => (
+              <label
+                key={field.key}
+                className="space-y-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4"
+              >
+                <span className="text-sm font-semibold text-on-surface">{field.label}</span>
+                <input
+                  type={field.type ?? 'text'}
+                  value={buyingPrefs[field.key]}
+                  placeholder={field.placeholder}
+                  onChange={(event) => handleBuyingPrefChange(field.key, event.target.value)}
+                  className="w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none"
+                />
+              </label>
+            ))}
+          </div>
+        </section>
+
         <div className="flex items-center justify-between gap-4 pb-4">
           {saved ? (
             <p className="flex items-center gap-2 text-sm text-on-surface-variant">
               <span className="text-base" aria-hidden="true">✅</span>
-              Preferences saved (placeholder — no messages will be sent yet).
+              Preferences captured (placeholder only — no backend actions yet).
             </p>
           ) : (
             <p className="text-sm text-on-surface-variant/50">Unsaved changes</p>
