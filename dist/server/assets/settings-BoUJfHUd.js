@@ -38,30 +38,70 @@ const EVENTS = [{
   label: "Vehicle History issue detected",
   description: "Alert when a vehicle history check surfaces a flag or concern."
 }];
-function RockerSwitch({
-  checked,
+const PRIORITY_OPTIONS = [{
+  id: "highPriority",
+  label: "🟢 High Priority Only"
+}, {
+  id: "dailySummary",
+  label: "🟡 Daily Summary"
+}, {
+  id: "off",
+  label: "⚪ Off"
+}];
+const BUYING_PREFERENCE_FIELDS = [{
+  key: "preferredVehicleTypes",
+  label: "Preferred Vehicle Types",
+  placeholder: "e.g. Hatchback, SUV, Van"
+}, {
+  key: "minimumExpectedProfit",
+  label: "Minimum Expected Profit",
+  placeholder: "e.g. 1200",
+  type: "number"
+}, {
+  key: "maximumMileage",
+  label: "Maximum Mileage",
+  placeholder: "e.g. 90000",
+  type: "number"
+}, {
+  key: "maximumVehicleAge",
+  label: "Maximum Vehicle Age",
+  placeholder: "e.g. 8",
+  type: "number"
+}, {
+  key: "preferredSearchArea",
+  label: "Preferred Search Area",
+  placeholder: "e.g. Midlands + 80 miles"
+}];
+function PrioritySelector({
+  value,
   onChange,
   id,
   disabled
 }) {
-  return /* @__PURE__ */ jsxs("button", { type: "button", role: "switch", id, "aria-checked": checked, disabled, onClick: () => onChange(!checked), className: `inline-flex h-10 flex-shrink-0 overflow-hidden rounded-lg border transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${disabled ? "cursor-not-allowed opacity-40" : "cursor-pointer"} ${checked ? "border-green-500/40" : "border-outline-variant/40"}`, children: [
-    /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: `flex min-w-[3rem] items-center justify-center px-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 ${checked ? "bg-surface-container-low/60 text-on-surface-variant/30" : "bg-surface-container text-on-surface-variant"}`, children: "OFF" }),
-    /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: `w-px flex-shrink-0 transition-colors duration-200 ${checked ? "bg-green-500/30" : "bg-outline-variant/30"}` }),
-    /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: `flex min-w-[3rem] items-center justify-center px-3 text-[10px] font-bold uppercase tracking-widest transition-colors duration-200 ${checked ? "bg-green-500/[0.18] text-green-400" : "bg-surface-container-low/60 text-on-surface-variant/30"}`, children: "ON" })
-  ] });
+  return /* @__PURE__ */ jsx("div", { id, role: "radiogroup", "aria-disabled": disabled, className: `grid w-full max-w-[18rem] grid-cols-1 gap-1 rounded-xl border border-outline-variant/30 bg-surface-container p-1 sm:grid-cols-3 ${disabled ? "opacity-50" : ""}`, children: PRIORITY_OPTIONS.map((option) => {
+    const selected = value === option.id;
+    return /* @__PURE__ */ jsx("button", { type: "button", role: "radio", "aria-checked": selected, disabled, onClick: () => onChange(option.id), className: `rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${selected ? "bg-primary/15 text-on-surface" : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"} ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`, children: option.label }, option.id);
+  }) });
 }
 function SettingsPage() {
   const [channelPrefs, setChannelPrefs] = useState({
-    email: true,
-    push: false,
-    sms: false
+    email: "highPriority",
+    push: "dailySummary",
+    sms: "off"
   });
   const [eventPrefs, setEventPrefs] = useState({
-    bestBuy: true,
-    opportunityScore: true,
-    estimatedProfit: false,
-    priceReduction: true,
-    vehicleHistory: true
+    bestBuy: "highPriority",
+    opportunityScore: "dailySummary",
+    estimatedProfit: "dailySummary",
+    priceReduction: "highPriority",
+    vehicleHistory: "off"
+  });
+  const [buyingPrefs, setBuyingPrefs] = useState({
+    preferredVehicleTypes: "",
+    minimumExpectedProfit: "",
+    maximumMileage: "",
+    maximumVehicleAge: "",
+    preferredSearchArea: ""
   });
   const [saved, setSaved] = useState(false);
   function handleChannelChange(id, value) {
@@ -73,6 +113,13 @@ function SettingsPage() {
   }
   function handleEventChange(id, value) {
     setEventPrefs((prev) => ({
+      ...prev,
+      [id]: value
+    }));
+    setSaved(false);
+  }
+  function handleBuyingPrefChange(id, value) {
+    setBuyingPrefs((prev) => ({
       ...prev,
       [id]: value
     }));
@@ -94,7 +141,7 @@ function SettingsPage() {
     label: "Settings",
     isSectionLabel: true
   }, {
-    label: "Notification Preferences",
+    label: "TICA Preferences",
     href: "/settings",
     active: true
   }, {
@@ -112,48 +159,55 @@ function SettingsPage() {
   }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-8 overflow-x-hidden", children: [
     /* @__PURE__ */ jsxs("header", { children: [
       /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Settings" }),
-      /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "Notification Preferences" }),
-      /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Control how and when Trade In Cars Agent alerts you to new opportunities. All notifications are currently in placeholder mode — no messages will be sent until connected." })
+      /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "TICA Preferences" }),
+      /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Teach TICA how you like to buy vehicles." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4", children: [
-      /* @__PURE__ */ jsx("span", { className: "mt-0.5 text-lg", "aria-hidden": "true", children: "🔔" }),
+      /* @__PURE__ */ jsx("span", { className: "mt-0.5 text-lg", "aria-hidden": "true", children: "🧠" }),
       /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-on-surface", children: "Preparing for Intelligent Notifications" }),
-        /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-sm text-on-surface-variant", children: "Your preferences will be saved and applied when notification services are connected. Push and SMS channels are coming in a future release." })
+        /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-on-surface", children: "Teach mode is active" }),
+        /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-sm text-on-surface-variant", children: "These controls are placeholders for now. Use them to define how TICA should prioritize opportunities and where to focus your buying strategy." })
       ] })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Notification Channels" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Choose how you want to receive alerts." }),
+      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Tell TICA the urgency level for each channel." }),
       /* @__PURE__ */ jsx("div", { className: "space-y-4", children: CHANNELS.map((channel) => {
-        const isDisabled = channel.id !== "email";
         return /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
           /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
-              /* @__PURE__ */ jsx("label", { htmlFor: `channel-${channel.id}`, className: `text-sm font-semibold ${isDisabled ? "text-on-surface-variant/60" : "text-on-surface"} cursor-pointer`, children: channel.label }),
+              /* @__PURE__ */ jsx("label", { htmlFor: `channel-${channel.id}`, className: "cursor-pointer text-sm font-semibold text-on-surface", children: channel.label }),
               channel.badge && /* @__PURE__ */ jsx("span", { className: "rounded-full border border-outline-variant/30 bg-surface-container-high px-2 py-0.5 text-xs text-on-surface-variant/50", children: channel.badge })
             ] }),
-            /* @__PURE__ */ jsx("p", { className: `mt-0.5 text-xs ${isDisabled ? "text-on-surface-variant/40" : "text-on-surface-variant"}`, children: channel.description })
+            /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-xs text-on-surface-variant", children: channel.description })
           ] }),
-          /* @__PURE__ */ jsx(RockerSwitch, { id: `channel-${channel.id}`, checked: channelPrefs[channel.id], onChange: (v) => handleChannelChange(channel.id, v), disabled: isDisabled })
+          /* @__PURE__ */ jsx(PrioritySelector, { id: `channel-${channel.id}`, value: channelPrefs[channel.id], onChange: (v) => handleChannelChange(channel.id, v) })
         ] }, channel.id);
       }) })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
-      /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Notify Me When…" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Select the events that should trigger a notification." }),
+      /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Opportunity Notification Rules" }),
+      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Set how urgently TICA should surface each signal." }),
       /* @__PURE__ */ jsx("div", { className: "space-y-4", children: EVENTS.map((event) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
         /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
           /* @__PURE__ */ jsx("label", { htmlFor: `event-${event.id}`, className: "text-sm font-semibold text-on-surface cursor-pointer", children: event.label }),
           /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-xs text-on-surface-variant", children: event.description })
         ] }),
-        /* @__PURE__ */ jsx(RockerSwitch, { id: `event-${event.id}`, checked: eventPrefs[event.id], onChange: (v) => handleEventChange(event.id, v) })
+        /* @__PURE__ */ jsx(PrioritySelector, { id: `event-${event.id}`, value: eventPrefs[event.id], onChange: (v) => handleEventChange(event.id, v) })
       ] }, event.id)) })
+    ] }),
+    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+      /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Buying Preferences" }),
+      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Placeholder controls to shape how TICA searches and evaluates stock." }),
+      /* @__PURE__ */ jsx("div", { className: "grid gap-4 md:grid-cols-2", children: BUYING_PREFERENCE_FIELDS.map((field) => /* @__PURE__ */ jsxs("label", { className: "space-y-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold text-on-surface", children: field.label }),
+        /* @__PURE__ */ jsx("input", { type: field.type ?? "text", value: buyingPrefs[field.key], placeholder: field.placeholder, onChange: (event) => handleBuyingPrefChange(field.key, event.target.value), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none" })
+      ] }, field.key)) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 pb-4", children: [
       saved ? /* @__PURE__ */ jsxs("p", { className: "flex items-center gap-2 text-sm text-on-surface-variant", children: [
         /* @__PURE__ */ jsx("span", { className: "text-base", "aria-hidden": "true", children: "✅" }),
-        "Preferences saved (placeholder — no messages will be sent yet)."
+        "Preferences captured (placeholder only — no backend actions yet)."
       ] }) : /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant/50", children: "Unsaved changes" }),
       /* @__PURE__ */ jsx("button", { type: "button", onClick: handleSave, className: "rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Save Preferences" })
     ] })
