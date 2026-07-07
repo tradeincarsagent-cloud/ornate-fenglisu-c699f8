@@ -482,7 +482,7 @@ function DashboardPage() {
             ] })
           ] }, item.label)) })
         ] }),
-        /* @__PURE__ */ jsxs("article", { className: "dashboard-border mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
+        /* @__PURE__ */ jsxs("article", { className: "dashboard-border timeline-mobile-shell mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "AI Activity Timeline" }),
