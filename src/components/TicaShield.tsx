@@ -10,14 +10,17 @@ const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c7
  * The shield aligns naturally with the right edge of the page content grid.
  *
  * Blue brand glow behaviour:
- *   • Permanent soft ambient outer glow (brand blue #1493ff) — no animation.
+ *   • Stronger permanent ambient outer glow (brand blue #1493ff) — clearly visible at all times.
+ *   • Slow repeating blue pulse until the user opens the popup for the first time.
+ *   • After first open: pulse stops; steady ambient glow remains.
  *   • Hover / tap: glow brightens smoothly, certification popup fades in.
- *   • On close: returns to ambient glow.
+ *   • On close: returns to ambient (or steady, if already opened) glow.
  */
 export function TicaShield() {
   const [open, setOpen] = useState(false)
   const [popupPos, setPopupPos] = useState<{ top: number; right: number } | null>(null)
   const [isHovered, setIsHovered] = useState(false)
+  const [hasOpened, setHasOpened] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   // Compute fixed popup position from button bounding rect
@@ -33,6 +36,7 @@ export function TicaShield() {
   const handleOpen = () => {
     updatePopupPos()
     setOpen(true)
+    setHasOpened(true)
   }
 
   const handleMouseEnter = () => {
@@ -82,7 +86,11 @@ export function TicaShield() {
         className="flex flex-col items-center gap-1.5 rounded-xl p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60"
       >
         {/* Blue brand glow — wraps the shield image only */}
-        <div className={['tica-shield-glow', isHovered ? 'tica-shield-hovered' : ''].join(' ')}>
+        <div className={[
+          'tica-shield-glow',
+          !hasOpened && !isHovered ? 'tica-shield-pulsing' : '',
+          isHovered ? 'tica-shield-hovered' : '',
+        ].join(' ').trim()}>
           {/* w-14 sm:w-[4.5rem] md:w-24 — consistent size across all authenticated pages */}
           <img
             src={TICA_SHIELD_SRC}
