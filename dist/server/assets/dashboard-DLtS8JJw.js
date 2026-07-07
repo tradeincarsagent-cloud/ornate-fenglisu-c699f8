@@ -2,7 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CuGw1k3x.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-UZbbq6Mn.js";
 const missionStatusConfig = {
   Monitoring: {
     color: "rgba(74, 222, 128, 0.9)",
@@ -160,7 +160,7 @@ function DashboardPage() {
   }, {
     label: "Top Priority",
     value: featuredOpportunity.vehicle,
-    detail: "Highest estimated profit margin"
+    detail: featuredOpportunity.scoring.estimatedProfitScore.status
   }];
   const recentOpportunities = dashboardRecentOpportunities;
   const activeSearches = [{
@@ -194,7 +194,7 @@ function DashboardPage() {
     nextScan: "19 minutes",
     progress: 61
   }];
-  const recommendationEvidencePoints = ["Estimated market value is above current asking price.", "Strong dealer demand in recent comparables.", "Mileage is below average for this model year.", "Estimated resale margin is above your target.", "Recently listed with competitive pricing."];
+  const recommendationEvidencePoints = [featuredOpportunity.scoring.marketPriceScore.summary, featuredOpportunity.scoring.dealerDemandScore.summary, featuredOpportunity.scoring.mileageScore.summary, featuredOpportunity.scoring.estimatedProfitScore.summary, featuredOpportunity.scoring.timeOnMarketScore.summary];
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
   const [highlightedMission, setHighlightedMission] = useState(null);
   const [priorityContactId, setPriorityContactId] = useState(null);
@@ -527,7 +527,7 @@ function DashboardPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Confidence Score" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.confidenceDisplay })
+          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.scoring.overallOpportunityScore.displayValue })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Reason" }),
