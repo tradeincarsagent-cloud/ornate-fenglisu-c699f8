@@ -11,10 +11,10 @@ type RadarContactType = 'car' | 'pickup' | 'van' | 'motorcycle'
 
 type MissionStatus = 'Monitoring' | 'Waiting' | 'Updating'
 
-const missionStatusConfig: Record<MissionStatus, { color: string; glow: string; label: string }> = {
-  Monitoring: { color: 'rgba(74, 222, 128, 0.9)', glow: 'rgba(74, 222, 128, 0.55)', label: 'Monitoring' },
-  Waiting: { color: 'rgba(251, 191, 36, 0.88)', glow: 'rgba(251, 191, 36, 0.5)', label: 'Waiting' },
-  Updating: { color: 'rgba(56, 189, 248, 0.9)', glow: 'rgba(56, 189, 248, 0.5)', label: 'Updating' },
+const missionStatusConfig: Record<MissionStatus, { color: string; glow: string; label: string; emoji: string }> = {
+  Monitoring: { color: 'rgba(74, 222, 128, 0.9)', glow: 'rgba(74, 222, 128, 0.55)', label: 'Monitoring', emoji: '🟢' },
+  Waiting: { color: 'rgba(251, 191, 36, 0.88)', glow: 'rgba(251, 191, 36, 0.5)', label: 'Waiting', emoji: '🟡' },
+  Updating: { color: 'rgba(56, 189, 248, 0.9)', glow: 'rgba(56, 189, 248, 0.5)', label: 'Updating', emoji: '🔵' },
 }
 
 type TimelineTemplate = {
@@ -138,10 +138,50 @@ function DashboardPage() {
     { label: 'Top Priority', value: featuredOpportunity.vehicle, detail: 'Highest estimated profit margin' },
   ]
   const recentOpportunities = dashboardRecentOpportunities
-  const activeSearches: Array<{ name: string; status: MissionStatus; lastScan: string; opportunities: number }> = [
-    { name: 'BMW M3 UK Search', status: 'Monitoring', lastScan: '2 minutes ago', opportunities: 3 },
-    { name: 'SUVs under £28k', status: 'Waiting', lastScan: '11 minutes ago', opportunities: 9 },
-    { name: 'Low-mileage hybrids', status: 'Updating', lastScan: '1 minute ago', opportunities: 6 },
+  const activeSearches: Array<{
+    name: string
+    status: MissionStatus
+    lastScan: string
+    opportunities: number
+    vehicleType: string
+    searchArea: string
+    budget: string
+    nextScan: string
+    progress: number
+  }> = [
+    {
+      name: 'BMW M3 UK Search',
+      status: 'Monitoring',
+      lastScan: '2 minutes ago',
+      opportunities: 3,
+      vehicleType: 'Car',
+      searchArea: 'UK Nationwide',
+      budget: 'Up to £35,000',
+      nextScan: '13 minutes',
+      progress: 78,
+    },
+    {
+      name: 'SUVs under £28k',
+      status: 'Waiting',
+      lastScan: '11 minutes ago',
+      opportunities: 9,
+      vehicleType: 'SUV',
+      searchArea: 'South East England',
+      budget: 'Up to £28,000',
+      nextScan: '4 minutes',
+      progress: 42,
+    },
+    {
+      name: 'Low-mileage hybrids',
+      status: 'Updating',
+      lastScan: '1 minute ago',
+      opportunities: 6,
+      vehicleType: 'Hybrid / EV',
+      searchArea: 'UK Nationwide',
+      budget: 'Up to £22,000',
+      nextScan: '19 minutes',
+      progress: 61,
+    },
   ]
   const recommendationEvidencePoints = [
     'Estimated market value is above current asking price.',
@@ -745,7 +785,8 @@ function DashboardPage() {
               <div className="fixed inset-0 z-10 md:hidden" onClick={() => setOpenMoreMenu(null)} aria-hidden="true" />
             )}
             <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-              <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
+              <p className="mb-4 text-sm text-on-surface-variant">Search jobs currently being monitored by TICA.</p>
               <div className="space-y-3">
                 {activeSearches.map((search, index) => {
                   const statusCfg = missionStatusConfig[search.status]
@@ -755,20 +796,75 @@ function DashboardPage() {
                       className={`rounded-xl bg-surface-container-high p-4 transition-all ${highlightedMission === index ? 'mission-card-highlight' : ''}`}
                     >
                       {/* Desktop layout */}
-                      <div className="hidden md:grid md:grid-cols-[1fr_auto_auto_auto] md:items-center md:gap-6">
-                        <p className="text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
-                        <div className="flex items-center gap-2">
-                          <span
-                            className="mission-status-dot"
-                            style={{ background: statusCfg.color, boxShadow: `0 0 6px ${statusCfg.glow}` }}
-                          />
-                          <span className="text-sm text-on-surface-variant">{statusCfg.label}</span>
+                      <div className="hidden md:block">
+                        {/* Top row: name + action buttons */}
+                        <div className="mb-3 flex items-start justify-between gap-4">
+                          <p className="text-body-md font-body-md font-semibold text-on-surface">{search.name}</p>
+                          <div className="flex flex-shrink-0 gap-2">
+                            <button className="rounded-lg bg-primary px-4 py-1.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                              Run Now
+                            </button>
+                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-on-surface transition-colors hover:border-primary/40">
+                              Edit
+                            </button>
+                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-on-surface-variant transition-colors hover:border-primary/40">
+                              Pause
+                            </button>
+                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-red-400 transition-colors hover:border-red-400/40">
+                              Delete
+                            </button>
+                          </div>
                         </div>
-                        <p className="text-sm text-on-surface-variant">
-                          <span className="font-label-caps text-label-caps uppercase tracking-widest">Last Scan: </span>
-                          {search.lastScan}
-                        </p>
-                        <p className="text-sm font-semibold text-primary">{search.opportunities} Opportunities</p>
+                        {/* Detail grid */}
+                        <dl className="mb-3 grid grid-cols-2 gap-x-6 gap-y-2 lg:grid-cols-4">
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicle Type</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.vehicleType}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Search Area</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.searchArea}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Budget</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.budget}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Status</dt>
+                            <dd className="mt-0.5 flex items-center gap-1.5 text-sm text-on-surface">
+                              <span
+                                className="mission-status-dot flex-shrink-0"
+                                style={{ background: statusCfg.color, boxShadow: `0 0 6px ${statusCfg.glow}` }}
+                              />
+                              {statusCfg.emoji} {statusCfg.label}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Last Scan</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.lastScan}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Opportunities Found</dt>
+                            <dd className="mt-0.5 text-sm font-semibold text-primary">{search.opportunities}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Next Scan</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.nextScan}</dd>
+                          </div>
+                        </dl>
+                        {/* Progress bar */}
+                        <div>
+                          <div className="mb-1 flex items-center justify-between">
+                            <span className="text-xs uppercase tracking-widest text-on-surface-variant">Search Progress</span>
+                            <span className="text-xs font-medium text-on-surface">{search.progress}%</span>
+                          </div>
+                          <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
+                            <div
+                              className="h-full rounded-full transition-all"
+                              style={{ width: `${search.progress}%`, background: statusCfg.color, boxShadow: `0 0 4px ${statusCfg.glow}` }}
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       {/* Mobile layout: collapsible card with action buttons */}
@@ -797,26 +893,65 @@ function DashboardPage() {
                         </button>
 
                         {expandedSearches[index] && (
-                          <div className="mt-3 flex gap-2">
-                            <button className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
-                              Run Now
-                            </button>
-                            <div className="relative">
-                              <button
-                                onClick={(e) => { e.stopPropagation(); setOpenMoreMenu(openMoreMenu === index ? null : index) }}
-                                className="rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40"
-                                aria-haspopup="true"
-                                aria-expanded={openMoreMenu === index}
-                              >
-                                More
+                          <div className="mt-3 space-y-3">
+                            {/* Detail list */}
+                            <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicle Type</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{search.vehicleType}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Search Area</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{search.searchArea}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Budget</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{search.budget}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Status</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{statusCfg.emoji} {statusCfg.label}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Next Scan</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{search.nextScan}</dd>
+                              </div>
+                            </dl>
+                            {/* Progress bar */}
+                            <div>
+                              <div className="mb-1 flex items-center justify-between">
+                                <span className="text-xs uppercase tracking-widest text-on-surface-variant">Search Progress</span>
+                                <span className="text-xs font-medium text-on-surface">{search.progress}%</span>
+                              </div>
+                              <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
+                                <div
+                                  className="h-full rounded-full"
+                                  style={{ width: `${search.progress}%`, background: statusCfg.color, boxShadow: `0 0 4px ${statusCfg.glow}` }}
+                                />
+                              </div>
+                            </div>
+                            {/* Action buttons */}
+                            <div className="flex gap-2">
+                              <button className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                                Run Now
                               </button>
-                              {openMoreMenu === index && (
-                                <div className="absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg">
-                                  <button className="w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Edit</button>
-                                  <button className="w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Pause</button>
-                                  <button className="w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Delete</button>
-                                </div>
-                              )}
+                              <div className="relative">
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); setOpenMoreMenu(openMoreMenu === index ? null : index) }}
+                                  className="rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40"
+                                  aria-haspopup="true"
+                                  aria-expanded={openMoreMenu === index}
+                                >
+                                  More
+                                </button>
+                                {openMoreMenu === index && (
+                                  <div className="absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg">
+                                    <button className="w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Edit</button>
+                                    <button className="w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Pause</button>
+                                    <button className="w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Delete</button>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
                         )}
