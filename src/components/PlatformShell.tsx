@@ -96,51 +96,42 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
     return () => document.removeEventListener('keydown', handler)
   }, [])
 
-  // Lock body scroll while the mobile drawer is open.
-  // Applies overflow:hidden to <html> so no scroll-position restoration
-  // is needed when the drawer closes — avoids the position:fixed jump
-  // that previously forced a window.scrollTo call on mobile.
-  useEffect(() => {
-    if (!sidebarOpen) return
-    document.documentElement.style.overflow = 'hidden'
-    return () => {
-      document.documentElement.style.overflow = ''
-    }
-  }, [sidebarOpen])
-
   return (
-    <div className="min-h-screen bg-background text-on-surface">
-      <div
-        className={`fixed inset-0 z-40 bg-black/70 transition-opacity duration-300 lg:hidden ${sidebarOpen ? 'opacity-100 backdrop-blur-sm' : 'pointer-events-none opacity-0'}`}
-        onClick={() => setSidebarOpen(false)}
-        aria-hidden="true"
-      />
-
-      <aside
-        id="mobile-sidebar"
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
-        aria-label="Navigation menu"
-        aria-hidden={!sidebarOpen}
-      >
-        <div className="mb-6 flex items-center justify-between">
-          <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Menu</span>
-          <button
+    <div className="platform-shell bg-background text-on-surface">
+      {sidebarOpen ? (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden"
             onClick={() => setSidebarOpen(false)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high"
-            aria-label="Close menu"
-          >
-            <CloseIcon />
-          </button>
-        </div>
-        <div className="mb-8">
-          <div className="logo-bezel rounded-lg p-1">
-            <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
-          </div>
-        </div>
-        <PlatformNav items={navItems} onNavigate={() => setSidebarOpen(false)} />
-      </aside>
+            aria-hidden="true"
+          />
 
-      <div className="mx-auto flex lg:min-h-screen max-w-container-max">
+          <aside
+            id="mobile-sidebar"
+            className="platform-shell-drawer fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-6 lg:hidden"
+            aria-label="Navigation menu"
+          >
+            <div className="mb-6 flex items-center justify-between">
+              <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Menu</span>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high"
+                aria-label="Close menu"
+              >
+                <CloseIcon />
+              </button>
+            </div>
+            <div className="mb-8">
+              <div className="logo-bezel rounded-lg p-1">
+                <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
+              </div>
+            </div>
+            <PlatformNav items={navItems} onNavigate={() => setSidebarOpen(false)} />
+          </aside>
+        </>
+      ) : null}
+
+      <div className="platform-shell-layout mx-auto flex w-full max-w-container-max lg:min-h-screen">
         <aside className="hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col">
           <div className="mb-8">
             <div className="logo-bezel rounded-lg p-1">
@@ -150,8 +141,8 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
           <PlatformNav items={navItems} />
         </aside>
 
-        <div className="flex flex-1 flex-col">
-          <header className="border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
+        <div className="flex min-w-0 flex-1 flex-col">
+          <header className="platform-shell-header border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
             <div className="relative flex items-center lg:hidden">
               <div className="mx-auto logo-bezel w-44 rounded-lg p-1">
                 <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
@@ -171,8 +162,8 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
             </p>
           </header>
 
-          <main className="flex-1 px-6 py-8 md:px-10">{children}</main>
-          <footer className="border-t border-outline-variant/25 bg-surface-container-low px-6 py-4 md:px-10">
+          <main className="platform-shell-main flex-1 overflow-x-clip px-6 py-8 md:px-10">{children}</main>
+          <footer className="platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-6 py-4 md:px-10">
             <div className="mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-1">
                 <p className="text-body-sm font-body-sm text-on-surface">Trade in Cars Agent</p>
