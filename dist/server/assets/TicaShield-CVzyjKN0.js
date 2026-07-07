@@ -183,7 +183,7 @@ function TicaShield() {
     "div",
     {
       ref: containerRef,
-      className: "relative -mr-[22px] flex-shrink-0",
+      className: "relative -mr-[44px] flex-shrink-0",
       onMouseEnter: handleOpen,
       onMouseLeave: () => setOpen(false),
       children: [
@@ -191,7 +191,7 @@ function TicaShield() {
           "button",
           {
             type: "button",
-            "aria-label": "TICA Trusted Buying AI trust mark",
+            "aria-label": "TICA Certified trust mark",
             "aria-expanded": open,
             onClick: () => {
               if (!open) {
@@ -206,12 +206,12 @@ function TicaShield() {
                 "img",
                 {
                   src: TICA_SHIELD_SRC,
-                  alt: "TICA Trusted Buying AI shield",
+                  alt: "TICA Certified shield",
                   className: "h-auto w-14 sm:w-[4.5rem] md:w-24",
                   decoding: "async"
                 }
               ),
-              /* @__PURE__ */ jsx("span", { className: "text-center text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.15em] text-on-surface-variant/70", children: "Trusted AI" })
+              /* @__PURE__ */ jsx("div", { className: "flex flex-col items-center gap-0.5", children: /* @__PURE__ */ jsx("span", { className: "text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant/80", children: "TICA Certified™" }) })
             ]
           }
         ),
@@ -223,29 +223,30 @@ function TicaShield() {
             style: { top: popupPos.top, right: popupPos.right },
             className: [
               "tica-popup",
-              "fixed z-[9999] w-64",
-              "rounded-2xl border border-white/10",
-              "bg-zinc-900/85 backdrop-blur-xl",
-              "shadow-[0_12px_48px_rgba(0,0,0,0.65)]",
-              "p-6",
+              "fixed z-[9999] w-96",
+              "rounded-3xl border border-white/10",
+              "bg-zinc-900/90 backdrop-blur-xl",
+              "shadow-[0_20px_64px_rgba(0,0,0,0.75)]",
+              "p-8",
               open ? "tica-popup--visible" : "tica-popup--hidden"
             ].join(" "),
-            children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 text-center", children: [
+            children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-6 text-center", children: [
               /* @__PURE__ */ jsx(
                 "img",
                 {
                   src: TICA_SHIELD_SRC,
-                  alt: "TICA Trusted Buying AI shield",
-                  className: "h-auto w-32",
+                  alt: "TICA Certified shield",
+                  className: "h-auto w-44",
                   decoding: "async"
                 }
               ),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-1.5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-sm font-bold tracking-wide text-white", children: "🛡 TICA Trusted Buying AI" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[11px] text-zinc-400 leading-snug", children: "Certified by the TICA Decision Engine" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold text-primary/90 tracking-wide", children: "Recommends. You Decide." })
+              /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-base font-bold tracking-wide text-white", children: "🛡 TICA Certified™" }),
+                /* @__PURE__ */ jsx("p", { className: "text-[12px] text-zinc-400 leading-snug", children: "Powered by the TICA Decision Engine" }),
+                /* @__PURE__ */ jsx("p", { className: "text-[12px] font-semibold text-primary/90 tracking-wide", children: "Recommends. You Decide." })
               ] }),
-              /* @__PURE__ */ jsx("div", { className: "w-full rounded-xl border border-primary/20 bg-primary/5 px-4 py-3", children: /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "AI Certified Recommendation" }) })
+              /* @__PURE__ */ jsx("p", { className: "text-[11px] text-zinc-400 leading-relaxed", children: "Every TICA Certified recommendation has been analysed using the TICA Opportunity Intelligence Engine and TICA Decision Engine to help dealers make informed buying decisions." }),
+              /* @__PURE__ */ jsx("div", { className: "w-full rounded-2xl border border-primary/20 bg-primary/5 px-5 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "Official Trust Mark · Trade in Cars Agent" }) })
             ] })
           }
         )
