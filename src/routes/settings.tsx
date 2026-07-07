@@ -9,16 +9,17 @@ export const Route = createFileRoute('/settings')({
 type NotificationChannel = 'email' | 'push' | 'sms'
 type NotificationEvent = 'bestBuy' | 'opportunityScore' | 'estimatedProfit' | 'priceReduction' | 'vehicleHistory'
 type PriorityLevel = 'highPriority' | 'dailySummary' | 'off'
-type BuyingPreferenceKey =
-  | 'preferredVehicleTypes'
-  | 'minimumExpectedProfit'
-  | 'maximumMileage'
-  | 'maximumVehicleAge'
-  | 'preferredSearchArea'
+type DealerProfileFieldKey =
+  | 'businessName'
+  | 'country'
+  | 'preferredCurrency'
+  | 'buyingExperience'
+  | 'currentStockCapacity'
+type BuyingStyle = 'aggressiveBuyer' | 'balancedBuyer' | 'conservativeBuyer'
 
 type ChannelPrefs = Record<NotificationChannel, PriorityLevel>
 type EventPrefs = Record<NotificationEvent, PriorityLevel>
-type BuyingPrefs = Record<BuyingPreferenceKey, string>
+type DealerProfile = Record<DealerProfileFieldKey, string>
 
 const CHANNELS: Array<{ id: NotificationChannel; label: string; description: string; badge?: string }> = [
   { id: 'email', label: 'Email Notifications', description: 'Receive alerts to your registered email address.' },
@@ -55,22 +56,40 @@ const EVENTS: Array<{ id: NotificationEvent; label: string; description: string 
 ]
 
 const PRIORITY_OPTIONS: Array<{ id: PriorityLevel; label: string }> = [
-  { id: 'highPriority', label: '🟢 High Priority Only' },
+  { id: 'highPriority', label: '🟢 High Priority' },
   { id: 'dailySummary', label: '🟡 Daily Summary' },
-  { id: 'off', label: '⚪ Off' },
+  { id: 'off', label: '🔴 Off' },
 ]
 
-const BUYING_PREFERENCE_FIELDS: Array<{
-  key: BuyingPreferenceKey
+const DEALER_PROFILE_FIELDS: Array<{
+  key: DealerProfileFieldKey
   label: string
   placeholder: string
   type?: 'text' | 'number'
 }> = [
-  { key: 'preferredVehicleTypes', label: 'Preferred Vehicle Types', placeholder: 'e.g. Hatchback, SUV, Van' },
-  { key: 'minimumExpectedProfit', label: 'Minimum Expected Profit', placeholder: 'e.g. 1200', type: 'number' },
-  { key: 'maximumMileage', label: 'Maximum Mileage', placeholder: 'e.g. 90000', type: 'number' },
-  { key: 'maximumVehicleAge', label: 'Maximum Vehicle Age', placeholder: 'e.g. 8', type: 'number' },
-  { key: 'preferredSearchArea', label: 'Preferred Search Area', placeholder: 'e.g. Midlands + 80 miles' },
+  { key: 'businessName', label: 'Business Name', placeholder: 'e.g. Trade Motors UK' },
+  { key: 'country', label: 'Country', placeholder: 'e.g. United Kingdom' },
+  { key: 'preferredCurrency', label: 'Preferred Currency', placeholder: 'e.g. GBP' },
+  { key: 'buyingExperience', label: 'Buying Experience', placeholder: 'e.g. 12 years in used vehicles' },
+  { key: 'currentStockCapacity', label: 'Current Stock Capacity', placeholder: 'e.g. 85', type: 'number' },
+]
+
+const BUYING_STYLE_OPTIONS: Array<{ id: BuyingStyle; label: string; description: string }> = [
+  {
+    id: 'aggressiveBuyer',
+    label: 'Aggressive Buyer',
+    description: 'Prioritises speed and volume, accepts tighter margins to secure stock quickly.',
+  },
+  {
+    id: 'balancedBuyer',
+    label: 'Balanced Buyer',
+    description: 'Balances margin, risk, and stock turn for steady and sustainable growth.',
+  },
+  {
+    id: 'conservativeBuyer',
+    label: 'Conservative Buyer',
+    description: 'Focuses on lower-risk stock with stronger confidence and margin protection.',
+  },
 ]
 
 function PrioritySelector({
@@ -132,13 +151,14 @@ function SettingsPage() {
     vehicleHistory: 'off',
   })
 
-  const [buyingPrefs, setBuyingPrefs] = useState<BuyingPrefs>({
-    preferredVehicleTypes: '',
-    minimumExpectedProfit: '',
-    maximumMileage: '',
-    maximumVehicleAge: '',
-    preferredSearchArea: '',
+  const [dealerProfile, setDealerProfile] = useState<DealerProfile>({
+    businessName: '',
+    country: '',
+    preferredCurrency: '',
+    buyingExperience: '',
+    currentStockCapacity: '',
   })
+  const [buyingStyle, setBuyingStyle] = useState<BuyingStyle>('balancedBuyer')
 
   const [saved, setSaved] = useState(false)
 
@@ -152,8 +172,13 @@ function SettingsPage() {
     setSaved(false)
   }
 
-  function handleBuyingPrefChange(id: BuyingPreferenceKey, value: string) {
-    setBuyingPrefs((prev) => ({ ...prev, [id]: value }))
+  function handleDealerProfileChange(id: DealerProfileFieldKey, value: string) {
+    setDealerProfile((prev) => ({ ...prev, [id]: value }))
+    setSaved(false)
+  }
+
+  function handleBuyingStyleChange(value: BuyingStyle) {
+    setBuyingStyle(value)
     setSaved(false)
   }
 
@@ -267,13 +292,13 @@ function SettingsPage() {
         </section>
 
         <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
-          <h2 className="mb-1 text-title-md font-title-md text-on-surface">Buying Preferences</h2>
+          <h2 className="mb-1 text-title-md font-title-md text-on-surface">Dealer Profile</h2>
           <p className="mb-5 text-sm text-on-surface-variant">
-            Placeholder controls to shape how TICA searches and evaluates stock.
+            Placeholder fields to begin teaching TICA how your dealership buys vehicles.
           </p>
 
           <div className="grid gap-4 md:grid-cols-2">
-            {BUYING_PREFERENCE_FIELDS.map((field) => (
+            {DEALER_PROFILE_FIELDS.map((field) => (
               <label
                 key={field.key}
                 className="space-y-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4"
@@ -281,13 +306,43 @@ function SettingsPage() {
                 <span className="text-sm font-semibold text-on-surface">{field.label}</span>
                 <input
                   type={field.type ?? 'text'}
-                  value={buyingPrefs[field.key]}
+                  value={dealerProfile[field.key]}
                   placeholder={field.placeholder}
-                  onChange={(event) => handleBuyingPrefChange(field.key, event.target.value)}
+                  onChange={(event) => handleDealerProfileChange(field.key, event.target.value)}
                   className="w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none"
                 />
               </label>
             ))}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+          <h2 className="mb-1 text-title-md font-title-md text-on-surface">Buying Style</h2>
+          <p className="mb-5 text-sm text-on-surface-variant">
+            Choose one placeholder profile so TICA can learn your preferred buying posture.
+          </p>
+
+          <div role="radiogroup" aria-label="Buying Style" className="grid gap-4 md:grid-cols-3">
+            {BUYING_STYLE_OPTIONS.map((option) => {
+              const selected = buyingStyle === option.id
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  onClick={() => handleBuyingStyleChange(option.id)}
+                  className={`rounded-xl border p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                    selected
+                      ? 'border-primary/50 bg-primary/10'
+                      : 'border-outline-variant/25 bg-surface-container-high/50 hover:bg-surface-container-high'
+                  }`}
+                >
+                  <p className="text-sm font-semibold text-on-surface">{option.label}</p>
+                  <p className="mt-2 text-xs text-on-surface-variant">{option.description}</p>
+                </button>
+              )
+            })}
           </div>
         </section>
 
