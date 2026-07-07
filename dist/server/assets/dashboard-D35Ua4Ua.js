@@ -109,6 +109,23 @@ const initialTimelineEvents = [{
   time: "09:02"
 }];
 const aiStatusMessages = ["Searching UK Dealer Network…", "Scanning Auto Trader…", "Checking Dealer Websites…", "Monitoring Price Drops…", "Analysing New Listings…", "Ranking Opportunities…", "Updating Search Missions…"];
+const topOpportunityComparison = [{
+  vehicle: "BMW M3 Competition",
+  opportunityScore: 94,
+  estimatedProfit: "£4,255",
+  ticaDecision: "BUY"
+}, {
+  vehicle: "BMW M3 Competition",
+  opportunityScore: 89,
+  estimatedProfit: "£3,620",
+  ticaDecision: "REVIEW"
+}, {
+  vehicle: "BMW M3 Competition",
+  opportunityScore: 74,
+  estimatedProfit: "£1,980",
+  ticaDecision: "PASS"
+}];
+const topOpportunityReasons = ["Highest opportunity score across this comparison set.", "Strongest estimated profit among available options.", "Aligned with current BUY threshold in the TICA model."];
 const activityTimeFormatter = new Intl.DateTimeFormat("en-GB", {
   hour: "2-digit",
   minute: "2-digit",
@@ -550,6 +567,30 @@ function DashboardPage() {
         /* @__PURE__ */ jsxs("div", { className: "border-t border-outline-variant/20 pt-3", children: [
           /* @__PURE__ */ jsx("p", { className: "mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "TICA Decision" }),
           /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md font-semibold text-on-surface", children: "🟢 BUY" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
+        /* @__PURE__ */ jsx("h3", { className: "mb-4 text-body-md font-body-md font-medium text-on-surface", children: "Top Opportunity Comparison" }),
+        /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "min-w-full text-left text-sm text-on-surface", children: [
+          /* @__PURE__ */ jsx("thead", { className: "border-b border-outline-variant/30 text-xs uppercase tracking-widest text-on-surface-variant", children: /* @__PURE__ */ jsxs("tr", { children: [
+            /* @__PURE__ */ jsx("th", { className: "px-0 py-2 font-label-caps", children: "Vehicle" }),
+            /* @__PURE__ */ jsx("th", { className: "px-0 py-2 font-label-caps", children: "Opportunity Score" }),
+            /* @__PURE__ */ jsx("th", { className: "px-0 py-2 font-label-caps", children: "Estimated Profit" }),
+            /* @__PURE__ */ jsx("th", { className: "px-0 py-2 font-label-caps", children: "TICA Decision" })
+          ] }) }),
+          /* @__PURE__ */ jsx("tbody", { children: topOpportunityComparison.map((row, index) => /* @__PURE__ */ jsxs("tr", { className: "border-b border-outline-variant/20 last:border-b-0", children: [
+            /* @__PURE__ */ jsx("td", { className: "py-2 pr-3", children: row.vehicle }),
+            /* @__PURE__ */ jsx("td", { className: "py-2 pr-3", children: row.opportunityScore }),
+            /* @__PURE__ */ jsx("td", { className: "py-2 pr-3", children: row.estimatedProfit }),
+            /* @__PURE__ */ jsx("td", { className: "py-2 font-semibold", children: row.ticaDecision })
+          ] }, `${row.vehicle}-${row.opportunityScore}-${index}`)) })
+        ] }) }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-4 border-t border-outline-variant/20 pt-4", children: [
+          /* @__PURE__ */ jsx("h4", { className: "mb-2 text-sm font-semibold text-on-surface", children: "Why the top vehicle ranks first" }),
+          /* @__PURE__ */ jsx("ul", { className: "space-y-1.5 text-sm text-on-surface-variant", children: topOpportunityReasons.map((reason) => /* @__PURE__ */ jsxs("li", { children: [
+            "• ",
+            reason
+          ] }, reason)) })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4", children: [
