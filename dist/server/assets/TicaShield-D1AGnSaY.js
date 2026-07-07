@@ -1,6 +1,6 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 const LOGO_SRC = "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS";
 function HamburgerIcon() {
   return /* @__PURE__ */ jsxs("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", children: [
@@ -148,16 +148,51 @@ function PlatformShell({ children, navItems }) {
   ] });
 }
 const TICA_SHIELD_SRC = "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f";
+const FIRST_VISIT_KEY = "tica_shield_first_visit_v1";
+const PULSE_INTERVAL_MS = 2e4;
 function TicaShield() {
   const [open, setOpen] = useState(false);
   const [popupPos, setPopupPos] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [pulseClass, setPulseClass] = useState("");
   const containerRef = useRef(null);
+  const intervalRef = useRef(null);
+  const isFirstCycleRef = useRef(false);
+  const triggerPulse = useCallback((cls) => {
+    setPulseClass("");
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setPulseClass(cls));
+    });
+  }, []);
+  const startRegularCycle = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => triggerPulse("tica-shield-pulsing"), PULSE_INTERVAL_MS);
+  }, [triggerPulse]);
+  const handleGlowAnimationEnd = useCallback(() => {
+    setPulseClass("");
+    if (isFirstCycleRef.current) {
+      isFirstCycleRef.current = false;
+      startRegularCycle();
+    }
+  }, [startRegularCycle]);
+  useEffect(() => {
+    const hasVisited = localStorage.getItem(FIRST_VISIT_KEY);
+    if (!hasVisited) {
+      localStorage.setItem(FIRST_VISIT_KEY, "1");
+      isFirstCycleRef.current = true;
+      const t = setTimeout(() => triggerPulse("tica-shield-pulsing-triple"), 1500);
+      return () => clearTimeout(t);
+    }
+    startRegularCycle();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [startRegularCycle, triggerPulse]);
   const updatePopupPos = () => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     setPopupPos({
       top: rect.bottom + 8,
-      // right offset from viewport right edge
       right: window.innerWidth - rect.right
     });
   };
@@ -165,11 +200,21 @@ function TicaShield() {
     updatePopupPos();
     setOpen(true);
   };
+  const handleMouseEnter = () => {
+    setPulseClass("");
+    setIsHovered(true);
+    handleOpen();
+  };
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setOpen(false);
+  };
   useEffect(() => {
     if (!open) return;
     const handleOutside = (e) => {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
         setOpen(false);
+        setIsHovered(false);
       }
     };
     document.addEventListener("mousedown", handleOutside);
@@ -183,9 +228,9 @@ function TicaShield() {
     "div",
     {
       ref: containerRef,
-      className: "relative -mr-[44px] flex-shrink-0",
-      onMouseEnter: handleOpen,
-      onMouseLeave: () => setOpen(false),
+      className: "relative flex-shrink-0",
+      onMouseEnter: handleMouseEnter,
+      onMouseLeave: handleMouseLeave,
       children: [
         /* @__PURE__ */ jsxs(
           "button",
@@ -200,15 +245,22 @@ function TicaShield() {
                 setOpen(false);
               }
             },
-            className: "flex flex-col items-center gap-1.5 rounded-xl p-1 transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60",
+            className: "flex flex-col items-center gap-1.5 rounded-xl p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60",
             children: [
               /* @__PURE__ */ jsx(
-                "img",
+                "div",
                 {
-                  src: TICA_SHIELD_SRC,
-                  alt: "TICA Certified shield",
-                  className: "h-auto w-14 sm:w-[4.5rem] md:w-24",
-                  decoding: "async"
+                  className: ["tica-shield-glow", pulseClass, isHovered ? "tica-shield-hovered" : ""].join(" "),
+                  onAnimationEnd: handleGlowAnimationEnd,
+                  children: /* @__PURE__ */ jsx(
+                    "img",
+                    {
+                      src: TICA_SHIELD_SRC,
+                      alt: "TICA Certified shield",
+                      className: "block h-auto w-14 sm:w-[4.5rem] md:w-24",
+                      decoding: "async"
+                    }
+                  )
                 }
               ),
               /* @__PURE__ */ jsx("div", { className: "flex flex-col items-center gap-0.5", children: /* @__PURE__ */ jsx("span", { className: "text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant/80", children: "TICA Certified™" }) })
@@ -223,7 +275,7 @@ function TicaShield() {
             style: { top: popupPos.top, right: popupPos.right },
             className: [
               "tica-popup",
-              "fixed z-[9999] w-96",
+              "fixed z-[9999] w-96 md:w-[441px]",
               "rounded-3xl border border-white/10",
               "bg-zinc-900/90 backdrop-blur-xl",
               "shadow-[0_20px_64px_rgba(0,0,0,0.75)]",
