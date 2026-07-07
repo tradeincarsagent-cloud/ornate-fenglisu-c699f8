@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
+import { TicaShield } from '../components/TicaShield'
 
 export const Route = createFileRoute('/settings')({
   component: SettingsPage,
@@ -225,13 +226,14 @@ function SettingsPage() {
       <div className="mx-auto w-full max-w-container-max space-y-8 overflow-x-hidden">
         <header>
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Settings</p>
-          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">TICA Preferences</h1>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-surface-container-high/70 px-3 py-1.5">
-            <span aria-hidden="true" className="text-sm">🛡</span>
-            <div className="leading-tight">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface">TICA Trusted AI</p>
-              <p className="text-[11px] text-on-surface-variant">Dealer Always in Control.</p>
-            </div>
+          <div className="mb-3 flex items-start justify-between gap-4">
+            <h1 className="min-w-0 flex-1 text-headline-lg font-headline-lg text-on-surface">TICA Preferences</h1>
+            <TicaShield
+              className="flex shrink-0 flex-col items-center gap-2"
+              imageClassName="h-auto w-20 sm:w-24"
+              caption="Recommends. You Decide."
+              captionClassName="text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface"
+            />
           </div>
           <p className="text-body-md font-body-md text-on-surface-variant">
             Teach TICA how you like to buy vehicles.
@@ -317,6 +319,27 @@ function SettingsPage() {
                 />
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-dashed border-primary/30 bg-surface-container-low p-5 sm:p-6">
+          <div className="flex flex-col gap-4 rounded-2xl border border-outline-variant/25 bg-surface-container-high/40 p-5">
+            <div>
+              <p className="text-title-md font-title-md text-on-surface">Future Email Notifications</p>
+              <p className="mt-1 text-sm text-on-surface-variant">
+                Placeholder only — reserve this header space for notification emails.
+              </p>
+            </div>
+            <div className="max-w-sm rounded-2xl border border-outline-variant/25 bg-surface-container px-4 py-5">
+              <div className="rounded-xl border border-dashed border-primary/35 bg-primary/5 px-4 py-4 text-center">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+                  TICA shield reserved here
+                </p>
+              </div>
+              <p className="mt-4 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">
+                Today&apos;s Best Buy
+              </p>
+            </div>
           </div>
         </section>
 
