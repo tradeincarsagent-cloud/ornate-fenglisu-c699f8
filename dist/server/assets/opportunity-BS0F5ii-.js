@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-UZbbq6Mn.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CzHRShk1.js";
 import "react";
 const {
   featuredOpportunity
@@ -10,12 +10,15 @@ function ChevronRightIcon() {
   return /* @__PURE__ */ jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "9 18 15 12 9 6" }) });
 }
 function OpportunityPage() {
+  const decisionModel = featuredOpportunity.decisionModel;
+  const decisionAction = decisionModel.recommendedAction;
+  const decisionActionDisplay = decisionModel.recommendedActionDisplay;
   const keyMetrics = [{
     label: "Confidence",
     value: featuredOpportunity.confidenceDisplay
   }, {
     label: "Opportunity Score",
-    value: featuredOpportunity.scoring.overallOpportunityScore.displayValue
+    value: decisionModel.factors.overallOpportunityScore.displayValue
   }, {
     label: "Estimated Retail Value",
     value: featuredOpportunity.estimatedRetailValueDisplay
@@ -27,7 +30,7 @@ function OpportunityPage() {
     value: featuredOpportunity.demandRatingDisplay
   }];
   const vehicleInfo = featuredOpportunity.vehicleInfo;
-  const [buyingSummaryLead, buyingSummaryTail = ""] = featuredOpportunity.buyingSummary.split("BUY");
+  const [buyingSummaryLead, buyingSummaryTail = ""] = featuredOpportunity.buyingSummary.split(decisionAction);
   return /* @__PURE__ */ jsx(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
     href: "/dashboard"
@@ -86,7 +89,7 @@ function OpportunityPage() {
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-primary-container/80", children: "Verdict" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-2 text-[34px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[46px]", children: featuredOpportunity.verdictDisplay })
+            /* @__PURE__ */ jsx("p", { className: "mt-2 text-[34px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[46px]", children: decisionActionDisplay })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "w-full rounded-xl border border-outline-variant/35 bg-surface-container-high/70 px-4 py-3 text-left", children: /* @__PURE__ */ jsxs("p", { className: "text-body-xs font-body-sm leading-relaxed text-on-surface-variant", children: [
             /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#4ade80]", children: "Green" }),
@@ -132,7 +135,7 @@ function OpportunityPage() {
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-primary/40 bg-primary-container p-5 sm:p-6", children: [
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.2em] text-on-primary-container/80", children: "AI Verdict" }),
-        /* @__PURE__ */ jsx("p", { className: "mt-4 text-[56px] font-semibold leading-none text-on-primary-container sm:text-[72px]", children: featuredOpportunity.verdict })
+        /* @__PURE__ */ jsx("p", { className: "mt-4 text-[56px] font-semibold leading-none text-on-primary-container sm:text-[72px]", children: decisionAction })
       ] })
     ] }) }),
     /* @__PURE__ */ jsx("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: /* @__PURE__ */ jsx("dl", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5", children: keyMetrics.map((metric) => /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
@@ -189,7 +192,7 @@ function OpportunityPage() {
       /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "AI Buying Summary" }),
       /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-primary/30 bg-primary-container/20 px-6 py-5", children: /* @__PURE__ */ jsxs("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface-variant", children: [
         buyingSummaryLead,
-        /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: featuredOpportunity.verdict }),
+        /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: decisionAction }),
         buyingSummaryTail
       ] }) })
     ] }),

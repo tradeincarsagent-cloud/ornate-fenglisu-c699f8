@@ -17,15 +17,18 @@ function ChevronRightIcon() {
 }
 
 function OpportunityPage() {
+  const decisionModel = featuredOpportunity.decisionModel
+  const decisionAction = decisionModel.recommendedAction
+  const decisionActionDisplay = decisionModel.recommendedActionDisplay
   const keyMetrics = [
-    { label: 'Confidence', value: featuredOpportunity.confidenceDisplay },
-    { label: 'Opportunity Score', value: featuredOpportunity.scoring.overallOpportunityScore.displayValue },
-    { label: 'Estimated Retail Value', value: featuredOpportunity.estimatedRetailValueDisplay },
-    { label: 'Estimated Gross Profit', value: featuredOpportunity.estimatedGrossProfitDisplay },
-    { label: 'Demand Rating', value: featuredOpportunity.demandRatingDisplay },
+   { label: 'Confidence', value: featuredOpportunity.confidenceDisplay },
+   { label: 'Opportunity Score', value: decisionModel.factors.overallOpportunityScore.displayValue },
+   { label: 'Estimated Retail Value', value: featuredOpportunity.estimatedRetailValueDisplay },
+   { label: 'Estimated Gross Profit', value: featuredOpportunity.estimatedGrossProfitDisplay },
+   { label: 'Demand Rating', value: featuredOpportunity.demandRatingDisplay },
   ]
   const vehicleInfo = featuredOpportunity.vehicleInfo
-  const [buyingSummaryLead, buyingSummaryTail = ''] = featuredOpportunity.buyingSummary.split('BUY')
+  const [buyingSummaryLead, buyingSummaryTail = ''] = featuredOpportunity.buyingSummary.split(decisionAction)
 
   return (
     <PlatformShell
@@ -90,7 +93,7 @@ function OpportunityPage() {
               </div>
               <div>
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-primary-container/80">Verdict</p>
-                <p className="mt-2 text-[34px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[46px]">{featuredOpportunity.verdictDisplay}</p>
+                <p className="mt-2 text-[34px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[46px]">{decisionActionDisplay}</p>
               </div>
               <div className="w-full rounded-xl border border-outline-variant/35 bg-surface-container-high/70 px-4 py-3 text-left">
                 <p className="text-body-xs font-body-sm leading-relaxed text-on-surface-variant">
@@ -143,7 +146,7 @@ function OpportunityPage() {
             </div>
             <div className="rounded-2xl border border-primary/40 bg-primary-container p-5 sm:p-6">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.2em] text-on-primary-container/80">AI Verdict</p>
-              <p className="mt-4 text-[56px] font-semibold leading-none text-on-primary-container sm:text-[72px]">{featuredOpportunity.verdict}</p>
+              <p className="mt-4 text-[56px] font-semibold leading-none text-on-primary-container sm:text-[72px]">{decisionAction}</p>
             </div>
           </div>
         </section>
@@ -238,7 +241,7 @@ function OpportunityPage() {
           <div className="rounded-xl border border-primary/30 bg-primary-container/20 px-6 py-5">
             <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
               {buyingSummaryLead}
-              <span className="font-semibold text-on-surface">{featuredOpportunity.verdict}</span>
+              <span className="font-semibold text-on-surface">{decisionAction}</span>
               {buyingSummaryTail}
             </p>
           </div>
