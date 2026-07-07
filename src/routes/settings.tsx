@@ -226,6 +226,13 @@ function SettingsPage() {
         <header>
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Settings</p>
           <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">TICA Preferences</h1>
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-surface-container-high/70 px-3 py-1.5">
+            <span aria-hidden="true" className="text-sm">🛡</span>
+            <div className="leading-tight">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface">TICA Trusted AI</p>
+              <p className="text-[11px] text-on-surface-variant">Dealer Always in Control.</p>
+            </div>
+          </div>
           <p className="text-body-md font-body-md text-on-surface-variant">
             Teach TICA how you like to buy vehicles.
           </p>
@@ -441,17 +448,6 @@ function SettingsPage() {
               {profileReviewRequested && (
                 <p className="text-xs text-on-surface-variant">Placeholder only — no backend actions yet.</p>
               )}
-            </div>
-          </div>
-        </section>
-
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
-          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5">
-            <h2 className="text-title-md font-title-md text-on-surface">TICA Promise</h2>
-            <div className="mt-3 space-y-2 text-sm leading-6 text-on-surface-variant">
-              <p>TICA will never automatically purchase a vehicle.</p>
-              <p>Every recommendation is designed to help you make better buying decisions.</p>
-              <p className="font-semibold text-on-surface">You remain in complete control.</p>
             </div>
           </div>
         </section>
