@@ -561,7 +561,7 @@ function DashboardPage() {
                     </dl>
                   </section>
 
-                  <article className="dashboard-border mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+                  <article className="dashboard-border timeline-mobile-shell mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
                     <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                       <div>
                         <h3 className="text-headline-md font-headline-md text-on-surface">AI Activity Timeline</h3>
