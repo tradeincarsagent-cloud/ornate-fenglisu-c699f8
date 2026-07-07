@@ -13,7 +13,7 @@ const bmwM3CompetitionScoring = {
   }
 };
 const bmwM3DecisionModel = {
-  weightedDecisionScoreDisplay: "89 / 100",
+  weightedDecisionScore: 89,
   recommendedAction: "BUY",
   recommendedActionDisplay: "BUY NOW",
   factors: {

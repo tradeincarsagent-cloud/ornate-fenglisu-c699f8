@@ -623,7 +623,8 @@ function DashboardPage() {
 
             {/* ── AI Recommendation ────────────────────────────────────── */}
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-              <h2 className="mb-6 text-headline-md font-headline-md text-on-surface">AI Recommendation of the Day</h2>
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Today's Best Buy</h2>
+              <p className="mb-6 text-sm text-on-surface-variant">Chosen by TICA</p>
 
               {/* Mobile premium badge */}
               <div className="mb-5 md:hidden">
@@ -650,8 +651,17 @@ function DashboardPage() {
                   <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.dashboardEstimatedProfitDisplay}</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Confidence Score</p>
-                  <p className="text-body-md font-body-md text-on-surface">{decisionModel.weightedDecisionScoreDisplay}</p>
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">AI Confidence</p>
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-32 overflow-hidden rounded-full bg-surface-container-high">
+                      <div
+                        className="h-full rounded-full bg-primary"
+                        style={{ width: `${decisionModel.weightedDecisionScore}%` }}
+                      />
+                    </div>
+                    <span className="text-body-md font-body-md text-on-surface">{decisionModel.weightedDecisionScore}%</span>
+                  </div>
+                  <p className="mt-1 text-xs font-semibold text-primary">High Confidence</p>
                 </div>
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>

@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CzHRShk1.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 import "react";
 const {
   featuredOpportunity
