@@ -807,6 +807,15 @@ function DashboardPage() {
                 )}
               </div>
 
+              {/* ── What's Changed Since Last Scan ────────────────────── */}
+              <div className="mb-6 flex items-start gap-2.5 rounded-xl border border-outline-variant/20 bg-surface-container-high px-4 py-3">
+                <span className="mt-0.5 text-sm leading-none">📉</span>
+                <div className="min-w-0">
+                  <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-on-surface-variant">What's Changed Since Last Scan</p>
+                  <p className="text-xs text-on-surface-variant">Asking price reduced by £750.</p>
+                </div>
+              </div>
+
               {/* Buttons: 1-column on mobile, 2-col on sm, 4-column on md+ */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
                 <Link

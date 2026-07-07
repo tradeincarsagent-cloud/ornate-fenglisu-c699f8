@@ -666,6 +666,13 @@ function DashboardPage() {
           ] })
         ] })
       ] }),
+      /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-start gap-2.5 rounded-xl border border-outline-variant/20 bg-surface-container-high px-4 py-3", children: [
+        /* @__PURE__ */ jsx("span", { className: "mt-0.5 text-sm leading-none", children: "📉" }),
+        /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-0.5 text-xs font-semibold uppercase tracking-widest text-on-surface-variant", children: "What's Changed Since Last Scan" }),
+          /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Asking price reduced by £750." })
+        ] })
+      ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4", children: [
         /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Review Opportunity" }),
         /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("saved"), className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40", children: "Save Opportunity" }),
