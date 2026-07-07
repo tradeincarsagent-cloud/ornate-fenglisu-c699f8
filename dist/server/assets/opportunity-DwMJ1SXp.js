@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CVzyjKN0.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-D1AGnSaY.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 import "react";
 const {
