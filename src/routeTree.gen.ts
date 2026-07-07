@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SearchBuilderRouteImport } from './routes/search-builder'
 import { Route as OpportunityRouteImport } from './routes/opportunity'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SearchBuilderRoute = SearchBuilderRouteImport.update({
   id: '/search-builder',
   path: '/search-builder',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
   '/search-builder': typeof SearchBuilderRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
   '/search-builder': typeof SearchBuilderRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,25 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
   '/search-builder': typeof SearchBuilderRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/opportunity' | '/search-builder'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/opportunity'
+    | '/search-builder'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/opportunity' | '/search-builder'
-  id: '__root__' | '/' | '/dashboard' | '/opportunity' | '/search-builder'
+  to: '/' | '/dashboard' | '/opportunity' | '/search-builder' | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/opportunity'
+    | '/search-builder'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +87,18 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   OpportunityRoute: typeof OpportunityRoute
   SearchBuilderRoute: typeof SearchBuilderRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/search-builder': {
       id: '/search-builder'
       path: '/search-builder'
@@ -107,6 +135,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   OpportunityRoute: OpportunityRoute,
   SearchBuilderRoute: SearchBuilderRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

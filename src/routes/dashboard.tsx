@@ -425,10 +425,11 @@ function DashboardPage() {
         { label: 'Dealer Command Centre', href: '/dashboard', active: true },
         { label: 'AI Search Builder', href: '/search-builder' },
         { label: 'AI Buying Report', href: '/opportunity' },
+        { label: 'Settings', isSectionLabel: true },
+        { label: 'Notification Preferences', href: '/settings' },
         { label: 'Future Features', isSectionLabel: true },
         { label: 'Vehicle History & MOT', disabled: true },
         { label: 'Watchlist', disabled: true },
-        { label: 'Settings', disabled: true },
         { label: 'Subscription', disabled: true },
       ]}
     >

@@ -46,6 +46,12 @@ function SearchBuilderPage() {
     label: "AI Buying Report",
     href: "/opportunity"
   }, {
+    label: "Settings",
+    isSectionLabel: true
+  }, {
+    label: "Notification Preferences",
+    href: "/settings"
+  }, {
     label: "Future Features",
     isSectionLabel: true
   }, {
@@ -53,9 +59,6 @@ function SearchBuilderPage() {
     disabled: true
   }, {
     label: "Watchlist",
-    disabled: true
-  }, {
-    label: "Settings",
     disabled: true
   }, {
     label: "Subscription",
