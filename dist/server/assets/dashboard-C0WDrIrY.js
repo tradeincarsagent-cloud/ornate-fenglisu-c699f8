@@ -2,7 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CzHRShk1.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 const missionStatusConfig = {
   Monitoring: {
     color: "rgba(74, 222, 128, 0.9)",
@@ -525,7 +525,8 @@ function DashboardPage() {
       ] }) })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
-      /* @__PURE__ */ jsx("h2", { className: "mb-6 text-headline-md font-headline-md text-on-surface", children: "AI Recommendation of the Day" }),
+      /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Today's Best Buy" }),
+      /* @__PURE__ */ jsx("p", { className: "mb-6 text-sm text-on-surface-variant", children: "Chosen by TICA" }),
       /* @__PURE__ */ jsx("div", { className: "mb-5 md:hidden", children: /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary", children: "⭐ Today's AI Pick" }) }),
       /* @__PURE__ */ jsxs("div", { className: "mb-8 grid grid-cols-1 gap-4 md:grid-cols-2", children: [
         /* @__PURE__ */ jsxs("div", { children: [
@@ -545,8 +546,17 @@ function DashboardPage() {
           /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: featuredOpportunity.dashboardEstimatedProfitDisplay })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Confidence Score" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface", children: decisionModel.weightedDecisionScoreDisplay })
+          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Confidence" }),
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "h-2 w-32 overflow-hidden rounded-full bg-surface-container-high", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full bg-primary", style: {
+              width: `${decisionModel.weightedDecisionScore}%`
+            } }) }),
+            /* @__PURE__ */ jsxs("span", { className: "text-body-md font-body-md text-on-surface", children: [
+              decisionModel.weightedDecisionScore,
+              "%"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs font-semibold text-primary", children: "High Confidence" })
         ] }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Reason" }),
