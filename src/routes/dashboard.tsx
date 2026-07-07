@@ -161,6 +161,11 @@ function DashboardPage() {
     budget: string
     nextScan: string
     progress: number
+    vehiclesAnalysedToday: number
+    matchesRejected: number
+    qualifiedOpportunities: number
+    highestOpportunityScore: number
+    missionUpdate: string
   }> = [
     {
       name: 'BMW M3 UK Search',
@@ -172,6 +177,11 @@ function DashboardPage() {
       budget: 'Up to £35,000',
       nextScan: '13 minutes',
       progress: 78,
+      vehiclesAnalysedToday: 4821,
+      matchesRejected: 112,
+      qualifiedOpportunities: 3,
+      highestOpportunityScore: 94,
+      missionUpdate: 'One opportunity promoted to Today\'s Best Buy.',
     },
     {
       name: 'SUVs under £28k',
@@ -183,6 +193,11 @@ function DashboardPage() {
       budget: 'Up to £28,000',
       nextScan: '4 minutes',
       progress: 42,
+      vehiclesAnalysedToday: 2309,
+      matchesRejected: 87,
+      qualifiedOpportunities: 9,
+      highestOpportunityScore: 81,
+      missionUpdate: 'No new qualifying listings during the last scan.',
     },
     {
       name: 'Low-mileage hybrids',
@@ -194,6 +209,11 @@ function DashboardPage() {
       budget: 'Up to £22,000',
       nextScan: '19 minutes',
       progress: 61,
+      vehiclesAnalysedToday: 3144,
+      matchesRejected: 98,
+      qualifiedOpportunities: 6,
+      highestOpportunityScore: 76,
+      missionUpdate: 'Price reduction detected on one monitored vehicle.',
     },
   ]
   const recommendationEvidencePoints = [
@@ -930,6 +950,22 @@ function DashboardPage() {
                             <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Next Scan</dt>
                             <dd className="mt-0.5 text-sm text-on-surface">{search.nextScan}</dd>
                           </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicles Analysed Today</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Matches Rejected</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.matchesRejected}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Qualified Opportunities</dt>
+                            <dd className="mt-0.5 text-sm font-semibold text-primary">{search.qualifiedOpportunities}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Highest Opportunity Score</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.highestOpportunityScore}</dd>
+                          </div>
                         </dl>
                         {/* Progress bar */}
                         <div>
@@ -944,6 +980,10 @@ function DashboardPage() {
                             />
                           </div>
                         </div>
+                        {/* Mission Update */}
+                        <p className="mt-2.5 text-xs text-on-surface-variant/60">
+                          Mission Update — {search.missionUpdate}
+                        </p>
                       </div>
 
                       {/* Mobile layout: collapsible card with action buttons */}
@@ -995,6 +1035,22 @@ function DashboardPage() {
                                 <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Next Scan</dt>
                                 <dd className="mt-0.5 text-sm text-on-surface">{search.nextScan}</dd>
                               </div>
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicles Analysed Today</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Matches Rejected</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{search.matchesRejected}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Qualified Opportunities</dt>
+                                <dd className="mt-0.5 text-sm font-semibold text-primary">{search.qualifiedOpportunities}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Highest Opp. Score</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{search.highestOpportunityScore}</dd>
+                              </div>
                             </dl>
                             {/* Progress bar */}
                             <div>
@@ -1009,6 +1065,10 @@ function DashboardPage() {
                                 />
                               </div>
                             </div>
+                            {/* Mission Update */}
+                            <p className="text-xs text-on-surface-variant/60">
+                              Mission Update — {search.missionUpdate}
+                            </p>
                             {/* Action buttons */}
                             <div className="flex gap-2">
                               <button className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">

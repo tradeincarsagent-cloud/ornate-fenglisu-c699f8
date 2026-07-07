@@ -190,7 +190,12 @@ function DashboardPage() {
     searchArea: "UK Nationwide",
     budget: "Up to £35,000",
     nextScan: "13 minutes",
-    progress: 78
+    progress: 78,
+    vehiclesAnalysedToday: 4821,
+    matchesRejected: 112,
+    qualifiedOpportunities: 3,
+    highestOpportunityScore: 94,
+    missionUpdate: "One opportunity promoted to Today's Best Buy."
   }, {
     name: "SUVs under £28k",
     status: "Waiting",
@@ -200,7 +205,12 @@ function DashboardPage() {
     searchArea: "South East England",
     budget: "Up to £28,000",
     nextScan: "4 minutes",
-    progress: 42
+    progress: 42,
+    vehiclesAnalysedToday: 2309,
+    matchesRejected: 87,
+    qualifiedOpportunities: 9,
+    highestOpportunityScore: 81,
+    missionUpdate: "No new qualifying listings during the last scan."
   }, {
     name: "Low-mileage hybrids",
     status: "Updating",
@@ -210,7 +220,12 @@ function DashboardPage() {
     searchArea: "UK Nationwide",
     budget: "Up to £22,000",
     nextScan: "19 minutes",
-    progress: 61
+    progress: 61,
+    vehiclesAnalysedToday: 3144,
+    matchesRejected: 98,
+    qualifiedOpportunities: 6,
+    highestOpportunityScore: 76,
+    missionUpdate: "Price reduction detected on one monitored vehicle."
   }];
   const recommendationEvidencePoints = [decisionModel.factors.overallOpportunityScore.summary, decisionModel.factors.dealerDemand.summary, decisionModel.factors.estimatedProfit.summary, decisionModel.factors.timeOnMarket.summary, decisionModel.factors.vehicleHistory.summary];
   const recommendationCautionPoints = ["Vehicle history has not yet been verified.", "Service history should be confirmed.", "Seller response time is currently unknown."];
@@ -717,6 +732,22 @@ function DashboardPage() {
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Next Scan" }),
                 /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.nextScan })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicles Analysed Today" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: counterFormatter.format(search.vehiclesAnalysedToday) })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Matches Rejected" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.matchesRejected })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Qualified Opportunities" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-primary", children: search.qualifiedOpportunities })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Highest Opportunity Score" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.highestOpportunityScore })
               ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
@@ -732,6 +763,10 @@ function DashboardPage() {
                 background: statusCfg.color,
                 boxShadow: `0 0 4px ${statusCfg.glow}`
               } }) })
+            ] }),
+            /* @__PURE__ */ jsxs("p", { className: "mt-2.5 text-xs text-on-surface-variant/60", children: [
+              "Mission Update — ",
+              search.missionUpdate
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "md:hidden", children: [
@@ -782,6 +817,22 @@ function DashboardPage() {
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Next Scan" }),
                   /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.nextScan })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicles Analysed Today" }),
+                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: counterFormatter.format(search.vehiclesAnalysedToday) })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Matches Rejected" }),
+                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.matchesRejected })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Qualified Opportunities" }),
+                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-primary", children: search.qualifiedOpportunities })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Highest Opp. Score" }),
+                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.highestOpportunityScore })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
@@ -797,6 +848,10 @@ function DashboardPage() {
                   background: statusCfg.color,
                   boxShadow: `0 0 4px ${statusCfg.glow}`
                 } }) })
+              ] }),
+              /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant/60", children: [
+                "Mission Update — ",
+                search.missionUpdate
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
                 /* @__PURE__ */ jsx("button", { className: "flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),
