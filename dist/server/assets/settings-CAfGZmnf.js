@@ -83,6 +83,8 @@ const BUYING_STYLE_OPTIONS = [{
   label: "Conservative Buyer",
   description: "Focuses on lower-risk stock with stronger confidence and margin protection."
 }];
+const LEARNING_ITEMS = ["Preferred Vehicle Types", "Buying Budget", "Preferred Profit Margin", "Typical Buying Locations", "Buying Style"];
+const LEARNING_PROGRESS = 82;
 function PrioritySelector({
   value,
   onChange,
@@ -91,7 +93,7 @@ function PrioritySelector({
 }) {
   return /* @__PURE__ */ jsx("div", { id, role: "radiogroup", "aria-disabled": disabled, className: `grid w-full max-w-[18rem] grid-cols-1 gap-1 rounded-xl border border-outline-variant/30 bg-surface-container p-1 sm:grid-cols-3 ${disabled ? "opacity-50" : ""}`, children: PRIORITY_OPTIONS.map((option) => {
     const selected = value === option.id;
-    return /* @__PURE__ */ jsx("button", { type: "button", role: "radio", "aria-checked": selected, disabled, onClick: () => onChange(option.id), className: `rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${selected ? "bg-primary/15 text-on-surface" : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"} ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`, children: option.label }, option.id);
+    return /* @__PURE__ */ jsx("button", { type: "button", role: "radio", "aria-checked": selected, disabled, onClick: () => onChange(option.id), className: `rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${option.id === "off" ? selected ? "bg-red-500/15 text-red-700" : "text-red-600 hover:bg-red-500/10 hover:text-red-700" : selected ? "bg-primary/15 text-on-surface" : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"} ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`, children: option.label }, option.id);
   }) });
 }
 function SettingsPage() {
@@ -115,6 +117,7 @@ function SettingsPage() {
     currentStockCapacity: ""
   });
   const [buyingStyle, setBuyingStyle] = useState("balancedBuyer");
+  const [profileReviewRequested, setProfileReviewRequested] = useState(false);
   const [saved, setSaved] = useState(false);
   function handleChannelChange(id, value) {
     setChannelPrefs((prev) => ({
@@ -230,6 +233,30 @@ function SettingsPage() {
           /* @__PURE__ */ jsx("p", { className: "mt-2 text-xs text-on-surface-variant", children: option.description })
         ] }, option.id);
       }) })
+    ] }),
+    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+      /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "TICA Learning" }),
+      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "The more you use TICA, the better it understands your buying habits and future recommendations." }),
+      /* @__PURE__ */ jsx("div", { className: "space-y-3", children: LEARNING_ITEMS.map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-4 py-3", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-on-surface", children: item }),
+        /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold text-green-600", children: "✅ Learned" })
+      ] }, item)) }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-6 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center justify-between gap-3", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-on-surface", children: "Learning Progress" }),
+          /* @__PURE__ */ jsxs("p", { className: "text-sm font-semibold text-on-surface", children: [
+            LEARNING_PROGRESS,
+            "%"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "h-2.5 w-full overflow-hidden rounded-full bg-surface-container", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full bg-primary transition-[width]", style: {
+          width: `${LEARNING_PROGRESS}%`
+        }, "aria-label": "Learning Progress", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": LEARNING_PROGRESS }) })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-wrap items-center gap-3", children: [
+        /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setProfileReviewRequested(true), className: "rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Review My Buying Profile" }),
+        profileReviewRequested && /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Placeholder only — no backend actions yet." })
+      ] })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 pb-4", children: [
       saved ? /* @__PURE__ */ jsxs("p", { className: "flex items-center gap-2 text-sm text-on-surface-variant", children: [
