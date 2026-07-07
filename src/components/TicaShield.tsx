@@ -1,10 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f'
-const FIRST_VISIT_KEY = 'tica_shield_first_visit_v1'
-const PULSE_INTERVAL_MS = 20_000
-
-type PulseClass = '' | 'tica-shield-pulsing' | 'tica-shield-pulsing-triple'
 
 /**
  * TicaShield — TICA Certified™ official trust mark.
@@ -14,57 +10,15 @@ type PulseClass = '' | 'tica-shield-pulsing' | 'tica-shield-pulsing-triple'
  * The shield aligns naturally with the right edge of the page content grid.
  *
  * Blue brand glow behaviour:
- *   • Always-on subtle outer glow (brand blue #1493ff).
- *   • First visit: three gentle pulses, then transitions to the regular cycle.
- *   • Regular cycle: one gentle pulse every 20 seconds.
- *   • Hover: glow brightens slightly, then the certification popup fades in.
+ *   • Permanent soft ambient outer glow (brand blue #1493ff) — no animation.
+ *   • Hover / tap: glow brightens smoothly, certification popup fades in.
+ *   • On close: returns to ambient glow.
  */
 export function TicaShield() {
   const [open, setOpen] = useState(false)
   const [popupPos, setPopupPos] = useState<{ top: number; right: number } | null>(null)
   const [isHovered, setIsHovered] = useState(false)
-  const [pulseClass, setPulseClass] = useState<PulseClass>('')
   const containerRef = useRef<HTMLDivElement>(null)
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const isFirstCycleRef = useRef(false)
-
-  // Trigger a single pulse by clearing the class for one frame then re-applying it.
-  const triggerPulse = useCallback((cls: PulseClass) => {
-    setPulseClass('')
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setPulseClass(cls))
-    })
-  }, [])
-
-  const startRegularCycle = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current)
-    intervalRef.current = setInterval(() => triggerPulse('tica-shield-pulsing'), PULSE_INTERVAL_MS)
-  }, [triggerPulse])
-
-  // Called when a pulse animation finishes — starts the regular 20 s cycle after first-visit triple.
-  const handleGlowAnimationEnd = useCallback(() => {
-    setPulseClass('')
-    if (isFirstCycleRef.current) {
-      isFirstCycleRef.current = false
-      startRegularCycle()
-    }
-  }, [startRegularCycle])
-
-  // First-visit detection & pulse scheduling
-  useEffect(() => {
-    const hasVisited = localStorage.getItem(FIRST_VISIT_KEY)
-    if (!hasVisited) {
-      localStorage.setItem(FIRST_VISIT_KEY, '1')
-      isFirstCycleRef.current = true
-      // Small initial delay so the page has settled before the pulses begin
-      const t = setTimeout(() => triggerPulse('tica-shield-pulsing-triple'), 1500)
-      return () => clearTimeout(t)
-    }
-    startRegularCycle()
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    }
-  }, [startRegularCycle, triggerPulse])
 
   // Compute fixed popup position from button bounding rect
   const updatePopupPos = () => {
@@ -82,8 +36,6 @@ export function TicaShield() {
   }
 
   const handleMouseEnter = () => {
-    // Cancel any in-progress pulse so the hover glow takes over cleanly
-    setPulseClass('')
     setIsHovered(true)
     handleOpen()
   }
@@ -130,10 +82,7 @@ export function TicaShield() {
         className="flex flex-col items-center gap-1.5 rounded-xl p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60"
       >
         {/* Blue brand glow — wraps the shield image only */}
-        <div
-          className={['tica-shield-glow', pulseClass, isHovered ? 'tica-shield-hovered' : ''].join(' ')}
-          onAnimationEnd={handleGlowAnimationEnd}
-        >
+        <div className={['tica-shield-glow', isHovered ? 'tica-shield-hovered' : ''].join(' ')}>
           {/* w-14 sm:w-[4.5rem] md:w-24 — consistent size across all authenticated pages */}
           <img
             src={TICA_SHIELD_SRC}
@@ -143,7 +92,7 @@ export function TicaShield() {
           />
         </div>
         <div className="flex flex-col items-center gap-0.5">
-          <span className="text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant/80">
+          <span className="tica-certified-text text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant/80">
             TICA Certified™
           </span>
         </div>

@@ -18,35 +18,25 @@ html {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* ── TICA Shield glow & pulse ────────────────────────────────────────── */
+/* ── TICA Shield glow ────────────────────────────────────────────────── */
 
 /* Brand blue: #1493ff = rgba(20, 147, 255, …) */
-@keyframes tica-glow-pulse {
-  0%   { box-shadow: 0 0 10px 3px rgba(20, 147, 255, 0.20); }
-  50%  { box-shadow: 0 0 24px 9px rgba(20, 147, 255, 0.48); }
-  100% { box-shadow: 0 0 10px 3px rgba(20, 147, 255, 0.20); }
-}
 
-/* Always-on soft glow wrapper */
+/* Always-on permanent soft ambient glow wrapper */
 .tica-shield-glow {
   border-radius: 0.875rem;
   box-shadow: 0 0 10px 3px rgba(20, 147, 255, 0.20);
   transition: box-shadow 0.35s ease;
 }
 
-/* Hover: gently brighter before popup appears */
+/* Hover / tap: gently brighter glow before popup appears */
 .tica-shield-glow.tica-shield-hovered {
   box-shadow: 0 0 20px 7px rgba(20, 147, 255, 0.42);
 }
 
-/* Single periodic pulse (one iteration, ~2.5 s) */
-.tica-shield-pulsing {
-  animation: tica-glow-pulse 2.5s ease-in-out 1;
-}
-
-/* First-visit triple pulse (three iterations, ~7.5 s total) */
-.tica-shield-pulsing-triple {
-  animation: tica-glow-pulse 2.5s ease-in-out 3;
+/* Subtle blue text glow for "TICA Certified™" label */
+.tica-certified-text {
+  text-shadow: 0 0 8px rgba(20, 147, 255, 0.45), 0 0 2px rgba(20, 147, 255, 0.20);
 }
 
 /* ── TICA Shield popup fade animation ───────────────────────────────── */

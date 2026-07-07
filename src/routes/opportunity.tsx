@@ -45,7 +45,7 @@ function OpportunityPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max space-y-6 overflow-x-hidden">
+      <div className="mx-auto w-full max-w-container-max space-y-6">
         <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
           {/* Future exported PDF buying reports should reuse the TICA shield as the official TICA certification mark. */}
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center">

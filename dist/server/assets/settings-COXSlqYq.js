@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { useState } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-D1AGnSaY.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-Ck6DAaho.js";
 import "@tanstack/react-router";
 const CHANNELS = [{
   id: "email",
@@ -176,7 +176,7 @@ function SettingsPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-8 overflow-x-hidden", children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-8", children: [
     /* @__PURE__ */ jsxs("header", { children: [
       /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Settings" }),
       /* @__PURE__ */ jsxs("div", { className: "mb-3 flex items-start justify-between gap-4", children: [

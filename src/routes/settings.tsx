@@ -223,7 +223,7 @@ function SettingsPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max space-y-8 overflow-x-hidden">
+      <div className="mx-auto w-full max-w-container-max space-y-8">
         <header>
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Settings</p>
           <div className="mb-3 flex items-start justify-between gap-4">
