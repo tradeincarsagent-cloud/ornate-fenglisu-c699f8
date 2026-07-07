@@ -40,37 +40,48 @@ const EVENTS = [{
 }];
 const PRIORITY_OPTIONS = [{
   id: "highPriority",
-  label: "🟢 High Priority Only"
+  label: "🟢 High Priority"
 }, {
   id: "dailySummary",
   label: "🟡 Daily Summary"
 }, {
   id: "off",
-  label: "⚪ Off"
+  label: "🔴 Off"
 }];
-const BUYING_PREFERENCE_FIELDS = [{
-  key: "preferredVehicleTypes",
-  label: "Preferred Vehicle Types",
-  placeholder: "e.g. Hatchback, SUV, Van"
+const DEALER_PROFILE_FIELDS = [{
+  key: "businessName",
+  label: "Business Name",
+  placeholder: "e.g. Trade Motors UK"
 }, {
-  key: "minimumExpectedProfit",
-  label: "Minimum Expected Profit",
-  placeholder: "e.g. 1200",
+  key: "country",
+  label: "Country",
+  placeholder: "e.g. United Kingdom"
+}, {
+  key: "preferredCurrency",
+  label: "Preferred Currency",
+  placeholder: "e.g. GBP"
+}, {
+  key: "buyingExperience",
+  label: "Buying Experience",
+  placeholder: "e.g. 12 years in used vehicles"
+}, {
+  key: "currentStockCapacity",
+  label: "Current Stock Capacity",
+  placeholder: "e.g. 85",
   type: "number"
+}];
+const BUYING_STYLE_OPTIONS = [{
+  id: "aggressiveBuyer",
+  label: "Aggressive Buyer",
+  description: "Prioritises speed and volume, accepts tighter margins to secure stock quickly."
 }, {
-  key: "maximumMileage",
-  label: "Maximum Mileage",
-  placeholder: "e.g. 90000",
-  type: "number"
+  id: "balancedBuyer",
+  label: "Balanced Buyer",
+  description: "Balances margin, risk, and stock turn for steady and sustainable growth."
 }, {
-  key: "maximumVehicleAge",
-  label: "Maximum Vehicle Age",
-  placeholder: "e.g. 8",
-  type: "number"
-}, {
-  key: "preferredSearchArea",
-  label: "Preferred Search Area",
-  placeholder: "e.g. Midlands + 80 miles"
+  id: "conservativeBuyer",
+  label: "Conservative Buyer",
+  description: "Focuses on lower-risk stock with stronger confidence and margin protection."
 }];
 function PrioritySelector({
   value,
@@ -96,13 +107,14 @@ function SettingsPage() {
     priceReduction: "highPriority",
     vehicleHistory: "off"
   });
-  const [buyingPrefs, setBuyingPrefs] = useState({
-    preferredVehicleTypes: "",
-    minimumExpectedProfit: "",
-    maximumMileage: "",
-    maximumVehicleAge: "",
-    preferredSearchArea: ""
+  const [dealerProfile, setDealerProfile] = useState({
+    businessName: "",
+    country: "",
+    preferredCurrency: "",
+    buyingExperience: "",
+    currentStockCapacity: ""
   });
+  const [buyingStyle, setBuyingStyle] = useState("balancedBuyer");
   const [saved, setSaved] = useState(false);
   function handleChannelChange(id, value) {
     setChannelPrefs((prev) => ({
@@ -118,11 +130,15 @@ function SettingsPage() {
     }));
     setSaved(false);
   }
-  function handleBuyingPrefChange(id, value) {
-    setBuyingPrefs((prev) => ({
+  function handleDealerProfileChange(id, value) {
+    setDealerProfile((prev) => ({
       ...prev,
       [id]: value
     }));
+    setSaved(false);
+  }
+  function handleBuyingStyleChange(value) {
+    setBuyingStyle(value);
     setSaved(false);
   }
   function handleSave() {
@@ -197,12 +213,23 @@ function SettingsPage() {
       ] }, event.id)) })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
-      /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Buying Preferences" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Placeholder controls to shape how TICA searches and evaluates stock." }),
-      /* @__PURE__ */ jsx("div", { className: "grid gap-4 md:grid-cols-2", children: BUYING_PREFERENCE_FIELDS.map((field) => /* @__PURE__ */ jsxs("label", { className: "space-y-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
+      /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Dealer Profile" }),
+      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Placeholder fields to begin teaching TICA how your dealership buys vehicles." }),
+      /* @__PURE__ */ jsx("div", { className: "grid gap-4 md:grid-cols-2", children: DEALER_PROFILE_FIELDS.map((field) => /* @__PURE__ */ jsxs("label", { className: "space-y-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
         /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold text-on-surface", children: field.label }),
-        /* @__PURE__ */ jsx("input", { type: field.type ?? "text", value: buyingPrefs[field.key], placeholder: field.placeholder, onChange: (event) => handleBuyingPrefChange(field.key, event.target.value), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none" })
+        /* @__PURE__ */ jsx("input", { type: field.type ?? "text", value: dealerProfile[field.key], placeholder: field.placeholder, onChange: (event) => handleDealerProfileChange(field.key, event.target.value), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none" })
       ] }, field.key)) })
+    ] }),
+    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+      /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Buying Style" }),
+      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Choose one placeholder profile so TICA can learn your preferred buying posture." }),
+      /* @__PURE__ */ jsx("div", { role: "radiogroup", "aria-label": "Buying Style", className: "grid gap-4 md:grid-cols-3", children: BUYING_STYLE_OPTIONS.map((option) => {
+        const selected = buyingStyle === option.id;
+        return /* @__PURE__ */ jsxs("button", { type: "button", role: "radio", "aria-checked": selected, onClick: () => handleBuyingStyleChange(option.id), className: `rounded-xl border p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${selected ? "border-primary/50 bg-primary/10" : "border-outline-variant/25 bg-surface-container-high/50 hover:bg-surface-container-high"}`, children: [
+          /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-on-surface", children: option.label }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-xs text-on-surface-variant", children: option.description })
+        ] }, option.id);
+      }) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 pb-4", children: [
       saved ? /* @__PURE__ */ jsxs("p", { className: "flex items-center gap-2 text-sm text-on-surface-variant", children: [
