@@ -1,6 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { useState } from "react";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
+import { T as TicaShield } from "./TicaShield-DjhzFjnj.js";
 import "@tanstack/react-router";
 const CHANNELS = [{
   id: "email",
@@ -179,13 +180,9 @@ function SettingsPage() {
   }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-8 overflow-x-hidden", children: [
     /* @__PURE__ */ jsxs("header", { children: [
       /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Settings" }),
-      /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "TICA Preferences" }),
-      /* @__PURE__ */ jsxs("div", { className: "mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-surface-container-high/70 px-3 py-1.5", children: [
-        /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "text-sm", children: "🛡" }),
-        /* @__PURE__ */ jsxs("div", { className: "leading-tight", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface", children: "TICA Trusted AI" }),
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant", children: "Dealer Always in Control." })
-        ] })
+      /* @__PURE__ */ jsxs("div", { className: "mb-3 flex items-start justify-between gap-4", children: [
+        /* @__PURE__ */ jsx("h1", { className: "min-w-0 flex-1 text-headline-lg font-headline-lg text-on-surface", children: "TICA Preferences" }),
+        /* @__PURE__ */ jsx(TicaShield, {})
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Teach TICA how you like to buy vehicles." })
     ] }),
@@ -223,6 +220,16 @@ function SettingsPage() {
         /* @__PURE__ */ jsx(PrioritySelector, { id: `event-${event.id}`, value: eventPrefs[event.id], onChange: (v) => handleEventChange(event.id, v) })
       ] }, event.id)) })
     ] }),
+    /* @__PURE__ */ jsx("section", { className: "rounded-2xl border border-dashed border-primary/30 bg-surface-container-low p-5 sm:p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 rounded-2xl border border-outline-variant/25 bg-surface-container-high/40 p-5", children: [
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("p", { className: "text-title-md font-title-md text-on-surface", children: "Future Email Notifications" }),
+        /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Placeholder only — reserve this header space for notification emails." })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-sm rounded-2xl border border-outline-variant/25 bg-surface-container px-4 py-5", children: [
+        /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-dashed border-primary/35 bg-primary/5 px-4 py-4 text-center", children: /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary", children: "TICA shield reserved here" }) }),
+        /* @__PURE__ */ jsx("p", { className: "mt-4 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant", children: "Today's Best Buy" })
+      ] })
+    ] }) }),
     /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Dealer Profile" }),
       /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Placeholder fields to begin teaching TICA how your dealership buys vehicles." }),

@@ -1,6 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
+import { T as TicaShield } from "./TicaShield-DjhzFjnj.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 import "react";
 const {
@@ -73,12 +74,15 @@ function OpportunityPage() {
         /* @__PURE__ */ jsx(ChevronRightIcon, {}),
         /* @__PURE__ */ jsx("span", { className: "text-on-surface", children: "AI Buying Report" })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-1", children: [
-        /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "AI Buying Report" }),
-        /* @__PURE__ */ jsxs("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant", children: [
-          "Vehicle Opportunity ID: ",
-          /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: featuredOpportunity.id })
-        ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-3 flex items-start justify-between gap-4", children: [
+        /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
+          /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "AI Buying Report" }),
+          /* @__PURE__ */ jsxs("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant", children: [
+            "Vehicle Opportunity ID: ",
+            /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: featuredOpportunity.id })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(TicaShield, {})
       ] })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8", children: [

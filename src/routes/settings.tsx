@@ -228,12 +228,7 @@ function SettingsPage() {
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Settings</p>
           <div className="mb-3 flex items-start justify-between gap-4">
             <h1 className="min-w-0 flex-1 text-headline-lg font-headline-lg text-on-surface">TICA Preferences</h1>
-            <TicaShield
-              className="flex shrink-0 flex-col items-center gap-2"
-              imageClassName="h-auto w-20 sm:w-24"
-              caption="Recommends. You Decide."
-              captionClassName="text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface"
-            />
+            <TicaShield />
           </div>
           <p className="text-body-md font-body-md text-on-surface-variant">
             Teach TICA how you like to buy vehicles.

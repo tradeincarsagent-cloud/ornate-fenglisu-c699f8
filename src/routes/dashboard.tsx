@@ -435,7 +435,10 @@ function DashboardPage() {
       ]}
     >
       <div className="mx-auto w-full max-w-container-max overflow-x-hidden">
-            <h1 className="mb-2 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <h1 className="text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
+              <TicaShield />
+            </div>
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6">
               <div className="flex flex-col gap-6">
                 <div className="space-y-2">
@@ -646,14 +649,8 @@ function DashboardPage() {
 
             {/* ── AI Recommendation ────────────────────────────────────── */}
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-              <TicaShield
-                className="absolute right-4 top-4 flex max-w-[5rem] flex-col items-center gap-2 sm:max-w-[7rem]"
-                imageClassName="h-auto w-full"
-                caption="TICA Decision Engine Certified"
-                captionClassName="text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant"
-              />
-              <h2 className="mb-1 pr-24 text-headline-md font-headline-md text-on-surface sm:pr-32">Today's Best Buy</h2>
-              <p className="mb-6 max-w-[20rem] pr-24 text-sm text-on-surface-variant sm:pr-32">Certified by the TICA Decision Engine.</p>
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Today's Best Buy</h2>
+              <p className="mb-6 max-w-[20rem] text-sm text-on-surface-variant">Certified by the TICA Decision Engine.</p>
 
               {/* Mobile premium badge */}
               <div className="mb-5 md:hidden">
