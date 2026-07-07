@@ -1,4 +1,4 @@
-import { jsxs, jsx } from "react/jsx-runtime";
+import { jsxs, Fragment, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 const LOGO_SRC = "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS";
@@ -65,54 +65,48 @@ function PlatformShell({ children, navItems }) {
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, []);
-  useEffect(() => {
-    if (!sidebarOpen) return;
-    document.documentElement.style.overflow = "hidden";
-    return () => {
-      document.documentElement.style.overflow = "";
-    };
-  }, [sidebarOpen]);
-  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-on-surface", children: [
-    /* @__PURE__ */ jsx(
-      "div",
-      {
-        className: `fixed inset-0 z-40 bg-black/70 transition-opacity duration-300 lg:hidden ${sidebarOpen ? "opacity-100 backdrop-blur-sm" : "pointer-events-none opacity-0"}`,
-        onClick: () => setSidebarOpen(false),
-        "aria-hidden": "true"
-      }
-    ),
-    /* @__PURE__ */ jsxs(
-      "aside",
-      {
-        id: "mobile-sidebar",
-        className: `fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`,
-        "aria-label": "Navigation menu",
-        "aria-hidden": !sidebarOpen,
-        children: [
-          /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-center justify-between", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Menu" }),
-            /* @__PURE__ */ jsx(
-              "button",
-              {
-                onClick: () => setSidebarOpen(false),
-                className: "flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high",
-                "aria-label": "Close menu",
-                children: /* @__PURE__ */ jsx(CloseIcon, {})
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "mb-8", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }) }),
-          /* @__PURE__ */ jsx(PlatformNav, { items: navItems, onNavigate: () => setSidebarOpen(false) })
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto flex lg:min-h-screen max-w-container-max", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "platform-shell bg-background text-on-surface", children: [
+    sidebarOpen ? /* @__PURE__ */ jsxs(Fragment, { children: [
+      /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: "fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden",
+          onClick: () => setSidebarOpen(false),
+          "aria-hidden": "true"
+        }
+      ),
+      /* @__PURE__ */ jsxs(
+        "aside",
+        {
+          id: "mobile-sidebar",
+          className: "platform-shell-drawer fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-6 lg:hidden",
+          "aria-label": "Navigation menu",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Menu" }),
+              /* @__PURE__ */ jsx(
+                "button",
+                {
+                  onClick: () => setSidebarOpen(false),
+                  className: "flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high",
+                  "aria-label": "Close menu",
+                  children: /* @__PURE__ */ jsx(CloseIcon, {})
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "mb-8", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }) }),
+            /* @__PURE__ */ jsx(PlatformNav, { items: navItems, onNavigate: () => setSidebarOpen(false) })
+          ]
+        }
+      )
+    ] }) : null,
+    /* @__PURE__ */ jsxs("div", { className: "platform-shell-layout mx-auto flex w-full max-w-container-max lg:min-h-screen", children: [
       /* @__PURE__ */ jsxs("aside", { className: "hidden w-64 border-r border-outline-variant/25 bg-surface-container-low px-6 py-8 lg:flex lg:flex-col", children: [
         /* @__PURE__ */ jsx("div", { className: "mb-8", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }) }),
         /* @__PURE__ */ jsx(PlatformNav, { items: navItems })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-1 flex-col", children: [
-        /* @__PURE__ */ jsxs("header", { className: "border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 flex-1 flex-col", children: [
+        /* @__PURE__ */ jsxs("header", { className: "platform-shell-header border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "relative flex items-center lg:hidden", children: [
             /* @__PURE__ */ jsx("div", { className: "mx-auto logo-bezel w-44 rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }),
             /* @__PURE__ */ jsx(
@@ -129,8 +123,8 @@ function PlatformShell({ children, navItems }) {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block", children: "Trade In Cars Agent" })
         ] }),
-        /* @__PURE__ */ jsx("main", { className: "flex-1 px-6 py-8 md:px-10", children }),
-        /* @__PURE__ */ jsx("footer", { className: "border-t border-outline-variant/25 bg-surface-container-low px-6 py-4 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between", children: [
+        /* @__PURE__ */ jsx("main", { className: "platform-shell-main flex-1 overflow-x-clip px-6 py-8 md:px-10", children }),
+        /* @__PURE__ */ jsx("footer", { className: "platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-6 py-4 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between", children: [
           /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
             /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface", children: "Trade in Cars Agent" }),
             /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Version 1.0 Beta" }),

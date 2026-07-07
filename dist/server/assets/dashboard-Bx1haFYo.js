@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell } from "./PlatformShell-tmsME7-g.js";
+import { P as PlatformShell } from "./PlatformShell-skJDeqy2.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-CuGw1k3x.js";
 const missionStatusConfig = {
   Monitoring: {

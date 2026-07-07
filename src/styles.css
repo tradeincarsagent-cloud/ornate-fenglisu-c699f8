@@ -1,8 +1,17 @@
 @import "tailwindcss" source("../");
 
+:root {
+  --app-safe-area-top: env(safe-area-inset-top, 0px);
+  --app-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
 html {
+  min-height: 100%;
+  width: 100%;
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
+  scroll-padding-top: calc(var(--app-safe-area-top) + 1rem);
+  scroll-padding-bottom: calc(var(--app-safe-area-bottom) + 1rem);
 }
 
 .material-symbols-outlined {
@@ -57,7 +66,23 @@ body {
   color: #dce1fb;
   font-family: 'Inter', sans-serif;
   margin: 0;
+  min-height: 100%;
+  width: 100%;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+}
+
+body > div {
+  min-height: 100%;
+}
+
+.platform-shell {
+  min-height: 100svh;
+  overflow-x: clip;
+}
+
+.platform-shell-layout {
+  min-height: 100%;
 }
 
 .modal-overlay {
@@ -377,6 +402,28 @@ body {
 }
 
 @media (max-width: 767px) {
+  .platform-shell-header {
+    padding-top: calc(var(--app-safe-area-top) + 1rem);
+    padding-bottom: 1rem;
+  }
+
+  .platform-shell-main {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .platform-shell-footer {
+    padding-top: 1rem;
+    padding-bottom: calc(var(--app-safe-area-bottom) + 1rem);
+  }
+
+  .platform-shell-drawer {
+    padding-top: calc(var(--app-safe-area-top) + 2rem);
+    padding-bottom: calc(var(--app-safe-area-bottom) + 2rem);
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .timeline-mobile-shell {
     padding: 0;
     border: 0;
