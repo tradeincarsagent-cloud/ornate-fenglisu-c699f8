@@ -7,7 +7,7 @@ const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c7
  *
  * Shared component used on every authenticated page.
  * The popup uses position:fixed to avoid being clipped by overflow-x-hidden ancestors.
- * -mr-[44px] shifts the shield ~44 px left for visual balance with the page title.
+ * The shield aligns naturally with the right edge of the page content grid.
  *
  * Desktop hover / mobile tap opens a premium glass-effect certification card.
  */
@@ -52,8 +52,7 @@ export function TicaShield() {
   return (
     <div
       ref={containerRef}
-      /* -mr-[44px]: shifts shield ~44 px left for visual balance with the page title */
-      className="relative -mr-[44px] flex-shrink-0"
+      className="relative flex-shrink-0"
       onMouseEnter={handleOpen}
       onMouseLeave={() => setOpen(false)}
     >
@@ -92,7 +91,7 @@ export function TicaShield() {
           style={{ top: popupPos.top, right: popupPos.right }}
           className={[
             'tica-popup',
-            'fixed z-[9999] w-96',
+            'fixed z-[9999] w-96 md:w-[441px]',
             'rounded-3xl border border-white/10',
             'bg-zinc-900/90 backdrop-blur-xl',
             'shadow-[0_20px_64px_rgba(0,0,0,0.75)]',
