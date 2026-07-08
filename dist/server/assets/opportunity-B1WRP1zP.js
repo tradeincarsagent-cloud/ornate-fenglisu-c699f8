@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CN-Sc1MP.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-CotHvtbv.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 import "react";
 const {
@@ -59,7 +59,7 @@ function OpportunityPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-6", children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-5 sm:space-y-6", children: [
     /* @__PURE__ */ jsxs("header", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center", children: [
         /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Trade In Cars Agent" }) }),
@@ -73,7 +73,7 @@ function OpportunityPage() {
         /* @__PURE__ */ jsx(ChevronRightIcon, {}),
         /* @__PURE__ */ jsx("span", { className: "text-on-surface", children: "AI Buying Report" })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-3 flex items-start justify-between gap-4", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mt-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4", children: [
         /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
           /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "AI Buying Report" }),
           /* @__PURE__ */ jsxs("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant", children: [
@@ -81,7 +81,7 @@ function OpportunityPage() {
             /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: featuredOpportunity.id })
           ] })
         ] }),
-        /* @__PURE__ */ jsx(TicaShield, {})
+        /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx(TicaShield, {}) })
       ] })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8", children: [
@@ -107,7 +107,7 @@ function OpportunityPage() {
             /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#ef4444]", children: "Red" }),
             " = Pass / avoid"
           ] }) }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-1 grid w-full grid-cols-1 gap-3 sm:grid-cols-2", children: [
+          /* @__PURE__ */ jsxs("div", { className: "mt-1 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2", children: [
             /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary/30 bg-surface-container-high px-3 py-3 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Confidence" }),
               /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-lg font-semibold text-primary", children: featuredOpportunity.confidenceDisplay })
@@ -171,7 +171,7 @@ function OpportunityPage() {
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-5 text-headline-md font-headline-md text-on-surface", children: "AI Negotiation Advice" }),
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-5", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4", children: [
         /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
           /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: "Suggested Opening Offer" }),
           /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-lg font-semibold text-on-surface", children: featuredOpportunity.negotiation.openingOfferDisplay })
@@ -190,7 +190,7 @@ function OpportunityPage() {
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start gap-2", children: [
-        /* @__PURE__ */ jsx("button", { disabled: true, className: "cursor-not-allowed rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant/50 opacity-50", children: "Future Feature: Simulate Deal" }),
+        /* @__PURE__ */ jsx("button", { disabled: true, className: "min-h-11 cursor-not-allowed rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant/50 opacity-50", children: "Future Feature: Simulate Deal" }),
         /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant/60 italic", children: "Interactive deal simulation will be available in a future release." })
       ] })
     ] }),
