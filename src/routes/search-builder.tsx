@@ -72,7 +72,7 @@ function SearchBuilderPage() {
     >
       <div className="mx-auto w-full max-w-container-max">
         {/* ── Page title ──────────────────────────────────────────────── */}
-        <div className="mb-6 md:mb-10">
+        <div className="mb-5 md:mb-10">
           <div className="mb-3 flex items-start justify-between gap-4">
             <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Builder</p>
             <div className="shrink-0">
@@ -83,10 +83,10 @@ function SearchBuilderPage() {
           <p className="text-body-md font-body-md text-on-surface-variant">Configure your search criteria and let the AI find matching vehicles 24/7.</p>
         </div>
 
-        <div className="space-y-6 sm:space-y-8">
+        <div className="space-y-5 sm:space-y-8">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-6 flex items-center gap-3">
+            <div className="mb-5 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">1</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Vehicle Type</h2>
             </div>
@@ -122,7 +122,7 @@ function SearchBuilderPage() {
 
           {/* ── Section 2: Vehicle Details ───────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-6 flex items-center gap-3">
+            <div className="mb-5 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">2</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Vehicle Details</h2>
             </div>
@@ -222,7 +222,7 @@ function SearchBuilderPage() {
 
           {/* ── Section 3: Search Sources ────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-6 flex items-center gap-3">
+            <div className="mb-5 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">3</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Search Sources</h2>
             </div>
@@ -233,7 +233,7 @@ function SearchBuilderPage() {
                   {PHASE_ONE_SOURCES.map((source) => (
                     <div
                       key={source}
-                      className="flex items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-5 py-4 shadow-sm shadow-primary/5"
+                      className="flex items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-4 py-3.5 shadow-sm shadow-primary/5"
                     >
                       <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-primary bg-primary text-on-primary" aria-hidden="true">
                         <CheckIcon />
@@ -251,7 +251,7 @@ function SearchBuilderPage() {
                   {PLANNED_INTEGRATIONS.map((source) => (
                     <div
                       key={source}
-                      className="flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-5 py-4 opacity-60"
+                      className="flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-4 py-3.5 opacity-60"
                       aria-disabled="true"
                     >
                       <span
@@ -265,7 +265,7 @@ function SearchBuilderPage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-4">
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3.5">
                 <p className="text-body-md font-body-md text-on-surface-variant">
                   Trade in Cars Agent is being designed to search connected marketplaces, dealer sources and trusted public vehicle listings. Some integrations will be released in later platform phases.
                 </p>
@@ -275,7 +275,7 @@ function SearchBuilderPage() {
 
           {/* ── Section 4: Search Frequency ──────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-6 flex items-center gap-3">
+            <div className="mb-5 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">4</span>
               <h2 className="text-headline-md font-headline-md text-on-surface">Search Frequency</h2>
             </div>
@@ -314,7 +314,7 @@ function SearchBuilderPage() {
             <button
               type="button"
               onClick={() => setMissionCreated(true)}
-              className="mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+              className="mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-4 sm:py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
             >
               <span>⚡</span>
               Start AI Search Mission

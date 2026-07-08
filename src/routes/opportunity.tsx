@@ -45,8 +45,8 @@ function OpportunityPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max space-y-5 sm:space-y-6">
-        <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+      <div className="mx-auto w-full max-w-container-max space-y-4 sm:space-y-6">
+        <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
           {/* Future exported PDF buying reports should reuse the TICA shield as the official TICA certification mark. */}
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center">
             <div>
@@ -90,7 +90,7 @@ function OpportunityPage() {
           </div>
         </header>
 
-        <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Buying Verdict</h2>
           <div className="flex flex-col gap-5 lg:flex-row lg:items-stretch">
             <div className="verdict-card-premium flex flex-col items-center justify-center gap-4 rounded-2xl px-5 py-6 text-center sm:px-8 sm:py-8 lg:min-w-[320px]">
@@ -132,7 +132,7 @@ function OpportunityPage() {
                 </div>
               </div>
             </div>
-            <div className="flex min-w-0 flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-5 py-5 sm:px-6 sm:py-6">
+            <div className="flex min-w-0 flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:px-6 sm:py-6">
               <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
                 {featuredOpportunity.verdictNarrative}
               </p>
@@ -140,9 +140,9 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_0.9fr]">
-            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-5 sm:p-6">
+            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-6">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">Target Vehicle</p>
               <h2 className="mt-3 text-headline-lg font-headline-lg text-on-surface">{featuredOpportunity.vehicle}</h2>
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-body-lg font-body-lg text-on-surface">
@@ -153,14 +153,14 @@ function OpportunityPage() {
                 <img src={featuredOpportunity.heroImageSrc} alt={featuredOpportunity.heroImageAlt} className="h-auto max-h-[280px] w-full object-cover" />
               </div>
             </div>
-            <div className="verdict-card-premium rounded-2xl p-5 sm:p-6">
+            <div className="verdict-card-premium rounded-2xl p-4 sm:p-6">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.2em] text-primary/80">AI Verdict</p>
               <p className="mt-4 text-[52px] font-semibold leading-none text-on-surface sm:text-[68px]">{decisionAction}</p>
             </div>
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
             {keyMetrics.map((metric) => (
               <div key={metric.label} className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
@@ -171,14 +171,14 @@ function OpportunityPage() {
           </dl>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="text-headline-md font-headline-md text-on-surface">AI Opportunity Analysis</h2>
           <p className="mt-3 max-w-3xl text-body-md font-body-md text-on-surface-variant">
             {featuredOpportunity.analysisSummary}
           </p>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Buying Checklist</h2>
           <div className="space-y-3">
           {featuredOpportunity.checklist.map((item) => {
@@ -210,7 +210,7 @@ function OpportunityPage() {
           </p>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Negotiation Advice</h2>
           <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
@@ -245,9 +245,9 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">AI Buying Summary</h2>
-          <div className="rounded-xl border border-primary/30 bg-primary-container/20 px-6 py-5">
+          <div className="rounded-xl border border-primary/30 bg-primary-container/20 px-4 py-4 sm:px-6 sm:py-5">
             <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
               {buyingSummaryLead}
               <span className="font-semibold text-on-surface">{decisionAction}</span>
@@ -256,7 +256,7 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Vehicle Information</h2>
           <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {vehicleInfo.map((item) => (
@@ -268,13 +268,13 @@ function OpportunityPage() {
           </dl>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Vehicle History &amp; MOT Checks</h2>
           <p className="text-body-md font-body-md text-on-surface-variant">Powered by trusted vehicle data providers.</p>
           <p className="mt-2 text-body-md font-body-md text-primary">Status: Available soon.</p>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Dealer Notes</h2>
           <textarea
             placeholder="Add internal notes, call outcomes, valuation observations, and next actions..."
@@ -282,7 +282,7 @@ function OpportunityPage() {
           />
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">Actions</h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
             <button className="min-h-11 rounded-xl bg-primary px-5 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110">

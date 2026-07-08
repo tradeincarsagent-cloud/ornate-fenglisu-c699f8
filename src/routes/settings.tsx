@@ -341,7 +341,7 @@ function SettingsPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max space-y-6 sm:space-y-8">
+      <div className="mx-auto w-full max-w-container-max space-y-5 sm:space-y-8">
         <header>
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Settings</p>
           <div className="mb-3 flex items-start justify-between gap-4">
@@ -366,9 +366,9 @@ function SettingsPage() {
           </div>
         </div>
 
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
           <h2 className="mb-1 text-title-md font-title-md text-on-surface">Notification Channels</h2>
-          <p className="mb-5 text-sm text-on-surface-variant">
+          <p className="mb-4 text-sm text-on-surface-variant">
             Tell TICA the urgency level for each channel.
           </p>
 
@@ -406,9 +406,9 @@ function SettingsPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
           <h2 className="mb-1 text-title-md font-title-md text-on-surface">Opportunity Notification Rules</h2>
-          <p className="mb-5 text-sm text-on-surface-variant">
+          <p className="mb-4 text-sm text-on-surface-variant">
             Set how urgently TICA should surface each signal.
           </p>
 
@@ -437,15 +437,15 @@ function SettingsPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-dashed border-primary/30 bg-surface-container-low p-5 sm:p-6">
-          <div className="flex flex-col gap-4 rounded-2xl border border-outline-variant/25 bg-surface-container-high/40 p-5">
+        <section className="rounded-2xl border border-dashed border-primary/30 bg-surface-container-low p-4 sm:p-6">
+          <div className="flex flex-col gap-4 rounded-2xl border border-outline-variant/25 bg-surface-container-high/40 p-4 sm:p-5">
             <div>
               <p className="text-title-md font-title-md text-on-surface">Future Email Notifications</p>
               <p className="mt-1 text-sm text-on-surface-variant">
                 Placeholder only — reserve this header space for notification emails.
               </p>
             </div>
-            <div className="max-w-sm rounded-2xl border border-outline-variant/25 bg-surface-container px-4 py-5">
+            <div className="max-w-sm rounded-2xl border border-outline-variant/25 bg-surface-container px-4 py-4">
               <div className="rounded-xl border border-dashed border-primary/35 bg-primary/5 px-4 py-4 text-center">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
                   TICA shield reserved here
@@ -458,9 +458,9 @@ function SettingsPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
           <h2 className="mb-1 text-title-md font-title-md text-on-surface">Dealer Profile</h2>
-          <p className="mb-5 text-sm text-on-surface-variant">
+          <p className="mb-4 text-sm text-on-surface-variant">
             Placeholder fields to begin teaching TICA how your dealership buys vehicles.
           </p>
 
@@ -483,9 +483,9 @@ function SettingsPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
           <h2 className="mb-1 text-title-md font-title-md text-on-surface">Buying Style</h2>
-          <p className="mb-5 text-sm text-on-surface-variant">
+          <p className="mb-4 text-sm text-on-surface-variant">
             Choose one premium placeholder profile so TICA can learn your preferred buying posture.
           </p>
 
@@ -499,7 +499,7 @@ function SettingsPage() {
                   role="radio"
                   aria-checked={selected}
                   onClick={() => handleBuyingStyleChange(option.id)}
-                  className={`min-h-40 rounded-2xl border p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  className={`min-h-40 rounded-2xl border p-4 sm:p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                     selected
                       ? 'border-primary/50 bg-linear-to-br from-primary/10 via-surface-container-high to-surface-container shadow-[0_12px_32px_rgba(0,0,0,0.08)]'
                       : 'border-outline-variant/25 bg-linear-to-br from-surface-container-high/80 to-surface-container hover:border-outline-variant/40 hover:bg-surface-container-high'
@@ -528,8 +528,8 @@ function SettingsPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
-          <div className="rounded-2xl border border-primary/15 bg-linear-to-br from-primary/5 via-surface-container-high/60 to-surface-container p-5">
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
+          <div className="rounded-2xl border border-primary/15 bg-linear-to-br from-primary/5 via-surface-container-high/60 to-surface-container p-4 sm:p-5">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <h2 className="text-title-md font-title-md text-on-surface">TICA Learning</h2>
