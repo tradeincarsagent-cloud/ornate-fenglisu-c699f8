@@ -66,7 +66,7 @@ function OpportunityPage() {
     label: "Dealer Command Centre",
     href: "/dashboard"
   }, {
-    label: "AI Search Builder",
+    label: "AI Search Finder",
     href: "/search-builder"
   }, {
     label: "AI Buying Report",

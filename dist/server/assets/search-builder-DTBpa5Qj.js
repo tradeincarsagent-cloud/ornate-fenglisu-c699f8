@@ -39,7 +39,7 @@ function SearchBuilderPage() {
     label: "Dealer Command Centre",
     href: "/dashboard"
   }, {
-    label: "AI Search Builder",
+    label: "AI Search Finder",
     href: "/search-builder",
     active: true
   }, {
@@ -66,11 +66,11 @@ function SearchBuilderPage() {
   }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max", children: [
     /* @__PURE__ */ jsxs("div", { className: "mb-5 md:mb-10", children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-3 flex items-start justify-between gap-4", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Search Builder" }),
+        /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Search Finder" }),
         /* @__PURE__ */ jsx("div", { className: "shrink-0", children: /* @__PURE__ */ jsx(TicaShield, {}) })
       ] }),
-      /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "Create an AI Search in Under 60 Seconds" }),
-      /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Configure your search criteria and let the AI find matching vehicles 24/7." })
+      /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "AI Search Finder" }),
+      /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Tell TICA exactly what you'd like me to find." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8", children: [
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
