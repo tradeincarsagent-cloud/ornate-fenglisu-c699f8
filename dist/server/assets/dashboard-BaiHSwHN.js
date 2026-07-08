@@ -192,10 +192,12 @@ function DashboardPage() {
     nextScan: "13 minutes",
     progress: 78,
     vehiclesAnalysedToday: 4821,
-    matchesRejected: 112,
+    rejectedListings: 112,
     qualifiedOpportunities: 3,
-    highestOpportunityScore: 94,
-    missionUpdate: "One opportunity promoted to Today's Best Buy."
+    bestOpportunityScore: 94,
+    missionUpdate: "One opportunity promoted to Today's Best Buy.",
+    sources: ["Auto Trader UK", "Facebook Marketplace", "Motors.co.uk", "CarGurus", "Dealer Auctions", "Classic Cars"],
+    liveMessages: ["Scanning 6 marketplaces…", "Analysing new listings…", "Comparing prices…", "Checking dealer demand…"]
   }, {
     name: "SUVs under £28k",
     status: "Waiting",
@@ -207,10 +209,12 @@ function DashboardPage() {
     nextScan: "4 minutes",
     progress: 42,
     vehiclesAnalysedToday: 2309,
-    matchesRejected: 87,
+    rejectedListings: 87,
     qualifiedOpportunities: 9,
-    highestOpportunityScore: 81,
-    missionUpdate: "No new qualifying listings during the last scan."
+    bestOpportunityScore: 81,
+    missionUpdate: "No new qualifying listings during the last scan.",
+    sources: ["Auto Trader UK", "Motors.co.uk", "CarGurus", "Dealer Auctions"],
+    liveMessages: ["Checking dealer demand…", "Searching for price reductions…", "Analysing new listings…", "Scanning 4 marketplaces…"]
   }, {
     name: "Low-mileage hybrids",
     status: "Updating",
@@ -222,10 +226,12 @@ function DashboardPage() {
     nextScan: "19 minutes",
     progress: 61,
     vehiclesAnalysedToday: 3144,
-    matchesRejected: 98,
+    rejectedListings: 98,
     qualifiedOpportunities: 6,
-    highestOpportunityScore: 76,
-    missionUpdate: "Price reduction detected on one monitored vehicle."
+    bestOpportunityScore: 76,
+    missionUpdate: "Price reduction detected on one monitored vehicle.",
+    sources: ["Auto Trader UK", "Facebook Marketplace", "Motors.co.uk", "CarGurus", "Classic Cars"],
+    liveMessages: ["Scanning 5 marketplaces…", "Comparing prices…", "Checking dealer demand…", "Searching for price reductions…"]
   }];
   const recommendationEvidencePoints = [decisionModel.factors.overallOpportunityScore.summary, decisionModel.factors.dealerDemand.summary, decisionModel.factors.estimatedProfit.summary, decisionModel.factors.timeOnMarket.summary, decisionModel.factors.vehicleHistory.summary];
   const recommendationCautionPoints = ["Vehicle history has not yet been verified.", "Service history should be confirmed.", "Seller response time is currently unknown."];
@@ -248,6 +254,8 @@ function DashboardPage() {
   const [opportunityHistoryOpen, setOpportunityHistoryOpen] = useState(false);
   const [activeAiStatusMessage, setActiveAiStatusMessage] = useState(aiStatusMessages[0]);
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true);
+  const [missionMsgIndices, setMissionMsgIndices] = useState(() => activeSearches.map(() => 0));
+  const [missionMsgVisible, setMissionMsgVisible] = useState(() => activeSearches.map(() => true));
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
     if (!aiSearchLive) return;
@@ -376,6 +384,32 @@ function DashboardPage() {
       if (fadeTimeoutId !== null) {
         window.clearTimeout(fadeTimeoutId);
       }
+    };
+  }, [aiSearchLive]);
+  useEffect(() => {
+    if (!aiSearchLive) {
+      setMissionMsgVisible(activeSearches.map(() => true));
+      return;
+    }
+    const fadeMs = 220;
+    const intervalMs = 4500;
+    const staggerMs = 1400;
+    const fadeTimeoutIds = activeSearches.map(() => null);
+    const intervalIds = activeSearches.map((_, i) => {
+      return window.setInterval(() => {
+        setMissionMsgVisible((prev) => prev.map((v, j) => j === i ? false : v));
+        if (fadeTimeoutIds[i] !== null) window.clearTimeout(fadeTimeoutIds[i]);
+        fadeTimeoutIds[i] = window.setTimeout(() => {
+          setMissionMsgIndices((prev) => prev.map((idx, j) => j === i ? (idx + 1) % activeSearches[i].liveMessages.length : idx));
+          setMissionMsgVisible((prev) => prev.map((v, j) => j === i ? true : v));
+        }, fadeMs);
+      }, intervalMs + i * staggerMs);
+    });
+    return () => {
+      intervalIds.forEach((id) => window.clearInterval(id));
+      fadeTimeoutIds.forEach((id) => {
+        if (id !== null) window.clearTimeout(id);
+      });
     };
   }, [aiSearchLive]);
   const toggleSearch = (index) => {
@@ -792,17 +826,21 @@ function DashboardPage() {
                 /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: counterFormatter.format(search.vehiclesAnalysedToday) })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Matches Rejected" }),
-                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.matchesRejected })
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Rejected Listings" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.rejectedListings })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Qualified Opportunities" }),
                 /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-primary", children: search.qualifiedOpportunities })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Highest Opportunity Score" }),
-                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.highestOpportunityScore })
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Today's Best Opportunity Score" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.bestOpportunityScore })
               ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mb-3", children: [
+              /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant", children: "Sources Being Scanned" }),
+              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: search.sources.map((src) => /* @__PURE__ */ jsx("span", { className: "rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant", children: src }, src)) })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsxs("div", { className: "mb-1 flex items-center justify-between", children: [
@@ -821,6 +859,13 @@ function DashboardPage() {
             /* @__PURE__ */ jsxs("p", { className: "mt-2.5 text-xs text-on-surface-variant/60", children: [
               "Mission Update — ",
               search.missionUpdate
+            ] }),
+            /* @__PURE__ */ jsxs("p", { className: "mt-1 text-xs font-medium text-primary/75", style: {
+              opacity: missionMsgVisible[index] ? 1 : 0,
+              transition: "opacity 0.22s ease"
+            }, children: [
+              "⚡ ",
+              search.liveMessages[missionMsgIndices[index]]
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "md:hidden", children: [
@@ -877,17 +922,21 @@ function DashboardPage() {
                   /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: counterFormatter.format(search.vehiclesAnalysedToday) })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Matches Rejected" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.matchesRejected })
+                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Rejected Listings" }),
+                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.rejectedListings })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Qualified Opportunities" }),
                   /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-primary", children: search.qualifiedOpportunities })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Highest Opp. Score" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.highestOpportunityScore })
+                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Today's Best Opp. Score" }),
+                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.bestOpportunityScore })
                 ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant", children: "Sources Being Scanned" }),
+                /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: search.sources.map((src) => /* @__PURE__ */ jsx("span", { className: "rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant", children: src }, src)) })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsxs("div", { className: "mb-1 flex items-center justify-between", children: [
@@ -906,6 +955,13 @@ function DashboardPage() {
               /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant/60", children: [
                 "Mission Update — ",
                 search.missionUpdate
+              ] }),
+              /* @__PURE__ */ jsxs("p", { className: "text-xs font-medium text-primary/75", style: {
+                opacity: missionMsgVisible[index] ? 1 : 0,
+                transition: "opacity 0.22s ease"
+              }, children: [
+                "⚡ ",
+                search.liveMessages[missionMsgIndices[index]]
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
                 /* @__PURE__ */ jsx("button", { className: "flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),

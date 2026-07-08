@@ -163,10 +163,12 @@ function DashboardPage() {
     nextScan: string
     progress: number
     vehiclesAnalysedToday: number
-    matchesRejected: number
+    rejectedListings: number
     qualifiedOpportunities: number
-    highestOpportunityScore: number
+    bestOpportunityScore: number
     missionUpdate: string
+    sources: string[]
+    liveMessages: string[]
   }> = [
     {
       name: 'BMW M3 UK Search',
@@ -179,10 +181,12 @@ function DashboardPage() {
       nextScan: '13 minutes',
       progress: 78,
       vehiclesAnalysedToday: 4821,
-      matchesRejected: 112,
+      rejectedListings: 112,
       qualifiedOpportunities: 3,
-      highestOpportunityScore: 94,
+      bestOpportunityScore: 94,
       missionUpdate: 'One opportunity promoted to Today\'s Best Buy.',
+      sources: ['Auto Trader UK', 'Facebook Marketplace', 'Motors.co.uk', 'CarGurus', 'Dealer Auctions', 'Classic Cars'],
+      liveMessages: ['Scanning 6 marketplaces…', 'Analysing new listings…', 'Comparing prices…', 'Checking dealer demand…'],
     },
     {
       name: 'SUVs under £28k',
@@ -195,10 +199,12 @@ function DashboardPage() {
       nextScan: '4 minutes',
       progress: 42,
       vehiclesAnalysedToday: 2309,
-      matchesRejected: 87,
+      rejectedListings: 87,
       qualifiedOpportunities: 9,
-      highestOpportunityScore: 81,
+      bestOpportunityScore: 81,
       missionUpdate: 'No new qualifying listings during the last scan.',
+      sources: ['Auto Trader UK', 'Motors.co.uk', 'CarGurus', 'Dealer Auctions'],
+      liveMessages: ['Checking dealer demand…', 'Searching for price reductions…', 'Analysing new listings…', 'Scanning 4 marketplaces…'],
     },
     {
       name: 'Low-mileage hybrids',
@@ -211,10 +217,12 @@ function DashboardPage() {
       nextScan: '19 minutes',
       progress: 61,
       vehiclesAnalysedToday: 3144,
-      matchesRejected: 98,
+      rejectedListings: 98,
       qualifiedOpportunities: 6,
-      highestOpportunityScore: 76,
+      bestOpportunityScore: 76,
       missionUpdate: 'Price reduction detected on one monitored vehicle.',
+      sources: ['Auto Trader UK', 'Facebook Marketplace', 'Motors.co.uk', 'CarGurus', 'Classic Cars'],
+      liveMessages: ['Scanning 5 marketplaces…', 'Comparing prices…', 'Checking dealer demand…', 'Searching for price reductions…'],
     },
   ]
   const recommendationEvidencePoints = [
@@ -251,6 +259,8 @@ function DashboardPage() {
   const [opportunityHistoryOpen, setOpportunityHistoryOpen] = useState(false)
   const [activeAiStatusMessage, setActiveAiStatusMessage] = useState(aiStatusMessages[0])
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true)
+  const [missionMsgIndices, setMissionMsgIndices] = useState<number[]>(() => activeSearches.map(() => 0))
+  const [missionMsgVisible, setMissionMsgVisible] = useState<boolean[]>(() => activeSearches.map(() => true))
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
 
@@ -403,6 +413,34 @@ function DashboardPage() {
       if (fadeTimeoutId !== null) {
         window.clearTimeout(fadeTimeoutId)
       }
+    }
+  }, [aiSearchLive])
+
+  useEffect(() => {
+    if (!aiSearchLive) {
+      setMissionMsgVisible(activeSearches.map(() => true))
+      return
+    }
+
+    const fadeMs = 220
+    const intervalMs = 4500
+    const staggerMs = 1400
+    const fadeTimeoutIds: (number | null)[] = activeSearches.map(() => null)
+
+    const intervalIds = activeSearches.map((_, i) => {
+      return window.setInterval(() => {
+        setMissionMsgVisible((prev) => prev.map((v, j) => (j === i ? false : v)))
+        if (fadeTimeoutIds[i] !== null) window.clearTimeout(fadeTimeoutIds[i]!)
+        fadeTimeoutIds[i] = window.setTimeout(() => {
+          setMissionMsgIndices((prev) => prev.map((idx, j) => (j === i ? (idx + 1) % activeSearches[i].liveMessages.length : idx)))
+          setMissionMsgVisible((prev) => prev.map((v, j) => (j === i ? true : v)))
+        }, fadeMs)
+      }, intervalMs + i * staggerMs)
+    })
+
+    return () => {
+      intervalIds.forEach((id) => window.clearInterval(id))
+      fadeTimeoutIds.forEach((id) => { if (id !== null) window.clearTimeout(id) })
     }
   }, [aiSearchLive])
 
@@ -1025,18 +1063,29 @@ function DashboardPage() {
                             <dd className="mt-0.5 text-sm text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
                           </div>
                           <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Matches Rejected</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.matchesRejected}</dd>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Rejected Listings</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.rejectedListings}</dd>
                           </div>
                           <div>
                             <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Qualified Opportunities</dt>
                             <dd className="mt-0.5 text-sm font-semibold text-primary">{search.qualifiedOpportunities}</dd>
                           </div>
                           <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Highest Opportunity Score</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.highestOpportunityScore}</dd>
+                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Today's Best Opportunity Score</dt>
+                            <dd className="mt-0.5 text-sm text-on-surface">{search.bestOpportunityScore}</dd>
                           </div>
                         </dl>
+                        {/* Sources Being Scanned */}
+                        <div className="mb-3">
+                          <p className="mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant">Sources Being Scanned</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {search.sources.map((src) => (
+                              <span key={src} className="rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant">
+                                {src}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                         {/* Progress bar */}
                         <div>
                           <div className="mb-1 flex items-center justify-between">
@@ -1053,6 +1102,13 @@ function DashboardPage() {
                         {/* Mission Update */}
                         <p className="mt-2.5 text-xs text-on-surface-variant/60">
                           Mission Update — {search.missionUpdate}
+                        </p>
+                        {/* Live mission message */}
+                        <p
+                          className="mt-1 text-xs font-medium text-primary/75"
+                          style={{ opacity: missionMsgVisible[index] ? 1 : 0, transition: 'opacity 0.22s ease' }}
+                        >
+                          ⚡ {search.liveMessages[missionMsgIndices[index]]}
                         </p>
                       </div>
 
@@ -1110,18 +1166,29 @@ function DashboardPage() {
                                 <dd className="mt-0.5 text-sm text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
                               </div>
                               <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Matches Rejected</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.matchesRejected}</dd>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Rejected Listings</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{search.rejectedListings}</dd>
                               </div>
                               <div>
                                 <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Qualified Opportunities</dt>
                                 <dd className="mt-0.5 text-sm font-semibold text-primary">{search.qualifiedOpportunities}</dd>
                               </div>
                               <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Highest Opp. Score</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.highestOpportunityScore}</dd>
+                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Today's Best Opp. Score</dt>
+                                <dd className="mt-0.5 text-sm text-on-surface">{search.bestOpportunityScore}</dd>
                               </div>
                             </dl>
+                            {/* Sources Being Scanned */}
+                            <div>
+                              <p className="mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant">Sources Being Scanned</p>
+                              <div className="flex flex-wrap gap-1.5">
+                                {search.sources.map((src) => (
+                                  <span key={src} className="rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant">
+                                    {src}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
                             {/* Progress bar */}
                             <div>
                               <div className="mb-1 flex items-center justify-between">
@@ -1138,6 +1205,13 @@ function DashboardPage() {
                             {/* Mission Update */}
                             <p className="text-xs text-on-surface-variant/60">
                               Mission Update — {search.missionUpdate}
+                            </p>
+                            {/* Live mission message */}
+                            <p
+                              className="text-xs font-medium text-primary/75"
+                              style={{ opacity: missionMsgVisible[index] ? 1 : 0, transition: 'opacity 0.22s ease' }}
+                            >
+                              ⚡ {search.liveMessages[missionMsgIndices[index]]}
                             </p>
                             {/* Action buttons */}
                             <div className="flex gap-2">
