@@ -60,7 +60,7 @@ function SearchBuilderPage() {
     <PlatformShell
       navItems={[
         { label: 'Dealer Command Centre', href: '/dashboard' },
-        { label: 'AI Search Builder', href: '/search-builder', active: true },
+        { label: 'AI Search Finder', href: '/search-builder', active: true },
         { label: 'AI Buying Report', href: '/opportunity' },
         { label: 'Settings', isSectionLabel: true },
         { label: 'Notification Preferences', href: '/settings' },
@@ -74,7 +74,7 @@ function SearchBuilderPage() {
         {/* ── Page title ──────────────────────────────────────────────── */}
         <div className="mb-5 md:mb-10">
           <div className="mb-3 flex items-start justify-between gap-4">
-            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Builder</p>
+            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Finder</p>
             <div className="shrink-0">
               <TicaShield />
             </div>

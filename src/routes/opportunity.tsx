@@ -53,7 +53,7 @@ function OpportunityPage() {
     <PlatformShell
       navItems={[
         { label: 'Dealer Command Centre', href: '/dashboard' },
-        { label: 'AI Search Builder', href: '/search-builder' },
+        { label: 'AI Search Finder', href: '/search-builder' },
         { label: 'AI Buying Report', href: '/opportunity', active: true },
         { label: 'Settings', isSectionLabel: true },
         { label: 'Notification Preferences', href: '/settings' },

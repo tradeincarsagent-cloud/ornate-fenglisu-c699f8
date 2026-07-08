@@ -466,7 +466,7 @@ function DashboardPage() {
     href: "/dashboard",
     active: true
   }, {
-    label: "AI Search Builder",
+    label: "AI Search Finder",
     href: "/search-builder"
   }, {
     label: "AI Buying Report",

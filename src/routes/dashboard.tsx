@@ -488,7 +488,7 @@ function DashboardPage() {
     <PlatformShell
       navItems={[
         { label: 'Dealer Command Centre', href: '/dashboard', active: true },
-        { label: 'AI Search Builder', href: '/search-builder' },
+        { label: 'AI Search Finder', href: '/search-builder' },
         { label: 'AI Buying Report', href: '/opportunity' },
         { label: 'Settings', isSectionLabel: true },
         { label: 'Notification Preferences', href: '/settings' },
