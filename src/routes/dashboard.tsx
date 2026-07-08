@@ -90,13 +90,21 @@ const initialTimelineEvents: TimelineEvent[] = [
 ]
 
 const aiStatusMessages = [
-  'Searching UK Dealer Network…',
-  'Scanning Auto Trader…',
-  'Checking Dealer Websites…',
-  'Monitoring Price Drops…',
-  'Analysing New Listings…',
-  'Ranking Opportunities…',
-  'Updating Search Missions…',
+  'Scanning marketplaces…',
+  'Comparing market prices…',
+  'Checking dealer demand…',
+  'Reviewing overnight auctions…',
+  'Analysing new listings…',
+  'Monitoring watched vehicles…',
+  'Ranking opportunities…',
+]
+
+const greetingSummaries = [
+  'TICA analysed 8,462 vehicles overnight.',
+  'Three opportunities require your attention.',
+  'One monitored vehicle has reduced in price.',
+  'Your top search mission found 3 new matches.',
+  'Market prices shifted on 14 vehicles overnight.',
 ]
 
 const topOpportunityComparison = [
@@ -261,6 +269,8 @@ function DashboardPage() {
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true)
   const [missionMsgIndices, setMissionMsgIndices] = useState<number[]>(() => activeSearches.map(() => 0))
   const [missionMsgVisible, setMissionMsgVisible] = useState<boolean[]>(() => activeSearches.map(() => true))
+  const [greetingSummaryIndex, setGreetingSummaryIndex] = useState(0)
+  const [greetingSummaryVisible, setGreetingSummaryVisible] = useState(true)
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
 
@@ -406,7 +416,7 @@ function DashboardPage() {
         setActiveAiStatusMessage(aiStatusMessages[messageIndex])
         setAiStatusMessageVisible(true)
       }, 220)
-    }, 3800)
+    }, 12000)
 
     return () => {
       window.clearInterval(intervalId)
@@ -443,6 +453,22 @@ function DashboardPage() {
       fadeTimeoutIds.forEach((id) => { if (id !== null) window.clearTimeout(id) })
     }
   }, [aiSearchLive])
+
+  useEffect(() => {
+    let fadeTimeoutId: number | null = null
+    const intervalId = window.setInterval(() => {
+      setGreetingSummaryVisible(false)
+      if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId)
+      fadeTimeoutId = window.setTimeout(() => {
+        setGreetingSummaryIndex((i) => (i + 1) % greetingSummaries.length)
+        setGreetingSummaryVisible(true)
+      }, 220)
+    }, 13000)
+    return () => {
+      window.clearInterval(intervalId)
+      if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId)
+    }
+  }, [])
 
   const toggleSearch = (index: number) => {
     setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
@@ -534,24 +560,35 @@ function DashboardPage() {
             {/* ── Morning Intelligence ─────────────────────────────────── */}
             <section className="mb-8 space-y-6 sm:space-y-8">
               <div>
+                {/* ── Mobile-only compact greeting ────────────────────── */}
+                <div className="mb-3 md:hidden">
+                  <p className="text-sm font-semibold text-on-surface">Good Morning, Jonathan.</p>
+                  <p
+                    className="mt-0.5 min-h-[1.2rem] text-xs text-on-surface-variant transition-opacity duration-200"
+                    style={{ opacity: greetingSummaryVisible ? 1 : 0 }}
+                  >
+                    {greetingSummaries[greetingSummaryIndex]}
+                  </p>
+                </div>
+
                 <h2 className="mb-3 text-headline-md font-headline-md text-on-surface sm:mb-4">Morning Intelligence Brief</h2>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5">
                   {summaryCards.map((card, index) => (
                     <article
                       key={card.title}
-                      className={`dashboard-border flex min-h-[52px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
+                      className={`dashboard-border flex min-h-[44px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
                     >
                       <p className="text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md">
                         <span className="block">{card.icon}</span>
                         <span>{card.title}</span>
                       </p>
-                      <p className="mt-0.5 text-[1.25rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
+                      <p className="mt-0.5 text-[1.5rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
                     </article>
                   ))}
                 </div>
 
                 {/* ── Mobile: Today's Best Buy featured card ────────────── */}
-                <article className="dashboard-border mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden">
+                <article className="best-buy-mobile-accent dashboard-border mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden">
                   <div className="mb-2.5 flex items-center justify-between">
                     <p className="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">🏆 Today's Best Buy</p>
                     <span className="rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary">⭐ AI Pick</span>
@@ -714,7 +751,7 @@ function DashboardPage() {
             </section>
 
             {/* ── AI Recommendation ────────────────────────────────────── */}
-            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+            <section className="best-buy-mobile-accent dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Today's Best Buy</h2>
               <p className="mb-5 max-w-[20rem] text-sm text-on-surface-variant">Certified by the TICA Decision Engine.</p>
 

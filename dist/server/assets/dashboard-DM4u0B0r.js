@@ -108,7 +108,8 @@ const initialTimelineEvents = [{
   eventId: "timeline-seed-5",
   time: "09:02"
 }];
-const aiStatusMessages = ["Searching UK Dealer Network…", "Scanning Auto Trader…", "Checking Dealer Websites…", "Monitoring Price Drops…", "Analysing New Listings…", "Ranking Opportunities…", "Updating Search Missions…"];
+const aiStatusMessages = ["Scanning marketplaces…", "Comparing market prices…", "Checking dealer demand…", "Reviewing overnight auctions…", "Analysing new listings…", "Monitoring watched vehicles…", "Ranking opportunities…"];
+const greetingSummaries = ["TICA analysed 8,462 vehicles overnight.", "Three opportunities require your attention.", "One monitored vehicle has reduced in price.", "Your top search mission found 3 new matches.", "Market prices shifted on 14 vehicles overnight."];
 const topOpportunityComparison = [{
   vehicle: "BMW M3 Competition",
   opportunityScore: 94,
@@ -259,6 +260,8 @@ function DashboardPage() {
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true);
   const [missionMsgIndices, setMissionMsgIndices] = useState(() => activeSearches.map(() => 0));
   const [missionMsgVisible, setMissionMsgVisible] = useState(() => activeSearches.map(() => true));
+  const [greetingSummaryIndex, setGreetingSummaryIndex] = useState(0);
+  const [greetingSummaryVisible, setGreetingSummaryVisible] = useState(true);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
     if (!aiSearchLive) return;
@@ -381,7 +384,7 @@ function DashboardPage() {
         setActiveAiStatusMessage(aiStatusMessages[messageIndex]);
         setAiStatusMessageVisible(true);
       }, 220);
-    }, 3800);
+    }, 12e3);
     return () => {
       window.clearInterval(intervalId);
       if (fadeTimeoutId !== null) {
@@ -415,6 +418,21 @@ function DashboardPage() {
       });
     };
   }, [aiSearchLive]);
+  useEffect(() => {
+    let fadeTimeoutId = null;
+    const intervalId = window.setInterval(() => {
+      setGreetingSummaryVisible(false);
+      if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId);
+      fadeTimeoutId = window.setTimeout(() => {
+        setGreetingSummaryIndex((i) => (i + 1) % greetingSummaries.length);
+        setGreetingSummaryVisible(true);
+      }, 220);
+    }, 13e3);
+    return () => {
+      window.clearInterval(intervalId);
+      if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId);
+    };
+  }, []);
   const toggleSearch = (index) => {
     setExpandedSearches((prev) => ({
       ...prev,
@@ -498,15 +516,21 @@ function DashboardPage() {
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "mb-8 space-y-6 sm:space-y-8", children: [
       /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs("div", { className: "mb-3 md:hidden", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-on-surface", children: "Good Morning, Jonathan." }),
+          /* @__PURE__ */ jsx("p", { className: "mt-0.5 min-h-[1.2rem] text-xs text-on-surface-variant transition-opacity duration-200", style: {
+            opacity: greetingSummaryVisible ? 1 : 0
+          }, children: greetingSummaries[greetingSummaryIndex] })
+        ] }),
         /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface sm:mb-4", children: "Morning Intelligence Brief" }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5", children: summaryCards.map((card, index) => /* @__PURE__ */ jsxs("article", { className: `dashboard-border flex min-h-[52px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? " hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0" : ""}`, children: [
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5", children: summaryCards.map((card, index) => /* @__PURE__ */ jsxs("article", { className: `dashboard-border flex min-h-[44px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? " hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0" : ""}`, children: [
           /* @__PURE__ */ jsxs("p", { className: "text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md", children: [
             /* @__PURE__ */ jsx("span", { className: "block", children: card.icon }),
             /* @__PURE__ */ jsx("span", { children: card.title })
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[1.25rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg", children: card.value })
+          /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[1.5rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg", children: card.value })
         ] }, card.title)) }),
-        /* @__PURE__ */ jsxs("article", { className: "dashboard-border mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden", children: [
+        /* @__PURE__ */ jsxs("article", { className: "best-buy-mobile-accent dashboard-border mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden", children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-2.5 flex items-center justify-between", children: [
             /* @__PURE__ */ jsx("p", { className: "text-xs font-semibold uppercase tracking-widest text-on-surface-variant", children: "🏆 Today's Best Buy" }),
             /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary", children: "⭐ AI Pick" })
@@ -610,7 +634,7 @@ function DashboardPage() {
         ] })
       ] }) })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "best-buy-mobile-accent dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Today's Best Buy" }),
       /* @__PURE__ */ jsx("p", { className: "mb-5 max-w-[20rem] text-sm text-on-surface-variant", children: "Certified by the TICA Decision Engine." }),
       /* @__PURE__ */ jsx("div", { className: "mb-5 md:hidden", children: /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary", children: "⭐ Today's AI Pick" }) }),
