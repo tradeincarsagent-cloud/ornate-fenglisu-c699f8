@@ -29,10 +29,10 @@ function OpportunityPage() {
    { label: 'Demand Rating', value: featuredOpportunity.demandRatingDisplay },
   ]
   const verdictReasons = [
-   'Asking price below market',
-   'Low estimated risk',
-   'Strong resale demand',
-   'High estimated profit',
+   'Asking price is 6% below estimated market value.',
+   'Estimated resale demand is High.',
+   'Estimated gross profit £4,255.',
+   'Risk assessment: Low.',
   ]
   const verdictMetrics = [
    { label: 'Confidence', value: featuredOpportunity.confidenceDisplay, valueClassName: 'text-primary' },
@@ -164,6 +164,12 @@ function OpportunityPage() {
               </li>
             ))}
           </ul>
+          <div className="mt-4 rounded-xl border border-primary/20 bg-surface-container-high/60 px-4 py-3">
+            <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Summary</p>
+            <p className="text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
+              Based on current market conditions, TICA considers this a high-confidence buying opportunity.
+            </p>
+          </div>
         </section>
 
         <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">

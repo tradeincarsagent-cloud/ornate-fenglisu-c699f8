@@ -29,7 +29,7 @@ function OpportunityPage() {
     label: "Demand Rating",
     value: featuredOpportunity.demandRatingDisplay
   }];
-  const verdictReasons = ["Asking price below market", "Low estimated risk", "Strong resale demand", "High estimated profit"];
+  const verdictReasons = ["Asking price is 6% below estimated market value.", "Estimated resale demand is High.", "Estimated gross profit £4,255.", "Risk assessment: Low."];
   const verdictMetrics = [{
     label: "Confidence",
     value: featuredOpportunity.confidenceDisplay,
@@ -156,7 +156,11 @@ function OpportunityPage() {
       /* @__PURE__ */ jsx("ul", { className: "mt-3 space-y-2.5 text-body-sm font-body-sm text-on-surface", children: verdictReasons.map((reason) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2", children: [
         /* @__PURE__ */ jsx("span", { className: "text-[#4ade80]", children: "✓" }),
         /* @__PURE__ */ jsx("span", { children: reason })
-      ] }, reason)) })
+      ] }, reason)) }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-4 rounded-xl border border-primary/20 bg-surface-container-high/60 px-4 py-3", children: [
+        /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "TICA Summary" }),
+        /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "Based on current market conditions, TICA considers this a high-confidence buying opportunity." })
+      ] })
     ] }),
     /* @__PURE__ */ jsx("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_0.9fr]", children: [
       /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-6", children: [
