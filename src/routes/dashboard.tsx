@@ -535,20 +535,46 @@ function DashboardPage() {
             <section className="mb-8 space-y-6 sm:space-y-8">
               <div>
                 <h2 className="mb-3 text-headline-md font-headline-md text-on-surface sm:mb-4">Morning Intelligence Brief</h2>
-                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5">
                   {summaryCards.map((card, index) => (
                     <article
                       key={card.title}
-                      className={`dashboard-border flex min-h-[84px] flex-col justify-between rounded-xl bg-surface-container-high p-3.5 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
+                      className={`dashboard-border flex min-h-[52px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
                     >
                       <p className="text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md">
                         <span className="block">{card.icon}</span>
                         <span>{card.title}</span>
                       </p>
-                      <p className="mt-0.5 text-[1.4rem] leading-tight font-bold text-primary md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
+                      <p className="mt-0.5 text-[1.25rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
                     </article>
                   ))}
                 </div>
+
+                {/* ── Mobile: Today's Best Buy featured card ────────────── */}
+                <article className="dashboard-border mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden">
+                  <div className="mb-2.5 flex items-center justify-between">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">🏆 Today's Best Buy</p>
+                    <span className="rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary">⭐ AI Pick</span>
+                  </div>
+                  <p className="mb-2 text-body-md font-body-md font-semibold text-on-surface">{featuredOpportunity.vehicle}</p>
+                  <div className="mb-2 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-on-surface-variant">
+                    <div>
+                      <span className="uppercase tracking-widest">Price</span>
+                      <p className="font-semibold text-on-surface">{featuredOpportunity.listPriceDisplay}</p>
+                    </div>
+                    <div>
+                      <span className="uppercase tracking-widest">Est. Profit</span>
+                      <p className="font-semibold text-on-surface">{featuredOpportunity.dashboardEstimatedProfitDisplay}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-container">
+                      <div className="h-full rounded-full bg-primary" style={{ width: `${decisionModel.weightedDecisionScore}%` }} />
+                    </div>
+                    <span className="text-xs font-semibold text-primary">{decisionModel.weightedDecisionScore}% confidence</span>
+                    <span className="text-xs font-bold text-on-surface">🟢 BUY</span>
+                  </div>
+                </article>
               </div>
 
               {/* ── AI Search Radar ──────────────────────────────────── */}

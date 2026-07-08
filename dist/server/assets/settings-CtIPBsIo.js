@@ -222,7 +222,7 @@ function SettingsPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-6 sm:space-y-8", children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-5 sm:space-y-8", children: [
     /* @__PURE__ */ jsxs("header", { children: [
       /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Settings" }),
       /* @__PURE__ */ jsxs("div", { className: "mb-3 flex items-start justify-between gap-4", children: [
@@ -238,9 +238,9 @@ function SettingsPage() {
         /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-sm text-on-surface-variant", children: "These controls are placeholders for now. Use them to define how TICA should prioritize opportunities and where to focus your buying strategy." })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Notification Channels" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Tell TICA the urgency level for each channel." }),
+      /* @__PURE__ */ jsx("p", { className: "mb-4 text-sm text-on-surface-variant", children: "Tell TICA the urgency level for each channel." }),
       /* @__PURE__ */ jsx("div", { className: "space-y-4", children: CHANNELS.map((channel) => {
         return /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4 sm:flex-row sm:items-center sm:justify-between", children: [
           /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
@@ -254,9 +254,9 @@ function SettingsPage() {
         ] }, channel.id);
       }) })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Opportunity Notification Rules" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Set how urgently TICA should surface each signal." }),
+      /* @__PURE__ */ jsx("p", { className: "mb-4 text-sm text-on-surface-variant", children: "Set how urgently TICA should surface each signal." }),
       /* @__PURE__ */ jsx("div", { className: "space-y-4", children: EVENTS.map((event) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4 sm:flex-row sm:items-center sm:justify-between", children: [
         /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
           /* @__PURE__ */ jsx("label", { htmlFor: `event-${event.id}`, className: "text-sm font-semibold text-on-surface cursor-pointer [text-wrap:balance]", children: event.label }),
@@ -265,30 +265,30 @@ function SettingsPage() {
         /* @__PURE__ */ jsx(PrioritySelector, { id: `event-${event.id}`, value: eventPrefs[event.id], onChange: (v) => handleEventChange(event.id, v) })
       ] }, event.id)) })
     ] }),
-    /* @__PURE__ */ jsx("section", { className: "rounded-2xl border border-dashed border-primary/30 bg-surface-container-low p-5 sm:p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 rounded-2xl border border-outline-variant/25 bg-surface-container-high/40 p-5", children: [
+    /* @__PURE__ */ jsx("section", { className: "rounded-2xl border border-dashed border-primary/30 bg-surface-container-low p-4 sm:p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 rounded-2xl border border-outline-variant/25 bg-surface-container-high/40 p-4 sm:p-5", children: [
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("p", { className: "text-title-md font-title-md text-on-surface", children: "Future Email Notifications" }),
         /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Placeholder only — reserve this header space for notification emails." })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "max-w-sm rounded-2xl border border-outline-variant/25 bg-surface-container px-4 py-5", children: [
+      /* @__PURE__ */ jsxs("div", { className: "max-w-sm rounded-2xl border border-outline-variant/25 bg-surface-container px-4 py-4", children: [
         /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-dashed border-primary/35 bg-primary/5 px-4 py-4 text-center", children: /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary", children: "TICA shield reserved here" }) }),
         /* @__PURE__ */ jsx("p", { className: "mt-4 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant", children: "Today's Best Buy" })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Dealer Profile" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Placeholder fields to begin teaching TICA how your dealership buys vehicles." }),
+      /* @__PURE__ */ jsx("p", { className: "mb-4 text-sm text-on-surface-variant", children: "Placeholder fields to begin teaching TICA how your dealership buys vehicles." }),
       /* @__PURE__ */ jsx("div", { className: "grid gap-4 md:grid-cols-2", children: DEALER_PROFILE_FIELDS.map((field) => /* @__PURE__ */ jsxs("label", { className: "space-y-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
         /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold text-on-surface", children: field.label }),
         /* @__PURE__ */ jsx("input", { type: field.type ?? "text", value: dealerProfile[field.key], placeholder: field.placeholder, onChange: (event) => handleDealerProfileChange(field.key, event.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none" })
       ] }, field.key)) })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+    /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Buying Style" }),
-      /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Choose one premium placeholder profile so TICA can learn your preferred buying posture." }),
+      /* @__PURE__ */ jsx("p", { className: "mb-4 text-sm text-on-surface-variant", children: "Choose one premium placeholder profile so TICA can learn your preferred buying posture." }),
       /* @__PURE__ */ jsx("div", { role: "radiogroup", "aria-label": "Buying Style", className: "grid gap-4 md:grid-cols-3", children: BUYING_STYLE_OPTIONS.map((option) => {
         const selected = buyingStyle === option.id;
-        return /* @__PURE__ */ jsxs("button", { type: "button", role: "radio", "aria-checked": selected, onClick: () => handleBuyingStyleChange(option.id), className: `min-h-40 rounded-2xl border p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${selected ? "border-primary/50 bg-linear-to-br from-primary/10 via-surface-container-high to-surface-container shadow-[0_12px_32px_rgba(0,0,0,0.08)]" : "border-outline-variant/25 bg-linear-to-br from-surface-container-high/80 to-surface-container hover:border-outline-variant/40 hover:bg-surface-container-high"}`, children: [
+        return /* @__PURE__ */ jsxs("button", { type: "button", role: "radio", "aria-checked": selected, onClick: () => handleBuyingStyleChange(option.id), className: `min-h-40 rounded-2xl border p-4 sm:p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${selected ? "border-primary/50 bg-linear-to-br from-primary/10 via-surface-container-high to-surface-container shadow-[0_12px_32px_rgba(0,0,0,0.08)]" : "border-outline-variant/25 bg-linear-to-br from-surface-container-high/80 to-surface-container hover:border-outline-variant/40 hover:bg-surface-container-high"}`, children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-3", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-on-surface", children: option.label }),
@@ -303,7 +303,7 @@ function SettingsPage() {
         ] }, option.id);
       }) })
     ] }),
-    /* @__PURE__ */ jsx("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-primary/15 bg-linear-to-br from-primary/5 via-surface-container-high/60 to-surface-container p-5", children: [
+    /* @__PURE__ */ jsx("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-primary/15 bg-linear-to-br from-primary/5 via-surface-container-high/60 to-surface-container p-4 sm:p-5", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-start justify-between gap-4", children: [
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("h2", { className: "text-title-md font-title-md text-on-surface", children: "TICA Learning" }),
