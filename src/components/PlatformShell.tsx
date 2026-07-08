@@ -177,7 +177,7 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
               <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-start text-xs text-on-surface-variant sm:justify-end">
                 {footerLinks.map((label, index) => (
                   <span key={label} className="flex items-center">
-                    {index > 0 ? <span className="px-2 text-on-surface-variant/70">•</span> : null}
+                    {index > 0 ? <span className="whitespace-pre text-on-surface-variant/70" aria-hidden="true">{' • '}</span> : null}
                     <a href="#" className="transition-colors hover:text-primary">
                       {label}
                     </a>
