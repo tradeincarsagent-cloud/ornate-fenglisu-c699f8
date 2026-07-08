@@ -124,8 +124,8 @@ function OpportunityPage() {
                 <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">Recommended Action by TICA AI</p>
               </div>
               <div className="w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left">
-                {/* Mobile: compact visual traffic light legend */}
-                <div className="flex items-center gap-3 sm:hidden" aria-label="Verdict colour key">
+                {/* Compact visual traffic light legend – shown on all screen sizes */}
+                <div className="flex items-center gap-3" aria-label="Verdict colour key">
                   <div className="legend-traffic-light shrink-0">
                     <div className="legend-traffic-light-lens legend-lens-green" aria-hidden="true" />
                     <div className="legend-traffic-light-lens legend-lens-amber" aria-hidden="true" />
@@ -137,14 +137,6 @@ function OpportunityPage() {
                     <span className="flex h-[30px] items-center text-[#ef4444]">PASS</span>
                   </div>
                 </div>
-                {/* Desktop: text explanation */}
-                <p className="hidden text-body-xs font-body-sm leading-relaxed text-on-surface-variant sm:block">
-                  <span className="font-semibold text-[#4ade80]">Green</span> = Strong buying opportunity
-                  <br />
-                  <span className="font-semibold text-[#f59e0b]">Amber</span> = Review further
-                  <br />
-                  <span className="font-semibold text-[#ef4444]">Red</span> = Pass / avoid
-                </p>
               </div>
               <div className="verdict-metrics-group mt-1 grid w-full grid-cols-2 auto-rows-fr gap-2">
                 {verdictMetrics.map((metric, index) => (

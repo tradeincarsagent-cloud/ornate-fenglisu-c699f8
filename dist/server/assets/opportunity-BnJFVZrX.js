@@ -133,30 +133,18 @@ function OpportunityPage() {
             ] }),
             /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant", children: "Recommended Action by TICA AI" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 sm:hidden", "aria-label": "Verdict colour key", children: [
-              /* @__PURE__ */ jsxs("div", { className: "legend-traffic-light shrink-0", children: [
-                /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-green", "aria-hidden": "true" }),
-                /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-amber", "aria-hidden": "true" }),
-                /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-red", "aria-hidden": "true" })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[6px] py-[7px] text-xs font-semibold leading-none", children: [
-                /* @__PURE__ */ jsx("span", { className: "flex h-[30px] items-center text-[#4ade80]", children: "BUY" }),
-                /* @__PURE__ */ jsx("span", { className: "flex h-[30px] items-center text-[#f59e0b]", children: "REVIEW" }),
-                /* @__PURE__ */ jsx("span", { className: "flex h-[30px] items-center text-[#ef4444]", children: "PASS" })
-              ] })
+          /* @__PURE__ */ jsx("div", { className: "w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", "aria-label": "Verdict colour key", children: [
+            /* @__PURE__ */ jsxs("div", { className: "legend-traffic-light shrink-0", children: [
+              /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-green", "aria-hidden": "true" }),
+              /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-amber", "aria-hidden": "true" }),
+              /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-red", "aria-hidden": "true" })
             ] }),
-            /* @__PURE__ */ jsxs("p", { className: "hidden text-body-xs font-body-sm leading-relaxed text-on-surface-variant sm:block", children: [
-              /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#4ade80]", children: "Green" }),
-              " = Strong buying opportunity",
-              /* @__PURE__ */ jsx("br", {}),
-              /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#f59e0b]", children: "Amber" }),
-              " = Review further",
-              /* @__PURE__ */ jsx("br", {}),
-              /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#ef4444]", children: "Red" }),
-              " = Pass / avoid"
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[6px] py-[7px] text-xs font-semibold leading-none", children: [
+              /* @__PURE__ */ jsx("span", { className: "flex h-[30px] items-center text-[#4ade80]", children: "BUY" }),
+              /* @__PURE__ */ jsx("span", { className: "flex h-[30px] items-center text-[#f59e0b]", children: "REVIEW" }),
+              /* @__PURE__ */ jsx("span", { className: "flex h-[30px] items-center text-[#ef4444]", children: "PASS" })
             ] })
-          ] }),
+          ] }) }),
           /* @__PURE__ */ jsx("div", { className: "verdict-metrics-group mt-1 grid w-full grid-cols-2 auto-rows-fr gap-2", children: verdictMetrics.map((metric, index) => /* @__PURE__ */ jsxs("div", { className: `flex h-full min-h-[88px] flex-col justify-center rounded-xl border bg-surface-container-high px-3 py-3 text-center ${index === 0 ? "border-primary/20" : "border-outline-variant/25"}`, children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.08em] text-on-surface-variant sm:tracking-[0.15em]", children: metric.label }),
             /* @__PURE__ */ jsx("p", { className: `mt-1 text-body-md font-semibold sm:text-body-lg ${metric.valueClassName}`, children: metric.value })
