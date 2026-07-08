@@ -1084,7 +1084,7 @@ function DashboardPage() {
 
             {/* ── AI Search Missions ───────────────────────────────────── */}
             {openMoreMenu !== null && (
-              <div className="fixed inset-0 z-10 md:hidden" onClick={() => setOpenMoreMenu(null)} aria-hidden="true" />
+              <div className="fixed inset-0 z-10" onClick={() => setOpenMoreMenu(null)} aria-hidden="true" />
             )}
             <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
@@ -1097,243 +1097,130 @@ function DashboardPage() {
                       key={search.name}
                       className={`rounded-xl bg-surface-container-high p-4 transition-all ${highlightedMission === index ? 'mission-card-highlight' : ''}`}
                     >
-                      {/* Desktop layout */}
-                      <div className="hidden md:block">
-                        {/* Top row: name + action buttons */}
-                        <div className="mb-3 flex items-start justify-between gap-4">
-                          <p className="text-body-md font-body-md font-semibold text-on-surface">{search.name}</p>
-                          <div className="flex flex-shrink-0 gap-2">
-                            <button className="rounded-lg bg-primary px-4 py-1.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                      <button
+                        onClick={() => toggleSearch(index)}
+                        className="flex w-full items-center justify-between gap-3"
+                        aria-expanded={expandedSearches[index]}
+                      >
+                        <div className="min-w-0 text-left">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className="mission-status-dot flex-shrink-0"
+                              style={{ background: statusCfg.color, boxShadow: `0 0 6px ${statusCfg.glow}` }}
+                            />
+                            <p className="text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
+                          </div>
+                          <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 pl-4">
+                            <p className="text-sm text-on-surface-variant">Last Scan: {search.lastScan}</p>
+                            <p className="text-sm font-semibold text-primary">{search.opportunities} Opp.</p>
+                          </div>
+                        </div>
+                        <span className="flex-shrink-0 text-on-surface-variant">
+                          <ChevronIcon open={expandedSearches[index]} />
+                        </span>
+                      </button>
+
+                      {expandedSearches[index] && (
+                        <div className="mt-3 space-y-3">
+                          {/* Detail list */}
+                          <dl className="grid grid-cols-2 gap-x-4 gap-y-2 lg:grid-cols-3">
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicle Type</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{search.vehicleType}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Search Area</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{search.searchArea}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Budget</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{search.budget}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Status</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{statusCfg.emoji} {statusCfg.label}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Next Scan</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{search.nextScan}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicles Analysed Today</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Rejected Listings</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{search.rejectedListings}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Qualified Opportunities</dt>
+                              <dd className="mt-0.5 text-sm font-semibold text-primary">{search.qualifiedOpportunities}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Today's Best Opp. Score</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{search.bestOpportunityScore}</dd>
+                            </div>
+                          </dl>
+                          {/* Sources Being Scanned */}
+                          <div>
+                            <p className="mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant">Sources Being Scanned</p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {search.sources.map((src) => (
+                                <span key={src} className="rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant">
+                                  {src}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          {/* Progress bar */}
+                          <div>
+                            <div className="mb-1 flex items-center justify-between">
+                              <span className="text-xs uppercase tracking-widest text-on-surface-variant">Search Progress</span>
+                              <span className="text-xs font-medium text-on-surface">{search.progress}%</span>
+                            </div>
+                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
+                              <div
+                                className="h-full rounded-full"
+                                style={{ width: `${search.progress}%`, background: statusCfg.color, boxShadow: `0 0 4px ${statusCfg.glow}` }}
+                              />
+                            </div>
+                          </div>
+                          {/* Mission Update */}
+                          <p className="text-xs text-on-surface-variant/60">
+                            Mission Update — {search.missionUpdate}
+                          </p>
+                          {/* Live mission message */}
+                          <p
+                            className="text-xs font-medium text-primary/75"
+                            style={{ opacity: missionMsgVisible[index] ? 1 : 0, transition: 'opacity 0.22s ease' }}
+                          >
+                            ⚡ {search.liveMessages[missionMsgIndices[index]]}
+                          </p>
+                          {/* Action buttons */}
+                          <div className="flex gap-2">
+                            <button className="min-h-11 flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
                               Run Now
                             </button>
-                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-on-surface transition-colors hover:border-primary/40">
-                              Edit
-                            </button>
-                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-on-surface-variant transition-colors hover:border-primary/40">
-                              Pause
-                            </button>
-                            <button className="rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-red-400 transition-colors hover:border-red-400/40">
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                        {/* Detail grid */}
-                        <dl className="mb-3 grid grid-cols-2 gap-x-6 gap-y-2 lg:grid-cols-4">
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicle Type</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.vehicleType}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Search Area</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.searchArea}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Budget</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.budget}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Status</dt>
-                            <dd className="mt-0.5 flex items-center gap-1.5 text-sm text-on-surface">
-                              <span
-                                className="mission-status-dot flex-shrink-0"
-                                style={{ background: statusCfg.color, boxShadow: `0 0 6px ${statusCfg.glow}` }}
-                              />
-                              {statusCfg.emoji} {statusCfg.label}
-                            </dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Last Scan</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.lastScan}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Opportunities Found</dt>
-                            <dd className="mt-0.5 text-sm font-semibold text-primary">{search.opportunities}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Next Scan</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.nextScan}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicles Analysed Today</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Rejected Listings</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.rejectedListings}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Qualified Opportunities</dt>
-                            <dd className="mt-0.5 text-sm font-semibold text-primary">{search.qualifiedOpportunities}</dd>
-                          </div>
-                          <div>
-                            <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Today's Best Opportunity Score</dt>
-                            <dd className="mt-0.5 text-sm text-on-surface">{search.bestOpportunityScore}</dd>
-                          </div>
-                        </dl>
-                        {/* Sources Being Scanned */}
-                        <div className="mb-3">
-                          <p className="mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant">Sources Being Scanned</p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {search.sources.map((src) => (
-                              <span key={src} className="rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant">
-                                {src}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        {/* Progress bar */}
-                        <div>
-                          <div className="mb-1 flex items-center justify-between">
-                            <span className="text-xs uppercase tracking-widest text-on-surface-variant">Search Progress</span>
-                            <span className="text-xs font-medium text-on-surface">{search.progress}%</span>
-                          </div>
-                          <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
-                            <div
-                              className="h-full rounded-full transition-all"
-                              style={{ width: `${search.progress}%`, background: statusCfg.color, boxShadow: `0 0 4px ${statusCfg.glow}` }}
-                            />
-                          </div>
-                        </div>
-                        {/* Mission Update */}
-                        <p className="mt-2.5 text-xs text-on-surface-variant/60">
-                          Mission Update — {search.missionUpdate}
-                        </p>
-                        {/* Live mission message */}
-                        <p
-                          className="mt-1 text-xs font-medium text-primary/75"
-                          style={{ opacity: missionMsgVisible[index] ? 1 : 0, transition: 'opacity 0.22s ease' }}
-                        >
-                          ⚡ {search.liveMessages[missionMsgIndices[index]]}
-                        </p>
-                      </div>
-
-                      {/* Mobile layout: collapsible card with action buttons */}
-                      <div className="md:hidden">
-                        <button
-                          onClick={() => toggleSearch(index)}
-                          className="flex w-full items-center justify-between gap-3"
-                          aria-expanded={expandedSearches[index]}
-                        >
-                          <div className="min-w-0 text-left">
-                            <div className="flex items-center gap-2">
-                              <span
-                                className="mission-status-dot flex-shrink-0"
-                                style={{ background: statusCfg.color, boxShadow: `0 0 6px ${statusCfg.glow}` }}
-                              />
-                              <p className="text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
-                            </div>
-                            <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 pl-4">
-                              <p className="text-sm text-on-surface-variant">Last Scan: {search.lastScan}</p>
-                              <p className="text-sm font-semibold text-primary">{search.opportunities} Opp.</p>
-                            </div>
-                          </div>
-                          <span className="flex-shrink-0 text-on-surface-variant">
-                            <ChevronIcon open={expandedSearches[index]} />
-                          </span>
-                        </button>
-
-                        {expandedSearches[index] && (
-                          <div className="mt-3 space-y-3">
-                            {/* Detail list */}
-                            <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicle Type</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.vehicleType}</dd>
-                              </div>
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Search Area</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.searchArea}</dd>
-                              </div>
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Budget</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.budget}</dd>
-                              </div>
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Status</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{statusCfg.emoji} {statusCfg.label}</dd>
-                              </div>
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Next Scan</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.nextScan}</dd>
-                              </div>
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicles Analysed Today</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
-                              </div>
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Rejected Listings</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.rejectedListings}</dd>
-                              </div>
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Qualified Opportunities</dt>
-                                <dd className="mt-0.5 text-sm font-semibold text-primary">{search.qualifiedOpportunities}</dd>
-                              </div>
-                              <div>
-                                <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Today's Best Opp. Score</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.bestOpportunityScore}</dd>
-                              </div>
-                            </dl>
-                            {/* Sources Being Scanned */}
-                            <div>
-                              <p className="mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant">Sources Being Scanned</p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {search.sources.map((src) => (
-                                  <span key={src} className="rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant">
-                                    {src}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                            {/* Progress bar */}
-                            <div>
-                              <div className="mb-1 flex items-center justify-between">
-                                <span className="text-xs uppercase tracking-widest text-on-surface-variant">Search Progress</span>
-                                <span className="text-xs font-medium text-on-surface">{search.progress}%</span>
-                              </div>
-                              <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
-                                <div
-                                  className="h-full rounded-full"
-                                  style={{ width: `${search.progress}%`, background: statusCfg.color, boxShadow: `0 0 4px ${statusCfg.glow}` }}
-                                />
-                              </div>
-                            </div>
-                            {/* Mission Update */}
-                            <p className="text-xs text-on-surface-variant/60">
-                              Mission Update — {search.missionUpdate}
-                            </p>
-                            {/* Live mission message */}
-                            <p
-                              className="text-xs font-medium text-primary/75"
-                              style={{ opacity: missionMsgVisible[index] ? 1 : 0, transition: 'opacity 0.22s ease' }}
-                            >
-                              ⚡ {search.liveMessages[missionMsgIndices[index]]}
-                            </p>
-                            {/* Action buttons */}
-                            <div className="flex gap-2">
-                              <button className="min-h-11 flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
-                                Run Now
+                            <div className="relative">
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setOpenMoreMenu(openMoreMenu === index ? null : index) }}
+                                className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40"
+                                aria-haspopup="true"
+                                aria-expanded={openMoreMenu === index}
+                              >
+                                More
                               </button>
-                              <div className="relative">
-                                <button
-                                  onClick={(e) => { e.stopPropagation(); setOpenMoreMenu(openMoreMenu === index ? null : index) }}
-                                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40"
-                                  aria-haspopup="true"
-                                  aria-expanded={openMoreMenu === index}
-                                >
-                                  More
-                                </button>
-                                {openMoreMenu === index && (
-                                  <div className="absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg">
-                                    <button className="w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Edit</button>
-                                    <button className="w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Pause</button>
-                                    <button className="w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Delete</button>
-                                  </div>
-                                )}
-                              </div>
+                              {openMoreMenu === index && (
+                                <div className="absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg">
+                                  <button className="w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Edit</button>
+                                  <button className="w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Pause</button>
+                                  <button className="w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest">Delete</button>
+                                </div>
+                              )}
                             </div>
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </article>
                   )
                 })}

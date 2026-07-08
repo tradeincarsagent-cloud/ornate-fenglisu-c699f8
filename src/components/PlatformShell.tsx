@@ -4,6 +4,8 @@ import { type ReactNode, useEffect, useState } from 'react'
 const LOGO_SRC =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS'
 
+const footerLinks = ['Support', 'Privacy', 'Terms', 'Contact']
+
 type PlatformNavItem = {
   label: string
   href?: string
@@ -172,11 +174,15 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
                   System Status: <span className="text-on-surface">🟢 Operational</span>
                 </p>
               </div>
-              <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-start gap-x-2 gap-y-2 text-xs text-on-surface-variant sm:justify-end">
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Support</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Privacy</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Terms</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Contact</a>
+              <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-start text-xs text-on-surface-variant sm:justify-end">
+                {footerLinks.map((label, index) => (
+                  <span key={label} className="flex items-center">
+                    {index > 0 ? <span className="px-2 text-on-surface-variant/70">•</span> : null}
+                    <a href="#" className="transition-colors hover:text-primary">
+                      {label}
+                    </a>
+                  </span>
+                ))}
               </nav>
             </div>
           </footer>
