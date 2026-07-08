@@ -18,7 +18,7 @@ const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c7
  */
 export function TicaShield() {
   const [open, setOpen] = useState(false)
-  const [popupPos, setPopupPos] = useState<{ top: number; right: number } | null>(null)
+  const [popupPos, setPopupPos] = useState<{ top: number; right: number; left?: number } | null>(null)
   const [isHovered, setIsHovered] = useState(false)
   const [hasOpened, setHasOpened] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -27,9 +27,17 @@ export function TicaShield() {
   const updatePopupPos = () => {
     if (!containerRef.current) return
     const rect = containerRef.current.getBoundingClientRect()
+    const safeTop = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-safe-area-top')) || 0
+    const horizontalGap = 12
+    const popupWidth = Math.min(441, window.innerWidth - horizontalGap * 2)
+    const preferredRight = Math.max(horizontalGap, window.innerWidth - rect.right)
+    const maxRight = Math.max(horizontalGap, window.innerWidth - popupWidth - horizontalGap)
+    const clampedRight = Math.min(preferredRight, maxRight)
+    const nextTop = Math.max(rect.bottom + 8, safeTop + 8)
+
     setPopupPos({
-      top: rect.bottom + 8,
-      right: window.innerWidth - rect.right,
+      top: nextTop,
+      right: clampedRight,
     })
   }
 
@@ -51,15 +59,20 @@ export function TicaShield() {
 
   useEffect(() => {
     if (!open) return
+    const handleWindowChange = () => updatePopupPos()
     const handleOutside = (e: MouseEvent | TouchEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setOpen(false)
         setIsHovered(false)
       }
     }
+    window.addEventListener('resize', handleWindowChange)
+    window.addEventListener('scroll', handleWindowChange, { passive: true })
     document.addEventListener('mousedown', handleOutside)
     document.addEventListener('touchstart', handleOutside)
     return () => {
+      window.removeEventListener('resize', handleWindowChange)
+      window.removeEventListener('scroll', handleWindowChange)
       document.removeEventListener('mousedown', handleOutside)
       document.removeEventListener('touchstart', handleOutside)
     }
@@ -83,7 +96,7 @@ export function TicaShield() {
             setOpen(false)
           }
         }}
-        className="flex flex-col items-center gap-1.5 rounded-xl p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60"
+        className="flex min-h-11 min-w-11 flex-col items-center gap-1 rounded-xl p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60"
       >
         {/* Blue brand glow — wraps the shield image only */}
         <div className={[
@@ -95,12 +108,12 @@ export function TicaShield() {
           <img
             src={TICA_SHIELD_SRC}
             alt="TICA Certified shield"
-            className="block h-auto w-14 sm:w-[4.5rem] md:w-24"
+            className="block h-auto w-12 sm:w-[4.5rem] md:w-24"
             decoding="async"
           />
         </div>
         <div className="flex flex-col items-center gap-0.5">
-          <span className="tica-certified-text text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant/80">
+          <span className="tica-certified-text text-center text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.14em] text-on-surface-variant/80">
             TICA Certified™
           </span>
         </div>
@@ -111,25 +124,25 @@ export function TicaShield() {
         <div
           role="tooltip"
           aria-hidden={!open}
-          style={{ top: popupPos.top, right: popupPos.right }}
+          style={{ top: popupPos.top, right: popupPos.right, left: popupPos.left }}
           className={[
             'tica-popup',
-            'fixed z-[9999] w-96 md:w-[441px]',
-            'rounded-3xl border border-white/10',
+            'fixed z-[9999] w-[min(22rem,calc(100vw-1.5rem))] sm:w-[22rem] md:w-[441px]',
+            'rounded-2xl sm:rounded-3xl border border-white/10',
             'bg-zinc-900/90 backdrop-blur-xl',
             'shadow-[0_20px_64px_rgba(0,0,0,0.75)]',
-            'p-8',
+            'p-4 sm:p-8',
             open ? 'tica-popup--visible' : 'tica-popup--hidden',
           ].join(' ')}
         >
-          <div className="flex flex-col items-center gap-6 text-center">
+          <div className="flex flex-col items-center gap-4 sm:gap-6 text-center">
             <img
               src={TICA_SHIELD_SRC}
               alt="TICA Certified shield"
-              className="h-auto w-44"
+              className="h-auto w-28 sm:w-44"
               decoding="async"
             />
-            <div className="space-y-2">
+            <div className="space-y-1.5 sm:space-y-2">
               <p className="text-base font-bold tracking-wide text-white">🛡 TICA Certified™</p>
               <p className="text-[12px] text-zinc-400 leading-snug">Powered by the TICA Decision Engine</p>
               <p className="text-[12px] font-semibold text-primary/90 tracking-wide">Recommends. You Decide.</p>

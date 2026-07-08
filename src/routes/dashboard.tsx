@@ -473,9 +473,11 @@ function DashboardPage() {
       ]}
     >
       <div className="mx-auto w-full max-w-container-max">
-            <div className="mb-4 flex items-start justify-between gap-4">
+            <div className="mb-5 flex items-start justify-between gap-4">
               <h1 className="text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
-              <TicaShield />
+              <div className="shrink-0">
+                <TicaShield />
+              </div>
             </div>
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6">
               <div className="flex flex-col gap-6">
@@ -514,7 +516,7 @@ function DashboardPage() {
               </div>
             </section>
 
-            <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="mb-7 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:flex-wrap">
               <Link
                 to="/opportunity"
                 className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
@@ -533,11 +535,11 @@ function DashboardPage() {
             <section className="mb-10 space-y-8">
               <div>
                 <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Morning Intelligence Brief</h2>
-                <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-5">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   {summaryCards.map((card, index) => (
                     <article
                       key={card.title}
-                      className={`dashboard-border flex flex-col justify-between rounded-xl bg-surface-container-high text-center min-h-20 p-3 md:min-h-[152px] md:p-5${index === 4 ? ' col-span-2 mx-auto w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
+                      className={`dashboard-border flex min-h-[100px] flex-col justify-between rounded-xl bg-surface-container-high p-4 text-left sm:min-h-[120px] sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
                     >
                       <p className="text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md">
                         <span className="block">{card.icon}</span>
@@ -688,7 +690,7 @@ function DashboardPage() {
             {/* ── AI Recommendation ────────────────────────────────────── */}
             <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Today's Best Buy</h2>
-              <p className="mb-6 max-w-[20rem] text-sm text-on-surface-variant">Certified by the TICA Decision Engine.</p>
+              <p className="mb-5 max-w-[20rem] text-sm text-on-surface-variant">Certified by the TICA Decision Engine.</p>
 
               {/* Mobile premium badge */}
               <div className="mb-5 md:hidden">
@@ -697,7 +699,7 @@ function DashboardPage() {
                 </span>
               </div>
 
-              <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="mb-7 grid grid-cols-1 gap-4 md:mb-8 md:grid-cols-2">
                 <div>
                   <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
                   <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.vehicle}</p>
@@ -800,7 +802,7 @@ function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setOpportunityHistoryOpen((v) => !v)}
-                  className="flex w-full items-center justify-between px-4 py-3 text-left"
+                  className="flex min-h-11 w-full items-center justify-between px-4 py-3 text-left"
                 >
                   <span className="text-body-md font-body-md font-medium text-on-surface">Opportunity History</span>
                   <span className="text-xs text-on-surface-variant" aria-hidden="true">
@@ -811,7 +813,7 @@ function DashboardPage() {
                 {opportunityHistoryOpen && (
                   <div className="border-t border-outline-variant/20 px-4 pb-4 pt-3">
                     {/* AI Confidence Trend */}
-                    <div className="mb-4 flex items-center gap-3 rounded-lg border border-primary/20 bg-surface-container px-3 py-2">
+                    <div className="mb-4 flex items-center gap-3 rounded-lg border border-primary/20 bg-surface-container px-3 py-2.5">
                       <span className="text-xs uppercase tracking-widest text-on-surface-variant">AI Confidence Trend</span>
                       <span className="ml-auto text-sm font-semibold text-on-surface">
                         <span className="text-on-surface-variant">87%</span>
@@ -971,14 +973,14 @@ function DashboardPage() {
                     <div className="flex gap-2">
                       <Link
                         to="/opportunity"
-                        className="flex flex-1 items-center justify-center rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
+                        className="flex min-h-11 flex-1 items-center justify-center rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
                       >
                         Review
                       </Link>
-                      <button className="flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
+                      <button className="min-h-11 flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
                         Save
                       </button>
-                      <button className="flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
+                      <button className="min-h-11 flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
                         Dismiss
                       </button>
                     </div>
@@ -1215,13 +1217,13 @@ function DashboardPage() {
                             </p>
                             {/* Action buttons */}
                             <div className="flex gap-2">
-                              <button className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                              <button className="min-h-11 flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
                                 Run Now
                               </button>
                               <div className="relative">
                                 <button
                                   onClick={(e) => { e.stopPropagation(); setOpenMoreMenu(openMoreMenu === index ? null : index) }}
-                                  className="rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40"
+                                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40"
                                   aria-haspopup="true"
                                   aria-expanded={openMoreMenu === index}
                                 >

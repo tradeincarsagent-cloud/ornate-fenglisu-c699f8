@@ -45,7 +45,7 @@ function OpportunityPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max space-y-6">
+      <div className="mx-auto w-full max-w-container-max space-y-5 sm:space-y-6">
         <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6">
           {/* Future exported PDF buying reports should reuse the TICA shield as the official TICA certification mark. */}
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center">
@@ -77,14 +77,16 @@ function OpportunityPage() {
           </nav>
 
           {/* Page title + Opportunity ID */}
-          <div className="mt-3 flex items-start justify-between gap-4">
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
             <div className="space-y-1">
               <h1 className="text-headline-lg font-headline-lg text-primary">AI Buying Report</h1>
               <p className="text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant">
                 Vehicle Opportunity ID: <span className="font-semibold text-on-surface">{featuredOpportunity.id}</span>
               </p>
             </div>
-            <TicaShield />
+            <div className="self-end sm:self-auto">
+              <TicaShield />
+            </div>
           </div>
         </header>
 
@@ -110,7 +112,7 @@ function OpportunityPage() {
                   <span className="font-semibold text-[#ef4444]">Red</span> = Pass / avoid
                 </p>
               </div>
-              <div className="mt-1 grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="mt-1 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2">
                 <div className="rounded-xl border border-primary/30 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Confidence</p>
                   <p className="mt-1 text-body-lg font-semibold text-primary">{featuredOpportunity.confidenceDisplay}</p>
@@ -209,7 +211,7 @@ function OpportunityPage() {
 
         <section className="dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Negotiation Advice</h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-5">
+          <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Suggested Opening Offer</p>
               <p className="mt-2 text-body-lg font-semibold text-on-surface">{featuredOpportunity.negotiation.openingOfferDisplay}</p>
@@ -232,7 +234,7 @@ function OpportunityPage() {
           <div className="flex flex-col items-start gap-2">
             <button
               disabled
-              className="cursor-not-allowed rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant/50 opacity-50"
+              className="min-h-11 cursor-not-allowed rounded-xl border border-outline-variant/30 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant/50 opacity-50"
             >
               Future Feature: Simulate Deal
             </button>
