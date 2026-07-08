@@ -79,8 +79,8 @@ function SearchBuilderPage() {
               <TicaShield />
             </div>
           </div>
-          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">Create an AI Search in Under 60 Seconds</h1>
-          <p className="text-body-md font-body-md text-on-surface-variant">Configure your search criteria and let the AI find matching vehicles 24/7.</p>
+          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">AI Search Finder</h1>
+          <p className="text-body-md font-body-md text-on-surface-variant">Tell TICA exactly what you'd like me to find.</p>
         </div>
 
         <div className="space-y-5 sm:space-y-8">
