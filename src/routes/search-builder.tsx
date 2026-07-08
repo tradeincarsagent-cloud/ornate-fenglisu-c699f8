@@ -40,11 +40,10 @@ function CheckIcon() {
   )
 }
 
-function StepMarker({ step, title }: { step: string; title: string }) {
+function StepMarker({ step }: { step: string }) {
   return (
-    <p className="mb-3 flex items-center gap-3">
+    <p className="mb-3">
       <span className="rounded-md border border-primary/25 bg-primary/10 px-2 py-1 text-label-caps font-label-caps text-primary">{step}</span>
-      <span className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Step {Number(step)} — {title}</span>
     </p>
   )
 }
@@ -96,7 +95,7 @@ function SearchBuilderPage() {
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
-              <StepMarker step="01" title="What would you like me to find?" />
+              <StepMarker step="01" />
               <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose the makes and models you want TICA to monitor.</p>
             </div>
@@ -133,7 +132,7 @@ function SearchBuilderPage() {
           {/* ── Section 2: Vehicle Details ───────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
-              <StepMarker step="02" title="Tell me a bit more about it" />
+              <StepMarker step="02" />
               <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
                 Set your buying budget and minimum profit target so TICA only finds opportunities that match your goals.
@@ -236,7 +235,7 @@ function SearchBuilderPage() {
           {/* ── Section 3: Search Sources ────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
-              <StepMarker step="03" title="Where should I search?" />
+              <StepMarker step="03" />
               <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the marketplaces and locations TICA should scan.</p>
             </div>
@@ -290,7 +289,7 @@ function SearchBuilderPage() {
           {/* ── Section 4: Search Frequency ──────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
-              <StepMarker step="04" title="How often should I look?" />
+              <StepMarker step="04" />
               <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose how frequently TICA should run this search.</p>
             </div>
