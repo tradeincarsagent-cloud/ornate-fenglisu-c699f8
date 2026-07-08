@@ -104,6 +104,14 @@ html {
   border-radius: inherit;
 }
 
+/* Mobile-only subtle blue accent for Today's Best Buy card */
+@media (max-width: 767px) {
+  .best-buy-mobile-accent {
+    border-color: rgba(20, 147, 255, 0.32);
+    box-shadow: 0 0 18px rgba(20, 147, 255, 0.08), inset 0 0 12px rgba(20, 147, 255, 0.03);
+  }
+}
+
 .engine-start-btn {
   position: relative;
   overflow: hidden;
