@@ -131,7 +131,7 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
-const $$splitComponentImporter$4 = () => import("./settings-D4OIq6Kk.js");
+const $$splitComponentImporter$4 = () => import("./settings-B0oBEvo6.js");
 const Route$4 = createFileRoute("/settings")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });

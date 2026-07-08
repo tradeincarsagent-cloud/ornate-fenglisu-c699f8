@@ -822,8 +822,18 @@ body > div {
   transform: translateY(100%);
   transition: transform 260ms cubic-bezier(0.32, 0.72, 0, 1);
   padding-bottom: max(env(safe-area-inset-bottom), 1.25rem);
+  max-height: 68vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .settings-sheet-panel--visible {
   transform: translateY(0);
+}
+
+.settings-sheet-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
