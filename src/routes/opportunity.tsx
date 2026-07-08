@@ -162,6 +162,18 @@ function OpportunityPage() {
           </div>
         </section>
 
+        <section className="dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:hidden">
+          <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Why TICA Recommends This</p>
+          <ul className="mt-3 space-y-2.5 text-body-sm font-body-sm text-on-surface">
+            {verdictReasons.map((reason) => (
+              <li key={reason} className="flex items-center gap-2">
+                <span className="text-[#4ade80]">✓</span>
+                <span>{reason}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_0.9fr]">
             <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-6">
