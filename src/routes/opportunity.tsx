@@ -123,14 +123,6 @@ function OpportunityPage() {
                 <p className="text-body-sm font-body-sm text-on-surface">TICA Confidence: {featuredOpportunity.confidenceDisplay}</p>
                 <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">Recommended Action by TICA AI</p>
               </div>
-              <div className="w-full rounded-xl border border-outline-variant/30 bg-surface-container-high/80 px-4 py-3 text-left sm:hidden">
-                <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Why TICA Recommends This</p>
-                <ul className="mt-3 space-y-2 text-body-sm font-body-sm text-on-surface">
-                  {verdictReasons.map((reason) => (
-                    <li key={reason}>✓ {reason}</li>
-                  ))}
-                </ul>
-              </div>
               <div className="w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left">
                 <p className="text-body-xs font-body-sm leading-relaxed text-on-surface-variant">
                   <span className="font-semibold text-[#4ade80]">Green</span> = Strong buying opportunity
@@ -162,7 +154,7 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:hidden">
+        <section className="dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4">
           <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Why TICA Recommends This</p>
           <ul className="mt-3 space-y-2.5 text-body-sm font-body-sm text-on-surface">
             {verdictReasons.map((reason) => (
