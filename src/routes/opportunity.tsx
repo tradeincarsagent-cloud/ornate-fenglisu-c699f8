@@ -41,10 +41,10 @@ function OpportunityPage() {
    { label: 'Days to Sell', value: featuredOpportunity.daysToSellDisplay, valueClassName: 'text-on-surface' },
   ]
   const investigationTimeline = [
-   { time: '09:02', message: 'TICA flagged the asking price as below the current market range.' },
-   { time: '09:04', message: 'Risk checks remained low based on the current placeholder profile.' },
-   { time: '09:06', message: 'Demand signals showed strong resale potential for this specification.' },
-   { time: '09:08', message: 'Projected gross profit kept the vehicle inside the BUY NOW threshold.' },
+   { time: '09:02', message: '✓ Price reduced by £850 (from £32,845 to £31,995).' },
+   { time: '09:04', message: '↑ Dealer demand increased (+12% buyer interest in 24 hours).' },
+   { time: '09:06', message: '✓ Opportunity Score increased from 91 to 94.' },
+   { time: '09:08', message: '🟢 BUY threshold reached (confidence steady at 97%).' },
   ]
   const vehicleInfo = featuredOpportunity.vehicleInfo
   const [buyingSummaryLead, buyingSummaryTail = ''] = featuredOpportunity.buyingSummary.split(decisionAction)
