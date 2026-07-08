@@ -40,6 +40,15 @@ function CheckIcon() {
   )
 }
 
+function StepMarker({ step, title }: { step: string; title: string }) {
+  return (
+    <p className="mb-3 hidden items-center gap-3 md:flex">
+      <span className="rounded-md border border-primary/25 bg-primary/10 px-2 py-1 text-label-caps font-label-caps text-primary">{step}</span>
+      <span className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Step {Number(step)} — {title}</span>
+    </p>
+  )
+}
+
 function SearchBuilderPage() {
   const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleType | null>(null)
   const [make, setMake] = useState('')
@@ -87,6 +96,7 @@ function SearchBuilderPage() {
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
+              <StepMarker step="01" title="What would you like me to find?" />
               <div className="flex items-center gap-3">
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">1</span>
                 <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
@@ -126,6 +136,7 @@ function SearchBuilderPage() {
           {/* ── Section 2: Vehicle Details ───────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
+              <StepMarker step="02" title="Tell me a bit more about it" />
               <div className="flex items-center gap-3">
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">2</span>
                 <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
@@ -231,6 +242,7 @@ function SearchBuilderPage() {
           {/* ── Section 3: Search Sources ────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
+              <StepMarker step="03" title="Where should I search?" />
               <div className="flex items-center gap-3">
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">3</span>
                 <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
@@ -287,6 +299,7 @@ function SearchBuilderPage() {
           {/* ── Section 4: Search Frequency ──────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
+              <StepMarker step="04" title="How often should I look?" />
               <div className="flex items-center gap-3">
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">4</span>
                 <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
