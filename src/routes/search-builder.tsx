@@ -86,9 +86,12 @@ function SearchBuilderPage() {
         <div className="space-y-5 sm:space-y-8">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">1</span>
-              <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
+            <div className="mb-5">
+              <div className="flex items-center gap-3">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">1</span>
+                <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
+              </div>
+              <p className="mt-2 pl-10 text-body-md font-body-md text-on-surface-variant">Choose the makes and models you want TICA to monitor.</p>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               {VEHICLE_TYPES.map((type) => {
@@ -122,9 +125,14 @@ function SearchBuilderPage() {
 
           {/* ── Section 2: Vehicle Details ───────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">2</span>
-              <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
+            <div className="mb-5">
+              <div className="flex items-center gap-3">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">2</span>
+                <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
+              </div>
+              <p className="mt-2 pl-10 text-body-md font-body-md text-on-surface-variant">
+                Set your buying budget and minimum profit target so TICA only finds opportunities that match your goals.
+              </p>
             </div>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col gap-2">
@@ -222,9 +230,12 @@ function SearchBuilderPage() {
 
           {/* ── Section 3: Search Sources ────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">3</span>
-              <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
+            <div className="mb-5">
+              <div className="flex items-center gap-3">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">3</span>
+                <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
+              </div>
+              <p className="mt-2 pl-10 text-body-md font-body-md text-on-surface-variant">Select the marketplaces and locations TICA should scan.</p>
             </div>
             <div className="space-y-6">
               <div>
@@ -275,9 +286,12 @@ function SearchBuilderPage() {
 
           {/* ── Section 4: Search Frequency ──────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">4</span>
-              <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
+            <div className="mb-5">
+              <div className="flex items-center gap-3">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">4</span>
+                <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
+              </div>
+              <p className="mt-2 pl-10 text-body-md font-body-md text-on-surface-variant">Choose how frequently TICA should run this search.</p>
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {SEARCH_FREQUENCIES.map(({ label, value }) => {
