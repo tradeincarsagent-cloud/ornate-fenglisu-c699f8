@@ -140,7 +140,7 @@ function PrioritySelector({
             aria-checked={selected}
             disabled={disabled}
             onClick={() => onChange(option.id)}
-            className={`rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+            className={`min-h-10 rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               option.id === 'off'
                 ? selected
                   ? 'bg-red-500/15 text-red-700'
@@ -223,12 +223,14 @@ function SettingsPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max space-y-8">
+      <div className="mx-auto w-full max-w-container-max space-y-6 sm:space-y-8">
         <header>
           <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Settings</p>
           <div className="mb-3 flex items-start justify-between gap-4">
             <h1 className="min-w-0 flex-1 text-headline-lg font-headline-lg text-on-surface">TICA Preferences</h1>
-            <TicaShield />
+            <div className="shrink-0">
+              <TicaShield />
+            </div>
           </div>
           <p className="text-body-md font-body-md text-on-surface-variant">
             Teach TICA how you like to buy vehicles.
@@ -356,7 +358,7 @@ function SettingsPage() {
                   value={dealerProfile[field.key]}
                   placeholder={field.placeholder}
                   onChange={(event) => handleDealerProfileChange(field.key, event.target.value)}
-                  className="w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none"
+                  className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none"
                 />
               </label>
             ))}
@@ -379,7 +381,7 @@ function SettingsPage() {
                   role="radio"
                   aria-checked={selected}
                   onClick={() => handleBuyingStyleChange(option.id)}
-                  className={`rounded-2xl border p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  className={`min-h-40 rounded-2xl border p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                     selected
                       ? 'border-primary/50 bg-linear-to-br from-primary/10 via-surface-container-high to-surface-container shadow-[0_12px_32px_rgba(0,0,0,0.08)]'
                       : 'border-outline-variant/25 bg-linear-to-br from-surface-container-high/80 to-surface-container hover:border-outline-variant/40 hover:bg-surface-container-high'
@@ -459,7 +461,7 @@ function SettingsPage() {
               <button
                 type="button"
                 onClick={() => setProfileReviewRequested(true)}
-                className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="min-h-11 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 Review My Buying Profile
               </button>
@@ -470,7 +472,7 @@ function SettingsPage() {
           </div>
         </section>
 
-        <div className="flex items-center justify-between gap-4 pb-4">
+        <div className="flex flex-col items-stretch justify-between gap-3 pb-2 sm:flex-row sm:items-center sm:gap-4 sm:pb-4">
           {saved ? (
             <p className="flex items-center gap-2 text-sm text-on-surface-variant">
               <span className="text-base" aria-hidden="true">✅</span>
@@ -482,7 +484,7 @@ function SettingsPage() {
           <button
             type="button"
             onClick={handleSave}
-            className="rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="min-h-11 rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             Save Preferences
           </button>

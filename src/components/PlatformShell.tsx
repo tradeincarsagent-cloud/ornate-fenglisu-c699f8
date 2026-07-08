@@ -108,14 +108,14 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
 
           <aside
             id="mobile-sidebar"
-            className="platform-shell-drawer fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-6 lg:hidden"
+            className="platform-shell-drawer fixed inset-y-0 left-0 z-50 flex w-[min(20rem,86vw)] flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-5 lg:hidden"
             aria-label="Navigation menu"
           >
             <div className="mb-6 flex items-center justify-between">
               <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Menu</span>
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high"
+                className="flex h-11 w-11 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high"
                 aria-label="Close menu"
               >
                 <CloseIcon />
@@ -142,9 +142,9 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="platform-shell-header border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10">
+          <header className="platform-shell-header border-b border-outline-variant/25 bg-surface-container px-5 py-4 md:px-10">
             <div className="relative flex items-center lg:hidden">
-              <div className="mx-auto logo-bezel w-44 rounded-lg p-1">
+              <div className="mx-auto logo-bezel w-40 rounded-lg p-1 sm:w-44">
                 <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
               </div>
               <button
@@ -162,8 +162,8 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
             </p>
           </header>
 
-          <main className="platform-shell-main flex-1 overflow-x-clip px-6 py-8 md:px-10">{children}</main>
-          <footer className="platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-6 py-4 md:px-10">
+          <main className="platform-shell-main flex-1 overflow-x-clip px-5 py-8 md:px-10">{children}</main>
+          <footer className="platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-5 py-4 md:px-10">
             <div className="mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-1">
                 <p className="text-body-sm font-body-sm text-on-surface">Trade in Cars Agent</p>

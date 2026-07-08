@@ -73,15 +73,17 @@ function SearchBuilderPage() {
       <div className="mx-auto w-full max-w-container-max">
         {/* ── Page title ──────────────────────────────────────────────── */}
         <div className="mb-6 md:mb-10">
-          <div className="mb-2 flex items-start justify-between gap-4">
+          <div className="mb-3 flex items-start justify-between gap-4">
             <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Builder</p>
-            <TicaShield />
+            <div className="shrink-0">
+              <TicaShield />
+            </div>
           </div>
           <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">Create an AI Search in Under 60 Seconds</h1>
           <p className="text-body-md font-body-md text-on-surface-variant">Configure your search criteria and let the AI find matching vehicles 24/7.</p>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-6 flex items-center gap-3">
@@ -96,7 +98,7 @@ function SearchBuilderPage() {
                     key={type}
                     type="button"
                     onClick={() => setSelectedVehicleType(type)}
-                    className={`group relative flex flex-col items-center justify-center gap-3 rounded-xl border p-6 text-center transition-all duration-200 ${
+                    className={`group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${
                       selected
                         ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
                         : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:bg-surface-container-high hover:text-on-surface'
@@ -133,7 +135,7 @@ function SearchBuilderPage() {
                   placeholder="e.g. BMW, Audi, Ford"
                   value={make}
                   onChange={(e) => setMake(e.target.value)}
-                  className="rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -144,7 +146,7 @@ function SearchBuilderPage() {
                   placeholder="e.g. 3 Series, A4, Focus"
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
-                  className="rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -157,7 +159,7 @@ function SearchBuilderPage() {
                   max="2030"
                   value={yearFrom}
                   onChange={(e) => setYearFrom(e.target.value)}
-                  className="rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -170,7 +172,7 @@ function SearchBuilderPage() {
                   max="2030"
                   value={yearTo}
                   onChange={(e) => setYearTo(e.target.value)}
-                  className="rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -184,7 +186,7 @@ function SearchBuilderPage() {
                     min="0"
                     value={maxBudget}
                     onChange={(e) => setMaxBudget(e.target.value)}
-                    className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                   />
                 </div>
               </div>
@@ -197,7 +199,7 @@ function SearchBuilderPage() {
                   min="0"
                   value={maxMileage}
                   onChange={(e) => setMaxMileage(e.target.value)}
-                  className="rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2 lg:col-span-1">
@@ -211,7 +213,7 @@ function SearchBuilderPage() {
                     min="0"
                     value={minProfit}
                     onChange={(e) => setMinProfit(e.target.value)}
-                    className="w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                   />
                 </div>
               </div>
@@ -286,7 +288,7 @@ function SearchBuilderPage() {
                     type="button"
                     onClick={() => setFrequency(value)}
                     aria-pressed={selected}
-                    className={`relative flex flex-col items-center justify-center gap-2 rounded-xl border px-4 py-5 text-center transition-all duration-200 ${
+                    className={`relative flex min-h-24 flex-col items-center justify-center gap-2 rounded-xl border px-4 py-4 text-center transition-all duration-200 sm:py-5 ${
                       selected
                         ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
                         : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
@@ -312,7 +314,7 @@ function SearchBuilderPage() {
             <button
               type="button"
               onClick={() => setMissionCreated(true)}
-              className="mx-auto flex w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+              className="mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
             >
               <span>⚡</span>
               Start AI Search Mission

@@ -140,6 +140,7 @@ body > div {
 .platform-shell {
   min-height: 100svh;
   overflow-x: clip;
+  overscroll-behavior-y: none;
 }
 
 .platform-shell-layout {
@@ -464,18 +465,18 @@ body > div {
 
 @media (max-width: 767px) {
   .platform-shell-header {
-    padding-top: calc(var(--app-safe-area-top) + 1rem);
+    padding-top: calc(var(--app-safe-area-top) + 0.9rem);
     padding-bottom: 1rem;
   }
 
   .platform-shell-main {
-    padding-top: 1.5rem;
-    padding-bottom: 2rem;
+    padding-top: 1.25rem;
+    padding-bottom: 2.25rem;
   }
 
   .platform-shell-footer {
-    padding-top: 1rem;
-    padding-bottom: calc(var(--app-safe-area-bottom) + 1rem);
+    padding-top: 1.15rem;
+    padding-bottom: calc(var(--app-safe-area-bottom) + 1.15rem);
   }
 
   .platform-shell-drawer {
@@ -483,6 +484,7 @@ body > div {
     padding-bottom: calc(var(--app-safe-area-bottom) + 2rem);
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    animation: drawerSlideIn 220ms ease-out;
   }
 
   .timeline-mobile-shell {
@@ -511,9 +513,9 @@ body > div {
   .timeline-entry {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.45rem;
     width: 100%;
-    padding: 0.95rem 1rem;
+    padding: 1rem;
     border-radius: 0.9rem;
   }
 
@@ -542,11 +544,22 @@ body > div {
   }
 
   .radar-container {
-    max-width: 360px;
+    max-width: min(92vw, 350px);
   }
 
   .radar-glass-panel {
-    padding: 1.15rem;
+    padding: 1rem;
+  }
+}
+
+@keyframes drawerSlideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
