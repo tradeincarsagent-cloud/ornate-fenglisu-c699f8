@@ -93,17 +93,18 @@ function OpportunityPage() {
         <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8">
           <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Buying Verdict</h2>
           <div className="flex flex-col gap-5 lg:flex-row lg:items-stretch">
-            <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-primary/50 bg-primary-container px-5 py-6 text-center sm:px-8 sm:py-8 lg:min-w-[320px]">
+            <div className="verdict-card-premium flex flex-col items-center justify-center gap-4 rounded-2xl px-5 py-6 text-center sm:px-8 sm:py-8 lg:min-w-[320px]">
               <div className="traffic-light-shell" aria-label="AI buying verdict traffic light">
                 <div className="traffic-light-lens traffic-light-lens-green-active" aria-hidden="true" />
                 <div className="traffic-light-lens" aria-hidden="true" />
                 <div className="traffic-light-lens" aria-hidden="true" />
               </div>
-              <div>
-                <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-primary-container/80">Verdict</p>
-                <p className="mt-2 text-[34px] font-bold leading-none tracking-tight text-on-primary-container sm:text-[46px]">{decisionActionDisplay}</p>
+              <div className="space-y-2">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary/80">AI Buying Verdict</p>
+                <p className="text-[30px] font-semibold leading-none tracking-[0.02em] text-on-surface sm:text-[40px]">{decisionActionDisplay}</p>
+                <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">TICA Recommended Action</p>
               </div>
-              <div className="w-full rounded-xl border border-outline-variant/35 bg-surface-container-high/70 px-4 py-3 text-left">
+              <div className="w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left">
                 <p className="text-body-xs font-body-sm leading-relaxed text-on-surface-variant">
                   <span className="font-semibold text-[#4ade80]">Green</span> = Strong buying opportunity
                   <br />
@@ -112,20 +113,20 @@ function OpportunityPage() {
                   <span className="font-semibold text-[#ef4444]">Red</span> = Pass / avoid
                 </p>
               </div>
-              <div className="mt-1 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2">
-                <div className="rounded-xl border border-primary/30 bg-surface-container-high px-3 py-3 text-center">
+              <div className="verdict-metrics-group mt-1 grid w-full grid-cols-2 gap-2">
+                <div className="rounded-xl border border-primary/20 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Confidence</p>
                   <p className="mt-1 text-body-lg font-semibold text-primary">{featuredOpportunity.confidenceDisplay}</p>
                 </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center">
+                <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Risk Level</p>
                   <p className="mt-1 text-body-lg font-semibold text-[#4ade80]">{featuredOpportunity.riskLevel}</p>
                 </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center">
+                <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Est. Gross Profit</p>
                   <p className="mt-1 text-body-md font-semibold text-on-surface">{featuredOpportunity.estimatedGrossProfitDisplay}</p>
                 </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-3 py-3 text-center">
+                <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Days to Sell</p>
                   <p className="mt-1 text-body-md font-semibold text-on-surface">{featuredOpportunity.daysToSellDisplay}</p>
                 </div>
@@ -152,9 +153,9 @@ function OpportunityPage() {
                 <img src={featuredOpportunity.heroImageSrc} alt={featuredOpportunity.heroImageAlt} className="h-auto max-h-[280px] w-full object-cover" />
               </div>
             </div>
-            <div className="rounded-2xl border border-primary/40 bg-primary-container p-5 sm:p-6">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.2em] text-on-primary-container/80">AI Verdict</p>
-              <p className="mt-4 text-[56px] font-semibold leading-none text-on-primary-container sm:text-[72px]">{decisionAction}</p>
+            <div className="verdict-card-premium rounded-2xl p-5 sm:p-6">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.2em] text-primary/80">AI Verdict</p>
+              <p className="mt-4 text-[52px] font-semibold leading-none text-on-surface sm:text-[68px]">{decisionAction}</p>
             </div>
           </div>
         </section>
