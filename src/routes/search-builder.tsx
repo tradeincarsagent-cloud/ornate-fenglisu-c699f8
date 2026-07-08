@@ -97,11 +97,8 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="01" title="What would you like me to find?" />
-              <div className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">1</span>
-                <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
-              </div>
-              <p className="mt-2 pl-10 text-body-md font-body-md text-on-surface-variant">Choose the makes and models you want TICA to monitor.</p>
+              <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose the makes and models you want TICA to monitor.</p>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               {VEHICLE_TYPES.map((type) => {
@@ -137,11 +134,8 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="02" title="Tell me a bit more about it" />
-              <div className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">2</span>
-                <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
-              </div>
-              <p className="mt-2 pl-10 text-body-md font-body-md text-on-surface-variant">
+              <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
                 Set your buying budget and minimum profit target so TICA only finds opportunities that match your goals.
               </p>
             </div>
@@ -243,11 +237,8 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="03" title="Where should I search?" />
-              <div className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">3</span>
-                <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
-              </div>
-              <p className="mt-2 pl-10 text-body-md font-body-md text-on-surface-variant">Select the marketplaces and locations TICA should scan.</p>
+              <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the marketplaces and locations TICA should scan.</p>
             </div>
             <div className="space-y-6">
               <div>
@@ -300,11 +291,8 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="04" title="How often should I look?" />
-              <div className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">4</span>
-                <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
-              </div>
-              <p className="mt-2 pl-10 text-body-md font-body-md text-on-surface-variant">Choose how frequently TICA should run this search.</p>
+              <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose how frequently TICA should run this search.</p>
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {SEARCH_FREQUENCIES.map(({ label, value }) => {

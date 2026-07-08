@@ -21,6 +21,20 @@ const PLANNED_INTEGRATIONS = ["Facebook Marketplace", "Auctions", "Private Selle
 function CheckIcon() {
   return /* @__PURE__ */ jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "20 6 9 17 4 12" }) });
 }
+function StepMarker({
+  step,
+  title
+}) {
+  return /* @__PURE__ */ jsxs("p", { className: "mb-3 hidden items-center gap-3 md:flex", children: [
+    /* @__PURE__ */ jsx("span", { className: "rounded-md border border-primary/25 bg-primary/10 px-2 py-1 text-label-caps font-label-caps text-primary", children: step }),
+    /* @__PURE__ */ jsxs("span", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: [
+      "Step ",
+      Number(step),
+      " — ",
+      title
+    ] })
+  ] });
+}
 function SearchBuilderPage() {
   const [selectedVehicleType, setSelectedVehicleType] = useState(null);
   const [make, setMake] = useState("");
@@ -75,11 +89,9 @@ function SearchBuilderPage() {
     /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8", children: [
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "1" }),
-            /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "What would you like me to find?" })
-          ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 pl-10 text-body-md font-body-md text-on-surface-variant", children: "Choose the makes and models you want TICA to monitor." })
+          /* @__PURE__ */ jsx(StepMarker, { step: "01", title: "What would you like me to find?" }),
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "What would you like me to find?" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Choose the makes and models you want TICA to monitor." })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-3", children: VEHICLE_TYPES.map((type) => {
           const selected = selectedVehicleType === type;
@@ -92,11 +104,9 @@ function SearchBuilderPage() {
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "2" }),
-            /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Tell me a bit more about it" })
-          ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 pl-10 text-body-md font-body-md text-on-surface-variant", children: "Set your buying budget and minimum profit target so TICA only finds opportunities that match your goals." })
+          /* @__PURE__ */ jsx(StepMarker, { step: "02", title: "Tell me a bit more about it" }),
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Tell me a bit more about it" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Set your buying budget and minimum profit target so TICA only finds opportunities that match your goals." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
@@ -137,11 +147,9 @@ function SearchBuilderPage() {
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "3" }),
-            /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Where should I search?" })
-          ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 pl-10 text-body-md font-body-md text-on-surface-variant", children: "Select the marketplaces and locations TICA should scan." })
+          /* @__PURE__ */ jsx(StepMarker, { step: "03", title: "Where should I search?" }),
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Where should I search?" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Select the marketplaces and locations TICA should scan." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
           /* @__PURE__ */ jsxs("div", { children: [
@@ -165,11 +173,9 @@ function SearchBuilderPage() {
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "4" }),
-            /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "How often should I look?" })
-          ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 pl-10 text-body-md font-body-md text-on-surface-variant", children: "Choose how frequently TICA should run this search." })
+          /* @__PURE__ */ jsx(StepMarker, { step: "04", title: "How often should I look?" }),
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "How often should I look?" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Choose how frequently TICA should run this search." })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 sm:grid-cols-4", children: SEARCH_FREQUENCIES.map(({
           label,
