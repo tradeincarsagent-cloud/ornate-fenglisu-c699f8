@@ -133,13 +133,6 @@ function OpportunityPage() {
             ] }),
             /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant", children: "Recommended Action by TICA AI" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "w-full rounded-xl border border-outline-variant/30 bg-surface-container-high/80 px-4 py-3 text-left sm:hidden", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: "Why TICA Recommends This" }),
-            /* @__PURE__ */ jsx("ul", { className: "mt-3 space-y-2 text-body-sm font-body-sm text-on-surface", children: verdictReasons.map((reason) => /* @__PURE__ */ jsxs("li", { children: [
-              "✓ ",
-              reason
-            ] }, reason)) })
-          ] }),
           /* @__PURE__ */ jsx("div", { className: "w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left", children: /* @__PURE__ */ jsxs("p", { className: "text-body-xs font-body-sm leading-relaxed text-on-surface-variant", children: [
             /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#4ade80]", children: "Green" }),
             " = Strong buying opportunity",
@@ -158,7 +151,7 @@ function OpportunityPage() {
         /* @__PURE__ */ jsx("div", { className: "flex min-w-0 flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:px-6 sm:py-6", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface-variant", children: featuredOpportunity.verdictNarrative }) })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:hidden", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4", children: [
       /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: "Why TICA Recommends This" }),
       /* @__PURE__ */ jsx("ul", { className: "mt-3 space-y-2.5 text-body-sm font-body-sm text-on-surface", children: verdictReasons.map((reason) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2", children: [
         /* @__PURE__ */ jsx("span", { className: "text-[#4ade80]", children: "✓" }),
