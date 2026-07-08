@@ -25,7 +25,7 @@ function StepMarker({
   step,
   title
 }) {
-  return /* @__PURE__ */ jsxs("p", { className: "mb-3 hidden items-center gap-3 md:flex", children: [
+  return /* @__PURE__ */ jsxs("p", { className: "mb-3 flex items-center gap-3", children: [
     /* @__PURE__ */ jsx("span", { className: "rounded-md border border-primary/25 bg-primary/10 px-2 py-1 text-label-caps font-label-caps text-primary", children: step }),
     /* @__PURE__ */ jsxs("span", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: [
       "Step ",
