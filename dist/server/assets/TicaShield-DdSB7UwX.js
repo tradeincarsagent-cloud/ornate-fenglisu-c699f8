@@ -133,11 +133,14 @@ function PlatformShell({ children, navItems }) {
               /* @__PURE__ */ jsx("span", { className: "text-on-surface", children: "🟢 Operational" })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("nav", { "aria-label": "Application footer links", className: "flex flex-wrap items-center justify-start gap-x-2 gap-y-2 text-xs text-on-surface-variant sm:justify-end", children: [
-            /* @__PURE__ */ jsx("a", { href: "#", className: "rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary", children: "Support" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary", children: "Privacy" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary", children: "Terms" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary", children: "Contact" })
+          /* @__PURE__ */ jsxs("nav", { "aria-label": "Application footer links", className: "flex flex-nowrap items-center gap-0 text-xs text-on-surface-variant sm:gap-2", children: [
+            /* @__PURE__ */ jsx("a", { href: "#", className: "px-2 py-2 transition-colors hover:text-primary sm:rounded-lg sm:border sm:border-outline-variant/20 sm:bg-surface-container-high/45 sm:px-3", children: "Support" }),
+            /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant/30 sm:hidden", "aria-hidden": "true", children: "|" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "px-2 py-2 transition-colors hover:text-primary sm:rounded-lg sm:border sm:border-outline-variant/20 sm:bg-surface-container-high/45 sm:px-3", children: "Privacy" }),
+            /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant/30 sm:hidden", "aria-hidden": "true", children: "|" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "px-2 py-2 transition-colors hover:text-primary sm:rounded-lg sm:border sm:border-outline-variant/20 sm:bg-surface-container-high/45 sm:px-3", children: "Terms" }),
+            /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant/30 sm:hidden", "aria-hidden": "true", children: "|" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "px-2 py-2 transition-colors hover:text-primary sm:rounded-lg sm:border sm:border-outline-variant/20 sm:bg-surface-container-high/45 sm:px-3", children: "Contact" })
           ] })
         ] }) })
       ] })

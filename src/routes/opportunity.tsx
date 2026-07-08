@@ -102,31 +102,34 @@ function OpportunityPage() {
               <div className="space-y-2">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary/80">AI Buying Verdict</p>
                 <p className="text-[30px] font-semibold leading-none tracking-[0.02em] text-on-surface sm:text-[40px]">{decisionActionDisplay}</p>
-                <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">TICA Recommended Action</p>
+                <p className="text-body-sm font-body-sm text-on-surface-variant">TICA Recommended Action</p>
               </div>
-              <div className="w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left">
-                <p className="text-body-xs font-body-sm leading-relaxed text-on-surface-variant">
-                  <span className="font-semibold text-[#4ade80]">Green</span> = Strong buying opportunity
-                  <br />
-                  <span className="font-semibold text-[#f59e0b]">Amber</span> = Review further
-                  <br />
-                  <span className="font-semibold text-[#ef4444]">Red</span> = Pass / avoid
-                </p>
+              <div className="flex w-full items-center gap-3 rounded-xl border border-primary/15 bg-surface-container-high/70 px-3 py-3">
+                <div className="flex shrink-0 flex-col items-center gap-1.5 rounded-2xl border border-slate-500/30 bg-slate-900/80 px-2 py-2.5" aria-label="AI buying verdict traffic light">
+                  <div className={`h-4 w-4 rounded-full ${decisionAction === 'BUY' ? 'bg-[#4ade80] shadow-[0_0_6px_rgba(74,222,128,0.7)]' : 'bg-slate-700/60'}`} aria-hidden="true" />
+                  <div className={`h-4 w-4 rounded-full ${decisionAction === 'REVIEW' ? 'bg-[#f59e0b] shadow-[0_0_6px_rgba(245,158,11,0.7)]' : 'bg-slate-700/60'}`} aria-hidden="true" />
+                  <div className={`h-4 w-4 rounded-full ${decisionAction === 'PASS' ? 'bg-[#ef4444] shadow-[0_0_6px_rgba(239,68,68,0.7)]' : 'bg-slate-700/60'}`} aria-hidden="true" />
+                </div>
+                <div className="space-y-1 text-body-xs font-body-sm text-on-surface-variant">
+                  <p><span className="font-semibold text-[#4ade80]">🟢 BUY</span> – Strong buying opportunity</p>
+                  <p><span className="font-semibold text-[#f59e0b]">🟡 REVIEW</span> – Needs further investigation</p>
+                  <p><span className="font-semibold text-[#ef4444]">🔴 PASS</span> – Avoid</p>
+                </div>
               </div>
               <div className="verdict-metrics-group mt-1 grid w-full grid-cols-2 gap-2">
-                <div className="rounded-xl border border-primary/20 bg-surface-container-high px-3 py-3 text-center">
+                <div className="flex min-h-[76px] flex-col items-center justify-center rounded-xl border border-primary/20 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Confidence</p>
-                  <p className="mt-1 text-body-lg font-semibold text-primary">{featuredOpportunity.confidenceDisplay}</p>
+                  <p className="mt-1 text-body-md font-semibold text-primary">{featuredOpportunity.confidenceDisplay}</p>
                 </div>
-                <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
+                <div className="flex min-h-[76px] flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Risk Level</p>
-                  <p className="mt-1 text-body-lg font-semibold text-[#4ade80]">{featuredOpportunity.riskLevel}</p>
+                  <p className="mt-1 text-body-md font-semibold text-[#4ade80]">{featuredOpportunity.riskLevel}</p>
                 </div>
-                <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
-                  <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Est. Gross Profit</p>
+                <div className="flex min-h-[76px] flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Gross Profit</p>
                   <p className="mt-1 text-body-md font-semibold text-on-surface">{featuredOpportunity.estimatedGrossProfitDisplay}</p>
                 </div>
-                <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
+                <div className="flex min-h-[76px] flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">Days to Sell</p>
                   <p className="mt-1 text-body-md font-semibold text-on-surface">{featuredOpportunity.daysToSellDisplay}</p>
                 </div>

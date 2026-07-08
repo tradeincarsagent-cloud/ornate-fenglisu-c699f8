@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CGKAL8o6.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-DdSB7UwX.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 import "react";
 const {
@@ -59,8 +59,8 @@ function OpportunityPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-5 sm:space-y-6", children: [
-    /* @__PURE__ */ jsxs("header", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-4 sm:space-y-6", children: [
+    /* @__PURE__ */ jsxs("header", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center", children: [
         /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Trade In Cars Agent" }) }),
         /* @__PURE__ */ jsxs("div", { className: "flex w-full flex-col gap-3 sm:w-auto sm:flex-row", children: [
@@ -84,7 +84,7 @@ function OpportunityPage() {
         /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx(TicaShield, {}) })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-5 text-headline-md font-headline-md text-on-surface", children: "AI Buying Verdict" }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-stretch", children: [
         /* @__PURE__ */ jsxs("div", { className: "verdict-card-premium flex flex-col items-center justify-center gap-4 rounded-2xl px-5 py-6 text-center sm:px-8 sm:py-8 lg:min-w-[320px]", children: [
@@ -96,42 +96,53 @@ function OpportunityPage() {
           /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary/80", children: "AI Buying Verdict" }),
             /* @__PURE__ */ jsx("p", { className: "text-[30px] font-semibold leading-none tracking-[0.02em] text-on-surface sm:text-[40px]", children: decisionActionDisplay }),
-            /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant", children: "TICA Recommended Action" })
+            /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "TICA Recommended Action" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left", children: /* @__PURE__ */ jsxs("p", { className: "text-body-xs font-body-sm leading-relaxed text-on-surface-variant", children: [
-            /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#4ade80]", children: "Green" }),
-            " = Strong buying opportunity",
-            /* @__PURE__ */ jsx("br", {}),
-            /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#f59e0b]", children: "Amber" }),
-            " = Review further",
-            /* @__PURE__ */ jsx("br", {}),
-            /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#ef4444]", children: "Red" }),
-            " = Pass / avoid"
-          ] }) }),
+          /* @__PURE__ */ jsxs("div", { className: "flex w-full items-center gap-3 rounded-xl border border-primary/15 bg-surface-container-high/70 px-3 py-3", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex shrink-0 flex-col items-center gap-1.5 rounded-2xl border border-slate-500/30 bg-slate-900/80 px-2 py-2.5", "aria-label": "AI buying verdict traffic light", children: [
+              /* @__PURE__ */ jsx("div", { className: `h-4 w-4 rounded-full ${"bg-[#4ade80] shadow-[0_0_6px_rgba(74,222,128,0.7)]"}`, "aria-hidden": "true" }),
+              /* @__PURE__ */ jsx("div", { className: `h-4 w-4 rounded-full ${"bg-slate-700/60"}`, "aria-hidden": "true" }),
+              /* @__PURE__ */ jsx("div", { className: `h-4 w-4 rounded-full ${"bg-slate-700/60"}`, "aria-hidden": "true" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-1 text-body-xs font-body-sm text-on-surface-variant", children: [
+              /* @__PURE__ */ jsxs("p", { children: [
+                /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#4ade80]", children: "🟢 BUY" }),
+                " – Strong buying opportunity"
+              ] }),
+              /* @__PURE__ */ jsxs("p", { children: [
+                /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#f59e0b]", children: "🟡 REVIEW" }),
+                " – Needs further investigation"
+              ] }),
+              /* @__PURE__ */ jsxs("p", { children: [
+                /* @__PURE__ */ jsx("span", { className: "font-semibold text-[#ef4444]", children: "🔴 PASS" }),
+                " – Avoid"
+              ] })
+            ] })
+          ] }),
           /* @__PURE__ */ jsxs("div", { className: "verdict-metrics-group mt-1 grid w-full grid-cols-2 gap-2", children: [
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary/20 bg-surface-container-high px-3 py-3 text-center", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex min-h-[76px] flex-col items-center justify-center rounded-xl border border-primary/20 bg-surface-container-high px-3 py-3 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Confidence" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-lg font-semibold text-primary", children: featuredOpportunity.confidenceDisplay })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-semibold text-primary", children: featuredOpportunity.confidenceDisplay })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex min-h-[76px] flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Risk Level" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-lg font-semibold text-[#4ade80]", children: featuredOpportunity.riskLevel })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-semibold text-[#4ade80]", children: featuredOpportunity.riskLevel })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Est. Gross Profit" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex min-h-[76px] flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Gross Profit" }),
               /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-semibold text-on-surface", children: featuredOpportunity.estimatedGrossProfitDisplay })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex min-h-[76px] flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: "Days to Sell" }),
               /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-semibold text-on-surface", children: featuredOpportunity.daysToSellDisplay })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "flex min-w-0 flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-5 py-5 sm:px-6 sm:py-6", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface-variant", children: featuredOpportunity.verdictNarrative }) })
+        /* @__PURE__ */ jsx("div", { className: "flex min-w-0 flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:px-6 sm:py-6", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface-variant", children: featuredOpportunity.verdictNarrative }) })
       ] })
     ] }),
-    /* @__PURE__ */ jsx("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_0.9fr]", children: [
-      /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-5 sm:p-6", children: [
+    /* @__PURE__ */ jsx("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_0.9fr]", children: [
+      /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-6", children: [
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant", children: "Target Vehicle" }),
         /* @__PURE__ */ jsx("h2", { className: "mt-3 text-headline-lg font-headline-lg text-on-surface", children: featuredOpportunity.vehicle }),
         /* @__PURE__ */ jsxs("div", { className: "mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-body-lg font-body-lg text-on-surface", children: [
@@ -140,20 +151,20 @@ function OpportunityPage() {
         ] }),
         /* @__PURE__ */ jsx("div", { className: "mt-5 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container", children: /* @__PURE__ */ jsx("img", { src: featuredOpportunity.heroImageSrc, alt: featuredOpportunity.heroImageAlt, className: "h-auto max-h-[280px] w-full object-cover" }) })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "verdict-card-premium rounded-2xl p-5 sm:p-6", children: [
+      /* @__PURE__ */ jsxs("div", { className: "verdict-card-premium rounded-2xl p-4 sm:p-6", children: [
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.2em] text-primary/80", children: "AI Verdict" }),
         /* @__PURE__ */ jsx("p", { className: "mt-4 text-[52px] font-semibold leading-none text-on-surface sm:text-[68px]", children: decisionAction })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: /* @__PURE__ */ jsx("dl", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5", children: keyMetrics.map((metric) => /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
+    /* @__PURE__ */ jsx("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: /* @__PURE__ */ jsx("dl", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5", children: keyMetrics.map((metric) => /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
       /* @__PURE__ */ jsx("dt", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: metric.label }),
       /* @__PURE__ */ jsx("dd", { className: "mt-2 text-body-lg font-body-lg text-on-surface", children: metric.value })
     ] }, metric.label)) }) }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "AI Opportunity Analysis" }),
       /* @__PURE__ */ jsx("p", { className: "mt-3 max-w-3xl text-body-md font-body-md text-on-surface-variant", children: featuredOpportunity.analysisSummary })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-5 text-headline-md font-headline-md text-on-surface", children: "AI Buying Checklist" }),
       /* @__PURE__ */ jsx("div", { className: "space-y-3", children: featuredOpportunity.checklist.map((item) => {
         const statusToneClass = item.tone === "positive" ? "text-[#4ade80]" : item.tone === "warning" ? "text-[#facc15]" : "text-primary";
@@ -170,7 +181,7 @@ function OpportunityPage() {
       }) }),
       /* @__PURE__ */ jsx("p", { className: "mt-5 text-body-sm font-body-sm text-on-surface-variant/70 italic", children: "Complete vehicle history, MOT and verification services will be available through trusted data providers in a future release." })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-5 text-headline-md font-headline-md text-on-surface", children: "AI Negotiation Advice" }),
       /* @__PURE__ */ jsxs("div", { className: "mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4", children: [
         /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
@@ -195,31 +206,31 @@ function OpportunityPage() {
         /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant/60 italic", children: "Interactive deal simulation will be available in a future release." })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "AI Buying Summary" }),
-      /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-primary/30 bg-primary-container/20 px-6 py-5", children: /* @__PURE__ */ jsxs("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface-variant", children: [
+      /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-primary/30 bg-primary-container/20 px-4 py-4 sm:px-6 sm:py-5", children: /* @__PURE__ */ jsxs("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface-variant", children: [
         buyingSummaryLead,
         /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: decisionAction }),
         buyingSummaryTail
       ] }) })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "Vehicle Information" }),
       /* @__PURE__ */ jsx("dl", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3", children: vehicleInfo.map((item) => /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container-high p-4", children: [
         /* @__PURE__ */ jsx("dt", { className: "text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant", children: item.label }),
         /* @__PURE__ */ jsx("dd", { className: "mt-1 text-body-md font-body-md text-on-surface", children: item.value })
       ] }, item.label)) })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "Vehicle History & MOT Checks" }),
       /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Powered by trusted vehicle data providers." }),
       /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-primary", children: "Status: Available soon." })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "Dealer Notes" }),
       /* @__PURE__ */ jsx("textarea", { placeholder: "Add internal notes, call outcomes, valuation observations, and next actions...", className: "h-44 w-full resize-y rounded-xl border border-outline-variant/35 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-all placeholder:text-on-surface-variant/70 focus:border-primary/60 sm:h-40" })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-5 sm:p-6 md:p-8", children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-5 text-headline-md font-headline-md text-on-surface", children: "Actions" }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5", children: [
         /* @__PURE__ */ jsx("button", { className: "min-h-11 rounded-xl bg-primary px-5 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Save Opportunity" }),

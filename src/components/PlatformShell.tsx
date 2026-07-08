@@ -172,11 +172,14 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
                   System Status: <span className="text-on-surface">🟢 Operational</span>
                 </p>
               </div>
-              <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-start gap-x-2 gap-y-2 text-xs text-on-surface-variant sm:justify-end">
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Support</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Privacy</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Terms</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Contact</a>
+              <nav aria-label="Application footer links" className="flex flex-nowrap items-center gap-0 text-xs text-on-surface-variant sm:gap-2">
+                <a href="#" className="px-2 py-2 transition-colors hover:text-primary sm:rounded-lg sm:border sm:border-outline-variant/20 sm:bg-surface-container-high/45 sm:px-3">Support</a>
+                <span className="text-on-surface-variant/30 sm:hidden" aria-hidden="true">|</span>
+                <a href="#" className="px-2 py-2 transition-colors hover:text-primary sm:rounded-lg sm:border sm:border-outline-variant/20 sm:bg-surface-container-high/45 sm:px-3">Privacy</a>
+                <span className="text-on-surface-variant/30 sm:hidden" aria-hidden="true">|</span>
+                <a href="#" className="px-2 py-2 transition-colors hover:text-primary sm:rounded-lg sm:border sm:border-outline-variant/20 sm:bg-surface-container-high/45 sm:px-3">Terms</a>
+                <span className="text-on-surface-variant/30 sm:hidden" aria-hidden="true">|</span>
+                <a href="#" className="px-2 py-2 transition-colors hover:text-primary sm:rounded-lg sm:border sm:border-outline-variant/20 sm:bg-surface-container-high/45 sm:px-3">Contact</a>
               </nav>
             </div>
           </footer>
