@@ -734,7 +734,7 @@ body > div {
 }
 
 .traffic-light-shell {
-  width: 82px;
+  width: 98px;
   border-radius: 18px;
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
   border: 1px solid rgba(148, 163, 184, 0.28);
@@ -779,6 +779,24 @@ body > div {
   }
 }
 
+.verdict-card-premium {
+  border: 1px solid rgba(20, 147, 255, 0.24);
+  background:
+    radial-gradient(circle at top, rgba(20, 147, 255, 0.12), transparent 58%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(12, 19, 36, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 18px 36px rgba(2, 6, 23, 0.36),
+    0 0 0 1px rgba(20, 147, 255, 0.08);
+}
+
+.verdict-metrics-group {
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 1rem;
+  padding: 0.65rem;
+  background: rgba(15, 23, 42, 0.46);
+}
+
 @keyframes verdictGlowPulse {
   0%,
   100% {
@@ -792,6 +810,21 @@ body > div {
 @media (prefers-reduced-motion: reduce) {
   .traffic-light-lens-green-active {
     animation: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .verdict-card-premium {
+    border-color: rgba(20, 147, 255, 0.2);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 14px 28px rgba(2, 6, 23, 0.32),
+      0 0 18px rgba(20, 147, 255, 0.08);
+  }
+
+  .verdict-metrics-group {
+    gap: 0.55rem;
+    padding: 0.55rem;
   }
 }
 

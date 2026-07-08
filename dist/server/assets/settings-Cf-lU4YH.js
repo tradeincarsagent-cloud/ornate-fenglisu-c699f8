@@ -1,6 +1,6 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CotHvtbv.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-CGKAL8o6.js";
 import "@tanstack/react-router";
 const CHANNELS = [{
   id: "email",

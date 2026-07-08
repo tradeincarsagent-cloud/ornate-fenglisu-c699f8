@@ -164,7 +164,7 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
 
           <main className="platform-shell-main flex-1 overflow-x-clip px-5 py-8 md:px-10">{children}</main>
           <footer className="platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-5 py-4 md:px-10">
-            <div className="mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mx-auto flex w-full max-w-container-max flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-1">
                 <p className="text-body-sm font-body-sm text-on-surface">Trade in Cars Agent</p>
                 <p className="text-xs text-on-surface-variant">Version 1.0 Beta</p>
@@ -172,14 +172,11 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
                   System Status: <span className="text-on-surface">🟢 Operational</span>
                 </p>
               </div>
-              <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-center gap-y-1 text-xs text-on-surface-variant sm:justify-end">
-                <a href="#" className="whitespace-nowrap px-2 py-1 transition-colors hover:text-primary">Support</a>
-                <span aria-hidden="true" className="text-outline-variant/50">•</span>
-                <a href="#" className="whitespace-nowrap px-2 py-1 transition-colors hover:text-primary">Privacy</a>
-                <span aria-hidden="true" className="text-outline-variant/50">•</span>
-                <a href="#" className="whitespace-nowrap px-2 py-1 transition-colors hover:text-primary">Terms</a>
-                <span aria-hidden="true" className="text-outline-variant/50">•</span>
-                <a href="#" className="whitespace-nowrap px-2 py-1 transition-colors hover:text-primary">Contact</a>
+              <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-start gap-x-2 gap-y-2 text-xs text-on-surface-variant sm:justify-end">
+                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Support</a>
+                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Privacy</a>
+                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Terms</a>
+                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Contact</a>
               </nav>
             </div>
           </footer>

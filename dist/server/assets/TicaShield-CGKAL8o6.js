@@ -124,7 +124,7 @@ function PlatformShell({ children, navItems }) {
           /* @__PURE__ */ jsx("p", { className: "hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block", children: "Trade In Cars Agent" })
         ] }),
         /* @__PURE__ */ jsx("main", { className: "platform-shell-main flex-1 overflow-x-clip px-5 py-8 md:px-10", children }),
-        /* @__PURE__ */ jsx("footer", { className: "platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-5 py-4 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between", children: [
+        /* @__PURE__ */ jsx("footer", { className: "platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-5 py-4 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex w-full max-w-container-max flex-col gap-4 sm:flex-row sm:items-center sm:justify-between", children: [
           /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
             /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface", children: "Trade in Cars Agent" }),
             /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Version 1.0 Beta" }),
@@ -133,14 +133,11 @@ function PlatformShell({ children, navItems }) {
               /* @__PURE__ */ jsx("span", { className: "text-on-surface", children: "🟢 Operational" })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("nav", { "aria-label": "Application footer links", className: "flex flex-wrap items-center justify-center gap-y-1 text-xs text-on-surface-variant sm:justify-end", children: [
-            /* @__PURE__ */ jsx("a", { href: "#", className: "whitespace-nowrap px-2 py-1 transition-colors hover:text-primary", children: "Support" }),
-            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "text-outline-variant/50", children: "•" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "whitespace-nowrap px-2 py-1 transition-colors hover:text-primary", children: "Privacy" }),
-            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "text-outline-variant/50", children: "•" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "whitespace-nowrap px-2 py-1 transition-colors hover:text-primary", children: "Terms" }),
-            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "text-outline-variant/50", children: "•" }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "whitespace-nowrap px-2 py-1 transition-colors hover:text-primary", children: "Contact" })
+          /* @__PURE__ */ jsxs("nav", { "aria-label": "Application footer links", className: "flex flex-wrap items-center justify-start gap-x-2 gap-y-2 text-xs text-on-surface-variant sm:justify-end", children: [
+            /* @__PURE__ */ jsx("a", { href: "#", className: "rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary", children: "Support" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary", children: "Privacy" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary", children: "Terms" }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary", children: "Contact" })
           ] })
         ] }) })
       ] })
