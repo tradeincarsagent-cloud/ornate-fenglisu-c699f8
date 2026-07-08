@@ -172,11 +172,14 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
                   System Status: <span className="text-on-surface">🟢 Operational</span>
                 </p>
               </div>
-              <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-start gap-x-2 gap-y-2 text-xs text-on-surface-variant sm:justify-end">
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Support</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Privacy</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Terms</a>
-                <a href="#" className="rounded-lg border border-outline-variant/20 bg-surface-container-high/45 px-3 py-2 transition-colors hover:text-primary">Contact</a>
+              <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-start gap-y-1 text-xs text-on-surface-variant sm:justify-end">
+                <a href="#" className="transition-colors hover:text-primary">Support</a>
+                <span aria-hidden="true" className="mx-2 select-none"> • </span>
+                <a href="#" className="transition-colors hover:text-primary">Privacy</a>
+                <span aria-hidden="true" className="mx-2 select-none"> • </span>
+                <a href="#" className="transition-colors hover:text-primary">Terms</a>
+                <span aria-hidden="true" className="mx-2 select-none"> • </span>
+                <a href="#" className="transition-colors hover:text-primary">Contact</a>
               </nav>
             </div>
           </footer>
