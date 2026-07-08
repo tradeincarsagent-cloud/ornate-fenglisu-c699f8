@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CGKAL8o6.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-DBXDg_m-.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-JxZmUpMV.js";
 const missionStatusConfig = {
   Monitoring: {
@@ -851,18 +851,31 @@ function DashboardPage() {
       /* @__PURE__ */ jsx("p", { className: "mb-4 text-sm text-on-surface-variant", children: "Search jobs currently being monitored by TICA." }),
       /* @__PURE__ */ jsx("div", { className: "space-y-3", children: activeSearches.map((search, index) => {
         const statusCfg = missionStatusConfig[search.status];
-        return /* @__PURE__ */ jsxs("article", { className: `rounded-xl bg-surface-container-high p-4 transition-all ${highlightedMission === index ? "mission-card-highlight" : ""}`, children: [
-          /* @__PURE__ */ jsxs("div", { className: "hidden md:block", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-3 flex items-start justify-between gap-4", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md font-semibold text-on-surface", children: search.name }),
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-shrink-0 gap-2", children: [
-                /* @__PURE__ */ jsx("button", { className: "rounded-lg bg-primary px-4 py-1.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),
-                /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-on-surface transition-colors hover:border-primary/40", children: "Edit" }),
-                /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-on-surface-variant transition-colors hover:border-primary/40", children: "Pause" }),
-                /* @__PURE__ */ jsx("button", { className: "rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-sm text-red-400 transition-colors hover:border-red-400/40", children: "Delete" })
+        return /* @__PURE__ */ jsx("article", { className: `rounded-xl bg-surface-container-high p-4 transition-all ${highlightedMission === index ? "mission-card-highlight" : ""}`, children: /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsxs("button", { onClick: () => toggleSearch(index), className: "flex w-full items-center justify-between gap-3", "aria-expanded": expandedSearches[index], children: [
+            /* @__PURE__ */ jsxs("div", { className: "min-w-0 text-left", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: {
+                  background: statusCfg.color,
+                  boxShadow: `0 0 6px ${statusCfg.glow}`
+                } }),
+                /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md font-medium text-on-surface", children: search.name })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 pl-4", children: [
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
+                  "Last Scan: ",
+                  search.lastScan
+                ] }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm font-semibold text-primary", children: [
+                  search.opportunities,
+                  " Opp."
+                ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("dl", { className: "mb-3 grid grid-cols-2 gap-x-6 gap-y-2 lg:grid-cols-4", children: [
+            /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 text-on-surface-variant", children: /* @__PURE__ */ jsx(ChevronIcon, { open: expandedSearches[index] }) })
+          ] }),
+          expandedSearches[index] && /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-3", children: [
+            /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-2 gap-x-4 gap-y-2", children: [
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicle Type" }),
                 /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.vehicleType })
@@ -877,23 +890,11 @@ function DashboardPage() {
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Status" }),
-                /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 flex items-center gap-1.5 text-sm text-on-surface", children: [
-                  /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: {
-                    background: statusCfg.color,
-                    boxShadow: `0 0 6px ${statusCfg.glow}`
-                  } }),
+                /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 text-sm text-on-surface", children: [
                   statusCfg.emoji,
                   " ",
                   statusCfg.label
                 ] })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Last Scan" }),
-                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.lastScan })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Opportunities Found" }),
-                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-primary", children: search.opportunities })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Next Scan" }),
@@ -912,11 +913,11 @@ function DashboardPage() {
                 /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-primary", children: search.qualifiedOpportunities })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Today's Best Opportunity Score" }),
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Today's Best Opp. Score" }),
                 /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.bestOpportunityScore })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "mb-3", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant", children: "Sources Being Scanned" }),
               /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: search.sources.map((src) => /* @__PURE__ */ jsx("span", { className: "rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant", children: src }, src)) })
             ] }),
@@ -928,136 +929,39 @@ function DashboardPage() {
                   "%"
                 ] })
               ] }),
-              /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full transition-all", style: {
+              /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full", style: {
                 width: `${search.progress}%`,
                 background: statusCfg.color,
                 boxShadow: `0 0 4px ${statusCfg.glow}`
               } }) })
             ] }),
-            /* @__PURE__ */ jsxs("p", { className: "mt-2.5 text-xs text-on-surface-variant/60", children: [
+            /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant/60", children: [
               "Mission Update — ",
               search.missionUpdate
             ] }),
-            /* @__PURE__ */ jsxs("p", { className: "mt-1 text-xs font-medium text-primary/75", style: {
+            /* @__PURE__ */ jsxs("p", { className: "text-xs font-medium text-primary/75", style: {
               opacity: missionMsgVisible[index] ? 1 : 0,
               transition: "opacity 0.22s ease"
             }, children: [
               "⚡ ",
               search.liveMessages[missionMsgIndices[index]]
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:hidden", children: [
-            /* @__PURE__ */ jsxs("button", { onClick: () => toggleSearch(index), className: "flex w-full items-center justify-between gap-3", "aria-expanded": expandedSearches[index], children: [
-              /* @__PURE__ */ jsxs("div", { className: "min-w-0 text-left", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-                  /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: {
-                    background: statusCfg.color,
-                    boxShadow: `0 0 6px ${statusCfg.glow}`
-                  } }),
-                  /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md font-medium text-on-surface", children: search.name })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 pl-4", children: [
-                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
-                    "Last Scan: ",
-                    search.lastScan
-                  ] }),
-                  /* @__PURE__ */ jsxs("p", { className: "text-sm font-semibold text-primary", children: [
-                    search.opportunities,
-                    " Opp."
-                  ] })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 text-on-surface-variant", children: /* @__PURE__ */ jsx(ChevronIcon, { open: expandedSearches[index] }) })
             ] }),
-            expandedSearches[index] && /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-3", children: [
-              /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-2 gap-x-4 gap-y-2", children: [
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicle Type" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.vehicleType })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Search Area" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.searchArea })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Budget" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.budget })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Status" }),
-                  /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 text-sm text-on-surface", children: [
-                    statusCfg.emoji,
-                    " ",
-                    statusCfg.label
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Next Scan" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.nextScan })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicles Analysed Today" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: counterFormatter.format(search.vehiclesAnalysedToday) })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Rejected Listings" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.rejectedListings })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Qualified Opportunities" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-primary", children: search.qualifiedOpportunities })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Today's Best Opp. Score" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.bestOpportunityScore })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant", children: "Sources Being Scanned" }),
-                /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: search.sources.map((src) => /* @__PURE__ */ jsx("span", { className: "rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant", children: src }, src)) })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsxs("div", { className: "mb-1 flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Search Progress" }),
-                  /* @__PURE__ */ jsxs("span", { className: "text-xs font-medium text-on-surface", children: [
-                    search.progress,
-                    "%"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full", style: {
-                  width: `${search.progress}%`,
-                  background: statusCfg.color,
-                  boxShadow: `0 0 4px ${statusCfg.glow}`
-                } }) })
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant/60", children: [
-                "Mission Update — ",
-                search.missionUpdate
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "text-xs font-medium text-primary/75", style: {
-                opacity: missionMsgVisible[index] ? 1 : 0,
-                transition: "opacity 0.22s ease"
-              }, children: [
-                "⚡ ",
-                search.liveMessages[missionMsgIndices[index]]
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
-                /* @__PURE__ */ jsx("button", { className: "min-h-11 flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),
-                /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                  /* @__PURE__ */ jsx("button", { onClick: (e) => {
-                    e.stopPropagation();
-                    setOpenMoreMenu(openMoreMenu === index ? null : index);
-                  }, className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40", "aria-haspopup": "true", "aria-expanded": openMoreMenu === index, children: "More" }),
-                  openMoreMenu === index && /* @__PURE__ */ jsxs("div", { className: "absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg", children: [
-                    /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Edit" }),
-                    /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Pause" }),
-                    /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Delete" })
-                  ] })
+            /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
+              /* @__PURE__ */ jsx("button", { className: "min-h-11 flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Run Now" }),
+              /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                /* @__PURE__ */ jsx("button", { onClick: (e) => {
+                  e.stopPropagation();
+                  setOpenMoreMenu(openMoreMenu === index ? null : index);
+                }, className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40", "aria-haspopup": "true", "aria-expanded": openMoreMenu === index, children: "More" }),
+                openMoreMenu === index && /* @__PURE__ */ jsxs("div", { className: "absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg", children: [
+                  /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Edit" }),
+                  /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Pause" }),
+                  /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Delete" })
                 ] })
               ] })
             ] })
           ] })
-        ] }, search.name);
+        ] }) }, search.name);
       }) })
     ] })
   ] }) });
