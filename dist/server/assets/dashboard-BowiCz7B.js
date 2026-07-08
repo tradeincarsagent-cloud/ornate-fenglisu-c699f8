@@ -108,7 +108,14 @@ const initialTimelineEvents = [{
   eventId: "timeline-seed-5",
   time: "09:02"
 }];
-const aiStatusMessages = ["Searching UK Dealer Network…", "Scanning Auto Trader…", "Checking Dealer Websites…", "Monitoring Price Drops…", "Analysing New Listings…", "Ranking Opportunities…", "Updating Search Missions…"];
+const aiStatusMessages = ["Scanning marketplaces…", "Comparing market prices…", "Checking dealer demand…", "Reviewing overnight auctions…", "Analysing new listings…", "Monitoring watched vehicles…"];
+const greetingSummaries = ["TICA analysed 8,462 vehicles overnight.", "Three opportunities require your attention.", "One monitored vehicle has reduced in price."];
+function getTimeGreeting() {
+  const hour = (/* @__PURE__ */ new Date()).getHours();
+  if (hour < 12) return "Good Morning";
+  if (hour < 17) return "Good Afternoon";
+  return "Good Evening";
+}
 const topOpportunityComparison = [{
   vehicle: "BMW M3 Competition",
   opportunityScore: 94,
@@ -259,6 +266,9 @@ function DashboardPage() {
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true);
   const [missionMsgIndices, setMissionMsgIndices] = useState(() => activeSearches.map(() => 0));
   const [missionMsgVisible, setMissionMsgVisible] = useState(() => activeSearches.map(() => true));
+  const [greetingSummaryIndex, setGreetingSummaryIndex] = useState(0);
+  const [greetingSummaryVisible, setGreetingSummaryVisible] = useState(true);
+  const [timeGreeting] = useState(getTimeGreeting);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
     if (!aiSearchLive) return;
@@ -381,7 +391,7 @@ function DashboardPage() {
         setActiveAiStatusMessage(aiStatusMessages[messageIndex]);
         setAiStatusMessageVisible(true);
       }, 220);
-    }, 3800);
+    }, 11e3 + Math.random() * 4e3);
     return () => {
       window.clearInterval(intervalId);
       if (fadeTimeoutId !== null) {
@@ -415,6 +425,23 @@ function DashboardPage() {
       });
     };
   }, [aiSearchLive]);
+  useEffect(() => {
+    let summaryIndex = 0;
+    let fadeTimeoutId = null;
+    const intervalId = window.setInterval(() => {
+      setGreetingSummaryVisible(false);
+      if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId);
+      fadeTimeoutId = window.setTimeout(() => {
+        summaryIndex = (summaryIndex + 1) % greetingSummaries.length;
+        setGreetingSummaryIndex(summaryIndex);
+        setGreetingSummaryVisible(true);
+      }, 220);
+    }, 13e3);
+    return () => {
+      window.clearInterval(intervalId);
+      if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId);
+    };
+  }, []);
   const toggleSearch = (index) => {
     setExpandedSearches((prev) => ({
       ...prev,
@@ -498,15 +525,22 @@ function DashboardPage() {
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "mb-8 space-y-6 sm:space-y-8", children: [
       /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs("div", { className: "mb-3 sm:hidden", children: [
+          /* @__PURE__ */ jsxs("p", { className: "text-[0.95rem] font-semibold text-on-surface", children: [
+            timeGreeting,
+            ", Jonathan."
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "mt-0.5 min-h-[1.2rem] text-xs text-on-surface-variant", children: /* @__PURE__ */ jsx("span", { className: `block transition-opacity duration-200 ${greetingSummaryVisible ? "opacity-100" : "opacity-0"}`, children: greetingSummaries[greetingSummaryIndex] }) })
+        ] }),
         /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface sm:mb-4", children: "Morning Intelligence Brief" }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5", children: summaryCards.map((card, index) => /* @__PURE__ */ jsxs("article", { className: `dashboard-border flex min-h-[52px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? " hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0" : ""}`, children: [
-          /* @__PURE__ */ jsxs("p", { className: "text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md", children: [
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5", children: summaryCards.map((card, index) => /* @__PURE__ */ jsxs("article", { className: `dashboard-border flex min-h-[44px] flex-col justify-between rounded-xl bg-surface-container-high p-2.5 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? " hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0" : ""}`, children: [
+          /* @__PURE__ */ jsxs("p", { className: "text-[10px] leading-snug text-on-surface-variant md:text-body-md md:font-body-md", children: [
             /* @__PURE__ */ jsx("span", { className: "block", children: card.icon }),
             /* @__PURE__ */ jsx("span", { children: card.title })
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[1.25rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg", children: card.value })
+          /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[1.55rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg", children: card.value })
         ] }, card.title)) }),
-        /* @__PURE__ */ jsxs("article", { className: "dashboard-border mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden", children: [
+        /* @__PURE__ */ jsxs("article", { className: "dashboard-border best-buy-mobile-accent mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden", children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-2.5 flex items-center justify-between", children: [
             /* @__PURE__ */ jsx("p", { className: "text-xs font-semibold uppercase tracking-widest text-on-surface-variant", children: "🏆 Today's Best Buy" }),
             /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary", children: "⭐ AI Pick" })

@@ -90,14 +90,26 @@ const initialTimelineEvents: TimelineEvent[] = [
 ]
 
 const aiStatusMessages = [
-  'Searching UK Dealer Network…',
-  'Scanning Auto Trader…',
-  'Checking Dealer Websites…',
-  'Monitoring Price Drops…',
-  'Analysing New Listings…',
-  'Ranking Opportunities…',
-  'Updating Search Missions…',
+  'Scanning marketplaces…',
+  'Comparing market prices…',
+  'Checking dealer demand…',
+  'Reviewing overnight auctions…',
+  'Analysing new listings…',
+  'Monitoring watched vehicles…',
 ]
+
+const greetingSummaries = [
+  'TICA analysed 8,462 vehicles overnight.',
+  'Three opportunities require your attention.',
+  'One monitored vehicle has reduced in price.',
+]
+
+function getTimeGreeting(): string {
+  const hour = new Date().getHours()
+  if (hour < 12) return 'Good Morning'
+  if (hour < 17) return 'Good Afternoon'
+  return 'Good Evening'
+}
 
 const topOpportunityComparison = [
   { vehicle: 'BMW M3 Competition', opportunityScore: 94, estimatedProfit: '£4,255', daysToSell: '22 days', ticaDecision: 'BUY' },
@@ -261,6 +273,9 @@ function DashboardPage() {
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true)
   const [missionMsgIndices, setMissionMsgIndices] = useState<number[]>(() => activeSearches.map(() => 0))
   const [missionMsgVisible, setMissionMsgVisible] = useState<boolean[]>(() => activeSearches.map(() => true))
+  const [greetingSummaryIndex, setGreetingSummaryIndex] = useState(0)
+  const [greetingSummaryVisible, setGreetingSummaryVisible] = useState(true)
+  const [timeGreeting] = useState(getTimeGreeting)
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
 
@@ -406,7 +421,7 @@ function DashboardPage() {
         setActiveAiStatusMessage(aiStatusMessages[messageIndex])
         setAiStatusMessageVisible(true)
       }, 220)
-    }, 3800)
+    }, 11000 + Math.random() * 4000)
 
     return () => {
       window.clearInterval(intervalId)
@@ -443,6 +458,26 @@ function DashboardPage() {
       fadeTimeoutIds.forEach((id) => { if (id !== null) window.clearTimeout(id) })
     }
   }, [aiSearchLive])
+
+  useEffect(() => {
+    let summaryIndex = 0
+    let fadeTimeoutId: number | null = null
+
+    const intervalId = window.setInterval(() => {
+      setGreetingSummaryVisible(false)
+      if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId)
+      fadeTimeoutId = window.setTimeout(() => {
+        summaryIndex = (summaryIndex + 1) % greetingSummaries.length
+        setGreetingSummaryIndex(summaryIndex)
+        setGreetingSummaryVisible(true)
+      }, 220)
+    }, 13000)
+
+    return () => {
+      window.clearInterval(intervalId)
+      if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId)
+    }
+  }, [])
 
   const toggleSearch = (index: number) => {
     setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
@@ -534,24 +569,36 @@ function DashboardPage() {
             {/* ── Morning Intelligence ─────────────────────────────────── */}
             <section className="mb-8 space-y-6 sm:space-y-8">
               <div>
+                {/* Task 3 – Mobile-only compact greeting above the brief */}
+                <div className="mb-3 sm:hidden">
+                  <p className="text-[0.95rem] font-semibold text-on-surface">{timeGreeting}, Jonathan.</p>
+                  <p className="mt-0.5 min-h-[1.2rem] text-xs text-on-surface-variant">
+                    <span
+                      className={`block transition-opacity duration-200 ${greetingSummaryVisible ? 'opacity-100' : 'opacity-0'}`}
+                    >
+                      {greetingSummaries[greetingSummaryIndex]}
+                    </span>
+                  </p>
+                </div>
+
                 <h2 className="mb-3 text-headline-md font-headline-md text-on-surface sm:mb-4">Morning Intelligence Brief</h2>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5">
                   {summaryCards.map((card, index) => (
                     <article
                       key={card.title}
-                      className={`dashboard-border flex min-h-[52px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
+                      className={`dashboard-border flex min-h-[44px] flex-col justify-between rounded-xl bg-surface-container-high p-2.5 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
                     >
-                      <p className="text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md">
+                      <p className="text-[10px] leading-snug text-on-surface-variant md:text-body-md md:font-body-md">
                         <span className="block">{card.icon}</span>
                         <span>{card.title}</span>
                       </p>
-                      <p className="mt-0.5 text-[1.25rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
+                      <p className="mt-0.5 text-[1.55rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
                     </article>
                   ))}
                 </div>
 
                 {/* ── Mobile: Today's Best Buy featured card ────────────── */}
-                <article className="dashboard-border mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden">
+                <article className="dashboard-border best-buy-mobile-accent mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden">
                   <div className="mb-2.5 flex items-center justify-between">
                     <p className="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">🏆 Today's Best Buy</p>
                     <span className="rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary">⭐ AI Pick</span>
