@@ -79,7 +79,7 @@ function PlatformShell({ children, navItems }) {
         "aside",
         {
           id: "mobile-sidebar",
-          className: "platform-shell-drawer fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-6 lg:hidden",
+          className: "platform-shell-drawer fixed inset-y-0 left-0 z-50 flex w-[min(20rem,86vw)] flex-col overflow-y-auto border-r border-outline-variant/25 bg-surface-container-low px-5 lg:hidden",
           "aria-label": "Navigation menu",
           children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-center justify-between", children: [
@@ -88,7 +88,7 @@ function PlatformShell({ children, navItems }) {
                 "button",
                 {
                   onClick: () => setSidebarOpen(false),
-                  className: "flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high",
+                  className: "flex h-11 w-11 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container-high",
                   "aria-label": "Close menu",
                   children: /* @__PURE__ */ jsx(CloseIcon, {})
                 }
@@ -106,9 +106,9 @@ function PlatformShell({ children, navItems }) {
         /* @__PURE__ */ jsx(PlatformNav, { items: navItems })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 flex-1 flex-col", children: [
-        /* @__PURE__ */ jsxs("header", { className: "platform-shell-header border-b border-outline-variant/25 bg-surface-container px-6 py-4 md:px-10", children: [
+        /* @__PURE__ */ jsxs("header", { className: "platform-shell-header border-b border-outline-variant/25 bg-surface-container px-5 py-4 md:px-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "relative flex items-center lg:hidden", children: [
-            /* @__PURE__ */ jsx("div", { className: "mx-auto logo-bezel w-44 rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }),
+            /* @__PURE__ */ jsx("div", { className: "mx-auto logo-bezel w-40 rounded-lg p-1 sm:w-44", children: /* @__PURE__ */ jsx("img", { src: LOGO_SRC, alt: "Trade In Cars Agent Logo", className: "h-auto w-full object-contain logo-blend" }) }),
             /* @__PURE__ */ jsx(
               "button",
               {
@@ -123,8 +123,8 @@ function PlatformShell({ children, navItems }) {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "hidden text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant lg:block", children: "Trade In Cars Agent" })
         ] }),
-        /* @__PURE__ */ jsx("main", { className: "platform-shell-main flex-1 overflow-x-clip px-6 py-8 md:px-10", children }),
-        /* @__PURE__ */ jsx("footer", { className: "platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-6 py-4 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between", children: [
+        /* @__PURE__ */ jsx("main", { className: "platform-shell-main flex-1 overflow-x-clip px-5 py-8 md:px-10", children }),
+        /* @__PURE__ */ jsx("footer", { className: "platform-shell-footer border-t border-outline-variant/25 bg-surface-container-low px-5 py-4 md:px-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex w-full max-w-container-max flex-col gap-3 sm:flex-row sm:items-center sm:justify-between", children: [
           /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
             /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface", children: "Trade in Cars Agent" }),
             /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Version 1.0 Beta" }),
@@ -157,9 +157,16 @@ function TicaShield() {
   const updatePopupPos = () => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
+    const safeTop = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--app-safe-area-top")) || 0;
+    const horizontalGap = 12;
+    const popupWidth = Math.min(441, window.innerWidth - horizontalGap * 2);
+    const preferredRight = Math.max(horizontalGap, window.innerWidth - rect.right);
+    const maxRight = Math.max(horizontalGap, window.innerWidth - popupWidth - horizontalGap);
+    const clampedRight = Math.min(preferredRight, maxRight);
+    const nextTop = Math.max(rect.bottom + 8, safeTop + 8);
     setPopupPos({
-      top: rect.bottom + 8,
-      right: window.innerWidth - rect.right
+      top: nextTop,
+      right: clampedRight
     });
   };
   const handleOpen = () => {
@@ -177,15 +184,20 @@ function TicaShield() {
   };
   useEffect(() => {
     if (!open) return;
+    const handleWindowChange = () => updatePopupPos();
     const handleOutside = (e) => {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
         setOpen(false);
         setIsHovered(false);
       }
     };
+    window.addEventListener("resize", handleWindowChange);
+    window.addEventListener("scroll", handleWindowChange, { passive: true });
     document.addEventListener("mousedown", handleOutside);
     document.addEventListener("touchstart", handleOutside);
     return () => {
+      window.removeEventListener("resize", handleWindowChange);
+      window.removeEventListener("scroll", handleWindowChange);
       document.removeEventListener("mousedown", handleOutside);
       document.removeEventListener("touchstart", handleOutside);
     };
@@ -211,7 +223,7 @@ function TicaShield() {
                 setOpen(false);
               }
             },
-            className: "flex flex-col items-center gap-1.5 rounded-xl p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60",
+            className: "flex min-h-11 min-w-11 flex-col items-center gap-1 rounded-xl p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/60",
             children: [
               /* @__PURE__ */ jsx("div", { className: [
                 "tica-shield-glow",
@@ -222,11 +234,11 @@ function TicaShield() {
                 {
                   src: TICA_SHIELD_SRC,
                   alt: "TICA Certified shield",
-                  className: "block h-auto w-14 sm:w-[4.5rem] md:w-24",
+                  className: "block h-auto w-12 sm:w-[4.5rem] md:w-24",
                   decoding: "async"
                 }
               ) }),
-              /* @__PURE__ */ jsx("div", { className: "flex flex-col items-center gap-0.5", children: /* @__PURE__ */ jsx("span", { className: "tica-certified-text text-center text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant/80", children: "TICA Certified™" }) })
+              /* @__PURE__ */ jsx("div", { className: "flex flex-col items-center gap-0.5", children: /* @__PURE__ */ jsx("span", { className: "tica-certified-text text-center text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.14em] text-on-surface-variant/80", children: "TICA Certified™" }) })
             ]
           }
         ),
@@ -235,27 +247,27 @@ function TicaShield() {
           {
             role: "tooltip",
             "aria-hidden": !open,
-            style: { top: popupPos.top, right: popupPos.right },
+            style: { top: popupPos.top, right: popupPos.right, left: popupPos.left },
             className: [
               "tica-popup",
-              "fixed z-[9999] w-96 md:w-[441px]",
-              "rounded-3xl border border-white/10",
+              "fixed z-[9999] w-[min(22rem,calc(100vw-1.5rem))] sm:w-[22rem] md:w-[441px]",
+              "rounded-2xl sm:rounded-3xl border border-white/10",
               "bg-zinc-900/90 backdrop-blur-xl",
               "shadow-[0_20px_64px_rgba(0,0,0,0.75)]",
-              "p-8",
+              "p-4 sm:p-8",
               open ? "tica-popup--visible" : "tica-popup--hidden"
             ].join(" "),
-            children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-6 text-center", children: [
+            children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 sm:gap-6 text-center", children: [
               /* @__PURE__ */ jsx(
                 "img",
                 {
                   src: TICA_SHIELD_SRC,
                   alt: "TICA Certified shield",
-                  className: "h-auto w-44",
+                  className: "h-auto w-28 sm:w-44",
                   decoding: "async"
                 }
               ),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+              /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 sm:space-y-2", children: [
                 /* @__PURE__ */ jsx("p", { className: "text-base font-bold tracking-wide text-white", children: "🛡 TICA Certified™" }),
                 /* @__PURE__ */ jsx("p", { className: "text-[12px] text-zinc-400 leading-snug", children: "Powered by the TICA Decision Engine" }),
                 /* @__PURE__ */ jsx("p", { className: "text-[12px] font-semibold text-primary/90 tracking-wide", children: "Recommends. You Decide." })

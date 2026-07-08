@@ -1,6 +1,6 @@
-import { jsx, jsxs } from "react/jsx-runtime";
-import { useState } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CN-Sc1MP.js";
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
+import { useState, useEffect } from "react";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-CotHvtbv.js";
 import "@tanstack/react-router";
 const CHANNELS = [{
   id: "email",
@@ -86,16 +86,62 @@ const BUYING_STYLE_OPTIONS = [{
 }];
 const LEARNING_ITEMS = ["Buying Style", "Preferred Vehicle Types", "Average Buying Budget", "Preferred Profit Margin", "Buying Locations", "Seasonal Buying Trends"];
 const LEARNING_PROGRESS = 82;
+function BottomSheet({
+  value,
+  onChange,
+  onClose
+}) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setVisible(true));
+    document.body.style.overflow = "hidden";
+    return () => {
+      cancelAnimationFrame(frame);
+      document.body.style.overflow = "";
+    };
+  }, []);
+  function dismiss() {
+    setVisible(false);
+    setTimeout(onClose, 270);
+  }
+  function handleSelect(v) {
+    onChange(v);
+    setVisible(false);
+    setTimeout(onClose, 270);
+  }
+  return /* @__PURE__ */ jsxs("div", { role: "dialog", "aria-modal": "true", "aria-label": "Select notification level", className: `settings-sheet-overlay sm:hidden ${visible ? "settings-sheet-overlay--visible" : ""}`, children: [
+    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/65 backdrop-blur-[3px]", onClick: dismiss, "aria-hidden": "true" }),
+    /* @__PURE__ */ jsxs("div", { className: `settings-sheet-panel ${visible ? "settings-sheet-panel--visible" : ""}`, children: [
+      /* @__PURE__ */ jsx("div", { className: "mx-auto mt-3 h-1 w-9 rounded-full bg-outline-variant/40", "aria-hidden": "true" }),
+      /* @__PURE__ */ jsx("p", { className: "px-6 pb-2 pt-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70", children: "Notification Level" }),
+      /* @__PURE__ */ jsx("div", { role: "listbox", "aria-label": "Notification level options", children: PRIORITY_OPTIONS.map((option) => /* @__PURE__ */ jsxs("button", { type: "button", role: "option", "aria-selected": value === option.id, onClick: () => handleSelect(option.id), className: `flex min-h-[56px] w-full items-center gap-3 px-6 py-3 text-left text-[15px] transition-colors active:bg-white/5 ${value === option.id ? "font-semibold text-primary" : "font-normal text-on-surface"}`, children: [
+        /* @__PURE__ */ jsx("span", { className: "flex-1", children: option.label }),
+        value === option.id && /* @__PURE__ */ jsx("span", { className: "text-[18px] text-primary", "aria-hidden": "true", children: "✓" })
+      ] }, option.id)) }),
+      /* @__PURE__ */ jsx("div", { className: "mx-4 my-1 h-px bg-outline-variant/25", "aria-hidden": "true" }),
+      /* @__PURE__ */ jsx("button", { type: "button", onClick: dismiss, className: "flex min-h-[52px] w-full items-center justify-center text-[15px] font-semibold text-on-surface-variant active:bg-white/5", children: "Cancel" })
+    ] })
+  ] });
+}
 function PrioritySelector({
   value,
   onChange,
   id,
   disabled
 }) {
-  return /* @__PURE__ */ jsx("div", { id, role: "radiogroup", "aria-disabled": disabled, className: `grid w-full max-w-[18rem] grid-cols-1 gap-1 rounded-xl border border-outline-variant/30 bg-surface-container p-1 sm:grid-cols-3 ${disabled ? "opacity-50" : ""}`, children: PRIORITY_OPTIONS.map((option) => {
-    const selected = value === option.id;
-    return /* @__PURE__ */ jsx("button", { type: "button", role: "radio", "aria-checked": selected, disabled, onClick: () => onChange(option.id), className: `rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${option.id === "off" ? selected ? "bg-red-500/15 text-red-700" : "text-red-600 hover:bg-red-500/10 hover:text-red-700" : selected ? "bg-primary/15 text-on-surface" : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"} ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`, children: option.label }, option.id);
-  }) });
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const currentOption = PRIORITY_OPTIONS.find((o) => o.id === value);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsxs("button", { id, type: "button", disabled, onClick: () => !disabled && setSheetOpen(true), "aria-haspopup": "dialog", "aria-expanded": sheetOpen, className: `flex min-h-[44px] w-full items-center gap-3 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-2.5 text-sm font-medium text-on-surface transition-colors active:bg-surface-container-high focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:hidden ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`, children: [
+      /* @__PURE__ */ jsx("span", { className: "flex-1 text-left", children: currentOption.label }),
+      /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", className: "h-4 w-4 shrink-0 text-on-surface-variant", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 2, children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M19 9l-7 7-7-7" }) })
+    ] }),
+    /* @__PURE__ */ jsx("div", { role: "radiogroup", "aria-disabled": disabled, className: `hidden w-full max-w-[18rem] grid-cols-3 gap-1 rounded-xl border border-outline-variant/30 bg-surface-container p-1 sm:grid ${disabled ? "opacity-50" : ""}`, children: PRIORITY_OPTIONS.map((option) => {
+      const selected = value === option.id;
+      return /* @__PURE__ */ jsx("button", { type: "button", role: "radio", "aria-checked": selected, disabled, onClick: () => onChange(option.id), className: `min-h-10 rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${option.id === "off" ? selected ? "bg-red-500/15 text-red-700" : "text-red-600 hover:bg-red-500/10 hover:text-red-700" : selected ? "bg-primary/15 text-on-surface" : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"} ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`, children: option.label }, option.id);
+    }) }),
+    sheetOpen && /* @__PURE__ */ jsx(BottomSheet, { value, onChange, onClose: () => setSheetOpen(false) })
+  ] });
 }
 function SettingsPage() {
   const [channelPrefs, setChannelPrefs] = useState({
@@ -176,12 +222,12 @@ function SettingsPage() {
   }, {
     label: "Subscription",
     disabled: true
-  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-8", children: [
+  }], children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-6 sm:space-y-8", children: [
     /* @__PURE__ */ jsxs("header", { children: [
       /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Settings" }),
       /* @__PURE__ */ jsxs("div", { className: "mb-3 flex items-start justify-between gap-4", children: [
         /* @__PURE__ */ jsx("h1", { className: "min-w-0 flex-1 text-headline-lg font-headline-lg text-on-surface", children: "TICA Preferences" }),
-        /* @__PURE__ */ jsx(TicaShield, {})
+        /* @__PURE__ */ jsx("div", { className: "shrink-0", children: /* @__PURE__ */ jsx(TicaShield, {}) })
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Teach TICA how you like to buy vehicles." })
     ] }),
@@ -196,7 +242,7 @@ function SettingsPage() {
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Notification Channels" }),
       /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Tell TICA the urgency level for each channel." }),
       /* @__PURE__ */ jsx("div", { className: "space-y-4", children: CHANNELS.map((channel) => {
-        return /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
+        return /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4 sm:flex-row sm:items-center sm:justify-between", children: [
           /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
               /* @__PURE__ */ jsx("label", { htmlFor: `channel-${channel.id}`, className: "cursor-pointer text-sm font-semibold text-on-surface", children: channel.label }),
@@ -211,7 +257,7 @@ function SettingsPage() {
     /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
       /* @__PURE__ */ jsx("h2", { className: "mb-1 text-title-md font-title-md text-on-surface", children: "Opportunity Notification Rules" }),
       /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Set how urgently TICA should surface each signal." }),
-      /* @__PURE__ */ jsx("div", { className: "space-y-4", children: EVENTS.map((event) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
+      /* @__PURE__ */ jsx("div", { className: "space-y-4", children: EVENTS.map((event) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4 sm:flex-row sm:items-center sm:justify-between", children: [
         /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
           /* @__PURE__ */ jsx("label", { htmlFor: `event-${event.id}`, className: "text-sm font-semibold text-on-surface cursor-pointer", children: event.label }),
           /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-xs text-on-surface-variant", children: event.description })
@@ -234,7 +280,7 @@ function SettingsPage() {
       /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Placeholder fields to begin teaching TICA how your dealership buys vehicles." }),
       /* @__PURE__ */ jsx("div", { className: "grid gap-4 md:grid-cols-2", children: DEALER_PROFILE_FIELDS.map((field) => /* @__PURE__ */ jsxs("label", { className: "space-y-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4", children: [
         /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold text-on-surface", children: field.label }),
-        /* @__PURE__ */ jsx("input", { type: field.type ?? "text", value: dealerProfile[field.key], placeholder: field.placeholder, onChange: (event) => handleDealerProfileChange(field.key, event.target.value), className: "w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none" })
+        /* @__PURE__ */ jsx("input", { type: field.type ?? "text", value: dealerProfile[field.key], placeholder: field.placeholder, onChange: (event) => handleDealerProfileChange(field.key, event.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary/60 focus:outline-none" })
       ] }, field.key)) })
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 sm:p-6", children: [
@@ -242,7 +288,7 @@ function SettingsPage() {
       /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Choose one premium placeholder profile so TICA can learn your preferred buying posture." }),
       /* @__PURE__ */ jsx("div", { role: "radiogroup", "aria-label": "Buying Style", className: "grid gap-4 md:grid-cols-3", children: BUYING_STYLE_OPTIONS.map((option) => {
         const selected = buyingStyle === option.id;
-        return /* @__PURE__ */ jsxs("button", { type: "button", role: "radio", "aria-checked": selected, onClick: () => handleBuyingStyleChange(option.id), className: `rounded-2xl border p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${selected ? "border-primary/50 bg-linear-to-br from-primary/10 via-surface-container-high to-surface-container shadow-[0_12px_32px_rgba(0,0,0,0.08)]" : "border-outline-variant/25 bg-linear-to-br from-surface-container-high/80 to-surface-container hover:border-outline-variant/40 hover:bg-surface-container-high"}`, children: [
+        return /* @__PURE__ */ jsxs("button", { type: "button", role: "radio", "aria-checked": selected, onClick: () => handleBuyingStyleChange(option.id), className: `min-h-40 rounded-2xl border p-5 text-left shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${selected ? "border-primary/50 bg-linear-to-br from-primary/10 via-surface-container-high to-surface-container shadow-[0_12px_32px_rgba(0,0,0,0.08)]" : "border-outline-variant/25 bg-linear-to-br from-surface-container-high/80 to-surface-container hover:border-outline-variant/40 hover:bg-surface-container-high"}`, children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-3", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-on-surface", children: option.label }),
@@ -282,16 +328,16 @@ function SettingsPage() {
         /* @__PURE__ */ jsx("span", { className: "text-xs font-semibold uppercase tracking-wide text-on-surface-variant", children: "Placeholder" })
       ] }, item)) }),
       /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-wrap items-center gap-3", children: [
-        /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setProfileReviewRequested(true), className: "rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Review My Buying Profile" }),
+        /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setProfileReviewRequested(true), className: "min-h-11 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Review My Buying Profile" }),
         profileReviewRequested && /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Placeholder only — no backend actions yet." })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 pb-4", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-stretch justify-between gap-3 pb-2 sm:flex-row sm:items-center sm:gap-4 sm:pb-4", children: [
       saved ? /* @__PURE__ */ jsxs("p", { className: "flex items-center gap-2 text-sm text-on-surface-variant", children: [
         /* @__PURE__ */ jsx("span", { className: "text-base", "aria-hidden": "true", children: "✅" }),
         "Preferences captured (placeholder only — no backend actions yet)."
       ] }) : /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant/50", children: "Unsaved changes" }),
-      /* @__PURE__ */ jsx("button", { type: "button", onClick: handleSave, className: "rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Save Preferences" })
+      /* @__PURE__ */ jsx("button", { type: "button", onClick: handleSave, className: "min-h-11 rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Save Preferences" })
     ] })
   ] }) });
 }
