@@ -100,9 +100,9 @@ const aiStatusMessages = [
 ]
 
 const topOpportunityComparison = [
-  { vehicle: 'BMW M3 Competition', opportunityScore: 94, estimatedProfit: '£4,255', ticaDecision: 'BUY' },
-  { vehicle: 'BMW M3 Competition', opportunityScore: 89, estimatedProfit: '£3,620', ticaDecision: 'REVIEW' },
-  { vehicle: 'BMW M3 Competition', opportunityScore: 74, estimatedProfit: '£1,980', ticaDecision: 'PASS' },
+  { vehicle: 'BMW M3 Competition', opportunityScore: 94, estimatedProfit: '£4,255', daysToSell: '22 days', ticaDecision: 'BUY' },
+  { vehicle: 'BMW M3 Competition', opportunityScore: 89, estimatedProfit: '£3,620', daysToSell: '27 days', ticaDecision: 'REVIEW' },
+  { vehicle: 'BMW M3 Competition', opportunityScore: 74, estimatedProfit: '£1,980', daysToSell: '41 days', ticaDecision: 'PASS' },
 ] as const
 
 const topOpportunityReasons = [
@@ -532,20 +532,20 @@ function DashboardPage() {
             </div>
 
             {/* ── Morning Intelligence ─────────────────────────────────── */}
-            <section className="mb-10 space-y-8">
+            <section className="mb-8 space-y-6 sm:space-y-8">
               <div>
-                <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Morning Intelligence Brief</h2>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                <h2 className="mb-3 text-headline-md font-headline-md text-on-surface sm:mb-4">Morning Intelligence Brief</h2>
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5">
                   {summaryCards.map((card, index) => (
                     <article
                       key={card.title}
-                      className={`dashboard-border flex min-h-[100px] flex-col justify-between rounded-xl bg-surface-container-high p-4 text-left sm:min-h-[120px] sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
+                      className={`dashboard-border flex min-h-[84px] flex-col justify-between rounded-xl bg-surface-container-high p-3.5 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
                     >
                       <p className="text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md">
                         <span className="block">{card.icon}</span>
                         <span>{card.title}</span>
                       </p>
-                      <p className="mt-1 text-2xl font-bold text-primary md:text-headline-lg md:font-headline-lg md:mt-0">{card.value}</p>
+                      <p className="mt-0.5 text-[1.4rem] leading-tight font-bold text-primary md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
                     </article>
                   ))}
                 </div>
@@ -763,8 +763,8 @@ function DashboardPage() {
               </div>
 
               <div className="mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                <h3 className="mb-4 text-body-md font-body-md font-medium text-on-surface">Top Opportunity Comparison</h3>
-                <div className="overflow-x-auto">
+                <h3 className="mb-3 text-body-md font-body-md font-medium text-on-surface sm:mb-4">Top Opportunity Comparison</h3>
+                <div className="hidden overflow-x-auto md:block">
                   <table className="min-w-full text-left text-sm text-on-surface">
                     <thead className="border-b border-outline-variant/30 text-xs uppercase tracking-widest text-on-surface-variant">
                       <tr>
@@ -785,6 +785,36 @@ function DashboardPage() {
                       ))}
                     </tbody>
                   </table>
+                </div>
+                <div className="space-y-3 md:hidden">
+                  {topOpportunityComparison.map((row, index) => (
+                    <article key={`${row.vehicle}-${row.opportunityScore}-${index}`} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3.5">
+                      <dl className="grid grid-cols-1 gap-2.5">
+                        <div>
+                          <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Vehicle Name</dt>
+                          <dd className="mt-0.5 text-body-md font-body-md text-on-surface">{row.vehicle}</dd>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Opportunity Score</dt>
+                            <dd className="mt-0.5 text-body-md font-body-md text-on-surface">{row.opportunityScore}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Estimated Profit</dt>
+                            <dd className="mt-0.5 text-body-md font-body-md text-on-surface">{row.estimatedProfit}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Days to Sell</dt>
+                            <dd className="mt-0.5 text-body-md font-body-md text-on-surface">{row.daysToSell}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">AI Verdict</dt>
+                            <dd className="mt-0.5 text-body-md font-body-md font-semibold text-on-surface">{row.ticaDecision}</dd>
+                          </div>
+                        </div>
+                      </dl>
+                    </article>
+                  ))}
                 </div>
 
                 <div className="mt-4 border-t border-outline-variant/20 pt-4">
