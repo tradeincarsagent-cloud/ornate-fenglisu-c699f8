@@ -76,7 +76,7 @@ function SearchBuilderPage() {
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5 flex items-center gap-3", children: [
           /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "1" }),
-          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Vehicle Type" })
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "What would you like me to find?" })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-3", children: VEHICLE_TYPES.map((type) => {
           const selected = selectedVehicleType === type;
@@ -90,7 +90,7 @@ function SearchBuilderPage() {
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5 flex items-center gap-3", children: [
           /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "2" }),
-          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Vehicle Details" })
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Tell me a bit more about it" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
@@ -132,7 +132,7 @@ function SearchBuilderPage() {
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5 flex items-center gap-3", children: [
           /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "3" }),
-          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Search Sources" })
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Where should I search?" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
           /* @__PURE__ */ jsxs("div", { children: [
@@ -157,7 +157,7 @@ function SearchBuilderPage() {
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5 flex items-center gap-3", children: [
           /* @__PURE__ */ jsx("span", { className: "flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary", children: "4" }),
-          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Search Frequency" })
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "How often should I look?" })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 sm:grid-cols-4", children: SEARCH_FREQUENCIES.map(({
           label,
