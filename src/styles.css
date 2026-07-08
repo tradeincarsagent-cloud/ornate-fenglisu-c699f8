@@ -836,6 +836,44 @@ body > div {
   }
 }
 
+/* ── Recommendation legend — compact traffic light (mobile only) ────────── */
+.legend-traffic-light {
+  width: 44px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    0 8px 20px rgba(2, 6, 23, 0.4);
+  padding: 7px;
+  display: grid;
+  gap: 6px;
+}
+
+.legend-traffic-light-lens {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+}
+
+.legend-lens-green {
+  background: radial-gradient(circle at 30% 30%, rgba(134, 239, 172, 0.95), rgba(22, 163, 74, 0.92) 45%, rgba(20, 83, 45, 0.95));
+  border: 1px solid rgba(134, 239, 172, 0.65);
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+}
+
+.legend-lens-amber {
+  background: radial-gradient(circle at 30% 30%, rgba(253, 224, 71, 0.95), rgba(245, 158, 11, 0.92) 45%, rgba(120, 76, 0, 0.95));
+  border: 1px solid rgba(251, 191, 36, 0.65);
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+
+.legend-lens-red {
+  background: radial-gradient(circle at 30% 30%, rgba(252, 165, 165, 0.95), rgba(239, 68, 68, 0.92) 45%, rgba(127, 29, 29, 0.95));
+  border: 1px solid rgba(252, 165, 165, 0.65);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
 /* ── Settings page — mobile bottom sheet ───────────────────────────────── */
 
 .settings-sheet-overlay {

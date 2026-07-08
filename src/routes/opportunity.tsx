@@ -124,7 +124,21 @@ function OpportunityPage() {
                 <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">Recommended Action by TICA AI</p>
               </div>
               <div className="w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left">
-                <p className="text-body-xs font-body-sm leading-relaxed text-on-surface-variant">
+                {/* Mobile: compact visual traffic light legend */}
+                <div className="flex items-center gap-3 sm:hidden" aria-label="Verdict colour key">
+                  <div className="legend-traffic-light shrink-0">
+                    <div className="legend-traffic-light-lens legend-lens-green" aria-hidden="true" />
+                    <div className="legend-traffic-light-lens legend-lens-amber" aria-hidden="true" />
+                    <div className="legend-traffic-light-lens legend-lens-red" aria-hidden="true" />
+                  </div>
+                  <div className="flex flex-col gap-[6px] py-[7px] text-xs font-semibold leading-none">
+                    <span className="flex h-[30px] items-center text-[#4ade80]">BUY</span>
+                    <span className="flex h-[30px] items-center text-[#f59e0b]">REVIEW</span>
+                    <span className="flex h-[30px] items-center text-[#ef4444]">PASS</span>
+                  </div>
+                </div>
+                {/* Desktop: text explanation */}
+                <p className="hidden text-body-xs font-body-sm leading-relaxed text-on-surface-variant sm:block">
                   <span className="font-semibold text-[#4ade80]">Green</span> = Strong buying opportunity
                   <br />
                   <span className="font-semibold text-[#f59e0b]">Amber</span> = Review further
@@ -140,7 +154,7 @@ function OpportunityPage() {
                       index === 0 ? 'border-primary/20' : 'border-outline-variant/25'
                     }`}
                   >
-                    <p className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">{metric.label}</p>
+                    <p className="text-label-caps font-label-caps uppercase tracking-[0.08em] text-on-surface-variant sm:tracking-[0.15em]">{metric.label}</p>
                     <p className={`mt-1 text-body-md font-semibold sm:text-body-lg ${metric.valueClassName}`}>{metric.value}</p>
                   </div>
                 ))}
