@@ -88,7 +88,7 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">1</span>
-              <h2 className="text-headline-md font-headline-md text-on-surface">Vehicle Type</h2>
+              <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               {VEHICLE_TYPES.map((type) => {
@@ -124,7 +124,7 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">2</span>
-              <h2 className="text-headline-md font-headline-md text-on-surface">Vehicle Details</h2>
+              <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
             </div>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col gap-2">
@@ -224,7 +224,7 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">3</span>
-              <h2 className="text-headline-md font-headline-md text-on-surface">Search Sources</h2>
+              <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
             </div>
             <div className="space-y-6">
               <div>
@@ -277,7 +277,7 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-label-caps font-label-caps text-primary">4</span>
-              <h2 className="text-headline-md font-headline-md text-on-surface">Search Frequency</h2>
+              <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {SEARCH_FREQUENCIES.map(({ label, value }) => {
