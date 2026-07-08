@@ -110,16 +110,16 @@ function BottomSheet({
     setTimeout(onClose, 270);
   }
   return /* @__PURE__ */ jsxs("div", { role: "dialog", "aria-modal": "true", "aria-label": "Select notification level", className: `settings-sheet-overlay sm:hidden ${visible ? "settings-sheet-overlay--visible" : ""}`, children: [
-    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/65 backdrop-blur-[3px]", onClick: dismiss, "aria-hidden": "true" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/45 backdrop-blur-[2px]", onClick: dismiss, "aria-hidden": "true" }),
     /* @__PURE__ */ jsxs("div", { className: `settings-sheet-panel ${visible ? "settings-sheet-panel--visible" : ""}`, children: [
       /* @__PURE__ */ jsx("div", { className: "mx-auto mt-3 h-1 w-9 rounded-full bg-outline-variant/40", "aria-hidden": "true" }),
       /* @__PURE__ */ jsx("p", { className: "px-6 pb-2 pt-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70", children: "Notification Level" }),
-      /* @__PURE__ */ jsx("div", { role: "listbox", "aria-label": "Notification level options", children: PRIORITY_OPTIONS.map((option) => /* @__PURE__ */ jsxs("button", { type: "button", role: "option", "aria-selected": value === option.id, onClick: () => handleSelect(option.id), className: `flex min-h-[56px] w-full items-center gap-3 px-6 py-3 text-left text-[15px] transition-colors active:bg-white/5 ${value === option.id ? "font-semibold text-primary" : "font-normal text-on-surface"}`, children: [
+      /* @__PURE__ */ jsx("div", { className: "settings-sheet-scroll", role: "listbox", "aria-label": "Notification level options", children: PRIORITY_OPTIONS.map((option) => /* @__PURE__ */ jsxs("button", { type: "button", role: "option", "aria-selected": value === option.id, onClick: () => handleSelect(option.id), className: `flex min-h-[60px] w-full items-center gap-3 px-6 py-4 text-left text-[15px] transition-colors active:bg-white/5 ${value === option.id ? "font-semibold text-primary" : "font-normal text-on-surface"}`, children: [
         /* @__PURE__ */ jsx("span", { className: "flex-1", children: option.label }),
         value === option.id && /* @__PURE__ */ jsx("span", { className: "text-[18px] text-primary", "aria-hidden": "true", children: "✓" })
       ] }, option.id)) }),
-      /* @__PURE__ */ jsx("div", { className: "mx-4 my-1 h-px bg-outline-variant/25", "aria-hidden": "true" }),
-      /* @__PURE__ */ jsx("button", { type: "button", onClick: dismiss, className: "flex min-h-[52px] w-full items-center justify-center text-[15px] font-semibold text-on-surface-variant active:bg-white/5", children: "Cancel" })
+      /* @__PURE__ */ jsx("div", { className: "mx-6 my-3 h-px bg-outline-variant/30", "aria-hidden": "true" }),
+      /* @__PURE__ */ jsx("button", { type: "button", onClick: dismiss, className: "flex min-h-[56px] w-full items-center justify-center text-[15px] font-semibold text-on-surface-variant active:bg-white/5", children: "Cancel" })
     ] })
   ] });
 }
@@ -245,7 +245,7 @@ function SettingsPage() {
         return /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4 sm:flex-row sm:items-center sm:justify-between", children: [
           /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
-              /* @__PURE__ */ jsx("label", { htmlFor: `channel-${channel.id}`, className: "cursor-pointer text-sm font-semibold text-on-surface", children: channel.label }),
+              /* @__PURE__ */ jsx("label", { htmlFor: `channel-${channel.id}`, className: "cursor-pointer text-sm font-semibold text-on-surface [text-wrap:balance]", children: channel.label }),
               channel.badge && /* @__PURE__ */ jsx("span", { className: "rounded-full border border-outline-variant/30 bg-surface-container-high px-2 py-0.5 text-xs text-on-surface-variant/50", children: channel.badge })
             ] }),
             /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-xs text-on-surface-variant", children: channel.description })
@@ -259,7 +259,7 @@ function SettingsPage() {
       /* @__PURE__ */ jsx("p", { className: "mb-5 text-sm text-on-surface-variant", children: "Set how urgently TICA should surface each signal." }),
       /* @__PURE__ */ jsx("div", { className: "space-y-4", children: EVENTS.map((event) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 p-4 sm:flex-row sm:items-center sm:justify-between", children: [
         /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
-          /* @__PURE__ */ jsx("label", { htmlFor: `event-${event.id}`, className: "text-sm font-semibold text-on-surface cursor-pointer", children: event.label }),
+          /* @__PURE__ */ jsx("label", { htmlFor: `event-${event.id}`, className: "text-sm font-semibold text-on-surface cursor-pointer [text-wrap:balance]", children: event.label }),
           /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-xs text-on-surface-variant", children: event.description })
         ] }),
         /* @__PURE__ */ jsx(PrioritySelector, { id: `event-${event.id}`, value: eventPrefs[event.id], onChange: (v) => handleEventChange(event.id, v) })

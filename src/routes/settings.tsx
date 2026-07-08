@@ -149,7 +149,7 @@ function BottomSheet({
       className={`settings-sheet-overlay sm:hidden ${visible ? 'settings-sheet-overlay--visible' : ''}`}
     >
       <div
-        className="absolute inset-0 bg-black/65 backdrop-blur-[3px]"
+        className="absolute inset-0 bg-black/45 backdrop-blur-[2px]"
         onClick={dismiss}
         aria-hidden="true"
       />
@@ -158,7 +158,7 @@ function BottomSheet({
         <p className="px-6 pb-2 pt-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70">
           Notification Level
         </p>
-        <div role="listbox" aria-label="Notification level options">
+        <div className="settings-sheet-scroll" role="listbox" aria-label="Notification level options">
           {PRIORITY_OPTIONS.map((option) => (
             <button
               key={option.id}
@@ -166,7 +166,7 @@ function BottomSheet({
               role="option"
               aria-selected={value === option.id}
               onClick={() => handleSelect(option.id)}
-              className={`flex min-h-[56px] w-full items-center gap-3 px-6 py-3 text-left text-[15px] transition-colors active:bg-white/5 ${
+              className={`flex min-h-[60px] w-full items-center gap-3 px-6 py-4 text-left text-[15px] transition-colors active:bg-white/5 ${
                 value === option.id ? 'font-semibold text-primary' : 'font-normal text-on-surface'
               }`}
             >
@@ -177,11 +177,11 @@ function BottomSheet({
             </button>
           ))}
         </div>
-        <div className="mx-4 my-1 h-px bg-outline-variant/25" aria-hidden="true" />
+        <div className="mx-6 my-3 h-px bg-outline-variant/30" aria-hidden="true" />
         <button
           type="button"
           onClick={dismiss}
-          className="flex min-h-[52px] w-full items-center justify-center text-[15px] font-semibold text-on-surface-variant active:bg-white/5"
+          className="flex min-h-[56px] w-full items-center justify-center text-[15px] font-semibold text-on-surface-variant active:bg-white/5"
         >
           Cancel
         </button>
@@ -383,7 +383,7 @@ function SettingsPage() {
                     <div className="flex flex-wrap items-center gap-2">
                       <label
                         htmlFor={`channel-${channel.id}`}
-                        className="cursor-pointer text-sm font-semibold text-on-surface"
+                        className="cursor-pointer text-sm font-semibold text-on-surface [text-wrap:balance]"
                       >
                         {channel.label}
                       </label>
@@ -421,7 +421,7 @@ function SettingsPage() {
                 <div className="min-w-0 flex-1">
                   <label
                     htmlFor={`event-${event.id}`}
-                    className="text-sm font-semibold text-on-surface cursor-pointer"
+                    className="text-sm font-semibold text-on-surface cursor-pointer [text-wrap:balance]"
                   >
                     {event.label}
                   </label>
