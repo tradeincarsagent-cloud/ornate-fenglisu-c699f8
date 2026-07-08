@@ -42,7 +42,7 @@ function CheckIcon() {
 
 function StepMarker({ step, title }: { step: string; title: string }) {
   return (
-    <p className="mb-3 hidden items-center gap-3 md:flex">
+    <p className="mb-3 flex items-center gap-3">
       <span className="rounded-md border border-primary/25 bg-primary/10 px-2 py-1 text-label-caps font-label-caps text-primary">{step}</span>
       <span className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Step {Number(step)} — {title}</span>
     </p>
