@@ -1,8 +1,54 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-DBXDg_m-.js";
-const VEHICLE_TYPES = ["Cars", "Pick-ups", "Vans & Light Commercials"];
+const VEHICLE_TYPES = ["Cars", "Classic Cars", "Pickups", "Vans & Light Commercial", "Motorcycles"];
+const VEHICLE_TYPE_EMOJI = {
+  "Cars": "🚗",
+  "Classic Cars": "🏎️",
+  "Pickups": "🛻",
+  "Vans & Light Commercial": "🚐",
+  "Motorcycles": "🏍️"
+};
+const UK_MAKES = ["Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Citroen", "Dacia", "DS", "Ferrari", "Fiat", "Ford", "Honda", "Hyundai", "Jaguar", "Jeep", "Kia", "Lamborghini", "Land Rover", "Lexus", "Maserati", "Mazda", "Mercedes-Benz", "MG", "Mini", "Mitsubishi", "Nissan", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Seat", "Skoda", "Subaru", "Suzuki", "Tesla", "Toyota", "Vauxhall", "Volkswagen", "Volvo"];
+const MODELS_BY_MAKE = {
+  "Alfa Romeo": ["Giulia", "Stelvio", "Giulietta", "147", "156", "159", "Spider", "4C"],
+  "Aston Martin": ["DB11", "DB12", "Vantage", "DBS", "DBX"],
+  "Audi": ["A1", "A3", "A4", "A5", "A6", "A7", "A8", "Q2", "Q3", "Q5", "Q7", "Q8", "TT", "R8", "RS3", "RS4", "RS5", "RS6", "RS7", "e-tron", "e-tron GT"],
+  "BMW": ["1 Series", "2 Series", "3 Series", "4 Series", "5 Series", "6 Series", "7 Series", "8 Series", "M2", "M3", "M4", "M5", "M6", "M8", "X1", "X2", "X3", "X4", "X5", "X6", "X7", "Z4", "iX", "i4", "i5", "i7"],
+  "Citroen": ["C1", "C3", "C4", "C5 X", "Berlingo", "Grand C4", "Picasso", "C3 Aircross", "C5 Aircross"],
+  "Dacia": ["Sandero", "Duster", "Logan", "Jogger", "Spring"],
+  "Ferrari": ["488", "F8", "SF90", "Roma", "296", "Portofino", "California", "GTC4Lusso"],
+  "Fiat": ["500", "500X", "500L", "Panda", "Tipo", "Punto", "Bravo"],
+  "Ford": ["Fiesta", "Focus", "Mondeo", "Kuga", "Puma", "Mustang", "Mustang Mach-E", "Explorer", "Galaxy", "S-Max", "EcoSport", "Edge", "Ranger", "Transit"],
+  "Honda": ["Civic", "Jazz", "CR-V", "HR-V", "e", "ZR-V", "Accord", "Legend", "FR-V"],
+  "Hyundai": ["i10", "i20", "i30", "IONIQ", "IONIQ 5", "IONIQ 6", "Tucson", "Santa Fe", "Kona"],
+  "Jaguar": ["XE", "XF", "XJ", "F-Type", "E-Pace", "F-Pace", "I-Pace"],
+  "Jeep": ["Renegade", "Compass", "Cherokee", "Grand Cherokee", "Wrangler", "Avenger"],
+  "Kia": ["Picanto", "Rio", "Ceed", "Sportage", "Niro", "Stinger", "EV6", "EV9", "Sorento"],
+  "Land Rover": ["Defender", "Discovery", "Discovery Sport", "Range Rover", "Range Rover Sport", "Range Rover Velar", "Range Rover Evoque", "Freelander"],
+  "Lexus": ["CT", "IS", "ES", "GS", "LS", "NX", "RX", "UX", "LX", "RC", "LC"],
+  "Maserati": ["Ghibli", "Quattroporte", "Levante", "Grecale", "GranTurismo"],
+  "Mazda": ["Mazda2", "Mazda3", "Mazda6", "CX-3", "CX-5", "CX-30", "CX-60", "MX-5", "MX-30"],
+  "Mercedes-Benz": ["A-Class", "B-Class", "C-Class", "E-Class", "S-Class", "CLA", "CLS", "GLA", "GLB", "GLC", "GLE", "GLS", "G-Class", "AMG GT", "EQA", "EQB", "EQC", "EQE", "EQS"],
+  "MG": ["MG3", "MG5", "MG ZS", "MG HS", "MG4", "MG ZS EV"],
+  "Mini": ["Hatch", "Convertible", "Clubman", "Countryman", "Paceman", "Roadster", "Cooper"],
+  "Mitsubishi": ["Outlander", "Eclipse Cross", "L200", "ASX", "Colt"],
+  "Nissan": ["Micra", "Juke", "Qashqai", "X-Trail", "Leaf", "Ariya", "GT-R", "370Z", "Navara"],
+  "Peugeot": ["108", "208", "308", "408", "508", "2008", "3008", "5008", "e-208", "e-2008"],
+  "Porsche": ["911", "Boxster", "Cayman", "Cayenne", "Macan", "Panamera", "Taycan"],
+  "Renault": ["Clio", "Megane", "Captur", "Kadjar", "Koleos", "Zoe", "Scenic", "Laguna"],
+  "Rolls-Royce": ["Ghost", "Phantom", "Wraith", "Dawn", "Cullinan", "Spectre"],
+  "Seat": ["Ibiza", "Leon", "Ateca", "Arona", "Tarraco", "Mii"],
+  "Skoda": ["Fabia", "Octavia", "Superb", "Karoq", "Kodiaq", "Enyaq", "Scala", "Kamiq"],
+  "Subaru": ["Impreza", "Outback", "Forester", "XV", "Legacy", "WRX", "BRZ", "Solterra"],
+  "Suzuki": ["Swift", "Vitara", "S-Cross", "Ignis", "Jimny", "Baleno"],
+  "Tesla": ["Model S", "Model 3", "Model X", "Model Y", "Cybertruck"],
+  "Toyota": ["Aygo", "Yaris", "Corolla", "Camry", "RAV4", "C-HR", "Highlander", "GR86", "Supra", "Prius", "Land Cruiser", "Hilux", "Proace"],
+  "Vauxhall": ["Corsa", "Astra", "Insignia", "Mokka", "Crossland", "Grandland", "Vivaro", "Movano"],
+  "Volkswagen": ["Polo", "Golf", "Passat", "Arteon", "T-Roc", "T-Cross", "Tiguan", "Touareg", "ID.3", "ID.4", "ID.5", "Touran", "Sharan"],
+  "Volvo": ["S60", "S90", "V60", "V90", "XC40", "XC60", "XC90", "C40", "EX30", "EX90"]
+};
 const SEARCH_FREQUENCIES = [{
   label: "Every 15 Minutes",
   value: "15min"
@@ -26,6 +72,49 @@ function StepMarker({
 }) {
   return /* @__PURE__ */ jsx("p", { className: "mb-3", children: /* @__PURE__ */ jsx("span", { className: "rounded-md border border-primary/25 bg-primary/10 px-2 py-1 text-label-caps font-label-caps text-primary", children: step }) });
 }
+function SearchableCombobox({
+  id,
+  options,
+  value,
+  onChange,
+  placeholder,
+  disabled
+}) {
+  const [query, setQuery] = useState(value);
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef(null);
+  const filtered = query.trim() ? options.filter((o) => o.toLowerCase().includes(query.toLowerCase())) : options;
+  useEffect(() => {
+    setQuery(value);
+  }, [value]);
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setOpen(false);
+        if (!options.includes(query)) {
+          setQuery(value);
+        }
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [value, query, options]);
+  return /* @__PURE__ */ jsxs("div", { ref: containerRef, className: "relative", children: [
+    /* @__PURE__ */ jsx("input", { id, type: "text", value: query, placeholder, disabled, autoComplete: "off", onChange: (e) => {
+      setQuery(e.target.value);
+      setOpen(true);
+      if (e.target.value === "") onChange("");
+    }, onFocus: () => {
+      if (!disabled) setOpen(true);
+    }, className: `min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 pr-10 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 ${disabled ? "cursor-not-allowed opacity-50" : ""}` }),
+    /* @__PURE__ */ jsx("span", { className: "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant", "aria-hidden": "true", children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx("polyline", { points: "6 9 12 15 18 9" }) }) }),
+    open && !disabled && filtered.length > 0 && /* @__PURE__ */ jsx("ul", { role: "listbox", className: "absolute z-50 mt-1 max-h-52 w-full overflow-auto rounded-lg border border-outline-variant/40 bg-surface-container-high shadow-lg", children: filtered.map((option) => /* @__PURE__ */ jsx("li", { role: "option", "aria-selected": value === option, onMouseDown: () => {
+      onChange(option);
+      setQuery(option);
+      setOpen(false);
+    }, className: `cursor-pointer px-4 py-2.5 text-body-md font-body-md transition-colors hover:bg-primary/10 hover:text-primary ${value === option ? "bg-primary/10 text-primary" : "text-on-surface"}`, children: option }, option)) })
+  ] });
+}
 function SearchBuilderPage() {
   const [selectedVehicleType, setSelectedVehicleType] = useState(null);
   const [make, setMake] = useState("");
@@ -37,6 +126,11 @@ function SearchBuilderPage() {
   const [minProfit, setMinProfit] = useState("");
   const [frequency, setFrequency] = useState(null);
   const [missionCreated, setMissionCreated] = useState(false);
+  const modelOptions = make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : [];
+  const handleMakeChange = (val) => {
+    setMake(val);
+    setModel("");
+  };
   const selectedFrequency = SEARCH_FREQUENCIES.find((item) => item.value === frequency)?.label ?? "Not selected";
   const missionNameBase = [make.trim(), model.trim()].filter(Boolean).join(" ");
   const missionName = missionNameBase || selectedVehicleType || "Vehicle Search";
@@ -84,11 +178,11 @@ function SearchBuilderPage() {
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "What would you like me to find?" }),
           /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Choose the makes and models you want TICA to monitor." })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-3", children: VEHICLE_TYPES.map((type) => {
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5", children: VEHICLE_TYPES.map((type) => {
           const selected = selectedVehicleType === type;
           return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setSelectedVehicleType(type), className: `group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:bg-surface-container-high hover:text-on-surface"}`, "aria-pressed": selected, children: [
             selected && /* @__PURE__ */ jsx("span", { className: "absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
-            /* @__PURE__ */ jsx("span", { className: "text-2xl", children: type === "Cars" ? "🚗" : type === "Pick-ups" ? "🛻" : "🚐" }),
+            /* @__PURE__ */ jsx("span", { className: "text-2xl", children: VEHICLE_TYPE_EMOJI[type] }),
             /* @__PURE__ */ jsx("span", { className: "text-body-md font-body-md font-semibold", children: type })
           ] }, type);
         }) })
@@ -102,11 +196,11 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Make" }),
-            /* @__PURE__ */ jsx("input", { id: "make", type: "text", placeholder: "e.g. BMW, Audi, Ford", value: make, onChange: (e) => setMake(e.target.value), className: "min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+            /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: UK_MAKES, value: make, onChange: handleMakeChange, placeholder: "Search make…" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Model" }),
-            /* @__PURE__ */ jsx("input", { id: "model", type: "text", placeholder: "e.g. 3 Series, A4, Focus", value: model, onChange: (e) => setModel(e.target.value), className: "min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+            /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: setModel, placeholder: make ? "Search model…" : "Select a make first", disabled: !make || modelOptions.length === 0 })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "year-from", children: "Year From" }),
