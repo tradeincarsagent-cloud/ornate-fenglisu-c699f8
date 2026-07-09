@@ -80,7 +80,7 @@ function SearchBuilderPage() {
     >
       <div className="mx-auto w-full max-w-container-max">
         {/* ── Page title ──────────────────────────────────────────────── */}
-        <div className="mb-5 md:mb-10">
+        <div className="mb-5 md:mb-8">
           <div className="mb-3 flex items-start justify-between gap-4">
             <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Finder</p>
             <div className="shrink-0">
@@ -147,7 +147,7 @@ function SearchBuilderPage() {
                   placeholder="e.g. BMW, Audi, Ford"
                   value={make}
                   onChange={(e) => setMake(e.target.value)}
-                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -158,7 +158,7 @@ function SearchBuilderPage() {
                   placeholder="e.g. 3 Series, A4, Focus"
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
-                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -171,7 +171,7 @@ function SearchBuilderPage() {
                   max="2030"
                   value={yearFrom}
                   onChange={(e) => setYearFrom(e.target.value)}
-                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -184,7 +184,7 @@ function SearchBuilderPage() {
                   max="2030"
                   value={yearTo}
                   onChange={(e) => setYearTo(e.target.value)}
-                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -211,7 +211,7 @@ function SearchBuilderPage() {
                   min="0"
                   value={maxMileage}
                   onChange={(e) => setMaxMileage(e.target.value)}
-                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2 lg:col-span-1">
@@ -324,7 +324,7 @@ function SearchBuilderPage() {
           </section>
 
           {/* ── Section 5: Activate ──────────────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-10">
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8">
             <button
               type="button"
               onClick={() => setMissionCreated(true)}
