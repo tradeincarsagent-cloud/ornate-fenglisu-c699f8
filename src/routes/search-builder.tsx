@@ -66,6 +66,10 @@ const MODELS_BY_MAKE: Record<string, string[]> = {
   'Volvo': ['S60', 'S90', 'V60', 'V90', 'XC40', 'XC60', 'XC90', 'C40', 'EX30', 'EX90'],
 }
 
+const FUEL_TYPES = ['Any', 'Petrol', 'Diesel', 'Hybrid', 'Plug-in Hybrid', 'Electric', 'Mild Hybrid'] as const
+const TRANSMISSION_TYPES = ['Any', 'Automatic', 'Manual', 'Semi-Automatic'] as const
+const SERVICE_HISTORY_OPTIONS = ['Any', 'Full Service History', 'Part Service History', 'No Service History'] as const
+
 const SEARCH_FREQUENCIES = [
   { label: 'Every 15 Minutes', value: '15min' },
   { label: 'Hourly', value: 'hourly' },
@@ -201,6 +205,10 @@ function SearchBuilderPage() {
   const [maxBudget, setMaxBudget] = useState('')
   const [maxMileage, setMaxMileage] = useState('')
   const [minProfit, setMinProfit] = useState('')
+  const [fuelType, setFuelType] = useState('')
+  const [transmission, setTransmission] = useState('')
+  const [serviceHistory, setServiceHistory] = useState('')
+  const [advancedOpen, setAdvancedOpen] = useState(false)
   const [frequency, setFrequency] = useState<string | null>(null)
   const [missionCreated, setMissionCreated] = useState(false)
 
@@ -312,32 +320,6 @@ function SearchBuilderPage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-from">Year From</label>
-                <input
-                  id="year-from"
-                  type="number"
-                  placeholder="e.g. 2018"
-                  min="1990"
-                  max="2030"
-                  value={yearFrom}
-                  onChange={(e) => setYearFrom(e.target.value)}
-                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-to">Year To</label>
-                <input
-                  id="year-to"
-                  type="number"
-                  placeholder="e.g. 2024"
-                  min="1990"
-                  max="2030"
-                  value={yearTo}
-                  onChange={(e) => setYearTo(e.target.value)}
-                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
                 <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-budget">Maximum Budget</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
@@ -352,19 +334,7 @@ function SearchBuilderPage() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-mileage">Maximum Mileage</label>
-                <input
-                  id="max-mileage"
-                  type="number"
-                  placeholder="e.g. 60000"
-                  min="0"
-                  value={maxMileage}
-                  onChange={(e) => setMaxMileage(e.target.value)}
-                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                />
-              </div>
-              <div className="flex flex-col gap-2 sm:col-span-2 lg:col-span-1">
+              <div className="flex flex-col gap-2 sm:col-span-2 lg:col-span-3 xl:col-span-1">
                 <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="min-profit">Minimum Estimated Profit</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
@@ -379,6 +349,115 @@ function SearchBuilderPage() {
                   />
                 </div>
               </div>
+            </div>
+
+            {/* ── Advanced Filters ─────────────────────────────────────── */}
+            <div className="mt-5 rounded-xl border border-outline-variant/30 bg-surface-container-high">
+              <button
+                type="button"
+                onClick={() => setAdvancedOpen((o) => !o)}
+                className="flex w-full items-center justify-between px-5 py-4 text-left"
+                aria-expanded={advancedOpen}
+              >
+                <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Advanced Filters</span>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className={`shrink-0 text-on-surface-variant transition-transform duration-200 ${advancedOpen ? 'rotate-180' : ''}`}
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              {advancedOpen && (
+                <div className="border-t border-outline-variant/30 px-5 pb-5 pt-5">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="flex flex-col gap-2">
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-from">Year From</label>
+                      <input
+                        id="year-from"
+                        type="number"
+                        placeholder="e.g. 2018"
+                        min="1990"
+                        max="2030"
+                        value={yearFrom}
+                        onChange={(e) => setYearFrom(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-to">Year To</label>
+                      <input
+                        id="year-to"
+                        type="number"
+                        placeholder="e.g. 2024"
+                        min="1990"
+                        max="2030"
+                        value={yearTo}
+                        onChange={(e) => setYearTo(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-mileage">Maximum Mileage</label>
+                      <input
+                        id="max-mileage"
+                        type="number"
+                        placeholder="e.g. 60000"
+                        min="0"
+                        value={maxMileage}
+                        onChange={(e) => setMaxMileage(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="fuel-type">Fuel Type</label>
+                      <select
+                        id="fuel-type"
+                        value={fuelType}
+                        onChange={(e) => setFuelType(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      >
+                        {FUEL_TYPES.map((ft) => (
+                          <option key={ft} value={ft === 'Any' ? '' : ft}>{ft}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="transmission">Transmission</label>
+                      <select
+                        id="transmission"
+                        value={transmission}
+                        onChange={(e) => setTransmission(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      >
+                        {TRANSMISSION_TYPES.map((tt) => (
+                          <option key={tt} value={tt === 'Any' ? '' : tt}>{tt}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="service-history">Service History</label>
+                      <select
+                        id="service-history"
+                        value={serviceHistory}
+                        onChange={(e) => setServiceHistory(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      >
+                        {SERVICE_HISTORY_OPTIONS.map((sh) => (
+                          <option key={sh} value={sh === 'Any' ? '' : sh}>{sh}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </section>
 
