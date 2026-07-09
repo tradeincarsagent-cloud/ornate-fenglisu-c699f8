@@ -49,6 +49,25 @@ const MODELS_BY_MAKE = {
   "Volkswagen": ["Polo", "Golf", "Passat", "Arteon", "T-Roc", "T-Cross", "Tiguan", "Touareg", "ID.3", "ID.4", "ID.5", "Touran", "Sharan"],
   "Volvo": ["S60", "S90", "V60", "V90", "XC40", "XC60", "XC90", "C40", "EX30", "EX90"]
 };
+const CLASSIC_MAKES = ["Alfa Romeo", "Aston Martin", "Austin", "Bentley", "Chevrolet", "Ferrari", "Ford", "Jaguar", "Mercedes-Benz", "MG", "Morris", "Porsche", "Rolls-Royce", "Triumph", "Volkswagen"];
+const CLASSIC_OTHER_OPTION = "Other / Enter model manually";
+const CLASSIC_MODELS_BY_MAKE = {
+  "Alfa Romeo": ["Giulietta Spider", "Giulia Sprint", "2000 Spider", "1750 GTV", "Spider Series 1"],
+  "Aston Martin": ["DB4", "DB5", "DB6", "DB2", "Vantage"],
+  "Austin": ["Healey 3000", "Healey Sprite", "A40", "A35", "Cambridge"],
+  "Bentley": ["S1", "S2", "S3", "R-Type", "Continental S1"],
+  "Chevrolet": ["Corvette C1", "Corvette C2", "Corvette C3", "Camaro", "Bel Air"],
+  "Ferrari": ["250 GTE", "250 GT", "275 GTB", "308 GTB", "328"],
+  "Ford": ["Mustang", "Capri", "Escort Mk1", "Escort Mk2", "Cortina"],
+  "Jaguar": ["E-Type", "XK120", "XK140", "XK150", "XJ6"],
+  "Mercedes-Benz": ["300SL", "Pagoda SL", "W108", "W123", "190SL"],
+  "MG": ["MGA", "MGB", "Midget", "Magnette", "T-Type"],
+  "Morris": ["Minor", "Oxford", "Marina", "1000", "Isis"],
+  "Porsche": ["356", "911 Classic", "912", "914", "928"],
+  "Rolls-Royce": ["Silver Shadow", "Silver Cloud", "Silver Wraith", "Corniche", "Silver Seraph"],
+  "Triumph": ["TR3", "TR4", "TR6", "TR7", "Spitfire"],
+  "Volkswagen": ["Beetle", "Karmann Ghia", "Type 3", "Transporter T1", "Transporter T2"]
+};
 const FUEL_TYPES = ["Any", "Petrol", "Diesel", "Hybrid", "Plug-in Hybrid", "Electric", "Mild Hybrid"];
 const TRANSMISSION_TYPES = ["Any", "Automatic", "Manual", "Semi-Automatic"];
 const SERVICE_HISTORY_OPTIONS = ["Any", "Full Service History", "Part Service History", "No Service History"];
@@ -146,13 +165,31 @@ function SearchBuilderPage() {
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [frequency, setFrequency] = useState(null);
   const [missionCreated, setMissionCreated] = useState(false);
-  const modelOptions = make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : [];
+  const [manualModel, setManualModel] = useState("");
+  const isClassic = selectedVehicleType === "Classic Cars";
+  const makeOptions = isClassic ? CLASSIC_MAKES : UK_MAKES;
+  const classicModelBase = isClassic && make && CLASSIC_MODELS_BY_MAKE[make] ? CLASSIC_MODELS_BY_MAKE[make] : [];
+  const classicModelOptions = isClassic ? [...classicModelBase, CLASSIC_OTHER_OPTION] : [];
+  const modelOptions = isClassic ? make ? classicModelOptions : [] : make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : [];
+  const isOtherModel = isClassic && model === CLASSIC_OTHER_OPTION;
+  const handleVehicleTypeChange = (type) => {
+    setSelectedVehicleType(type);
+    setMake("");
+    setModel("");
+    setManualModel("");
+  };
   const handleMakeChange = (val) => {
     setMake(val);
     setModel("");
+    setManualModel("");
+  };
+  const handleModelChange = (val) => {
+    setModel(val);
+    if (val !== CLASSIC_OTHER_OPTION) setManualModel("");
   };
   const selectedFrequency = SEARCH_FREQUENCIES.find((item) => item.value === frequency)?.label ?? "Not selected";
-  const missionNameBase = [make.trim(), model.trim()].filter(Boolean).join(" ");
+  const effectiveModel = isOtherModel ? manualModel : model;
+  const missionNameBase = [make.trim(), effectiveModel.trim()].filter(Boolean).join(" ");
   const missionName = missionNameBase || selectedVehicleType || "Vehicle Search";
   return /* @__PURE__ */ jsx(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
@@ -200,7 +237,7 @@ function SearchBuilderPage() {
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5", children: VEHICLE_TYPES.map((type) => {
           const selected = selectedVehicleType === type;
-          return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setSelectedVehicleType(type), className: `group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:bg-surface-container-high hover:text-on-surface"}`, "aria-pressed": selected, children: [
+          return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => handleVehicleTypeChange(type), className: `group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:bg-surface-container-high hover:text-on-surface"}`, "aria-pressed": selected, children: [
             selected && /* @__PURE__ */ jsx("span", { className: "absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
             /* @__PURE__ */ jsx("span", { className: "text-2xl", children: VEHICLE_TYPE_EMOJI[type] }),
             /* @__PURE__ */ jsx("span", { className: "text-body-md font-body-md font-semibold", children: type })
@@ -216,11 +253,12 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Make" }),
-            /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: UK_MAKES, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION })
+            /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: makeOptions, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Model" }),
-            /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: setModel, placeholder: make ? SELECT_MODEL_OPTION : "Select a make first", clearOptionLabel: SELECT_MODEL_OPTION, disabled: !make || modelOptions.length === 0 })
+            /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: handleModelChange, placeholder: make ? SELECT_MODEL_OPTION : "Select a make first", clearOptionLabel: SELECT_MODEL_OPTION, disabled: !make || modelOptions.length === 0 }),
+            isOtherModel && /* @__PURE__ */ jsx("input", { id: "manual-model", type: "text", placeholder: "Enter classic model", value: manualModel, onChange: (e) => setManualModel(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-budget", children: "Maximum Budget" }),
