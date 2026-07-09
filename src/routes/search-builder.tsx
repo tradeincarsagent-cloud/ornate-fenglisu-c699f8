@@ -359,6 +359,11 @@ function SearchBuilderPage() {
                 </div>
               </div>
             </div>
+            {/* ── What Happens Next panel ──────────────────────────────── */}
+            <div className="mx-auto mb-5 w-full max-w-md rounded-xl border border-primary/25 bg-primary/8 px-5 py-4">
+              <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary">What Happens Next?</p>
+              <p className="text-body-sm font-body-sm text-on-surface-variant">Once you start your AI Search Finder, TICA will continuously monitor your selected marketplaces, analyse new listings, compare market values, and notify you whenever a high-confidence opportunity matches your buying strategy.</p>
+            </div>
             <button
               type="button"
               onClick={() => setMissionCreated(true)}
