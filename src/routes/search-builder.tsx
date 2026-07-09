@@ -299,7 +299,18 @@ function SearchBuilderPage() {
             </div>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Make</label>
+                <div className="flex items-center justify-between">
+                  <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Make</label>
+                  {make && (
+                    <button
+                      type="button"
+                      onClick={() => { setMake(''); setModel('') }}
+                      className="text-label-sm font-label-sm text-on-surface-variant/60 hover:text-primary transition-colors"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
                 <SearchableCombobox
                   id="make"
                   options={UK_MAKES}
@@ -309,7 +320,18 @@ function SearchBuilderPage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
+                <div className="flex items-center justify-between">
+                  <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
+                  {model && (
+                    <button
+                      type="button"
+                      onClick={() => setModel('')}
+                      className="text-label-sm font-label-sm text-on-surface-variant/60 hover:text-primary transition-colors"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
                 <SearchableCombobox
                   id="model"
                   options={modelOptions}

@@ -202,11 +202,20 @@ function SearchBuilderPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-            /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Make" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Make" }),
+              make && /* @__PURE__ */ jsx("button", { type: "button", onClick: () => {
+                setMake("");
+                setModel("");
+              }, className: "text-label-sm font-label-sm text-on-surface-variant/60 hover:text-primary transition-colors", children: "Clear" })
+            ] }),
             /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: UK_MAKES, value: make, onChange: handleMakeChange, placeholder: "Search make…" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-            /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Model" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Model" }),
+              model && /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setModel(""), className: "text-label-sm font-label-sm text-on-surface-variant/60 hover:text-primary transition-colors", children: "Clear" })
+            ] }),
             /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: setModel, placeholder: make ? "Search model…" : "Select a make first", disabled: !make || modelOptions.length === 0 })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
