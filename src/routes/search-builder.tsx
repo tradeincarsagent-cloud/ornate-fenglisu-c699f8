@@ -76,6 +76,8 @@ const SEARCH_FREQUENCIES = [
   { label: 'Every 6 Hours', value: '6h' },
   { label: 'Daily', value: 'daily' },
 ] as const
+const SELECT_MAKE_OPTION = '— Select Make —'
+const SELECT_MODEL_OPTION = '— Select Model —'
 
 const PHASE_ONE_SOURCES = [
   'Auto Trader',
@@ -115,6 +117,7 @@ function SearchableCombobox({
   onChange,
   placeholder,
   disabled,
+  clearOptionLabel,
 }: {
   id: string
   options: string[]
@@ -122,14 +125,18 @@ function SearchableCombobox({
   onChange: (val: string) => void
   placeholder: string
   disabled?: boolean
+  clearOptionLabel?: string
 }) {
   const [query, setQuery] = useState(value)
   const [open, setOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const normalizedQuery = query.trim().toLowerCase()
+  const normalizedValue = value.trim().toLowerCase()
+  const showAllOptions = normalizedQuery === '' || normalizedQuery === normalizedValue
 
-  const filtered = query.trim()
-    ? options.filter((o) => o.toLowerCase().includes(query.toLowerCase()))
-    : options
+  const filtered = showAllOptions
+    ? options
+    : options.filter((o) => o.toLowerCase().includes(query.toLowerCase()))
 
   useEffect(() => {
     setQuery(value)
@@ -173,6 +180,22 @@ function SearchableCombobox({
           role="listbox"
           className="absolute z-50 mt-1 max-h-52 w-full overflow-auto rounded-lg border border-outline-variant/40 bg-surface-container-high shadow-lg"
         >
+          {clearOptionLabel && (
+            <li
+              role="option"
+              aria-selected={value === ''}
+              onMouseDown={() => {
+                onChange('')
+                setQuery('')
+                setOpen(false)
+              }}
+              className={`cursor-pointer px-4 py-2.5 text-body-md font-body-md transition-colors hover:bg-primary/10 hover:text-primary ${
+                value === '' ? 'bg-primary/10 text-primary' : 'text-on-surface'
+              }`}
+            >
+              {clearOptionLabel}
+            </li>
+          )}
           {filtered.map((option) => (
             <li
               key={option}
@@ -299,45 +322,25 @@ function SearchBuilderPage() {
             </div>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Make</label>
-                  {make && (
-                    <button
-                      type="button"
-                      onClick={() => { setMake(''); setModel('') }}
-                      className="text-label-sm font-label-sm text-on-surface-variant/60 hover:text-primary transition-colors"
-                    >
-                      Clear
-                    </button>
-                  )}
-                </div>
+                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Make</label>
                 <SearchableCombobox
                   id="make"
                   options={UK_MAKES}
                   value={make}
                   onChange={handleMakeChange}
-                  placeholder="Search make…"
+                  placeholder={SELECT_MAKE_OPTION}
+                  clearOptionLabel={SELECT_MAKE_OPTION}
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
-                  {model && (
-                    <button
-                      type="button"
-                      onClick={() => setModel('')}
-                      className="text-label-sm font-label-sm text-on-surface-variant/60 hover:text-primary transition-colors"
-                    >
-                      Clear
-                    </button>
-                  )}
-                </div>
+                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
                 <SearchableCombobox
                   id="model"
                   options={modelOptions}
                   value={model}
                   onChange={setModel}
-                  placeholder={make ? 'Search model…' : 'Select a make first'}
+                  placeholder={make ? SELECT_MODEL_OPTION : 'Select a make first'}
+                  clearOptionLabel={SELECT_MODEL_OPTION}
                   disabled={!make || modelOptions.length === 0}
                 />
               </div>

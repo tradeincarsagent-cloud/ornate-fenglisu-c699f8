@@ -65,6 +65,8 @@ const SEARCH_FREQUENCIES = [{
   label: "Daily",
   value: "daily"
 }];
+const SELECT_MAKE_OPTION = "— Select Make —";
+const SELECT_MODEL_OPTION = "— Select Model —";
 const PHASE_ONE_SOURCES = ["Auto Trader", "Dealer Network", "UK Public Vehicle Listings", "Dealer Websites", "Classified Vehicle Websites"];
 const PLANNED_INTEGRATIONS = ["Facebook Marketplace", "Auctions", "Private Sellers", "Trade Feeds", "Vehicle History Providers"];
 function CheckIcon() {
@@ -81,12 +83,16 @@ function SearchableCombobox({
   value,
   onChange,
   placeholder,
-  disabled
+  disabled,
+  clearOptionLabel
 }) {
   const [query, setQuery] = useState(value);
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
-  const filtered = query.trim() ? options.filter((o) => o.toLowerCase().includes(query.toLowerCase())) : options;
+  const normalizedQuery = query.trim().toLowerCase();
+  const normalizedValue = value.trim().toLowerCase();
+  const showAllOptions = normalizedQuery === "" || normalizedQuery === normalizedValue;
+  const filtered = showAllOptions ? options : options.filter((o) => o.toLowerCase().includes(query.toLowerCase()));
   useEffect(() => {
     setQuery(value);
   }, [value]);
@@ -111,11 +117,18 @@ function SearchableCombobox({
       if (!disabled) setOpen(true);
     }, className: `min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 pr-10 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 ${disabled ? "cursor-not-allowed opacity-50" : ""}` }),
     /* @__PURE__ */ jsx("span", { className: "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant", "aria-hidden": "true", children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx("polyline", { points: "6 9 12 15 18 9" }) }) }),
-    open && !disabled && filtered.length > 0 && /* @__PURE__ */ jsx("ul", { role: "listbox", className: "absolute z-50 mt-1 max-h-52 w-full overflow-auto rounded-lg border border-outline-variant/40 bg-surface-container-high shadow-lg", children: filtered.map((option) => /* @__PURE__ */ jsx("li", { role: "option", "aria-selected": value === option, onMouseDown: () => {
-      onChange(option);
-      setQuery(option);
-      setOpen(false);
-    }, className: `cursor-pointer px-4 py-2.5 text-body-md font-body-md transition-colors hover:bg-primary/10 hover:text-primary ${value === option ? "bg-primary/10 text-primary" : "text-on-surface"}`, children: option }, option)) })
+    open && !disabled && filtered.length > 0 && /* @__PURE__ */ jsxs("ul", { role: "listbox", className: "absolute z-50 mt-1 max-h-52 w-full overflow-auto rounded-lg border border-outline-variant/40 bg-surface-container-high shadow-lg", children: [
+      clearOptionLabel && /* @__PURE__ */ jsx("li", { role: "option", "aria-selected": value === "", onMouseDown: () => {
+        onChange("");
+        setQuery("");
+        setOpen(false);
+      }, className: `cursor-pointer px-4 py-2.5 text-body-md font-body-md transition-colors hover:bg-primary/10 hover:text-primary ${value === "" ? "bg-primary/10 text-primary" : "text-on-surface"}`, children: clearOptionLabel }),
+      filtered.map((option) => /* @__PURE__ */ jsx("li", { role: "option", "aria-selected": value === option, onMouseDown: () => {
+        onChange(option);
+        setQuery(option);
+        setOpen(false);
+      }, className: `cursor-pointer px-4 py-2.5 text-body-md font-body-md transition-colors hover:bg-primary/10 hover:text-primary ${value === option ? "bg-primary/10 text-primary" : "text-on-surface"}`, children: option }, option))
+    ] })
   ] });
 }
 function SearchBuilderPage() {
@@ -202,21 +215,12 @@ function SearchBuilderPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Make" }),
-              make && /* @__PURE__ */ jsx("button", { type: "button", onClick: () => {
-                setMake("");
-                setModel("");
-              }, className: "text-label-sm font-label-sm text-on-surface-variant/60 hover:text-primary transition-colors", children: "Clear" })
-            ] }),
-            /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: UK_MAKES, value: make, onChange: handleMakeChange, placeholder: "Search make…" })
+            /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Make" }),
+            /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: UK_MAKES, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Model" }),
-              model && /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setModel(""), className: "text-label-sm font-label-sm text-on-surface-variant/60 hover:text-primary transition-colors", children: "Clear" })
-            ] }),
-            /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: setModel, placeholder: make ? "Search model…" : "Select a make first", disabled: !make || modelOptions.length === 0 })
+            /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Model" }),
+            /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: setModel, placeholder: make ? SELECT_MODEL_OPTION : "Select a make first", clearOptionLabel: SELECT_MODEL_OPTION, disabled: !make || modelOptions.length === 0 })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-budget", children: "Maximum Budget" }),
