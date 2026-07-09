@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 
@@ -7,8 +7,64 @@ export const Route = createFileRoute('/search-builder')({
   component: SearchBuilderPage,
 })
 
-const VEHICLE_TYPES = ['Cars', 'Pick-ups', 'Vans & Light Commercials'] as const
+const VEHICLE_TYPES = ['Cars', 'Classic Cars', 'Pickups', 'Vans & Light Commercial', 'Motorcycles'] as const
 type VehicleType = (typeof VEHICLE_TYPES)[number]
+
+const VEHICLE_TYPE_EMOJI: Record<VehicleType, string> = {
+  'Cars': '🚗',
+  'Classic Cars': '🏎️',
+  'Pickups': '🛻',
+  'Vans & Light Commercial': '🚐',
+  'Motorcycles': '🏍️',
+}
+
+const UK_MAKES = [
+  'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Citroen', 'Dacia',
+  'DS', 'Ferrari', 'Fiat', 'Ford', 'Honda', 'Hyundai', 'Jaguar', 'Jeep',
+  'Kia', 'Lamborghini', 'Land Rover', 'Lexus', 'Maserati', 'Mazda',
+  'Mercedes-Benz', 'MG', 'Mini', 'Mitsubishi', 'Nissan', 'Peugeot', 'Porsche',
+  'Renault', 'Rolls-Royce', 'Seat', 'Skoda', 'Subaru', 'Suzuki', 'Tesla',
+  'Toyota', 'Vauxhall', 'Volkswagen', 'Volvo',
+]
+
+const MODELS_BY_MAKE: Record<string, string[]> = {
+  'Alfa Romeo': ['Giulia', 'Stelvio', 'Giulietta', '147', '156', '159', 'Spider', '4C'],
+  'Aston Martin': ['DB11', 'DB12', 'Vantage', 'DBS', 'DBX'],
+  'Audi': ['A1', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8', 'TT', 'R8', 'RS3', 'RS4', 'RS5', 'RS6', 'RS7', 'e-tron', 'e-tron GT'],
+  'BMW': ['1 Series', '2 Series', '3 Series', '4 Series', '5 Series', '6 Series', '7 Series', '8 Series', 'M2', 'M3', 'M4', 'M5', 'M6', 'M8', 'X1', 'X2', 'X3', 'X4', 'X5', 'X6', 'X7', 'Z4', 'iX', 'i4', 'i5', 'i7'],
+  'Citroen': ['C1', 'C3', 'C4', 'C5 X', 'Berlingo', 'Grand C4', 'Picasso', 'C3 Aircross', 'C5 Aircross'],
+  'Dacia': ['Sandero', 'Duster', 'Logan', 'Jogger', 'Spring'],
+  'Ferrari': ['488', 'F8', 'SF90', 'Roma', '296', 'Portofino', 'California', 'GTC4Lusso'],
+  'Fiat': ['500', '500X', '500L', 'Panda', 'Tipo', 'Punto', 'Bravo'],
+  'Ford': ['Fiesta', 'Focus', 'Mondeo', 'Kuga', 'Puma', 'Mustang', 'Mustang Mach-E', 'Explorer', 'Galaxy', 'S-Max', 'EcoSport', 'Edge', 'Ranger', 'Transit'],
+  'Honda': ['Civic', 'Jazz', 'CR-V', 'HR-V', 'e', 'ZR-V', 'Accord', 'Legend', 'FR-V'],
+  'Hyundai': ['i10', 'i20', 'i30', 'IONIQ', 'IONIQ 5', 'IONIQ 6', 'Tucson', 'Santa Fe', 'Kona'],
+  'Jaguar': ['XE', 'XF', 'XJ', 'F-Type', 'E-Pace', 'F-Pace', 'I-Pace'],
+  'Jeep': ['Renegade', 'Compass', 'Cherokee', 'Grand Cherokee', 'Wrangler', 'Avenger'],
+  'Kia': ['Picanto', 'Rio', 'Ceed', 'Sportage', 'Niro', 'Stinger', 'EV6', 'EV9', 'Sorento'],
+  'Land Rover': ['Defender', 'Discovery', 'Discovery Sport', 'Range Rover', 'Range Rover Sport', 'Range Rover Velar', 'Range Rover Evoque', 'Freelander'],
+  'Lexus': ['CT', 'IS', 'ES', 'GS', 'LS', 'NX', 'RX', 'UX', 'LX', 'RC', 'LC'],
+  'Maserati': ['Ghibli', 'Quattroporte', 'Levante', 'Grecale', 'GranTurismo'],
+  'Mazda': ['Mazda2', 'Mazda3', 'Mazda6', 'CX-3', 'CX-5', 'CX-30', 'CX-60', 'MX-5', 'MX-30'],
+  'Mercedes-Benz': ['A-Class', 'B-Class', 'C-Class', 'E-Class', 'S-Class', 'CLA', 'CLS', 'GLA', 'GLB', 'GLC', 'GLE', 'GLS', 'G-Class', 'AMG GT', 'EQA', 'EQB', 'EQC', 'EQE', 'EQS'],
+  'MG': ['MG3', 'MG5', 'MG ZS', 'MG HS', 'MG4', 'MG ZS EV'],
+  'Mini': ['Hatch', 'Convertible', 'Clubman', 'Countryman', 'Paceman', 'Roadster', 'Cooper'],
+  'Mitsubishi': ['Outlander', 'Eclipse Cross', 'L200', 'ASX', 'Colt'],
+  'Nissan': ['Micra', 'Juke', 'Qashqai', 'X-Trail', 'Leaf', 'Ariya', 'GT-R', '370Z', 'Navara'],
+  'Peugeot': ['108', '208', '308', '408', '508', '2008', '3008', '5008', 'e-208', 'e-2008'],
+  'Porsche': ['911', 'Boxster', 'Cayman', 'Cayenne', 'Macan', 'Panamera', 'Taycan'],
+  'Renault': ['Clio', 'Megane', 'Captur', 'Kadjar', 'Koleos', 'Zoe', 'Scenic', 'Laguna'],
+  'Rolls-Royce': ['Ghost', 'Phantom', 'Wraith', 'Dawn', 'Cullinan', 'Spectre'],
+  'Seat': ['Ibiza', 'Leon', 'Ateca', 'Arona', 'Tarraco', 'Mii'],
+  'Skoda': ['Fabia', 'Octavia', 'Superb', 'Karoq', 'Kodiaq', 'Enyaq', 'Scala', 'Kamiq'],
+  'Subaru': ['Impreza', 'Outback', 'Forester', 'XV', 'Legacy', 'WRX', 'BRZ', 'Solterra'],
+  'Suzuki': ['Swift', 'Vitara', 'S-Cross', 'Ignis', 'Jimny', 'Baleno'],
+  'Tesla': ['Model S', 'Model 3', 'Model X', 'Model Y', 'Cybertruck'],
+  'Toyota': ['Aygo', 'Yaris', 'Corolla', 'Camry', 'RAV4', 'C-HR', 'Highlander', 'GR86', 'Supra', 'Prius', 'Land Cruiser', 'Hilux', 'Proace'],
+  'Vauxhall': ['Corsa', 'Astra', 'Insignia', 'Mokka', 'Crossland', 'Grandland', 'Vivaro', 'Movano'],
+  'Volkswagen': ['Polo', 'Golf', 'Passat', 'Arteon', 'T-Roc', 'T-Cross', 'Tiguan', 'Touareg', 'ID.3', 'ID.4', 'ID.5', 'Touran', 'Sharan'],
+  'Volvo': ['S60', 'S90', 'V60', 'V90', 'XC40', 'XC60', 'XC90', 'C40', 'EX30', 'EX90'],
+}
 
 const SEARCH_FREQUENCIES = [
   { label: 'Every 15 Minutes', value: '15min' },
@@ -48,6 +104,94 @@ function StepMarker({ step }: { step: string }) {
   )
 }
 
+function SearchableCombobox({
+  id,
+  options,
+  value,
+  onChange,
+  placeholder,
+  disabled,
+}: {
+  id: string
+  options: string[]
+  value: string
+  onChange: (val: string) => void
+  placeholder: string
+  disabled?: boolean
+}) {
+  const [query, setQuery] = useState(value)
+  const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const filtered = query.trim()
+    ? options.filter((o) => o.toLowerCase().includes(query.toLowerCase()))
+    : options
+
+  useEffect(() => {
+    setQuery(value)
+  }, [value])
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false)
+        if (!options.includes(query)) {
+          setQuery(value)
+        }
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [value, query, options])
+
+  return (
+    <div ref={containerRef} className="relative">
+      <input
+        id={id}
+        type="text"
+        value={query}
+        placeholder={placeholder}
+        disabled={disabled}
+        autoComplete="off"
+        onChange={(e) => {
+          setQuery(e.target.value)
+          setOpen(true)
+          if (e.target.value === '') onChange('')
+        }}
+        onFocus={() => { if (!disabled) setOpen(true) }}
+        className={`min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 pr-10 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
+      />
+      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+      </span>
+      {open && !disabled && filtered.length > 0 && (
+        <ul
+          role="listbox"
+          className="absolute z-50 mt-1 max-h-52 w-full overflow-auto rounded-lg border border-outline-variant/40 bg-surface-container-high shadow-lg"
+        >
+          {filtered.map((option) => (
+            <li
+              key={option}
+              role="option"
+              aria-selected={value === option}
+              onMouseDown={() => {
+                onChange(option)
+                setQuery(option)
+                setOpen(false)
+              }}
+              className={`cursor-pointer px-4 py-2.5 text-body-md font-body-md transition-colors hover:bg-primary/10 hover:text-primary ${
+                value === option ? 'bg-primary/10 text-primary' : 'text-on-surface'
+              }`}
+            >
+              {option}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 function SearchBuilderPage() {
   const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleType | null>(null)
   const [make, setMake] = useState('')
@@ -59,6 +203,13 @@ function SearchBuilderPage() {
   const [minProfit, setMinProfit] = useState('')
   const [frequency, setFrequency] = useState<string | null>(null)
   const [missionCreated, setMissionCreated] = useState(false)
+
+  const modelOptions = make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : []
+
+  const handleMakeChange = (val: string) => {
+    setMake(val)
+    setModel('')
+  }
 
   const selectedFrequency = SEARCH_FREQUENCIES.find((item) => item.value === frequency)?.label ?? 'Not selected'
   const missionNameBase = [make.trim(), model.trim()].filter(Boolean).join(' ')
@@ -99,7 +250,7 @@ function SearchBuilderPage() {
               <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose the makes and models you want TICA to monitor.</p>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
               {VEHICLE_TYPES.map((type) => {
                 const selected = selectedVehicleType === type
                 return (
@@ -120,7 +271,7 @@ function SearchBuilderPage() {
                       </span>
                     )}
                     <span className="text-2xl">
-                      {type === 'Cars' ? '🚗' : type === 'Pick-ups' ? '🛻' : '🚐'}
+                      {VEHICLE_TYPE_EMOJI[type]}
                     </span>
                     <span className="text-body-md font-body-md font-semibold">{type}</span>
                   </button>
@@ -141,24 +292,23 @@ function SearchBuilderPage() {
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col gap-2">
                 <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Make</label>
-                <input
+                <SearchableCombobox
                   id="make"
-                  type="text"
-                  placeholder="e.g. BMW, Audi, Ford"
+                  options={UK_MAKES}
                   value={make}
-                  onChange={(e) => setMake(e.target.value)}
-                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  onChange={handleMakeChange}
+                  placeholder="Search make…"
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
-                <input
+                <SearchableCombobox
                   id="model"
-                  type="text"
-                  placeholder="e.g. 3 Series, A4, Focus"
+                  options={modelOptions}
                   value={model}
-                  onChange={(e) => setModel(e.target.value)}
-                  className="min-h-11 md:w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  onChange={setModel}
+                  placeholder={make ? 'Search model…' : 'Select a make first'}
+                  disabled={!make || modelOptions.length === 0}
                 />
               </div>
               <div className="flex flex-col gap-2">
