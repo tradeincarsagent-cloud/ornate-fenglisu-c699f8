@@ -325,6 +325,40 @@ function SearchBuilderPage() {
 
           {/* ── Section 5: Activate ──────────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8">
+            <div className="mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block">
+              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Your AI Search Summary</p>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">TICA understands your requirements.</p>
+              <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Looking for:</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">BMW M3 Competition</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Maximum Budget:</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">£40,000</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Search Area:</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">United Kingdom</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Minimum Profit:</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">£3,000</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Scan Frequency:</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">Every 15 minutes</p>
+                </div>
+                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Search Sources:</p>
+                  <ul className="mt-2 space-y-1 text-body-md font-body-md text-on-surface">
+                    <li>Auto Trader</li>
+                    <li>Dealer Auctions</li>
+                    <li>Facebook Marketplace</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
             <button
               type="button"
               onClick={() => setMissionCreated(true)}
