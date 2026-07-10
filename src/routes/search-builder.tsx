@@ -352,8 +352,8 @@ function SearchBuilderPage() {
               <TicaShield />
             </div>
           </div>
-          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">Create Your AI Search in Under 60 Seconds</h1>
-          <p className="text-body-md font-body-md text-on-surface-variant">Tell TICA exactly what you're looking for and let your AI Search Finder work 24/7 to discover the best buying opportunities before everyone else.</p>
+          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">Brief Your AI Employee in Under 60 Seconds</h1>
+          <p className="text-body-md font-body-md text-on-surface-variant">Tell TICA exactly what you’re looking for and brief your AI Employee to work continuously, finding the best buying opportunities before everyone else.</p>
         </div>
 
         {/* ── Powered by TICA Intelligence ────────────────────────────── */}
@@ -365,7 +365,7 @@ function SearchBuilderPage() {
               <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">🧠</span>
               <div>
                 <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Smart Learning™</p>
-                <p className="text-body-sm font-body-sm text-on-surface-variant">Learns your vehicle preferences, budgets, locations and buying priorities so future searches become more relevant.</p>
+                <p className="text-body-sm font-body-sm text-on-surface-variant">Your AI Employee learns your vehicle preferences, budgets, locations and buying priorities so future searches become more relevant.</p>
               </div>
             </div>
             {/* Opportunity Intelligence™ */}
@@ -401,7 +401,7 @@ function SearchBuilderPage() {
             <div className="mb-5">
               <StepMarker step="01" />
               <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose the makes and models you want TICA to monitor.</p>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose the makes and models you want your AI Employee to monitor.</p>
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
               {VEHICLE_TYPES.map((type) => {
@@ -439,7 +439,7 @@ function SearchBuilderPage() {
               <StepMarker step="02" />
               <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
-                Set your buying budget and minimum profit target so TICA only finds opportunities that match your goals.
+                Set your buying budget and minimum profit target so your AI Employee only finds opportunities that match your goals.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -634,7 +634,7 @@ function SearchBuilderPage() {
               <StepMarker step="03" />
               <h2 className="text-headline-md font-headline-md text-on-surface">Search Priority</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
-                Tell TICA how to rank opportunities for this mission.
+                Tell your AI Employee how to rank opportunities for this mission.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -672,7 +672,7 @@ function SearchBuilderPage() {
             <div className="mb-5">
               <StepMarker step="04" />
               <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the marketplaces and locations TICA should scan.</p>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the marketplaces and locations your AI Employee should scan.</p>
             </div>
             <div className="space-y-6">
               <div>
@@ -728,7 +728,7 @@ function SearchBuilderPage() {
               <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">🔔 Notification Preferences</p>
               <h2 className="text-headline-md font-headline-md text-on-surface">How Should Your AI Employee Keep You Updated?</h2>
               <div className="mt-3 space-y-1 text-body-md font-body-md text-on-surface-variant">
-                <p>TICA works continuously, 24 hours a day.</p>
+                <p>Your AI Employee works continuously, 24 hours a day.</p>
                 <p>Choose how your AI Employee should keep you informed about buying opportunities.</p>
               </div>
             </div>
@@ -776,7 +776,7 @@ function SearchBuilderPage() {
 
               {/* Info strip */}
               <div className="border-t border-outline-variant/20 px-5 py-3 text-body-sm font-body-sm text-on-surface-variant">
-                💡 TICA never stops searching. Your AI Employee continuously monitors the market and keeps you informed according to the preferences you choose.
+                💡 Your AI Employee never stops searching, continuously monitoring the market and keeping you informed according to the preferences you choose.
               </div>
             </div>
 
@@ -787,7 +787,7 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8">
             <div className="mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block">
               <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Your AI Search Summary</p>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">TICA understands your requirements.</p>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Your AI Employee understands your requirements.</p>
               <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
                   <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Looking for:</p>
@@ -822,7 +822,7 @@ function SearchBuilderPage() {
             {/* ── What Happens Next panel ──────────────────────────────── */}
             <div className="mx-auto mb-5 w-full max-w-md rounded-xl border border-primary/25 bg-primary/8 px-5 py-4">
               <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary">What Happens Next?</p>
-              <p className="text-body-sm font-body-sm text-on-surface-variant">Once you start your AI Search Finder, TICA will continuously monitor your selected marketplaces, analyse new listings, compare market values, and notify you whenever a high-confidence opportunity matches your buying strategy.</p>
+              <p className="text-body-sm font-body-sm text-on-surface-variant">Once you start your AI Search Finder, your AI Employee will continuously monitor your selected marketplaces, analyse new listings, compare market values, and notify you whenever a high-confidence opportunity matches your buying strategy.</p>
             </div>
             <button
               type="button"
@@ -830,7 +830,7 @@ function SearchBuilderPage() {
               className="mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-4 sm:py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
             >
               <span>⚡</span>
-              Start AI Search Mission
+              Activate My AI Employee
             </button>
             <p className="mt-4 text-body-md font-body-md text-on-surface-variant">
               Live AI scanning will be available in a future platform release.
