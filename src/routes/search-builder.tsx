@@ -75,8 +75,6 @@ const CLASSIC_MAKES = [
   'Rolls-Royce', 'Triumph', 'Volkswagen',
 ]
 
-const CLASSIC_OTHER_OPTION = 'Other / Enter model manually'
-
 const CLASSIC_MODELS_BY_MAKE: Record<string, string[]> = {
   'Alfa Romeo': ['Giulietta Spider', 'Giulia Sprint', '2000 Spider', '1750 GTV', 'Spider Series 1'],
   'Aston Martin': ['DB4', 'DB5', 'DB6', 'DB2', 'Vantage'],
@@ -107,6 +105,8 @@ const SEARCH_FREQUENCIES = [
 ] as const
 const SELECT_MAKE_OPTION = '— Select Make —'
 const SELECT_MODEL_OPTION = '— Select Model —'
+const OTHER_MAKE_OPTION = 'Other / Enter Make'
+const OTHER_MODEL_OPTION = 'Other / Enter Model'
 
 const PHASE_ONE_SOURCES = [
   'Auto Trader',
@@ -263,39 +263,43 @@ function SearchBuilderPage() {
   const [advancedOpen, setAdvancedOpen] = useState(false)
   const [frequency, setFrequency] = useState<string | null>(null)
   const [missionCreated, setMissionCreated] = useState(false)
+  const [manualMake, setManualMake] = useState('')
   const [manualModel, setManualModel] = useState('')
 
   const isClassic = selectedVehicleType === 'Classic Cars'
-  const makeOptions = isClassic ? CLASSIC_MAKES : UK_MAKES
-  const classicModelBase = isClassic && make && CLASSIC_MODELS_BY_MAKE[make] ? CLASSIC_MODELS_BY_MAKE[make] : []
-  const classicModelOptions = isClassic ? [...classicModelBase, CLASSIC_OTHER_OPTION] : []
-  const modelOptions = isClassic
-    ? (make ? classicModelOptions : [])
-    : (make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : [])
+  const isOtherMake = make === OTHER_MAKE_OPTION
+  const baseClassicModels = isClassic && !isOtherMake && make && CLASSIC_MODELS_BY_MAKE[make] ? CLASSIC_MODELS_BY_MAKE[make] : []
+  const baseRegularModels = !isClassic && !isOtherMake && make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : []
+  const baseModelOptions = isClassic ? baseClassicModels : baseRegularModels
+  const makeOptions = [...(isClassic ? CLASSIC_MAKES : UK_MAKES), OTHER_MAKE_OPTION]
+  const modelOptions = make ? [...baseModelOptions, OTHER_MODEL_OPTION] : []
 
-  const isOtherModel = isClassic && model === CLASSIC_OTHER_OPTION
+  const isOtherModel = model === OTHER_MODEL_OPTION
 
   const handleVehicleTypeChange = (type: VehicleType) => {
     setSelectedVehicleType(type)
     setMake('')
     setModel('')
+    setManualMake('')
     setManualModel('')
   }
 
   const handleMakeChange = (val: string) => {
     setMake(val)
     setModel('')
+    setManualMake('')
     setManualModel('')
   }
 
   const handleModelChange = (val: string) => {
     setModel(val)
-    if (val !== CLASSIC_OTHER_OPTION) setManualModel('')
+    if (val !== OTHER_MODEL_OPTION) setManualModel('')
   }
 
   const selectedFrequency = SEARCH_FREQUENCIES.find((item) => item.value === frequency)?.label ?? 'Not selected'
+  const effectiveMake = isOtherMake ? manualMake : make
   const effectiveModel = isOtherModel ? manualModel : model
-  const missionNameBase = [make.trim(), effectiveModel.trim()].filter(Boolean).join(' ')
+  const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ')
   const missionName = missionNameBase || selectedVehicleType || 'Vehicle Search'
 
   return (
@@ -383,6 +387,16 @@ function SearchBuilderPage() {
                   placeholder={SELECT_MAKE_OPTION}
                   clearOptionLabel={SELECT_MAKE_OPTION}
                 />
+                {isOtherMake && (
+                  <input
+                    id="manual-make"
+                    type="text"
+                    placeholder="Enter Make"
+                    value={manualMake}
+                    onChange={(e) => setManualMake(e.target.value)}
+                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  />
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
@@ -399,7 +413,7 @@ function SearchBuilderPage() {
                   <input
                     id="manual-model"
                     type="text"
-                    placeholder="Enter classic model"
+                    placeholder="Enter Model"
                     value={manualModel}
                     onChange={(e) => setManualModel(e.target.value)}
                     className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
