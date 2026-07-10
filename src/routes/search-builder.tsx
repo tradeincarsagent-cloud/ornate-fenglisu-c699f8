@@ -339,16 +339,41 @@ function SearchBuilderPage() {
           <p className="text-body-md font-body-md text-on-surface-variant">Tell TICA exactly what you're looking for and let your AI Search Finder work 24/7 to discover the best buying opportunities before everyone else.</p>
         </div>
 
-        {/* ── TICA Smart Learning info card ───────────────────────────── */}
-        <div className="mb-5 rounded-xl border border-primary/25 bg-primary/8 px-5 py-4 sm:px-6 sm:py-5 md:mb-8">
-          <div className="flex items-start gap-3">
-            <span className="mt-0.5 shrink-0 text-2xl" aria-hidden="true">🧠</span>
-            <div>
-              <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Smart Learning™</p>
-              <p className="mb-2 text-body-md font-body-md text-on-surface-variant">Every search helps TICA build a better understanding of how you buy vehicles.</p>
-              <p className="mb-2 text-body-md font-body-md text-on-surface-variant">As you create searches and adjust your preferences, TICA builds your personal buying profile by learning your preferred vehicle types, budgets, locations and buying priorities.</p>
-              <p className="mb-2 text-body-md font-body-md text-on-surface-variant">This allows future recommendations to become more relevant and more valuable over time.</p>
-              <p className="text-body-md font-body-md text-on-surface-variant">You remain in complete control and can update your preferences whenever you like.</p>
+        {/* ── Powered by TICA Intelligence ────────────────────────────── */}
+        <div className="mb-5 md:mb-8">
+          <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Powered by TICA Intelligence</p>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            {/* TICA Smart Learning™ */}
+            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5">
+              <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">🧠</span>
+              <div>
+                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Smart Learning™</p>
+                <p className="text-body-sm font-body-sm text-on-surface-variant">Learns your vehicle preferences, budgets, locations and buying priorities so future searches become more relevant.</p>
+              </div>
+            </div>
+            {/* Opportunity Intelligence™ */}
+            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5">
+              <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">📊</span>
+              <div>
+                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Opportunity Intelligence™</p>
+                <p className="text-body-sm font-body-sm text-on-surface-variant">Analyses vehicle pricing, demand, potential margin and market activity to identify stronger buying opportunities.</p>
+              </div>
+            </div>
+            {/* TICA Decision Engine™ */}
+            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5">
+              <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">⚡</span>
+              <div>
+                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Decision Engine™</p>
+                <p className="text-body-sm font-body-sm text-on-surface-variant">Turns market analysis into clear recommendations and explains why an opportunity should be reviewed, watched, bought or passed.</p>
+              </div>
+            </div>
+            {/* TICA Certified™ */}
+            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5">
+              <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">✅</span>
+              <div>
+                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Certified™</p>
+                <p className="text-body-sm font-body-sm text-on-surface-variant">Marks opportunities that have completed TICA's analysis and meet the required confidence and buying criteria.</p>
+              </div>
             </div>
           </div>
         </div>
