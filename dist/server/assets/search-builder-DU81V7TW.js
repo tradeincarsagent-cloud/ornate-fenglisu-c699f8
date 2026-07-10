@@ -428,10 +428,10 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
           /* @__PURE__ */ jsx(StepMarker, { step: "05" }),
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "🔔 Notification Preferences" }),
-          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "When Should Your AI Employee Contact You?" }),
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "How Should Your AI Employee Keep You Updated?" }),
           /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-1 text-body-md font-body-md text-on-surface-variant", children: [
-            /* @__PURE__ */ jsx("p", { children: "TICA monitors the market continuously, 24 hours a day." }),
-            /* @__PURE__ */ jsx("p", { children: "You're not choosing when TICA searches — you're choosing when your AI Employee should interrupt your day with important opportunities." })
+            /* @__PURE__ */ jsx("p", { children: "TICA works continuously, 24 hours a day." }),
+            /* @__PURE__ */ jsx("p", { children: "Choose how your AI Employee should keep you informed about buying opportunities." })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "overflow-hidden rounded-2xl border border-primary/20 bg-surface-container-high shadow-md shadow-primary/5", children: [
@@ -445,7 +445,7 @@ function SearchBuilderPage() {
                   else next.add(option.value);
                   return next;
                 });
-              }, "aria-pressed": selected, className: `flex w-full items-start gap-4 px-5 py-4 text-left transition-colors duration-150 ${selected ? "bg-primary/10" : "hover:bg-surface-container"}`, children: [
+              }, "aria-pressed": selected, className: `flex w-full items-start gap-4 px-5 py-3.5 text-left transition-colors duration-150 ${selected ? "bg-primary/10" : "hover:bg-surface-container"}`, children: [
                 /* @__PURE__ */ jsx("span", { className: `mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors duration-150 ${selected ? "border-primary bg-primary text-on-primary" : "border-outline-variant/60 bg-transparent text-transparent"}`, "aria-hidden": "true", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
                 /* @__PURE__ */ jsxs("span", { className: "flex flex-col gap-0.5", children: [
                   /* @__PURE__ */ jsx("span", { className: `text-body-md font-body-md font-semibold leading-snug ${selected ? "text-primary" : "text-on-surface"}`, children: option.label }),
@@ -455,15 +455,9 @@ function SearchBuilderPage() {
               idx < NOTIFICATION_OPTIONS.length - 1 && /* @__PURE__ */ jsx("div", { className: "mx-5 border-b border-outline-variant/20" })
             ] }, option.value);
           }),
-          /* @__PURE__ */ jsxs("div", { className: "mx-5 mb-5 mt-4 flex gap-3 rounded-xl border border-primary/15 bg-primary/5 px-4 py-3", children: [
-            /* @__PURE__ */ jsx("span", { className: "shrink-0 text-base", "aria-hidden": "true", children: "💡" }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-0.5", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm font-semibold text-on-surface", children: "TICA never stops searching." }),
-              /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "Your AI Employee continuously monitors the market and only contacts you according to the preferences you choose." })
-            ] })
-          ] })
+          /* @__PURE__ */ jsx("div", { className: "border-t border-outline-variant/20 px-5 py-3 text-body-sm font-body-sm text-on-surface-variant", children: "💡 TICA never stops searching. Your AI Employee continuously monitors the market and keeps you informed according to the preferences you choose." })
         ] }),
-        /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "You can change these preferences at any time from Settings." })
+        /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "You can update these preferences at any time from Settings." })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block", children: [
