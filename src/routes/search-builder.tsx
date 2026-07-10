@@ -103,6 +103,15 @@ const SEARCH_FREQUENCIES = [
   { label: 'Every 6 Hours', value: '6h' },
   { label: 'Daily', value: 'daily' },
 ] as const
+
+const SEARCH_PRIORITIES = [
+  { label: 'Maximum Profit', value: 'maximum-profit', description: 'Focus on opportunities with the highest expected margin.' },
+  { label: 'Fastest Sale', value: 'fastest-sale', description: 'Prioritise vehicles likely to sell quickly in your market.' },
+  { label: 'Best Value', value: 'best-value', description: 'Balance purchase price against strong retail potential.' },
+  { label: 'Rare Opportunity', value: 'rare-opportunity', description: 'Surface harder-to-find stock with standout demand.' },
+  { label: 'Balanced', value: 'balanced', description: 'Combine margin, speed, and demand for all-round results.' },
+] as const
+
 const SELECT_MAKE_OPTION = '— Select Make —'
 const SELECT_MODEL_OPTION = '— Select Model —'
 const OTHER_MAKE_OPTION = 'Other / Enter Make'
@@ -261,6 +270,7 @@ function SearchBuilderPage() {
   const [transmission, setTransmission] = useState('')
   const [serviceHistory, setServiceHistory] = useState('')
   const [advancedOpen, setAdvancedOpen] = useState(false)
+  const [searchPriority, setSearchPriority] = useState<(typeof SEARCH_PRIORITIES)[number]['value'] | null>(null)
   const [frequency, setFrequency] = useState<string | null>(null)
   const [missionCreated, setMissionCreated] = useState(false)
   const [manualMake, setManualMake] = useState('')
@@ -562,10 +572,49 @@ function SearchBuilderPage() {
             </div>
           </section>
 
-          {/* ── Section 3: Search Sources ────────────────────────────── */}
+          {/* ── Section 3: Search Priority ───────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="03" />
+              <h2 className="text-headline-md font-headline-md text-on-surface">Search Priority</h2>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
+                Tell TICA how to rank opportunities for this mission.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {SEARCH_PRIORITIES.map(({ label, value, description }) => {
+                const selected = searchPriority === value
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setSearchPriority(value)}
+                    aria-pressed={selected}
+                    className={`relative flex min-h-24 flex-col items-start justify-center rounded-xl border px-4 py-4 text-left transition-all duration-200 ${
+                      selected
+                        ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
+                        : 'border-outline-variant/40 bg-surface-container-high text-on-surface hover:border-primary/40'
+                    }`}
+                  >
+                    {selected && (
+                      <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-on-primary">
+                        <CheckIcon />
+                      </span>
+                    )}
+                    <span className="text-body-md font-body-md font-semibold">{label}</span>
+                    <span className={`mt-1 text-body-sm font-body-sm ${selected ? 'text-primary/90' : 'text-on-surface-variant'}`}>
+                      {description}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+
+          {/* ── Section 4: Search Sources ────────────────────────────── */}
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+            <div className="mb-5">
+              <StepMarker step="04" />
               <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the marketplaces and locations TICA should scan.</p>
             </div>
@@ -616,10 +665,10 @@ function SearchBuilderPage() {
             </div>
           </section>
 
-          {/* ── Section 4: Search Frequency ──────────────────────────── */}
+          {/* ── Section 5: Search Frequency ──────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
-              <StepMarker step="04" />
+              <StepMarker step="05" />
               <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose how frequently TICA should run this search.</p>
             </div>
@@ -653,7 +702,7 @@ function SearchBuilderPage() {
             </div>
           </section>
 
-          {/* ── Section 5: Activate ──────────────────────────────────── */}
+          {/* ── Section 6: Activate ──────────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8">
             <div className="mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block">
               <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Your AI Search Summary</p>
