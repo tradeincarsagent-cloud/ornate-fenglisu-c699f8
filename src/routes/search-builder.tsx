@@ -124,6 +124,27 @@ const NOTIFICATION_OPTIONS = [
   },
 ] as const
 
+const NOTIFICATION_GROUPS = [
+  {
+    key: 'urgent',
+    emoji: '🚨',
+    title: 'Urgent',
+    options: ['instant'],
+  },
+  {
+    key: 'daily',
+    emoji: '🌅',
+    title: 'Daily',
+    options: ['morning', 'evening'],
+  },
+  {
+    key: 'weekly',
+    emoji: '📅',
+    title: 'Weekly',
+    options: ['weekly'],
+  },
+] as const
+
 const SEARCH_PRIORITIES = [
   { label: 'Maximum Profit', value: 'maximum-profit', description: 'Focus on opportunities with the highest expected margin.' },
   { label: 'Fastest Sale', value: 'fastest-sale', description: 'Prioritise vehicles likely to sell quickly in your market.' },
@@ -729,51 +750,66 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="05" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">🔔 How Would You Like TICA to Keep You Updated?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select one or more notification preferences.</p>
+              <h2 className="text-headline-md font-headline-md text-on-surface">When Should Your AI Employee Contact You?</h2>
+              <div className="mt-3 space-y-2 text-body-md font-body-md text-on-surface-variant">
+                <p>TICA monitors the market continuously, 24 hours a day.</p>
+                <p>Choose how and when you would like your AI Employee to notify you about important buying opportunities.</p>
+              </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {NOTIFICATION_OPTIONS.map(({ value, emoji, label, description }) => {
-                const selected = notifications.has(value)
-                return (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => {
-                      setNotifications((prev) => {
-                        const next = new Set(prev)
-                        if (next.has(value)) next.delete(value)
-                        else next.add(value)
-                        return next
-                      })
-                    }}
-                    aria-pressed={selected}
-                    className={`relative flex flex-col items-start gap-2 rounded-xl border px-5 py-4 text-left transition-all duration-200 ${
-                      selected
-                        ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
-                        : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
-                    }`}
-                  >
-                    {selected && (
-                      <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary">
-                        <CheckIcon />
-                      </span>
-                    )}
-                    <span className="text-2xl">{emoji}</span>
-                    <span className="text-body-md font-body-md font-semibold leading-snug">{label}</span>
-                    <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/80' : 'text-on-surface-variant'}`}>{description}</span>
-                  </button>
-                )
-              })}
+            <div className="space-y-5">
+              {NOTIFICATION_GROUPS.map(({ key, emoji: groupEmoji, title, options }) => (
+                <div key={key} className="rounded-2xl border border-outline-variant/25 bg-surface-container p-4 sm:p-5">
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl" aria-hidden="true">
+                      {groupEmoji}
+                    </span>
+                    <div>
+                      <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">{title}</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {options.map((optionValue) => {
+                      const option = NOTIFICATION_OPTIONS.find(({ value }) => value === optionValue)
+                      if (!option) return null
+
+                      const selected = notifications.has(option.value)
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => {
+                            setNotifications((prev) => {
+                              const next = new Set(prev)
+                              if (next.has(option.value)) next.delete(option.value)
+                              else next.add(option.value)
+                              return next
+                            })
+                          }}
+                          aria-pressed={selected}
+                          className={`relative flex h-full flex-col items-start gap-2 rounded-xl border px-5 py-4 text-left transition-all duration-200 ${
+                            selected
+                              ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
+                              : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
+                          }`}
+                        >
+                          {selected && (
+                            <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary">
+                              <CheckIcon />
+                            </span>
+                          )}
+                          <span className="text-2xl">{option.emoji}</span>
+                          <span className="text-body-md font-body-md font-semibold leading-snug">{option.label}</span>
+                          <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/80' : 'text-on-surface-variant'}`}>{option.description}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
-            {/* Information panel */}
             <div className="mt-6 rounded-xl border border-primary/20 bg-primary/6 px-5 py-4">
-              <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">About TICA Monitoring</p>
               <p className="text-body-sm font-body-sm text-on-surface-variant">
-                TICA works continuously, 24 hours a day, monitoring the market for opportunities.
-              </p>
-              <p className="mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
-                These settings only control how and when you would like your AI employee to keep you informed.
+                You can change your notification preferences at any time from Settings.
               </p>
             </div>
           </section>
