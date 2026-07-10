@@ -726,10 +726,10 @@ function SearchBuilderPage() {
             <div className="mb-5">
               <StepMarker step="05" />
               <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">🔔 Notification Preferences</p>
-              <h2 className="text-headline-md font-headline-md text-on-surface">When Should Your AI Employee Contact You?</h2>
+              <h2 className="text-headline-md font-headline-md text-on-surface">How Should Your AI Employee Keep You Updated?</h2>
               <div className="mt-3 space-y-1 text-body-md font-body-md text-on-surface-variant">
-                <p>TICA monitors the market continuously, 24 hours a day.</p>
-                <p>You're not choosing when TICA searches — you're choosing when your AI Employee should interrupt your day with important opportunities.</p>
+                <p>TICA works continuously, 24 hours a day.</p>
+                <p>Choose how your AI Employee should keep you informed about buying opportunities.</p>
               </div>
             </div>
 
@@ -750,7 +750,7 @@ function SearchBuilderPage() {
                         })
                       }}
                       aria-pressed={selected}
-                      className={`flex w-full items-start gap-4 px-5 py-4 text-left transition-colors duration-150 ${
+                      className={`flex w-full items-start gap-4 px-5 py-3.5 text-left transition-colors duration-150 ${
                         selected ? 'bg-primary/10' : 'hover:bg-surface-container'
                       }`}
                     >
@@ -774,17 +774,13 @@ function SearchBuilderPage() {
                 )
               })}
 
-              {/* Info box */}
-              <div className="mx-5 mb-5 mt-4 flex gap-3 rounded-xl border border-primary/15 bg-primary/5 px-4 py-3">
-                <span className="shrink-0 text-base" aria-hidden="true">💡</span>
-                <div className="space-y-0.5">
-                  <p className="text-body-sm font-body-sm font-semibold text-on-surface">TICA never stops searching.</p>
-                  <p className="text-body-sm font-body-sm text-on-surface-variant">Your AI Employee continuously monitors the market and only contacts you according to the preferences you choose.</p>
-                </div>
+              {/* Info strip */}
+              <div className="border-t border-outline-variant/20 px-5 py-3 text-body-sm font-body-sm text-on-surface-variant">
+                💡 TICA never stops searching. Your AI Employee continuously monitors the market and keeps you informed according to the preferences you choose.
               </div>
             </div>
 
-            <p className="mt-4 text-body-sm font-body-sm text-on-surface-variant">You can change these preferences at any time from Settings.</p>
+            <p className="mt-4 text-body-sm font-body-sm text-on-surface-variant">You can update these preferences at any time from Settings.</p>
           </section>
 
           {/* ── Section 6: Activate ──────────────────────────────────── */}
