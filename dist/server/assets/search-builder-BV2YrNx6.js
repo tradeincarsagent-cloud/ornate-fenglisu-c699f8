@@ -15,9 +15,11 @@ const MODELS_BY_MAKE = {
   "Alfa Romeo": ["Giulia", "Stelvio", "Giulietta", "147", "156", "159", "Spider", "4C"],
   "Aston Martin": ["DB11", "DB12", "Vantage", "DBS", "DBX"],
   "Audi": ["A1", "A3", "A4", "A5", "A6", "A7", "A8", "Q2", "Q3", "Q5", "Q7", "Q8", "TT", "R8", "RS3", "RS4", "RS5", "RS6", "RS7", "e-tron", "e-tron GT"],
+  "Bentley": ["Continental GT", "Bentayga", "Flying Spur", "Continental GTC", "Mulsanne"],
   "BMW": ["1 Series", "2 Series", "3 Series", "4 Series", "5 Series", "6 Series", "7 Series", "8 Series", "M2", "M3", "M4", "M5", "M6", "M8", "X1", "X2", "X3", "X4", "X5", "X6", "X7", "Z4", "iX", "i4", "i5", "i7"],
   "Citroen": ["C1", "C3", "C4", "C5 X", "Berlingo", "Grand C4", "Picasso", "C3 Aircross", "C5 Aircross"],
   "Dacia": ["Sandero", "Duster", "Logan", "Jogger", "Spring"],
+  "DS": ["DS 3", "DS 4", "DS 7", "DS 9", "DS 3 Crossback"],
   "Ferrari": ["488", "F8", "SF90", "Roma", "296", "Portofino", "California", "GTC4Lusso"],
   "Fiat": ["500", "500X", "500L", "Panda", "Tipo", "Punto", "Bravo"],
   "Ford": ["Fiesta", "Focus", "Mondeo", "Kuga", "Puma", "Mustang", "Mustang Mach-E", "Explorer", "Galaxy", "S-Max", "EcoSport", "Edge", "Ranger", "Transit"],
@@ -26,6 +28,7 @@ const MODELS_BY_MAKE = {
   "Jaguar": ["XE", "XF", "XJ", "F-Type", "E-Pace", "F-Pace", "I-Pace"],
   "Jeep": ["Renegade", "Compass", "Cherokee", "Grand Cherokee", "Wrangler", "Avenger"],
   "Kia": ["Picanto", "Rio", "Ceed", "Sportage", "Niro", "Stinger", "EV6", "EV9", "Sorento"],
+  "Lamborghini": ["Huracán", "Aventador", "Urus", "Gallardo", "Revuelto"],
   "Land Rover": ["Defender", "Discovery", "Discovery Sport", "Range Rover", "Range Rover Sport", "Range Rover Velar", "Range Rover Evoque", "Freelander"],
   "Lexus": ["CT", "IS", "ES", "GS", "LS", "NX", "RX", "UX", "LX", "RC", "LC"],
   "Maserati": ["Ghibli", "Quattroporte", "Levante", "Grecale", "GranTurismo"],
@@ -50,7 +53,6 @@ const MODELS_BY_MAKE = {
   "Volvo": ["S60", "S90", "V60", "V90", "XC40", "XC60", "XC90", "C40", "EX30", "EX90"]
 };
 const CLASSIC_MAKES = ["Alfa Romeo", "Aston Martin", "Austin", "Bentley", "Chevrolet", "Ferrari", "Ford", "Jaguar", "Mercedes-Benz", "MG", "Morris", "Porsche", "Rolls-Royce", "Triumph", "Volkswagen"];
-const CLASSIC_OTHER_OPTION = "Other / Enter model manually";
 const CLASSIC_MODELS_BY_MAKE = {
   "Alfa Romeo": ["Giulietta Spider", "Giulia Sprint", "2000 Spider", "1750 GTV", "Spider Series 1"],
   "Aston Martin": ["DB4", "DB5", "DB6", "DB2", "Vantage"],
@@ -86,6 +88,8 @@ const SEARCH_FREQUENCIES = [{
 }];
 const SELECT_MAKE_OPTION = "— Select Make —";
 const SELECT_MODEL_OPTION = "— Select Model —";
+const OTHER_MAKE_OPTION = "Other / Enter Make";
+const OTHER_MODEL_OPTION = "Other / Enter Model";
 const PHASE_ONE_SOURCES = ["Auto Trader", "Dealer Network", "UK Public Vehicle Listings", "Dealer Websites", "Classified Vehicle Websites"];
 const PLANNED_INTEGRATIONS = ["Facebook Marketplace", "Auctions", "Private Sellers", "Trade Feeds", "Vehicle History Providers"];
 function CheckIcon() {
@@ -165,31 +169,37 @@ function SearchBuilderPage() {
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [frequency, setFrequency] = useState(null);
   const [missionCreated, setMissionCreated] = useState(false);
+  const [manualMake, setManualMake] = useState("");
   const [manualModel, setManualModel] = useState("");
   const isClassic = selectedVehicleType === "Classic Cars";
-  const makeOptions = isClassic ? CLASSIC_MAKES : UK_MAKES;
-  const classicModelBase = isClassic && make && CLASSIC_MODELS_BY_MAKE[make] ? CLASSIC_MODELS_BY_MAKE[make] : [];
-  const classicModelOptions = isClassic ? [...classicModelBase, CLASSIC_OTHER_OPTION] : [];
-  const modelOptions = isClassic ? make ? classicModelOptions : [] : make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : [];
-  const isOtherModel = isClassic && model === CLASSIC_OTHER_OPTION;
+  const isOtherMake = make === OTHER_MAKE_OPTION;
+  const baseClassicModels = isClassic && !isOtherMake && make && CLASSIC_MODELS_BY_MAKE[make] ? CLASSIC_MODELS_BY_MAKE[make] : [];
+  const baseRegularModels = !isClassic && !isOtherMake && make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : [];
+  const baseModelOptions = isClassic ? baseClassicModels : baseRegularModels;
+  const makeOptions = [...isClassic ? CLASSIC_MAKES : UK_MAKES, OTHER_MAKE_OPTION];
+  const modelOptions = make ? [...baseModelOptions, OTHER_MODEL_OPTION] : [];
+  const isOtherModel = model === OTHER_MODEL_OPTION;
   const handleVehicleTypeChange = (type) => {
     setSelectedVehicleType(type);
     setMake("");
     setModel("");
+    setManualMake("");
     setManualModel("");
   };
   const handleMakeChange = (val) => {
     setMake(val);
     setModel("");
+    setManualMake("");
     setManualModel("");
   };
   const handleModelChange = (val) => {
     setModel(val);
-    if (val !== CLASSIC_OTHER_OPTION) setManualModel("");
+    if (val !== OTHER_MODEL_OPTION) setManualModel("");
   };
   const selectedFrequency = SEARCH_FREQUENCIES.find((item) => item.value === frequency)?.label ?? "Not selected";
+  const effectiveMake = isOtherMake ? manualMake : make;
   const effectiveModel = isOtherModel ? manualModel : model;
-  const missionNameBase = [make.trim(), effectiveModel.trim()].filter(Boolean).join(" ");
+  const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" ");
   const missionName = missionNameBase || selectedVehicleType || "Vehicle Search";
   return /* @__PURE__ */ jsx(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
@@ -253,12 +263,13 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Make" }),
-            /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: makeOptions, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION })
+            /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: makeOptions, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION }),
+            isOtherMake && /* @__PURE__ */ jsx("input", { id: "manual-make", type: "text", placeholder: "Enter Make", value: manualMake, onChange: (e) => setManualMake(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Model" }),
             /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: handleModelChange, placeholder: make ? SELECT_MODEL_OPTION : "Select a make first", clearOptionLabel: SELECT_MODEL_OPTION, disabled: !make || modelOptions.length === 0 }),
-            isOtherModel && /* @__PURE__ */ jsx("input", { id: "manual-model", type: "text", placeholder: "Enter classic model", value: manualModel, onChange: (e) => setManualModel(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+            isOtherModel && /* @__PURE__ */ jsx("input", { id: "manual-model", type: "text", placeholder: "Enter Model", value: manualModel, onChange: (e) => setManualModel(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-budget", children: "Maximum Budget" }),
