@@ -97,11 +97,31 @@ const FUEL_TYPES = ['Any', 'Petrol', 'Diesel', 'Hybrid', 'Plug-in Hybrid', 'Elec
 const TRANSMISSION_TYPES = ['Any', 'Automatic', 'Manual', 'Semi-Automatic'] as const
 const SERVICE_HISTORY_OPTIONS = ['Any', 'Full Service History', 'Part Service History', 'No Service History'] as const
 
-const SEARCH_FREQUENCIES = [
-  { label: 'Every 15 Minutes', value: '15min' },
-  { label: 'Hourly', value: 'hourly' },
-  { label: 'Every 6 Hours', value: '6h' },
-  { label: 'Daily', value: 'daily' },
+const NOTIFICATION_OPTIONS = [
+  {
+    value: 'instant',
+    emoji: '⚡',
+    label: 'Instant Alerts',
+    description: 'Notify me immediately when TICA finds a high-confidence buying opportunity.',
+  },
+  {
+    value: 'morning',
+    emoji: '🌅',
+    label: 'Morning Intelligence Briefing',
+    description: 'Receive a summary of overnight opportunities before your working day begins.',
+  },
+  {
+    value: 'evening',
+    emoji: '🌆',
+    label: 'Evening Market Summary',
+    description: "Receive a summary of the day's best opportunities.",
+  },
+  {
+    value: 'weekly',
+    emoji: '📊',
+    label: 'Weekly Intelligence Report',
+    description: 'Receive a weekly overview of opportunities and market trends.',
+  },
 ] as const
 
 const SEARCH_PRIORITIES = [
@@ -271,7 +291,7 @@ function SearchBuilderPage() {
   const [serviceHistory, setServiceHistory] = useState('')
   const [advancedOpen, setAdvancedOpen] = useState(false)
   const [searchPriority, setSearchPriority] = useState<(typeof SEARCH_PRIORITIES)[number]['value'] | null>(null)
-  const [frequency, setFrequency] = useState<string | null>(null)
+  const [notifications, setNotifications] = useState<Set<string>>(new Set())
   const [missionCreated, setMissionCreated] = useState(false)
   const [manualMake, setManualMake] = useState('')
   const [manualModel, setManualModel] = useState('')
@@ -306,7 +326,8 @@ function SearchBuilderPage() {
     if (val !== OTHER_MODEL_OPTION) setManualModel('')
   }
 
-  const selectedFrequency = SEARCH_FREQUENCIES.find((item) => item.value === frequency)?.label ?? 'Not selected'
+  const selectedNotificationLabels = NOTIFICATION_OPTIONS.filter((o) => notifications.has(o.value)).map((o) => o.label)
+  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(', ') : 'Not selected'
   const effectiveMake = isOtherMake ? manualMake : make
   const effectiveModel = isOtherModel ? manualModel : model
   const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ')
@@ -704,40 +725,56 @@ function SearchBuilderPage() {
             </div>
           </section>
 
-          {/* ── Section 5: Search Frequency ──────────────────────────── */}
+          {/* ── Section 5: Notification Preferences ──────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="05" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">How often should I look?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose how frequently TICA should run this search.</p>
+              <h2 className="text-headline-md font-headline-md text-on-surface">🔔 How Would You Like TICA to Keep You Updated?</h2>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select one or more notification preferences.</p>
             </div>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {SEARCH_FREQUENCIES.map(({ label, value }) => {
-                const selected = frequency === value
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {NOTIFICATION_OPTIONS.map(({ value, emoji, label, description }) => {
+                const selected = notifications.has(value)
                 return (
                   <button
                     key={value}
                     type="button"
-                    onClick={() => setFrequency(value)}
+                    onClick={() => {
+                      setNotifications((prev) => {
+                        const next = new Set(prev)
+                        if (next.has(value)) next.delete(value)
+                        else next.add(value)
+                        return next
+                      })
+                    }}
                     aria-pressed={selected}
-                    className={`relative flex min-h-24 flex-col items-center justify-center gap-2 rounded-xl border px-4 py-4 text-center transition-all duration-200 sm:py-5 ${
+                    className={`relative flex flex-col items-start gap-2 rounded-xl border px-5 py-4 text-left transition-all duration-200 ${
                       selected
                         ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
                         : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
                     }`}
                   >
                     {selected && (
-                      <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-on-primary">
+                      <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary">
                         <CheckIcon />
                       </span>
                     )}
-                    <span className="text-xl">
-                      {value === '15min' ? '⚡' : value === 'hourly' ? '🔄' : value === '6h' ? '⏱️' : '📅'}
-                    </span>
-                    <span className="text-body-md font-body-md font-semibold leading-tight">{label}</span>
+                    <span className="text-2xl">{emoji}</span>
+                    <span className="text-body-md font-body-md font-semibold leading-snug">{label}</span>
+                    <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/80' : 'text-on-surface-variant'}`}>{description}</span>
                   </button>
                 )
               })}
+            </div>
+            {/* Information panel */}
+            <div className="mt-6 rounded-xl border border-primary/20 bg-primary/6 px-5 py-4">
+              <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">About TICA Monitoring</p>
+              <p className="text-body-sm font-body-sm text-on-surface-variant">
+                TICA works continuously, 24 hours a day, monitoring the market for opportunities.
+              </p>
+              <p className="mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+                These settings only control how and when you would like your AI employee to keep you informed.
+              </p>
             </div>
           </section>
 
@@ -764,8 +801,8 @@ function SearchBuilderPage() {
                   <p className="mt-2 text-body-md font-body-md text-on-surface">£3,000</p>
                 </div>
                 <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Scan Frequency:</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">Every 15 minutes</p>
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Notifications:</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">{selectedNotificationSummary}</p>
                 </div>
                 <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
                   <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Search Sources:</p>
@@ -809,8 +846,8 @@ function SearchBuilderPage() {
                   <p className="mt-2 text-body-md font-body-md text-primary">Active</p>
                 </div>
                 <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Monitoring Frequency</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">{selectedFrequency}</p>
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Notification Preferences</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">{selectedNotificationSummary}</p>
                 </div>
                 <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
                   <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Search Sources</p>
