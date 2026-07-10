@@ -75,40 +75,20 @@ const TRANSMISSION_TYPES = ["Any", "Automatic", "Manual", "Semi-Automatic"];
 const SERVICE_HISTORY_OPTIONS = ["Any", "Full Service History", "Part Service History", "No Service History"];
 const NOTIFICATION_OPTIONS = [{
   value: "instant",
-  emoji: "⚡",
   label: "Instant Alerts",
-  description: "Notify me immediately when TICA finds a high-confidence buying opportunity."
+  description: "High-confidence opportunities only."
 }, {
   value: "morning",
-  emoji: "🌅",
   label: "Morning Intelligence Briefing",
-  description: "Receive a summary of overnight opportunities before your working day begins."
+  description: "Your overnight buying opportunities before your working day begins."
 }, {
   value: "evening",
-  emoji: "🌆",
   label: "Evening Market Summary",
-  description: "Receive a summary of the day's best opportunities."
+  description: "A summary of today's best opportunities."
 }, {
   value: "weekly",
-  emoji: "📊",
   label: "Weekly Intelligence Report",
-  description: "Receive a weekly overview of opportunities and market trends."
-}];
-const NOTIFICATION_GROUPS = [{
-  key: "urgent",
-  emoji: "🚨",
-  title: "Urgent",
-  options: ["instant"]
-}, {
-  key: "daily",
-  emoji: "🌅",
-  title: "Daily",
-  options: ["morning", "evening"]
-}, {
-  key: "weekly",
-  emoji: "📅",
-  title: "Weekly",
-  options: ["weekly"]
+  description: "A weekly overview of market activity and buying opportunities."
 }];
 const SEARCH_PRIORITIES = [{
   label: "Maximum Profit",
@@ -444,47 +424,46 @@ function SearchBuilderPage() {
           /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3.5", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Trade in Cars Agent is being designed to search connected marketplaces, dealer sources and trusted public vehicle listings. Some integrations will be released in later platform phases." }) })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-primary/25 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high p-4 shadow-lg shadow-primary/10 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
           /* @__PURE__ */ jsx(StepMarker, { step: "05" }),
+          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "🔔 Notification Preferences" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "When Should Your AI Employee Contact You?" }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-2 text-body-md font-body-md text-on-surface-variant", children: [
+          /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-1 text-body-md font-body-md text-on-surface-variant", children: [
             /* @__PURE__ */ jsx("p", { children: "TICA monitors the market continuously, 24 hours a day." }),
-            /* @__PURE__ */ jsx("p", { children: "Choose how and when you would like your AI Employee to notify you about important buying opportunities." })
+            /* @__PURE__ */ jsx("p", { children: "You're not choosing when TICA searches — you're choosing when your AI Employee should interrupt your day with important opportunities." })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "space-y-5", children: NOTIFICATION_GROUPS.map(({
-          key,
-          emoji: groupEmoji,
-          title,
-          options
-        }) => /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/25 bg-surface-container p-4 sm:p-5", children: [
-          /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx("span", { className: "flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl", "aria-hidden": "true", children: groupEmoji }),
-            /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: title }) })
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2", children: options.map((optionValue) => {
-            const option = NOTIFICATION_OPTIONS.find(({
-              value
-            }) => value === optionValue);
-            if (!option) return null;
+        /* @__PURE__ */ jsxs("div", { className: "overflow-hidden rounded-2xl border border-primary/20 bg-surface-container-high shadow-md shadow-primary/5", children: [
+          NOTIFICATION_OPTIONS.map((option, idx) => {
             const selected = notifications.has(option.value);
-            return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => {
-              setNotifications((prev) => {
-                const next = new Set(prev);
-                if (next.has(option.value)) next.delete(option.value);
-                else next.add(option.value);
-                return next;
-              });
-            }, "aria-pressed": selected, className: `relative flex h-full flex-col items-start gap-2 rounded-xl border px-5 py-4 text-left transition-all duration-200 ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface"}`, children: [
-              selected && /* @__PURE__ */ jsx("span", { className: "absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
-              /* @__PURE__ */ jsx("span", { className: "text-2xl", children: option.emoji }),
-              /* @__PURE__ */ jsx("span", { className: "text-body-md font-body-md font-semibold leading-snug", children: option.label }),
-              /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm leading-snug ${selected ? "text-primary/80" : "text-on-surface-variant"}`, children: option.description })
+            return /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => {
+                setNotifications((prev) => {
+                  const next = new Set(prev);
+                  if (next.has(option.value)) next.delete(option.value);
+                  else next.add(option.value);
+                  return next;
+                });
+              }, "aria-pressed": selected, className: `flex w-full items-start gap-4 px-5 py-4 text-left transition-colors duration-150 ${selected ? "bg-primary/10" : "hover:bg-surface-container"}`, children: [
+                /* @__PURE__ */ jsx("span", { className: `mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors duration-150 ${selected ? "border-primary bg-primary text-on-primary" : "border-outline-variant/60 bg-transparent text-transparent"}`, "aria-hidden": "true", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
+                /* @__PURE__ */ jsxs("span", { className: "flex flex-col gap-0.5", children: [
+                  /* @__PURE__ */ jsx("span", { className: `text-body-md font-body-md font-semibold leading-snug ${selected ? "text-primary" : "text-on-surface"}`, children: option.label }),
+                  /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm leading-snug ${selected ? "text-primary/75" : "text-on-surface-variant"}`, children: option.description })
+                ] })
+              ] }),
+              idx < NOTIFICATION_OPTIONS.length - 1 && /* @__PURE__ */ jsx("div", { className: "mx-5 border-b border-outline-variant/20" })
             ] }, option.value);
-          }) })
-        ] }, key)) }),
-        /* @__PURE__ */ jsx("div", { className: "mt-6 rounded-xl border border-primary/20 bg-primary/6 px-5 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "You can change your notification preferences at any time from Settings." }) })
+          }),
+          /* @__PURE__ */ jsxs("div", { className: "mx-5 mb-5 mt-4 flex gap-3 rounded-xl border border-primary/15 bg-primary/5 px-4 py-3", children: [
+            /* @__PURE__ */ jsx("span", { className: "shrink-0 text-base", "aria-hidden": "true", children: "💡" }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-0.5", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm font-semibold text-on-surface", children: "TICA never stops searching." }),
+              /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "Your AI Employee continuously monitors the market and only contacts you according to the preferences you choose." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "You can change these preferences at any time from Settings." })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block", children: [

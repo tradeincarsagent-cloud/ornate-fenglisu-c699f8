@@ -135,7 +135,7 @@ const $$splitComponentImporter$4 = () => import("./settings-B6UdRlA-.js");
 const Route$4 = createFileRoute("/settings")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./search-builder-Bh6fv08D.js");
+const $$splitComponentImporter$3 = () => import("./search-builder-BMHHet_t.js");
 const Route$3 = createFileRoute("/search-builder")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
