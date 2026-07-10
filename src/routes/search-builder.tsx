@@ -339,6 +339,20 @@ function SearchBuilderPage() {
           <p className="text-body-md font-body-md text-on-surface-variant">Tell TICA exactly what you're looking for and let your AI Search Finder work 24/7 to discover the best buying opportunities before everyone else.</p>
         </div>
 
+        {/* ── TICA Smart Learning info card ───────────────────────────── */}
+        <div className="mb-5 rounded-xl border border-primary/25 bg-primary/8 px-5 py-4 sm:px-6 sm:py-5 md:mb-8">
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 shrink-0 text-2xl" aria-hidden="true">🧠</span>
+            <div>
+              <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Smart Learning™</p>
+              <p className="mb-2 text-body-md font-body-md text-on-surface-variant">Every search helps TICA build a better understanding of how you buy vehicles.</p>
+              <p className="mb-2 text-body-md font-body-md text-on-surface-variant">As you create searches and adjust your preferences, TICA builds your personal buying profile by learning your preferred vehicle types, budgets, locations and buying priorities.</p>
+              <p className="mb-2 text-body-md font-body-md text-on-surface-variant">This allows future recommendations to become more relevant and more valuable over time.</p>
+              <p className="text-body-md font-body-md text-on-surface-variant">You remain in complete control and can update your preferences whenever you like.</p>
+            </div>
+          </div>
+        </div>
+
         <div className="space-y-5 sm:space-y-8">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
