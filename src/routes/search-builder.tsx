@@ -747,27 +747,25 @@ function SearchBuilderPage() {
           </section>
 
           {/* ── Section 5: Notification Preferences ──────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+          <section className="rounded-2xl border border-primary/25 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high p-4 shadow-lg shadow-primary/10 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="05" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">When Should Your AI Employee Contact You?</h2>
+              <h2 className="text-headline-md font-headline-md text-on-surface">🔔 When Should Your AI Employee Contact You?</h2>
               <div className="mt-3 space-y-2 text-body-md font-body-md text-on-surface-variant">
                 <p>TICA monitors the market continuously, 24 hours a day.</p>
                 <p>Choose how and when you would like your AI Employee to notify you about important buying opportunities.</p>
               </div>
             </div>
-            <div className="space-y-5">
+            <div className="space-y-6">
               {NOTIFICATION_GROUPS.map(({ key, emoji: groupEmoji, title, options }) => (
-                <div key={key} className="rounded-2xl border border-outline-variant/25 bg-surface-container p-4 sm:p-5">
-                  <div className="mb-4 flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl" aria-hidden="true">
+                <div key={key} className="border-b border-outline-variant/25 pb-5 last:border-0 last:pb-0">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="text-lg" aria-hidden="true">
                       {groupEmoji}
                     </span>
-                    <div>
-                      <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">{title}</p>
-                    </div>
+                    <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">{title}</p>
                   </div>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {options.map((optionValue) => {
                       const option = NOTIFICATION_OPTIONS.find(({ value }) => value === optionValue)
                       if (!option) return null
@@ -786,20 +784,22 @@ function SearchBuilderPage() {
                             })
                           }}
                           aria-pressed={selected}
-                          className={`relative flex h-full flex-col items-start gap-2 rounded-xl border px-5 py-4 text-left transition-all duration-200 ${
+                          className={`relative flex h-full flex-col items-start gap-1 rounded-xl border px-4 py-3 text-left transition-all duration-200 ${
                             selected
                               ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
                               : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
                           }`}
                         >
-                          {selected && (
-                            <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary">
-                              <CheckIcon />
-                            </span>
-                          )}
-                          <span className="text-2xl">{option.emoji}</span>
-                          <span className="text-body-md font-body-md font-semibold leading-snug">{option.label}</span>
-                          <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/80' : 'text-on-surface-variant'}`}>{option.description}</span>
+                          <span
+                            className={`absolute left-3 top-3 flex h-5 w-5 items-center justify-center rounded border-2 ${
+                              selected ? 'border-primary bg-primary text-on-primary' : 'border-outline-variant/50 bg-transparent text-transparent'
+                            }`}
+                            aria-hidden="true"
+                          >
+                            <CheckIcon />
+                          </span>
+                          <span className="pl-7 text-body-md font-body-md font-semibold leading-snug">{option.label}</span>
+                          <span className={`pl-7 text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/80' : 'text-on-surface-variant'}`}>{option.description}</span>
                         </button>
                       )
                     })}
@@ -807,11 +807,7 @@ function SearchBuilderPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-xl border border-primary/20 bg-primary/6 px-5 py-4">
-              <p className="text-body-sm font-body-sm text-on-surface-variant">
-                You can change your notification preferences at any time from Settings.
-              </p>
-            </div>
+            <p className="mt-6 text-body-sm font-body-sm text-on-surface-variant">You can change these preferences at any time from Settings.</p>
           </section>
 
           {/* ── Section 6: Activate ──────────────────────────────────── */}
