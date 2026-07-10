@@ -94,6 +94,22 @@ const NOTIFICATION_OPTIONS = [{
   label: "Weekly Intelligence Report",
   description: "Receive a weekly overview of opportunities and market trends."
 }];
+const NOTIFICATION_GROUPS = [{
+  key: "urgent",
+  emoji: "🚨",
+  title: "Urgent",
+  options: ["instant"]
+}, {
+  key: "daily",
+  emoji: "🌅",
+  title: "Daily",
+  options: ["morning", "evening"]
+}, {
+  key: "weekly",
+  emoji: "📅",
+  title: "Weekly",
+  options: ["weekly"]
+}];
 const SEARCH_PRIORITIES = [{
   label: "Maximum Profit",
   value: "maximum-profit",
@@ -431,35 +447,44 @@ function SearchBuilderPage() {
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
           /* @__PURE__ */ jsx(StepMarker, { step: "05" }),
-          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "🔔 How Would You Like TICA to Keep You Updated?" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Select one or more notification preferences." })
+          /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "When Should Your AI Employee Contact You?" }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-2 text-body-md font-body-md text-on-surface-variant", children: [
+            /* @__PURE__ */ jsx("p", { children: "TICA monitors the market continuously, 24 hours a day." }),
+            /* @__PURE__ */ jsx("p", { children: "Choose how and when you would like your AI Employee to notify you about important buying opportunities." })
+          ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2", children: NOTIFICATION_OPTIONS.map(({
-          value,
-          emoji,
-          label,
-          description
-        }) => {
-          const selected = notifications.has(value);
-          return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => {
-            setNotifications((prev) => {
-              const next = new Set(prev);
-              if (next.has(value)) next.delete(value);
-              else next.add(value);
-              return next;
-            });
-          }, "aria-pressed": selected, className: `relative flex flex-col items-start gap-2 rounded-xl border px-5 py-4 text-left transition-all duration-200 ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface"}`, children: [
-            selected && /* @__PURE__ */ jsx("span", { className: "absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
-            /* @__PURE__ */ jsx("span", { className: "text-2xl", children: emoji }),
-            /* @__PURE__ */ jsx("span", { className: "text-body-md font-body-md font-semibold leading-snug", children: label }),
-            /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm leading-snug ${selected ? "text-primary/80" : "text-on-surface-variant"}`, children: description })
-          ] }, value);
-        }) }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-6 rounded-xl border border-primary/20 bg-primary/6 px-5 py-4", children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "About TICA Monitoring" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "TICA works continuously, 24 hours a day, monitoring the market for opportunities." }),
-          /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm text-on-surface-variant", children: "These settings only control how and when you would like your AI employee to keep you informed." })
-        ] })
+        /* @__PURE__ */ jsx("div", { className: "space-y-5", children: NOTIFICATION_GROUPS.map(({
+          key,
+          emoji: groupEmoji,
+          title,
+          options
+        }) => /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/25 bg-surface-container p-4 sm:p-5", children: [
+          /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx("span", { className: "flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl", "aria-hidden": "true", children: groupEmoji }),
+            /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: title }) })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2", children: options.map((optionValue) => {
+            const option = NOTIFICATION_OPTIONS.find(({
+              value
+            }) => value === optionValue);
+            if (!option) return null;
+            const selected = notifications.has(option.value);
+            return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => {
+              setNotifications((prev) => {
+                const next = new Set(prev);
+                if (next.has(option.value)) next.delete(option.value);
+                else next.add(option.value);
+                return next;
+              });
+            }, "aria-pressed": selected, className: `relative flex h-full flex-col items-start gap-2 rounded-xl border px-5 py-4 text-left transition-all duration-200 ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface"}`, children: [
+              selected && /* @__PURE__ */ jsx("span", { className: "absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
+              /* @__PURE__ */ jsx("span", { className: "text-2xl", children: option.emoji }),
+              /* @__PURE__ */ jsx("span", { className: "text-body-md font-body-md font-semibold leading-snug", children: option.label }),
+              /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm leading-snug ${selected ? "text-primary/80" : "text-on-surface-variant"}`, children: option.description })
+            ] }, option.value);
+          }) })
+        ] }, key)) }),
+        /* @__PURE__ */ jsx("div", { className: "mt-6 rounded-xl border border-primary/20 bg-primary/6 px-5 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "You can change your notification preferences at any time from Settings." }) })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block", children: [
