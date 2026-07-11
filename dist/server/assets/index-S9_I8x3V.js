@@ -402,19 +402,42 @@ function LandingPage() {
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-on-surface-variant text-sm", children: row.status })
           ] }, row.name)) })
         ] }) }) }),
-        /* @__PURE__ */ jsx("div", { className: "max-w-lg mb-12", children: /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-3", children: "AI Recommendation" }),
-          /* @__PURE__ */ jsx("p", { className: "text-white font-headline-md text-xl mb-3", children: "BMW M3" }),
-          /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-on-surface-variant text-sm", children: [
-            /* @__PURE__ */ jsx("li", { children: "High demand." }),
-            /* @__PURE__ */ jsx("li", { children: "Low market supply." }),
-            /* @__PURE__ */ jsx("li", { children: "Estimated profit £3,200." })
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12", children: [
+          /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-3", children: "AI Recommendation" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white font-headline-md text-xl mb-3", children: "BMW M3" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-on-surface-variant text-sm", children: [
+              /* @__PURE__ */ jsx("li", { children: "High demand." }),
+              /* @__PURE__ */ jsx("li", { children: "Low market supply." }),
+              /* @__PURE__ */ jsx("li", { children: "Estimated profit £3,200." })
+            ] }),
+            /* @__PURE__ */ jsxs("p", { className: "mt-4 text-sm text-white", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-primary font-semibold", children: "Recommended action:" }),
+              " Contact seller immediately."
+            ] })
           ] }),
-          /* @__PURE__ */ jsxs("p", { className: "mt-4 text-sm text-white", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-primary font-semibold", children: "Recommended action:" }),
-            " Contact seller immediately."
+          /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-4", children: "Live AI Activity" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex items-baseline justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "Market Scans Today" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold text-lg", children: "1,287" })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-baseline justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "Vehicles Analysed" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold text-lg", children: "8,492" })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-baseline justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "High-Confidence Opportunities" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold text-lg", children: "73" })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "pt-1 border-t border-outline-variant/20 flex items-center justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "AI Status" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "🟢 Monitoring Live" })
+              ] })
+            ] })
           ] })
-        ] }) }),
+        ] }),
         /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsx("button", { onClick: () => scrollToSection("dashboard-preview"), className: "border border-primary/50 text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95", children: "Enter My AI Command Centre" }) })
       ] }) }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container-lowest", children: [
