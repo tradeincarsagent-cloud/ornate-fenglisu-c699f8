@@ -288,7 +288,7 @@ function LandingPage() {
                 <span className="font-label-caps text-label-caps text-primary tracking-widest">LIVE INVENTORY AGENT v1.0</span>
               </div>
               <h1 className="font-display-lg text-display-lg leading-tight text-on-surface">
-                Find More Stock.{' '}
+                Find Better Stock.{' '}
                 <svg className="inline-block w-10 h-10 text-primary-container align-middle ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                 </svg><br />
@@ -296,7 +296,7 @@ function LandingPage() {
                 Save Hours Every Week.
               </h1>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                Trade In Cars Agent is your AI vehicle finder working 24/7, helping you discover vehicle opportunities that match your exact buying criteria before the competition.
+                Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you buy better vehicles before the competition.
               </p>
               <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -308,6 +308,9 @@ function LandingPage() {
                     See How It Works
                   </a>
                 </div>
+                <p className="text-xs text-on-surface-variant">
+                  Built specifically for independent dealers, professional buyers and used vehicle specialists.
+                </p>
                 <p className="text-xs text-on-surface-variant flex items-center gap-2">
                   <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
