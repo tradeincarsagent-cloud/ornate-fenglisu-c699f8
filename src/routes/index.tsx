@@ -544,7 +544,7 @@ function LandingPage() {
             </div>
             {/* Professional */}
             <div className="p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ Most Popular</div>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
               <div className="mb-8">
                 <h4 className="font-headline-md text-headline-md mb-2">Professional</h4>
                 <p className="text-on-surface-variant text-sm mb-4">Designed for growing dealerships that buy and sell vehicles every day.</p>
