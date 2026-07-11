@@ -512,24 +512,24 @@ function LandingPage() {
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center max-w-3xl mx-auto mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4", children: "Product Roadmap" }),
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Built To Keep Getting Better" }),
-          /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-lg", children: "From live AI sourcing today to negotiation and price-prediction tomorrow, here is where Trade In Cars Agent is heading across three releases." })
+          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Built for Today. Designed for Tomorrow." }),
+          /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-lg", children: "TICA is continuously evolving. Here's what you receive today, what's currently being developed, and where the platform is heading in the future." })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 items-start", children: [{
-          version: "Version 1",
+          version: "Available Today",
           status: "Available Now",
           statusClass: "bg-primary/20 text-primary",
           icon: "check_circle",
           items: ["AI-assisted vehicle sourcing", "Dealer dashboard", "Saved searches", "Email alerts", "14-day free trial", "Subscription plans"]
         }, {
-          version: "Version 2",
-          status: "Coming Soon",
+          version: "Coming Next",
+          status: "In Development",
           statusClass: "bg-tertiary/20 text-tertiary",
           icon: "schedule",
           items: ["Live AI search engine", "Mobile app (iOS & Android)", "Instant push notifications", "Saved favourites", "Dealer analytics", "Multiple countries", "Motorcycle support", "Vans & commercial vehicles", "Vehicle watchlists"]
         }, {
-          version: "Version 3",
-          status: "Future Development",
+          version: "Future Vision",
+          status: "Future Vision",
           statusClass: "bg-surface-bright text-on-surface-variant",
           icon: "rocket_launch",
           items: ["AI negotiation assistant", "Price prediction AI", "Profit estimator", "Vehicle history integration (HPI and similar services)", "Auction integrations", "Multi-language support", "Multi-user dealer accounts", "API integrations"]
@@ -546,17 +546,11 @@ function LandingPage() {
         /* @__PURE__ */ jsxs("div", { className: "mt-12 glass-card rounded-2xl p-8 border border-outline-variant/20", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "auto_awesome" }),
-            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: "Coming Soon" })
+            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: "🚀 Future Roadmap" })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4", children: [{
             icon: "search",
-            text: "AI Search Engine"
-          }, {
-            icon: "smartphone",
-            text: "Mobile App"
-          }, {
-            icon: "two_wheeler",
-            text: "Motorcycle Search"
+            text: "AI Intelligence Engine"
           }, {
             icon: "fact_check",
             text: "Vehicle History Checks"
@@ -566,6 +560,12 @@ function LandingPage() {
           }, {
             icon: "public",
             text: "International Search"
+          }, {
+            icon: "query_stats",
+            text: "Dealer Insights"
+          }, {
+            icon: "notifications_active",
+            text: "TICA Smart Alerts™"
           }].map((item) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-4 rounded-xl flex items-center gap-3 border border-outline-variant/20", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container", children: item.icon }),
             /* @__PURE__ */ jsx("span", { className: "font-bold text-sm", children: item.text })

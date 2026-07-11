@@ -593,14 +593,14 @@ function LandingPage() {
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4">Product Roadmap</span>
-              <h2 className="font-display-lg text-headline-lg mb-6">Built To Keep Getting Better</h2>
-              <p className="text-on-surface-variant text-lg">From live AI sourcing today to negotiation and price-prediction tomorrow, here is where Trade In Cars Agent is heading across three releases.</p>
+              <h2 className="font-display-lg text-headline-lg mb-6">Built for Today. Designed for Tomorrow.</h2>
+              <p className="text-on-surface-variant text-lg">TICA is continuously evolving. Here's what you receive today, what's currently being developed, and where the platform is heading in the future.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
               {[
                 {
-                  version: 'Version 1',
+                  version: 'Available Today',
                   status: 'Available Now',
                   statusClass: 'bg-primary/20 text-primary',
                   icon: 'check_circle',
@@ -614,8 +614,8 @@ function LandingPage() {
                   ],
                 },
                 {
-                  version: 'Version 2',
-                  status: 'Coming Soon',
+                  version: 'Coming Next',
+                  status: 'In Development',
                   statusClass: 'bg-tertiary/20 text-tertiary',
                   icon: 'schedule',
                   items: [
@@ -631,8 +631,8 @@ function LandingPage() {
                   ],
                 },
                 {
-                  version: 'Version 3',
-                  status: 'Future Development',
+                  version: 'Future Vision',
+                  status: 'Future Vision',
                   statusClass: 'bg-surface-bright text-on-surface-variant',
                   icon: 'rocket_launch',
                   items: [
