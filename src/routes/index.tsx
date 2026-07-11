@@ -113,36 +113,6 @@ function LandingPage() {
     return () => cancelAnimationFrame(rafId)
   }, [])
 
-  // Glass card tilt effect
-  useEffect(() => {
-    const cards = document.querySelectorAll<HTMLElement>('.glass-card')
-    const handlers: Array<{ el: HTMLElement; move: (e: MouseEvent) => void; leave: () => void }> = []
-    cards.forEach(card => {
-      const move = (e: MouseEvent) => {
-        const rect = card.getBoundingClientRect()
-        const x = e.clientX - rect.left
-        const y = e.clientY - rect.top
-        const cx = rect.width / 2
-        const cy = rect.height / 2
-        const rX = (y - cy) / 25
-        const rY = (cx - x) / 25
-        card.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) translateY(-5px)`
-      }
-      const leave = () => {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`
-      }
-      card.addEventListener('mousemove', move)
-      card.addEventListener('mouseleave', leave)
-      handlers.push({ el: card, move, leave })
-    })
-    return () => {
-      handlers.forEach(({ el, move, leave }) => {
-        el.removeEventListener('mousemove', move)
-        el.removeEventListener('mouseleave', leave)
-      })
-    }
-  }, [])
-
   return (
     <>
       {/* Lead Capture Modal */}
@@ -294,7 +264,7 @@ function LandingPage() {
               </div>
             </div>
 
-            <div className="relative lg:flex items-center justify-center animate-float flex mt-10 overflow-visible">
+            <div className="relative lg:flex items-center justify-center flex mt-10 overflow-visible">
               <div className="radar-container glass-card rounded-full p-2 glow-border">
                 <canvas className="absolute inset-0 w-full h-full rounded-full z-0" ref={canvasRef} width="438" height="438" />
                 <div className="radar-frame"></div>
