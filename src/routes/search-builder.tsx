@@ -7,18 +7,18 @@ export const Route = createFileRoute('/search-builder')({
   component: SearchBuilderPage,
 })
 
-const VEHICLE_TYPES = ['Cars', 'Classic Cars', 'Pickups', 'Vans & Light Commercial', 'Motorcycles'] as const
+const VEHICLE_TYPES = ['Cars', 'Classic Cars', 'Pickups', 'Vans & Light Commercials', 'Motorcycles'] as const
 type VehicleType = (typeof VEHICLE_TYPES)[number]
 
 const VEHICLE_TYPE_EMOJI: Record<VehicleType, string> = {
   'Cars': '🚗',
   'Classic Cars': '🏎️',
   'Pickups': '🛻',
-  'Vans & Light Commercial': '🚐',
+  'Vans & Light Commercials': '🚐',
   'Motorcycles': '🏍️',
 }
 
-const UK_MAKES = [
+const CAR_MAKES = [
   'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Citroen', 'Dacia',
   'DS', 'Ferrari', 'Fiat', 'Ford', 'Honda', 'Hyundai', 'Jaguar', 'Jeep',
   'Kia', 'Lamborghini', 'Land Rover', 'Lexus', 'Maserati', 'Mazda',
@@ -27,7 +27,7 @@ const UK_MAKES = [
   'Toyota', 'Vauxhall', 'Volkswagen', 'Volvo',
 ]
 
-const MODELS_BY_MAKE: Record<string, string[]> = {
+const CAR_MODELS_BY_MAKE: Record<string, string[]> = {
   'Alfa Romeo': ['Giulia', 'Stelvio', 'Giulietta', '147', '156', '159', 'Spider', '4C'],
   'Aston Martin': ['DB11', 'DB12', 'Vantage', 'DBS', 'DBX'],
   'Audi': ['A1', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8', 'TT', 'R8', 'RS3', 'RS4', 'RS5', 'RS6', 'RS7', 'e-tron', 'e-tron GT'],
@@ -69,6 +69,37 @@ const MODELS_BY_MAKE: Record<string, string[]> = {
   'Volvo': ['S60', 'S90', 'V60', 'V90', 'XC40', 'XC60', 'XC90', 'C40', 'EX30', 'EX90'],
 }
 
+const PICKUP_MAKES = ['Ford', 'Isuzu', 'Maxus', 'Mercedes-Benz', 'Mitsubishi', 'Nissan', 'Toyota', 'Volkswagen'] as const
+
+const PICKUP_MODELS_BY_MAKE: Record<string, string[]> = {
+  'Ford': ['Ranger', 'Ranger Raptor'],
+  'Isuzu': ['D-Max', 'D-Max AT35'],
+  'Maxus': ['T90EV'],
+  'Mercedes-Benz': ['X-Class'],
+  'Mitsubishi': ['L200', 'L200 Barbarian'],
+  'Nissan': ['Navara', 'Navara N-Guard'],
+  'Toyota': ['Hilux', 'Hilux Invincible'],
+  'Volkswagen': ['Amarok', 'Amarok Aventura'],
+}
+
+const VAN_LIGHT_COMMERCIAL_MAKES = ['Citroen', 'Fiat', 'Ford', 'Iveco', 'MAN', 'Maxus', 'Mercedes-Benz', 'Nissan', 'Peugeot', 'Renault', 'Toyota', 'Vauxhall', 'Volkswagen'] as const
+
+const VAN_LIGHT_COMMERCIAL_MODELS_BY_MAKE: Record<string, string[]> = {
+  'Citroen': ['Berlingo Van', 'Dispatch', 'Relay'],
+  'Fiat': ['Doblo', 'Scudo', 'Ducato'],
+  'Ford': ['Transit Courier', 'Transit Connect', 'Transit Custom', 'Transit'],
+  'Iveco': ['Daily'],
+  'MAN': ['TGE'],
+  'Maxus': ['eDeliver 3', 'eDeliver 7', 'eDeliver 9', 'Deliver 9'],
+  'Mercedes-Benz': ['Citan', 'Vito', 'Sprinter'],
+  'Nissan': ['Townstar', 'Primastar', 'Interstar'],
+  'Peugeot': ['Partner', 'Expert', 'Boxer'],
+  'Renault': ['Kangoo', 'Trafic', 'Master'],
+  'Toyota': ['Proace City', 'Proace', 'Proace Max'],
+  'Vauxhall': ['Combo Cargo', 'Vivaro', 'Movano'],
+  'Volkswagen': ['Caddy Cargo', 'Transporter', 'Crafter'],
+}
+
 const CLASSIC_MAKES = [
   'Alfa Romeo', 'Aston Martin', 'Austin', 'Bentley', 'Chevrolet', 'Ferrari',
   'Ford', 'Jaguar', 'Mercedes-Benz', 'MG', 'Morris', 'Porsche',
@@ -91,6 +122,37 @@ const CLASSIC_MODELS_BY_MAKE: Record<string, string[]> = {
   'Rolls-Royce': ['Silver Shadow', 'Silver Cloud', 'Silver Wraith', 'Corniche', 'Silver Seraph'],
   'Triumph': ['TR3', 'TR4', 'TR6', 'TR7', 'Spitfire'],
   'Volkswagen': ['Beetle', 'Karmann Ghia', 'Type 3', 'Transporter T1', 'Transporter T2'],
+}
+
+const MOTORCYCLE_MAKES = ['Aprilia', 'BMW Motorrad', 'Ducati', 'Harley-Davidson', 'Honda', 'Kawasaki', 'KTM', 'Suzuki', 'Triumph', 'Yamaha'] as const
+
+const MOTORCYCLE_MODELS_BY_MAKE: Record<string, string[]> = {
+  'Aprilia': ['RS 660', 'Tuono 660', 'Tuareg 660', 'RSV4'],
+  'BMW Motorrad': ['R 1250 GS', 'F 900 R', 'S 1000 RR', 'CE 04'],
+  'Ducati': ['Monster', 'Panigale V4', 'Multistrada V4', 'Scrambler Icon'],
+  'Harley-Davidson': ['Sportster S', 'Nightster', 'Street Bob 114', 'Pan America 1250'],
+  'Honda': ['CB650R', 'CBR650R', 'Africa Twin', 'Forza 125', 'PCX 125'],
+  'Kawasaki': ['Ninja 650', 'Ninja ZX-6R', 'Z900', 'Versys 650'],
+  'KTM': ['390 Duke', '790 Duke', '890 Adventure', '1290 Super Duke R'],
+  'Suzuki': ['GSX-R750', 'GSX-8S', 'V-Strom 650', 'Hayabusa'],
+  'Triumph': ['Street Triple', 'Tiger 900', 'Bonneville T120', 'Trident 660'],
+  'Yamaha': ['MT-07', 'MT-09', 'Tracer 9', 'YZF-R1', 'NMAX 125'],
+}
+
+const MAKES_BY_VEHICLE_TYPE: Record<VehicleType, readonly string[]> = {
+  'Cars': CAR_MAKES,
+  'Classic Cars': CLASSIC_MAKES,
+  'Pickups': PICKUP_MAKES,
+  'Vans & Light Commercials': VAN_LIGHT_COMMERCIAL_MAKES,
+  'Motorcycles': MOTORCYCLE_MAKES,
+}
+
+const MODELS_BY_VEHICLE_TYPE: Record<VehicleType, Record<string, string[]>> = {
+  'Cars': CAR_MODELS_BY_MAKE,
+  'Classic Cars': CLASSIC_MODELS_BY_MAKE,
+  'Pickups': PICKUP_MODELS_BY_MAKE,
+  'Vans & Light Commercials': VAN_LIGHT_COMMERCIAL_MODELS_BY_MAKE,
+  'Motorcycles': MOTORCYCLE_MODELS_BY_MAKE,
 }
 
 const FUEL_TYPES = ['Any', 'Petrol', 'Diesel', 'Hybrid', 'Plug-in Hybrid', 'Electric', 'Mild Hybrid'] as const
@@ -292,12 +354,10 @@ function SearchBuilderPage() {
   const [manualMake, setManualMake] = useState('')
   const [manualModel, setManualModel] = useState('')
 
-  const isClassic = selectedVehicleType === 'Classic Cars'
+  const activeVehicleType: VehicleType = selectedVehicleType ?? 'Cars'
   const isOtherMake = make === OTHER_MAKE_OPTION
-  const baseClassicModels = isClassic && !isOtherMake && make && CLASSIC_MODELS_BY_MAKE[make] ? CLASSIC_MODELS_BY_MAKE[make] : []
-  const baseRegularModels = !isClassic && !isOtherMake && make && MODELS_BY_MAKE[make] ? MODELS_BY_MAKE[make] : []
-  const baseModelOptions = isClassic ? baseClassicModels : baseRegularModels
-  const makeOptions = [...(isClassic ? CLASSIC_MAKES : UK_MAKES), OTHER_MAKE_OPTION]
+  const baseModelOptions = !isOtherMake && make ? MODELS_BY_VEHICLE_TYPE[activeVehicleType][make] ?? [] : []
+  const makeOptions = [...MAKES_BY_VEHICLE_TYPE[activeVehicleType], OTHER_MAKE_OPTION]
   const modelOptions = make ? [...baseModelOptions, OTHER_MODEL_OPTION] : []
 
   const isOtherModel = model === OTHER_MODEL_OPTION
