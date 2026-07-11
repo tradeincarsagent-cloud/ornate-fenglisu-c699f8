@@ -323,9 +323,23 @@ function SearchBuilderPage() {
   }
 
   const selectedNotificationLabels = NOTIFICATION_OPTIONS.filter((o) => notifications.has(o.value)).map((o) => o.label)
-  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(', ') : 'Not selected'
+  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(' + ') : 'Not yet selected'
   const effectiveMake = isOtherMake ? manualMake : make
   const effectiveModel = isOtherModel ? manualModel : model
+  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? 'Not yet selected'
+  const lookingForSummary = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ') || 'Not yet selected'
+  const formatPounds = (value: string) => `£${Number(value).toLocaleString('en-GB')}`
+  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Not yet selected'
+  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : 'Not yet selected'
+  const briefSummaryItems = [
+    { label: 'Vehicle Type', value: selectedVehicleType ?? 'Not yet selected' },
+    { label: 'Looking For', value: lookingForSummary },
+    { label: 'Budget', value: budgetSummary },
+    { label: 'Target Profit', value: targetProfitSummary },
+    { label: 'Search Area', value: 'United Kingdom' },
+    { label: 'Buying Priority', value: selectedSearchPriority },
+    { label: 'Notifications', value: selectedNotificationSummary },
+  ] as const
   const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ')
   const missionName = missionNameBase || selectedVehicleType || 'Vehicle Search'
 
@@ -785,38 +799,15 @@ function SearchBuilderPage() {
 
           {/* ── Section 6: Activate ──────────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8">
-            <div className="mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block">
-              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Your AI Search Summary</p>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Your AI Employee understands your requirements.</p>
-              <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Looking for:</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">BMW M3 Competition</p>
-                </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Maximum Budget:</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">£40,000</p>
-                </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Search Area:</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">United Kingdom</p>
-                </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Minimum Profit:</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">£3,000</p>
-                </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Notifications:</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">{selectedNotificationSummary}</p>
-                </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Search Sources:</p>
-                  <ul className="mt-2 space-y-1 text-body-md font-body-md text-on-surface">
-                    <li>Auto Trader</li>
-                    <li>Dealer Auctions</li>
-                    <li>Facebook Marketplace</li>
-                  </ul>
-                </div>
+            <div className="mb-5 rounded-2xl border border-primary/20 bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-high p-4 text-left shadow-md shadow-primary/10 sm:p-5">
+              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Your AI Employee Brief</p>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {briefSummaryItems.map((item) => (
+                  <div key={item.label} className="rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5">
+                    <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
+                    <p className="mt-1 text-body-sm font-body-sm font-semibold text-on-surface">{item.value}</p>
+                  </div>
+                ))}
               </div>
             </div>
             {/* ── What Happens Next panel ──────────────────────────────── */}
