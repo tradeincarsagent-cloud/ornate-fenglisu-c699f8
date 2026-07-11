@@ -11,9 +11,19 @@ const pricingCheckoutLinks = {
   dealerGroup: 'https://buy.stripe.com/28E3coe4R4ie9iYeo32cg0g',
 } as const
 
+const exampleCriteria = [
+  { label: 'BMW M3', lines: ['2018–2023', 'Under £55,000'] },
+  { label: 'VW Golf GTI', lines: ['2021+', 'Under £18,000'] },
+  { label: 'Ford Ranger', lines: ['Double Cab', 'Under £20,000'] },
+  { label: 'Harley-Davidson Fat Boy', lines: ['1990–1995'] },
+  { label: 'Mercedes G-Class', lines: ['G350d', 'Black', 'Under £45,000'] },
+]
+
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [criteriaIndex, setCriteriaIndex] = useState(0)
+  const [criteriaVisible, setCriteriaVisible] = useState(true)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   function openModal() {
@@ -111,6 +121,17 @@ function LandingPage() {
     }
     rafId = requestAnimationFrame(render)
     return () => cancelAnimationFrame(rafId)
+  }, [])
+
+  useEffect(() => {
+    const id = setInterval(() => {
+    setCriteriaVisible(false)
+    setTimeout(() => {
+      setCriteriaIndex(i => (i + 1) % exampleCriteria.length)
+      setCriteriaVisible(true)
+    }, 400)
+    }, 4500)
+    return () => clearInterval(id)
   }, [])
 
   return (
@@ -474,24 +495,30 @@ function LandingPage() {
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
               <div className="max-w-xl">
                 <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Our Process</span>
-                <h2 className="font-display-lg text-headline-lg">Effortless Stock Acquisition</h2>
+                <h2 className="font-display-lg text-headline-lg">How Your AI Buying Employee Works</h2>
+                <p className="text-on-surface-variant mt-4 leading-relaxed">Getting started takes just a few minutes. Your AI Buying Employee then searches continuously for vehicles that match your buying strategy.</p>
               </div>
-              <div className="bg-surface-variant p-4 rounded-xl border border-outline-variant/30 flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded flex items-center justify-center">
+              <div className="bg-surface-variant p-4 rounded-xl border border-outline-variant/30 flex items-center gap-4 min-w-[220px]">
+                <div className="w-12 h-12 bg-primary/20 rounded flex items-center justify-center flex-shrink-0">
                   <span className="material-symbols-outlined text-primary">filter_list</span>
                 </div>
-                <div>
+                <div style={{ minHeight: '3.5rem' }} className="flex flex-col justify-center">
                   <p className="text-xs font-label-caps text-on-surface-variant">EXAMPLE CRITERIA</p>
-                  <p className="font-bold text-on-surface">BMW M3 • 2018–2023 • &lt; £55k</p>
+                  <div style={{ transition: 'opacity 0.4s ease', opacity: criteriaVisible ? 1 : 0 }}>
+                    <p className="font-bold text-on-surface leading-snug">{exampleCriteria[criteriaIndex].label}</p>
+                    {exampleCriteria[criteriaIndex].lines.map((line, i) => (
+                      <p key={i} className="text-sm text-on-surface-variant leading-snug">{line}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
               <div className="hidden md:block absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent z-0"></div>
               {[
-                { icon: 'rule', step: '1', title: 'Define Criteria', desc: 'Set your exact requirements: make, model, age, mileage, and price ceiling across all major platforms.' },
-                { icon: 'travel_explore', step: '2', title: 'AI-Assisted Vehicle Search', desc: 'Designed to search connected vehicle marketplaces and trusted sources as the platform develops.' },
-                { icon: 'notifications_active', step: '3', title: 'Instant Reports', desc: 'Receive curated reports or instant mobile alerts the second a matching vehicle goes live. Be the first caller.' },
+                { icon: 'rule', step: '1', title: 'Tell TICA What You\'re Looking For', desc: 'Choose your preferred makes, models, budget, mileage, location and buying criteria in just a few minutes.' },
+                { icon: 'travel_explore', step: '2', title: 'Your AI Buying Employee Searches 24/7', desc: 'TICA continuously monitors connected vehicle marketplaces and trusted sources, learning your preferences over time.' },
+                { icon: 'notifications_active', step: '3', title: 'Receive Buying Opportunities First', desc: 'Receive instant alerts and daily intelligence briefings when high-confidence vehicles matching your criteria become available.' },
               ].map(item => (
                 <div key={item.step} className="relative z-10 text-center">
                   <div className="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center mx-auto mb-8 glow-border">
