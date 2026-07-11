@@ -520,6 +520,7 @@ function LandingPage() {
           description: "Everything you need to start using your AI Buying Employee today.",
           status: "Available Now",
           statusClass: "bg-emerald-500/15 text-emerald-400",
+          iconClass: "text-emerald-400",
           icon: "check_circle",
           items: ["AI Search Finder", "Dealer Command Centre", "Opportunity Intelligence", "TICA Smart Learning™", "TICA Decision Engine™", "TICA Certified™", "Saved Searches", "Email Notifications", "14-Day Free Trial"]
         }, {
@@ -527,6 +528,7 @@ function LandingPage() {
           description: "Features already planned and actively being developed.",
           status: "In Development",
           statusClass: "bg-primary/20 text-primary",
+          iconClass: "text-primary",
           icon: "schedule",
           items: ["Mobile App", "Push Notifications", "Motorcycle Support", "Vans & Commercial Vehicles", "International Search", "Dealer Insights", "Vehicle Watchlists"]
         }, {
@@ -534,6 +536,7 @@ function LandingPage() {
           description: "Our long-term vision for the future of intelligent vehicle sourcing.",
           status: "Future Vision",
           statusClass: "bg-purple-500/15 text-purple-400",
+          iconClass: "text-purple-400",
           icon: "rocket_launch",
           items: ["AI Negotiation Assistant", "Price Prediction AI", "Profit Estimator", "Vehicle History Integration", "Auction Integrations", "API Integrations", "Multi-language Support", "Multi-user Dealer Accounts"]
         }].map((phase) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full", children: [
@@ -543,7 +546,7 @@ function LandingPage() {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-6", children: phase.description }),
           /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: phase.items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-on-surface-variant", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container text-xl flex-shrink-0", children: phase.icon }),
+            /* @__PURE__ */ jsx("span", { className: `material-symbols-outlined text-xl flex-shrink-0 ${phase.iconClass}`, children: phase.icon }),
             /* @__PURE__ */ jsx("span", { children: item })
           ] }, item)) })
         ] }, phase.version)) }),
@@ -606,7 +609,7 @@ function LandingPage() {
       /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
         /* @__PURE__ */ jsx("div", { className: "flex items-center mb-6", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" }) }) }),
         /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant max-w-sm", children: "An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals." }),
-        /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "© 2024 Trade In Cars Agent. Your AI Vehicle Finder Working 24/7." })
+        /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "© 2026 Trade in Cars Agent. All rights reserved." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
