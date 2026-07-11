@@ -457,7 +457,7 @@ function LandingPage() {
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1", children: ["3 Active Watchlists", "Daily Email Reports", "Basic Dashboard"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1", children: ["Up to 3 Active AI Buying Missions", "Daily AI Buying Briefings", "Dealer Command Centre Access"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
@@ -475,7 +475,7 @@ function LandingPage() {
             ] }),
             /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1", children: [{
               icon: "stars",
-              text: "Unlimited Watchlists",
+              text: "Unlimited AI Buying Missions",
               bold: true
             }, {
               icon: "stars",
@@ -483,11 +483,11 @@ function LandingPage() {
               bold: true
             }, {
               icon: "check_circle",
-              text: "Advanced Search Filters",
+              text: "Advanced AI Search Intelligence",
               bold: false
             }, {
               icon: "check_circle",
-              text: "AI Description Analysis",
+              text: "Opportunity Intelligence™",
               bold: false
             }].map((f) => /* @__PURE__ */ jsxs("li", { className: `flex items-center gap-3 ${f.bold ? "font-bold" : ""}`, children: [
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: f.icon }),
@@ -504,13 +504,14 @@ function LandingPage() {
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1", children: ["Up to 10 Site Profiles", "Buyer Accountability Logs", "Dedicated Account Manager", "API Access (White-label)"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1", children: ["Up to 10 Dealership Locations", "Team Activity Tracking", "Dedicated Account Manager", "API Access (White-label)"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
             /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.dealerGroup, children: "Start Free Trial" })
           ] })
-        ] })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl p-5 border border-outline-variant/20", children: /* @__PURE__ */ jsx("ul", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant", children: ["✔ Secure Stripe Checkout", "✔ Cancel Anytime", "✔ No Hidden Fees", "✔ Upgrade Anytime"].map((item) => /* @__PURE__ */ jsx("li", { className: "flex items-center justify-center text-center", children: item }, item)) }) }) })
       ] }),
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center max-w-3xl mx-auto mb-16", children: [
