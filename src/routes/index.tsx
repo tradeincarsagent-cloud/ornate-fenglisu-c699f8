@@ -664,20 +664,20 @@ function LandingPage() {
               ))}
             </div>
 
-            {/* Coming Soon highlights */}
+            {/* Future roadmap highlights */}
             <div className="mt-12 glass-card rounded-2xl p-8 border border-outline-variant/20">
               <div className="flex items-center gap-3 mb-6">
                 <span className="material-symbols-outlined text-primary">auto_awesome</span>
-                <h3 className="font-headline-md text-headline-md">Coming Soon</h3>
+                <h3 className="font-headline-md text-headline-md">🚀 Future Roadmap</h3>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {[
-                  { icon: 'search', text: 'AI Search Engine' },
-                  { icon: 'smartphone', text: 'Mobile App' },
-                  { icon: 'two_wheeler', text: 'Motorcycle Search' },
+                  { icon: 'search', text: 'AI Intelligence Engine' },
                   { icon: 'fact_check', text: 'Vehicle History Checks' },
                   { icon: 'gavel', text: 'Auction Integration' },
                   { icon: 'public', text: 'International Search' },
+                  { icon: 'query_stats', text: 'Dealer Insights' },
+                  { icon: 'notifications_active', text: 'TICA Smart Alerts™' },
                 ].map(item => (
                   <div key={item.text} className="bg-surface-container p-4 rounded-xl flex items-center gap-3 border border-outline-variant/20">
                     <span className="material-symbols-outlined text-primary-container">{item.icon}</span>
