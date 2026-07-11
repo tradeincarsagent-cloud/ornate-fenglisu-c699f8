@@ -512,12 +512,12 @@ function LandingPage() {
         <section className="py-24 relative" id="pricing">
           <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Pricing</span>
-            <h2 className="font-display-lg text-headline-lg mb-4">Invest in Better Stock</h2>
+            <h2 className="font-display-lg text-headline-lg mb-4">Hire Your AI Buying Employee</h2>
             <div className="flex items-center justify-center gap-2 text-on-surface-variant mb-2">
               <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
               </svg>
-              <span>14-Day Free Trial. Cancel Anytime. All plans include full AI search.</span>
+              <span>Choose the AI Buying Employee that&apos;s right for your dealership. Every plan includes a 14-Day Free Trial and can be upgraded as your business grows.</span>
             </div>
             <p className="text-[11px] text-on-surface-variant/70 uppercase tracking-widest">Card required. No charge today. Cancel anytime before your trial ends.</p>
           </div>
@@ -526,6 +526,7 @@ function LandingPage() {
             <div className="p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="mb-8">
                 <h4 className="font-headline-md text-headline-md mb-2">Starter</h4>
+                <p className="text-on-surface-variant text-sm mb-4">Perfect for independent dealers and small traders starting with AI sourcing.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">£49</span>
                   <span className="text-on-surface-variant">/mo</span>
@@ -543,9 +544,10 @@ function LandingPage() {
             </div>
             {/* Professional */}
             <div className="p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Recommended</div>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
               <div className="mb-8">
                 <h4 className="font-headline-md text-headline-md mb-2">Professional</h4>
+                <p className="text-on-surface-variant text-sm mb-4">Designed for growing dealerships that buy and sell vehicles every day.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold text-primary">£99</span>
                   <span className="text-on-surface-variant">/mo</span>
@@ -570,6 +572,7 @@ function LandingPage() {
             <div className="p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="mb-8">
                 <h4 className="font-headline-md text-headline-md mb-2 text-secondary">Dealer Group</h4>
+                <p className="text-on-surface-variant text-sm mb-4">Built for multi-site dealer groups and professional buying teams.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">£299</span>
                   <span className="text-on-surface-variant">/mo</span>
