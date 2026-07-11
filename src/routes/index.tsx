@@ -157,7 +157,7 @@ function LandingPage() {
               <div>
                 <div className="mb-8">
                   <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-2 uppercase">Beta Access</span>
-                  <h2 className="font-display-lg text-headline-lg text-white">Start Your Free 3-Day Trial</h2>
+                  <h2 className="font-display-lg text-headline-lg text-white">Start Your Free 14-Day Trial</h2>
                   <p className="text-on-surface-variant mt-2 flex items-center gap-2">
                     <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
@@ -285,7 +285,7 @@ function LandingPage() {
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <button className="engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider" onClick={() => scrollToSection('pricing')}>
                     <span className="w-3 h-3 bg-white rounded-full animate-pulse"></span>
-                    Start Free 3-Day Trial
+                    Start Free 14-Day Trial
                   </button>
                   <a className="border border-outline text-on-surface px-8 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="#how-it-works">
                     See How It Works
@@ -561,7 +561,7 @@ function LandingPage() {
               <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
               </svg>
-              <span>3-Day Free Trial. Cancel Anytime. All plans include full AI search.</span>
+              <span>14-Day Free Trial. Cancel Anytime. All plans include full AI search.</span>
             </div>
             <p className="text-[11px] text-on-surface-variant/70 uppercase tracking-widest">Card required. No charge today. Cancel anytime before your trial ends.</p>
           </div>
@@ -653,7 +653,7 @@ function LandingPage() {
                     'Dealer dashboard',
                     'Saved searches',
                     'Email alerts',
-                    '3-day free trial',
+                    '14-day free trial',
                     'Subscription plans',
                   ],
                 },
@@ -759,10 +759,10 @@ function LandingPage() {
                 <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase">Get Started Today</span>
                 <h2 className="font-display-lg text-headline-lg text-white">Ready To Find Better Stock While You Sleep?</h2>
                 <p className="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
-                  Start your 3-day trial and let our AI vehicle finder find your next high-margin vehicles. Join early users exploring AI-assisted vehicle sourcing.
+                  Start your 14-day trial and let our AI vehicle finder find your next high-margin vehicles. Join early users exploring AI-assisted vehicle sourcing.
                 </p>
                 <div className="flex flex-col gap-4 pt-4">
-                  {['Card required. No charge today. Cancel anytime before your trial ends.', 'Full access to all AI features', 'Cancel anytime during the 3 days'].map(item => (
+                  {['Card required. No charge today. Cancel anytime before your trial ends.', 'Full access to all AI features', 'Cancel anytime during the 14 days'].map(item => (
                     <div key={item} className="flex items-center gap-3 text-on-surface-variant">
                       <span className="material-symbols-outlined text-primary">check_circle</span>
                       <span>{item}</span>
