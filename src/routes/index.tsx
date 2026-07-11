@@ -470,8 +470,8 @@ function LandingPage() {
                 </table>
               </div>
             </div>
-            <div className="max-w-lg mb-12">
-              <div className="glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+              <div className="glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full">
                 <p className="text-label-caps text-primary uppercase tracking-widest mb-3">AI Recommendation</p>
                 <p className="text-white font-headline-md text-xl mb-3">BMW M3</p>
                 <ul className="space-y-2 text-on-surface-variant text-sm">
@@ -480,6 +480,27 @@ function LandingPage() {
                   <li>Estimated profit £3,200.</li>
                 </ul>
                 <p className="mt-4 text-sm text-white"><span className="text-primary font-semibold">Recommended action:</span> Contact seller immediately.</p>
+              </div>
+              <div className="glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full">
+                <p className="text-label-caps text-primary uppercase tracking-widest mb-4">Live AI Activity</p>
+                <ul className="space-y-4">
+                  <li className="flex items-baseline justify-between gap-4">
+                    <span className="text-on-surface-variant text-sm">Market Scans Today</span>
+                    <span className="text-white font-semibold text-lg">1,287</span>
+                  </li>
+                  <li className="flex items-baseline justify-between gap-4">
+                    <span className="text-on-surface-variant text-sm">Vehicles Analysed</span>
+                    <span className="text-white font-semibold text-lg">8,492</span>
+                  </li>
+                  <li className="flex items-baseline justify-between gap-4">
+                    <span className="text-on-surface-variant text-sm">High-Confidence Opportunities</span>
+                    <span className="text-white font-semibold text-lg">73</span>
+                  </li>
+                  <li className="pt-1 border-t border-outline-variant/20 flex items-center justify-between gap-4">
+                    <span className="text-on-surface-variant text-sm">AI Status</span>
+                    <span className="text-white font-semibold">🟢 Monitoring Live</span>
+                  </li>
+                </ul>
               </div>
             </div>
             <div className="flex justify-center">
