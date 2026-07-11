@@ -223,9 +223,36 @@ function SearchBuilderPage() {
     if (val !== OTHER_MODEL_OPTION) setManualModel("");
   };
   const selectedNotificationLabels = NOTIFICATION_OPTIONS.filter((o) => notifications.has(o.value)).map((o) => o.label);
-  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(", ") : "Not selected";
+  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(" + ") : "Not yet selected";
   const effectiveMake = isOtherMake ? manualMake : make;
   const effectiveModel = isOtherModel ? manualModel : model;
+  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? "Not yet selected";
+  const lookingForSummary = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" ") || "Not yet selected";
+  const formatPounds = (value) => `£${Number(value).toLocaleString("en-GB")}`;
+  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : "Not yet selected";
+  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : "Not yet selected";
+  const briefSummaryItems = [{
+    label: "Vehicle Type",
+    value: selectedVehicleType ?? "Not yet selected"
+  }, {
+    label: "Looking For",
+    value: lookingForSummary
+  }, {
+    label: "Budget",
+    value: budgetSummary
+  }, {
+    label: "Target Profit",
+    value: targetProfitSummary
+  }, {
+    label: "Search Area",
+    value: "United Kingdom"
+  }, {
+    label: "Buying Priority",
+    value: selectedSearchPriority
+  }, {
+    label: "Notifications",
+    value: selectedNotificationSummary
+  }];
   const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" ");
   const missionName = missionNameBase || selectedVehicleType || "Vehicle Search";
   return /* @__PURE__ */ jsx(PlatformShell, { navItems: [{
@@ -460,39 +487,12 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "You can update these preferences at any time from Settings." })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8", children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Your AI Search Summary" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Your AI Employee understands your requirements." }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2", children: [
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Looking for:" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: "BMW M3 Competition" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Maximum Budget:" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: "£40,000" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Search Area:" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: "United Kingdom" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Minimum Profit:" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: "£3,000" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Notifications:" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: selectedNotificationSummary })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Search Sources:" }),
-              /* @__PURE__ */ jsxs("ul", { className: "mt-2 space-y-1 text-body-md font-body-md text-on-surface", children: [
-                /* @__PURE__ */ jsx("li", { children: "Auto Trader" }),
-                /* @__PURE__ */ jsx("li", { children: "Dealer Auctions" }),
-                /* @__PURE__ */ jsx("li", { children: "Facebook Marketplace" })
-              ] })
-            ] })
-          ] })
+        /* @__PURE__ */ jsxs("div", { className: "mb-5 rounded-2xl border border-primary/20 bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-high p-4 text-left shadow-md shadow-primary/10 sm:p-5", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Your AI Employee Brief" }),
+          /* @__PURE__ */ jsx("div", { className: "mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2", children: briefSummaryItems.map((item) => /* @__PURE__ */ jsxs("div", { className: "rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: item.label }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm font-semibold text-on-surface", children: item.value })
+          ] }, item.label)) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-5 w-full max-w-md rounded-xl border border-primary/25 bg-primary/8 px-5 py-4", children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "What Happens Next?" }),
