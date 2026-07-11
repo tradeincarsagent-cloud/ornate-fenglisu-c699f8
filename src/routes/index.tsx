@@ -180,28 +180,8 @@ function LandingPage() {
                       <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="email" placeholder="john@company.co.uk" required type="email" />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Phone Number *</label>
+                      <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Mobile Number *</label>
                       <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="phone" pattern="[+]?[0-9\s\-]{10,}" placeholder="+44 7000 000000" required type="tel" />
-                    </div>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">What vehicles do you mainly buy? *</label>
-                    <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="vehicleTypes" placeholder="e.g. 2018+ Prestige SUVs, BMW/Audi Performance" required type="text" />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-1.5">
-                      <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Vehicles per month? *</label>
-                      <select className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm appearance-none" name="monthlyPurchases" required>
-                        <option value="">Select volume</option>
-                        <option value="1-10">1-10 vehicles</option>
-                        <option value="11-30">11-30 vehicles</option>
-                        <option value="31-50">31-50 vehicles</option>
-                        <option value="50+">50+ vehicles</option>
-                      </select>
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Preferred search area/location *</label>
-                      <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="searchArea" placeholder="e.g. Nationwide or 50 miles from London" required type="text" />
                     </div>
                   </div>
                   <div className="pt-4">
@@ -825,36 +805,22 @@ function FooterForm() {
     <form className="space-y-4" onSubmit={e => e.preventDefault()}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Full Name</label>
+          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Full Name *</label>
           <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="fullName" placeholder="John Smith" required type="text" />
         </div>
         <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Company Name</label>
+          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Company Name *</label>
           <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="companyName" placeholder="Elite Motors Ltd" required type="text" />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Email Address</label>
+          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Email Address *</label>
           <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="email" placeholder="john@company.co.uk" required type="email" />
         </div>
         <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Phone Number</label>
+          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Mobile Number *</label>
           <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="phone" placeholder="+44 7000 000000" required type="tel" />
-        </div>
-      </div>
-      <div className="space-y-1">
-        <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Vehicle Types</label>
-        <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="vehicleTypes" placeholder="e.g. SUV, Hatchback" required type="text" />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Monthly Purchases</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="monthlyPurchases" placeholder="e.g. 5-10" required type="text" />
-        </div>
-        <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Search Area</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="searchArea" placeholder="e.g. London" required type="text" />
         </div>
       </div>
       <div className="pt-4">
