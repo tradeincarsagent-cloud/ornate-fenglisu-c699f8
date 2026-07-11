@@ -262,8 +262,8 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Search Finder" }),
         /* @__PURE__ */ jsx("div", { className: "shrink-0", children: /* @__PURE__ */ jsx(TicaShield, {}) })
       ] }),
-      /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "Create Your AI Search in Under 60 Seconds" }),
-      /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Tell TICA exactly what you're looking for and let your AI Search Finder work 24/7 to discover the best buying opportunities before everyone else." })
+      /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "Brief Your AI Employee in Under 60 Seconds" }),
+      /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Tell TICA exactly what you’re looking for and brief your AI Employee to work continuously, finding the best buying opportunities before everyone else." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "mb-5 md:mb-8", children: [
       /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Powered by TICA Intelligence" }),
@@ -272,7 +272,7 @@ function SearchBuilderPage() {
           /* @__PURE__ */ jsx("span", { className: "mt-0.5 shrink-0 text-xl", "aria-hidden": "true", children: "🧠" }),
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "TICA Smart Learning™" }),
-            /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "Learns your vehicle preferences, budgets, locations and buying priorities so future searches become more relevant." })
+            /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "Your AI Employee learns your vehicle preferences, budgets, locations and buying priorities so future searches become more relevant." })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5", children: [
@@ -303,7 +303,7 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
           /* @__PURE__ */ jsx(StepMarker, { step: "01" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "What would you like me to find?" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Choose the makes and models you want TICA to monitor." })
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Choose the makes and models you want your AI Employee to monitor." })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5", children: VEHICLE_TYPES.map((type) => {
           const selected = selectedVehicleType === type;
@@ -318,7 +318,7 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
           /* @__PURE__ */ jsx(StepMarker, { step: "02" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Tell me a bit more about it" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Set your buying budget and minimum profit target so TICA only finds opportunities that match your goals." })
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Set your buying budget and minimum profit target so your AI Employee only finds opportunities that match your goals." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
@@ -383,7 +383,7 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
           /* @__PURE__ */ jsx(StepMarker, { step: "03" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Search Priority" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Tell TICA how to rank opportunities for this mission." })
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Tell your AI Employee how to rank opportunities for this mission." })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3", children: SEARCH_PRIORITIES.map(({
           label,
@@ -402,7 +402,7 @@ function SearchBuilderPage() {
         /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
           /* @__PURE__ */ jsx(StepMarker, { step: "04" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Where should I search?" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Select the marketplaces and locations TICA should scan." })
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Select the marketplaces and locations your AI Employee should scan." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
           /* @__PURE__ */ jsxs("div", { children: [
@@ -430,7 +430,7 @@ function SearchBuilderPage() {
           /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "🔔 Notification Preferences" }),
           /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "How Should Your AI Employee Keep You Updated?" }),
           /* @__PURE__ */ jsxs("div", { className: "mt-3 space-y-1 text-body-md font-body-md text-on-surface-variant", children: [
-            /* @__PURE__ */ jsx("p", { children: "TICA works continuously, 24 hours a day." }),
+            /* @__PURE__ */ jsx("p", { children: "Your AI Employee works continuously, 24 hours a day." }),
             /* @__PURE__ */ jsx("p", { children: "Choose how your AI Employee should keep you informed about buying opportunities." })
           ] })
         ] }),
@@ -455,14 +455,14 @@ function SearchBuilderPage() {
               idx < NOTIFICATION_OPTIONS.length - 1 && /* @__PURE__ */ jsx("div", { className: "mx-5 border-b border-outline-variant/20" })
             ] }, option.value);
           }),
-          /* @__PURE__ */ jsx("div", { className: "border-t border-outline-variant/20 px-5 py-3 text-body-sm font-body-sm text-on-surface-variant", children: "💡 TICA never stops searching. Your AI Employee continuously monitors the market and keeps you informed according to the preferences you choose." })
+          /* @__PURE__ */ jsx("div", { className: "border-t border-outline-variant/20 px-5 py-3 text-body-sm font-body-sm text-on-surface-variant", children: "💡 Your AI Employee never stops searching, continuously monitoring the market and keeping you informed according to the preferences you choose." })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "You can update these preferences at any time from Settings." })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-6 hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-6 text-left md:block", children: [
           /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Your AI Search Summary" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "TICA understands your requirements." }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Your AI Employee understands your requirements." }),
           /* @__PURE__ */ jsxs("div", { className: "mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2", children: [
             /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Looking for:" }),
@@ -496,11 +496,11 @@ function SearchBuilderPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-5 w-full max-w-md rounded-xl border border-primary/25 bg-primary/8 px-5 py-4", children: [
           /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "What Happens Next?" }),
-          /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "Once you start your AI Search Finder, TICA will continuously monitor your selected marketplaces, analyse new listings, compare market values, and notify you whenever a high-confidence opportunity matches your buying strategy." })
+          /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "Once you start your AI Search Finder, your AI Employee will continuously monitor your selected marketplaces, analyse new listings, compare market values, and notify you whenever a high-confidence opportunity matches your buying strategy." })
         ] }),
         /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setMissionCreated(true), className: "mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-4 sm:py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]", children: [
           /* @__PURE__ */ jsx("span", { children: "⚡" }),
-          "Start AI Search Mission"
+          "Activate My AI Employee"
         ] }),
         /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-md font-body-md text-on-surface-variant", children: "Live AI scanning will be available in a future platform release." })
       ] }),
