@@ -440,10 +440,10 @@ function LandingPage() {
       /* @__PURE__ */ jsxs("section", { className: "py-24 relative", id: "pricing", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Pricing" }),
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4", children: "Invest in Better Stock" }),
+          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4", children: "Hire Your AI Buying Employee" }),
           /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-2 text-on-surface-variant mb-2", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
-            /* @__PURE__ */ jsx("span", { children: "14-Day Free Trial. Cancel Anytime. All plans include full AI search." })
+            /* @__PURE__ */ jsx("span", { children: "Choose the AI Buying Employee that's right for your dealership. Every plan includes a 14-Day Free Trial and can be upgraded as your business grows." })
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant/70 uppercase tracking-widest", children: "Card required. No charge today. Cancel anytime before your trial ends." })
         ] }),
@@ -451,6 +451,7 @@ function LandingPage() {
           /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2", children: "Starter" }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-4", children: "Perfect for independent dealers and small traders starting with AI sourcing." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£49" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
@@ -463,9 +464,10 @@ function LandingPage() {
             /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.starter, children: "Start Free Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "Recommended" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ MOST POPULAR" }),
             /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2", children: "Professional" }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-4", children: "Designed for growing dealerships that buy and sell vehicles every day." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-5xl font-extrabold text-primary", children: "£99" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
@@ -496,6 +498,7 @@ function LandingPage() {
           /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2 text-secondary", children: "Dealer Group" }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-4", children: "Built for multi-site dealer groups and professional buying teams." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£299" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
