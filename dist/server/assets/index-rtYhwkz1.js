@@ -517,27 +517,31 @@ function LandingPage() {
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 items-start", children: [{
           version: "Available Today",
+          description: "Everything you need to start using your AI Buying Employee today.",
           status: "Available Now",
-          statusClass: "bg-primary/20 text-primary",
+          statusClass: "bg-emerald-500/15 text-emerald-400",
           icon: "check_circle",
-          items: ["AI-assisted vehicle sourcing", "Dealer dashboard", "Saved searches", "Email alerts", "14-day free trial", "Subscription plans"]
+          items: ["AI Search Finder", "Dealer Command Centre", "Opportunity Intelligence", "TICA Smart Learning™", "TICA Decision Engine™", "TICA Certified™", "Saved Searches", "Email Notifications", "14-Day Free Trial"]
         }, {
           version: "Coming Next",
+          description: "Features already planned and actively being developed.",
           status: "In Development",
-          statusClass: "bg-tertiary/20 text-tertiary",
+          statusClass: "bg-primary/20 text-primary",
           icon: "schedule",
-          items: ["Live AI search engine", "Mobile app (iOS & Android)", "Instant push notifications", "Saved favourites", "Dealer analytics", "Multiple countries", "Motorcycle support", "Vans & commercial vehicles", "Vehicle watchlists"]
+          items: ["Mobile App", "Push Notifications", "Motorcycle Support", "Vans & Commercial Vehicles", "International Search", "Dealer Insights", "Vehicle Watchlists"]
         }, {
           version: "Future Vision",
+          description: "Our long-term vision for the future of intelligent vehicle sourcing.",
           status: "Future Vision",
-          statusClass: "bg-surface-bright text-on-surface-variant",
+          statusClass: "bg-purple-500/15 text-purple-400",
           icon: "rocket_launch",
-          items: ["AI negotiation assistant", "Price prediction AI", "Profit estimator", "Vehicle history integration (HPI and similar services)", "Auction integrations", "Multi-language support", "Multi-user dealer accounts", "API integrations"]
+          items: ["AI Negotiation Assistant", "Price Prediction AI", "Profit Estimator", "Vehicle History Integration", "Auction Integrations", "API Integrations", "Multi-language Support", "Multi-user Dealer Accounts"]
         }].map((phase) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-3", children: [
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: phase.version }),
             /* @__PURE__ */ jsx("span", { className: `text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${phase.statusClass}`, children: phase.status })
           ] }),
+          /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-6", children: phase.description }),
           /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: phase.items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-on-surface-variant", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container text-xl flex-shrink-0", children: phase.icon }),
             /* @__PURE__ */ jsx("span", { children: item })

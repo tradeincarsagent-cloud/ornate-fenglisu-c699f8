@@ -601,8 +601,9 @@ function LandingPage() {
               {[
                 {
                   version: 'Available Today',
+                  description: 'Everything you need to start using your AI Buying Employee today.',
                   status: 'Available Now',
-                  statusClass: 'bg-primary/20 text-primary',
+                  statusClass: 'bg-emerald-500/15 text-emerald-400',
                   icon: 'check_circle',
                   items: [
                     'AI Search Finder',
@@ -618,8 +619,9 @@ function LandingPage() {
                 },
                 {
                   version: 'Coming Next',
+                  description: 'Features already planned and actively being developed.',
                   status: 'In Development',
-                  statusClass: 'bg-tertiary/20 text-tertiary',
+                  statusClass: 'bg-primary/20 text-primary',
                   icon: 'schedule',
                   items: [
                     'Mobile App',
@@ -633,8 +635,9 @@ function LandingPage() {
                 },
                 {
                   version: 'Future Vision',
+                  description: 'Our long-term vision for the future of intelligent vehicle sourcing.',
                   status: 'Future Vision',
-                  statusClass: 'bg-surface-bright text-on-surface-variant',
+                  statusClass: 'bg-purple-500/15 text-purple-400',
                   icon: 'rocket_launch',
                   items: [
                     'AI Negotiation Assistant',
@@ -649,10 +652,11 @@ function LandingPage() {
                 },
               ].map(phase => (
                 <div key={phase.version} className="bg-surface-container p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between mb-3">
                     <h3 className="font-headline-md text-headline-md">{phase.version}</h3>
                     <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${phase.statusClass}`}>{phase.status}</span>
                   </div>
+                  <p className="text-on-surface-variant text-sm mb-6">{phase.description}</p>
                   <ul className="space-y-3">
                     {phase.items.map(item => (
                       <li key={item} className="flex items-start gap-3 text-on-surface-variant">
