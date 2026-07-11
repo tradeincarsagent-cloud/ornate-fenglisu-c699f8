@@ -298,7 +298,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest", children: "LIVE INVENTORY AGENT v1.0" })
             ] }),
             /* @__PURE__ */ jsxs("h1", { className: "font-display-lg text-display-lg leading-tight text-on-surface", children: [
-              "Find More Stock.",
+              "Find Better Stock.",
               " ",
               /* @__PURE__ */ jsx("svg", { className: "inline-block w-10 h-10 text-primary-container align-middle ml-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M13 10V3L4 14h7v7l9-11h-7z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
               /* @__PURE__ */ jsx("br", {}),
@@ -306,7 +306,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("br", {}),
               "Save Hours Every Week."
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI vehicle finder working 24/7, helping you discover vehicle opportunities that match your exact buying criteria before the competition." }),
+            /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you buy better vehicles before the competition." }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-4", children: [
                 /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: () => scrollToSection("pricing"), children: [
@@ -315,6 +315,7 @@ function LandingPage() {
                 ] }),
                 /* @__PURE__ */ jsx("a", { className: "border border-outline text-on-surface px-8 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all", href: "#how-it-works", children: "See How It Works" })
               ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Built specifically for independent dealers, professional buyers and used vehicle specialists." }),
               /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant flex items-center gap-2", children: [
                 /* @__PURE__ */ jsx("svg", { className: "w-4 h-4 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
                 "Card required. No charge today. Cancel anytime before your trial ends."
