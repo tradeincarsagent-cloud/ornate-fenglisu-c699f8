@@ -235,17 +235,16 @@ function LandingPage() {
 
       {/* Navigation */}
       <nav className="relative w-full bg-background/80 border-b border-outline-variant/30 shadow-sm">
-        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20 lg:h-36">
           <div className="flex items-center flex-shrink-0 gap-4">
             <div className="logo-bezel rounded-lg p-1">
-              <img alt="Trade In Cars Agent Logo" className="h-12 lg:h-16 w-auto max-w-[140px] sm:max-w-none object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
+              <img alt="Trade In Cars Agent Logo" className="h-12 lg:h-32 w-auto max-w-[140px] sm:max-w-none object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
             </div>
           </div>
           <div className="hidden lg:flex items-center gap-8 mx-6">
             <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#how-it-works">How It Works</a>
             <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#features">Features</a>
             <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#pricing">Pricing</a>
-            <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#version-2">Version 2</a>
           </div>
           <div className="flex items-center ml-auto">
             <button className="engine-start-btn text-white px-4 sm:px-6 md:px-8 py-2 md:py-2.5 rounded-full font-bold text-xs md:text-sm active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter" onClick={() => scrollToSection('pricing')}>
