@@ -476,10 +476,7 @@ function LandingPage() {
         <section className="py-24 bg-surface-container-lowest">
           <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Why Dealers Need an AI Buying Employee</span>
-            <h2 className="font-display-lg text-headline-lg mb-6">Why Dealers Need an AI Buying Employee</h2>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-              The most profitable dealers don't search harder—they search smarter. Let TICA monitor the market while your team focuses on buying and selling vehicles.
-            </p>
+            <h2 className="font-display-lg text-headline-lg mb-6">The most profitable dealers don't search harder—they search smarter. Let TICA monitor the market while your team focuses on buying and selling vehicles.</h2>
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {[
