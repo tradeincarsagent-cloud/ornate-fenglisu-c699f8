@@ -20,11 +20,25 @@ const exampleCriteria = [
   { label: 'Land Rover Discovery Sport HSE', lines: ['2017–2021', 'Under £22,000'] },
 ]
 
+const opportunityExamples = [
+  { name: 'BMW M3 2020', askingPrice: '£31,995', confidence: '97%', estimatedProfit: '+£3,200', ticaCertified: true, detectedAt: '2 hours ago' },
+  { name: 'VW Golf GTI 2021', askingPrice: '£18,450', confidence: '94%', estimatedProfit: '+£1,450', ticaCertified: true, detectedAt: '1 hour ago' },
+  { name: 'Ford Ranger Wildtrak 2021', askingPrice: '£22,995', confidence: '93%', estimatedProfit: '+£2,100', ticaCertified: false, detectedAt: '4 hours ago' },
+  { name: 'Toyota Hilux Invincible X 2020', askingPrice: '£24,750', confidence: '95%', estimatedProfit: '+£2,300', ticaCertified: true, detectedAt: '53 minutes ago' },
+  { name: 'Mercedes E220 2019', askingPrice: '£18,495', confidence: '92%', estimatedProfit: '+£1,850', ticaCertified: false, detectedAt: '3 hours ago' },
+  { name: 'Mercedes G-Class 2018', askingPrice: '£69,950', confidence: '91%', estimatedProfit: '+£4,400', ticaCertified: false, detectedAt: '5 hours ago' },
+  { name: 'Harley-Davidson Fat Boy 2019', askingPrice: '£13,995', confidence: '90%', estimatedProfit: '+£1,200', ticaCertified: false, detectedAt: '2 hours ago' },
+  { name: 'Ford Transit Custom 2022', askingPrice: '£19,995', confidence: '96%', estimatedProfit: '+£2,450', ticaCertified: true, detectedAt: '35 minutes ago' },
+  { name: 'Porsche Cayman 2019', askingPrice: '£41,250', confidence: '94%', estimatedProfit: '+£3,100', ticaCertified: true, detectedAt: '27 minutes ago' },
+]
+
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [criteriaIndex, setCriteriaIndex] = useState(0)
   const [criteriaVisible, setCriteriaVisible] = useState(true)
+  const [opportunityIndex, setOpportunityIndex] = useState(0)
+  const [opportunitiesVisible, setOpportunitiesVisible] = useState(true)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   function openModal() {
@@ -134,6 +148,25 @@ function LandingPage() {
     }, 4800)
     return () => clearInterval(id)
   }, [])
+
+  useEffect(() => {
+    let fadeTimeout: ReturnType<typeof setTimeout> | undefined
+    const id = setInterval(() => {
+      setOpportunitiesVisible(false)
+      fadeTimeout = setTimeout(() => {
+        setOpportunityIndex(i => (i + 1) % opportunityExamples.length)
+        setOpportunitiesVisible(true)
+      }, 450)
+    }, 6200)
+    return () => {
+      clearInterval(id)
+      if (fadeTimeout) clearTimeout(fadeTimeout)
+    }
+  }, [])
+
+  const visibleOpportunities = Array.from({ length: 3 }, (_, offset) => {
+    return opportunityExamples[(opportunityIndex + offset) % opportunityExamples.length]
+  })
 
   const processSteps = [
     { icon: 'rule', step: '1', title: 'Tell TICA What You\'re Looking For', desc: 'Choose your preferred makes, models, budget, mileage, location and buying criteria in just a few minutes.' },
@@ -388,30 +421,44 @@ function LandingPage() {
         <section className="py-24 bg-surface" id="live-demo">
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="text-center mb-16">
-              <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Live Opportunity Feed (Demo)</span>
-              <h2 className="font-display-lg text-headline-lg mb-6">Market Opportunity Preview</h2>
+              <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Live Opportunity Feed</span>
+              <h2 className="font-display-lg text-headline-lg mb-4">Today&apos;s AI Buying Opportunities</h2>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                This is a product demonstration showing how Trade in Cars Agent will present potential vehicle opportunities from connected marketplaces and trusted sources as the platform develops.
+                Illustrative examples showing how your AI Buying Employee identifies high-confidence buying opportunities.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-              {[
-                { name: 'BMW M3 2020', price: '£31,995' },
-                { name: 'Ford Ranger Wildtrak 2021', price: '£22,995' },
-                { name: 'Mercedes E220 2019', price: '£18,495' },
-              ].map(car => (
-                <div key={car.name} className="glass-card rounded-2xl p-6 border-l-4 border-primary transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]">
-                  <div className="flex justify-between items-start mb-6">
+            <div className="max-w-2xl mx-auto mb-8 text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-400/10 border border-emerald-300/30 text-emerald-200 text-xs uppercase tracking-widest font-label-caps mb-2">
+                <span className="animate-pulse" aria-hidden="true">🟢</span>
+                <span>Live Market Monitoring</span>
+              </div>
+              <p className="text-xs text-on-surface-variant">Scanning connected marketplaces and trusted sources 24/7.</p>
+            </div>
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-gutter transition-all duration-500 ${opportunitiesVisible ? 'opacity-100 translate-y-0' : 'opacity-70 translate-y-1'}`}>
+              {visibleOpportunities.map(car => (
+                <div key={`${car.name}-${car.askingPrice}`} className="glass-card rounded-2xl p-6 border-l-4 border-primary transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]">
+                  <div className="flex justify-between items-start mb-5">
                     <span className="bg-primary/10 text-primary text-[10px] font-label-caps px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">Detected</span>
                     <span className="text-[10px] text-on-surface-variant flex items-center gap-1">
-                      <span className="material-symbols-outlined text-xs">schedule</span> Found 2 hours ago
+                      <span className="material-symbols-outlined text-xs">schedule</span> {car.detectedAt}
                     </span>
                   </div>
                   <h3 className="font-headline-md text-xl text-white mb-2">{car.name}</h3>
-                  <p className="text-2xl font-extrabold text-primary mb-4">{car.price}</p>
-                  <div className="flex items-center gap-2 text-on-surface-variant text-sm">
-                    <span className="material-symbols-outlined text-primary text-sm">trending_down</span>
-                    <span>Potential Opportunity</span>
+                  <p className="text-2xl font-extrabold text-primary mb-5">{car.askingPrice}</p>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps">AI Confidence Score</p>
+                      <p className="text-white font-bold">{car.confidence}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps">Estimated Profit</p>
+                      <p className="text-primary font-bold">{car.estimatedProfit}</p>
+                    </div>
+                    <p className="text-sm text-on-surface-variant">{car.ticaCertified ? '✅ TICA Certified™' : 'TICA Review Queue'}</p>
+                    <p className="text-xs text-on-surface-variant">Detected {car.detectedAt}</p>
+                    <button type="button" className="text-xs text-primary/90 hover:text-primary transition-colors font-semibold">
+                      View AI Analysis →
+                    </button>
                   </div>
                 </div>
               ))}
