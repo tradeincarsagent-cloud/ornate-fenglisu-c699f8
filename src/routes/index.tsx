@@ -513,14 +513,19 @@ function LandingPage() {
           <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Pricing</span>
             <h2 className="font-display-lg text-headline-lg mb-4">Hire Your AI Buying Employee</h2>
-            <div className="flex items-start justify-center gap-2 text-on-surface-variant mb-2">
+            <div className="flex items-start justify-center gap-2 text-on-surface-variant mb-4">
               <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
               </svg>
               <span>
-                <span className="block">Every dealership is different.</span>
-                <span className="block mt-2">Choose the level of AI Buying Employee that&apos;s right for your business. Start with a full-featured 14-Day Professional Trial and decide which plan best suits your dealership before your trial ends.</span>
+                <span className="block">Start with a full-featured 14-Day Professional Trial.</span>
+                <span className="block mt-2">After your trial, choose the subscription that&apos;s right for your dealership.</span>
               </span>
+            </div>
+            <div className="glass-card rounded-2xl border border-outline-variant/20 bg-surface-container/60 px-4 py-3 mx-auto mb-4 max-w-3xl">
+              <p className="text-sm text-on-surface-variant">
+                ✅ Every new customer begins with a full Professional Trial, giving you complete access to TICA before choosing your subscription.
+              </p>
             </div>
             <p className="text-[11px] text-on-surface-variant/70 uppercase tracking-widest">Card required. No charge today. Cancel anytime before your trial ends.</p>
           </div>
@@ -547,9 +552,9 @@ function LandingPage() {
             </div>
             {/* Professional */}
             <div className="p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">MOST POPULAR</div>
               <div className="mb-8">
-                <h4 className="font-headline-md text-headline-md mb-2">Professional ⭐</h4>
+                <h4 className="font-headline-md text-headline-md mb-2">Professional</h4>
                 <p className="text-on-surface-variant text-sm mb-4">Our most popular choice for dealers who buy and sell vehicles every week.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold text-primary">£99</span>
@@ -591,9 +596,6 @@ function LandingPage() {
               </ul>
               <a className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" href={pricingCheckoutLinks.dealerGroup}>Start Free Trial</a>
             </div>
-          </div>
-          <div className="max-w-container-max mx-auto px-margin-desktop mt-8">
-            <p className="text-sm text-on-surface-variant text-center">Every new customer begins with a full Professional 14-Day Trial so you can experience everything TICA has to offer before choosing your subscription.</p>
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop mt-8">
             <div className="glass-card rounded-2xl p-5 border border-outline-variant/20">
