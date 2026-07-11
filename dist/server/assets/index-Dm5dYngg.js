@@ -441,13 +441,14 @@ function LandingPage() {
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Pricing" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4", children: "Hire Your AI Buying Employee" }),
-          /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-center gap-2 text-on-surface-variant mb-2", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-center gap-2 text-on-surface-variant mb-4", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
             /* @__PURE__ */ jsxs("span", { children: [
-              /* @__PURE__ */ jsx("span", { className: "block", children: "Every dealership is different." }),
-              /* @__PURE__ */ jsx("span", { className: "block mt-2", children: "Choose the level of AI Buying Employee that's right for your business. Start with a full-featured 14-Day Professional Trial and decide which plan best suits your dealership before your trial ends." })
+              /* @__PURE__ */ jsx("span", { className: "block", children: "Start with a full-featured 14-Day Professional Trial." }),
+              /* @__PURE__ */ jsx("span", { className: "block mt-2", children: "After your trial, choose the subscription that's right for your dealership." })
             ] })
           ] }),
+          /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl border border-outline-variant/20 bg-surface-container/60 px-4 py-3 mx-auto mb-4 max-w-3xl", children: /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant", children: "✅ Every new customer begins with a full Professional Trial, giving you complete access to TICA before choosing your subscription." }) }),
           /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant/70 uppercase tracking-widest", children: "Card required. No charge today. Cancel anytime before your trial ends." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch", children: [
@@ -467,9 +468,9 @@ function LandingPage() {
             /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.starter, children: "Start Free Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ MOST POPULAR" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "MOST POPULAR" }),
             /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
-              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2", children: "Professional ⭐" }),
+              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2", children: "Professional" }),
               /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-4", children: "Our most popular choice for dealers who buy and sell vehicles every week." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-5xl font-extrabold text-primary", children: "£99" }),
@@ -514,7 +515,6 @@ function LandingPage() {
             /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.dealerGroup, children: "Start Free Trial" })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant text-center", children: "Every new customer begins with a full Professional 14-Day Trial so you can experience everything TICA has to offer before choosing your subscription." }) }),
         /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl p-5 border border-outline-variant/20", children: /* @__PURE__ */ jsx("ul", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant", children: ["✔ Secure Stripe Checkout", "✔ Cancel Anytime", "✔ No Hidden Fees", "✔ Upgrade Anytime"].map((item) => /* @__PURE__ */ jsx("li", { className: "flex items-center justify-center text-center", children: item }, item)) }) }) })
       ] }),
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
