@@ -353,52 +353,92 @@ function LandingPage() {
       ] }) }),
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-low border-y border-outline-variant/10", id: "dashboard-preview", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-on-surface mb-4", children: "Dealer Dashboard Preview" }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "See how Trade in Cars Agent helps dealers track opportunities and manage vehicle sourcing." })
+          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-on-surface mb-4", children: "Your AI Buying Command Centre" }),
+          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "See how Trade in Cars Agent helps dealers track opportunities and manage vehicle sourcing." }),
+          /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-emerald-400/10 border border-emerald-300/30 text-emerald-200 text-xs uppercase tracking-widest font-label-caps", children: [
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "🟢" }),
+            /* @__PURE__ */ jsx("span", { children: "Live Market Monitoring" })
+          ] })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6 mb-12", children: [{
-          label: "Active Searches",
-          value: "12"
+          label: "AI Buying Missions",
+          value: "12 Active"
         }, {
-          label: "New Opportunities Today",
-          value: "7"
+          label: "High-Confidence Opportunities",
+          value: "7 Found Today"
         }, {
-          label: "Saved Vehicles",
-          value: "23"
+          label: "Potential Monthly Profit",
+          value: "£18,750"
         }].map((stat) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-bright/10 border border-outline-variant/20 rounded-xl p-6 text-center backdrop-blur-md", children: [
           /* @__PURE__ */ jsx("p", { className: "text-label-caps text-on-surface-variant uppercase tracking-widest mb-2", children: stat.label }),
-          /* @__PURE__ */ jsx("p", { className: "text-4xl font-extrabold text-primary", children: stat.value })
+          /* @__PURE__ */ jsx("p", { className: "text-3xl md:text-4xl font-extrabold text-primary", children: stat.value })
         ] }, stat.label)) }),
         /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl overflow-hidden border border-outline-variant/20 mb-12", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-left font-body-md", children: [
           /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "bg-surface-variant/50 border-b border-outline-variant/20", children: [
             /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-label-caps text-primary", children: "Vehicle" }),
-            /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-label-caps text-primary", children: "Year" }),
-            /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-label-caps text-primary", children: "Price" }),
+            /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-label-caps text-primary", children: "AI Score" }),
+            /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-label-caps text-primary", children: "Estimated Profit" }),
             /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-label-caps text-primary", children: "Status" })
           ] }) }),
           /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-outline-variant/10", children: [{
             name: "BMW M3",
-            year: "2020",
-            price: "£31,995",
-            status: "Detected 2 hours ago"
+            score: "97%",
+            profit: "+£3,200",
+            status: "TICA Certified™"
           }, {
-            name: "Ford Ranger Wildtrak",
-            year: "2021",
-            price: "£22,995",
-            status: "Detected 4 hours ago"
+            name: "Ford Ranger",
+            score: "94%",
+            profit: "+£2,100",
+            status: "Watching"
           }, {
             name: "Mercedes E220",
-            year: "2019",
-            price: "£18,495",
-            status: "Detected 6 hours ago"
+            score: "92%",
+            profit: "+£1,850",
+            status: "New Opportunity"
           }].map((row) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-white/5 transition-colors", children: [
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-white font-medium", children: row.name }),
-            /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-on-surface-variant", children: row.year }),
-            /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-primary font-bold", children: row.price }),
+            /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-on-surface-variant font-semibold", children: row.score }),
+            /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-primary font-bold", children: row.profit }),
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-on-surface-variant text-sm", children: row.status })
           ] }, row.name)) })
         ] }) }) }),
-        /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsx("button", { onClick: () => scrollToSection("dashboard-preview"), className: "border border-primary/50 text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95", children: "View Full Dashboard" }) })
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12", children: [
+          /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-3", children: "AI Recommendation" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white font-headline-md text-xl mb-3", children: "BMW M3" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-on-surface-variant text-sm", children: [
+              /* @__PURE__ */ jsx("li", { children: "High demand." }),
+              /* @__PURE__ */ jsx("li", { children: "Low market supply." }),
+              /* @__PURE__ */ jsx("li", { children: "Estimated profit £3,200." })
+            ] }),
+            /* @__PURE__ */ jsxs("p", { className: "mt-4 text-sm text-white", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-primary font-semibold", children: "Recommended action:" }),
+              " Contact seller immediately."
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-4", children: "Live AI Activity" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex items-baseline justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "Market Scans Today" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold text-lg", children: "1,287" })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-baseline justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "Vehicles Analysed" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold text-lg", children: "8,492" })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-baseline justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "High-Confidence Opportunities" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold text-lg", children: "73" })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "pt-1 border-t border-outline-variant/20 flex items-center justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "AI Status" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "🟢 Monitoring Live" })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsx("button", { onClick: () => scrollToSection("dashboard-preview"), className: "border border-primary/50 text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95", children: "Enter My AI Command Centre" }) })
       ] }) }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container-lowest", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
