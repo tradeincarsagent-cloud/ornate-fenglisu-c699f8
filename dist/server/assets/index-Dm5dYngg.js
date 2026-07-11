@@ -232,28 +232,6 @@ function LandingPage() {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-low border-y border-outline-variant/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-center mb-14", children: [
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4 text-on-surface", children: "Meet Your AI Buying Employee" }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto", children: "Four intelligent technologies working together to help you buy smarter, faster and more profitably." })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8", children: [{
-          title: "🧠 TICA Smart Learning™",
-          desc: "Learns how your dealership buys vehicles, remembers your preferences and continuously improves every future search."
-        }, {
-          title: "📊 Opportunity Intelligence™",
-          desc: "Analyses pricing, market demand and potential profit to highlight the strongest buying opportunities."
-        }, {
-          title: "⚡ TICA Decision Engine™",
-          desc: "Explains why a vehicle deserves your attention, helping you make faster and more confident buying decisions."
-        }, {
-          title: "🛡️ TICA Certified™",
-          desc: "Only the highest-confidence opportunities receive TICA Certified™, giving you greater confidence before making contact with the seller."
-        }].map((item) => /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl p-8 md:p-10 border border-outline-variant/20 transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]", children: [
-          /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-4 text-on-surface", children: item.title }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant leading-relaxed", children: item.desc })
-        ] }, item.title)) })
-      ] }) }),
       /* @__PURE__ */ jsx("section", { className: "py-12 bg-surface-container-lowest border-y border-outline-variant/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [{
         icon: "verified_user",
         title: "Built for Independent Car Dealers",
