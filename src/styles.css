@@ -378,10 +378,11 @@ body > div {
 }
 
 .how-it-works-arrow {
-  font-size: 1.35rem;
-  color: rgba(20, 147, 255, 0.52);
-  text-shadow: 0 0 10px rgba(20, 147, 255, 0.14);
-  animation: howItWorksArrowFlow 2.8s ease-in-out infinite;
+  font-size: 1.45rem;
+  font-variation-settings: 'wght' 620;
+  color: rgba(56, 189, 248, 0.82);
+  text-shadow: 0 0 10px rgba(20, 147, 255, 0.2), 0 0 22px rgba(20, 147, 255, 0.12);
+  animation: howItWorksArrowFlow 3.4s ease-in-out infinite;
 }
 
 .how-it-works-arrow-delay {
@@ -389,9 +390,11 @@ body > div {
 }
 
 .how-it-works-arrow-mobile {
-  font-size: 1.3rem;
-  color: rgba(20, 147, 255, 0.5);
-  animation: howItWorksArrowFlowMobile 2.8s ease-in-out infinite;
+  font-size: 1.4rem;
+  font-variation-settings: 'wght' 620;
+  color: rgba(56, 189, 248, 0.8);
+  text-shadow: 0 0 10px rgba(20, 147, 255, 0.18), 0 0 20px rgba(20, 147, 255, 0.1);
+  animation: howItWorksArrowFlowMobile 3.4s ease-in-out infinite;
 }
 
 .how-it-works-scan-icon {
@@ -492,23 +495,23 @@ body > div {
 
 @keyframes howItWorksArrowFlow {
   0%, 100% {
-    opacity: 0.34;
-    transform: translateX(-2px);
+    opacity: 0.62;
+    transform: translateX(-1px);
   }
   50% {
-    opacity: 0.84;
-    transform: translateX(2px);
+    opacity: 0.98;
+    transform: translateX(1.5px);
   }
 }
 
 @keyframes howItWorksArrowFlowMobile {
   0%, 100% {
-    opacity: 0.34;
-    transform: translateY(-2px);
+    opacity: 0.6;
+    transform: translateY(-1px);
   }
   50% {
-    opacity: 0.8;
-    transform: translateY(2px);
+    opacity: 0.96;
+    transform: translateY(1.5px);
   }
 }
 
