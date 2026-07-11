@@ -296,6 +296,43 @@ function LandingPage() {
           </div>
         </section>
 
+        {/* AI Buying Employee Technologies */}
+        <section className="py-24 bg-surface-container-low border-y border-outline-variant/10">
+          <div className="max-w-container-max mx-auto px-margin-desktop">
+            <div className="text-center mb-14">
+              <h2 className="font-display-lg text-headline-lg mb-4 text-on-surface">Meet Your AI Buying Employee</h2>
+              <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto">
+                Four intelligent technologies working together to help you buy smarter, faster and more profitably.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {[
+                {
+                  title: '🧠 TICA Smart Learning™',
+                  desc: 'Learns how your dealership buys vehicles, remembers your preferences and continuously improves every future search.',
+                },
+                {
+                  title: '📊 Opportunity Intelligence™',
+                  desc: 'Analyses pricing, market demand and potential profit to highlight the strongest buying opportunities.',
+                },
+                {
+                  title: '⚡ TICA Decision Engine™',
+                  desc: 'Explains why a vehicle deserves your attention, helping you make faster and more confident buying decisions.',
+                },
+                {
+                  title: '🛡️ TICA Certified™',
+                  desc: 'Only the highest-confidence opportunities receive TICA Certified™, giving you greater confidence before making contact with the seller.',
+                },
+              ].map(item => (
+                <div key={item.title} className="glass-card rounded-2xl p-8 md:p-10 border border-outline-variant/20 transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]">
+                  <h3 className="font-headline-md text-headline-md mb-4 text-on-surface">{item.title}</h3>
+                  <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Proof Section */}
         <section className="py-12 bg-surface-container-lowest border-y border-outline-variant/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
