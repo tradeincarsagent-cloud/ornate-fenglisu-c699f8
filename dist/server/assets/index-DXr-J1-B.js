@@ -402,22 +402,22 @@ function LandingPage() {
       ] }) }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container-lowest", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "The Problem" }),
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Dealers Waste Hours Searching For Stock" }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "The manual grind of scouring marketplaces, refreshing tabs, and missing prime stock to faster buyers is costing you thousands in lost margin every month." })
+          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Why Dealers Need an AI Buying Employee" }),
+          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Why Dealers Need an AI Buying Employee" }),
+          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "The most profitable dealers don't search harder—they search smarter. Let TICA monitor the market while your team focuses on buying and selling vehicles." })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter", children: [{
           icon: "timer_off",
-          title: "Wasted Man-Hours",
-          desc: "Stop paying skilled staff to manually scroll through lists. Let AI do the heavy lifting in seconds."
+          title: "Save Hours Every Week",
+          desc: "Stop spending hours refreshing marketplaces and scrolling through listings. Your AI Buying Employee searches continuously so your team doesn't have to."
         }, {
           icon: "notification_important",
-          title: "Missed Opportunities",
-          desc: "Top-tier stock sells in minutes. If you aren't the first to see it, you've already lost the profit."
+          title: "Never Miss Profitable Vehicles",
+          desc: "The best opportunities often disappear within minutes. TICA alerts you the moment high-confidence vehicles become available."
         }, {
           icon: "psychology_alt",
-          title: "Decision Fatigue",
-          desc: "Processing thousands of listings daily leads to errors. Our AI filters for quality automatically."
+          title: "Buy With Greater Confidence",
+          desc: "Opportunity Intelligence™ helps prioritise stronger buying opportunities, giving you more confidence before contacting the seller."
         }].map((item) => /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl border-l-4 border-error/50", children: [
           /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-error text-4xl mb-6 block", children: item.icon }),
           /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-4", children: item.title }),
