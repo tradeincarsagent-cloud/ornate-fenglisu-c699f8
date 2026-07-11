@@ -423,18 +423,22 @@ function LandingPage() {
         <section className="py-24 bg-surface-container-low border-y border-outline-variant/10" id="dashboard-preview">
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="text-center mb-16">
-              <h2 className="font-display-lg text-headline-lg text-on-surface mb-4">Dealer Dashboard Preview</h2>
+              <h2 className="font-display-lg text-headline-lg text-on-surface mb-4">Your AI Buying Command Centre</h2>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">See how Trade in Cars Agent helps dealers track opportunities and manage vehicle sourcing.</p>
+              <div className="inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-emerald-400/10 border border-emerald-300/30 text-emerald-200 text-xs uppercase tracking-widest font-label-caps">
+                <span aria-hidden="true">🟢</span>
+                <span>Live Market Monitoring</span>
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               {[
-                { label: 'Active Searches', value: '12' },
-                { label: 'New Opportunities Today', value: '7' },
-                { label: 'Saved Vehicles', value: '23' },
+                { label: 'AI Buying Missions', value: '12 Active' },
+                { label: 'High-Confidence Opportunities', value: '7 Found Today' },
+                { label: 'Potential Monthly Profit', value: '£18,750' },
               ].map(stat => (
                 <div key={stat.label} className="bg-surface-bright/10 border border-outline-variant/20 rounded-xl p-6 text-center backdrop-blur-md">
                   <p className="text-label-caps text-on-surface-variant uppercase tracking-widest mb-2">{stat.label}</p>
-                  <p className="text-4xl font-extrabold text-primary">{stat.value}</p>
+                  <p className="text-3xl md:text-4xl font-extrabold text-primary">{stat.value}</p>
                 </div>
               ))}
             </div>
@@ -444,21 +448,21 @@ function LandingPage() {
                   <thead>
                     <tr className="bg-surface-variant/50 border-b border-outline-variant/20">
                       <th className="px-6 py-4 text-label-caps text-primary">Vehicle</th>
-                      <th className="px-6 py-4 text-label-caps text-primary">Year</th>
-                      <th className="px-6 py-4 text-label-caps text-primary">Price</th>
+                      <th className="px-6 py-4 text-label-caps text-primary">AI Score</th>
+                      <th className="px-6 py-4 text-label-caps text-primary">Estimated Profit</th>
                       <th className="px-6 py-4 text-label-caps text-primary">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-outline-variant/10">
                     {[
-                      { name: 'BMW M3', year: '2020', price: '£31,995', status: 'Detected 2 hours ago' },
-                      { name: 'Ford Ranger Wildtrak', year: '2021', price: '£22,995', status: 'Detected 4 hours ago' },
-                      { name: 'Mercedes E220', year: '2019', price: '£18,495', status: 'Detected 6 hours ago' },
+                      { name: 'BMW M3', score: '97%', profit: '+£3,200', status: 'TICA Certified™' },
+                      { name: 'Ford Ranger', score: '94%', profit: '+£2,100', status: 'Watching' },
+                      { name: 'Mercedes E220', score: '92%', profit: '+£1,850', status: 'New Opportunity' },
                     ].map(row => (
                       <tr key={row.name} className="hover:bg-white/5 transition-colors">
                         <td className="px-6 py-4 text-white font-medium">{row.name}</td>
-                        <td className="px-6 py-4 text-on-surface-variant">{row.year}</td>
-                        <td className="px-6 py-4 text-primary font-bold">{row.price}</td>
+                        <td className="px-6 py-4 text-on-surface-variant font-semibold">{row.score}</td>
+                        <td className="px-6 py-4 text-primary font-bold">{row.profit}</td>
                         <td className="px-6 py-4 text-on-surface-variant text-sm">{row.status}</td>
                       </tr>
                     ))}
@@ -466,8 +470,20 @@ function LandingPage() {
                 </table>
               </div>
             </div>
+            <div className="max-w-lg mb-12">
+              <div className="glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7">
+                <p className="text-label-caps text-primary uppercase tracking-widest mb-3">AI Recommendation</p>
+                <p className="text-white font-headline-md text-xl mb-3">BMW M3</p>
+                <ul className="space-y-2 text-on-surface-variant text-sm">
+                  <li>High demand.</li>
+                  <li>Low market supply.</li>
+                  <li>Estimated profit £3,200.</li>
+                </ul>
+                <p className="mt-4 text-sm text-white"><span className="text-primary font-semibold">Recommended action:</span> Contact seller immediately.</p>
+              </div>
+            </div>
             <div className="flex justify-center">
-              <button onClick={() => scrollToSection('dashboard-preview')} className="border border-primary/50 text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95">View Full Dashboard</button>
+              <button onClick={() => scrollToSection('dashboard-preview')} className="border border-primary/50 text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95">Enter My AI Command Centre</button>
             </div>
           </div>
         </section>
