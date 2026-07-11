@@ -505,46 +505,6 @@ function LandingPage() {
           </div>
         </section>
 
-        {/* Features */}
-        <section className="py-24 bg-surface-container" id="features">
-          <div className="max-w-container-max mx-auto px-margin-desktop mb-16">
-            <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Technology</span>
-            <h2 className="font-display-lg text-headline-lg">Engineered for Automotive Pro's</h2>
-          </div>
-          <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-6 h-auto">
-            <div className="md:col-span-8 glass-card rounded-2xl p-10 flex flex-col justify-center relative overflow-hidden group min-h-[300px]">
-              <div className="relative z-10">
-                <span className="material-symbols-outlined text-primary text-5xl mb-6 block">hub</span>
-                <h3 className="font-display-lg text-headline-md mb-4">AI Vehicle Finder</h3>
-                <p className="text-on-surface-variant text-lg max-w-lg">Advanced neural networks that understand vehicle specifications and condition reports better than basic keyword search.</p>
-              </div>
-              <div className="absolute right-0 bottom-0 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
-                <span className="material-symbols-outlined text-[120px] md:text-[240px]" style={{ fontVariationSettings: "'FILL' 1" }}>memory</span>
-              </div>
-            </div>
-            <div className="md:col-span-4 bg-primary-container rounded-2xl p-10 flex flex-col justify-end text-on-primary-container min-h-[300px]">
-              <span className="material-symbols-outlined text-4xl mb-6 block">assessment</span>
-              <h3 className="font-headline-md text-headline-md mb-2">Daily Opportunity Reports</h3>
-              <p className="opacity-80">A consolidated morning briefing of the best deals found overnight, ready for your morning stand-up.</p>
-            </div>
-            <div className="md:col-span-4 glass-card rounded-2xl p-10 min-h-[250px]">
-              <span className="material-symbols-outlined text-primary text-4xl mb-6 block">dashboard</span>
-              <h3 className="font-headline-md text-headline-md mb-2">Dealer Dashboard</h3>
-              <p className="text-on-surface-variant">Track your search history, ROI, and saved watchlists in one centralized high-tech hub.</p>
-            </div>
-            <div className="md:col-span-4 glass-card rounded-2xl p-10 min-h-[250px]">
-              <span className="material-symbols-outlined text-primary text-4xl mb-6 block">notifications_active</span>
-              <h3 className="font-headline-md text-headline-md mb-2">Email &amp; SMS Alerts</h3>
-              <p className="text-on-surface-variant">Real-time push notifications so you're never tethered to your desk searching.</p>
-            </div>
-            <div className="md:col-span-4 glass-card rounded-2xl p-10 border-t-4 border-primary min-h-[250px]">
-              <span className="material-symbols-outlined text-primary text-4xl mb-6 block">groups</span>
-              <h3 className="font-headline-md text-headline-md mb-2">Group Management</h3>
-              <p className="text-on-surface-variant">Manage multiple sites and different buyer criteria across your entire dealer group.</p>
-            </div>
-          </div>
-        </section>
-
         {/* Pricing */}
         <section className="py-24 relative" id="pricing">
           <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">

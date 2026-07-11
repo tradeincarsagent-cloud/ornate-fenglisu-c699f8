@@ -232,6 +232,28 @@ function LandingPage() {
           ] })
         ] })
       ] }),
+      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-low border-y border-outline-variant/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-center mb-14", children: [
+          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4 text-on-surface", children: "Meet Your AI Buying Employee" }),
+          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto", children: "Four intelligent technologies working together to help you buy smarter, faster and more profitably." })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8", children: [{
+          title: "🧠 TICA Smart Learning™",
+          desc: "Learns how your dealership buys vehicles, remembers your preferences and continuously improves every future search."
+        }, {
+          title: "📊 Opportunity Intelligence™",
+          desc: "Analyses pricing, market demand and potential profit to highlight the strongest buying opportunities."
+        }, {
+          title: "⚡ TICA Decision Engine™",
+          desc: "Explains why a vehicle deserves your attention, helping you make faster and more confident buying decisions."
+        }, {
+          title: "🛡️ TICA Certified™",
+          desc: "Only the highest-confidence opportunities receive TICA Certified™, giving you greater confidence before making contact with the seller."
+        }].map((item) => /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl p-8 md:p-10 border border-outline-variant/20 transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]", children: [
+          /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-4 text-on-surface", children: item.title }),
+          /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant leading-relaxed", children: item.desc })
+        ] }, item.title)) })
+      ] }) }),
       /* @__PURE__ */ jsx("section", { className: "py-12 bg-surface-container-lowest border-y border-outline-variant/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [{
         icon: "verified_user",
         title: "Built for Independent Car Dealers",
@@ -399,44 +421,6 @@ function LandingPage() {
           ] }, item.step))
         ] })
       ] }) }),
-      /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container", id: "features", children: [
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop mb-16", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Technology" }),
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg", children: "Engineered for Automotive Pro's" })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-6 h-auto", children: [
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-8 glass-card rounded-2xl p-10 flex flex-col justify-center relative overflow-hidden group min-h-[300px]", children: [
-            /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-5xl mb-6 block", children: "hub" }),
-              /* @__PURE__ */ jsx("h3", { className: "font-display-lg text-headline-md mb-4", children: "AI Vehicle Finder" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-lg max-w-lg", children: "Advanced neural networks that understand vehicle specifications and condition reports better than basic keyword search." })
-            ] }),
-            /* @__PURE__ */ jsx("div", { className: "absolute right-0 bottom-0 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-[120px] md:text-[240px]", style: {
-              fontVariationSettings: "'FILL' 1"
-            }, children: "memory" }) })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 bg-primary-container rounded-2xl p-10 flex flex-col justify-end text-on-primary-container min-h-[300px]", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-4xl mb-6 block", children: "assessment" }),
-            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-2", children: "Daily Opportunity Reports" }),
-            /* @__PURE__ */ jsx("p", { className: "opacity-80", children: "A consolidated morning briefing of the best deals found overnight, ready for your morning stand-up." })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-10 min-h-[250px]", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-4xl mb-6 block", children: "dashboard" }),
-            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-2", children: "Dealer Dashboard" }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Track your search history, ROI, and saved watchlists in one centralized high-tech hub." })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-10 min-h-[250px]", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-4xl mb-6 block", children: "notifications_active" }),
-            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-2", children: "Email & SMS Alerts" }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Real-time push notifications so you're never tethered to your desk searching." })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "md:col-span-4 glass-card rounded-2xl p-10 border-t-4 border-primary min-h-[250px]", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-4xl mb-6 block", children: "groups" }),
-            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-2", children: "Group Management" }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Manage multiple sites and different buyer criteria across your entire dealer group." })
-          ] })
-        ] })
-      ] }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 relative", id: "pricing", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Pricing" }),
@@ -588,12 +572,13 @@ function LandingPage() {
         ] })
       ] }) }),
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-margin-desktop", children: [
-        /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-8", children: "Ready To Find Better Stock While You Sleep?" }),
+        /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-4", children: "Ready to Hire Your AI Buying Employee?" }),
+        /* @__PURE__ */ jsx("p", { className: "text-on-primary/80 text-lg mb-8", children: "Join dealers using AI to discover better buying opportunities 24/7." }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: () => scrollToSection("pricing"), children: "Start Free Trial Now" }),
+          /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: () => scrollToSection("pricing"), children: "Start My 14-Day Trial" }),
           /* @__PURE__ */ jsxs("p", { className: "text-on-primary/80 flex items-center justify-center gap-2 font-medium", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
-            "Card required. No charge today. Cancel anytime before your trial ends."
+            "Secure Stripe checkout • No charge today • Cancel anytime during your 14-day trial."
           ] })
         ] })
       ] }) }),
