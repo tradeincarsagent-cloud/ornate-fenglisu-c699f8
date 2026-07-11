@@ -757,16 +757,17 @@ function LandingPage() {
         {/* Final CTA */}
         <section className="py-24 bg-primary text-on-primary text-center">
           <div className="max-w-3xl mx-auto px-margin-desktop">
-            <h2 className="font-display-lg text-display-lg mb-8">Ready To Find Better Stock While You Sleep?</h2>
+            <h2 className="font-display-lg text-display-lg mb-4">Ready to Hire Your AI Buying Employee?</h2>
+            <p className="text-on-primary/80 text-lg mb-8">Join dealers using AI to discover better buying opportunities 24/7.</p>
             <div className="space-y-6">
               <button className="engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest" onClick={() => scrollToSection('pricing')}>
-                Start Free Trial Now
+                Start My 14-Day Trial
               </button>
               <p className="text-on-primary/80 flex items-center justify-center gap-2 font-medium">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                 </svg>
-                Card required. No charge today. Cancel anytime before your trial ends.
+                Secure Stripe checkout • No charge today • Cancel anytime during your 14-day trial.
               </p>
             </div>
           </div>
