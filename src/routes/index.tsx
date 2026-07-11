@@ -5,6 +5,12 @@ export const Route = createFileRoute('/')({
   component: LandingPage,
 })
 
+const pricingCheckoutLinks = {
+  starter: 'https://buy.stripe.com/28EbIU9OB8yucva3Jp2cg0h',
+  professional: 'https://buy.stripe.com/7sY9AMaSF7uqcvabbR2cg0f',
+  dealerGroup: 'https://buy.stripe.com/28E3coe4R4ie9iYeo32cg0g',
+} as const
+
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -563,7 +569,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95" onClick={openModal}>Start Free Trial</button>
+              <a className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" href={pricingCheckoutLinks.starter}>Start Free Trial</a>
             </div>
             {/* Professional */}
             <div className="p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
@@ -588,7 +594,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95" onClick={openModal}>Start Free Trial</button>
+              <a className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" href={pricingCheckoutLinks.professional}>Start Free Trial</a>
             </div>
             {/* Dealer Group */}
             <div className="p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
@@ -607,7 +613,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95" onClick={openModal}>Start Free Trial</button>
+              <a className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" href={pricingCheckoutLinks.dealerGroup}>Start Free Trial</a>
             </div>
           </div>
         </section>
