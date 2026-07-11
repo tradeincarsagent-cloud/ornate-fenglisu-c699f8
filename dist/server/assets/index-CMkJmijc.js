@@ -1,14 +1,14 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
 import { useState, useRef, useEffect } from "react";
+const pricingCheckoutLinks = {
+  starter: "https://buy.stripe.com/28EbIU9OB8yucva3Jp2cg0h",
+  professional: "https://buy.stripe.com/7sY9AMaSF7uqcvabbR2cg0f",
+  dealerGroup: "https://buy.stripe.com/28E3coe4R4ie9iYeo32cg0g"
+};
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const canvasRef = useRef(null);
-  function openModal() {
-    setModalOpen(true);
-    setSubmitted(false);
-    document.body.style.overflow = "hidden";
-  }
   function closeModal() {
     setModalOpen(false);
     document.body.style.overflow = "";
@@ -496,7 +496,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95", onClick: openModal, children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.starter, children: "Start Free Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
             /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "Recommended" }),
@@ -527,7 +527,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: f.icon }),
               /* @__PURE__ */ jsx("span", { children: f.text })
             ] }, f.text)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95", onClick: openModal, children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("a", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center", href: pricingCheckoutLinks.professional, children: "Start Free Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
@@ -541,7 +541,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95", onClick: openModal, children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.dealerGroup, children: "Start Free Trial" })
           ] })
         ] })
       ] }),
