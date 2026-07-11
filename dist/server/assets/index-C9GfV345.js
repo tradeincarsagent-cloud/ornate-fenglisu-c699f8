@@ -6,20 +6,23 @@ const pricingCheckoutLinks = {
   dealerGroup: "https://buy.stripe.com/28E3coe4R4ie9iYeo32cg0g"
 };
 const exampleCriteria = [{
-  label: "BMW M3",
-  lines: ["2018–2023", "Under £55,000"]
+  label: "BMW 320d M Sport",
+  lines: ["2019–2022", "Under £17,000"]
 }, {
-  label: "VW Golf GTI",
-  lines: ["2021+", "Under £18,000"]
+  label: "Audi A4 Black Edition",
+  lines: ["2020+", "Under £18,500"]
 }, {
-  label: "Ford Ranger",
-  lines: ["Double Cab", "Under £20,000"]
+  label: "Ford Ranger Wildtrak",
+  lines: ["Double Cab", "Under £22,000"]
 }, {
-  label: "Harley-Davidson Fat Boy",
-  lines: ["1990–1995"]
+  label: "Mercedes C220d AMG Line",
+  lines: ["2019+", "Under £20,000"]
 }, {
-  label: "Mercedes G-Class",
-  lines: ["G350d", "Black", "Under £45,000"]
+  label: "Toyota Hilux Invincible X",
+  lines: ["2018+", "Under £24,000"]
+}, {
+  label: "Land Rover Discovery Sport HSE",
+  lines: ["2017–2021", "Under £22,000"]
 }];
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -117,10 +120,26 @@ function LandingPage() {
       setTimeout(() => {
         setCriteriaIndex((i) => (i + 1) % exampleCriteria.length);
         setCriteriaVisible(true);
-      }, 400);
-    }, 4500);
+      }, 450);
+    }, 4800);
     return () => clearInterval(id);
   }, []);
+  const processSteps = [{
+    icon: "rule",
+    step: "1",
+    title: "Tell TICA What You're Looking For",
+    desc: "Choose your preferred makes, models, budget, mileage, location and buying criteria in just a few minutes."
+  }, {
+    icon: "travel_explore",
+    step: "2",
+    title: "Your AI Buying Employee Searches 24/7",
+    desc: "TICA continuously monitors connected vehicle marketplaces and trusted sources, learning your preferences over time."
+  }, {
+    icon: "notifications_active",
+    step: "3",
+    title: "Receive High-Confidence Buying Opportunities",
+    desc: "Receive instant alerts and daily intelligence briefings when high-confidence vehicles matching your criteria become available."
+  }];
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     modalOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay overflow-y-auto", onClick: (e) => {
       if (e.target === e.currentTarget) closeModal();
@@ -419,8 +438,9 @@ function LandingPage() {
             }, className: "flex flex-col justify-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-xs font-label-caps text-on-surface-variant", children: "EXAMPLE CRITERIA" }),
               /* @__PURE__ */ jsxs("div", { style: {
-                transition: "opacity 0.4s ease",
-                opacity: criteriaVisible ? 1 : 0
+                transition: "opacity 0.45s ease, transform 0.45s ease",
+                opacity: criteriaVisible ? 1 : 0,
+                transform: criteriaVisible ? "translateY(0)" : "translateY(4px)"
               }, children: [
                 /* @__PURE__ */ jsx("p", { className: "font-bold text-on-surface leading-snug", children: exampleCriteria[criteriaIndex].label }),
                 exampleCriteria[criteriaIndex].lines.map((line, i) => /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant leading-snug", children: line }, i))
@@ -430,23 +450,12 @@ function LandingPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-12 relative", children: [
           /* @__PURE__ */ jsx("div", { className: "hidden md:block absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent z-0" }),
-          [{
-            icon: "rule",
-            step: "1",
-            title: "Tell TICA What You're Looking For",
-            desc: "Choose your preferred makes, models, budget, mileage, location and buying criteria in just a few minutes."
-          }, {
-            icon: "travel_explore",
-            step: "2",
-            title: "Your AI Buying Employee Searches 24/7",
-            desc: "TICA continuously monitors connected vehicle marketplaces and trusted sources, learning your preferences over time."
-          }, {
-            icon: "notifications_active",
-            step: "3",
-            title: "Receive Buying Opportunities First",
-            desc: "Receive instant alerts and daily intelligence briefings when high-confidence vehicles matching your criteria become available."
-          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "relative z-10 text-center", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-primary-container rounded-full flex items-center justify-center mx-auto mb-8 glow-border", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-on-primary-container text-3xl", style: {
+          /* @__PURE__ */ jsx("div", { className: "hidden md:flex pointer-events-none absolute inset-x-0 top-7 z-20 justify-center", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-4xl px-20 flex items-center justify-between", children: [
+            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined how-it-works-arrow", children: "east" }),
+            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined how-it-works-arrow how-it-works-arrow-delay", children: "east" })
+          ] }) }),
+          processSteps.map((item, index) => /* @__PURE__ */ jsxs("div", { className: "relative z-10 text-center", children: [
+            /* @__PURE__ */ jsx("div", { className: `w-16 h-16 bg-primary-container rounded-full flex items-center justify-center mx-auto mb-8 glow-border ${item.step === "2" ? "how-it-works-scan-icon" : ""}`, children: /* @__PURE__ */ jsx("span", { className: `material-symbols-outlined text-on-primary-container text-3xl ${item.step === "3" ? "how-it-works-bell" : ""}`, style: {
               fontVariationSettings: "'FILL' 1"
             }, children: item.icon }) }),
             /* @__PURE__ */ jsxs("h4", { className: "font-headline-md text-headline-md mb-4", children: [
@@ -454,9 +463,11 @@ function LandingPage() {
               ". ",
               item.title
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: item.desc })
+            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: item.desc }),
+            index < processSteps.length - 1 && /* @__PURE__ */ jsx("div", { className: "md:hidden mt-8 flex justify-center", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined how-it-works-arrow-mobile", children: "south" }) })
           ] }, item.step))
-        ] })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-12 text-center text-sm text-on-surface-variant/85 max-w-2xl mx-auto", children: "Your AI Buying Employee never stops searching. Update your buying criteria anytime." })
       ] }) }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 relative", id: "pricing", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
