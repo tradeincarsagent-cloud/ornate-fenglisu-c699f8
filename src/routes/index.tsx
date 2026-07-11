@@ -533,7 +533,7 @@ function LandingPage() {
                 </div>
               </div>
               <ul className="space-y-4 mb-10 flex-1">
-                {['3 Active Watchlists', 'Daily Email Reports', 'Basic Dashboard'].map(f => (
+                {['Up to 3 Active AI Buying Missions', 'Daily AI Buying Briefings', 'Dealer Command Centre Access'].map(f => (
                   <li key={f} className="flex items-center gap-3">
                     <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f}</span>
@@ -555,10 +555,10 @@ function LandingPage() {
               </div>
               <ul className="space-y-4 mb-10 flex-1">
                 {[
-                  { icon: 'stars', text: 'Unlimited Watchlists', bold: true },
+                  { icon: 'stars', text: 'Unlimited AI Buying Missions', bold: true },
                   { icon: 'stars', text: 'Instant SMS/Push Alerts', bold: true },
-                  { icon: 'check_circle', text: 'Advanced Search Filters', bold: false },
-                  { icon: 'check_circle', text: 'AI Description Analysis', bold: false },
+                  { icon: 'check_circle', text: 'Advanced AI Search Intelligence', bold: false },
+                  { icon: 'check_circle', text: 'Opportunity Intelligence™', bold: false },
                 ].map(f => (
                   <li key={f.text} className={`flex items-center gap-3 ${f.bold ? 'font-bold' : ''}`}>
                     <span className="material-symbols-outlined text-primary text-sm">{f.icon}</span>
@@ -579,7 +579,7 @@ function LandingPage() {
                 </div>
               </div>
               <ul className="space-y-4 mb-10 flex-1">
-                {['Up to 10 Site Profiles', 'Buyer Accountability Logs', 'Dedicated Account Manager', 'API Access (White-label)'].map(f => (
+                {['Up to 10 Dealership Locations', 'Team Activity Tracking', 'Dedicated Account Manager', 'API Access (White-label)'].map(f => (
                   <li key={f} className="flex items-center gap-3">
                     <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f}</span>
@@ -587,6 +587,15 @@ function LandingPage() {
                 ))}
               </ul>
               <a className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" href={pricingCheckoutLinks.dealerGroup}>Start Free Trial</a>
+            </div>
+          </div>
+          <div className="max-w-container-max mx-auto px-margin-desktop mt-8">
+            <div className="glass-card rounded-2xl p-5 border border-outline-variant/20">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant">
+                {['✔ Secure Stripe Checkout', '✔ Cancel Anytime', '✔ No Hidden Fees', '✔ Upgrade Anytime'].map(item => (
+                  <li key={item} className="flex items-center justify-center text-center">{item}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
