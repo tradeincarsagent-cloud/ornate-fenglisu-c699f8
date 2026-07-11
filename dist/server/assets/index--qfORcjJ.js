@@ -93,42 +93,6 @@ function LandingPage() {
     rafId = requestAnimationFrame(render);
     return () => cancelAnimationFrame(rafId);
   }, []);
-  useEffect(() => {
-    const cards = document.querySelectorAll(".glass-card");
-    const handlers = [];
-    cards.forEach((card) => {
-      const move = (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const cx = rect.width / 2;
-        const cy = rect.height / 2;
-        const rX = (y - cy) / 25;
-        const rY = (cx - x) / 25;
-        card.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) translateY(-5px)`;
-      };
-      const leave = () => {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
-      };
-      card.addEventListener("mousemove", move);
-      card.addEventListener("mouseleave", leave);
-      handlers.push({
-        el: card,
-        move,
-        leave
-      });
-    });
-    return () => {
-      handlers.forEach(({
-        el,
-        move,
-        leave
-      }) => {
-        el.removeEventListener("mousemove", move);
-        el.removeEventListener("mouseleave", leave);
-      });
-    };
-  }, []);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     modalOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay overflow-y-auto", onClick: (e) => {
       if (e.target === e.currentTarget) closeModal();
@@ -233,7 +197,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "Built for UK dealers, traders and sourcing professionals" })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "relative lg:flex items-center justify-center animate-float flex mt-10 overflow-visible", children: [
+          /* @__PURE__ */ jsxs("div", { className: "relative lg:flex items-center justify-center flex mt-10 overflow-visible", children: [
             /* @__PURE__ */ jsxs("div", { className: "radar-container glass-card rounded-full p-2 glow-border", children: [
               /* @__PURE__ */ jsx("canvas", { className: "absolute inset-0 w-full h-full rounded-full z-0", ref: canvasRef, width: "438", height: "438" }),
               /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
