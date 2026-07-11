@@ -604,6 +604,7 @@ function LandingPage() {
                   description: 'Everything you need to start using your AI Buying Employee today.',
                   status: 'Available Now',
                   statusClass: 'bg-emerald-500/15 text-emerald-400',
+                  iconClass: 'text-emerald-400',
                   icon: 'check_circle',
                   items: [
                     'AI Search Finder',
@@ -622,6 +623,7 @@ function LandingPage() {
                   description: 'Features already planned and actively being developed.',
                   status: 'In Development',
                   statusClass: 'bg-primary/20 text-primary',
+                  iconClass: 'text-primary',
                   icon: 'schedule',
                   items: [
                     'Mobile App',
@@ -638,6 +640,7 @@ function LandingPage() {
                   description: 'Our long-term vision for the future of intelligent vehicle sourcing.',
                   status: 'Future Vision',
                   statusClass: 'bg-purple-500/15 text-purple-400',
+                  iconClass: 'text-purple-400',
                   icon: 'rocket_launch',
                   items: [
                     'AI Negotiation Assistant',
@@ -660,7 +663,7 @@ function LandingPage() {
                   <ul className="space-y-3">
                     {phase.items.map(item => (
                       <li key={item} className="flex items-start gap-3 text-on-surface-variant">
-                        <span className="material-symbols-outlined text-primary-container text-xl flex-shrink-0">{phase.icon}</span>
+                        <span className={`material-symbols-outlined text-xl flex-shrink-0 ${phase.iconClass}`}>{phase.icon}</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -751,7 +754,7 @@ function LandingPage() {
             <p className="font-body-md text-body-md text-on-surface-variant max-w-sm">
               An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals.
             </p>
-            <p className="font-body-md text-body-md text-on-surface-variant">© 2024 Trade In Cars Agent. Your AI Vehicle Finder Working 24/7.</p>
+            <p className="font-body-md text-body-md text-on-surface-variant">© 2026 Trade in Cars Agent. All rights reserved.</p>
           </div>
           <div className="grid grid-cols-2 gap-8">
             <div className="flex flex-col gap-4">
