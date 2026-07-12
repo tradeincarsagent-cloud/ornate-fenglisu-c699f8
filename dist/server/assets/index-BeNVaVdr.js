@@ -414,13 +414,6 @@ function LandingPage() {
   function handleHeroStartFreeTrial() {
     handleStartFreeTrial();
   }
-  function handleFooterFormSuccess() {
-    startTrialOverlay();
-    setTimeout(() => {
-      hideTrialOverlay();
-      window.location.assign(pricingCheckoutLinks["professional"]);
-    }, 950);
-  }
   function startTrialOverlay() {
     setTrialOverlayShowing(true);
     requestAnimationFrame(() => {
@@ -1037,21 +1030,16 @@ function LandingPage() {
           ] })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container border-t border-outline-variant/20", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-12 items-center", children: [
-        /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase", children: "Get Started Today" }),
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Ready To Find Better Stock While You Sleep?" }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-lg", children: "Start your 14-day trial and let our AI vehicle finder find your next high-margin vehicles. Join early users exploring AI-assisted vehicle sourcing." }),
-          /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 pt-4", children: ["Card required. No charge today. Cancel anytime before your trial ends.", "Full access to all AI features", "Cancel anytime during the 14 days"].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "check_circle" }),
-            /* @__PURE__ */ jsx("span", { children: item })
-          ] }, item)) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "glass-card p-8 rounded-2xl glow-border", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-body-md mb-6 opacity-80 italic", children: "Having trouble with the popup? Use this secure form below to request your free trial." }),
-          /* @__PURE__ */ jsx(FooterForm, { onSuccess: handleFooterFormSuccess })
-        ] })
-      ] }) }) })
+      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container border-t border-outline-variant/20", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto text-center space-y-8", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+        /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase", children: "Get Started Today" }),
+        /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Ready to Hire Your AI Buying Employee?" }),
+        /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "Start with a full-featured 14-Day Professional Trial and discover how TICA can help you find better buying opportunities around the clock." }),
+        /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: handleStartFreeTrial, children: "START MY 14-DAY TRIAL" }),
+        /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 pt-4 max-w-2xl mx-auto text-left", children: ["Card required. No charge today.", "Full access to Professional features during the trial.", "Cancel anytime during the 14 days."].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
+          /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "check_circle" }),
+          /* @__PURE__ */ jsx("span", { children: item })
+        ] }, item)) })
+      ] }) }) }) })
     ] }),
     /* @__PURE__ */ jsx("footer", { className: "bg-surface-container-lowest w-full py-20 border-t border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
@@ -1076,83 +1064,6 @@ function LandingPage() {
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "Contact Support" })
         ] })
       ] })
-    ] }) })
-  ] });
-}
-function FooterForm({
-  onSuccess
-}) {
-  const [values, setValues] = useState({
-    fullName: "",
-    companyName: "",
-    email: "",
-    phone: ""
-  });
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
-  function handleChange(e) {
-    const {
-      name,
-      value
-    } = e.currentTarget;
-    setValues((v) => ({
-      ...v,
-      [name]: value
-    }));
-  }
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (submitting || submitted) return;
-    const data = new FormData();
-    data.append("fullName", values.fullName);
-    data.append("companyName", values.companyName);
-    data.append("email", values.email);
-    data.append("phone", values.phone);
-    data.append("plan", "Professional");
-    setError("");
-    setSubmitting(true);
-    try {
-      const res = await fetch("https://formspree.io/f/mdarndrp", {
-        method: "POST",
-        body: data,
-        headers: {
-          Accept: "application/json"
-        }
-      });
-      if (!res.ok) throw new Error("Unable to submit your details right now.");
-      setSubmitted(true);
-      onSuccess();
-    } catch {
-      setError("Something went wrong submitting your details. Please check your information and try again.");
-      setSubmitting(false);
-    }
-  }
-  return /* @__PURE__ */ jsxs("form", { className: "space-y-4", onSubmit: handleSubmit, children: [
-    /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-      /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
-        /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Full Name *" }),
-        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "fullName", onChange: handleChange, placeholder: "John Smith", required: true, type: "text", value: values.fullName })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
-        /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Company Name *" }),
-        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "companyName", onChange: handleChange, placeholder: "Elite Motors Ltd", required: true, type: "text", value: values.companyName })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-      /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
-        /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Email Address *" }),
-        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "email", onChange: handleChange, placeholder: "john@company.co.uk", required: true, type: "email", value: values.email })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
-        /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Mobile Number *" }),
-        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "phone", onChange: handleChange, pattern: "[+]?[0-9\\s\\-]{10,}", placeholder: "+44 7000 000000", required: true, type: "tel", value: values.phone })
-      ] })
-    ] }),
-    error && /* @__PURE__ */ jsx("p", { className: "text-sm text-red-300 bg-red-900/20 border border-red-500/40 rounded-lg px-4 py-3", children: error }),
-    /* @__PURE__ */ jsx("div", { className: "pt-4", children: /* @__PURE__ */ jsxs("button", { className: "w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed", disabled: submitting || submitted, type: "submit", children: [
-      /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]" }),
-      submitting ? "Submitting..." : "Start My Free Trial"
     ] }) })
   ] });
 }
