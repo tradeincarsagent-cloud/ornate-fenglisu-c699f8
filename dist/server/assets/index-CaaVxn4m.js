@@ -904,7 +904,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("starter"), type: "button", children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("starter"), type: "button", children: "Start My Starter Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
             /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ MOST POPULAR" }),
@@ -936,7 +936,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: f.icon }),
               /* @__PURE__ */ jsx("span", { children: f.text })
             ] }, f.text)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center", onClick: () => openModal("professional"), type: "button", children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("button", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center", onClick: () => openModal("professional"), type: "button", children: "Start My Professional Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
@@ -951,7 +951,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("enterprise"), type: "button", children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("enterprise"), type: "button", children: "Start My Enterprise Trial" })
           ] })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl p-5 border border-outline-variant/20", children: /* @__PURE__ */ jsx("ul", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant", children: ["✔ Secure Stripe Checkout", "✔ Cancel Anytime", "✔ No Hidden Fees", "✔ Upgrade Anytime"].map((item) => /* @__PURE__ */ jsx("li", { className: "flex items-center justify-center text-center", children: item }, item)) }) }) })
