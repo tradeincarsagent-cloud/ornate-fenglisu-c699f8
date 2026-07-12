@@ -1040,11 +1040,11 @@ function LandingPage() {
           /* @__PURE__ */ jsx("span", { children: item })
         ] }, item)) }),
         /* @__PURE__ */ jsxs("div", { className: "mt-14 mb-6 flex flex-col items-center gap-6 text-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "tica-certified-shield flex h-28 w-24 items-center justify-center rounded-[1.8rem] border border-[#8db7e6]/45 bg-surface-container-high/70", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-5xl text-[#b7d8ff]", children: "verified_user" }) }),
+          /* @__PURE__ */ jsx("img", { src: "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f", alt: "TICA Certified shield", className: "tica-certified-shield h-auto w-32", decoding: "async" }),
           /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
             /* @__PURE__ */ jsx("p", { className: "font-semibold text-xl text-white tracking-wide", children: "TICA Certified™" }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-medium", children: "Trusted AI Buying Technology" }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Built for professional vehicle dealers." })
+            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-medium", children: "Only opportunities that pass TICA's AI confidence analysis receive the TICA Certified™ badge." }),
+            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Professional AI buying confidence for serious vehicle dealers." })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "grid w-full max-w-4xl grid-cols-1 gap-3 pt-3 sm:grid-cols-2", children: [{
             icon: "lock",

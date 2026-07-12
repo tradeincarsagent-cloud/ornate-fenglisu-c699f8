@@ -1177,13 +1177,16 @@ function LandingPage() {
                   ))}
                 </div>
                 <div className="mt-14 mb-6 flex flex-col items-center gap-6 text-center">
-                  <div className="tica-certified-shield flex h-28 w-24 items-center justify-center rounded-[1.8rem] border border-[#8db7e6]/45 bg-surface-container-high/70">
-                    <span className="material-symbols-outlined text-5xl text-[#b7d8ff]">verified_user</span>
-                  </div>
+                  <img
+                    src="https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f"
+                    alt="TICA Certified shield"
+                    className="tica-certified-shield h-auto w-32"
+                    decoding="async"
+                  />
                   <div className="space-y-2">
                     <p className="font-semibold text-xl text-white tracking-wide">TICA Certified™</p>
-                    <p className="text-on-surface-variant font-medium">Trusted AI Buying Technology</p>
-                    <p className="text-on-surface-variant">Built for professional vehicle dealers.</p>
+                    <p className="text-on-surface-variant font-medium">Only opportunities that pass TICA's AI confidence analysis receive the TICA Certified™ badge.</p>
+                    <p className="text-on-surface-variant">Professional AI buying confidence for serious vehicle dealers.</p>
                   </div>
                   <div className="grid w-full max-w-4xl grid-cols-1 gap-3 pt-3 sm:grid-cols-2">
                     {[
