@@ -49,7 +49,9 @@ type RadarContact = {
 type RadarNotification = {
   id: string
   title: string
-  subtitle: string
+  vehicle: string
+  margin: string
+  confidence: string
   stamp: string
   tone: NotificationTone
   position: NotificationPosition
@@ -68,10 +70,10 @@ const radarContacts: RadarContact[] = [
 ]
 
 const radarNotifications: RadarNotification[] = [
-  { id: 'bmw', title: 'BMW M3 Detected', subtitle: 'Fresh premium performance listing', stamp: 'LIVE • 12s', tone: 'primary', position: 'upper-right' },
-  { id: 'ranger', title: 'Ford Ranger Found', subtitle: 'Double cab opportunity within brief', stamp: 'SYNC • 31s', tone: 'secondary', position: 'lower-left' },
-  { id: 'transit', title: 'Transit Custom Added', subtitle: 'Van channel updated across UK feeds', stamp: 'UK • 44s', tone: 'accent', position: 'upper-left' },
-  { id: 'golf', title: 'Golf GTI Opportunity', subtitle: 'Margin signal rising above threshold', stamp: 'AI • 18s', tone: 'primary', position: 'lower-right' },
+  { id: 'bmw', title: 'Opportunity Found', vehicle: 'BMW M3 Competition 2020', margin: '£3,200', confidence: '97%', stamp: 'LIVE • 12s', tone: 'primary', position: 'upper-right' },
+  { id: 'ranger', title: 'Opportunity Found', vehicle: 'Ford Ranger Wildtrak 2021', margin: '£2,350', confidence: '93%', stamp: 'SYNC • 31s', tone: 'secondary', position: 'lower-left' },
+  { id: 'transit', title: 'Opportunity Found', vehicle: 'Ford Transit Custom 2022', margin: '£2,450', confidence: '96%', stamp: 'UK • 44s', tone: 'accent', position: 'upper-left' },
+  { id: 'golf', title: 'Opportunity Found', vehicle: 'VW Golf GTI 2021', margin: '£1,450', confidence: '94%', stamp: 'AI • 18s', tone: 'primary', position: 'lower-right' },
 ]
 
 const radarRingInsets = [6, 14, 22, 30, 38, 46]
@@ -149,6 +151,9 @@ function UnitedKingdomFlag() {
   )
 }
 
+// Country flag configuration — replace HeroCountryFlag with another flag component to change country
+const HeroCountryFlag = UnitedKingdomFlag
+
 function HeroRadar() {
   const [sweepAngle, setSweepAngle] = useState(0)
   const [notificationIndex, setNotificationIndex] = useState(0)
@@ -221,6 +226,23 @@ function HeroRadar() {
             <path className="radar-map-path" d="M50 114c16-17 36-28 60-29 13-1 24 3 36 1 18-3 28-18 43-22 19-5 45 6 60 24-7 9-12 17-13 27-1 11 9 18 18 24 9 7 15 16 17 29-22 6-48 2-66 14-17 11-24 33-43 40-17 6-35-4-52-10-21-8-46-10-58-29-10-14-8-33-1-49 7-18 20-32 33-44 6-5 12-10 16-16-19 1-37 16-50 40-9-9-9-20 0-30Z" />
             <path className="radar-map-path" d="M214 90c8-10 20-16 33-16 10 0 18 4 24 11-5 10-16 17-26 23-10 5-22 7-31 2 1-8-2-14 0-20Z" />
             <path className="radar-map-path" d="M116 193c14-5 29-5 40 1 9 4 17 12 19 22-13 3-25 10-31 21-16 0-30-11-37-24-5-8-4-15 9-20Z" />
+            <g className="radar-road-network">
+              <line x1="157" y1="222" x2="140" y2="182" strokeWidth="0.9" />
+              <line x1="140" y1="182" x2="138" y2="152" strokeWidth="0.9" />
+              <line x1="138" y1="152" x2="130" y2="94" strokeWidth="0.8" />
+              <line x1="157" y1="222" x2="112" y2="210" strokeWidth="0.8" />
+              <line x1="157" y1="222" x2="153" y2="155" strokeWidth="0.8" />
+              <line x1="140" y1="182" x2="153" y2="155" strokeWidth="0.7" />
+              <line x1="138" y1="152" x2="153" y2="155" strokeWidth="0.7" />
+            </g>
+            <g className="radar-data-points">
+              <circle cx="157" cy="222" r="3" />
+              <circle cx="140" cy="182" r="2.2" />
+              <circle cx="138" cy="152" r="2.2" />
+              <circle cx="130" cy="94" r="2" />
+              <circle cx="112" cy="210" r="2" />
+              <circle cx="153" cy="155" r="2" />
+            </g>
           </svg>
         </div>
 
@@ -247,7 +269,7 @@ function HeroRadar() {
 
         <div className="radar-flag-marker">
           <span className="radar-flag-pole"></span>
-          <UnitedKingdomFlag />
+          <HeroCountryFlag />
         </div>
 
         <div className="radar-sweep" aria-hidden="true"></div>
@@ -280,7 +302,7 @@ function HeroRadar() {
         <div className="radar-centre-point" aria-hidden="true"></div>
         <div className="radar-status-chip" aria-hidden="true">
           <span className="radar-status-dot"></span>
-          UK MARKET // LIVE
+          🇬🇧 UK MARKET • LIVE SCAN
         </div>
       </div>
 
@@ -290,11 +312,20 @@ function HeroRadar() {
           className={`radar-notification radar-notification-${notification.position} radar-notification-${notification.tone}`}
         >
           <div className="radar-notification-header">
-            <span className="radar-notification-label">Opportunity Feed</span>
+            <span className="radar-notification-label">{notification.title}</span>
             <span className="radar-notification-stamp">{notification.stamp}</span>
           </div>
-          <p className="radar-notification-title">{notification.title}</p>
-          <p className="radar-notification-subtitle">{notification.subtitle}</p>
+          <p className="radar-notification-vehicle">{notification.vehicle}</p>
+          <div className="radar-notification-metrics">
+            <div className="radar-notification-metric">
+              <span className="radar-notification-metric-label">Estimated Margin</span>
+              <span className="radar-notification-metric-value">{notification.margin}</span>
+            </div>
+            <div className="radar-notification-metric">
+              <span className="radar-notification-metric-label">Confidence</span>
+              <span className="radar-notification-metric-value">{notification.confidence}</span>
+            </div>
+          </div>
         </div>
       ))}
     </div>

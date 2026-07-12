@@ -131,29 +131,37 @@ const radarContacts = [{
 }];
 const radarNotifications = [{
   id: "bmw",
-  title: "BMW M3 Detected",
-  subtitle: "Fresh premium performance listing",
+  title: "Opportunity Found",
+  vehicle: "BMW M3 Competition 2020",
+  margin: "£3,200",
+  confidence: "97%",
   stamp: "LIVE • 12s",
   tone: "primary",
   position: "upper-right"
 }, {
   id: "ranger",
-  title: "Ford Ranger Found",
-  subtitle: "Double cab opportunity within brief",
+  title: "Opportunity Found",
+  vehicle: "Ford Ranger Wildtrak 2021",
+  margin: "£2,350",
+  confidence: "93%",
   stamp: "SYNC • 31s",
   tone: "secondary",
   position: "lower-left"
 }, {
   id: "transit",
-  title: "Transit Custom Added",
-  subtitle: "Van channel updated across UK feeds",
+  title: "Opportunity Found",
+  vehicle: "Ford Transit Custom 2022",
+  margin: "£2,450",
+  confidence: "96%",
   stamp: "UK • 44s",
   tone: "accent",
   position: "upper-left"
 }, {
   id: "golf",
-  title: "Golf GTI Opportunity",
-  subtitle: "Margin signal rising above threshold",
+  title: "Opportunity Found",
+  vehicle: "VW Golf GTI 2021",
+  margin: "£1,450",
+  confidence: "94%",
   stamp: "AI • 18s",
   tone: "primary",
   position: "lower-right"
@@ -220,6 +228,7 @@ function UnitedKingdomFlag() {
     /* @__PURE__ */ jsx("path", { d: "M18 0v24M0 12h36", stroke: "#E2434B", strokeWidth: "3.8" })
   ] });
 }
+const HeroCountryFlag = UnitedKingdomFlag;
 function HeroRadar() {
   const [sweepAngle, setSweepAngle] = useState(0);
   const [notificationIndex, setNotificationIndex] = useState(0);
@@ -279,7 +288,24 @@ function HeroRadar() {
       /* @__PURE__ */ jsx("div", { className: "radar-map-overlay", "aria-hidden": "true", children: /* @__PURE__ */ jsxs("svg", { viewBox: "0 0 320 320", children: [
         /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M50 114c16-17 36-28 60-29 13-1 24 3 36 1 18-3 28-18 43-22 19-5 45 6 60 24-7 9-12 17-13 27-1 11 9 18 18 24 9 7 15 16 17 29-22 6-48 2-66 14-17 11-24 33-43 40-17 6-35-4-52-10-21-8-46-10-58-29-10-14-8-33-1-49 7-18 20-32 33-44 6-5 12-10 16-16-19 1-37 16-50 40-9-9-9-20 0-30Z" }),
         /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M214 90c8-10 20-16 33-16 10 0 18 4 24 11-5 10-16 17-26 23-10 5-22 7-31 2 1-8-2-14 0-20Z" }),
-        /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M116 193c14-5 29-5 40 1 9 4 17 12 19 22-13 3-25 10-31 21-16 0-30-11-37-24-5-8-4-15 9-20Z" })
+        /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M116 193c14-5 29-5 40 1 9 4 17 12 19 22-13 3-25 10-31 21-16 0-30-11-37-24-5-8-4-15 9-20Z" }),
+        /* @__PURE__ */ jsxs("g", { className: "radar-road-network", children: [
+          /* @__PURE__ */ jsx("line", { x1: "157", y1: "222", x2: "140", y2: "182", strokeWidth: "0.9" }),
+          /* @__PURE__ */ jsx("line", { x1: "140", y1: "182", x2: "138", y2: "152", strokeWidth: "0.9" }),
+          /* @__PURE__ */ jsx("line", { x1: "138", y1: "152", x2: "130", y2: "94", strokeWidth: "0.8" }),
+          /* @__PURE__ */ jsx("line", { x1: "157", y1: "222", x2: "112", y2: "210", strokeWidth: "0.8" }),
+          /* @__PURE__ */ jsx("line", { x1: "157", y1: "222", x2: "153", y2: "155", strokeWidth: "0.8" }),
+          /* @__PURE__ */ jsx("line", { x1: "140", y1: "182", x2: "153", y2: "155", strokeWidth: "0.7" }),
+          /* @__PURE__ */ jsx("line", { x1: "138", y1: "152", x2: "153", y2: "155", strokeWidth: "0.7" })
+        ] }),
+        /* @__PURE__ */ jsxs("g", { className: "radar-data-points", children: [
+          /* @__PURE__ */ jsx("circle", { cx: "157", cy: "222", r: "3" }),
+          /* @__PURE__ */ jsx("circle", { cx: "140", cy: "182", r: "2.2" }),
+          /* @__PURE__ */ jsx("circle", { cx: "138", cy: "152", r: "2.2" }),
+          /* @__PURE__ */ jsx("circle", { cx: "130", cy: "94", r: "2" }),
+          /* @__PURE__ */ jsx("circle", { cx: "112", cy: "210", r: "2" }),
+          /* @__PURE__ */ jsx("circle", { cx: "153", cy: "155", r: "2" })
+        ] })
       ] }) }),
       radarGridAngles.map((angle) => /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-grid-line", style: {
         transform: `translate(-50%, -50%) rotate(${angle}deg)`
@@ -291,7 +317,7 @@ function HeroRadar() {
       /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-crosshair radar-crosshair-vertical" }),
       /* @__PURE__ */ jsxs("div", { className: "radar-flag-marker", children: [
         /* @__PURE__ */ jsx("span", { className: "radar-flag-pole" }),
-        /* @__PURE__ */ jsx(UnitedKingdomFlag, {})
+        /* @__PURE__ */ jsx(HeroCountryFlag, {})
       ] }),
       /* @__PURE__ */ jsx("div", { className: "radar-sweep", "aria-hidden": "true" }),
       /* @__PURE__ */ jsx("div", { className: "radar-sweep-glow", "aria-hidden": "true" }),
@@ -318,16 +344,25 @@ function HeroRadar() {
       /* @__PURE__ */ jsx("div", { className: "radar-centre-point", "aria-hidden": "true" }),
       /* @__PURE__ */ jsxs("div", { className: "radar-status-chip", "aria-hidden": "true", children: [
         /* @__PURE__ */ jsx("span", { className: "radar-status-dot" }),
-        "UK MARKET // LIVE"
+        "🇬🇧 UK MARKET • LIVE SCAN"
       ] })
     ] }),
     activeNotifications.map((notification) => /* @__PURE__ */ jsxs("div", { className: `radar-notification radar-notification-${notification.position} radar-notification-${notification.tone}`, children: [
       /* @__PURE__ */ jsxs("div", { className: "radar-notification-header", children: [
-        /* @__PURE__ */ jsx("span", { className: "radar-notification-label", children: "Opportunity Feed" }),
+        /* @__PURE__ */ jsx("span", { className: "radar-notification-label", children: notification.title }),
         /* @__PURE__ */ jsx("span", { className: "radar-notification-stamp", children: notification.stamp })
       ] }),
-      /* @__PURE__ */ jsx("p", { className: "radar-notification-title", children: notification.title }),
-      /* @__PURE__ */ jsx("p", { className: "radar-notification-subtitle", children: notification.subtitle })
+      /* @__PURE__ */ jsx("p", { className: "radar-notification-vehicle", children: notification.vehicle }),
+      /* @__PURE__ */ jsxs("div", { className: "radar-notification-metrics", children: [
+        /* @__PURE__ */ jsxs("div", { className: "radar-notification-metric", children: [
+          /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-label", children: "Estimated Margin" }),
+          /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-value", children: notification.margin })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "radar-notification-metric", children: [
+          /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-label", children: "Confidence" }),
+          /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-value", children: notification.confidence })
+        ] })
+      ] })
     ] }, notification.uid))
   ] });
 }
