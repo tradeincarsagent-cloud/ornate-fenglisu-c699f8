@@ -946,7 +946,7 @@ function LandingPage() {
             <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="mb-9 space-y-3">
                 <h4 className="font-headline-md text-headline-md leading-tight">AI Buying Employee – Starter</h4>
-                <p className="text-on-surface-variant text-sm leading-relaxed">Designed for independent dealers hiring their first AI buying employee to consistently surface stronger stock opportunities.</p>
+                <p className="text-on-surface-variant text-sm leading-relaxed">Perfect for independent dealers and traders hiring their first AI Buying Employee.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">£49</span>
                   <span className="text-on-surface-variant">/mo</span>
@@ -964,7 +964,7 @@ function LandingPage() {
             </div>
             {/* Professional */}
             <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ Recommended for Active Dealers</div>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
               <div className="mb-9 space-y-3">
                 <h4 className="font-headline-md text-headline-md leading-tight">AI Buying Employee – Professional</h4>
                 <p className="text-on-surface-variant text-sm leading-relaxed">Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time.</p>
@@ -992,7 +992,7 @@ function LandingPage() {
             <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="mb-9 space-y-3">
                 <h4 className="font-headline-md text-headline-md leading-tight text-secondary">AI Buying Employee – Enterprise</h4>
-                <p className="text-on-surface-variant text-sm leading-relaxed">Created for dealer groups and specialist buying teams that need one AI employee workforce aligned across multiple sites.</p>
+                <p className="text-on-surface-variant text-sm leading-relaxed">Designed for larger dealerships, buying teams and specialist vehicle sourcing companies.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">£299</span>
                   <span className="text-on-surface-variant">/mo</span>
