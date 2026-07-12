@@ -275,18 +275,8 @@ function LandingPage() {
       <main>
         {/* Hero Section */}
         <section className="relative min-h-[90vh] flex items-center hero-gradient overflow-hidden">
-          <div className="absolute top-6 right-6 z-20 md:top-10 md:right-margin-desktop">
-            <div className="flex items-center gap-2 bg-primary/20 backdrop-blur-md border border-primary/50 px-4 py-2 rounded-full shadow-[0_0_15px_rgba(163,201,255,0.3)] animate-pulse">
-              <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#a3c9ff]"></span>
-              <span className="font-label-caps text-[10px] md:text-xs text-primary tracking-[0.2em] uppercase font-bold">Latest Update: Version 2 Live</span>
-            </div>
-          </div>
           <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10">
             <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 bg-surface-container px-4 py-1.5 rounded-full border border-outline-variant/30">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                <span className="font-label-caps text-label-caps text-primary tracking-widest">LIVE INVENTORY AGENT v1.0</span>
-              </div>
               <h1 className="font-display-lg text-display-lg leading-tight text-on-surface">
                 Find Better Stock.{' '}
                 <svg className="inline-block w-10 h-10 text-primary-container align-middle ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -286,85 +286,75 @@ function LandingPage() {
       ] }) })
     ] }) }),
     /* @__PURE__ */ jsxs("main", { children: [
-      /* @__PURE__ */ jsxs("section", { className: "relative min-h-[90vh] flex items-center hero-gradient overflow-hidden", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute top-6 right-6 z-20 md:top-10 md:right-margin-desktop", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-primary/20 backdrop-blur-md border border-primary/50 px-4 py-2 rounded-full shadow-[0_0_15px_rgba(163,201,255,0.3)] animate-pulse", children: [
-          /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#a3c9ff]" }),
-          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-[10px] md:text-xs text-primary tracking-[0.2em] uppercase font-bold", children: "Latest Update: Version 2 Live" })
-        ] }) }),
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10", children: [
-          /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
-            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 bg-surface-container px-4 py-1.5 rounded-full border border-outline-variant/30", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-primary animate-pulse" }),
-              /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest", children: "LIVE INVENTORY AGENT v1.0" })
-            ] }),
-            /* @__PURE__ */ jsxs("h1", { className: "font-display-lg text-display-lg leading-tight text-on-surface", children: [
-              "Find Better Stock.",
-              " ",
-              /* @__PURE__ */ jsx("svg", { className: "inline-block w-10 h-10 text-primary-container align-middle ml-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M13 10V3L4 14h7v7l9-11h-7z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
-              /* @__PURE__ */ jsx("br", {}),
-              /* @__PURE__ */ jsx("span", { className: "text-primary-container", children: "Buy Better Cars." }),
-              /* @__PURE__ */ jsx("br", {}),
-              "Save Hours Every Week."
-            ] }),
-            /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you buy better vehicles before the competition." }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-4", children: [
-                /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: () => scrollToSection("pricing"), children: [
-                  /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse" }),
-                  "Start Free 14-Day Trial"
-                ] }),
-                /* @__PURE__ */ jsx("a", { className: "border border-outline text-on-surface px-8 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all", href: "#how-it-works", children: "See How It Works" })
+      /* @__PURE__ */ jsx("section", { className: "relative min-h-[90vh] flex items-center hero-gradient overflow-hidden", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10", children: [
+        /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+          /* @__PURE__ */ jsxs("h1", { className: "font-display-lg text-display-lg leading-tight text-on-surface", children: [
+            "Find Better Stock.",
+            " ",
+            /* @__PURE__ */ jsx("svg", { className: "inline-block w-10 h-10 text-primary-container align-middle ml-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M13 10V3L4 14h7v7l9-11h-7z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
+            /* @__PURE__ */ jsx("br", {}),
+            /* @__PURE__ */ jsx("span", { className: "text-primary-container", children: "Buy Better Cars." }),
+            /* @__PURE__ */ jsx("br", {}),
+            "Save Hours Every Week."
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you buy better vehicles before the competition." }),
+          /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-4", children: [
+              /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: () => scrollToSection("pricing"), children: [
+                /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse" }),
+                "Start Free 14-Day Trial"
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Built specifically for independent dealers, professional buyers and used vehicle specialists." }),
-              /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx("svg", { className: "w-4 h-4 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
-                "Card required. No charge today. Cancel anytime before your trial ends."
-              ] })
+              /* @__PURE__ */ jsx("a", { className: "border border-outline text-on-surface px-8 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all", href: "#how-it-works", children: "See How It Works" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6 pt-8 border-t border-outline-variant/20", children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex -space-x-3", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background bg-surface-bright flex items-center justify-center text-[10px] font-bold", children: "JD" }),
-                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background bg-surface-container-high flex items-center justify-center text-[10px] font-bold", children: "SL" }),
-                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background bg-primary-container flex items-center justify-center text-[10px] font-bold", children: "EM" })
-              ] }),
-              /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "Built for UK dealers, traders and sourcing professionals" })
+            /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Built specifically for independent dealers, professional buyers and used vehicle specialists." }),
+            /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("svg", { className: "w-4 h-4 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
+              "Card required. No charge today. Cancel anytime before your trial ends."
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "relative lg:flex items-center justify-center flex mt-10 overflow-visible", children: [
-            /* @__PURE__ */ jsxs("div", { className: "radar-container glass-card rounded-full p-2 glow-border", children: [
-              /* @__PURE__ */ jsx("canvas", { className: "absolute inset-0 w-full h-full rounded-full z-0", ref: canvasRef, width: "438", height: "438" }),
-              /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
-              /* @__PURE__ */ jsxs("div", { className: "absolute inset-4 z-20 pointer-events-none opacity-40", children: [
-                /* @__PURE__ */ jsx("div", { className: "absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-ping" }),
-                /* @__PURE__ */ jsx("div", { className: "absolute bottom-1/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-ping", style: {
-                  animationDelay: "1s"
-                } }),
-                /* @__PURE__ */ jsx("div", { className: "absolute top-1/2 right-1/3 w-2 h-2 bg-primary rounded-full animate-ping", style: {
-                  animationDelay: "2.5s"
-                } })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "absolute right-2 sm:-right-8 top-3 sm:top-1/4 z-30 w-36 sm:w-56 glass-card p-2 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-[10px] font-label-caps text-primary uppercase", children: "New Alert" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-[10px] text-on-surface-variant", children: "2m ago" })
-                ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white mb-1", children: "Audi RS6 Avant" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[10px] text-primary", children: "£84,900 • Under Market" })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "absolute left-2 sm:-left-12 bottom-3 sm:bottom-1/4 z-30 w-32 sm:w-52 glass-card p-2 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-[10px] font-label-caps text-secondary uppercase", children: "Scanning..." }),
-                  /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-[12px] text-secondary", children: "sync" })
-                ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white", children: "Private Listing Detected" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[10px] text-on-surface-variant", children: 'Matches "2018+ Prestige SUV"' })
-              ] })
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6 pt-8 border-t border-outline-variant/20", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex -space-x-3", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background bg-surface-bright flex items-center justify-center text-[10px] font-bold", children: "JD" }),
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background bg-surface-container-high flex items-center justify-center text-[10px] font-bold", children: "SL" }),
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background bg-primary-container flex items-center justify-center text-[10px] font-bold", children: "EM" })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full" }),
-            /* @__PURE__ */ jsx("div", { className: "absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full" })
+            /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "Built for UK dealers, traders and sourcing professionals" })
           ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "relative lg:flex items-center justify-center flex mt-10 overflow-visible", children: [
+          /* @__PURE__ */ jsxs("div", { className: "radar-container glass-card rounded-full p-2 glow-border", children: [
+            /* @__PURE__ */ jsx("canvas", { className: "absolute inset-0 w-full h-full rounded-full z-0", ref: canvasRef, width: "438", height: "438" }),
+            /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute inset-4 z-20 pointer-events-none opacity-40", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-ping" }),
+              /* @__PURE__ */ jsx("div", { className: "absolute bottom-1/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-ping", style: {
+                animationDelay: "1s"
+              } }),
+              /* @__PURE__ */ jsx("div", { className: "absolute top-1/2 right-1/3 w-2 h-2 bg-primary rounded-full animate-ping", style: {
+                animationDelay: "2.5s"
+              } })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute right-2 sm:-right-8 top-3 sm:top-1/4 z-30 w-36 sm:w-56 glass-card p-2 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-[10px] font-label-caps text-primary uppercase", children: "New Alert" }),
+                /* @__PURE__ */ jsx("span", { className: "text-[10px] text-on-surface-variant", children: "2m ago" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white mb-1", children: "Audi RS6 Avant" }),
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-primary", children: "£84,900 • Under Market" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute left-2 sm:-left-12 bottom-3 sm:bottom-1/4 z-30 w-32 sm:w-52 glass-card p-2 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-[10px] font-label-caps text-secondary uppercase", children: "Scanning..." }),
+                /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-[12px] text-secondary", children: "sync" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white", children: "Private Listing Detected" }),
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-on-surface-variant", children: 'Matches "2018+ Prestige SUV"' })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full" })
         ] })
-      ] }),
+      ] }) }),
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-low border-y border-outline-variant/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center mb-14", children: [
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4 text-on-surface", children: "Meet Your AI Buying Employee" }),
