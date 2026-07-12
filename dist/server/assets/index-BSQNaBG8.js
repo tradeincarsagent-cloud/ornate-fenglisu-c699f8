@@ -407,6 +407,16 @@ function LandingPage() {
   function handleStartFreeTrial() {
     openModal("professional");
   }
+  function handleHeroStartFreeTrial() {
+    startTrialOverlay();
+    setTimeout(() => {
+      hideTrialOverlay();
+      scrollToSection("pricing");
+    }, 1e3);
+    setTimeout(() => {
+      openModal(selectedPlan);
+    }, 1700);
+  }
   function startTrialOverlay() {
     setTrialOverlayShowing(true);
     requestAnimationFrame(() => {
@@ -596,7 +606,7 @@ function LandingPage() {
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you buy better vehicles before the competition." }),
           /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-4", children: [
-              /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: handleStartFreeTrial, children: [
+              /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: handleHeroStartFreeTrial, children: [
                 /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse" }),
                 "Start Free 14-Day Trial"
               ] }),

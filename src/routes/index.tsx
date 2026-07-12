@@ -378,6 +378,17 @@ function LandingPage() {
     openModal('professional')
   }
 
+  function handleHeroStartFreeTrial() {
+    startTrialOverlay()
+    setTimeout(() => {
+      hideTrialOverlay()
+      scrollToSection('pricing')
+    }, 1000)
+    setTimeout(() => {
+      openModal(selectedPlan)
+    }, 1700)
+  }
+
   function startTrialOverlay() {
     setTrialOverlayShowing(true)
     requestAnimationFrame(() => {
@@ -611,7 +622,7 @@ function LandingPage() {
               </p>
               <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <button className="engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider" onClick={handleStartFreeTrial}>
+                  <button className="engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider" onClick={handleHeroStartFreeTrial}>
                     <span className="w-3 h-3 bg-white rounded-full animate-pulse"></span>
                     Start Free 14-Day Trial
                   </button>
