@@ -260,11 +260,11 @@ function LandingPage() {
           </div>
           <div className="hidden lg:flex items-center gap-8 mx-6">
             <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#how-it-works">How It Works</a>
-            <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#features">Features</a>
+            <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#ai-technology">AI Technology</a>
             <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#pricing">Pricing</a>
           </div>
           <div className="flex items-center ml-auto">
-            <button className="engine-start-btn text-white px-4 sm:px-6 md:px-8 py-2 md:py-2.5 rounded-full font-bold text-xs md:text-sm active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter" onClick={() => scrollToSection('pricing')}>
+            <button className="engine-start-btn text-white px-3 sm:px-5 md:px-7 py-1.5 md:py-2 rounded-full font-bold text-xs active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter" onClick={() => scrollToSection('pricing')}>
               <span className="w-2 h-2 bg-white rounded-full"></span>
               <span className="whitespace-nowrap">Start Free Trial</span>
             </button>
@@ -351,7 +351,7 @@ function LandingPage() {
         </section>
 
         {/* AI Buying Employee Technologies */}
-        <section className="py-24 bg-surface-container-low border-y border-outline-variant/10">
+        <section className="py-24 bg-surface-container-low border-y border-outline-variant/10" id="ai-technology">
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="text-center mb-14">
               <h2 className="font-display-lg text-headline-lg mb-4 text-on-surface">Meet Your AI Buying Employee</h2>
