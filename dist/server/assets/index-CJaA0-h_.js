@@ -414,6 +414,13 @@ function LandingPage() {
   function handleHeroStartFreeTrial() {
     handleStartFreeTrial();
   }
+  function handleFooterFormSuccess() {
+    startTrialOverlay();
+    setTimeout(() => {
+      hideTrialOverlay();
+      window.location.assign(pricingCheckoutLinks["professional"]);
+    }, 950);
+  }
   function startTrialOverlay() {
     setTrialOverlayShowing(true);
     requestAnimationFrame(() => {
@@ -1042,7 +1049,7 @@ function LandingPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "glass-card p-8 rounded-2xl glow-border", children: [
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-body-md mb-6 opacity-80 italic", children: "Having trouble with the popup? Use this secure form below to request your free trial." }),
-          /* @__PURE__ */ jsx(FooterForm, { onStartTrial: handleStartFreeTrial })
+          /* @__PURE__ */ jsx(FooterForm, { onSuccess: handleFooterFormSuccess })
         ] })
       ] }) }) })
     ] }),
@@ -1073,32 +1080,79 @@ function LandingPage() {
   ] });
 }
 function FooterForm({
-  onStartTrial
+  onSuccess
 }) {
-  return /* @__PURE__ */ jsxs("form", { className: "space-y-4", onSubmit: (e) => e.preventDefault(), children: [
+  const [values, setValues] = useState({
+    fullName: "",
+    companyName: "",
+    email: "",
+    phone: ""
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  function handleChange(e) {
+    const {
+      name,
+      value
+    } = e.currentTarget;
+    setValues((v) => ({
+      ...v,
+      [name]: value
+    }));
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (submitting || submitted) return;
+    const data = new FormData();
+    data.append("fullName", values.fullName);
+    data.append("companyName", values.companyName);
+    data.append("email", values.email);
+    data.append("phone", values.phone);
+    data.append("plan", "Professional");
+    setError("");
+    setSubmitting(true);
+    try {
+      const res = await fetch("https://formspree.io/f/mdarndrp", {
+        method: "POST",
+        body: data,
+        headers: {
+          Accept: "application/json"
+        }
+      });
+      if (!res.ok) throw new Error("Unable to submit your details right now.");
+      setSubmitted(true);
+      onSuccess();
+    } catch {
+      setError("Something went wrong submitting your details. Please check your information and try again.");
+      setSubmitting(false);
+    }
+  }
+  return /* @__PURE__ */ jsxs("form", { className: "space-y-4", onSubmit: handleSubmit, children: [
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
         /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Full Name *" }),
-        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "fullName", placeholder: "John Smith", required: true, type: "text" })
+        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "fullName", onChange: handleChange, placeholder: "John Smith", required: true, type: "text", value: values.fullName })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
         /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Company Name *" }),
-        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "companyName", placeholder: "Elite Motors Ltd", required: true, type: "text" })
+        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "companyName", onChange: handleChange, placeholder: "Elite Motors Ltd", required: true, type: "text", value: values.companyName })
       ] })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
         /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Email Address *" }),
-        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "email", placeholder: "john@company.co.uk", required: true, type: "email" })
+        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "email", onChange: handleChange, placeholder: "john@company.co.uk", required: true, type: "email", value: values.email })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
         /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Mobile Number *" }),
-        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "phone", placeholder: "+44 7000 000000", required: true, type: "tel" })
+        /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "phone", onChange: handleChange, pattern: "[+]?[0-9\\s\\-]{10,}", placeholder: "+44 7000 000000", required: true, type: "tel", value: values.phone })
       ] })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "pt-4", children: /* @__PURE__ */ jsxs("button", { className: "w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3", type: "button", onClick: onStartTrial, children: [
+    error && /* @__PURE__ */ jsx("p", { className: "text-sm text-red-300 bg-red-900/20 border border-red-500/40 rounded-lg px-4 py-3", children: error }),
+    /* @__PURE__ */ jsx("div", { className: "pt-4", children: /* @__PURE__ */ jsxs("button", { className: "w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed", disabled: submitting || submitted, type: "submit", children: [
       /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]" }),
-      "Start My Free Trial"
+      submitting ? "Submitting..." : "Start My Free Trial"
     ] }) })
   ] });
 }

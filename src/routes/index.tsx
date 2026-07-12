@@ -386,6 +386,14 @@ function LandingPage() {
     handleStartFreeTrial()
   }
 
+  function handleFooterFormSuccess() {
+    startTrialOverlay()
+    setTimeout(() => {
+      hideTrialOverlay()
+      window.location.assign(pricingCheckoutLinks['professional'])
+    }, 950)
+  }
+
   function startTrialOverlay() {
     setTrialOverlayShowing(true)
     requestAnimationFrame(() => {
@@ -1176,7 +1184,7 @@ function LandingPage() {
               </div>
               <div className="glass-card p-8 rounded-2xl glow-border">
                 <p className="text-on-surface-variant font-body-md mb-6 opacity-80 italic">Having trouble with the popup? Use this secure form below to request your free trial.</p>
-                <FooterForm onStartTrial={handleStartFreeTrial} />
+                <FooterForm onSuccess={handleFooterFormSuccess} />
               </div>
             </div>
           </div>
@@ -1220,33 +1228,75 @@ function LandingPage() {
   )
 }
 
-function FooterForm({ onStartTrial }: { onStartTrial: () => void }) {
+function FooterForm({ onSuccess }: { onSuccess: () => void }) {
+  const [values, setValues] = useState({ fullName: '', companyName: '', email: '', phone: '' })
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.currentTarget
+    setValues(v => ({ ...v, [name]: value }))
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    if (submitting || submitted) return
+
+    const data = new FormData()
+    data.append('fullName', values.fullName)
+    data.append('companyName', values.companyName)
+    data.append('email', values.email)
+    data.append('phone', values.phone)
+    data.append('plan', 'Professional')
+
+    setError('')
+    setSubmitting(true)
+
+    try {
+      const res = await fetch('https://formspree.io/f/mdarndrp', {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      })
+      if (!res.ok) throw new Error('Unable to submit your details right now.')
+      setSubmitted(true)
+      onSuccess()
+    } catch {
+      setError('Something went wrong submitting your details. Please check your information and try again.')
+      setSubmitting(false)
+    }
+  }
+
   return (
-    <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+    <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1">
           <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Full Name *</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="fullName" placeholder="John Smith" required type="text" />
+          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="fullName" onChange={handleChange} placeholder="John Smith" required type="text" value={values.fullName} />
         </div>
         <div className="space-y-1">
           <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Company Name *</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="companyName" placeholder="Elite Motors Ltd" required type="text" />
+          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="companyName" onChange={handleChange} placeholder="Elite Motors Ltd" required type="text" value={values.companyName} />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1">
           <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Email Address *</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="email" placeholder="john@company.co.uk" required type="email" />
+          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="email" onChange={handleChange} placeholder="john@company.co.uk" required type="email" value={values.email} />
         </div>
         <div className="space-y-1">
           <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Mobile Number *</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="phone" placeholder="+44 7000 000000" required type="tel" />
+          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="phone" onChange={handleChange} pattern="[+]?[0-9\s\-]{10,}" placeholder="+44 7000 000000" required type="tel" value={values.phone} />
         </div>
       </div>
+      {error && (
+        <p className="text-sm text-red-300 bg-red-900/20 border border-red-500/40 rounded-lg px-4 py-3">{error}</p>
+      )}
       <div className="pt-4">
-        <button className="w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3" type="button" onClick={onStartTrial}>
+        <button className="w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed" disabled={submitting || submitted} type="submit">
           <span className="w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]"></span>
-          Start My Free Trial
+          {submitting ? 'Submitting...' : 'Start My Free Trial'}
         </button>
       </div>
     </form>
