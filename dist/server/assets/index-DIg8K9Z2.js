@@ -1031,13 +1031,9 @@ function LandingPage() {
         ] })
       ] }) }),
       /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container border-t border-outline-variant/20", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto text-center space-y-8", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-        /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase", children: "Get Started Today" }),
-        /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Ready to Hire Your AI Buying Employee?" }),
-        /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "Start with a full-featured 14-Day Professional Trial and discover how TICA can help you find better buying opportunities around the clock." }),
-        /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-5 pt-4 max-w-2xl mx-auto text-left", children: ["Card required. No charge today.", "Full access to Professional features during the trial.", "Cancel anytime during the 14 days."].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
-          /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "check_circle" }),
-          /* @__PURE__ */ jsx("span", { children: item })
-        ] }, item)) }),
+        /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase", children: "THE TICA CERTIFIED™ STANDARD" }),
+        /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Why Dealers Trust TICA™" }),
+        /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "Every recommendation made by TICA must first pass our AI confidence analysis. Only opportunities that meet our buying criteria receive the TICA Certified™ recommendation." }),
         /* @__PURE__ */ jsx("div", { className: "mt-12 mb-12 max-w-2xl mx-auto border-t border-outline-variant/15" }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-10 text-center", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-5", children: [

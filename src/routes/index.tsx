@@ -1160,20 +1160,11 @@ function LandingPage() {
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <div className="space-y-6">
-                <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase">Get Started Today</span>
-                <h2 className="font-display-lg text-headline-lg text-white">Ready to Hire Your AI Buying Employee?</h2>
+                <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase">THE TICA CERTIFIED™ STANDARD</span>
+                <h2 className="font-display-lg text-headline-lg text-white">Why Dealers Trust TICA™</h2>
                 <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                  Start with a full-featured 14-Day Professional Trial and discover how TICA can help you find better buying opportunities around the clock.
+                  Every recommendation made by TICA must first pass our AI confidence analysis. Only opportunities that meet our buying criteria receive the TICA Certified™ recommendation.
                 </p>
-
-                <div className="flex flex-col gap-5 pt-4 max-w-2xl mx-auto text-left">
-                  {['Card required. No charge today.', 'Full access to Professional features during the trial.', 'Cancel anytime during the 14 days.'].map(item => (
-                    <div key={item} className="flex items-center gap-3 text-on-surface-variant">
-                      <span className="material-symbols-outlined text-primary">check_circle</span>
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
 
                 {/* Divider */}
                 <div className="mt-12 mb-12 max-w-2xl mx-auto border-t border-outline-variant/15" />
