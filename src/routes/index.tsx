@@ -8,8 +8,16 @@ export const Route = createFileRoute('/')({
 const pricingCheckoutLinks = {
   starter: 'https://buy.stripe.com/28EbIU9OB8yucva3Jp2cg0h',
   professional: 'https://buy.stripe.com/7sY9AMaSF7uqcvabbR2cg0f',
-  dealerGroup: 'https://buy.stripe.com/28E3coe4R4ie9iYeo32cg0g',
+  enterprise: 'https://buy.stripe.com/28E3coe4R4ie9iYeo32cg0g',
 } as const
+
+type TrialPlan = keyof typeof pricingCheckoutLinks
+
+const trialPlanLabels: Record<TrialPlan, string> = {
+  starter: 'Starter',
+  professional: 'Professional',
+  enterprise: 'Enterprise',
+}
 
 const exampleCriteria = [
   { label: 'BMW 320d M Sport', lines: ['2019–2022', 'Under £17,000'] },
@@ -334,7 +342,15 @@ function HeroRadar() {
 
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState<TrialPlan>('professional')
+  const [submissionError, setSubmissionError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [formValues, setFormValues] = useState({
+    fullName: '',
+    companyName: '',
+    email: '',
+    phone: '',
+  })
   const [criteriaIndex, setCriteriaIndex] = useState(0)
   const [criteriaVisible, setCriteriaVisible] = useState(true)
   const [opportunityIndex, setOpportunityIndex] = useState(0)
@@ -342,9 +358,10 @@ function LandingPage() {
   const [trialOverlayVisible, setTrialOverlayVisible] = useState(false)
   const [trialOverlayShowing, setTrialOverlayShowing] = useState(false)
 
-  function openModal() {
+  function openModal(plan: TrialPlan) {
+    setSelectedPlan(plan)
+    setSubmissionError('')
     setModalOpen(true)
-    setSubmitted(false)
     document.body.style.overflow = 'hidden'
   }
 
@@ -358,35 +375,63 @@ function LandingPage() {
   }
 
   function handleStartFreeTrial() {
+    openModal('professional')
+  }
+
+  function startTrialOverlay() {
     setTrialOverlayShowing(true)
-    // Trigger fade-in on next frame
     requestAnimationFrame(() => {
       requestAnimationFrame(() => setTrialOverlayVisible(true))
     })
-    // After ~1s scroll to pricing, then fade out
-    setTimeout(() => {
-      document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      setTimeout(() => {
-        setTrialOverlayVisible(false)
-        // Remove from DOM after fade-out completes
-        setTimeout(() => setTrialOverlayShowing(false), 400)
-      }, 400)
-    }, 1000)
+  }
+
+  function hideTrialOverlay() {
+    setTrialOverlayVisible(false)
+    setTimeout(() => setTrialOverlayShowing(false), 400)
+  }
+
+  function handleFormValueChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.currentTarget
+    setFormValues(current => ({ ...current, [name]: value }))
   }
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const form = e.currentTarget
-    const data = new FormData(form)
+    if (submitting) return
+
+    const data = new FormData()
+    data.append('fullName', formValues.fullName)
+    data.append('companyName', formValues.companyName)
+    data.append('email', formValues.email)
+    data.append('phone', formValues.phone)
+    data.append('plan', trialPlanLabels[selectedPlan])
+
+    setSubmissionError('')
+    setSubmitting(true)
+
     try {
-      await fetch('https://formspree.io/f/mdarndrp', {
+      const response = await fetch('https://formspree.io/f/mdarndrp', {
         method: 'POST',
         body: data,
         headers: { Accept: 'application/json' },
       })
-      setSubmitted(true)
+
+      if (!response.ok) {
+        throw new Error('Unable to submit your details right now.')
+      }
+
+      startTrialOverlay()
+      setModalOpen(false)
+      document.body.style.overflow = ''
+
+      const destination = pricingCheckoutLinks[selectedPlan]
+      setTimeout(() => {
+        hideTrialOverlay()
+        window.location.assign(destination)
+      }, 950)
     } catch {
-      setSubmitted(true)
+      setSubmissionError('Something went wrong submitting your details. Please check your information and try again.')
+      setSubmitting(false)
     }
   }
 
@@ -453,73 +498,75 @@ function LandingPage() {
       {/* Lead Capture Modal */}
       {modalOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay overflow-y-auto"
+          className="fixed inset-0 z-[100] flex items-start justify-center p-4 pt-4 md:pt-8 modal-overlay overflow-y-auto"
           onClick={e => { if (e.target === e.currentTarget) closeModal() }}
         >
-          <div className="relative w-full max-w-2xl glass-card rounded-2xl p-8 md:p-10 glow-border modal-enter mx-auto my-8">
+          <div className="relative w-full max-w-2xl glass-card rounded-2xl p-6 md:p-10 glow-border modal-enter mx-auto my-2 md:my-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
+            <button
+              className="absolute top-6 left-6 text-on-surface-variant hover:text-white transition-colors flex items-center gap-1"
+              onClick={closeModal}
+              type="button"
+            >
+              <span className="material-symbols-outlined text-xl">arrow_back</span>
+              <span className="text-xs uppercase tracking-widest font-bold">Back</span>
+            </button>
             <button
               className="absolute top-6 right-6 text-on-surface-variant hover:text-white transition-colors"
               onClick={closeModal}
+              type="button"
             >
               <span className="material-symbols-outlined text-3xl">close</span>
             </button>
 
-            {!submitted ? (
-              <div>
-                <div className="mb-8">
-                  <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-2 uppercase">Beta Access</span>
-                  <h2 className="font-display-lg text-headline-lg text-white">Start Your Free 14-Day Trial</h2>
-                  <p className="text-on-surface-variant mt-2 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                    </svg>
-                    Join early users exploring AI-assisted vehicle sourcing.
+            <div>
+              <div className="mb-8 pt-10">
+                <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-2 uppercase">Beta Access</span>
+                <h2 className="font-display-lg text-headline-lg text-white">Start Your Free 14-Day Trial</h2>
+                <p className="text-on-surface-variant mt-2 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                  </svg>
+                  Join early users exploring AI-assisted vehicle sourcing.
+                </p>
+                <p className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 bg-primary/10 text-primary text-xs uppercase tracking-widest font-bold">
+                  Selected Plan: {trialPlanLabels[selectedPlan]}
+                </p>
+              </div>
+              <form className="space-y-6" onSubmit={handleFormSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-1.5">
+                    <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Full Name *</label>
+                    <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="fullName" onChange={handleFormValueChange} placeholder="John Smith" required type="text" value={formValues.fullName} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Company Name *</label>
+                    <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="companyName" onChange={handleFormValueChange} placeholder="Elite Motors Ltd" required type="text" value={formValues.companyName} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Email Address *</label>
+                    <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="email" onChange={handleFormValueChange} placeholder="john@company.co.uk" required type="email" value={formValues.email} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Mobile Number *</label>
+                    <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="phone" onChange={handleFormValueChange} pattern="[+]?[0-9\s\-]{10,}" placeholder="+44 7000 000000" required type="tel" value={formValues.phone} />
+                  </div>
+                </div>
+                {submissionError && (
+                  <p className="text-sm text-red-300 bg-red-900/20 border border-red-500/40 rounded-lg px-4 py-3">
+                    {submissionError}
+                  </p>
+                )}
+                <div className="pt-4">
+                  <button className="w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed" disabled={submitting} type="submit">
+                    <span className="w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]"></span>
+                    {submitting ? 'Submitting...' : `Continue with ${trialPlanLabels[selectedPlan]}`}
+                  </button>
+                  <p className="text-center text-[11px] text-on-surface-variant mt-4 px-4 leading-relaxed">
+                    Card required. No charge today. Cancel anytime before your trial ends. We will only use your details to contact you about your Trade in Cars Agent trial.
                   </p>
                 </div>
-                <form className="space-y-6" onSubmit={handleFormSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-1.5">
-                      <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Full Name *</label>
-                      <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="fullName" placeholder="John Smith" required type="text" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Company Name *</label>
-                      <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="companyName" placeholder="Elite Motors Ltd" required type="text" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Email Address *</label>
-                      <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="email" placeholder="john@company.co.uk" required type="email" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Mobile Number *</label>
-                      <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="phone" pattern="[+]?[0-9\s\-]{10,}" placeholder="+44 7000 000000" required type="tel" />
-                    </div>
-                  </div>
-                  <div className="pt-4">
-                    <button className="w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3" type="submit">
-                      <span className="w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]"></span>
-                      Engine Start: Free Trial
-                    </button>
-                    <p className="text-center text-[11px] text-on-surface-variant mt-4 px-4 leading-relaxed">
-                      Card required. No charge today. Cancel anytime before your trial ends. We will only use your details to contact you about your Trade in Cars Agent trial.
-                    </p>
-                  </div>
-                </form>
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-8">
-                  <span className="material-symbols-outlined text-primary text-5xl">check_circle</span>
-                </div>
-                <h2 className="font-display-lg text-headline-lg text-white mb-4">Application Received!</h2>
-                <p className="text-on-surface-variant text-lg">
-                  Thank you. Your Trade in Cars Agent trial request has been received.
-                </p>
-                <button className="mt-10 border border-outline text-on-surface px-8 py-3 rounded-full hover:bg-surface-variant transition-all" onClick={closeModal}>
-                  Close
-                </button>
-              </div>
-            )}
+              </form>
+            </div>
           </div>
         </div>
       )}
@@ -913,7 +960,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <a className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" href={pricingCheckoutLinks.starter}>Start Free Trial</a>
+              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('starter')} type="button">Start Free Trial</button>
             </div>
             {/* Professional */}
             <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
@@ -939,7 +986,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <a className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" href={pricingCheckoutLinks.professional}>Start Free Trial</a>
+              <button className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" onClick={() => openModal('professional')} type="button">Start Free Trial</button>
             </div>
             {/* Enterprise */}
             <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
@@ -959,7 +1006,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <a className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" href={pricingCheckoutLinks.dealerGroup}>Start Free Trial</a>
+              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('enterprise')} type="button">Start Free Trial</button>
             </div>
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop mt-8">
