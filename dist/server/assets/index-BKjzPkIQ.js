@@ -95,6 +95,8 @@ function LandingPage() {
   const [criteriaVisible, setCriteriaVisible] = useState(true);
   const [opportunityIndex, setOpportunityIndex] = useState(0);
   const [opportunitiesVisible, setOpportunitiesVisible] = useState(true);
+  const [trialOverlayVisible, setTrialOverlayVisible] = useState(false);
+  const [trialOverlayShowing, setTrialOverlayShowing] = useState(false);
   const canvasRef = useRef(null);
   function closeModal() {
     setModalOpen(false);
@@ -105,6 +107,22 @@ function LandingPage() {
       behavior: "smooth",
       block: "start"
     });
+  }
+  function handleStartFreeTrial() {
+    setTrialOverlayShowing(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setTrialOverlayVisible(true));
+    });
+    setTimeout(() => {
+      document.getElementById("pricing")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+      setTimeout(() => {
+        setTrialOverlayVisible(false);
+        setTimeout(() => setTrialOverlayShowing(false), 400);
+      }, 400);
+    }, 1e3);
   }
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -226,6 +244,16 @@ function LandingPage() {
     desc: "Receive instant alerts and daily intelligence briefings when high-confidence vehicles matching your criteria become available."
   }];
   return /* @__PURE__ */ jsxs(Fragment, { children: [
+    trialOverlayShowing && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-[200] flex flex-col items-center justify-center pointer-events-none", style: {
+      background: "rgba(3,7,18,0.92)",
+      backdropFilter: "blur(8px)",
+      transition: "opacity 0.35s ease",
+      opacity: trialOverlayVisible ? 1 : 0
+    }, children: /* @__PURE__ */ jsxs("div", { className: "text-center space-y-4 px-6", children: [
+      /* @__PURE__ */ jsx("div", { className: "text-5xl mb-2", children: "🤖" }),
+      /* @__PURE__ */ jsx("p", { className: "font-display-lg text-display-lg text-white font-bold tracking-tight", children: "Preparing Your AI Buying Employee..." }),
+      /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto", children: "Connecting you to your AI Buying Command Centre..." })
+    ] }) }),
     modalOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay overflow-y-auto", onClick: (e) => {
       if (e.target === e.currentTarget) closeModal();
     }, children: /* @__PURE__ */ jsxs("div", { className: "relative w-full max-w-2xl glass-card rounded-2xl p-8 md:p-10 glow-border modal-enter mx-auto my-8", children: [
@@ -280,7 +308,7 @@ function LandingPage() {
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#ai-technology", children: "AI Technology" }),
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#pricing", children: "Pricing" })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "flex items-center ml-auto", children: /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-3 sm:px-5 md:px-7 py-1.5 md:py-2 rounded-full font-bold text-xs active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter", onClick: () => scrollToSection("pricing"), children: [
+      /* @__PURE__ */ jsx("div", { className: "flex items-center ml-auto", children: /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-3 sm:px-5 md:px-7 py-1.5 md:py-2 rounded-full font-bold text-xs active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter", onClick: handleStartFreeTrial, children: [
         /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-white rounded-full" }),
         /* @__PURE__ */ jsx("span", { className: "whitespace-nowrap", children: "Start Free Trial" })
       ] }) })
@@ -300,7 +328,7 @@ function LandingPage() {
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you buy better vehicles before the competition." }),
           /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-4", children: [
-              /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: () => scrollToSection("pricing"), children: [
+              /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: handleStartFreeTrial, children: [
                 /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse" }),
                 "Start Free 14-Day Trial"
               ] }),
@@ -749,7 +777,7 @@ function LandingPage() {
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-4", children: "Ready to Hire Your AI Buying Employee?" }),
         /* @__PURE__ */ jsx("p", { className: "text-on-primary/80 text-lg mb-8", children: "Join dealers using AI to discover better buying opportunities 24/7." }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: () => scrollToSection("pricing"), children: "Start My 14-Day Trial" }),
+          /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: handleStartFreeTrial, children: "Start My 14-Day Trial" }),
           /* @__PURE__ */ jsxs("p", { className: "text-on-primary/80 flex items-center justify-center gap-2 font-medium", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
             "Secure Stripe checkout • No charge today • Cancel anytime during your 14-day trial."
@@ -768,7 +796,7 @@ function LandingPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "glass-card p-8 rounded-2xl glow-border", children: [
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-body-md mb-6 opacity-80 italic", children: "Having trouble with the popup? Use this secure form below to request your free trial." }),
-          /* @__PURE__ */ jsx(FooterForm, {})
+          /* @__PURE__ */ jsx(FooterForm, { onStartTrial: handleStartFreeTrial })
         ] })
       ] }) }) })
     ] }),
@@ -798,13 +826,9 @@ function LandingPage() {
     ] }) })
   ] });
 }
-function FooterForm() {
-  function scrollToPricing() {
-    document.getElementById("pricing")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
+function FooterForm({
+  onStartTrial
+}) {
   return /* @__PURE__ */ jsxs("form", { className: "space-y-4", onSubmit: (e) => e.preventDefault(), children: [
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
@@ -826,7 +850,7 @@ function FooterForm() {
         /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "phone", placeholder: "+44 7000 000000", required: true, type: "tel" })
       ] })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "pt-4", children: /* @__PURE__ */ jsxs("button", { className: "w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3", type: "button", onClick: scrollToPricing, children: [
+    /* @__PURE__ */ jsx("div", { className: "pt-4", children: /* @__PURE__ */ jsxs("button", { className: "w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3", type: "button", onClick: onStartTrial, children: [
       /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]" }),
       "Start My Free Trial"
     ] }) })

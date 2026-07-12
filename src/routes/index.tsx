@@ -39,6 +39,8 @@ function LandingPage() {
   const [criteriaVisible, setCriteriaVisible] = useState(true)
   const [opportunityIndex, setOpportunityIndex] = useState(0)
   const [opportunitiesVisible, setOpportunitiesVisible] = useState(true)
+  const [trialOverlayVisible, setTrialOverlayVisible] = useState(false)
+  const [trialOverlayShowing, setTrialOverlayShowing] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   function openModal() {
@@ -54,6 +56,23 @@ function LandingPage() {
 
   function scrollToSection(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  function handleStartFreeTrial() {
+    setTrialOverlayShowing(true)
+    // Trigger fade-in on next frame
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setTrialOverlayVisible(true))
+    })
+    // After ~1s scroll to pricing, then fade out
+    setTimeout(() => {
+      document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setTimeout(() => {
+        setTrialOverlayVisible(false)
+        // Remove from DOM after fade-out completes
+        setTimeout(() => setTrialOverlayShowing(false), 400)
+      }, 400)
+    }, 1000)
   }
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -176,6 +195,28 @@ function LandingPage() {
 
   return (
     <>
+      {/* Start Free Trial Transition Overlay */}
+      {trialOverlayShowing && (
+        <div
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center pointer-events-none"
+          style={{
+            background: 'rgba(3,7,18,0.92)',
+            backdropFilter: 'blur(8px)',
+            transition: 'opacity 0.35s ease',
+            opacity: trialOverlayVisible ? 1 : 0,
+          }}
+        >
+          <div className="text-center space-y-4 px-6">
+            <div className="text-5xl mb-2">🤖</div>
+            <p className="font-display-lg text-display-lg text-white font-bold tracking-tight">
+              Preparing Your AI Buying Employee...
+            </p>
+            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">
+              Connecting you to your AI Buying Command Centre...
+            </p>
+          </div>
+        </div>
+      )}
       {/* Lead Capture Modal */}
       {modalOpen && (
         <div
@@ -264,7 +305,7 @@ function LandingPage() {
             <a className="font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#pricing">Pricing</a>
           </div>
           <div className="flex items-center ml-auto">
-            <button className="engine-start-btn text-white px-3 sm:px-5 md:px-7 py-1.5 md:py-2 rounded-full font-bold text-xs active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter" onClick={() => scrollToSection('pricing')}>
+            <button className="engine-start-btn text-white px-3 sm:px-5 md:px-7 py-1.5 md:py-2 rounded-full font-bold text-xs active:scale-95 transition-all flex items-center gap-2 uppercase tracking-tighter" onClick={handleStartFreeTrial}>
               <span className="w-2 h-2 bg-white rounded-full"></span>
               <span className="whitespace-nowrap">Start Free Trial</span>
             </button>
@@ -290,7 +331,7 @@ function LandingPage() {
               </p>
               <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <button className="engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider" onClick={() => scrollToSection('pricing')}>
+                  <button className="engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider" onClick={handleStartFreeTrial}>
                     <span className="w-3 h-3 bg-white rounded-full animate-pulse"></span>
                     Start Free 14-Day Trial
                   </button>
@@ -838,7 +879,7 @@ function LandingPage() {
             <h2 className="font-display-lg text-display-lg mb-4">Ready to Hire Your AI Buying Employee?</h2>
             <p className="text-on-primary/80 text-lg mb-8">Join dealers using AI to discover better buying opportunities 24/7.</p>
             <div className="space-y-6">
-              <button className="engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest" onClick={() => scrollToSection('pricing')}>
+              <button className="engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest" onClick={handleStartFreeTrial}>
                 Start My 14-Day Trial
               </button>
               <p className="text-on-primary/80 flex items-center justify-center gap-2 font-medium">
@@ -872,7 +913,7 @@ function LandingPage() {
               </div>
               <div className="glass-card p-8 rounded-2xl glow-border">
                 <p className="text-on-surface-variant font-body-md mb-6 opacity-80 italic">Having trouble with the popup? Use this secure form below to request your free trial.</p>
-                <FooterForm />
+                <FooterForm onStartTrial={handleStartFreeTrial} />
               </div>
             </div>
           </div>
@@ -916,11 +957,7 @@ function LandingPage() {
   )
 }
 
-function FooterForm() {
-  function scrollToPricing() {
-    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
+function FooterForm({ onStartTrial }: { onStartTrial: () => void }) {
   return (
     <form className="space-y-4" onSubmit={e => e.preventDefault()}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -944,7 +981,7 @@ function FooterForm() {
         </div>
       </div>
       <div className="pt-4">
-        <button className="w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3" type="button" onClick={scrollToPricing}>
+        <button className="w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3" type="button" onClick={onStartTrial}>
           <span className="w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]"></span>
           Start My Free Trial
         </button>
