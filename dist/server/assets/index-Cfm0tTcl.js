@@ -830,46 +830,46 @@ function LandingPage() {
           /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant/70 uppercase tracking-widest", children: "Card required. No charge today. Cancel anytime before your trial ends." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch", children: [
-          /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
-              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2", children: "Starter" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-4", children: "Ideal for independent dealers beginning their AI buying journey." }),
+          /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
+              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Starter" }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Designed for independent dealers hiring their first AI buying employee to consistently surface stronger stock opportunities." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£49" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1", children: ["Up to 3 Active AI Buying Missions", "Daily AI Buying Briefings", "Dealer Command Centre Access"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Keeps up to 3 buying briefs actively searching for margin-ready stock", "Delivers a daily shortlist so you can make faster buying calls", "Gives you one command centre to track opportunities and next actions"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
             /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.starter, children: "Start Free Trial" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "MOST POPULAR" }),
-            /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
-              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2", children: "Professional" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-4", children: "Our most popular choice for dealers who buy and sell vehicles every week." }),
+          /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
+            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ Recommended for Active Dealers" }),
+            /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
+              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Professional" }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-5xl font-extrabold text-primary", children: "£99" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1", children: [{
+            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: [{
               icon: "stars",
-              text: "Unlimited AI Buying Missions",
+              text: "Keeps unlimited buying briefs running so no profitable lead is missed",
               bold: true
             }, {
               icon: "stars",
-              text: "Instant SMS/Push Alerts",
+              text: "Sends instant opportunity alerts so your team can act before competitors",
               bold: true
             }, {
               icon: "check_circle",
-              text: "Advanced AI Search Intelligence",
+              text: "Prioritises the best-fit stock using advanced AI buying intelligence",
               bold: false
             }, {
               icon: "check_circle",
-              text: "Opportunity Intelligence™",
+              text: "Highlights margin potential with Opportunity Intelligence™ insights",
               bold: false
             }].map((f) => /* @__PURE__ */ jsxs("li", { className: `flex items-center gap-3 ${f.bold ? "font-bold" : ""}`, children: [
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: f.icon }),
@@ -877,16 +877,16 @@ function LandingPage() {
             ] }, f.text)) }),
             /* @__PURE__ */ jsx("a", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center", href: pricingCheckoutLinks.professional, children: "Start Free Trial" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
-              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md mb-2 text-secondary", children: "Enterprise" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-4", children: "Designed for larger businesses, buying teams and specialist vehicle sourcing companies." }),
+          /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
+              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight text-secondary", children: "AI Buying Employee – Enterprise" }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Created for dealer groups and specialist buying teams that need one AI employee workforce aligned across multiple sites." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£299" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1", children: ["Up to 10 Dealership Locations", "Team Activity Tracking", "Dedicated Account Manager", "API Access (White-label)"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Coordinates up to 10 dealership locations from one shared buying operation", "Gives full team visibility so managers can improve buying performance", "Includes a dedicated account manager to optimise results as you scale", "Supports white-label API access for enterprise workflows and integrations"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
