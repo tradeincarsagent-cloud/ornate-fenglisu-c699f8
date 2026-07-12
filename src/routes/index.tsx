@@ -1182,7 +1182,7 @@ function LandingPage() {
                     />
                     <div className="space-y-2">
                       <p className="font-semibold text-xl text-white tracking-wide">Professional AI Buying Confidence</p>
-                      <p className="text-on-surface-variant font-medium">Only opportunities that pass TICA's AI confidence analysis receive the TICA Certified™ badge before being recommended.</p>
+                      <p className="text-on-surface-variant font-medium">Every TICA Certified™ opportunity is analysed using market demand, pricing trends, buying criteria and estimated profit potential before being recommended to your dealership.</p>
                     </div>
                   </div>
 
