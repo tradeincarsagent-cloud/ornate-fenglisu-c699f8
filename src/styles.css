@@ -66,18 +66,30 @@ html {
 @keyframes tica-certified-halo {
   0%, 100% {
     filter:
-      drop-shadow(0 0 6px rgba(20, 147, 255, 0.20))
-      drop-shadow(0 0 16px rgba(20, 147, 255, 0.08));
+      drop-shadow(0 0 10px rgba(20, 147, 255, 0.22))
+      drop-shadow(0 0 26px rgba(20, 147, 255, 0.10));
+  }
+  45%, 55% {
+    filter:
+      drop-shadow(0 0 14px rgba(20, 147, 255, 0.30))
+      drop-shadow(0 0 34px rgba(20, 147, 255, 0.15));
+  }
+}
+
+@keyframes tica-certified-float {
+  0%, 100% {
+    transform: translateY(0);
   }
   50% {
-    filter:
-      drop-shadow(0 0 14px rgba(20, 147, 255, 0.52))
-      drop-shadow(0 0 34px rgba(20, 147, 255, 0.22));
+    transform: translateY(-3px);
   }
 }
 
 .tica-certified-shield {
-  animation: tica-certified-halo 6s ease-in-out infinite;
+  animation:
+    tica-certified-float 9s ease-in-out infinite,
+    tica-certified-halo 9s ease-in-out infinite;
+  will-change: transform, filter;
 }
 
 /* ── TICA Shield popup fade animation ───────────────────────────────── */
