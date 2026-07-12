@@ -610,11 +610,11 @@ function LandingPage() {
                 <svg className="inline-block w-10 h-10 text-primary-container align-middle ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                 </svg><br />
-                <span className="text-primary-container">Buy Better Cars.</span><br />
+                <span className="text-primary-container">Buy Better Vehicles.</span><br />
                 Save Hours Every Week.
               </h1>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you buy better vehicles before the competition.
+                Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition.
               </p>
               <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
