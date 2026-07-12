@@ -975,7 +975,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('starter')} type="button">Start Free Trial</button>
+              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('starter')} type="button">Start My Starter Trial</button>
             </div>
             {/* Professional */}
             <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
@@ -1001,7 +1001,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" onClick={() => openModal('professional')} type="button">Start Free Trial</button>
+              <button className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" onClick={() => openModal('professional')} type="button">Start My Professional Trial</button>
             </div>
             {/* Enterprise */}
             <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
@@ -1021,7 +1021,7 @@ function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('enterprise')} type="button">Start Free Trial</button>
+              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('enterprise')} type="button">Start My Enterprise Trial</button>
             </div>
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop mt-8">
