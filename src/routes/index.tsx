@@ -375,18 +375,15 @@ function LandingPage() {
   }
 
   function handleStartFreeTrial() {
-    openModal('professional')
-  }
-
-  function handleHeroStartFreeTrial() {
     startTrialOverlay()
     setTimeout(() => {
       hideTrialOverlay()
       scrollToSection('pricing')
     }, 1000)
-    setTimeout(() => {
-      openModal(selectedPlan)
-    }, 2400)
+  }
+
+  function handleHeroStartFreeTrial() {
+    handleStartFreeTrial()
   }
 
   function startTrialOverlay() {
@@ -497,10 +494,10 @@ function LandingPage() {
         >
           <div className="text-center space-y-4 px-6">
             <p className="font-display-lg text-display-lg text-white font-bold tracking-tight">
-              🤖 Preparing Your AI Employee...
+              🤖 Preparing Your AI Buying Employee...
             </p>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">
-              Connecting you to your AI Buying Command Centre...
+              Connecting you to your subscription options...
             </p>
           </div>
         </div>
