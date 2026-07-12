@@ -1034,20 +1034,21 @@ function LandingPage() {
         /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase", children: "Get Started Today" }),
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Ready to Hire Your AI Buying Employee?" }),
         /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "Start with a full-featured 14-Day Professional Trial and discover how TICA can help you find better buying opportunities around the clock." }),
-        /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 pt-2 max-w-2xl mx-auto text-left", children: ["Card required. No charge today.", "Full access to Professional features during the trial.", "Cancel anytime during the 14 days."].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
+        /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-5 pt-4 max-w-2xl mx-auto text-left", children: ["Card required. No charge today.", "Full access to Professional features during the trial.", "Cancel anytime during the 14 days."].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
           /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "check_circle" }),
           /* @__PURE__ */ jsx("span", { children: item })
         ] }, item)) }),
-        /* @__PURE__ */ jsx("div", { className: "mt-10 mb-10 max-w-2xl mx-auto border-t border-outline-variant/15" }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-8 text-center", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4", children: [
-            /* @__PURE__ */ jsx("img", { src: "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f", alt: "TICA Certified shield", className: "tica-certified-shield h-auto w-32", decoding: "async" }),
+        /* @__PURE__ */ jsx("div", { className: "mt-12 mb-12 max-w-2xl mx-auto border-t border-outline-variant/15" }),
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-10 text-center", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-5", children: [
+            /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps tracking-widest block uppercase text-on-surface-variant/80", children: "Trusted AI Certification" }),
+            /* @__PURE__ */ jsx("img", { src: "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f", alt: "TICA Certified shield", className: "tica-certified-shield h-auto w-36", decoding: "async" }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
               /* @__PURE__ */ jsx("p", { className: "font-semibold text-xl text-white tracking-wide", children: "Professional AI Buying Confidence" }),
               /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-medium", children: "Only opportunities that pass TICA's AI confidence analysis receive the TICA Certified™ badge before being recommended." })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid w-full max-w-4xl grid-cols-1 gap-4 pt-2 sm:grid-cols-2", children: [{
+          /* @__PURE__ */ jsx("div", { className: "grid w-full max-w-4xl grid-cols-1 gap-4 pt-4 sm:grid-cols-2", children: [{
             icon: "🔒",
             label: "Secure Stripe Checkout",
             desc: "Your subscription is processed securely through Stripe."
@@ -1070,7 +1071,7 @@ function LandingPage() {
             ] }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant leading-relaxed", children: item.desc })
           ] }, item.label)) }),
-          /* @__PURE__ */ jsx("p", { className: "pt-4 text-on-surface-variant font-medium max-w-xl", children: "Join professional dealers already using AI to buy better vehicles before the competition." })
+          /* @__PURE__ */ jsx("p", { className: "pt-6 text-on-surface-variant font-medium max-w-2xl text-center", children: "Start your Professional Trial today and discover why dealers trust TICA to identify better buying opportunities before anyone else." })
         ] })
       ] }) }) }) })
     ] }),

@@ -1166,7 +1166,7 @@ function LandingPage() {
                   Start with a full-featured 14-Day Professional Trial and discover how TICA can help you find better buying opportunities around the clock.
                 </p>
 
-                <div className="flex flex-col gap-4 pt-2 max-w-2xl mx-auto text-left">
+                <div className="flex flex-col gap-5 pt-4 max-w-2xl mx-auto text-left">
                   {['Card required. No charge today.', 'Full access to Professional features during the trial.', 'Cancel anytime during the 14 days.'].map(item => (
                     <div key={item} className="flex items-center gap-3 text-on-surface-variant">
                       <span className="material-symbols-outlined text-primary">check_circle</span>
@@ -1176,14 +1176,17 @@ function LandingPage() {
                 </div>
 
                 {/* Divider */}
-                <div className="mt-10 mb-10 max-w-2xl mx-auto border-t border-outline-variant/15" />
+                <div className="mt-12 mb-12 max-w-2xl mx-auto border-t border-outline-variant/15" />
 
-                <div className="flex flex-col items-center gap-8 text-center">
-                  <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-10 text-center">
+                  <div className="flex flex-col items-center gap-5">
+                    <span className="font-label-caps text-label-caps tracking-widest block uppercase text-on-surface-variant/80">
+                      Trusted AI Certification
+                    </span>
                     <img
                       src="https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f"
                       alt="TICA Certified shield"
-                      className="tica-certified-shield h-auto w-32"
+                      className="tica-certified-shield h-auto w-36"
                       decoding="async"
                     />
                     <div className="space-y-2">
@@ -1192,7 +1195,7 @@ function LandingPage() {
                     </div>
                   </div>
 
-                  <div className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
+                  <div className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-4 sm:grid-cols-2">
                     {[
                       { icon: '🔒', label: 'Secure Stripe Checkout', desc: 'Your subscription is processed securely through Stripe.' },
                       { icon: '📅', label: '14-Day Professional Trial', desc: 'Full access to every Professional feature from day one.' },
@@ -1209,7 +1212,7 @@ function LandingPage() {
                     ))}
                   </div>
 
-                  <p className="pt-4 text-on-surface-variant font-medium max-w-xl">Join professional dealers already using AI to buy better vehicles before the competition.</p>
+                  <p className="pt-6 text-on-surface-variant font-medium max-w-2xl text-center">Start your Professional Trial today and discover why dealers trust TICA to identify better buying opportunities before anyone else.</p>
                 </div>
               </div>
             </div>
