@@ -386,14 +386,6 @@ function LandingPage() {
     handleStartFreeTrial()
   }
 
-  function handleFooterFormSuccess() {
-    startTrialOverlay()
-    setTimeout(() => {
-      hideTrialOverlay()
-      window.location.assign(pricingCheckoutLinks['professional'])
-    }, 950)
-  }
-
   function startTrialOverlay() {
     setTrialOverlayShowing(true)
     requestAnimationFrame(() => {
@@ -1166,25 +1158,24 @@ function LandingPage() {
         {/* Static Lead Capture Footer Section */}
         <section className="py-24 bg-surface-container border-t border-outline-variant/20">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="max-w-3xl mx-auto text-center space-y-8">
               <div className="space-y-6">
                 <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase">Get Started Today</span>
-                <h2 className="font-display-lg text-headline-lg text-white">Ready To Find Better Stock While You Sleep?</h2>
-                <p className="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
-                  Start your 14-day trial and let our AI vehicle finder find your next high-margin vehicles. Join early users exploring AI-assisted vehicle sourcing.
+                <h2 className="font-display-lg text-headline-lg text-white">Ready to Hire Your AI Buying Employee?</h2>
+                <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                  Start with a full-featured 14-Day Professional Trial and discover how TICA can help you find better buying opportunities around the clock.
                 </p>
-                <div className="flex flex-col gap-4 pt-4">
-                  {['Card required. No charge today. Cancel anytime before your trial ends.', 'Full access to all AI features', 'Cancel anytime during the 14 days'].map(item => (
+                <button className="engine-start-btn text-white px-10 py-5 rounded-full font-bold text-xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest" onClick={handleStartFreeTrial}>
+                  START MY 14-DAY TRIAL
+                </button>
+                <div className="flex flex-col gap-4 pt-4 max-w-2xl mx-auto text-left">
+                  {['Card required. No charge today.', 'Full access to Professional features during the trial.', 'Cancel anytime during the 14 days.'].map(item => (
                     <div key={item} className="flex items-center gap-3 text-on-surface-variant">
                       <span className="material-symbols-outlined text-primary">check_circle</span>
                       <span>{item}</span>
                     </div>
                   ))}
                 </div>
-              </div>
-              <div className="glass-card p-8 rounded-2xl glow-border">
-                <p className="text-on-surface-variant font-body-md mb-6 opacity-80 italic">Having trouble with the popup? Use this secure form below to request your free trial.</p>
-                <FooterForm onSuccess={handleFooterFormSuccess} />
               </div>
             </div>
           </div>
@@ -1225,80 +1216,5 @@ function LandingPage() {
         </div>
       </footer>
     </>
-  )
-}
-
-function FooterForm({ onSuccess }: { onSuccess: () => void }) {
-  const [values, setValues] = useState({ fullName: '', companyName: '', email: '', phone: '' })
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.currentTarget
-    setValues(v => ({ ...v, [name]: value }))
-  }
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    if (submitting || submitted) return
-
-    const data = new FormData()
-    data.append('fullName', values.fullName)
-    data.append('companyName', values.companyName)
-    data.append('email', values.email)
-    data.append('phone', values.phone)
-    data.append('plan', 'Professional')
-
-    setError('')
-    setSubmitting(true)
-
-    try {
-      const res = await fetch('https://formspree.io/f/mdarndrp', {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
-      })
-      if (!res.ok) throw new Error('Unable to submit your details right now.')
-      setSubmitted(true)
-      onSuccess()
-    } catch {
-      setError('Something went wrong submitting your details. Please check your information and try again.')
-      setSubmitting(false)
-    }
-  }
-
-  return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Full Name *</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="fullName" onChange={handleChange} placeholder="John Smith" required type="text" value={values.fullName} />
-        </div>
-        <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Company Name *</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="companyName" onChange={handleChange} placeholder="Elite Motors Ltd" required type="text" value={values.companyName} />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Email Address *</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="email" onChange={handleChange} placeholder="john@company.co.uk" required type="email" value={values.email} />
-        </div>
-        <div className="space-y-1">
-          <label className="font-label-caps text-[10px] text-on-surface-variant uppercase">Mobile Number *</label>
-          <input className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm" name="phone" onChange={handleChange} pattern="[+]?[0-9\s\-]{10,}" placeholder="+44 7000 000000" required type="tel" value={values.phone} />
-        </div>
-      </div>
-      {error && (
-        <p className="text-sm text-red-300 bg-red-900/20 border border-red-500/40 rounded-lg px-4 py-3">{error}</p>
-      )}
-      <div className="pt-4">
-        <button className="w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed" disabled={submitting || submitted} type="submit">
-          <span className="w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]"></span>
-          {submitting ? 'Submitting...' : 'Start My Free Trial'}
-        </button>
-      </div>
-    </form>
   )
 }
