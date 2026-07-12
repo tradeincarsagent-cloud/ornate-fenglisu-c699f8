@@ -1035,34 +1035,44 @@ function LandingPage() {
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Ready to Hire Your AI Buying Employee?" }),
         /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "Start with a full-featured 14-Day Professional Trial and discover how TICA can help you find better buying opportunities around the clock." }),
         /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: handleStartFreeTrial, children: "START MY 14-DAY TRIAL" }),
-        /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 pt-4 max-w-2xl mx-auto text-left", children: ["Card required. No charge today.", "Full access to Professional features during the trial.", "Cancel anytime during the 14 days."].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
+        /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 pt-6 max-w-2xl mx-auto text-left", children: ["Card required. No charge today.", "Full access to Professional features during the trial.", "Cancel anytime during the 14 days."].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
           /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "check_circle" }),
           /* @__PURE__ */ jsx("span", { children: item })
         ] }, item)) }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-14 mb-6 flex flex-col items-center gap-6 text-center", children: [
-          /* @__PURE__ */ jsx("img", { src: "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f", alt: "TICA Certified shield", className: "tica-certified-shield h-auto w-32", decoding: "async" }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-            /* @__PURE__ */ jsx("p", { className: "font-semibold text-xl text-white tracking-wide", children: "TICA Certified™" }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-medium", children: "Only opportunities that pass TICA's AI confidence analysis receive the TICA Certified™ badge." }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Professional AI buying confidence for serious vehicle dealers." })
+        /* @__PURE__ */ jsx("div", { className: "mt-12 mb-12 max-w-2xl mx-auto border-t border-outline-variant/15" }),
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-8 text-center", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4", children: [
+            /* @__PURE__ */ jsx("img", { src: "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f", alt: "TICA Certified shield", className: "tica-certified-shield h-auto w-32", decoding: "async" }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+              /* @__PURE__ */ jsx("p", { className: "font-semibold text-xl text-white tracking-wide", children: "TICA Certified™" }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-medium", children: "Only opportunities that pass TICA's AI confidence analysis receive the TICA Certified™ badge." }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Professional AI buying confidence for serious vehicle dealers." })
+            ] })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid w-full max-w-4xl grid-cols-1 gap-3 pt-3 sm:grid-cols-2", children: [{
-            icon: "lock",
-            label: "Secure Stripe Checkout"
+          /* @__PURE__ */ jsx("div", { className: "grid w-full max-w-4xl grid-cols-1 gap-4 pt-2 sm:grid-cols-2", children: [{
+            icon: "🔒",
+            label: "Secure Stripe Checkout",
+            desc: "Your subscription is processed securely through Stripe."
           }, {
-            icon: "verified",
-            label: "14-Day Professional Trial"
+            icon: "🧠",
+            label: "AI Confidence Analysis",
+            desc: "Every opportunity is analysed before being recommended."
           }, {
-            icon: "psychology_alt",
-            label: "Professional AI Vehicle Intelligence"
+            icon: "🛡️",
+            label: "TICA Certified™",
+            desc: "Only high-confidence opportunities receive the TICA Certified™ badge."
           }, {
-            icon: "groups",
-            label: "Built for Independent Dealers & Dealer Groups"
-          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-4 py-3 text-on-surface-variant", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container", children: item.icon }),
-            /* @__PURE__ */ jsx("span", { className: "text-sm font-medium sm:text-base", children: item.label })
+            icon: "🚗",
+            label: "Built for Professional Dealers",
+            desc: "Designed specifically for independent dealers, traders and buying teams."
+          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-5 py-4 text-left", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-xl leading-none", children: item.icon }),
+              /* @__PURE__ */ jsx("span", { className: "font-semibold text-sm text-white sm:text-base", children: item.label })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant leading-relaxed", children: item.desc })
           ] }, item.label)) }),
-          /* @__PURE__ */ jsx("p", { className: "pt-3 text-on-surface-variant font-medium", children: "Your AI Buying Employee is ready whenever you are." })
+          /* @__PURE__ */ jsx("p", { className: "pt-4 text-on-surface-variant font-medium max-w-xl", children: "Start your 14-Day Professional Trial today and discover how TICA helps you find better buying opportunities before the competition." })
         ] })
       ] }) }) }) })
     ] }),
