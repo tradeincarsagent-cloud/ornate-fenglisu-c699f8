@@ -881,7 +881,7 @@ function LandingPage() {
           /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Starter" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Designed for independent dealers hiring their first AI buying employee to consistently surface stronger stock opportunities." }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Perfect for independent dealers and traders hiring their first AI Buying Employee." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£49" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
@@ -894,7 +894,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("starter"), type: "button", children: "Start Free Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ Recommended for Active Dealers" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ MOST POPULAR" }),
             /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Professional" }),
               /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time." }),
@@ -928,7 +928,7 @@ function LandingPage() {
           /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight text-secondary", children: "AI Buying Employee – Enterprise" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Created for dealer groups and specialist buying teams that need one AI employee workforce aligned across multiple sites." }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Designed for larger dealerships, buying teams and specialist vehicle sourcing companies." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£299" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
