@@ -415,7 +415,7 @@ function LandingPage() {
     }, 1e3);
     setTimeout(() => {
       openModal(selectedPlan);
-    }, 1700);
+    }, 2400);
   }
   function startTrialOverlay() {
     setTrialOverlayShowing(true);
@@ -524,8 +524,7 @@ function LandingPage() {
       transition: "opacity 0.35s ease",
       opacity: trialOverlayVisible ? 1 : 0
     }, children: /* @__PURE__ */ jsxs("div", { className: "text-center space-y-4 px-6", children: [
-      /* @__PURE__ */ jsx("div", { className: "text-5xl mb-2", children: "🤖" }),
-      /* @__PURE__ */ jsx("p", { className: "font-display-lg text-display-lg text-white font-bold tracking-tight", children: "Preparing Your AI Buying Employee..." }),
+      /* @__PURE__ */ jsx("p", { className: "font-display-lg text-display-lg text-white font-bold tracking-tight", children: "🤖 Preparing Your AI Employee..." }),
       /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto", children: "Connecting you to your AI Buying Command Centre..." })
     ] }) }),
     modalOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-[100] flex items-start justify-center p-4 pt-4 md:pt-8 modal-overlay overflow-y-auto", onClick: (e) => {

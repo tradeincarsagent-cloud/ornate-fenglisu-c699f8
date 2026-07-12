@@ -386,7 +386,7 @@ function LandingPage() {
     }, 1000)
     setTimeout(() => {
       openModal(selectedPlan)
-    }, 1700)
+    }, 2400)
   }
 
   function startTrialOverlay() {
@@ -496,9 +496,8 @@ function LandingPage() {
           }}
         >
           <div className="text-center space-y-4 px-6">
-            <div className="text-5xl mb-2">🤖</div>
             <p className="font-display-lg text-display-lg text-white font-bold tracking-tight">
-              Preparing Your AI Buying Employee...
+              🤖 Preparing Your AI Employee...
             </p>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">
               Connecting you to your AI Buying Command Centre...
