@@ -1176,6 +1176,30 @@ function LandingPage() {
                     </div>
                   ))}
                 </div>
+                <div className="mt-14 mb-6 flex flex-col items-center gap-6 text-center">
+                  <div className="tica-certified-shield flex h-28 w-24 items-center justify-center rounded-[1.8rem] border border-[#8db7e6]/45 bg-surface-container-high/70">
+                    <span className="material-symbols-outlined text-5xl text-[#b7d8ff]">verified_user</span>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-semibold text-xl text-white tracking-wide">TICA Certified™</p>
+                    <p className="text-on-surface-variant font-medium">Trusted AI Buying Technology</p>
+                    <p className="text-on-surface-variant">Built for professional vehicle dealers.</p>
+                  </div>
+                  <div className="grid w-full max-w-4xl grid-cols-1 gap-3 pt-3 sm:grid-cols-2">
+                    {[
+                      { icon: 'lock', label: 'Secure Stripe Checkout' },
+                      { icon: 'verified', label: '14-Day Professional Trial' },
+                      { icon: 'psychology_alt', label: 'Professional AI Vehicle Intelligence' },
+                      { icon: 'groups', label: 'Built for Independent Dealers & Dealer Groups' },
+                    ].map(item => (
+                      <div key={item.label} className="flex items-center justify-center gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-4 py-3 text-on-surface-variant">
+                        <span className="material-symbols-outlined text-primary-container">{item.icon}</span>
+                        <span className="text-sm font-medium sm:text-base">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="pt-3 text-on-surface-variant font-medium">Your AI Buying Employee is ready whenever you are.</p>
+                </div>
               </div>
             </div>
           </div>

@@ -1038,7 +1038,32 @@ function LandingPage() {
         /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-4 pt-4 max-w-2xl mx-auto text-left", children: ["Card required. No charge today.", "Full access to Professional features during the trial.", "Cancel anytime during the 14 days."].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 text-on-surface-variant", children: [
           /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "check_circle" }),
           /* @__PURE__ */ jsx("span", { children: item })
-        ] }, item)) })
+        ] }, item)) }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-14 mb-6 flex flex-col items-center gap-6 text-center", children: [
+          /* @__PURE__ */ jsx("div", { className: "tica-certified-shield flex h-28 w-24 items-center justify-center rounded-[1.8rem] border border-[#8db7e6]/45 bg-surface-container-high/70", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-5xl text-[#b7d8ff]", children: "verified_user" }) }),
+          /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+            /* @__PURE__ */ jsx("p", { className: "font-semibold text-xl text-white tracking-wide", children: "TICA Certified™" }),
+            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-medium", children: "Trusted AI Buying Technology" }),
+            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant", children: "Built for professional vehicle dealers." })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "grid w-full max-w-4xl grid-cols-1 gap-3 pt-3 sm:grid-cols-2", children: [{
+            icon: "lock",
+            label: "Secure Stripe Checkout"
+          }, {
+            icon: "verified",
+            label: "14-Day Professional Trial"
+          }, {
+            icon: "psychology_alt",
+            label: "Professional AI Vehicle Intelligence"
+          }, {
+            icon: "groups",
+            label: "Built for Independent Dealers & Dealer Groups"
+          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-4 py-3 text-on-surface-variant", children: [
+            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container", children: item.icon }),
+            /* @__PURE__ */ jsx("span", { className: "text-sm font-medium sm:text-base", children: item.label })
+          ] }, item.label)) }),
+          /* @__PURE__ */ jsx("p", { className: "pt-3 text-on-surface-variant font-medium", children: "Your AI Buying Employee is ready whenever you are." })
+        ] })
       ] }) }) }) })
     ] }),
     /* @__PURE__ */ jsx("footer", { className: "bg-surface-container-lowest w-full py-20 border-t border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter", children: [
