@@ -286,7 +286,7 @@ body > div {
 .radar-map-overlay {
   position: absolute;
   inset: 15%;
-  opacity: 0.18;
+  opacity: 0.22;
   mix-blend-mode: screen;
 }
 
@@ -299,6 +299,15 @@ body > div {
   fill: rgba(132, 214, 255, 0.18);
   stroke: rgba(132, 214, 255, 0.24);
   stroke-width: 1.2;
+}
+
+.radar-road-network line {
+  stroke: rgba(96, 214, 255, 0.38);
+  stroke-linecap: round;
+}
+
+.radar-data-points circle {
+  fill: rgba(96, 221, 255, 0.58);
 }
 
 .radar-ring {
@@ -438,21 +447,21 @@ body > div {
 
 .premium-radar-shell .radar-sweep {
   inset: -10%;
-  background: conic-gradient(from -90deg, transparent 0deg, transparent 326deg, rgba(96, 221, 255, 0.06) 334deg, rgba(96, 221, 255, 0.18) 346deg, rgba(96, 221, 255, 0.72) 357deg, rgba(176, 239, 255, 0.95) 360deg);
+  background: conic-gradient(from -90deg, transparent 0deg, transparent 326deg, rgba(96, 221, 255, 0.04) 334deg, rgba(96, 221, 255, 0.14) 346deg, rgba(96, 221, 255, 0.56) 357deg, rgba(176, 239, 255, 0.82) 360deg);
   animation: radarSweep 5.4s linear infinite;
   mix-blend-mode: screen;
-  opacity: 0.95;
+  opacity: 0.86;
 }
 
 .radar-sweep-glow {
   position: absolute;
   inset: -11%;
   border-radius: 50%;
-  background: conic-gradient(from -90deg, transparent 0deg, transparent 322deg, rgba(20, 147, 255, 0.05) 334deg, rgba(20, 147, 255, 0.22) 350deg, rgba(186, 230, 253, 0.42) 360deg);
+  background: conic-gradient(from -90deg, transparent 0deg, transparent 322deg, rgba(20, 147, 255, 0.04) 334deg, rgba(20, 147, 255, 0.18) 350deg, rgba(186, 230, 253, 0.34) 360deg);
   filter: blur(20px);
   mix-blend-mode: screen;
   animation: radarSweep 5.4s linear infinite;
-  opacity: 0.78;
+  opacity: 0.66;
 }
 
 .radar-contact {
@@ -682,6 +691,44 @@ body > div {
   font-size: 0.66rem;
   line-height: 1.35;
   color: rgba(186, 230, 253, 0.72);
+}
+
+.radar-notification-vehicle {
+  margin: 0.32rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: 0.01em;
+}
+
+.radar-notification-metrics {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.radar-notification-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.radar-notification-metric-label {
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.72);
+}
+
+.radar-notification-metric-value {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: rgba(186, 230, 253, 0.96);
 }
 
 .opportunity-row-highlight {
