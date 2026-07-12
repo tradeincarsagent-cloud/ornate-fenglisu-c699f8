@@ -1,5 +1,5 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 const pricingCheckoutLinks = {
   starter: "https://buy.stripe.com/28EbIU9OB8yucva3Jp2cg0h",
   professional: "https://buy.stripe.com/7sY9AMaSF7uqcvabbR2cg0f",
@@ -88,6 +88,249 @@ const opportunityExamples = [{
   ticaCertified: true,
   detectedAt: "27 minutes ago"
 }];
+const radarContacts = [{
+  id: "bmw-m3",
+  x: 31,
+  y: 27,
+  label: "BMW M3",
+  heading: "318°",
+  source: "Motorway feed",
+  type: "car"
+}, {
+  id: "transit-custom",
+  x: 72,
+  y: 34,
+  label: "Transit Custom",
+  heading: "058°",
+  source: "Fleet source",
+  type: "van"
+}, {
+  id: "ranger",
+  x: 65,
+  y: 65,
+  label: "Ford Ranger",
+  heading: "132°",
+  source: "Dealer trade",
+  type: "pickup"
+}, {
+  id: "golf-gti",
+  x: 41,
+  y: 73,
+  label: "Golf GTI",
+  heading: "214°",
+  source: "Retail listing",
+  type: "car"
+}, {
+  id: "tracer",
+  x: 23,
+  y: 59,
+  label: "Tracer 9",
+  heading: "254°",
+  source: "Bike network",
+  type: "motorcycle"
+}];
+const radarNotifications = [{
+  id: "bmw",
+  title: "BMW M3 Detected",
+  subtitle: "Fresh premium performance listing",
+  stamp: "LIVE • 12s",
+  tone: "primary",
+  position: "upper-right"
+}, {
+  id: "ranger",
+  title: "Ford Ranger Found",
+  subtitle: "Double cab opportunity within brief",
+  stamp: "SYNC • 31s",
+  tone: "secondary",
+  position: "lower-left"
+}, {
+  id: "transit",
+  title: "Transit Custom Added",
+  subtitle: "Van channel updated across UK feeds",
+  stamp: "UK • 44s",
+  tone: "accent",
+  position: "upper-left"
+}, {
+  id: "golf",
+  title: "Golf GTI Opportunity",
+  subtitle: "Margin signal rising above threshold",
+  stamp: "AI • 18s",
+  tone: "primary",
+  position: "lower-right"
+}];
+const radarRingInsets = [6, 14, 22, 30, 38, 46];
+const radarGridAngles = Array.from({
+  length: 24
+}, (_, index) => index * 15);
+const degreeMarks = Array.from({
+  length: 12
+}, (_, index) => index * 30);
+function getContactBearing(x, y) {
+  const radians = Math.atan2(x - 50, 50 - y);
+  return (radians * 180 / Math.PI + 360) % 360;
+}
+function getSweepIntensity(sweepAngle, contact) {
+  const bearing = getContactBearing(contact.x, contact.y);
+  const circularDifference = Math.abs((sweepAngle - bearing + 540) % 360 - 180);
+  const trailingDifference = (sweepAngle - bearing + 360) % 360;
+  const primaryGlow = Math.max(0, 1 - circularDifference / 24);
+  const trailingGlow = trailingDifference <= 72 ? 1 - trailingDifference / 72 : 0;
+  return Math.min(1, 0.24 + primaryGlow * 0.64 + trailingGlow * 0.36);
+}
+function VehicleGlyph({
+  type
+}) {
+  if (type === "van") {
+    return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+      /* @__PURE__ */ jsx("path", { d: "M5 18.5h3.1l2.7-6.1c.5-1.1 1.5-1.9 2.7-1.9H21c1.2 0 2.2.6 2.8 1.5l2.9 4.5H29a1 1 0 0 1 1 1v4h-2.2a2.8 2.8 0 0 1-5.5 0h-9.8a2.8 2.8 0 0 1-5.5 0H5v-3Z" }),
+      /* @__PURE__ */ jsx("path", { d: "M14.5 13h5.4c.8 0 1.5.4 1.9 1l1.7 2.8H12.4l1-2.2c.2-.4.6-.6 1.1-.6Z" }),
+      /* @__PURE__ */ jsx("circle", { cx: "9.5", cy: "21.5", r: "1.8" }),
+      /* @__PURE__ */ jsx("circle", { cx: "24.8", cy: "21.5", r: "1.8" })
+    ] });
+  }
+  if (type === "pickup") {
+    return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+      /* @__PURE__ */ jsx("path", { d: "M4.5 18.4h3.4l2.1-4.3c.6-1.1 1.6-1.8 2.8-1.8h5.4c1.1 0 2.1.5 2.8 1.4l1.6 2.2h2.6c.9 0 1.6.7 1.6 1.6v4h-2.2a2.8 2.8 0 0 1-5.5 0H12a2.8 2.8 0 0 1-5.5 0H4.5v-3.1Z" }),
+      /* @__PURE__ */ jsx("path", { d: "M13 14.8h6.3l1.4 1.9H12l.4-.8c.2-.7.9-1.1 1.6-1.1Z" }),
+      /* @__PURE__ */ jsx("circle", { cx: "9.2", cy: "21.6", r: "1.8" }),
+      /* @__PURE__ */ jsx("circle", { cx: "23.7", cy: "21.6", r: "1.8" })
+    ] });
+  }
+  if (type === "motorcycle") {
+    return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+      /* @__PURE__ */ jsx("circle", { cx: "9.3", cy: "22", r: "3.2", fill: "none", stroke: "currentColor", strokeWidth: "2" }),
+      /* @__PURE__ */ jsx("circle", { cx: "23", cy: "22", r: "3.2", fill: "none", stroke: "currentColor", strokeWidth: "2" }),
+      /* @__PURE__ */ jsx("path", { d: "m11.5 22 5.2-7.8h4.1l2.4 3.8H18l-2.5 4Z", fill: "none", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }),
+      /* @__PURE__ */ jsx("path", { d: "m15.2 14.2 2.3 3.8", fill: "none", stroke: "currentColor", strokeLinecap: "round", strokeWidth: "2" })
+    ] });
+  }
+  return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+    /* @__PURE__ */ jsx("path", { d: "M5 18.5h2.6l2.4-4.7c.7-1.4 2.2-2.3 3.8-2.3h5.8c1.5 0 2.9.7 3.8 1.9l2 3H27c1.1 0 2 .9 2 2v3.1h-2.2a3 3 0 0 1-5.8 0h-10a3 3 0 0 1-5.8 0H5v-3Z" }),
+    /* @__PURE__ */ jsx("path", { d: "M13.6 14h5.9c.7 0 1.4.3 1.8.9l1.2 1.6H11.8l.9-1.8c.2-.4.6-.7.9-.7Z" }),
+    /* @__PURE__ */ jsx("circle", { cx: "8.8", cy: "21.5", r: "1.9" }),
+    /* @__PURE__ */ jsx("circle", { cx: "23.6", cy: "21.5", r: "1.9" })
+  ] });
+}
+function UnitedKingdomFlag() {
+  return /* @__PURE__ */ jsxs("svg", { "aria-label": "United Kingdom marker", className: "uk-flag-icon", viewBox: "0 0 36 24", children: [
+    /* @__PURE__ */ jsx("rect", { width: "36", height: "24", rx: "3", fill: "#0A2B6B" }),
+    /* @__PURE__ */ jsx("path", { d: "M0 0 36 24M36 0 0 24", stroke: "#fff", strokeWidth: "5" }),
+    /* @__PURE__ */ jsx("path", { d: "M0 0 36 24M36 0 0 24", stroke: "#E2434B", strokeWidth: "2.4" }),
+    /* @__PURE__ */ jsx("path", { d: "M18 0v24M0 12h36", stroke: "#fff", strokeWidth: "7" }),
+    /* @__PURE__ */ jsx("path", { d: "M18 0v24M0 12h36", stroke: "#E2434B", strokeWidth: "3.8" })
+  ] });
+}
+function HeroRadar() {
+  const [sweepAngle, setSweepAngle] = useState(0);
+  const [notificationIndex, setNotificationIndex] = useState(0);
+  const [activeNotifications, setActiveNotifications] = useState([]);
+  useEffect(() => {
+    const sweepDurationMs = 5400;
+    const startedAt = performance.now();
+    const intervalId = window.setInterval(() => {
+      const elapsed = performance.now() - startedAt;
+      setSweepAngle(elapsed / sweepDurationMs * 360 % 360);
+    }, 80);
+    return () => window.clearInterval(intervalId);
+  }, []);
+  useEffect(() => {
+    let notificationUid = 0;
+    const removalTimers = [];
+    const spawnNotification = () => {
+      setNotificationIndex((index) => {
+        const nextNotification = radarNotifications[index];
+        const liveNotification = {
+          ...nextNotification,
+          uid: notificationUid++
+        };
+        setActiveNotifications((current) => [...current.slice(-1), liveNotification]);
+        const removalTimer = window.setTimeout(() => {
+          setActiveNotifications((current) => current.filter((item) => item.uid !== liveNotification.uid));
+        }, 4600);
+        removalTimers.push(removalTimer);
+        return (index + 1) % radarNotifications.length;
+      });
+    };
+    spawnNotification();
+    const intervalId = window.setInterval(spawnNotification, 2600);
+    return () => {
+      window.clearInterval(intervalId);
+      removalTimers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, []);
+  return /* @__PURE__ */ jsxs("div", { className: "radar-container glass-card rounded-full p-2 glow-border premium-radar-shell", children: [
+    /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
+    degreeMarks.map((degree) => {
+      const labelStyle = {
+        transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-bearing-radius) * -1)) rotate(${-degree}deg)`
+      };
+      const tickStyle = {
+        transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-tick-radius) * -1))`
+      };
+      return /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs("span", { className: "radar-bearing-label", style: labelStyle, children: [
+          degree,
+          "°"
+        ] }),
+        /* @__PURE__ */ jsx("span", { className: "radar-bearing-tick", style: tickStyle })
+      ] }, degree);
+    }),
+    /* @__PURE__ */ jsxs("div", { className: "radar-scope premium-radar-scope", children: [
+      /* @__PURE__ */ jsx("div", { className: "radar-map-overlay", "aria-hidden": "true", children: /* @__PURE__ */ jsxs("svg", { viewBox: "0 0 320 320", children: [
+        /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M50 114c16-17 36-28 60-29 13-1 24 3 36 1 18-3 28-18 43-22 19-5 45 6 60 24-7 9-12 17-13 27-1 11 9 18 18 24 9 7 15 16 17 29-22 6-48 2-66 14-17 11-24 33-43 40-17 6-35-4-52-10-21-8-46-10-58-29-10-14-8-33-1-49 7-18 20-32 33-44 6-5 12-10 16-16-19 1-37 16-50 40-9-9-9-20 0-30Z" }),
+        /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M214 90c8-10 20-16 33-16 10 0 18 4 24 11-5 10-16 17-26 23-10 5-22 7-31 2 1-8-2-14 0-20Z" }),
+        /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M116 193c14-5 29-5 40 1 9 4 17 12 19 22-13 3-25 10-31 21-16 0-30-11-37-24-5-8-4-15 9-20Z" })
+      ] }) }),
+      radarGridAngles.map((angle) => /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-grid-line", style: {
+        transform: `translate(-50%, -50%) rotate(${angle}deg)`
+      } }, angle)),
+      radarRingInsets.map((inset, index) => /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: `radar-ring ${index % 2 === 0 ? "radar-ring-major" : "radar-ring-minor"}`, style: {
+        inset: `${inset}%`
+      } }, inset)),
+      /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-crosshair radar-crosshair-horizontal" }),
+      /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-crosshair radar-crosshair-vertical" }),
+      /* @__PURE__ */ jsxs("div", { className: "radar-flag-marker", children: [
+        /* @__PURE__ */ jsx("span", { className: "radar-flag-pole" }),
+        /* @__PURE__ */ jsx(UnitedKingdomFlag, {})
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "radar-sweep", "aria-hidden": "true" }),
+      /* @__PURE__ */ jsx("div", { className: "radar-sweep-glow", "aria-hidden": "true" }),
+      radarContacts.map((contact) => {
+        const intensity = getSweepIntensity(sweepAngle, contact);
+        const contactStyle = {
+          left: `${contact.x}%`,
+          top: `${contact.y}%`,
+          "--radar-contact-intensity": intensity.toFixed(3)
+        };
+        return /* @__PURE__ */ jsxs("div", { className: `radar-contact ${intensity > 0.84 ? "radar-contact-priority" : ""}`, style: contactStyle, children: [
+          /* @__PURE__ */ jsx("span", { className: "radar-contact-halo" }),
+          /* @__PURE__ */ jsx(VehicleGlyph, { type: contact.type }),
+          /* @__PURE__ */ jsxs("span", { className: "radar-contact-caption", children: [
+            /* @__PURE__ */ jsx("span", { className: "radar-contact-title", children: contact.label }),
+            /* @__PURE__ */ jsxs("span", { className: "radar-contact-meta", children: [
+              contact.heading,
+              " • ",
+              contact.source
+            ] })
+          ] })
+        ] }, contact.id);
+      }),
+      /* @__PURE__ */ jsx("div", { className: "radar-centre-point", "aria-hidden": "true" }),
+      /* @__PURE__ */ jsxs("div", { className: "radar-status-chip", "aria-hidden": "true", children: [
+        /* @__PURE__ */ jsx("span", { className: "radar-status-dot" }),
+        "UK MARKET // LIVE"
+      ] })
+    ] }),
+    activeNotifications.map((notification) => /* @__PURE__ */ jsxs("div", { className: `radar-notification radar-notification-${notification.position} radar-notification-${notification.tone}`, children: [
+      /* @__PURE__ */ jsxs("div", { className: "radar-notification-header", children: [
+        /* @__PURE__ */ jsx("span", { className: "radar-notification-label", children: "Opportunity Feed" }),
+        /* @__PURE__ */ jsx("span", { className: "radar-notification-stamp", children: notification.stamp })
+      ] }),
+      /* @__PURE__ */ jsx("p", { className: "radar-notification-title", children: notification.title }),
+      /* @__PURE__ */ jsx("p", { className: "radar-notification-subtitle", children: notification.subtitle })
+    ] }, notification.uid))
+  ] });
+}
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -97,7 +340,6 @@ function LandingPage() {
   const [opportunitiesVisible, setOpportunitiesVisible] = useState(true);
   const [trialOverlayVisible, setTrialOverlayVisible] = useState(false);
   const [trialOverlayShowing, setTrialOverlayShowing] = useState(false);
-  const canvasRef = useRef(null);
   function closeModal() {
     setModalOpen(false);
     document.body.style.overflow = "";
@@ -141,63 +383,6 @@ function LandingPage() {
       setSubmitted(true);
     }
   }
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const gl = canvas.getContext("webgl");
-    if (!gl) return;
-    const vsSource = `
-      attribute vec4 aVertexPosition;
-      void main() { gl_Position = aVertexPosition; }
-    `;
-    const fsSource = `
-      precision mediump float;
-      uniform float uTime;
-      uniform vec2 uResolution;
-      void main() {
-        vec2 uv = (gl_FragCoord.xy * 2.0 - uResolution.xy) / min(uResolution.y, uResolution.x);
-        float dist = length(uv);
-        float angle = atan(uv.y, uv.x);
-        float sweep = mod(angle + uTime * 2.0, 6.28318) / 6.28318;
-        sweep = pow(sweep, 4.0);
-        float rings = step(0.98, mod(dist * 5.0, 1.0)) * 0.2;
-        vec3 color = vec3(0.078, 0.576, 1.0) * (sweep + rings);
-        float alpha = (sweep + rings) * (1.0 - smoothstep(0.9, 1.0, dist));
-        gl_FragColor = vec4(color, alpha * 0.6);
-      }
-    `;
-    function loadShader(type, source) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      return shader;
-    }
-    const program = gl.createProgram();
-    gl.attachShader(program, loadShader(gl.VERTEX_SHADER, vsSource));
-    gl.attachShader(program, loadShader(gl.FRAGMENT_SHADER, fsSource));
-    gl.linkProgram(program);
-    gl.useProgram(program);
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, 1, 1, 1, -1, -1, 1, -1]), gl.STATIC_DRAW);
-    const posLoc = gl.getAttribLocation(program, "aVertexPosition");
-    gl.enableVertexAttribArray(posLoc);
-    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
-    const timeLoc = gl.getUniformLocation(program, "uTime");
-    const resLoc = gl.getUniformLocation(program, "uResolution");
-    let rafId;
-    function render(time) {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform1f(timeLoc, time * 1e-3);
-      gl.uniform2f(resLoc, canvas.width, canvas.height);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      rafId = requestAnimationFrame(render);
-    }
-    rafId = requestAnimationFrame(render);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
   useEffect(() => {
     const id = setInterval(() => {
       setCriteriaVisible(false);
@@ -350,35 +535,7 @@ function LandingPage() {
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "relative lg:flex items-center justify-center flex mt-10 overflow-visible", children: [
-          /* @__PURE__ */ jsxs("div", { className: "radar-container glass-card rounded-full p-2 glow-border", children: [
-            /* @__PURE__ */ jsx("canvas", { className: "absolute inset-0 w-full h-full rounded-full z-0", ref: canvasRef, width: "438", height: "438" }),
-            /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
-            /* @__PURE__ */ jsxs("div", { className: "absolute inset-4 z-20 pointer-events-none opacity-40", children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-ping" }),
-              /* @__PURE__ */ jsx("div", { className: "absolute bottom-1/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-ping", style: {
-                animationDelay: "1s"
-              } }),
-              /* @__PURE__ */ jsx("div", { className: "absolute top-1/2 right-1/3 w-2 h-2 bg-primary rounded-full animate-ping", style: {
-                animationDelay: "2.5s"
-              } })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "absolute right-2 sm:-right-8 top-3 sm:top-1/4 z-30 w-36 sm:w-56 glass-card p-2 sm:p-4 rounded-xl border-l-4 border-primary sm:translate-x-4", children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-[10px] font-label-caps text-primary uppercase", children: "New Alert" }),
-                /* @__PURE__ */ jsx("span", { className: "text-[10px] text-on-surface-variant", children: "2m ago" })
-              ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white mb-1", children: "Audi RS6 Avant" }),
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-primary", children: "£84,900 • Under Market" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "absolute left-2 sm:-left-12 bottom-3 sm:bottom-1/4 z-30 w-32 sm:w-52 glass-card p-2 sm:p-4 rounded-xl border-l-4 border-secondary sm:-translate-x-4", children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-[10px] font-label-caps text-secondary uppercase", children: "Scanning..." }),
-                /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-[12px] text-secondary", children: "sync" })
-              ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white", children: "Private Listing Detected" }),
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-on-surface-variant", children: 'Matches "2018+ Prestige SUV"' })
-            ] })
-          ] }),
+          /* @__PURE__ */ jsx(HeroRadar, {}),
           /* @__PURE__ */ jsx("div", { className: "absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full" }),
           /* @__PURE__ */ jsx("div", { className: "absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full" })
         ] })
