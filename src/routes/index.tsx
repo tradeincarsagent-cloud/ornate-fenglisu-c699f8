@@ -896,17 +896,17 @@ function LandingPage() {
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch">
             {/* Starter */}
-            <div className="p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
-              <div className="mb-8">
-                <h4 className="font-headline-md text-headline-md mb-2">Starter</h4>
-                <p className="text-on-surface-variant text-sm mb-4">Ideal for independent dealers beginning their AI buying journey.</p>
+            <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
+              <div className="mb-9 space-y-3">
+                <h4 className="font-headline-md text-headline-md leading-tight">AI Buying Employee – Starter</h4>
+                <p className="text-on-surface-variant text-sm leading-relaxed">Designed for independent dealers hiring their first AI buying employee to consistently surface stronger stock opportunities.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">£49</span>
                   <span className="text-on-surface-variant">/mo</span>
                 </div>
               </div>
-              <ul className="space-y-4 mb-10 flex-1">
-                {['Up to 3 Active AI Buying Missions', 'Daily AI Buying Briefings', 'Dealer Command Centre Access'].map(f => (
+              <ul className="space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
+                {['Keeps up to 3 buying briefs actively searching for margin-ready stock', 'Delivers a daily shortlist so you can make faster buying calls', 'Gives you one command centre to track opportunities and next actions'].map(f => (
                   <li key={f} className="flex items-center gap-3">
                     <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f}</span>
@@ -916,22 +916,22 @@ function LandingPage() {
               <a className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" href={pricingCheckoutLinks.starter}>Start Free Trial</a>
             </div>
             {/* Professional */}
-            <div className="p-8 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">MOST POPULAR</div>
-              <div className="mb-8">
-                <h4 className="font-headline-md text-headline-md mb-2">Professional</h4>
-                <p className="text-on-surface-variant text-sm mb-4">Our most popular choice for dealers who buy and sell vehicles every week.</p>
+            <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ Recommended for Active Dealers</div>
+              <div className="mb-9 space-y-3">
+                <h4 className="font-headline-md text-headline-md leading-tight">AI Buying Employee – Professional</h4>
+                <p className="text-on-surface-variant text-sm leading-relaxed">Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold text-primary">£99</span>
                   <span className="text-on-surface-variant">/mo</span>
                 </div>
               </div>
-              <ul className="space-y-4 mb-10 flex-1">
+              <ul className="space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
                 {[
-                  { icon: 'stars', text: 'Unlimited AI Buying Missions', bold: true },
-                  { icon: 'stars', text: 'Instant SMS/Push Alerts', bold: true },
-                  { icon: 'check_circle', text: 'Advanced AI Search Intelligence', bold: false },
-                  { icon: 'check_circle', text: 'Opportunity Intelligence™', bold: false },
+                  { icon: 'stars', text: 'Keeps unlimited buying briefs running so no profitable lead is missed', bold: true },
+                  { icon: 'stars', text: 'Sends instant opportunity alerts so your team can act before competitors', bold: true },
+                  { icon: 'check_circle', text: 'Prioritises the best-fit stock using advanced AI buying intelligence', bold: false },
+                  { icon: 'check_circle', text: 'Highlights margin potential with Opportunity Intelligence™ insights', bold: false },
                 ].map(f => (
                   <li key={f.text} className={`flex items-center gap-3 ${f.bold ? 'font-bold' : ''}`}>
                     <span className="material-symbols-outlined text-primary text-sm">{f.icon}</span>
@@ -942,17 +942,17 @@ function LandingPage() {
               <a className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" href={pricingCheckoutLinks.professional}>Start Free Trial</a>
             </div>
             {/* Enterprise */}
-            <div className="p-8 glass-card rounded-2xl flex flex-col h-full dashboard-border">
-              <div className="mb-8">
-                <h4 className="font-headline-md text-headline-md mb-2 text-secondary">Enterprise</h4>
-                <p className="text-on-surface-variant text-sm mb-4">Designed for larger businesses, buying teams and specialist vehicle sourcing companies.</p>
+            <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
+              <div className="mb-9 space-y-3">
+                <h4 className="font-headline-md text-headline-md leading-tight text-secondary">AI Buying Employee – Enterprise</h4>
+                <p className="text-on-surface-variant text-sm leading-relaxed">Created for dealer groups and specialist buying teams that need one AI employee workforce aligned across multiple sites.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-extrabold text-white">£299</span>
                   <span className="text-on-surface-variant">/mo</span>
                 </div>
               </div>
-              <ul className="space-y-4 mb-10 flex-1">
-                {['Up to 10 Dealership Locations', 'Team Activity Tracking', 'Dedicated Account Manager', 'API Access (White-label)'].map(f => (
+              <ul className="space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
+                {['Coordinates up to 10 dealership locations from one shared buying operation', 'Gives full team visibility so managers can improve buying performance', 'Includes a dedicated account manager to optimise results as you scale', 'Supports white-label API access for enterprise workflows and integrations'].map(f => (
                   <li key={f} className="flex items-center gap-3">
                     <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f}</span>
