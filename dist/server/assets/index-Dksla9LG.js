@@ -3,7 +3,12 @@ import { useState, useEffect } from "react";
 const pricingCheckoutLinks = {
   starter: "https://buy.stripe.com/28EbIU9OB8yucva3Jp2cg0h",
   professional: "https://buy.stripe.com/7sY9AMaSF7uqcvabbR2cg0f",
-  dealerGroup: "https://buy.stripe.com/28E3coe4R4ie9iYeo32cg0g"
+  enterprise: "https://buy.stripe.com/28E3coe4R4ie9iYeo32cg0g"
+};
+const trialPlanLabels = {
+  starter: "Starter",
+  professional: "Professional",
+  enterprise: "Enterprise"
 };
 const exampleCriteria = [{
   label: "BMW 320d M Sport",
@@ -368,13 +373,27 @@ function HeroRadar() {
 }
 function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("professional");
+  const [submissionError, setSubmissionError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [formValues, setFormValues] = useState({
+    fullName: "",
+    companyName: "",
+    email: "",
+    phone: ""
+  });
   const [criteriaIndex, setCriteriaIndex] = useState(0);
   const [criteriaVisible, setCriteriaVisible] = useState(true);
   const [opportunityIndex, setOpportunityIndex] = useState(0);
   const [opportunitiesVisible, setOpportunitiesVisible] = useState(true);
   const [trialOverlayVisible, setTrialOverlayVisible] = useState(false);
   const [trialOverlayShowing, setTrialOverlayShowing] = useState(false);
+  function openModal(plan) {
+    setSelectedPlan(plan);
+    setSubmissionError("");
+    setModalOpen(true);
+    document.body.style.overflow = "hidden";
+  }
   function closeModal() {
     setModalOpen(false);
     document.body.style.overflow = "";
@@ -386,36 +405,61 @@ function LandingPage() {
     });
   }
   function handleStartFreeTrial() {
+    openModal("professional");
+  }
+  function startTrialOverlay() {
     setTrialOverlayShowing(true);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => setTrialOverlayVisible(true));
     });
-    setTimeout(() => {
-      document.getElementById("pricing")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-      setTimeout(() => {
-        setTrialOverlayVisible(false);
-        setTimeout(() => setTrialOverlayShowing(false), 400);
-      }, 400);
-    }, 1e3);
+  }
+  function hideTrialOverlay() {
+    setTrialOverlayVisible(false);
+    setTimeout(() => setTrialOverlayShowing(false), 400);
+  }
+  function handleFormValueChange(e) {
+    const {
+      name,
+      value
+    } = e.currentTarget;
+    setFormValues((current) => ({
+      ...current,
+      [name]: value
+    }));
   }
   async function handleFormSubmit(e) {
     e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
+    if (submitting) return;
+    const data = new FormData();
+    data.append("fullName", formValues.fullName);
+    data.append("companyName", formValues.companyName);
+    data.append("email", formValues.email);
+    data.append("phone", formValues.phone);
+    data.append("plan", trialPlanLabels[selectedPlan]);
+    setSubmissionError("");
+    setSubmitting(true);
     try {
-      await fetch("https://formspree.io/f/mdarndrp", {
+      const response = await fetch("https://formspree.io/f/mdarndrp", {
         method: "POST",
         body: data,
         headers: {
           Accept: "application/json"
         }
       });
-      setSubmitted(true);
+      if (!response.ok) {
+        throw new Error("Unable to submit your details right now.");
+      }
+      startTrialOverlay();
+      setModalOpen(false);
+      document.body.style.overflow = "";
+      const destination = pricingCheckoutLinks[selectedPlan];
+      setTimeout(() => {
+        hideTrialOverlay();
+        window.location.assign(destination);
+      }, 950);
     } catch {
-      setSubmitted(true);
+      setSubmissionError("Something went wrong submitting your details. Please check your information and try again.");
+      setSubmitting(false);
     }
   }
   useEffect(() => {
@@ -474,51 +518,55 @@ function LandingPage() {
       /* @__PURE__ */ jsx("p", { className: "font-display-lg text-display-lg text-white font-bold tracking-tight", children: "Preparing Your AI Buying Employee..." }),
       /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto", children: "Connecting you to your AI Buying Command Centre..." })
     ] }) }),
-    modalOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay overflow-y-auto", onClick: (e) => {
+    modalOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-[100] flex items-start justify-center p-4 pt-4 md:pt-8 modal-overlay overflow-y-auto", onClick: (e) => {
       if (e.target === e.currentTarget) closeModal();
-    }, children: /* @__PURE__ */ jsxs("div", { className: "relative w-full max-w-2xl glass-card rounded-2xl p-8 md:p-10 glow-border modal-enter mx-auto my-8", children: [
-      /* @__PURE__ */ jsx("button", { className: "absolute top-6 right-6 text-on-surface-variant hover:text-white transition-colors", onClick: closeModal, children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-3xl", children: "close" }) }),
-      !submitted ? /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+    }, children: /* @__PURE__ */ jsxs("div", { className: "relative w-full max-w-2xl glass-card rounded-2xl p-6 md:p-10 glow-border modal-enter mx-auto my-2 md:my-4 max-h-[calc(100vh-2rem)] overflow-y-auto", children: [
+      /* @__PURE__ */ jsxs("button", { className: "absolute top-6 left-6 text-on-surface-variant hover:text-white transition-colors flex items-center gap-1", onClick: closeModal, type: "button", children: [
+        /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-xl", children: "arrow_back" }),
+        /* @__PURE__ */ jsx("span", { className: "text-xs uppercase tracking-widest font-bold", children: "Back" })
+      ] }),
+      /* @__PURE__ */ jsx("button", { className: "absolute top-6 right-6 text-on-surface-variant hover:text-white transition-colors", onClick: closeModal, type: "button", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-3xl", children: "close" }) }),
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs("div", { className: "mb-8 pt-10", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-2 uppercase", children: "Beta Access" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Start Your Free 14-Day Trial" }),
           /* @__PURE__ */ jsxs("p", { className: "text-on-surface-variant mt-2 flex items-center gap-2", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
             "Join early users exploring AI-assisted vehicle sourcing."
+          ] }),
+          /* @__PURE__ */ jsxs("p", { className: "mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 bg-primary/10 text-primary text-xs uppercase tracking-widest font-bold", children: [
+            "Selected Plan: ",
+            trialPlanLabels[selectedPlan]
           ] })
         ] }),
         /* @__PURE__ */ jsxs("form", { className: "space-y-6", onSubmit: handleFormSubmit, children: [
           /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
             /* @__PURE__ */ jsxs("div", { className: "space-y-1.5", children: [
               /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Full Name *" }),
-              /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "fullName", placeholder: "John Smith", required: true, type: "text" })
+              /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "fullName", onChange: handleFormValueChange, placeholder: "John Smith", required: true, type: "text", value: formValues.fullName })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-1.5", children: [
               /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Company Name *" }),
-              /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "companyName", placeholder: "Elite Motors Ltd", required: true, type: "text" })
+              /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "companyName", onChange: handleFormValueChange, placeholder: "Elite Motors Ltd", required: true, type: "text", value: formValues.companyName })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-1.5", children: [
               /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Email Address *" }),
-              /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "email", placeholder: "john@company.co.uk", required: true, type: "email" })
+              /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "email", onChange: handleFormValueChange, placeholder: "john@company.co.uk", required: true, type: "email", value: formValues.email })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-1.5", children: [
               /* @__PURE__ */ jsx("label", { className: "font-label-caps text-[10px] text-on-surface-variant uppercase", children: "Mobile Number *" }),
-              /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "phone", pattern: "[+]?[0-9\\s\\-]{10,}", placeholder: "+44 7000 000000", required: true, type: "tel" })
+              /* @__PURE__ */ jsx("input", { className: "w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface text-sm", name: "phone", onChange: handleFormValueChange, pattern: "[+]?[0-9\\s\\-]{10,}", placeholder: "+44 7000 000000", required: true, type: "tel", value: formValues.phone })
             ] })
           ] }),
+          submissionError && /* @__PURE__ */ jsx("p", { className: "text-sm text-red-300 bg-red-900/20 border border-red-500/40 rounded-lg px-4 py-3", children: submissionError }),
           /* @__PURE__ */ jsxs("div", { className: "pt-4", children: [
-            /* @__PURE__ */ jsxs("button", { className: "w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3", type: "submit", children: [
+            /* @__PURE__ */ jsxs("button", { className: "w-full engine-start-btn text-white py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed", disabled: submitting, type: "submit", children: [
               /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]" }),
-              "Engine Start: Free Trial"
+              submitting ? "Submitting..." : `Continue with ${trialPlanLabels[selectedPlan]}`
             ] }),
             /* @__PURE__ */ jsx("p", { className: "text-center text-[11px] text-on-surface-variant mt-4 px-4 leading-relaxed", children: "Card required. No charge today. Cancel anytime before your trial ends. We will only use your details to contact you about your Trade in Cars Agent trial." })
           ] })
         ] })
-      ] }) : /* @__PURE__ */ jsxs("div", { className: "text-center py-12", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-8", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-5xl", children: "check_circle" }) }),
-        /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white mb-4", children: "Application Received!" }),
-        /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-lg", children: "Thank you. Your Trade in Cars Agent trial request has been received." }),
-        /* @__PURE__ */ jsx("button", { className: "mt-10 border border-outline text-on-surface px-8 py-3 rounded-full hover:bg-surface-variant transition-all", onClick: closeModal, children: "Close" })
       ] })
     ] }) }),
     /* @__PURE__ */ jsx("nav", { className: "relative w-full bg-background/80 border-b border-outline-variant/30 shadow-sm", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20 lg:h-36", children: [
@@ -833,7 +881,7 @@ function LandingPage() {
           /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Starter" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Designed for independent dealers hiring their first AI buying employee to consistently surface stronger stock opportunities." }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Perfect for independent dealers and traders hiring their first AI Buying Employee." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£49" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
@@ -843,10 +891,10 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.starter, children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("starter"), type: "button", children: "Start Free Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ Recommended for Active Dealers" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ MOST POPULAR" }),
             /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Professional" }),
               /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time." }),
@@ -875,12 +923,12 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: f.icon }),
               /* @__PURE__ */ jsx("span", { children: f.text })
             ] }, f.text)) }),
-            /* @__PURE__ */ jsx("a", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center", href: pricingCheckoutLinks.professional, children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("button", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center", onClick: () => openModal("professional"), type: "button", children: "Start Free Trial" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight text-secondary", children: "AI Buying Employee – Enterprise" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Created for dealer groups and specialist buying teams that need one AI employee workforce aligned across multiple sites." }),
+              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Designed for larger dealerships, buying teams and specialist vehicle sourcing companies." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£299" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
@@ -890,7 +938,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("a", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", href: pricingCheckoutLinks.dealerGroup, children: "Start Free Trial" })
+            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("enterprise"), type: "button", children: "Start Free Trial" })
           ] })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl p-5 border border-outline-variant/20", children: /* @__PURE__ */ jsx("ul", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant", children: ["✔ Secure Stripe Checkout", "✔ Cancel Anytime", "✔ No Hidden Fees", "✔ Upgrade Anytime"].map((item) => /* @__PURE__ */ jsx("li", { className: "flex items-center justify-center text-center", children: item }, item)) }) }) })
