@@ -199,6 +199,17 @@ html {
     padding-top: 4.25rem;
     padding-bottom: 3.5rem;
   }
+
+  /* How It Works — mobile heading size (reduce ~12% from 32px) */
+  .how-it-works-heading {
+    font-size: 28px;
+    line-height: 1.25;
+  }
+
+  /* Criteria card inner — reduce min-height on mobile */
+  .how-it-works-criteria-inner {
+    min-height: 3rem !important;
+  }
 }
 
 .engine-start-btn {
