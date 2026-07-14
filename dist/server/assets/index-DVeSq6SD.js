@@ -1176,7 +1176,13 @@ function LandingPage() {
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-4", children: "Ready to Hire Your AI Buying Employee?" }),
         /* @__PURE__ */ jsx("p", { className: "text-on-primary/80 text-lg mb-8", children: "Join dealers using AI to discover better buying opportunities 24/7." }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("button", { className: "engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest", onClick: handleStartFreeTrial, children: "Start My 14-Day Trial" }),
+          /* @__PURE__ */ jsxs("button", { className: "engine-start-btn final-mobile-cta-btn inline-flex items-center justify-center text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest max-md:w-[91%] max-md:mx-auto max-md:px-5", onClick: handleStartFreeTrial, children: [
+            /* @__PURE__ */ jsx("span", { className: "max-md:hidden", children: "Start My 14-Day Trial" }),
+            /* @__PURE__ */ jsxs("span", { className: "hidden max-md:flex final-mobile-cta-label flex-col items-center justify-center leading-tight", children: [
+              /* @__PURE__ */ jsx("span", { children: "Start My" }),
+              /* @__PURE__ */ jsx("span", { children: "14-Day Trial" })
+            ] })
+          ] }),
           /* @__PURE__ */ jsxs("p", { className: "text-on-primary/80 flex items-center justify-center gap-2 font-medium", children: [
             /* @__PURE__ */ jsx("svg", { className: "w-5 h-5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
             "Secure Stripe checkout • No charge today • Cancel anytime during your 14-day trial."
