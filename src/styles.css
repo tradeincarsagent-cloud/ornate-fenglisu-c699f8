@@ -191,11 +191,13 @@ html {
 
   /* Tighten the gap between Benefits Cards and How It Works on mobile */
   .benefits-section {
+    padding-top: 3.5rem;
     padding-bottom: 3.75rem;
   }
 
   #how-it-works {
     padding-top: 4.25rem;
+    padding-bottom: 3.5rem;
   }
 }
 

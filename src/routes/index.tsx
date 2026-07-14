@@ -660,9 +660,9 @@ function LandingPage() {
         </section>
 
         {/* AI Buying Employee Technologies */}
-        <section className="py-24 bg-surface-container-low border-y border-outline-variant/10" id="ai-technology">
+        <section className="py-24 max-md:py-14 bg-surface-container-low border-y border-outline-variant/10" id="ai-technology">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-14">
+            <div className="text-center mb-14 max-md:mb-8">
               <h2 className="font-display-lg text-headline-lg mb-4 text-on-surface">Meet Your AI Buying Employee</h2>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto">
                 Four intelligent technologies working together to help you buy smarter, faster and more profitably.
@@ -702,7 +702,7 @@ function LandingPage() {
         </section>
 
         {/* Proof Section */}
-        <section className="py-12 bg-surface-container-lowest border-y border-outline-variant/10">
+        <section className="py-12 max-md:py-8 bg-surface-container-lowest border-y border-outline-variant/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
@@ -725,9 +725,9 @@ function LandingPage() {
         </section>
 
         {/* Live Demo */}
-        <section className="py-24 bg-surface" id="live-demo">
+        <section className="py-24 max-md:py-14 bg-surface" id="live-demo">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 max-md:mb-10">
               <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Live Opportunity Feed</span>
               <h2 className="font-display-lg text-headline-lg mb-4">Today&apos;s AI Buying Opportunities</h2>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
@@ -799,9 +799,9 @@ function LandingPage() {
         </section>
 
         {/* Dashboard Preview */}
-        <section className="py-24 bg-surface-container-low border-y border-outline-variant/10" id="dashboard-preview">
+        <section className="py-24 max-md:py-14 bg-surface-container-low border-y border-outline-variant/10" id="dashboard-preview">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 max-md:mb-10">
               <h2 className="font-display-lg text-headline-lg text-on-surface mb-4">Your AI Buying Command Centre</h2>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">See how Trade in Cars Agent helps dealers track opportunities and manage vehicle sourcing.</p>
               <div className="inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-emerald-400/10 border border-emerald-300/30 text-emerald-200 text-xs uppercase tracking-widest font-label-caps">
@@ -979,7 +979,7 @@ function LandingPage() {
 
         {/* Problem Section */}
         <section className="py-24 bg-surface-container-lowest benefits-section">
-          <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
+          <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16 max-md:mb-8">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Why Dealers Need an AI Buying Employee</span>
             <div className="why-dealer-mobile-card">
               <h2 className="font-display-lg text-headline-lg mb-6">The most profitable dealers don't search harder—<span className="why-dealer-highlight">they search smarter.</span> Let TICA monitor the market while your team focuses on buying and selling vehicles.</h2>
@@ -1003,7 +1003,7 @@ function LandingPage() {
         {/* How It Works */}
         <section className="py-24 relative overflow-hidden" id="how-it-works">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 max-md:mb-10 gap-8">
               <div className="max-w-xl">
                 <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Our Process</span>
                 <h2 className="font-display-lg text-headline-lg">How Your AI Buying Employee Works</h2>
@@ -1024,7 +1024,7 @@ function LandingPage() {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-md:gap-8 relative">
               <div className="hidden md:block absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent z-0"></div>
               <div className="hidden md:flex pointer-events-none absolute inset-x-0 top-7 z-20 justify-center">
                 <div className="w-full max-w-4xl px-20 flex items-center justify-between">
@@ -1054,8 +1054,8 @@ function LandingPage() {
         </section>
 
         {/* Pricing */}
-        <section className="py-24 relative" id="pricing">
-          <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
+        <section className="py-24 max-md:py-14 relative" id="pricing">
+          <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16 max-md:mb-10">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Pricing</span>
             <h2 className="font-display-lg text-headline-lg mb-4">Hire Your AI Buying Employee</h2>
             <div className="flex items-start justify-center gap-2 text-on-surface-variant mb-4">
@@ -1154,9 +1154,9 @@ function LandingPage() {
         </section>
 
         {/* Roadmap */}
-        <section className="py-24 bg-surface-container-lowest border-y border-outline-variant/10" id="version-2">
+        <section className="py-24 max-md:py-12 bg-surface-container-lowest border-y border-outline-variant/10" id="version-2">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-16 max-md:mb-10">
               <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4">Product Roadmap</span>
               <h2 className="font-display-lg text-headline-lg mb-6">Built for Today. Designed for Tomorrow.</h2>
               <p className="text-on-surface-variant text-lg">TICA is continuously evolving. Here's what you receive today, what's currently being developed, and where the platform is heading in the future.</p>
@@ -1238,7 +1238,7 @@ function LandingPage() {
             </div>
 
             {/* Future roadmap highlights */}
-            <div className="mt-12 glass-card rounded-2xl p-8 border border-outline-variant/20">
+            <div className="mt-12 max-md:mt-8 glass-card rounded-2xl p-8 border border-outline-variant/20">
               <div className="flex items-center gap-3 mb-6">
                 <span className="material-symbols-outlined text-primary">auto_awesome</span>
                 <h3 className="font-headline-md text-headline-md">🚀 Future Roadmap</h3>
@@ -1263,7 +1263,7 @@ function LandingPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 bg-primary text-on-primary text-center">
+        <section className="py-24 max-md:py-14 bg-primary text-on-primary text-center">
           <div className="max-w-3xl mx-auto px-margin-desktop">
             <h2 className="font-display-lg text-display-lg mb-4">Ready to Hire Your AI Buying Employee?</h2>
             <p className="text-on-primary/80 text-lg mb-8">Join dealers using AI to discover better buying opportunities 24/7.</p>
@@ -1282,7 +1282,7 @@ function LandingPage() {
         </section>
 
         {/* Trust & Confidence Section */}
-        <section className="py-24 bg-surface-container border-t border-outline-variant/20">
+        <section className="py-24 max-md:py-12 bg-surface-container border-t border-outline-variant/20">
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <div className="space-y-6">
@@ -1293,7 +1293,7 @@ function LandingPage() {
                 </p>
 
                 {/* Divider */}
-                <div className="mt-12 mb-12 max-w-2xl mx-auto border-t border-outline-variant/15" />
+                <div className="mt-12 mb-12 max-md:mt-6 max-md:mb-6 max-w-2xl mx-auto border-t border-outline-variant/15" />
 
                 <div className="flex flex-col items-center gap-10 text-center">
                   <div className="flex flex-col items-center gap-5">
