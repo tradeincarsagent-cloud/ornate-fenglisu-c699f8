@@ -1143,10 +1143,21 @@ function LandingPage() {
             </div>
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop mt-8">
-            <div className="glass-card rounded-2xl p-5 border border-outline-variant/20">
-              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant">
-                {['✔ Secure Stripe Checkout', '✔ Cancel Anytime', '✔ No Hidden Fees', '✔ Upgrade Anytime'].map(item => (
-                  <li key={item} className="flex items-center justify-center text-center">{item}</li>
+            <div className="trust-panel-card glass-card rounded-2xl p-5 border border-outline-variant/20">
+              <ul className="trust-panel-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant">
+                {[
+                  { label: 'Secure Stripe Checkout', emphasized: true },
+                  { label: 'Cancel Anytime', emphasized: false },
+                  { label: 'No Hidden Fees', emphasized: false },
+                  { label: 'Upgrade Anytime', emphasized: false },
+                ].map(item => (
+                  <li key={item.label} className="trust-panel-item flex items-center justify-center text-center">
+                    <span className="trust-panel-mobile-row md:hidden">
+                      <span className="trust-panel-tick text-emerald-300" aria-hidden="true">✔</span>
+                      <span className={item.emphasized ? 'font-semibold' : 'font-medium'}>{item.label}</span>
+                    </span>
+                    <span className="hidden md:inline">{`✔ ${item.label}`}</span>
+                  </li>
                 ))}
               </ul>
             </div>
