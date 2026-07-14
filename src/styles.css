@@ -188,6 +188,15 @@ html {
     line-height: 1.45;
     margin-bottom: 0;
   }
+
+  /* Tighten the gap between Benefits Cards and How It Works on mobile */
+  .benefits-section {
+    padding-bottom: 3.75rem;
+  }
+
+  #how-it-works {
+    padding-top: 4.25rem;
+  }
 }
 
 .engine-start-btn {
