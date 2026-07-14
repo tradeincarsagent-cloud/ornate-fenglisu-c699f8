@@ -1081,8 +1081,8 @@ function LandingPage() {
           emphasized: false
         }].map((item) => /* @__PURE__ */ jsxs("li", { className: "trust-panel-item flex items-center justify-center text-center", children: [
           /* @__PURE__ */ jsxs("span", { className: "trust-panel-mobile-row md:hidden", children: [
-            /* @__PURE__ */ jsx("span", { className: "trust-panel-tick text-emerald-300", "aria-hidden": "true", children: "✔" }),
-            /* @__PURE__ */ jsx("span", { className: item.emphasized ? "font-semibold" : "font-medium", children: item.label })
+            /* @__PURE__ */ jsx("span", { className: "trust-panel-tick", "aria-hidden": "true", children: "✔" }),
+            /* @__PURE__ */ jsx("span", { className: item.emphasized ? "font-semibold" : "font-normal", children: item.label })
           ] }),
           /* @__PURE__ */ jsx("span", { className: "hidden md:inline", children: `✔ ${item.label}` })
         ] }, item.label)) }) }) })
@@ -1133,7 +1133,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "auto_awesome" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: "🚀 Future Roadmap" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:grid-cols-1 max-md:gap-2.5", children: [{
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:grid-cols-2 max-md:gap-2 max-md:[grid-auto-rows:1fr]", children: [{
             icon: "search",
             text: "AI Intelligence Engine",
             status: "In Development",
@@ -1163,12 +1163,12 @@ function LandingPage() {
             text: "TICA Smart Alerts™",
             status: "Coming Soon",
             badgeClass: "bg-purple-500/20 text-purple-300"
-          }].map((item) => /* @__PURE__ */ jsx("div", { className: "bg-surface-container p-4 max-md:p-3 rounded-xl border border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 min-w-0", children: [
-              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container max-md:text-[22px]", children: item.icon }),
-              /* @__PURE__ */ jsx("span", { className: "font-bold text-sm max-md:text-[13px]", children: item.text })
+          }].map((item) => /* @__PURE__ */ jsx("div", { className: "bg-surface-container p-4 max-md:p-3 rounded-xl border border-outline-variant/20 max-md:flex max-md:flex-col max-md:items-center max-md:justify-center max-md:text-center max-md:gap-2", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3 max-md:contents", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 min-w-0 max-md:contents", children: [
+              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container max-md:text-[26px]", children: item.icon }),
+              /* @__PURE__ */ jsx("span", { className: "font-bold text-sm max-md:text-[12px] max-md:leading-snug", children: item.text })
             ] }),
-            /* @__PURE__ */ jsx("span", { className: `hidden max-md:inline-flex items-center whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${item.badgeClass}`, children: item.status })
+            /* @__PURE__ */ jsx("span", { className: `hidden max-md:inline-flex items-center justify-center whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide max-md:w-28 max-md:h-6 ${item.badgeClass}`, children: item.status })
           ] }) }, item.text)) })
         ] })
       ] }) }),
