@@ -639,21 +639,26 @@ function LandingPage() {
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4 text-on-surface", children: "Meet Your AI Buying Employee" }),
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto", children: "Four intelligent technologies working together to help you buy smarter, faster and more profitably." })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8", children: [{
-          title: "🧠 TICA Smart Learning™",
-          desc: "Learns how your dealership buys vehicles, remembers your preferences and continuously improves every future search."
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3 sm:gap-4 lg:gap-8", children: [{
+          icon: "⚡",
+          title: "TICA Decision Engine™",
+          desc: "Explains why a vehicle deserves your attention."
         }, {
-          title: "📊 Opportunity Intelligence™",
-          desc: "Analyses pricing, market demand and potential profit to highlight the strongest buying opportunities."
+          icon: "🛡️",
+          title: "TICA Certified™",
+          desc: "Only the highest-confidence buying opportunities receive the TICA Certified™ badge."
         }, {
-          title: "⚡ TICA Decision Engine™",
-          desc: "Explains why a vehicle deserves your attention, helping you make faster and more confident buying decisions."
+          icon: "🧠",
+          title: "TICA Smart Learning™",
+          desc: "Learns your buying preferences and improves every search."
         }, {
-          title: "🛡️ TICA Certified™",
-          desc: "Only the highest-confidence opportunities receive TICA Certified™, giving you greater confidence before making contact with the seller."
-        }].map((item) => /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl p-8 md:p-10 border border-outline-variant/20 transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]", children: [
-          /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-4 text-on-surface", children: item.title }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant leading-relaxed", children: item.desc })
+          icon: "📊",
+          title: "Opportunity Intelligence™",
+          desc: "Analyses pricing, demand and profit potential instantly."
+        }].map((item) => /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-10 border border-outline-variant/20 transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]", children: [
+          /* @__PURE__ */ jsx("div", { className: "text-xl sm:text-2xl lg:text-3xl mb-1.5 lg:mb-3", children: item.icon }),
+          /* @__PURE__ */ jsx("h3", { className: "font-semibold text-xs sm:text-sm lg:font-headline-md lg:text-headline-md mb-1.5 lg:mb-4 text-on-surface leading-tight", children: item.title }),
+          /* @__PURE__ */ jsx("p", { className: "text-[10px] sm:text-xs lg:font-body-md lg:text-body-md text-on-surface-variant leading-snug lg:leading-relaxed", children: item.desc })
         ] }, item.title)) })
       ] }) }),
       /* @__PURE__ */ jsx("section", { className: "py-12 bg-surface-container-lowest border-y border-outline-variant/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [{
