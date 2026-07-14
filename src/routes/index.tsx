@@ -1143,20 +1143,20 @@ function LandingPage() {
             </div>
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop mt-8">
-            <div className="trust-panel-card glass-card rounded-2xl p-5 border border-outline-variant/20">
-              <ul className="trust-panel-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant">
+            <div className="trust-panel-card glass-card rounded-2xl border border-outline-variant/20">
+              <p className="trust-panel-heading font-label-caps text-label-caps text-primary tracking-widest uppercase text-center mb-4">Why Dealers Trust TICA</p>
+              <ul className="trust-panel-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-on-surface-variant">
                 {[
                   { label: 'Secure Stripe Checkout', emphasized: true },
                   { label: 'Cancel Anytime', emphasized: false },
                   { label: 'No Hidden Fees', emphasized: false },
                   { label: 'Upgrade Anytime', emphasized: false },
                 ].map(item => (
-                  <li key={item.label} className="trust-panel-item flex items-center justify-center text-center">
-                    <span className="trust-panel-mobile-row md:hidden">
-                      <span className="trust-panel-tick" aria-hidden="true">✔</span>
-                     <span className={item.emphasized ? 'font-bold' : 'font-medium'}>{item.label}</span>
-                    </span>
-                    <span className="hidden md:inline">{`✔ ${item.label}`}</span>
+                  <li key={item.label} className="trust-panel-item flex items-center gap-2.5">
+                    <svg className="trust-panel-icon shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.707 7.293a1 1 0 0 0-1.414 0L10 14.586l-2.293-2.293a1 1 0 0 0-1.414 1.414l3 3a1 1 0 0 0 1.414 0l6-6a1 1 0 0 0 0-1.414z" />
+                    </svg>
+                    <span className={item.emphasized ? 'font-bold' : 'font-medium'}>{item.label}</span>
                   </li>
                 ))}
               </ul>
