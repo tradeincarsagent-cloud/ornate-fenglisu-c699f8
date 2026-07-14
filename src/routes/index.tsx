@@ -1330,19 +1330,19 @@ function LandingPage() {
                     </div>
                   </div>
 
-                  <div className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-4 sm:grid-cols-2">
+                  <div className="grid w-full max-w-4xl grid-cols-2 gap-3 pt-4 sm:gap-4 sm:grid-cols-2">
                     {[
-                      { icon: '🔒', label: 'Secure Stripe Checkout', desc: 'Your subscription is processed securely through Stripe.' },
-                      { icon: '📅', label: '14-Day Professional Trial', desc: 'Full access to every Professional feature from day one.' },
-                      { icon: '🧠', label: 'AI Confidence Analysis', desc: 'Every opportunity is analysed before being recommended.' },
-                      { icon: '🚗', label: 'Built for Professional Dealers', desc: 'Designed specifically for independent dealers, traders and buying teams.' },
+                      { icon: '🔒', label: 'Secure Stripe Checkout', desc: 'Secure payments through Stripe.' },
+                      { icon: '📅', label: '14-Day Professional Trial', desc: 'Full Professional access from day one.' },
+                      { icon: '🧠', label: 'AI Confidence Analysis', desc: 'Every vehicle analysed before recommendation.' },
+                      { icon: '🚗', label: 'Built for Professional Dealers', desc: 'Designed for dealers, traders and buying teams.' },
                     ].map(item => (
-                      <div key={item.label} className="flex flex-col gap-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-5 py-4 text-left">
-                        <div className="flex items-center gap-3">
-                          <span className="text-xl leading-none">{item.icon}</span>
-                          <span className="font-semibold text-sm text-white sm:text-base">{item.label}</span>
+                      <div key={item.label} className="flex h-full flex-col gap-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-5 py-4 text-left max-md:h-[158px] max-md:px-3.5 max-md:py-3 max-md:text-center">
+                        <div className="flex items-center gap-3 max-md:flex-col max-md:items-center max-md:gap-1.5">
+                          <span className="text-xl leading-none max-md:text-lg">{item.icon}</span>
+                          <span className="font-semibold text-sm text-white sm:text-base max-md:text-[0.82rem] max-md:font-bold max-md:leading-tight">{item.label}</span>
                         </div>
-                        <p className="text-sm text-on-surface-variant leading-relaxed">{item.desc}</p>
+                        <p className="text-sm text-on-surface-variant leading-relaxed max-md:text-[0.74rem] max-md:leading-snug">{item.desc}</p>
                       </div>
                     ))}
                   </div>
