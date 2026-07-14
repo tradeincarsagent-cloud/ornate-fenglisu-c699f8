@@ -924,7 +924,11 @@ function LandingPage() {
       /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container-lowest", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Why Dealers Need an AI Buying Employee" }),
-          /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "The most profitable dealers don't search harder—they search smarter. Let TICA monitor the market while your team focuses on buying and selling vehicles." })
+          /* @__PURE__ */ jsx("div", { className: "why-dealer-mobile-card", children: /* @__PURE__ */ jsxs("h2", { className: "font-display-lg text-headline-lg mb-6", children: [
+            "The most profitable dealers don't search harder—",
+            /* @__PURE__ */ jsx("span", { className: "why-dealer-highlight", children: "they search smarter." }),
+            " Let TICA monitor the market while your team focuses on buying and selling vehicles."
+          ] }) })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter", children: [{
           icon: "timer_off",
