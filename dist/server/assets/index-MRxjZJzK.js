@@ -693,32 +693,63 @@ function LandingPage() {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Scanning connected marketplaces and trusted sources 24/7." })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: `grid grid-cols-1 md:grid-cols-3 gap-gutter transition-all duration-500 ${opportunitiesVisible ? "opacity-100 translate-y-0" : "opacity-70 translate-y-1"}`, children: visibleOpportunities.map((car) => /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl p-6 border-l-4 border-primary transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-5", children: [
-            /* @__PURE__ */ jsx("span", { className: "bg-primary/10 text-primary text-[10px] font-label-caps px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider", children: "Detected" }),
-            /* @__PURE__ */ jsxs("span", { className: "text-[10px] text-on-surface-variant flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-xs", children: "schedule" }),
-              " ",
-              car.detectedAt
+        /* @__PURE__ */ jsx("div", { className: `grid grid-cols-1 sm:grid-cols-3 gap-gutter transition-all duration-500 ${opportunitiesVisible ? "opacity-100 translate-y-0" : "opacity-70 translate-y-1"}`, children: visibleOpportunities.map((car) => /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsxs("div", { className: "md:hidden glass-card rounded-xl p-3 border-l-4 border-primary transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-1.5", children: [
+              /* @__PURE__ */ jsx("span", { className: "bg-primary/10 text-primary text-[9px] font-label-caps px-2 py-0.5 rounded-full border border-primary/20 uppercase tracking-wider", children: "Detected" }),
+              /* @__PURE__ */ jsxs("span", { className: "text-[9px] text-on-surface-variant flex items-center gap-0.5", children: [
+                /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined", style: {
+                  fontSize: "10px"
+                }, children: "schedule" }),
+                car.detectedAt
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-baseline gap-2 mb-1.5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-xs text-white leading-tight min-w-0", children: car.name }),
+              /* @__PURE__ */ jsx("p", { className: "text-xs font-extrabold text-primary whitespace-nowrap", children: car.askingPrice })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex gap-3 mb-1.5 flex-wrap", children: [
+              /* @__PURE__ */ jsxs("span", { className: "text-[9px] text-on-surface-variant", children: [
+                "AI Confidence: ",
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: car.confidence })
+              ] }),
+              /* @__PURE__ */ jsxs("span", { className: "text-[9px] text-on-surface-variant", children: [
+                "Est. Profit: ",
+                /* @__PURE__ */ jsx("span", { className: "text-primary font-semibold", children: car.estimatedProfit })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-[9px] text-on-surface-variant", children: car.ticaCertified ? "✅ TICA Certified™" : "TICA Review Queue" }),
+              /* @__PURE__ */ jsx("button", { type: "button", className: "text-[9px] text-primary/90 hover:text-primary transition-colors font-semibold whitespace-nowrap", children: "View AI Analysis →" })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-xl text-white mb-2", children: car.name }),
-          /* @__PURE__ */ jsx("p", { className: "text-2xl font-extrabold text-primary mb-5", children: car.askingPrice }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps", children: "AI Confidence Score" }),
-              /* @__PURE__ */ jsx("p", { className: "text-white font-bold", children: car.confidence })
+          /* @__PURE__ */ jsxs("div", { className: "hidden md:block glass-card rounded-2xl p-6 border-l-4 border-primary transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-5", children: [
+              /* @__PURE__ */ jsx("span", { className: "bg-primary/10 text-primary text-[10px] font-label-caps px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider", children: "Detected" }),
+              /* @__PURE__ */ jsxs("span", { className: "text-[10px] text-on-surface-variant flex items-center gap-1", children: [
+                /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-xs", children: "schedule" }),
+                " ",
+                car.detectedAt
+              ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps", children: "Estimated Profit" }),
-              /* @__PURE__ */ jsx("p", { className: "text-primary font-bold", children: car.estimatedProfit })
-            ] }),
-            /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant", children: car.ticaCertified ? "✅ TICA Certified™" : "TICA Review Queue" }),
-            /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant", children: [
-              "Detected ",
-              car.detectedAt
-            ] }),
-            /* @__PURE__ */ jsx("button", { type: "button", className: "text-xs text-primary/90 hover:text-primary transition-colors font-semibold", children: "View AI Analysis →" })
+            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-xl text-white mb-2", children: car.name }),
+            /* @__PURE__ */ jsx("p", { className: "text-2xl font-extrabold text-primary mb-5", children: car.askingPrice }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps", children: "AI Confidence Score" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white font-bold", children: car.confidence })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps", children: "Estimated Profit" }),
+                /* @__PURE__ */ jsx("p", { className: "text-primary font-bold", children: car.estimatedProfit })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant", children: car.ticaCertified ? "✅ TICA Certified™" : "TICA Review Queue" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant", children: [
+                "Detected ",
+                car.detectedAt
+              ] }),
+              /* @__PURE__ */ jsx("button", { type: "button", className: "text-xs text-primary/90 hover:text-primary transition-colors font-semibold", children: "View AI Analysis →" })
+            ] })
           ] })
         ] }, `${car.name}-${car.askingPrice}`)) })
       ] }) }),
