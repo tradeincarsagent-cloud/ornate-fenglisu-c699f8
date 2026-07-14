@@ -1286,8 +1286,15 @@ function LandingPage() {
             <h2 className="font-display-lg text-display-lg mb-4">Ready to Hire Your AI Buying Employee?</h2>
             <p className="text-on-primary/80 text-lg mb-8">Join dealers using AI to discover better buying opportunities 24/7.</p>
             <div className="space-y-6">
-              <button className="engine-start-btn text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest" onClick={handleStartFreeTrial}>
-                Start My 14-Day Trial
+              <button
+                className="engine-start-btn final-mobile-cta-btn inline-flex items-center justify-center text-white px-12 py-6 rounded-full font-bold text-2xl active:scale-95 transition-all shadow-2xl hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] uppercase tracking-widest max-md:w-[91%] max-md:mx-auto max-md:px-5"
+                onClick={handleStartFreeTrial}
+              >
+                <span className="max-md:hidden">Start My 14-Day Trial</span>
+                <span className="hidden max-md:flex final-mobile-cta-label flex-col items-center justify-center leading-tight">
+                  <span>Start My</span>
+                  <span>14-Day Trial</span>
+                </span>
               </button>
               <p className="text-on-primary/80 flex items-center justify-center gap-2 font-medium">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
