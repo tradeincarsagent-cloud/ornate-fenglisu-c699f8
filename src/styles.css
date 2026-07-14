@@ -1654,3 +1654,30 @@ body > div {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 }
+
+/* ── Dashboard preview: live dot pulse (mobile card indicator) ───────── */
+@keyframes live-dot-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55);
+  }
+  60% {
+    opacity: 0.75;
+    box-shadow: 0 0 0 4px rgba(52, 211, 153, 0);
+  }
+}
+
+.live-dot-pulse {
+  animation: live-dot-pulse 2s ease-in-out infinite;
+}
+
+/* ── Dashboard preview: button blue glow on tap / hover (mobile only) ── */
+@media (max-width: 1023px) {
+  .preview-btn-glow:hover,
+  .preview-btn-glow:active {
+    box-shadow:
+      0 0 18px rgba(20, 147, 255, 0.42),
+      0 0 6px  rgba(20, 147, 255, 0.22);
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+}

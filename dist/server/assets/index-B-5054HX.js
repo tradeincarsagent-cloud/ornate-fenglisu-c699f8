@@ -849,20 +849,26 @@ function LandingPage() {
           /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-4 lg:p-7 h-full", children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-1.5 lg:mb-3 text-[10px] lg:text-xs", children: "AI Recommendation" }),
             /* @__PURE__ */ jsx("p", { className: "text-white font-semibold text-base lg:text-xl mb-1.5 lg:mb-3", children: "BMW M3" }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-[10px] uppercase tracking-widest mb-1 lg:mb-2", children: "Why TICA recommends it" }),
-            /* @__PURE__ */ jsxs("ul", { className: "space-y-0.5 lg:space-y-2 text-on-surface-variant text-xs lg:text-sm", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-[10px] uppercase tracking-widest mb-0.5 lg:mb-2", children: "Why TICA recommends it" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-0 lg:space-y-2 text-on-surface-variant text-xs lg:text-sm", children: [
               /* @__PURE__ */ jsx("li", { children: "• High demand" }),
               /* @__PURE__ */ jsx("li", { children: "• Low market supply" }),
               /* @__PURE__ */ jsx("li", { children: "• Estimated profit £3,200" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-2.5 lg:mt-4 pt-2.5 lg:pt-0 border-t border-outline-variant/20 lg:border-0", children: [
+            /* @__PURE__ */ jsxs("div", { className: "mt-1.5 lg:mt-4 pt-1.5 lg:pt-0 border-t border-outline-variant/20 lg:border-0", children: [
               /* @__PURE__ */ jsx("p", { className: "text-xs lg:text-sm text-on-surface-variant", children: /* @__PURE__ */ jsx("span", { className: "text-primary font-semibold", children: "Recommended Action" }) }),
-              /* @__PURE__ */ jsx("p", { className: "text-white text-xs lg:text-sm mt-0.5", children: "📞 Contact seller immediately." })
+              /* @__PURE__ */ jsxs("p", { className: "lg:hidden text-white text-xs mt-0.5 flex items-center gap-1.5", children: [
+                /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-white shrink-0", style: {
+                  fontSize: "13px"
+                }, children: "phone" }),
+                /* @__PURE__ */ jsx("span", { className: "font-bold", children: "Contact seller immediately." })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "hidden lg:block text-white text-sm mt-0.5", children: "📞 Contact seller immediately." })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-4 lg:p-7 h-full", children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-2 lg:mb-4 text-[10px] lg:text-xs", children: "Live AI Activity" }),
-            /* @__PURE__ */ jsxs("ul", { className: "lg:hidden space-y-1.5 font-mono text-xs", children: [
+            /* @__PURE__ */ jsxs("ul", { className: "lg:hidden space-y-1 font-mono text-xs", children: [
               [{
                 label: "Market Scans",
                 value: "1,287"
@@ -877,9 +883,15 @@ function LandingPage() {
                 /* @__PURE__ */ jsx("span", { className: "flex-1 border-b border-dotted border-outline-variant/30 mx-1 mb-0.5" }),
                 /* @__PURE__ */ jsx("span", { className: "text-white font-semibold shrink-0", children: item.value })
               ] }, item.label)),
-              /* @__PURE__ */ jsxs("li", { className: "flex items-center justify-between gap-1 pt-1.5 border-t border-outline-variant/20", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start justify-between gap-1 pt-1 border-t border-outline-variant/20", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-[10px] uppercase tracking-widest font-sans", children: "Status" }),
-                /* @__PURE__ */ jsx("span", { className: "text-emerald-300 font-semibold text-xs", children: "🟢 AI Monitoring Live" })
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-end", children: [
+                  /* @__PURE__ */ jsxs("span", { className: "text-emerald-300 font-semibold text-xs flex items-center gap-1.5", children: [
+                    /* @__PURE__ */ jsx("span", { className: "inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot-pulse shrink-0" }),
+                    "AI Monitoring Live"
+                  ] }),
+                  /* @__PURE__ */ jsx("span", { className: "text-[9px] text-on-surface-variant/50 mt-0.5 font-sans font-normal", children: "Live • Updating continuously" })
+                ] })
               ] })
             ] }),
             /* @__PURE__ */ jsxs("ul", { className: "hidden lg:block space-y-4", children: [
@@ -902,7 +914,12 @@ function LandingPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsx("button", { onClick: () => scrollToSection("dashboard-preview"), className: "border border-primary/50 text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95", children: "Enter My AI Command Centre" }) })
+        /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsxs("button", { onClick: () => scrollToSection("dashboard-preview"), className: "preview-btn-glow border border-primary/50 text-primary px-6 py-3 lg:px-10 lg:py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95 flex items-center gap-2", children: [
+          /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined lg:hidden shrink-0", style: {
+            fontSize: "16px"
+          }, children: "space_dashboard" }),
+          "Enter My AI Command Centre"
+        ] }) })
       ] }) }),
       /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container-lowest", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
