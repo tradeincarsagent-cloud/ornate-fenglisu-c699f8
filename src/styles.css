@@ -210,6 +210,28 @@ html {
   .how-it-works-criteria-inner {
     min-height: 3rem !important;
   }
+
+  .roadmap-future-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .roadmap-future-card {
+    width: 100%;
+    min-height: 0;
+    padding: 0.72rem 0.8rem;
+  }
+
+  .roadmap-future-card .material-symbols-outlined {
+    font-size: 1.1rem;
+  }
+
+  .roadmap-future-badge {
+    font-size: 0.56rem;
+    line-height: 1;
+    letter-spacing: 0.08em;
+  }
 }
 
 .engine-start-btn {

@@ -1087,7 +1087,7 @@ function LandingPage() {
           /* @__PURE__ */ jsx("span", { className: "hidden md:inline", children: `✔ ${item.label}` })
         ] }, item.label)) }) }) })
       ] }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:pt-12 max-md:pb-8 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:pt-10 max-md:pb-6 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center max-w-3xl mx-auto mb-16 max-md:mb-10", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4", children: "Product Roadmap" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Built for Today. Designed for Tomorrow." }),
@@ -1128,36 +1128,51 @@ function LandingPage() {
             /* @__PURE__ */ jsx("span", { children: item })
           ] }, item)) })
         ] }, phase.version)) }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-12 max-md:mt-6 glass-card rounded-2xl p-8 max-md:p-5 border border-outline-variant/20", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6 max-md:mb-4", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mt-12 max-md:mt-5 glass-card rounded-2xl p-8 max-md:p-4 border border-outline-variant/20", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6 max-md:mb-3", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "auto_awesome" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: "🚀 Future Roadmap" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:gap-2", children: [{
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:gap-2 roadmap-future-grid", children: [{
             icon: "search",
-            text: "AI Intelligence Engine"
+            text: "AI Intelligence Engine",
+            status: "In Development",
+            statusClass: "bg-primary/20 text-primary"
           }, {
             icon: "fact_check",
-            text: "Vehicle History Checks"
+            text: "Vehicle History Checks",
+            status: "Planned",
+            statusClass: "bg-purple-500/15 text-purple-300"
           }, {
             icon: "gavel",
-            text: "Auction Integration"
+            text: "Auction Integration",
+            status: "Coming Soon",
+            statusClass: "bg-emerald-500/15 text-emerald-300"
           }, {
             icon: "public",
-            text: "International Search"
+            text: "International Search",
+            status: "In Development",
+            statusClass: "bg-primary/20 text-primary"
           }, {
             icon: "query_stats",
-            text: "Dealer Insights"
+            text: "Dealer Insights",
+            status: "Planned",
+            statusClass: "bg-purple-500/15 text-purple-300"
           }, {
             icon: "notifications_active",
-            text: "TICA Smart Alerts™"
-          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-4 max-md:p-2.5 rounded-xl flex items-center gap-3 max-md:gap-2 border border-outline-variant/20", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container max-md:text-[22px]", children: item.icon }),
-            /* @__PURE__ */ jsx("span", { className: "font-bold text-sm max-md:text-[13px]", children: item.text })
+            text: "TICA Smart Alerts™",
+            status: "Coming Soon",
+            statusClass: "bg-emerald-500/15 text-emerald-300"
+          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-4 max-md:p-3 rounded-xl flex items-center gap-3 max-md:gap-2 border border-outline-variant/20 roadmap-future-card", children: [
+            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container max-md:text-[22px] flex-shrink-0", children: item.icon }),
+            /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1 flex items-center justify-between gap-2", children: [
+              /* @__PURE__ */ jsx("span", { className: "font-bold text-sm max-md:text-[13px] leading-tight", children: item.text }),
+              /* @__PURE__ */ jsx("span", { className: `roadmap-future-badge text-[10px] font-bold uppercase tracking-[0.08em] px-2 py-1 rounded-full whitespace-nowrap ${item.statusClass}`, children: item.status })
+            ] })
           ] }, item.text)) })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:pt-10 max-md:pb-14 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:pt-8 max-md:pb-14 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-4", children: "Ready to Hire Your AI Buying Employee?" }),
         /* @__PURE__ */ jsx("p", { className: "text-on-primary/80 text-lg mb-8", children: "Join dealers using AI to discover better buying opportunities 24/7." }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
