@@ -1643,6 +1643,70 @@ body > div {
     gap: 0.55rem;
     padding: 0.55rem;
   }
+
+  .pricing-plans-grid {
+    gap: 1rem;
+  }
+
+  .pricing-plan-card {
+    padding: 1.3rem;
+  }
+
+  .pricing-plan-header {
+    margin-bottom: 1.2rem;
+  }
+
+  .pricing-plan-header > :where(:not([hidden]) ~ :not([hidden])) {
+    margin-top: 0.55rem;
+  }
+
+  .pricing-plan-title {
+    font-size: 1.55rem;
+    line-height: 1.15;
+  }
+
+  .pricing-plan-description {
+    line-height: 1.5;
+  }
+
+  .pricing-plan-price {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .pricing-plan-price-featured {
+    font-size: 2.2rem;
+  }
+
+  .pricing-plan-features {
+    margin-bottom: 1.3rem;
+  }
+
+  .pricing-plan-features > :where(:not([hidden]) ~ :not([hidden])) {
+    margin-top: 0.7rem;
+  }
+
+  .pricing-plan-feature {
+    align-items: flex-start;
+    gap: 0.6rem;
+    line-height: 1.45;
+  }
+
+  .pricing-plan-feature-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+    margin-top: 0.18rem;
+  }
+
+  .pricing-plan-cta {
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .pricing-plan-cta-featured {
+    padding-top: 0.92rem;
+    padding-bottom: 0.92rem;
+  }
 }
 
 /* ── Recommendation legend — compact traffic light (mobile only) ────────── */
