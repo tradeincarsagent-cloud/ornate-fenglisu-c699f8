@@ -1082,7 +1082,7 @@ function LandingPage() {
         }].map((item) => /* @__PURE__ */ jsxs("li", { className: "trust-panel-item flex items-center justify-center text-center", children: [
           /* @__PURE__ */ jsxs("span", { className: "trust-panel-mobile-row md:hidden", children: [
             /* @__PURE__ */ jsx("span", { className: "trust-panel-tick", "aria-hidden": "true", children: "✔" }),
-            /* @__PURE__ */ jsx("span", { className: item.emphasized ? "font-semibold" : "font-normal", children: item.label })
+            /* @__PURE__ */ jsx("span", { className: item.emphasized ? "font-bold" : "font-medium", children: item.label })
           ] }),
           /* @__PURE__ */ jsx("span", { className: "hidden md:inline", children: `✔ ${item.label}` })
         ] }, item.label)) }) }) })
