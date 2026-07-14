@@ -1153,8 +1153,8 @@ function LandingPage() {
                 ].map(item => (
                   <li key={item.label} className="trust-panel-item flex items-center justify-center text-center">
                     <span className="trust-panel-mobile-row md:hidden">
-                      <span className="trust-panel-tick text-emerald-300" aria-hidden="true">✔</span>
-                      <span className={item.emphasized ? 'font-semibold' : 'font-medium'}>{item.label}</span>
+                      <span className="trust-panel-tick" aria-hidden="true">✔</span>
+                      <span className={item.emphasized ? 'font-semibold' : 'font-normal'}>{item.label}</span>
                     </span>
                     <span className="hidden md:inline">{`✔ ${item.label}`}</span>
                   </li>
