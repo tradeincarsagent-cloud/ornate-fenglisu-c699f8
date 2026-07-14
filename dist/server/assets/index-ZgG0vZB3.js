@@ -1163,12 +1163,12 @@ function LandingPage() {
             text: "TICA Smart Alerts™",
             status: "Coming Soon",
             badgeClass: "bg-purple-500/20 text-purple-300"
-          }].map((item) => /* @__PURE__ */ jsx("div", { className: "bg-surface-container p-4 max-md:p-3 rounded-xl border border-outline-variant/20 max-md:flex max-md:flex-col max-md:items-center max-md:justify-center max-md:text-center max-md:gap-2", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3 max-md:contents", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 min-w-0 max-md:contents", children: [
-              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container max-md:text-[26px]", children: item.icon }),
-              /* @__PURE__ */ jsx("span", { className: "font-bold text-sm max-md:text-[12px] max-md:leading-snug", children: item.text })
+          }].map((item) => /* @__PURE__ */ jsx("div", { className: "bg-surface-container p-4 max-md:px-2.5 max-md:py-3 rounded-xl border border-outline-variant/20 h-full max-md:flex max-md:flex-col max-md:items-center max-md:justify-center max-md:text-center max-md:gap-2", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3 w-full max-md:flex-col max-md:items-center max-md:justify-center", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 min-w-0 max-md:flex-col max-md:items-center max-md:gap-1.5 max-md:w-full", children: [
+              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container flex-shrink-0 max-md:text-[26px]", children: item.icon }),
+              /* @__PURE__ */ jsx("span", { className: "font-bold text-sm max-md:text-[12px] max-md:leading-snug max-md:px-1", children: item.text })
             ] }),
-            /* @__PURE__ */ jsx("span", { className: `hidden max-md:inline-flex items-center justify-center whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide max-md:w-28 max-md:h-6 ${item.badgeClass}`, children: item.status })
+            /* @__PURE__ */ jsx("span", { className: `hidden max-md:inline-flex items-center justify-center rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide max-md:w-[88%] max-md:px-1.5 max-md:py-1 max-md:text-[9px] max-md:leading-tight whitespace-normal text-center break-words ${item.badgeClass}`, children: item.status })
           ] }) }, item.text)) })
         ] })
       ] }) }),
