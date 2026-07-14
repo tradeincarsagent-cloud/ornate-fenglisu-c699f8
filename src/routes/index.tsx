@@ -603,8 +603,8 @@ function LandingPage() {
       <main>
         {/* Hero Section */}
         <section className="relative min-h-[90vh] flex items-center hero-gradient overflow-hidden">
-          <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10">
-            <div className="space-y-8">
+          <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 lg:gap-gutter items-center relative z-10">
+            <div className="space-y-6 md:space-y-8">
               <h1 className="font-display-lg text-display-lg leading-tight text-on-surface">
                 Find Better Stock.{' '}
                 <svg className="inline-block w-10 h-10 text-primary-container align-middle ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -616,6 +616,11 @@ function LandingPage() {
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
                 Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition.
               </p>
+              <div className="relative flex items-center justify-center overflow-visible pt-2 md:hidden">
+                <HeroRadar />
+                <div className="absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full"></div>
+                <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full"></div>
+              </div>
               <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <button className="engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider" onClick={handleHeroStartFreeTrial}>
@@ -646,7 +651,7 @@ function LandingPage() {
               </div>
             </div>
 
-            <div className="relative lg:flex items-center justify-center flex mt-10 overflow-visible">
+            <div className="relative hidden md:flex items-center justify-center overflow-visible">
               <HeroRadar />
               <div className="absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full"></div>
               <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full"></div>

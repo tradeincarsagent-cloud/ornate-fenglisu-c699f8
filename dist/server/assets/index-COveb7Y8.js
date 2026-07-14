@@ -588,18 +588,23 @@ function LandingPage() {
       ] }) })
     ] }) }),
     /* @__PURE__ */ jsxs("main", { children: [
-      /* @__PURE__ */ jsx("section", { className: "relative min-h-[90vh] flex items-center hero-gradient overflow-hidden", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center relative z-10", children: [
-        /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+      /* @__PURE__ */ jsx("section", { className: "relative min-h-[90vh] flex items-center hero-gradient overflow-hidden", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 lg:gap-gutter items-center relative z-10", children: [
+        /* @__PURE__ */ jsxs("div", { className: "space-y-6 md:space-y-8", children: [
           /* @__PURE__ */ jsxs("h1", { className: "font-display-lg text-display-lg leading-tight text-on-surface", children: [
             "Find Better Stock.",
             " ",
             /* @__PURE__ */ jsx("svg", { className: "inline-block w-10 h-10 text-primary-container align-middle ml-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M13 10V3L4 14h7v7l9-11h-7z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
             /* @__PURE__ */ jsx("br", {}),
-            /* @__PURE__ */ jsx("span", { className: "text-primary-container", children: "Buy Better Cars." }),
+            /* @__PURE__ */ jsx("span", { className: "text-primary-container", children: "Buy Better Vehicles." }),
             /* @__PURE__ */ jsx("br", {}),
             "Save Hours Every Week."
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you buy better vehicles before the competition." }),
+          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition." }),
+          /* @__PURE__ */ jsxs("div", { className: "relative flex items-center justify-center overflow-visible pt-2 md:hidden", children: [
+            /* @__PURE__ */ jsx(HeroRadar, {}),
+            /* @__PURE__ */ jsx("div", { className: "absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full" })
+          ] }),
           /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-4", children: [
               /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: handleHeroStartFreeTrial, children: [
@@ -623,7 +628,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "Built for UK dealers, traders and sourcing professionals" })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "relative lg:flex items-center justify-center flex mt-10 overflow-visible", children: [
+        /* @__PURE__ */ jsxs("div", { className: "relative hidden md:flex items-center justify-center overflow-visible", children: [
           /* @__PURE__ */ jsx(HeroRadar, {}),
           /* @__PURE__ */ jsx("div", { className: "absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full" }),
           /* @__PURE__ */ jsx("div", { className: "absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full" })
