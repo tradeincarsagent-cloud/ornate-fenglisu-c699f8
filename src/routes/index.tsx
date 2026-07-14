@@ -809,7 +809,30 @@ function LandingPage() {
                 <span>Live Market Monitoring</span>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {/* Compact stats row – mobile & tablet (hidden on lg+) */}
+            <div className="lg:hidden mb-12">
+              <div className="grid grid-cols-2 min-[480px]:grid-cols-3 bg-surface-bright/10 border border-outline-variant/20 rounded-xl overflow-hidden backdrop-blur-md">
+                {[
+                  { label: 'AI Buying Missions', value: '12 Active' },
+                  { label: 'High-Confidence Opportunities', value: '7 Found Today' },
+                  { label: 'Potential Monthly Profit', value: '£18,750' },
+                ].map((stat, i) => (
+                  <div
+                    key={stat.label}
+                    className={[
+                      'py-3 px-2 text-center',
+                      i === 1 ? 'border-l border-outline-variant/30' : '',
+                      i === 2 ? 'col-span-2 border-t border-outline-variant/30 min-[480px]:col-span-1 min-[480px]:border-t-0 min-[480px]:border-l' : '',
+                    ].join(' ')}
+                  >
+                    <p className="text-[10px] uppercase tracking-widest text-on-surface-variant leading-tight mb-1">{stat.label}</p>
+                    <p className="text-xl font-extrabold text-primary leading-none">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Desktop stats cards – lg and above */}
+            <div className="hidden lg:grid grid-cols-3 gap-6 mb-12">
               {[
                 { label: 'AI Buying Missions', value: '12 Active' },
                 { label: 'High-Confidence Opportunities', value: '7 Found Today' },
@@ -817,7 +840,7 @@ function LandingPage() {
               ].map(stat => (
                 <div key={stat.label} className="bg-surface-bright/10 border border-outline-variant/20 rounded-xl p-6 text-center backdrop-blur-md">
                   <p className="text-label-caps text-on-surface-variant uppercase tracking-widest mb-2">{stat.label}</p>
-                  <p className="text-3xl md:text-4xl font-extrabold text-primary">{stat.value}</p>
+                  <p className="text-3xl lg:text-4xl font-extrabold text-primary">{stat.value}</p>
                 </div>
               ))}
             </div>
