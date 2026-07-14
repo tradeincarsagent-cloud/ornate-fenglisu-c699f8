@@ -978,7 +978,7 @@ function LandingPage() {
         </section>
 
         {/* Problem Section */}
-        <section className="py-24 bg-surface-container-lowest">
+        <section className="py-24 bg-surface-container-lowest benefits-section">
           <div className="max-w-container-max mx-auto px-margin-desktop text-center mb-16">
             <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Why Dealers Need an AI Buying Employee</span>
             <div className="why-dealer-mobile-card">
