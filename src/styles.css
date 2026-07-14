@@ -162,6 +162,27 @@ html {
   .why-dealer-highlight {
     color: #a3c9ff;
   }
+
+  .why-dealer-feature-card {
+    padding: 1.4rem;
+    height: 13.5rem;
+  }
+
+  .why-dealer-feature-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .why-dealer-feature-title {
+    font-size: 1.3rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .why-dealer-feature-desc {
+    font-size: 0.94rem;
+    line-height: 1.45;
+  }
 }
 
 .engine-start-btn {
