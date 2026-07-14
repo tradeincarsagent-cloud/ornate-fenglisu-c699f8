@@ -1073,7 +1073,7 @@ function LandingPage() {
         ] }),
         /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl p-5 border border-outline-variant/20", children: /* @__PURE__ */ jsx("ul", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant", children: ["✔ Secure Stripe Checkout", "✔ Cancel Anytime", "✔ No Hidden Fees", "✔ Upgrade Anytime"].map((item) => /* @__PURE__ */ jsx("li", { className: "flex items-center justify-center text-center", children: item }, item)) }) }) })
       ] }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:py-12 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:pt-12 max-md:pb-8 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center max-w-3xl mx-auto mb-16 max-md:mb-10", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4", children: "Product Roadmap" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Built for Today. Designed for Tomorrow." }),
@@ -1114,12 +1114,12 @@ function LandingPage() {
             /* @__PURE__ */ jsx("span", { children: item })
           ] }, item)) })
         ] }, phase.version)) }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-12 max-md:mt-8 glass-card rounded-2xl p-8 border border-outline-variant/20", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mt-12 max-md:mt-6 glass-card rounded-2xl p-8 max-md:p-5 border border-outline-variant/20", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6 max-md:mb-4", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "auto_awesome" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: "🚀 Future Roadmap" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4", children: [{
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:gap-2", children: [{
             icon: "search",
             text: "AI Intelligence Engine"
           }, {
@@ -1137,13 +1137,13 @@ function LandingPage() {
           }, {
             icon: "notifications_active",
             text: "TICA Smart Alerts™"
-          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-4 rounded-xl flex items-center gap-3 border border-outline-variant/20", children: [
-            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container", children: item.icon }),
-            /* @__PURE__ */ jsx("span", { className: "font-bold text-sm", children: item.text })
+          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-4 max-md:p-2.5 rounded-xl flex items-center gap-3 max-md:gap-2 border border-outline-variant/20", children: [
+            /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container max-md:text-[22px]", children: item.icon }),
+            /* @__PURE__ */ jsx("span", { className: "font-bold text-sm max-md:text-[13px]", children: item.text })
           ] }, item.text)) })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:py-14 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:pt-10 max-md:pb-14 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-4", children: "Ready to Hire Your AI Buying Employee?" }),
         /* @__PURE__ */ jsx("p", { className: "text-on-primary/80 text-lg mb-8", children: "Join dealers using AI to discover better buying opportunities 24/7." }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [

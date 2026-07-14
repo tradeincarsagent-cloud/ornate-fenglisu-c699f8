@@ -1154,7 +1154,7 @@ function LandingPage() {
         </section>
 
         {/* Roadmap */}
-        <section className="py-24 max-md:py-12 bg-surface-container-lowest border-y border-outline-variant/10" id="version-2">
+        <section className="py-24 max-md:pt-12 max-md:pb-8 bg-surface-container-lowest border-y border-outline-variant/10" id="version-2">
           <div className="max-w-container-max mx-auto px-margin-desktop">
             <div className="text-center max-w-3xl mx-auto mb-16 max-md:mb-10">
               <span className="font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4">Product Roadmap</span>
@@ -1238,12 +1238,12 @@ function LandingPage() {
             </div>
 
             {/* Future roadmap highlights */}
-            <div className="mt-12 max-md:mt-8 glass-card rounded-2xl p-8 border border-outline-variant/20">
-              <div className="flex items-center gap-3 mb-6">
+            <div className="mt-12 max-md:mt-6 glass-card rounded-2xl p-8 max-md:p-5 border border-outline-variant/20">
+              <div className="flex items-center gap-3 mb-6 max-md:mb-4">
                 <span className="material-symbols-outlined text-primary">auto_awesome</span>
                 <h3 className="font-headline-md text-headline-md">🚀 Future Roadmap</h3>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:gap-2">
                 {[
                   { icon: 'search', text: 'AI Intelligence Engine' },
                   { icon: 'fact_check', text: 'Vehicle History Checks' },
@@ -1252,9 +1252,9 @@ function LandingPage() {
                   { icon: 'query_stats', text: 'Dealer Insights' },
                   { icon: 'notifications_active', text: 'TICA Smart Alerts™' },
                 ].map(item => (
-                  <div key={item.text} className="bg-surface-container p-4 rounded-xl flex items-center gap-3 border border-outline-variant/20">
-                    <span className="material-symbols-outlined text-primary-container">{item.icon}</span>
-                    <span className="font-bold text-sm">{item.text}</span>
+                  <div key={item.text} className="bg-surface-container p-4 max-md:p-2.5 rounded-xl flex items-center gap-3 max-md:gap-2 border border-outline-variant/20">
+                    <span className="material-symbols-outlined text-primary-container max-md:text-[22px]">{item.icon}</span>
+                    <span className="font-bold text-sm max-md:text-[13px]">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -1263,7 +1263,7 @@ function LandingPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 max-md:py-14 bg-primary text-on-primary text-center">
+        <section className="py-24 max-md:pt-10 max-md:pb-14 bg-primary text-on-primary text-center">
           <div className="max-w-3xl mx-auto px-margin-desktop">
             <h2 className="font-display-lg text-display-lg mb-4">Ready to Hire Your AI Buying Employee?</h2>
             <p className="text-on-primary/80 text-lg mb-8">Join dealers using AI to discover better buying opportunities 24/7.</p>
