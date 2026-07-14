@@ -226,6 +226,24 @@ html {
   filter: brightness(1.03);
 }
 
+@media (max-width: 767px) {
+  .final-mobile-cta-btn {
+    min-height: clamp(4rem, 13vw, 4.4rem);
+    padding-top: clamp(0.9rem, 2.8vw, 1.05rem) !important;
+    padding-bottom: clamp(0.9rem, 2.8vw, 1.05rem) !important;
+    font-size: clamp(1.05rem, 4.4vw, 1.2rem) !important;
+    line-height: 1.1;
+  }
+
+  .final-mobile-cta-label {
+    width: 100%;
+    gap: 0.12rem;
+    line-height: 1.05;
+    white-space: nowrap;
+    text-align: center;
+  }
+}
+
 .hero-gradient {
   background: radial-gradient(circle at top right, rgba(20, 147, 255, 0.15), transparent 60%),
               radial-gradient(circle at bottom left, rgba(163, 201, 255, 0.05), transparent 40%);
