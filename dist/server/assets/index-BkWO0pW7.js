@@ -762,7 +762,20 @@ function LandingPage() {
             /* @__PURE__ */ jsx("span", { children: "Live Market Monitoring" })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6 mb-12", children: [{
+        /* @__PURE__ */ jsx("div", { className: "lg:hidden mb-12", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 min-[480px]:grid-cols-3 bg-surface-bright/10 border border-outline-variant/20 rounded-xl overflow-hidden backdrop-blur-md", children: [{
+          label: "AI Buying Missions",
+          value: "12 Active"
+        }, {
+          label: "High-Confidence Opportunities",
+          value: "7 Found Today"
+        }, {
+          label: "Potential Monthly Profit",
+          value: "£18,750"
+        }].map((stat, i) => /* @__PURE__ */ jsxs("div", { className: ["py-3 px-2 text-center", i === 1 ? "border-l border-outline-variant/30" : "", i === 2 ? "col-span-2 border-t border-outline-variant/30 min-[480px]:col-span-1 min-[480px]:border-t-0 min-[480px]:border-l" : ""].join(" "), children: [
+          /* @__PURE__ */ jsx("p", { className: "text-[10px] uppercase tracking-widest text-on-surface-variant leading-tight mb-1", children: stat.label }),
+          /* @__PURE__ */ jsx("p", { className: "text-xl font-extrabold text-primary leading-none", children: stat.value })
+        ] }, stat.label)) }) }),
+        /* @__PURE__ */ jsx("div", { className: "hidden lg:grid grid-cols-3 gap-6 mb-12", children: [{
           label: "AI Buying Missions",
           value: "12 Active"
         }, {
@@ -773,7 +786,7 @@ function LandingPage() {
           value: "£18,750"
         }].map((stat) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-bright/10 border border-outline-variant/20 rounded-xl p-6 text-center backdrop-blur-md", children: [
           /* @__PURE__ */ jsx("p", { className: "text-label-caps text-on-surface-variant uppercase tracking-widest mb-2", children: stat.label }),
-          /* @__PURE__ */ jsx("p", { className: "text-3xl md:text-4xl font-extrabold text-primary", children: stat.value })
+          /* @__PURE__ */ jsx("p", { className: "text-3xl lg:text-4xl font-extrabold text-primary", children: stat.value })
         ] }, stat.label)) }),
         /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl overflow-hidden border border-outline-variant/20 mb-12", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-left font-body-md", children: [
           /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "bg-surface-variant/50 border-b border-outline-variant/20", children: [
