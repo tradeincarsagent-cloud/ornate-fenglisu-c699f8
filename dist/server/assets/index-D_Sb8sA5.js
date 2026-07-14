@@ -762,7 +762,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("span", { children: "Live Market Monitoring" })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "lg:hidden mb-12", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 min-[480px]:grid-cols-3 bg-surface-bright/10 border border-outline-variant/20 rounded-xl overflow-hidden backdrop-blur-md", children: [{
+        /* @__PURE__ */ jsx("div", { className: "lg:hidden mb-5", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 min-[480px]:grid-cols-3 bg-surface-bright/10 border border-outline-variant/20 rounded-xl overflow-hidden backdrop-blur-md", children: [{
           label: "AI Buying Missions",
           value: "12 Active"
         }, {
@@ -788,7 +788,35 @@ function LandingPage() {
           /* @__PURE__ */ jsx("p", { className: "text-label-caps text-on-surface-variant uppercase tracking-widest mb-2", children: stat.label }),
           /* @__PURE__ */ jsx("p", { className: "text-3xl lg:text-4xl font-extrabold text-primary", children: stat.value })
         ] }, stat.label)) }),
-        /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl overflow-hidden border border-outline-variant/20 mb-12", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-left font-body-md", children: [
+        /* @__PURE__ */ jsx("div", { className: "lg:hidden mb-6 space-y-3", children: [{
+          name: "BMW M3",
+          score: "97%",
+          profit: "+£3,200",
+          certified: true
+        }, {
+          name: "Ford Ranger",
+          score: "94%",
+          profit: "+£2,100",
+          certified: false
+        }, {
+          name: "Mercedes E220",
+          score: "92%",
+          profit: "+£1,850",
+          certified: false
+        }].map((row) => /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-xl border border-outline-variant/20 px-4 py-3 flex items-center justify-between gap-3", children: [
+          /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-white font-semibold text-sm leading-tight", children: row.name }),
+            /* @__PURE__ */ jsxs("p", { className: "text-on-surface-variant text-xs mt-0.5", children: [
+              "AI Score: ",
+              /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: row.score }),
+              /* @__PURE__ */ jsx("span", { className: "mx-1.5 opacity-40", children: "·" }),
+              "Profit: ",
+              /* @__PURE__ */ jsx("span", { className: "text-primary font-bold", children: row.profit })
+            ] })
+          ] }),
+          row.certified && /* @__PURE__ */ jsx("span", { className: "shrink-0 text-[10px] text-primary font-bold uppercase tracking-wide border border-primary/40 rounded-full px-2 py-0.5", children: "🛡️ TICA™" })
+        ] }, row.name)) }),
+        /* @__PURE__ */ jsx("div", { className: "hidden lg:block glass-card rounded-2xl overflow-hidden border border-outline-variant/20 mb-12", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-left font-body-md", children: [
           /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "bg-surface-variant/50 border-b border-outline-variant/20", children: [
             /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-label-caps text-primary", children: "Vehicle" }),
             /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-label-caps text-primary", children: "AI Score" }),
@@ -817,23 +845,44 @@ function LandingPage() {
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-on-surface-variant text-sm", children: row.status })
           ] }, row.name)) })
         ] }) }) }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12", children: [
-          /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-3", children: "AI Recommendation" }),
-            /* @__PURE__ */ jsx("p", { className: "text-white font-headline-md text-xl mb-3", children: "BMW M3" }),
-            /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-on-surface-variant text-sm", children: [
-              /* @__PURE__ */ jsx("li", { children: "High demand." }),
-              /* @__PURE__ */ jsx("li", { children: "Low market supply." }),
-              /* @__PURE__ */ jsx("li", { children: "Estimated profit £3,200." })
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-6 mb-6 lg:mb-12", children: [
+          /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-4 lg:p-7 h-full", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-1.5 lg:mb-3 text-[10px] lg:text-xs", children: "AI Recommendation" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white font-semibold text-base lg:text-xl mb-1.5 lg:mb-3", children: "BMW M3" }),
+            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-[10px] uppercase tracking-widest mb-1 lg:mb-2", children: "Why TICA recommends it" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-0.5 lg:space-y-2 text-on-surface-variant text-xs lg:text-sm", children: [
+              /* @__PURE__ */ jsx("li", { children: "• High demand" }),
+              /* @__PURE__ */ jsx("li", { children: "• Low market supply" }),
+              /* @__PURE__ */ jsx("li", { children: "• Estimated profit £3,200" })
             ] }),
-            /* @__PURE__ */ jsxs("p", { className: "mt-4 text-sm text-white", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-primary font-semibold", children: "Recommended action:" }),
-              " Contact seller immediately."
+            /* @__PURE__ */ jsxs("div", { className: "mt-2.5 lg:mt-4 pt-2.5 lg:pt-0 border-t border-outline-variant/20 lg:border-0", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-xs lg:text-sm text-on-surface-variant", children: /* @__PURE__ */ jsx("span", { className: "text-primary font-semibold", children: "Recommended Action" }) }),
+              /* @__PURE__ */ jsx("p", { className: "text-white text-xs lg:text-sm mt-0.5", children: "📞 Contact seller immediately." })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-4", children: "Live AI Activity" }),
-            /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "glass-card rounded-2xl border border-outline-variant/20 p-4 lg:p-7 h-full", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps text-primary uppercase tracking-widest mb-2 lg:mb-4 text-[10px] lg:text-xs", children: "Live AI Activity" }),
+            /* @__PURE__ */ jsxs("ul", { className: "lg:hidden space-y-1.5 font-mono text-xs", children: [
+              [{
+                label: "Market Scans",
+                value: "1,287"
+              }, {
+                label: "Vehicles Analysed",
+                value: "8,492"
+              }, {
+                label: "High Confidence",
+                value: "73"
+              }].map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-baseline gap-1", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant shrink-0", children: item.label }),
+                /* @__PURE__ */ jsx("span", { className: "flex-1 border-b border-dotted border-outline-variant/30 mx-1 mb-0.5" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold shrink-0", children: item.value })
+              ] }, item.label)),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-center justify-between gap-1 pt-1.5 border-t border-outline-variant/20", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-[10px] uppercase tracking-widest font-sans", children: "Status" }),
+                /* @__PURE__ */ jsx("span", { className: "text-emerald-300 font-semibold text-xs", children: "🟢 AI Monitoring Live" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("ul", { className: "hidden lg:block space-y-4", children: [
               /* @__PURE__ */ jsxs("li", { className: "flex items-baseline justify-between gap-4", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant text-sm", children: "Market Scans Today" }),
                 /* @__PURE__ */ jsx("span", { className: "text-white font-semibold text-lg", children: "1,287" })

@@ -810,7 +810,7 @@ function LandingPage() {
               </div>
             </div>
             {/* Compact stats row – mobile & tablet (hidden on lg+) */}
-            <div className="lg:hidden mb-12">
+            <div className="lg:hidden mb-5">
               <div className="grid grid-cols-2 min-[480px]:grid-cols-3 bg-surface-bright/10 border border-outline-variant/20 rounded-xl overflow-hidden backdrop-blur-md">
                 {[
                   { label: 'AI Buying Missions', value: '12 Active' },
@@ -844,7 +844,31 @@ function LandingPage() {
                 </div>
               ))}
             </div>
-            <div className="glass-card rounded-2xl overflow-hidden border border-outline-variant/20 mb-12">
+            {/* Mobile / Tablet: Opportunity Cards (hidden on desktop) */}
+            <div className="lg:hidden mb-6 space-y-3">
+              {[
+                { name: 'BMW M3', score: '97%', profit: '+£3,200', certified: true },
+                { name: 'Ford Ranger', score: '94%', profit: '+£2,100', certified: false },
+                { name: 'Mercedes E220', score: '92%', profit: '+£1,850', certified: false },
+              ].map(row => (
+                <div key={row.name} className="glass-card rounded-xl border border-outline-variant/20 px-4 py-3 flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-white font-semibold text-sm leading-tight">{row.name}</p>
+                    <p className="text-on-surface-variant text-xs mt-0.5">
+                      AI Score: <span className="text-white font-semibold">{row.score}</span>
+                      <span className="mx-1.5 opacity-40">·</span>
+                      Profit: <span className="text-primary font-bold">{row.profit}</span>
+                    </p>
+                  </div>
+                  {row.certified && (
+                    <span className="shrink-0 text-[10px] text-primary font-bold uppercase tracking-wide border border-primary/40 rounded-full px-2 py-0.5">🛡️ TICA™</span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop: Table (hidden on mobile/tablet) */}
+            <div className="hidden lg:block glass-card rounded-2xl overflow-hidden border border-outline-variant/20 mb-12">
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-body-md">
                   <thead>
@@ -872,20 +896,47 @@ function LandingPage() {
                 </table>
               </div>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
-              <div className="glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full">
-                <p className="text-label-caps text-primary uppercase tracking-widest mb-3">AI Recommendation</p>
-                <p className="text-white font-headline-md text-xl mb-3">BMW M3</p>
-                <ul className="space-y-2 text-on-surface-variant text-sm">
-                  <li>High demand.</li>
-                  <li>Low market supply.</li>
-                  <li>Estimated profit £3,200.</li>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-6 mb-6 lg:mb-12">
+              {/* AI Recommendation */}
+              <div className="glass-card rounded-2xl border border-outline-variant/20 p-4 lg:p-7 h-full">
+                <p className="text-label-caps text-primary uppercase tracking-widest mb-1.5 lg:mb-3 text-[10px] lg:text-xs">AI Recommendation</p>
+                <p className="text-white font-semibold text-base lg:text-xl mb-1.5 lg:mb-3">BMW M3</p>
+                <p className="text-on-surface-variant text-[10px] uppercase tracking-widest mb-1 lg:mb-2">Why TICA recommends it</p>
+                <ul className="space-y-0.5 lg:space-y-2 text-on-surface-variant text-xs lg:text-sm">
+                  <li>• High demand</li>
+                  <li>• Low market supply</li>
+                  <li>• Estimated profit £3,200</li>
                 </ul>
-                <p className="mt-4 text-sm text-white"><span className="text-primary font-semibold">Recommended action:</span> Contact seller immediately.</p>
+                <div className="mt-2.5 lg:mt-4 pt-2.5 lg:pt-0 border-t border-outline-variant/20 lg:border-0">
+                  <p className="text-xs lg:text-sm text-on-surface-variant"><span className="text-primary font-semibold">Recommended Action</span></p>
+                  <p className="text-white text-xs lg:text-sm mt-0.5">📞 Contact seller immediately.</p>
+                </div>
               </div>
-              <div className="glass-card rounded-2xl border border-outline-variant/20 p-6 md:p-7 h-full">
-                <p className="text-label-caps text-primary uppercase tracking-widest mb-4">Live AI Activity</p>
-                <ul className="space-y-4">
+
+              {/* Live AI Activity */}
+              <div className="glass-card rounded-2xl border border-outline-variant/20 p-4 lg:p-7 h-full">
+                <p className="text-label-caps text-primary uppercase tracking-widest mb-2 lg:mb-4 text-[10px] lg:text-xs">Live AI Activity</p>
+                {/* Mobile/Tablet: compact dot-leader layout */}
+                <ul className="lg:hidden space-y-1.5 font-mono text-xs">
+                  {[
+                    { label: 'Market Scans', value: '1,287' },
+                    { label: 'Vehicles Analysed', value: '8,492' },
+                    { label: 'High Confidence', value: '73' },
+                  ].map(item => (
+                    <li key={item.label} className="flex items-baseline gap-1">
+                      <span className="text-on-surface-variant shrink-0">{item.label}</span>
+                      <span className="flex-1 border-b border-dotted border-outline-variant/30 mx-1 mb-0.5" />
+                      <span className="text-white font-semibold shrink-0">{item.value}</span>
+                    </li>
+                  ))}
+                  <li className="flex items-center justify-between gap-1 pt-1.5 border-t border-outline-variant/20">
+                    <span className="text-on-surface-variant text-[10px] uppercase tracking-widest font-sans">Status</span>
+                    <span className="text-emerald-300 font-semibold text-xs">🟢 AI Monitoring Live</span>
+                  </li>
+                </ul>
+                {/* Desktop: original layout */}
+                <ul className="hidden lg:block space-y-4">
                   <li className="flex items-baseline justify-between gap-4">
                     <span className="text-on-surface-variant text-sm">Market Scans Today</span>
                     <span className="text-white font-semibold text-lg">1,287</span>
