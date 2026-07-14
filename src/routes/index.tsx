@@ -1074,72 +1074,72 @@ function LandingPage() {
             </div>
             <p className="text-[11px] text-on-surface-variant/70 uppercase tracking-widest">Card required. No charge today. Cancel anytime before your trial ends.</p>
           </div>
-          <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch">
+          <div className="pricing-plans-grid max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch">
             {/* Starter */}
-            <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
-              <div className="mb-9 space-y-3">
-                <h4 className="font-headline-md text-headline-md leading-tight">AI Buying Employee – Starter</h4>
-                <p className="text-on-surface-variant text-sm leading-relaxed">Perfect for independent dealers and traders hiring their first AI Buying Employee.</p>
+            <div className="pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
+              <div className="pricing-plan-header mb-9 space-y-3">
+                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight">AI Buying Employee – Starter</h4>
+                <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">Perfect for independent dealers and traders hiring their first AI Buying Employee.</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-white">£49</span>
+                  <span className="pricing-plan-price text-4xl font-extrabold text-white">£49</span>
                   <span className="text-on-surface-variant">/mo</span>
                 </div>
               </div>
-              <ul className="space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
+              <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
                 {['Keeps up to 3 buying briefs actively searching for margin-ready stock', 'Delivers a daily shortlist so you can make faster buying calls', 'Gives you one command centre to track opportunities and next actions'].map(f => (
-                  <li key={f} className="flex items-center gap-3">
-                    <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
+                  <li key={f} className="pricing-plan-feature flex items-center gap-3">
+                    <span className="pricing-plan-feature-icon material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('starter')} type="button">Start My Starter Trial</button>
+              <button className="pricing-plan-cta w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('starter')} type="button">Start My Starter Trial</button>
             </div>
             {/* Professional */}
-            <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
-              <div className="mb-9 space-y-3">
-                <h4 className="font-headline-md text-headline-md leading-tight">AI Buying Employee – Professional</h4>
-                <p className="text-on-surface-variant text-sm leading-relaxed">Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time.</p>
+            <div className="pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
+              <div className="pricing-popular-badge absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
+              <div className="pricing-plan-header mb-9 space-y-3">
+                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight">AI Buying Employee – Professional</h4>
+                <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time.</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-extrabold text-primary">£99</span>
+                  <span className="pricing-plan-price pricing-plan-price-featured text-5xl font-extrabold text-primary">£99</span>
                   <span className="text-on-surface-variant">/mo</span>
                 </div>
               </div>
-              <ul className="space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
+              <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
                 {[
                   { icon: 'stars', text: 'Keeps unlimited buying briefs running so no profitable lead is missed', bold: true },
                   { icon: 'stars', text: 'Sends instant opportunity alerts so your team can act before competitors', bold: true },
                   { icon: 'check_circle', text: 'Prioritises the best-fit stock using advanced AI buying intelligence', bold: false },
                   { icon: 'check_circle', text: 'Highlights margin potential with Opportunity Intelligence™ insights', bold: false },
                 ].map(f => (
-                  <li key={f.text} className={`flex items-center gap-3 ${f.bold ? 'font-bold' : ''}`}>
-                    <span className="material-symbols-outlined text-primary text-sm">{f.icon}</span>
+                  <li key={f.text} className={`pricing-plan-feature flex items-center gap-3 ${f.bold ? 'font-bold' : ''}`}>
+                    <span className="pricing-plan-feature-icon material-symbols-outlined text-primary text-sm">{f.icon}</span>
                     <span>{f.text}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" onClick={() => openModal('professional')} type="button">Start My Professional Trial</button>
+              <button className="pricing-plan-cta pricing-plan-cta-featured w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" onClick={() => openModal('professional')} type="button">Start My Professional Trial</button>
             </div>
             {/* Enterprise */}
-            <div className="p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
-              <div className="mb-9 space-y-3">
-                <h4 className="font-headline-md text-headline-md leading-tight text-secondary">AI Buying Employee – Enterprise</h4>
-                <p className="text-on-surface-variant text-sm leading-relaxed">Designed for larger dealerships, buying teams and specialist vehicle sourcing companies.</p>
+            <div className="pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
+              <div className="pricing-plan-header mb-9 space-y-3">
+                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight text-secondary">AI Buying Employee – Enterprise</h4>
+                <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">Designed for larger dealerships, buying teams and specialist vehicle sourcing companies.</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-white">£299</span>
+                  <span className="pricing-plan-price text-4xl font-extrabold text-white">£299</span>
                   <span className="text-on-surface-variant">/mo</span>
                 </div>
               </div>
-              <ul className="space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
+              <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
                 {['Coordinates up to 10 dealership locations from one shared buying operation', 'Gives full team visibility so managers can improve buying performance', 'Includes a dedicated account manager to optimise results as you scale', 'Supports white-label API access for enterprise workflows and integrations'].map(f => (
-                  <li key={f} className="flex items-center gap-3">
-                    <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
+                  <li key={f} className="pricing-plan-feature flex items-center gap-3">
+                    <span className="pricing-plan-feature-icon material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('enterprise')} type="button">Start My Enterprise Trial</button>
+              <button className="pricing-plan-cta w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('enterprise')} type="button">Start My Enterprise Trial</button>
             </div>
           </div>
           <div className="max-w-container-max mx-auto px-margin-desktop mt-8">

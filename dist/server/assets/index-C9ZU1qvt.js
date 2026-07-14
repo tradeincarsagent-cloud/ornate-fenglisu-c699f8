@@ -1007,33 +1007,33 @@ function LandingPage() {
           /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl border border-outline-variant/20 bg-surface-container/60 px-4 py-3 mx-auto mb-4 max-w-3xl", children: /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant", children: "✅ Every new customer begins with a full Professional Trial, giving you complete access to TICA before choosing your subscription." }) }),
           /* @__PURE__ */ jsx("p", { className: "text-[11px] text-on-surface-variant/70 uppercase tracking-widest", children: "Card required. No charge today. Cancel anytime before your trial ends." })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch", children: [
-          /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
-              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Starter" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Perfect for independent dealers and traders hiring their first AI Buying Employee." }),
+        /* @__PURE__ */ jsxs("div", { className: "pricing-plans-grid max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch", children: [
+          /* @__PURE__ */ jsxs("div", { className: "pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
+            /* @__PURE__ */ jsxs("div", { className: "pricing-plan-header mb-9 space-y-3", children: [
+              /* @__PURE__ */ jsx("h4", { className: "pricing-plan-title font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Starter" }),
+              /* @__PURE__ */ jsx("p", { className: "pricing-plan-description text-on-surface-variant text-sm leading-relaxed", children: "Perfect for independent dealers and traders hiring their first AI Buying Employee." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£49" }),
+                /* @__PURE__ */ jsx("span", { className: "pricing-plan-price text-4xl font-extrabold text-white", children: "£49" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Keeps up to 3 buying briefs actively searching for margin-ready stock", "Delivers a daily shortlist so you can make faster buying calls", "Gives you one command centre to track opportunities and next actions"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
+            /* @__PURE__ */ jsx("ul", { className: "pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Keeps up to 3 buying briefs actively searching for margin-ready stock", "Delivers a daily shortlist so you can make faster buying calls", "Gives you one command centre to track opportunities and next actions"].map((f) => /* @__PURE__ */ jsxs("li", { className: "pricing-plan-feature flex items-center gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "pricing-plan-feature-icon material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("starter"), type: "button", children: "Start My Starter Trial" })
+            /* @__PURE__ */ jsx("button", { className: "pricing-plan-cta w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("starter"), type: "button", children: "Start My Starter Trial" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ MOST POPULAR" }),
-            /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
-              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Professional" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time." }),
+          /* @__PURE__ */ jsxs("div", { className: "pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl", children: [
+            /* @__PURE__ */ jsx("div", { className: "pricing-popular-badge absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ MOST POPULAR" }),
+            /* @__PURE__ */ jsxs("div", { className: "pricing-plan-header mb-9 space-y-3", children: [
+              /* @__PURE__ */ jsx("h4", { className: "pricing-plan-title font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Professional" }),
+              /* @__PURE__ */ jsx("p", { className: "pricing-plan-description text-on-surface-variant text-sm leading-relaxed", children: "Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-5xl font-extrabold text-primary", children: "£99" }),
+                /* @__PURE__ */ jsx("span", { className: "pricing-plan-price pricing-plan-price-featured text-5xl font-extrabold text-primary", children: "£99" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: [{
+            /* @__PURE__ */ jsx("ul", { className: "pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: [{
               icon: "stars",
               text: "Keeps unlimited buying briefs running so no profitable lead is missed",
               bold: true
@@ -1049,26 +1049,26 @@ function LandingPage() {
               icon: "check_circle",
               text: "Highlights margin potential with Opportunity Intelligence™ insights",
               bold: false
-            }].map((f) => /* @__PURE__ */ jsxs("li", { className: `flex items-center gap-3 ${f.bold ? "font-bold" : ""}`, children: [
-              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: f.icon }),
+            }].map((f) => /* @__PURE__ */ jsxs("li", { className: `pricing-plan-feature flex items-center gap-3 ${f.bold ? "font-bold" : ""}`, children: [
+              /* @__PURE__ */ jsx("span", { className: "pricing-plan-feature-icon material-symbols-outlined text-primary text-sm", children: f.icon }),
               /* @__PURE__ */ jsx("span", { children: f.text })
             ] }, f.text)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center", onClick: () => openModal("professional"), type: "button", children: "Start My Professional Trial" })
+            /* @__PURE__ */ jsx("button", { className: "pricing-plan-cta pricing-plan-cta-featured w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center", onClick: () => openModal("professional"), type: "button", children: "Start My Professional Trial" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-9 space-y-3", children: [
-              /* @__PURE__ */ jsx("h4", { className: "font-headline-md text-headline-md leading-tight text-secondary", children: "AI Buying Employee – Enterprise" }),
-              /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm leading-relaxed", children: "Designed for larger dealerships, buying teams and specialist vehicle sourcing companies." }),
+          /* @__PURE__ */ jsxs("div", { className: "pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
+            /* @__PURE__ */ jsxs("div", { className: "pricing-plan-header mb-9 space-y-3", children: [
+              /* @__PURE__ */ jsx("h4", { className: "pricing-plan-title font-headline-md text-headline-md leading-tight text-secondary", children: "AI Buying Employee – Enterprise" }),
+              /* @__PURE__ */ jsx("p", { className: "pricing-plan-description text-on-surface-variant text-sm leading-relaxed", children: "Designed for larger dealerships, buying teams and specialist vehicle sourcing companies." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-4xl font-extrabold text-white", children: "£299" }),
+                /* @__PURE__ */ jsx("span", { className: "pricing-plan-price text-4xl font-extrabold text-white", children: "£299" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Coordinates up to 10 dealership locations from one shared buying operation", "Gives full team visibility so managers can improve buying performance", "Includes a dedicated account manager to optimise results as you scale", "Supports white-label API access for enterprise workflows and integrations"].map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary text-sm", children: "check_circle" }),
+            /* @__PURE__ */ jsx("ul", { className: "pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Coordinates up to 10 dealership locations from one shared buying operation", "Gives full team visibility so managers can improve buying performance", "Includes a dedicated account manager to optimise results as you scale", "Supports white-label API access for enterprise workflows and integrations"].map((f) => /* @__PURE__ */ jsxs("li", { className: "pricing-plan-feature flex items-center gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "pricing-plan-feature-icon material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
-            /* @__PURE__ */ jsx("button", { className: "w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("enterprise"), type: "button", children: "Start My Enterprise Trial" })
+            /* @__PURE__ */ jsx("button", { className: "pricing-plan-cta w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("enterprise"), type: "button", children: "Start My Enterprise Trial" })
           ] })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl p-5 border border-outline-variant/20", children: /* @__PURE__ */ jsx("ul", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant", children: ["✔ Secure Stripe Checkout", "✔ Cancel Anytime", "✔ No Hidden Fees", "✔ Upgrade Anytime"].map((item) => /* @__PURE__ */ jsx("li", { className: "flex items-center justify-center text-center", children: item }, item)) }) }) })
