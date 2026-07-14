@@ -942,10 +942,10 @@ function LandingPage() {
           icon: "psychology_alt",
           title: "Buy With Greater Confidence",
           desc: "Opportunity Intelligence™ helps prioritise stronger buying opportunities, giving you more confidence before contacting the seller."
-        }].map((item) => /* @__PURE__ */ jsxs("div", { className: "p-8 glass-card rounded-2xl border-l-4 border-error/50", children: [
-          /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-error text-4xl mb-6 block", children: item.icon }),
-          /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md mb-4", children: item.title }),
-          /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant leading-relaxed", children: item.desc })
+        }].map((item) => /* @__PURE__ */ jsxs("div", { className: "why-dealer-feature-card p-8 glass-card rounded-2xl border-l-4 border-error/50", children: [
+          /* @__PURE__ */ jsx("span", { className: "why-dealer-feature-icon material-symbols-outlined text-error text-4xl mb-6 block", children: item.icon }),
+          /* @__PURE__ */ jsx("h3", { className: "why-dealer-feature-title font-headline-md text-headline-md mb-4", children: item.title }),
+          /* @__PURE__ */ jsx("p", { className: "why-dealer-feature-desc text-on-surface-variant leading-relaxed", children: item.desc })
         ] }, item.icon)) })
       ] }),
       /* @__PURE__ */ jsx("section", { className: "py-24 relative overflow-hidden", id: "how-it-works", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
