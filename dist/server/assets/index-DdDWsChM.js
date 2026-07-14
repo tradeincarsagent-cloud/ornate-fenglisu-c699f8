@@ -1067,25 +1067,25 @@ function LandingPage() {
             /* @__PURE__ */ jsx("button", { className: "pricing-plan-cta w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center", onClick: () => openModal("enterprise"), type: "button", children: "Start My Enterprise Trial" })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("div", { className: "trust-panel-card glass-card rounded-2xl p-5 border border-outline-variant/20", children: /* @__PURE__ */ jsx("ul", { className: "trust-panel-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant", children: [{
-          label: "Secure Stripe Checkout",
-          emphasized: true
-        }, {
-          label: "Cancel Anytime",
-          emphasized: false
-        }, {
-          label: "No Hidden Fees",
-          emphasized: false
-        }, {
-          label: "Upgrade Anytime",
-          emphasized: false
-        }].map((item) => /* @__PURE__ */ jsxs("li", { className: "trust-panel-item flex items-center justify-center text-center", children: [
-          /* @__PURE__ */ jsxs("span", { className: "trust-panel-mobile-row md:hidden", children: [
-            /* @__PURE__ */ jsx("span", { className: "trust-panel-tick", "aria-hidden": "true", children: "✔" }),
+        /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsxs("div", { className: "trust-panel-card glass-card rounded-2xl border border-outline-variant/20", children: [
+          /* @__PURE__ */ jsx("p", { className: "trust-panel-heading font-label-caps text-label-caps text-primary tracking-widest uppercase text-center mb-4", children: "Why Dealers Trust TICA" }),
+          /* @__PURE__ */ jsx("ul", { className: "trust-panel-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-on-surface-variant", children: [{
+            label: "Secure Stripe Checkout",
+            emphasized: true
+          }, {
+            label: "Cancel Anytime",
+            emphasized: false
+          }, {
+            label: "No Hidden Fees",
+            emphasized: false
+          }, {
+            label: "Upgrade Anytime",
+            emphasized: false
+          }].map((item) => /* @__PURE__ */ jsxs("li", { className: "trust-panel-item flex items-center gap-2.5", children: [
+            /* @__PURE__ */ jsx("svg", { className: "trust-panel-icon shrink-0 text-emerald-400", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.707 7.293a1 1 0 0 0-1.414 0L10 14.586l-2.293-2.293a1 1 0 0 0-1.414 1.414l3 3a1 1 0 0 0 1.414 0l6-6a1 1 0 0 0 0-1.414z" }) }),
             /* @__PURE__ */ jsx("span", { className: item.emphasized ? "font-bold" : "font-medium", children: item.label })
-          ] }),
-          /* @__PURE__ */ jsx("span", { className: "hidden md:inline", children: `✔ ${item.label}` })
-        ] }, item.label)) }) }) })
+          ] }, item.label)) })
+        ] }) })
       ] }),
       /* @__PURE__ */ jsx("section", { className: "py-24 max-md:pt-10 max-md:pb-6 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center max-w-3xl mx-auto mb-16 max-md:mb-8", children: [
