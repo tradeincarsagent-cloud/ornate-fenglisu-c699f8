@@ -741,31 +741,56 @@ function LandingPage() {
               </div>
               <p className="text-xs text-on-surface-variant">Scanning connected marketplaces and trusted sources 24/7.</p>
             </div>
-            <div className={`grid grid-cols-1 md:grid-cols-3 gap-gutter transition-all duration-500 ${opportunitiesVisible ? 'opacity-100 translate-y-0' : 'opacity-70 translate-y-1'}`}>
+            <div className={`grid grid-cols-1 sm:grid-cols-3 gap-gutter transition-all duration-500 ${opportunitiesVisible ? 'opacity-100 translate-y-0' : 'opacity-70 translate-y-1'}`}>
               {visibleOpportunities.map(car => (
-                <div key={`${car.name}-${car.askingPrice}`} className="glass-card rounded-2xl p-6 border-l-4 border-primary transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]">
-                  <div className="flex justify-between items-start mb-5">
-                    <span className="bg-primary/10 text-primary text-[10px] font-label-caps px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">Detected</span>
-                    <span className="text-[10px] text-on-surface-variant flex items-center gap-1">
-                      <span className="material-symbols-outlined text-xs">schedule</span> {car.detectedAt}
-                    </span>
+                <div key={`${car.name}-${car.askingPrice}`}>
+                  {/* Compact card — mobile + tablet (hidden on md+) */}
+                  <div className="md:hidden glass-card rounded-xl p-3 border-l-4 border-primary transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]">
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="bg-primary/10 text-primary text-[9px] font-label-caps px-2 py-0.5 rounded-full border border-primary/20 uppercase tracking-wider">Detected</span>
+                      <span className="text-[9px] text-on-surface-variant flex items-center gap-0.5">
+                        <span className="material-symbols-outlined" style={{fontSize:'10px'}}>schedule</span>
+                        {car.detectedAt}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-baseline gap-2 mb-1.5">
+                      <h3 className="font-headline-md text-xs text-white leading-tight min-w-0">{car.name}</h3>
+                      <p className="text-xs font-extrabold text-primary whitespace-nowrap">{car.askingPrice}</p>
+                    </div>
+                    <div className="flex gap-3 mb-1.5 flex-wrap">
+                      <span className="text-[9px] text-on-surface-variant">AI Confidence: <span className="text-white font-semibold">{car.confidence}</span></span>
+                      <span className="text-[9px] text-on-surface-variant">Est. Profit: <span className="text-primary font-semibold">{car.estimatedProfit}</span></span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[9px] text-on-surface-variant">{car.ticaCertified ? '✅ TICA Certified™' : 'TICA Review Queue'}</span>
+                      <button type="button" className="text-[9px] text-primary/90 hover:text-primary transition-colors font-semibold whitespace-nowrap">View AI Analysis →</button>
+                    </div>
                   </div>
-                  <h3 className="font-headline-md text-xl text-white mb-2">{car.name}</h3>
-                  <p className="text-2xl font-extrabold text-primary mb-5">{car.askingPrice}</p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps">AI Confidence Score</p>
-                      <p className="text-white font-bold">{car.confidence}</p>
+                  {/* Desktop card — md+ (unchanged) */}
+                  <div className="hidden md:block glass-card rounded-2xl p-6 border-l-4 border-primary transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]">
+                    <div className="flex justify-between items-start mb-5">
+                      <span className="bg-primary/10 text-primary text-[10px] font-label-caps px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">Detected</span>
+                      <span className="text-[10px] text-on-surface-variant flex items-center gap-1">
+                        <span className="material-symbols-outlined text-xs">schedule</span> {car.detectedAt}
+                      </span>
                     </div>
-                    <div>
-                      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps">Estimated Profit</p>
-                      <p className="text-primary font-bold">{car.estimatedProfit}</p>
+                    <h3 className="font-headline-md text-xl text-white mb-2">{car.name}</h3>
+                    <p className="text-2xl font-extrabold text-primary mb-5">{car.askingPrice}</p>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps">AI Confidence Score</p>
+                        <p className="text-white font-bold">{car.confidence}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-label-caps">Estimated Profit</p>
+                        <p className="text-primary font-bold">{car.estimatedProfit}</p>
+                      </div>
+                      <p className="text-sm text-on-surface-variant">{car.ticaCertified ? '✅ TICA Certified™' : 'TICA Review Queue'}</p>
+                      <p className="text-xs text-on-surface-variant">Detected {car.detectedAt}</p>
+                      <button type="button" className="text-xs text-primary/90 hover:text-primary transition-colors font-semibold">
+                        View AI Analysis →
+                      </button>
                     </div>
-                    <p className="text-sm text-on-surface-variant">{car.ticaCertified ? '✅ TICA Certified™' : 'TICA Review Queue'}</p>
-                    <p className="text-xs text-on-surface-variant">Detected {car.detectedAt}</p>
-                    <button type="button" className="text-xs text-primary/90 hover:text-primary transition-colors font-semibold">
-                      View AI Analysis →
-                    </button>
                   </div>
                 </div>
               ))}
