@@ -634,8 +634,8 @@ function LandingPage() {
           /* @__PURE__ */ jsx("div", { className: "absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full" })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-low border-y border-outline-variant/10", id: "ai-technology", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-center mb-14", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:py-14 bg-surface-container-low border-y border-outline-variant/10", id: "ai-technology", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-center mb-14 max-md:mb-8", children: [
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4 text-on-surface", children: "Meet Your AI Buying Employee" }),
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto", children: "Four intelligent technologies working together to help you buy smarter, faster and more profitably." })
         ] }),
@@ -661,7 +661,7 @@ function LandingPage() {
           /* @__PURE__ */ jsx("p", { className: "text-[10px] sm:text-xs lg:font-body-md lg:text-body-md text-on-surface-variant leading-snug lg:leading-relaxed", children: item.desc })
         ] }, item.title)) })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-12 bg-surface-container-lowest border-y border-outline-variant/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [{
+      /* @__PURE__ */ jsx("section", { className: "py-12 max-md:py-8 bg-surface-container-lowest border-y border-outline-variant/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [{
         icon: "verified_user",
         title: "Built for Independent Car Dealers",
         sub: "Tailored for UK market dynamics"
@@ -680,8 +680,8 @@ function LandingPage() {
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-xs mt-1", children: item.sub })
         ] })
       ] }, item.icon)) }) }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface", id: "live-demo", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:py-14 bg-surface", id: "live-demo", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-center mb-16 max-md:mb-10", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Live Opportunity Feed" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4", children: "Today's AI Buying Opportunities" }),
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "Illustrative examples showing how your AI Buying Employee identifies high-confidence buying opportunities." })
@@ -753,8 +753,8 @@ function LandingPage() {
           ] })
         ] }, `${car.name}-${car.askingPrice}`)) })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-low border-y border-outline-variant/10", id: "dashboard-preview", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:py-14 bg-surface-container-low border-y border-outline-variant/10", id: "dashboard-preview", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-center mb-16 max-md:mb-10", children: [
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-on-surface mb-4", children: "Your AI Buying Command Centre" }),
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "See how Trade in Cars Agent helps dealers track opportunities and manage vehicle sourcing." }),
           /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-emerald-400/10 border border-emerald-300/30 text-emerald-200 text-xs uppercase tracking-widest font-label-caps", children: [
@@ -921,8 +921,8 @@ function LandingPage() {
           "Enter My AI Command Centre"
         ] }) })
       ] }) }),
-      /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container-lowest", children: [
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
+      /* @__PURE__ */ jsxs("section", { className: "py-24 bg-surface-container-lowest benefits-section", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16 max-md:mb-8", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Why Dealers Need an AI Buying Employee" }),
           /* @__PURE__ */ jsx("div", { className: "why-dealer-mobile-card", children: /* @__PURE__ */ jsxs("h2", { className: "font-display-lg text-headline-lg mb-6", children: [
             "The most profitable dealers don't search harder—",
@@ -949,7 +949,7 @@ function LandingPage() {
         ] }, item.icon)) })
       ] }),
       /* @__PURE__ */ jsx("section", { className: "py-24 relative overflow-hidden", id: "how-it-works", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-end mb-16 gap-8", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-end mb-16 max-md:mb-10 gap-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "max-w-xl", children: [
             /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Our Process" }),
             /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg", children: "How Your AI Buying Employee Works" }),
@@ -972,7 +972,7 @@ function LandingPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-12 relative", children: [
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-12 max-md:gap-8 relative", children: [
           /* @__PURE__ */ jsx("div", { className: "hidden md:block absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent z-0" }),
           /* @__PURE__ */ jsx("div", { className: "hidden md:flex pointer-events-none absolute inset-x-0 top-7 z-20 justify-center", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-4xl px-20 flex items-center justify-between", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined how-it-works-arrow", children: "east" }),
@@ -993,8 +993,8 @@ function LandingPage() {
         ] }),
         /* @__PURE__ */ jsx("p", { className: "mt-12 text-center text-sm text-on-surface-variant/85 max-w-2xl mx-auto", children: "Your AI Buying Employee never stops searching. Update your buying criteria anytime." })
       ] }) }),
-      /* @__PURE__ */ jsxs("section", { className: "py-24 relative", id: "pricing", children: [
-        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16", children: [
+      /* @__PURE__ */ jsxs("section", { className: "py-24 max-md:py-14 relative", id: "pricing", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop text-center mb-16 max-md:mb-10", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Pricing" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-4", children: "Hire Your AI Buying Employee" }),
           /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-center gap-2 text-on-surface-variant mb-4", children: [
@@ -1073,8 +1073,8 @@ function LandingPage() {
         ] }),
         /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop mt-8", children: /* @__PURE__ */ jsx("div", { className: "glass-card rounded-2xl p-5 border border-outline-variant/20", children: /* @__PURE__ */ jsx("ul", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm font-semibold text-on-surface-variant", children: ["✔ Secure Stripe Checkout", "✔ Cancel Anytime", "✔ No Hidden Fees", "✔ Upgrade Anytime"].map((item) => /* @__PURE__ */ jsx("li", { className: "flex items-center justify-center text-center", children: item }, item)) }) }) })
       ] }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
-        /* @__PURE__ */ jsxs("div", { className: "text-center max-w-3xl mx-auto mb-16", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:py-12 bg-surface-container-lowest border-y border-outline-variant/10", id: "version-2", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-center max-w-3xl mx-auto mb-16 max-md:mb-10", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase mb-4", children: "Product Roadmap" }),
           /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg mb-6", children: "Built for Today. Designed for Tomorrow." }),
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-lg", children: "TICA is continuously evolving. Here's what you receive today, what's currently being developed, and where the platform is heading in the future." })
@@ -1114,7 +1114,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("span", { children: item })
           ] }, item)) })
         ] }, phase.version)) }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-12 glass-card rounded-2xl p-8 border border-outline-variant/20", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mt-12 max-md:mt-8 glass-card rounded-2xl p-8 border border-outline-variant/20", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
             /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "auto_awesome" }),
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: "🚀 Future Roadmap" })
@@ -1143,7 +1143,7 @@ function LandingPage() {
           ] }, item.text)) })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-margin-desktop", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:py-14 bg-primary text-on-primary text-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto px-margin-desktop", children: [
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-display-lg mb-4", children: "Ready to Hire Your AI Buying Employee?" }),
         /* @__PURE__ */ jsx("p", { className: "text-on-primary/80 text-lg mb-8", children: "Join dealers using AI to discover better buying opportunities 24/7." }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
@@ -1154,11 +1154,11 @@ function LandingPage() {
           ] })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-24 bg-surface-container border-t border-outline-variant/20", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto text-center space-y-8", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+      /* @__PURE__ */ jsx("section", { className: "py-24 max-md:py-12 bg-surface-container border-t border-outline-variant/20", children: /* @__PURE__ */ jsx("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto text-center space-y-8", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
         /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block uppercase", children: "THE TICA CERTIFIED™ STANDARD" }),
         /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg text-white", children: "Why Dealers Trust TICA™" }),
         /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto", children: "Every recommendation made by TICA must first pass our AI confidence analysis. Only opportunities that meet our buying criteria receive the TICA Certified™ recommendation." }),
-        /* @__PURE__ */ jsx("div", { className: "mt-12 mb-12 max-w-2xl mx-auto border-t border-outline-variant/15" }),
+        /* @__PURE__ */ jsx("div", { className: "mt-12 mb-12 max-md:mt-6 max-md:mb-6 max-w-2xl mx-auto border-t border-outline-variant/15" }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-10 text-center", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-5", children: [
             /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps tracking-widest block uppercase text-on-surface-variant/80", children: "Trusted AI Certification" }),
