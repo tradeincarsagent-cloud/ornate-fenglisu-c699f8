@@ -1197,28 +1197,28 @@ function LandingPage() {
               /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-medium", children: "Only opportunities that pass TICA's AI confidence analysis receive the TICA Certified™ badge before being recommended." })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "grid w-full max-w-4xl grid-cols-1 gap-4 pt-4 sm:grid-cols-2", children: [{
+          /* @__PURE__ */ jsx("div", { className: "grid w-full max-w-4xl grid-cols-2 gap-3 pt-4 sm:gap-4 sm:grid-cols-2", children: [{
             icon: "🔒",
             label: "Secure Stripe Checkout",
-            desc: "Your subscription is processed securely through Stripe."
+            desc: "Secure payments through Stripe."
           }, {
             icon: "📅",
             label: "14-Day Professional Trial",
-            desc: "Full access to every Professional feature from day one."
+            desc: "Full Professional access from day one."
           }, {
             icon: "🧠",
             label: "AI Confidence Analysis",
-            desc: "Every opportunity is analysed before being recommended."
+            desc: "Every vehicle analysed before recommendation."
           }, {
             icon: "🚗",
             label: "Built for Professional Dealers",
-            desc: "Designed specifically for independent dealers, traders and buying teams."
-          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-5 py-4 text-left", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-xl leading-none", children: item.icon }),
-              /* @__PURE__ */ jsx("span", { className: "font-semibold text-sm text-white sm:text-base", children: item.label })
+            desc: "Designed for dealers, traders and buying teams."
+          }].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex h-full flex-col gap-2 rounded-xl border border-outline-variant/25 bg-surface-container-high/50 px-5 py-4 text-left max-md:h-[158px] max-md:px-3.5 max-md:py-3 max-md:text-center", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 max-md:flex-col max-md:items-center max-md:gap-1.5", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-xl leading-none max-md:text-lg", children: item.icon }),
+              /* @__PURE__ */ jsx("span", { className: "font-semibold text-sm text-white sm:text-base max-md:text-[0.82rem] max-md:font-bold max-md:leading-tight", children: item.label })
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant leading-relaxed", children: item.desc })
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant leading-relaxed max-md:text-[0.74rem] max-md:leading-snug", children: item.desc })
           ] }, item.label)) }),
           /* @__PURE__ */ jsx("p", { className: "pt-6 text-on-surface-variant font-medium max-w-2xl text-center", children: "Start your Professional Trial today and discover why dealers trust TICA to identify better buying opportunities before anyone else." })
         ] })
