@@ -1649,7 +1649,7 @@ body > div {
   }
 
   .pricing-plan-card {
-    padding: 1rem 0.85rem;
+    padding: 0.93rem 0.85rem;
   }
 
   .pricing-plan-header {
@@ -1663,6 +1663,7 @@ body > div {
   .pricing-plan-title {
     font-size: 1.3rem;
     line-height: 1.15;
+    color: #1493ff;
   }
 
   .pricing-plan-description {
@@ -1671,12 +1672,22 @@ body > div {
   }
 
   .pricing-plan-price {
-    font-size: 1.75rem;
+    font-size: 1.84rem;
     line-height: 1;
   }
 
   .pricing-plan-price-featured {
-    font-size: 1.9rem;
+    font-size: 2.0rem;
+  }
+
+  .pricing-plan-mo {
+    font-size: 0.7rem;
+  }
+
+  .pricing-popular-badge {
+    top: -11px;
+    padding-top: 3px;
+    padding-bottom: 3px;
   }
 
   .pricing-plan-features {

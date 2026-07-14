@@ -1076,13 +1076,13 @@ function LandingPage() {
           </div>
           <div className="pricing-plans-grid max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter items-stretch">
             {/* Starter */}
-            <div className="pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
+            <div className="pricing-plan-card py-[1.85rem] px-8 md:py-[2.3rem] md:px-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="pricing-plan-header mb-9 space-y-3">
-                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight">AI Buying Employee – Starter</h4>
+                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight text-primary-container">AI Buying Employee – Starter</h4>
                 <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">Perfect for independent dealers starting with AI sourcing.</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="pricing-plan-price text-4xl font-extrabold text-white">£49</span>
-                  <span className="text-on-surface-variant">/mo</span>
+                  <span className="pricing-plan-price text-[2.36rem] font-extrabold text-white">£49</span>
+                  <span className="pricing-plan-mo text-xs text-on-surface-variant">/mo</span>
                 </div>
               </div>
               <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
@@ -1096,25 +1096,25 @@ function LandingPage() {
               <button className="pricing-plan-cta w-full border border-outline py-4 rounded-full font-bold hover:bg-surface-variant transition-all uppercase text-sm tracking-widest active:scale-95 text-center" onClick={() => openModal('starter')} type="button">Start My Starter Trial</button>
             </div>
             {/* Professional */}
-            <div className="pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
-              <div className="pricing-popular-badge absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
+            <div className="pricing-plan-card py-[1.85rem] px-8 md:py-[2.3rem] md:px-10 glass-card rounded-2xl flex flex-col h-full glow-border relative transform md:-translate-y-4 shadow-2xl">
+              <div className="pricing-popular-badge absolute -top-[14px] left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-[3px] rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
               <div className="pricing-plan-header mb-9 space-y-3">
-                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight">AI Buying Employee – Professional</h4>
+                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight text-primary-container">AI Buying Employee – Professional</h4>
                 <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">For active dealers who need real-time opportunity flow.</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="pricing-plan-price pricing-plan-price-featured text-5xl font-extrabold text-primary">£99</span>
-                  <span className="text-on-surface-variant">/mo</span>
+                  <span className="pricing-plan-price pricing-plan-price-featured text-[3.15rem] font-extrabold text-primary">£99</span>
+                  <span className="pricing-plan-mo text-xs text-on-surface-variant">/mo</span>
                 </div>
               </div>
               <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
                 {[
-                  { icon: 'stars', text: 'Unlimited buying briefs', bold: true },
-                  { icon: 'stars', text: 'Instant AI opportunity alerts', bold: true },
-                  { icon: 'check_circle', text: 'Advanced AI buying intelligence', bold: false },
-                  { icon: 'check_circle', text: 'Opportunity Intelligence™ insights', bold: false },
+                  { text: 'Unlimited buying briefs', bold: true },
+                  { text: 'Instant AI opportunity alerts', bold: true },
+                  { text: 'Advanced AI buying intelligence', bold: false },
+                  { text: 'Opportunity Intelligence™ insights', bold: false },
                 ].map(f => (
                   <li key={f.text} className={`pricing-plan-feature flex items-center gap-3 ${f.bold ? 'font-bold' : ''}`}>
-                    <span className="pricing-plan-feature-icon material-symbols-outlined text-primary text-sm">{f.icon}</span>
+                    <span className="pricing-plan-feature-icon material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f.text}</span>
                   </li>
                 ))}
@@ -1122,13 +1122,13 @@ function LandingPage() {
               <button className="pricing-plan-cta pricing-plan-cta-featured w-full engine-start-btn text-white py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-center" onClick={() => openModal('professional')} type="button">Start My Professional Trial</button>
             </div>
             {/* Enterprise */}
-            <div className="pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
+            <div className="pricing-plan-card py-[1.85rem] px-8 md:py-[2.3rem] md:px-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="pricing-plan-header mb-9 space-y-3">
-                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight text-secondary">AI Buying Employee – Enterprise</h4>
+                <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight text-primary-container">AI Buying Employee – Enterprise</h4>
                 <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">Designed for larger dealerships, buying teams and specialist vehicle sourcing companies.</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="pricing-plan-price text-4xl font-extrabold text-white">£299</span>
-                  <span className="text-on-surface-variant">/mo</span>
+                  <span className="pricing-plan-price text-[2.36rem] font-extrabold text-white">£299</span>
+                  <span className="pricing-plan-mo text-xs text-on-surface-variant">/mo</span>
                 </div>
               </div>
               <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
