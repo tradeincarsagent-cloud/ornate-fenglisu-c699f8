@@ -949,17 +949,17 @@ function LandingPage() {
         ] }, item.icon)) })
       ] }),
       /* @__PURE__ */ jsx("section", { className: "py-24 relative overflow-hidden", id: "how-it-works", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-end mb-16 max-md:mb-10 gap-8", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-end mb-16 max-md:mb-7 gap-8 max-md:gap-5", children: [
           /* @__PURE__ */ jsxs("div", { className: "max-w-xl", children: [
-            /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase", children: "Our Process" }),
-            /* @__PURE__ */ jsx("h2", { className: "font-display-lg text-headline-lg", children: "How Your AI Buying Employee Works" }),
-            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant mt-4 leading-relaxed", children: "Getting started takes just a few minutes. Your AI Buying Employee then searches continuously for vehicles that match your buying strategy." })
+            /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 max-md:mb-2 uppercase", children: "Our Process" }),
+            /* @__PURE__ */ jsx("h2", { className: "how-it-works-heading font-display-lg text-headline-lg", children: "How Your AI Buying Employee Works" }),
+            /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant mt-4 max-md:mt-2 leading-relaxed", children: "Getting started takes just a few minutes. Your AI Buying Employee then searches continuously for vehicles that match your buying strategy." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-surface-variant p-4 rounded-xl border border-outline-variant/30 flex items-center gap-4 min-w-[220px]", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-surface-variant p-4 max-md:p-3 rounded-xl max-md:rounded-2xl border border-outline-variant/30 flex items-center gap-4 min-w-[220px]", children: [
             /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/20 rounded flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "filter_list" }) }),
             /* @__PURE__ */ jsxs("div", { style: {
               minHeight: "3.5rem"
-            }, className: "flex flex-col justify-center", children: [
+            }, className: "how-it-works-criteria-inner flex flex-col justify-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-xs font-label-caps text-on-surface-variant", children: "EXAMPLE CRITERIA" }),
               /* @__PURE__ */ jsxs("div", { style: {
                 transition: "opacity 0.45s ease, transform 0.45s ease",

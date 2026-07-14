@@ -1003,17 +1003,17 @@ function LandingPage() {
         {/* How It Works */}
         <section className="py-24 relative overflow-hidden" id="how-it-works">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16 max-md:mb-10 gap-8">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 max-md:mb-7 gap-8 max-md:gap-5">
               <div className="max-w-xl">
-                <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">Our Process</span>
-                <h2 className="font-display-lg text-headline-lg">How Your AI Buying Employee Works</h2>
-                <p className="text-on-surface-variant mt-4 leading-relaxed">Getting started takes just a few minutes. Your AI Buying Employee then searches continuously for vehicles that match your buying strategy.</p>
+                <span className="font-label-caps text-label-caps text-primary tracking-widest block mb-4 max-md:mb-2 uppercase">Our Process</span>
+                <h2 className="how-it-works-heading font-display-lg text-headline-lg">How Your AI Buying Employee Works</h2>
+                <p className="text-on-surface-variant mt-4 max-md:mt-2 leading-relaxed">Getting started takes just a few minutes. Your AI Buying Employee then searches continuously for vehicles that match your buying strategy.</p>
               </div>
-              <div className="bg-surface-variant p-4 rounded-xl border border-outline-variant/30 flex items-center gap-4 min-w-[220px]">
+              <div className="bg-surface-variant p-4 max-md:p-3 rounded-xl max-md:rounded-2xl border border-outline-variant/30 flex items-center gap-4 min-w-[220px]">
                 <div className="w-12 h-12 bg-primary/20 rounded flex items-center justify-center flex-shrink-0">
                   <span className="material-symbols-outlined text-primary">filter_list</span>
                 </div>
-                <div style={{ minHeight: '3.5rem' }} className="flex flex-col justify-center">
+                <div style={{ minHeight: '3.5rem' }} className="how-it-works-criteria-inner flex flex-col justify-center">
                   <p className="text-xs font-label-caps text-on-surface-variant">EXAMPLE CRITERIA</p>
                   <div style={{ transition: 'opacity 0.45s ease, transform 0.45s ease', opacity: criteriaVisible ? 1 : 0, transform: criteriaVisible ? 'translateY(0)' : 'translateY(4px)' }}>
                     <p className="font-bold text-on-surface leading-snug">{exampleCriteria[criteriaIndex].label}</p>
