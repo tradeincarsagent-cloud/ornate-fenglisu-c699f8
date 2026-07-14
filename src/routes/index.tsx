@@ -1254,7 +1254,7 @@ function LandingPage() {
                 <span className="material-symbols-outlined text-primary">auto_awesome</span>
                 <h3 className="font-headline-md text-headline-md">🚀 Future Roadmap</h3>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:grid-cols-1 max-md:gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:grid-cols-2 max-md:gap-2 max-md:[grid-auto-rows:1fr]">
                 {[
                   { icon: 'search', text: 'AI Intelligence Engine', status: 'In Development', badgeClass: 'bg-primary/20 text-primary' },
                   { icon: 'fact_check', text: 'Vehicle History Checks', status: 'Planned', badgeClass: 'bg-amber-500/20 text-amber-300' },
@@ -1263,13 +1263,13 @@ function LandingPage() {
                   { icon: 'query_stats', text: 'Dealer Insights', status: 'In Development', badgeClass: 'bg-primary/20 text-primary' },
                   { icon: 'notifications_active', text: 'TICA Smart Alerts™', status: 'Coming Soon', badgeClass: 'bg-purple-500/20 text-purple-300' },
                 ].map(item => (
-                  <div key={item.text} className="bg-surface-container p-4 max-md:p-3 rounded-xl border border-outline-variant/20">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <span className="material-symbols-outlined text-primary-container max-md:text-[22px]">{item.icon}</span>
-                        <span className="font-bold text-sm max-md:text-[13px]">{item.text}</span>
+                  <div key={item.text} className="bg-surface-container p-4 max-md:p-3 rounded-xl border border-outline-variant/20 max-md:flex max-md:flex-col max-md:items-center max-md:justify-center max-md:text-center max-md:gap-2">
+                    <div className="flex items-center justify-between gap-3 max-md:contents">
+                      <div className="flex items-center gap-3 min-w-0 max-md:contents">
+                        <span className="material-symbols-outlined text-primary-container max-md:text-[26px]">{item.icon}</span>
+                        <span className="font-bold text-sm max-md:text-[12px] max-md:leading-snug">{item.text}</span>
                       </div>
-                      <span className={`hidden max-md:inline-flex items-center whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${item.badgeClass}`}>
+                      <span className={`hidden max-md:inline-flex items-center justify-center whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide max-md:w-28 max-md:h-6 ${item.badgeClass}`}>
                         {item.status}
                       </span>
                     </div>
