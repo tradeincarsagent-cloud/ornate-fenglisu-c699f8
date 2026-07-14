@@ -1743,6 +1743,33 @@ body > div {
     padding-top: 0.72rem;
     padding-bottom: 0.72rem;
   }
+
+  .trust-panel-card {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .trust-panel-list {
+    row-gap: 0.55rem;
+  }
+
+  .trust-panel-item {
+    min-height: 1.5rem;
+  }
+
+  .trust-panel-mobile-row {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    line-height: 1.2;
+  }
+
+  .trust-panel-tick {
+    font-size: 1.05rem;
+    line-height: 1;
+    font-weight: 900;
+  }
 }
 
 /* ── Recommendation legend — compact traffic light (mobile only) ────────── */
