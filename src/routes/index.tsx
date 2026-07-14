@@ -902,15 +902,21 @@ function LandingPage() {
               <div className="glass-card rounded-2xl border border-outline-variant/20 p-4 lg:p-7 h-full">
                 <p className="text-label-caps text-primary uppercase tracking-widest mb-1.5 lg:mb-3 text-[10px] lg:text-xs">AI Recommendation</p>
                 <p className="text-white font-semibold text-base lg:text-xl mb-1.5 lg:mb-3">BMW M3</p>
-                <p className="text-on-surface-variant text-[10px] uppercase tracking-widest mb-1 lg:mb-2">Why TICA recommends it</p>
-                <ul className="space-y-0.5 lg:space-y-2 text-on-surface-variant text-xs lg:text-sm">
+                <p className="text-on-surface-variant text-[10px] uppercase tracking-widest mb-0.5 lg:mb-2">Why TICA recommends it</p>
+                <ul className="space-y-0 lg:space-y-2 text-on-surface-variant text-xs lg:text-sm">
                   <li>• High demand</li>
                   <li>• Low market supply</li>
                   <li>• Estimated profit £3,200</li>
                 </ul>
-                <div className="mt-2.5 lg:mt-4 pt-2.5 lg:pt-0 border-t border-outline-variant/20 lg:border-0">
+                <div className="mt-1.5 lg:mt-4 pt-1.5 lg:pt-0 border-t border-outline-variant/20 lg:border-0">
                   <p className="text-xs lg:text-sm text-on-surface-variant"><span className="text-primary font-semibold">Recommended Action</span></p>
-                  <p className="text-white text-xs lg:text-sm mt-0.5">📞 Contact seller immediately.</p>
+                  {/* Mobile: outline phone icon + bold text */}
+                  <p className="lg:hidden text-white text-xs mt-0.5 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-white shrink-0" style={{fontSize:'13px'}}>phone</span>
+                    <span className="font-bold">Contact seller immediately.</span>
+                  </p>
+                  {/* Desktop: unchanged */}
+                  <p className="hidden lg:block text-white text-sm mt-0.5">📞 Contact seller immediately.</p>
                 </div>
               </div>
 
@@ -918,7 +924,7 @@ function LandingPage() {
               <div className="glass-card rounded-2xl border border-outline-variant/20 p-4 lg:p-7 h-full">
                 <p className="text-label-caps text-primary uppercase tracking-widest mb-2 lg:mb-4 text-[10px] lg:text-xs">Live AI Activity</p>
                 {/* Mobile/Tablet: compact dot-leader layout */}
-                <ul className="lg:hidden space-y-1.5 font-mono text-xs">
+                <ul className="lg:hidden space-y-1 font-mono text-xs">
                   {[
                     { label: 'Market Scans', value: '1,287' },
                     { label: 'Vehicles Analysed', value: '8,492' },
@@ -930,9 +936,15 @@ function LandingPage() {
                       <span className="text-white font-semibold shrink-0">{item.value}</span>
                     </li>
                   ))}
-                  <li className="flex items-center justify-between gap-1 pt-1.5 border-t border-outline-variant/20">
+                  <li className="flex items-start justify-between gap-1 pt-1 border-t border-outline-variant/20">
                     <span className="text-on-surface-variant text-[10px] uppercase tracking-widest font-sans">Status</span>
-                    <span className="text-emerald-300 font-semibold text-xs">🟢 AI Monitoring Live</span>
+                    <div className="flex flex-col items-end">
+                      <span className="text-emerald-300 font-semibold text-xs flex items-center gap-1.5">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot-pulse shrink-0" />
+                        AI Monitoring Live
+                      </span>
+                      <span className="text-[9px] text-on-surface-variant/50 mt-0.5 font-sans font-normal">Live • Updating continuously</span>
+                    </div>
                   </li>
                 </ul>
                 {/* Desktop: original layout */}
@@ -957,7 +969,10 @@ function LandingPage() {
               </div>
             </div>
             <div className="flex justify-center">
-              <button onClick={() => scrollToSection('dashboard-preview')} className="border border-primary/50 text-primary px-10 py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95">Enter My AI Command Centre</button>
+              <button onClick={() => scrollToSection('dashboard-preview')} className="preview-btn-glow border border-primary/50 text-primary px-6 py-3 lg:px-10 lg:py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95 flex items-center gap-2">
+                <span className="material-symbols-outlined lg:hidden shrink-0" style={{fontSize:'16px'}}>space_dashboard</span>
+                Enter My AI Command Centre
+              </button>
             </div>
           </div>
         </section>
