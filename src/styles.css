@@ -1148,6 +1148,20 @@ body > div {
 }
 
 @media (max-width: 767px) {
+  .hero-mobile-radar-wrap {
+    padding-top: 0.35rem !important;
+    margin-bottom: -1.2rem;
+  }
+
+  .hero-mobile-radar-wrap .radar-container {
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+
+  .hero-mobile-cta-stack {
+    margin-top: 0.35rem;
+  }
+
   .platform-shell-header {
     padding-top: calc(var(--app-safe-area-top) + 0.9rem);
     padding-bottom: 1rem;

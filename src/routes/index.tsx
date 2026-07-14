@@ -616,13 +616,13 @@ function LandingPage() {
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
                 Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition.
               </p>
-              <div className="relative flex items-center justify-center overflow-visible pt-2 md:hidden">
+              <div className="hero-mobile-radar-wrap relative flex items-center justify-center overflow-visible pt-2 md:hidden">
                 <HeroRadar />
                 <div className="absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full"></div>
                 <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full"></div>
               </div>
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="hero-mobile-cta-stack space-y-6">
+                <div className="flex flex-col sm:flex-row gap-4 pt-2 md:pt-4">
                   <button className="engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider" onClick={handleHeroStartFreeTrial}>
                     <span className="w-3 h-3 bg-white rounded-full animate-pulse"></span>
                     Start Free 14-Day Trial

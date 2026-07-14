@@ -600,13 +600,13 @@ function LandingPage() {
             "Save Hours Every Week."
           ] }),
           /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition." }),
-          /* @__PURE__ */ jsxs("div", { className: "relative flex items-center justify-center overflow-visible pt-2 md:hidden", children: [
+          /* @__PURE__ */ jsxs("div", { className: "hero-mobile-radar-wrap relative flex items-center justify-center overflow-visible pt-2 md:hidden", children: [
             /* @__PURE__ */ jsx(HeroRadar, {}),
             /* @__PURE__ */ jsx("div", { className: "absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full" }),
             /* @__PURE__ */ jsx("div", { className: "absolute -bottom-12 -left-12 w-48 h-48 bg-primary/10 blur-[80px] rounded-full" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "hero-mobile-cta-stack space-y-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 pt-2 md:pt-4", children: [
               /* @__PURE__ */ jsxs("button", { className: "engine-start-btn text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_40px_rgba(239,68,68,0.4)] uppercase tracking-wider", onClick: handleHeroStartFreeTrial, children: [
                 /* @__PURE__ */ jsx("span", { className: "w-3 h-3 bg-white rounded-full animate-pulse" }),
                 "Start Free 14-Day Trial"
@@ -952,11 +952,11 @@ function LandingPage() {
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-end mb-16 max-md:mb-7 gap-8 max-md:gap-5", children: [
           /* @__PURE__ */ jsxs("div", { className: "max-w-xl", children: [
             /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary tracking-widest block mb-4 max-md:mb-2 uppercase", children: "Our Process" }),
-            /* @__PURE__ */ jsx("h2", { className: "how-it-works-heading font-display-lg text-headline-lg", children: "How Your AI Buying Employee Works" }),
+            /* @__PURE__ */ jsx("h2", { className: "how-it-works-heading font-display-lg text-headline-lg text-primary", children: "How Your AI Buying Employee Works" }),
             /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant mt-4 max-md:mt-2 leading-relaxed", children: "Getting started takes just a few minutes. Your AI Buying Employee then searches continuously for vehicles that match your buying strategy." })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "bg-surface-variant p-4 max-md:p-3 rounded-xl max-md:rounded-2xl border border-outline-variant/30 flex items-center gap-4 min-w-[220px]", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/20 rounded flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary", children: "filter_list" }) }),
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/20 rounded flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-emerald-400", children: "search" }) }),
             /* @__PURE__ */ jsxs("div", { style: {
               minHeight: "3.5rem"
             }, className: "how-it-works-criteria-inner flex flex-col justify-center", children: [
