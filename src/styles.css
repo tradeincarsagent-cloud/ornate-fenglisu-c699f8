@@ -1165,8 +1165,80 @@ body > div {
   }
 
   .radar-notification {
-    width: min(12rem, calc(100% - 2rem));
-    padding: 0.75rem 0.8rem;
+    width: min(6.9rem, calc(50% - 0.9rem));
+    padding: 0.45rem 0.5rem;
+    border-radius: 0.75rem;
+  }
+
+  .radar-notification-upper-right,
+  .radar-notification-upper-left {
+    top: 0.8rem;
+  }
+
+  .radar-notification-upper-right,
+  .radar-notification-lower-right {
+    right: 0.1rem;
+  }
+
+  .radar-notification-upper-left,
+  .radar-notification-lower-left {
+    left: 0.1rem;
+  }
+
+  .radar-notification-lower-left,
+  .radar-notification-lower-right {
+    bottom: 0.85rem;
+  }
+
+  .radar-notification-header {
+    gap: 0.35rem;
+    margin-bottom: 0.22rem;
+  }
+
+  .radar-notification-label {
+    font-size: 0.38rem;
+    letter-spacing: 0.12em;
+  }
+
+  .radar-notification-stamp {
+    font-size: 0.36rem;
+    letter-spacing: 0.1em;
+  }
+
+  .radar-notification-vehicle {
+    margin-top: 0.18rem;
+    font-size: 0.58rem;
+    line-height: 1.15;
+  }
+
+  .radar-notification-metrics {
+    gap: 0.35rem;
+    margin-top: 0.4rem;
+    padding-top: 0.35rem;
+  }
+
+  .radar-notification-metric {
+    gap: 0.12rem;
+    min-width: 0;
+  }
+
+  .radar-notification-metric-label {
+    font-size: 0.34rem;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+  }
+
+  .radar-notification-metric-value {
+    font-size: 0.62rem;
+    line-height: 1.1;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .radar-notification {
+    width: min(9.25rem, calc(50% - 1rem));
+    padding: 0.62rem 0.68rem;
+    border-radius: 0.85rem;
   }
 
   .radar-notification-upper-right,
@@ -1176,17 +1248,53 @@ body > div {
 
   .radar-notification-upper-right,
   .radar-notification-lower-right {
-    right: 0.2rem;
+    right: 0.25rem;
   }
 
   .radar-notification-upper-left,
   .radar-notification-lower-left {
-    left: 0.2rem;
+    left: 0.25rem;
   }
 
   .radar-notification-lower-left,
   .radar-notification-lower-right {
-    bottom: 0.75rem;
+    bottom: 1rem;
+  }
+
+  .radar-notification-header {
+    gap: 0.55rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .radar-notification-label {
+    font-size: 0.48rem;
+    letter-spacing: 0.16em;
+  }
+
+  .radar-notification-stamp {
+    font-size: 0.42rem;
+    letter-spacing: 0.12em;
+  }
+
+  .radar-notification-vehicle {
+    margin-top: 0.24rem;
+    font-size: 0.7rem;
+    line-height: 1.18;
+  }
+
+  .radar-notification-metrics {
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding-top: 0.42rem;
+  }
+
+  .radar-notification-metric-label {
+    font-size: 0.43rem;
+    letter-spacing: 0.12em;
+  }
+
+  .radar-notification-metric-value {
+    font-size: 0.76rem;
   }
 }
 
