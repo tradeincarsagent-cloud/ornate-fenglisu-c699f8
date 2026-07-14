@@ -668,28 +668,33 @@ function LandingPage() {
                 Four intelligent technologies working together to help you buy smarter, faster and more profitably.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-8">
               {[
                 {
-                  title: '🧠 TICA Smart Learning™',
-                  desc: 'Learns how your dealership buys vehicles, remembers your preferences and continuously improves every future search.',
+                  icon: '⚡',
+                  title: 'TICA Decision Engine™',
+                  desc: 'Explains why a vehicle deserves your attention.',
                 },
                 {
-                  title: '📊 Opportunity Intelligence™',
-                  desc: 'Analyses pricing, market demand and potential profit to highlight the strongest buying opportunities.',
+                  icon: '🛡️',
+                  title: 'TICA Certified™',
+                  desc: 'Only the highest-confidence buying opportunities receive the TICA Certified™ badge.',
                 },
                 {
-                  title: '⚡ TICA Decision Engine™',
-                  desc: 'Explains why a vehicle deserves your attention, helping you make faster and more confident buying decisions.',
+                  icon: '🧠',
+                  title: 'TICA Smart Learning™',
+                  desc: 'Learns your buying preferences and improves every search.',
                 },
                 {
-                  title: '🛡️ TICA Certified™',
-                  desc: 'Only the highest-confidence opportunities receive TICA Certified™, giving you greater confidence before making contact with the seller.',
+                  icon: '📊',
+                  title: 'Opportunity Intelligence™',
+                  desc: 'Analyses pricing, demand and profit potential instantly.',
                 },
               ].map(item => (
-                <div key={item.title} className="glass-card rounded-2xl p-8 md:p-10 border border-outline-variant/20 transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]">
-                  <h3 className="font-headline-md text-headline-md mb-4 text-on-surface">{item.title}</h3>
-                  <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{item.desc}</p>
+                <div key={item.title} className="glass-card rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-10 border border-outline-variant/20 transition-all hover:shadow-[0_0_30px_rgba(20,147,255,0.2)]">
+                  <div className="text-xl sm:text-2xl lg:text-3xl mb-1.5 lg:mb-3">{item.icon}</div>
+                  <h3 className="font-semibold text-xs sm:text-sm lg:font-headline-md lg:text-headline-md mb-1.5 lg:mb-4 text-on-surface leading-tight">{item.title}</h3>
+                  <p className="text-[10px] sm:text-xs lg:font-body-md lg:text-body-md text-on-surface-variant leading-snug lg:leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
