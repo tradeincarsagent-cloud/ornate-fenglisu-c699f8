@@ -991,10 +991,10 @@ function LandingPage() {
               { icon: 'notification_important', title: 'Never Miss Profitable Vehicles', desc: 'The best opportunities often disappear within minutes. TICA alerts you the moment high-confidence vehicles become available.' },
               { icon: 'psychology_alt', title: 'Buy With Greater Confidence', desc: 'Opportunity Intelligence™ helps prioritise stronger buying opportunities, giving you more confidence before contacting the seller.' },
             ].map(item => (
-              <div key={item.icon} className="p-8 glass-card rounded-2xl border-l-4 border-error/50">
-                <span className="material-symbols-outlined text-error text-4xl mb-6 block">{item.icon}</span>
-                <h3 className="font-headline-md text-headline-md mb-4">{item.title}</h3>
-                <p className="text-on-surface-variant leading-relaxed">{item.desc}</p>
+              <div key={item.icon} className="why-dealer-feature-card p-8 glass-card rounded-2xl border-l-4 border-error/50">
+                <span className="why-dealer-feature-icon material-symbols-outlined text-error text-4xl mb-6 block">{item.icon}</span>
+                <h3 className="why-dealer-feature-title font-headline-md text-headline-md mb-4">{item.title}</h3>
+                <p className="why-dealer-feature-desc text-on-surface-variant leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
