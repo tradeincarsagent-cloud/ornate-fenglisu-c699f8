@@ -1645,67 +1645,70 @@ body > div {
   }
 
   .pricing-plans-grid {
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .pricing-plan-card {
-    padding: 1.3rem;
+    padding: 1rem 0.85rem;
   }
 
   .pricing-plan-header {
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.85rem;
   }
 
   .pricing-plan-header > :where(:not([hidden]) ~ :not([hidden])) {
-    margin-top: 0.55rem;
+    margin-top: 0.35rem;
   }
 
   .pricing-plan-title {
-    font-size: 1.55rem;
+    font-size: 1.3rem;
     line-height: 1.15;
   }
 
   .pricing-plan-description {
-    line-height: 1.5;
+    line-height: 1.4;
+    font-size: 0.8rem;
   }
 
   .pricing-plan-price {
-    font-size: 2rem;
+    font-size: 1.75rem;
     line-height: 1;
   }
 
   .pricing-plan-price-featured {
-    font-size: 2.2rem;
+    font-size: 1.9rem;
   }
 
   .pricing-plan-features {
-    margin-bottom: 1.3rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.82rem;
   }
 
   .pricing-plan-features > :where(:not([hidden]) ~ :not([hidden])) {
-    margin-top: 0.7rem;
+    margin-top: 0.4rem;
   }
 
   .pricing-plan-feature {
     align-items: flex-start;
-    gap: 0.6rem;
-    line-height: 1.45;
+    gap: 0.45rem;
+    line-height: 1.3;
   }
 
   .pricing-plan-feature-icon {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     line-height: 1;
-    margin-top: 0.18rem;
+    margin-top: 0.12rem;
   }
 
   .pricing-plan-cta {
-    padding-top: 0.85rem;
-    padding-bottom: 0.85rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+    font-size: 0.72rem;
   }
 
   .pricing-plan-cta-featured {
-    padding-top: 0.92rem;
-    padding-bottom: 0.92rem;
+    padding-top: 0.72rem;
+    padding-bottom: 0.72rem;
   }
 }
 

@@ -1011,13 +1011,13 @@ function LandingPage() {
           /* @__PURE__ */ jsxs("div", { className: "pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border", children: [
             /* @__PURE__ */ jsxs("div", { className: "pricing-plan-header mb-9 space-y-3", children: [
               /* @__PURE__ */ jsx("h4", { className: "pricing-plan-title font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Starter" }),
-              /* @__PURE__ */ jsx("p", { className: "pricing-plan-description text-on-surface-variant text-sm leading-relaxed", children: "Perfect for independent dealers and traders hiring their first AI Buying Employee." }),
+              /* @__PURE__ */ jsx("p", { className: "pricing-plan-description text-on-surface-variant text-sm leading-relaxed", children: "Perfect for independent dealers starting with AI sourcing." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "pricing-plan-price text-4xl font-extrabold text-white", children: "£49" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Keeps up to 3 buying briefs actively searching for margin-ready stock", "Delivers a daily shortlist so you can make faster buying calls", "Gives you one command centre to track opportunities and next actions"].map((f) => /* @__PURE__ */ jsxs("li", { className: "pricing-plan-feature flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx("ul", { className: "pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Up to 3 active buying briefs", "Daily shortlist of margin-ready stock", "One command centre for all opportunities"].map((f) => /* @__PURE__ */ jsxs("li", { className: "pricing-plan-feature flex items-center gap-3", children: [
               /* @__PURE__ */ jsx("span", { className: "pricing-plan-feature-icon material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
@@ -1027,7 +1027,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("div", { className: "pricing-popular-badge absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider", children: "⭐ MOST POPULAR" }),
             /* @__PURE__ */ jsxs("div", { className: "pricing-plan-header mb-9 space-y-3", children: [
               /* @__PURE__ */ jsx("h4", { className: "pricing-plan-title font-headline-md text-headline-md leading-tight", children: "AI Buying Employee – Professional" }),
-              /* @__PURE__ */ jsx("p", { className: "pricing-plan-description text-on-surface-variant text-sm leading-relaxed", children: "Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time." }),
+              /* @__PURE__ */ jsx("p", { className: "pricing-plan-description text-on-surface-variant text-sm leading-relaxed", children: "For active dealers who need real-time opportunity flow." }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
                 /* @__PURE__ */ jsx("span", { className: "pricing-plan-price pricing-plan-price-featured text-5xl font-extrabold text-primary", children: "£99" }),
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
@@ -1035,19 +1035,19 @@ function LandingPage() {
             ] }),
             /* @__PURE__ */ jsx("ul", { className: "pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: [{
               icon: "stars",
-              text: "Keeps unlimited buying briefs running so no profitable lead is missed",
+              text: "Unlimited buying briefs",
               bold: true
             }, {
               icon: "stars",
-              text: "Sends instant opportunity alerts so your team can act before competitors",
+              text: "Instant AI opportunity alerts",
               bold: true
             }, {
               icon: "check_circle",
-              text: "Prioritises the best-fit stock using advanced AI buying intelligence",
+              text: "Advanced AI buying intelligence",
               bold: false
             }, {
               icon: "check_circle",
-              text: "Highlights margin potential with Opportunity Intelligence™ insights",
+              text: "Opportunity Intelligence™ insights",
               bold: false
             }].map((f) => /* @__PURE__ */ jsxs("li", { className: `pricing-plan-feature flex items-center gap-3 ${f.bold ? "font-bold" : ""}`, children: [
               /* @__PURE__ */ jsx("span", { className: "pricing-plan-feature-icon material-symbols-outlined text-primary text-sm", children: f.icon }),
@@ -1064,7 +1064,7 @@ function LandingPage() {
                 /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant", children: "/mo" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("ul", { className: "pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Coordinates up to 10 dealership locations from one shared buying operation", "Gives full team visibility so managers can improve buying performance", "Includes a dedicated account manager to optimise results as you scale", "Supports white-label API access for enterprise workflows and integrations"].map((f) => /* @__PURE__ */ jsxs("li", { className: "pricing-plan-feature flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx("ul", { className: "pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed", children: ["Up to 10 dealership locations", "Full team visibility & performance tracking", "Dedicated account manager", "White-label API access"].map((f) => /* @__PURE__ */ jsxs("li", { className: "pricing-plan-feature flex items-center gap-3", children: [
               /* @__PURE__ */ jsx("span", { className: "pricing-plan-feature-icon material-symbols-outlined text-primary text-sm", children: "check_circle" }),
               /* @__PURE__ */ jsx("span", { children: f })
             ] }, f)) }),
