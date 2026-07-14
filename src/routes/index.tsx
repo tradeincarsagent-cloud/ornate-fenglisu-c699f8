@@ -1079,14 +1079,14 @@ function LandingPage() {
             <div className="pricing-plan-card p-8 md:p-10 glass-card rounded-2xl flex flex-col h-full dashboard-border">
               <div className="pricing-plan-header mb-9 space-y-3">
                 <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight">AI Buying Employee – Starter</h4>
-                <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">Perfect for independent dealers and traders hiring their first AI Buying Employee.</p>
+                <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">Perfect for independent dealers starting with AI sourcing.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="pricing-plan-price text-4xl font-extrabold text-white">£49</span>
                   <span className="text-on-surface-variant">/mo</span>
                 </div>
               </div>
               <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
-                {['Keeps up to 3 buying briefs actively searching for margin-ready stock', 'Delivers a daily shortlist so you can make faster buying calls', 'Gives you one command centre to track opportunities and next actions'].map(f => (
+                {['Up to 3 active buying briefs', 'Daily shortlist of margin-ready stock', 'One command centre for all opportunities'].map(f => (
                   <li key={f} className="pricing-plan-feature flex items-center gap-3">
                     <span className="pricing-plan-feature-icon material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f}</span>
@@ -1100,7 +1100,7 @@ function LandingPage() {
               <div className="pricing-popular-badge absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">⭐ MOST POPULAR</div>
               <div className="pricing-plan-header mb-9 space-y-3">
                 <h4 className="pricing-plan-title font-headline-md text-headline-md leading-tight">AI Buying Employee – Professional</h4>
-                <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">Built for active dealers who source and sell every week and need an AI employee that keeps opportunities flowing in real time.</p>
+                <p className="pricing-plan-description text-on-surface-variant text-sm leading-relaxed">For active dealers who need real-time opportunity flow.</p>
                 <div className="flex items-baseline gap-1">
                   <span className="pricing-plan-price pricing-plan-price-featured text-5xl font-extrabold text-primary">£99</span>
                   <span className="text-on-surface-variant">/mo</span>
@@ -1108,10 +1108,10 @@ function LandingPage() {
               </div>
               <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
                 {[
-                  { icon: 'stars', text: 'Keeps unlimited buying briefs running so no profitable lead is missed', bold: true },
-                  { icon: 'stars', text: 'Sends instant opportunity alerts so your team can act before competitors', bold: true },
-                  { icon: 'check_circle', text: 'Prioritises the best-fit stock using advanced AI buying intelligence', bold: false },
-                  { icon: 'check_circle', text: 'Highlights margin potential with Opportunity Intelligence™ insights', bold: false },
+                  { icon: 'stars', text: 'Unlimited buying briefs', bold: true },
+                  { icon: 'stars', text: 'Instant AI opportunity alerts', bold: true },
+                  { icon: 'check_circle', text: 'Advanced AI buying intelligence', bold: false },
+                  { icon: 'check_circle', text: 'Opportunity Intelligence™ insights', bold: false },
                 ].map(f => (
                   <li key={f.text} className={`pricing-plan-feature flex items-center gap-3 ${f.bold ? 'font-bold' : ''}`}>
                     <span className="pricing-plan-feature-icon material-symbols-outlined text-primary text-sm">{f.icon}</span>
@@ -1132,7 +1132,7 @@ function LandingPage() {
                 </div>
               </div>
               <ul className="pricing-plan-features space-y-4 mb-10 flex-1 text-[15px] leading-relaxed">
-                {['Coordinates up to 10 dealership locations from one shared buying operation', 'Gives full team visibility so managers can improve buying performance', 'Includes a dedicated account manager to optimise results as you scale', 'Supports white-label API access for enterprise workflows and integrations'].map(f => (
+                {['Up to 10 dealership locations', 'Full team visibility & performance tracking', 'Dedicated account manager', 'White-label API access'].map(f => (
                   <li key={f} className="pricing-plan-feature flex items-center gap-3">
                     <span className="pricing-plan-feature-icon material-symbols-outlined text-primary text-sm">check_circle</span>
                     <span>{f}</span>
