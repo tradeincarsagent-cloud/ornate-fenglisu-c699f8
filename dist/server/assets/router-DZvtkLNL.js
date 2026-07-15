@@ -147,7 +147,7 @@ const $$splitComponentImporter$1 = () => import("./dashboard-BWcMFq3N.js");
 const Route$1 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-B9HTj-Nt.js");
+const $$splitComponentImporter = () => import("./index-CvVwoFtn.js");
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
