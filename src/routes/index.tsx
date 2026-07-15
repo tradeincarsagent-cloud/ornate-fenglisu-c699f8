@@ -1385,7 +1385,6 @@ function LandingPage() {
         <div className="max-w-[1200px] mx-auto px-margin-desktop grid grid-cols-1 md:flex md:flex-col md:items-center gap-12 md:gap-6">
           <div className="space-y-6 max-md:space-y-5 md:space-y-0 md:flex md:flex-col md:items-center md:gap-5">
             <div className="relative flex items-center mb-6 md:mb-0 md:justify-center">
-              <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-20 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(20,147,255,0.18) 0%, rgba(20,147,255,0.08) 44%, transparent 66%)', filter: 'blur(12px)' }} />
               <div className="logo-bezel rounded-lg p-1">
                 <img alt="Trade In Cars Agent Logo" className="h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" />
               </div>
