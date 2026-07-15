@@ -1257,26 +1257,26 @@ function LandingPage() {
         /* @__PURE__ */ jsx("div", { className: "relative flex items-center mb-6 md:mb-0 md:justify-center", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" }) }) }),
         /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant max-w-sm md:text-center", children: "An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals." }),
         /* @__PURE__ */ jsx("div", { className: "mx-auto h-16 w-28 md:hidden" }),
-        /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 text-center", children: [
+        /* @__PURE__ */ jsxs("div", { className: "space-y-0.5 text-center", children: [
           /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "© 2026 Trade in Cars Agent (TICA)" }),
           /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "All rights reserved." }),
           /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "Built for modern vehicle dealers." })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-[17px] md:gap-14 md:w-full md:max-w-2xl md:mx-auto", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[11px] md:gap-3.5 md:items-center", children: [
+      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-[14px] md:gap-14 md:w-full md:max-w-2xl md:mx-auto", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[9px] md:gap-3.5 md:items-center", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]", children: "PLATFORM" }),
           /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "#how-it-works", children: "How It Works" }),
           /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "#pricing", children: "Pricing" }),
           /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/dashboard", children: "Dealer Command Centre" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[11px] md:gap-3.5 md:items-center", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[9px] md:gap-3.5 md:items-center", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]", children: "COMPANY" }),
           /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/about", children: "About TICA" }),
           /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/contact", children: "Contact" }),
           /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/support", children: "Support" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[11px] md:gap-3.5 md:items-center", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[9px] md:gap-3.5 md:items-center", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]", children: "LEGAL" }),
           /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/privacy-policy", children: "Privacy Policy" }),
           /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/terms-of-service", children: "Terms of Service" }),

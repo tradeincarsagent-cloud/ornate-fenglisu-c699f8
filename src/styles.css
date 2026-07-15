@@ -301,7 +301,7 @@ body > div {
 @media (max-width: 767px) {
   /* Mobile footer: compact link size while preserving touch targets */
   .footer-link-premium {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.5;
   }
 }
@@ -1177,7 +1177,7 @@ body > div {
 
 .logo-bezel {
   border: 1px solid rgba(148, 163, 184, 0.3);
-  box-shadow: 0 0 25px rgba(20, 147, 255, 0.4);
+  box-shadow: 0 0 14px rgba(20, 147, 255, 0.24);
   background-color: #0c1324;
   display: inline-flex;
   align-items: center;
@@ -1949,8 +1949,8 @@ body > div {
 /* ── Back to Top floating button ─────────────────────────────────────── */
 .back-to-top-btn {
   position: fixed;
-  bottom: 64px;
-  right: 20px;
+  bottom: 76px;
+  right: 32px;
   z-index: 90;
   width: 56px;
   height: 56px;
