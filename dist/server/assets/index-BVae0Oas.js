@@ -178,6 +178,7 @@ const radarGridAngles = Array.from({
 const degreeMarks = Array.from({
   length: 12
 }, (_, index) => index * 30);
+const roadmapBadgeBaseClass = "inline-flex items-center justify-center h-7 px-3 rounded-full text-[10px] font-bold uppercase tracking-[0.08em] leading-none whitespace-nowrap text-center align-middle";
 function getContactBearing(x, y) {
   const radians = Math.atan2(x - 50, 50 - y);
   return (radians * 180 / Math.PI + 360) % 360;
@@ -1104,23 +1105,23 @@ function LandingPage() {
         }, {
           version: "Coming Next",
           description: "Features already planned and actively being developed.",
-          status: "In Development",
-          statusClass: "bg-primary/20 text-primary",
+          status: "Coming Soon",
+          statusClass: "bg-purple-500/20 text-purple-300",
           iconClass: "text-primary",
           icon: "schedule",
           items: ["Mobile App", "Push Notifications", "Motorcycle Support", "Vans & Commercial Vehicles", "International Search", "Dealer Insights", "Vehicle Watchlists"]
         }, {
           version: "Future Vision",
           description: "Our long-term vision for the future of intelligent vehicle sourcing.",
-          status: "Future Vision",
-          statusClass: "bg-purple-500/15 text-purple-400",
+          status: "Planned",
+          statusClass: "bg-amber-500/20 text-amber-300",
           iconClass: "text-purple-400",
           icon: "rocket_launch",
           items: ["AI Negotiation Assistant", "Price Prediction AI", "Profit Estimator", "Vehicle History Integration", "Auction Integrations", "API Integrations", "Multi-language Support", "Multi-user Dealer Accounts"]
         }].map((phase) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-8 max-md:px-5 rounded-2xl border border-outline-variant/20 flex flex-col h-full", children: [
-          /* @__PURE__ */ jsxs("div", { className: "roadmap-phase-header flex items-center justify-between mb-3 max-md:grid max-md:grid-cols-[1fr_auto] max-md:items-start max-md:gap-x-3", children: [
+          /* @__PURE__ */ jsxs("div", { className: "roadmap-phase-header flex items-center justify-between mb-3 max-md:flex-col max-md:items-start max-md:gap-2", children: [
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md max-md:min-w-0", children: phase.version }),
-            /* @__PURE__ */ jsx("span", { className: `text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full max-md:w-[68px] max-md:min-w-[68px] max-md:max-w-[44%] max-md:px-2 max-md:py-1.5 max-md:text-[9px] max-md:leading-[1.4] max-md:tracking-[0.05em] max-md:text-center max-md:rounded-lg ${phase.statusClass}`, children: phase.status })
+            /* @__PURE__ */ jsx("span", { className: `${roadmapBadgeBaseClass} max-md:self-center ${phase.statusClass}`, children: phase.status })
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-6", children: phase.description }),
           /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: phase.items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-on-surface-variant", children: [
@@ -1136,8 +1137,8 @@ function LandingPage() {
           /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4 max-md:grid-cols-2 max-md:gap-2 max-md:[grid-auto-rows:1fr]", children: [{
             icon: "search",
             text: "AI Intelligence Engine",
-            status: "In Development",
-            badgeClass: "bg-primary/20 text-primary"
+            status: "Coming Soon",
+            badgeClass: "bg-purple-500/20 text-purple-300"
           }, {
             icon: "fact_check",
             text: "Vehicle History Checks",
@@ -1156,8 +1157,8 @@ function LandingPage() {
           }, {
             icon: "query_stats",
             text: "Dealer Insights",
-            status: "In Development",
-            badgeClass: "bg-primary/20 text-primary"
+            status: "Coming Soon",
+            badgeClass: "bg-purple-500/20 text-purple-300"
           }, {
             icon: "notifications_active",
             text: "TICA Smart Alerts™",
@@ -1168,7 +1169,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("span", { className: "material-symbols-outlined text-primary-container flex-shrink-0 max-md:text-[26px]", children: item.icon }),
               /* @__PURE__ */ jsx("span", { className: "font-bold text-sm max-md:text-[12px] max-md:leading-snug max-md:px-1", children: item.text })
             ] }),
-            /* @__PURE__ */ jsx("span", { className: `hidden max-md:inline-flex items-center justify-center rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide max-md:w-[88%] max-md:px-1.5 max-md:py-1 max-md:text-[9px] max-md:leading-tight whitespace-normal text-center break-words ${item.badgeClass}`, children: item.status })
+            /* @__PURE__ */ jsx("span", { className: `hidden max-md:inline-flex ${roadmapBadgeBaseClass} max-md:self-center max-md:max-w-full ${item.badgeClass}`, children: item.status })
           ] }) }, item.text)) })
         ] })
       ] }) }),
