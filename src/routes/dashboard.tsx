@@ -165,8 +165,8 @@ const aiStatusMessages = [
 ]
 
 const greetingSummaries = [
-  'TICA analysed 8,462 vehicles overnight.',
-  'Three opportunities require your attention.',
+  'TICA analysed 18,462 vehicles overnight.',
+  '5 vehicles require your attention today.',
   'One monitored vehicle has reduced in price.',
   'Your top search mission found 3 new matches.',
   'Market prices shifted on 14 vehicles overnight.',
@@ -174,8 +174,8 @@ const greetingSummaries = [
 
 const topOpportunityComparison = [
   { vehicle: 'BMW M3 Competition', opportunityScore: 94, estimatedProfit: '£4,255', daysToSell: '22 days', ticaDecision: 'BUY' },
-  { vehicle: 'BMW M3 Competition', opportunityScore: 89, estimatedProfit: '£3,620', daysToSell: '27 days', ticaDecision: 'REVIEW' },
-  { vehicle: 'BMW M3 Competition', opportunityScore: 74, estimatedProfit: '£1,980', daysToSell: '41 days', ticaDecision: 'PASS' },
+  { vehicle: 'Audi RS5 Sportback', opportunityScore: 89, estimatedProfit: '£3,620', daysToSell: '27 days', ticaDecision: 'REVIEW' },
+  { vehicle: 'Mercedes-AMG C63', opportunityScore: 74, estimatedProfit: '£1,980', daysToSell: '41 days', ticaDecision: 'PASS' },
 ] as const
 
 const topOpportunityReasons = [
@@ -320,8 +320,8 @@ function DashboardPage() {
   const [timelineEvents, setTimelineEvents] = useState(initialTimelineEvents)
   const [activeTimelineEventId, setActiveTimelineEventId] = useState<string | null>(null)
   const [liveCounters, setLiveCounters] = useState({
-    vehiclesCheckedToday: 12487,
-    matchesFound: 27,
+    vehiclesCheckedToday: 18462,
+    matchesFound: 24,
     highPriorityMatches: 3,
   })
   const [expandedSearches, setExpandedSearches] = useState<Record<number, boolean>>(
@@ -815,6 +815,9 @@ function DashboardPage() {
                         </div>
                       ))}
                     </dl>
+                    <p className="mt-3 text-center text-xs text-on-surface-variant/55">
+                      Demonstration data — live source connections coming soon.
+                    </p>
                   </section>
 
                   <article className="dashboard-border timeline-mobile-shell mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
