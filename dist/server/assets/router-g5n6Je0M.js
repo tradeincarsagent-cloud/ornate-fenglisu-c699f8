@@ -1,6 +1,6 @@
 import { createRootRoute, HeadContent, Scripts, createFileRoute, lazyRouteComponent, createRouter } from "@tanstack/react-router";
 import { jsxs, jsx } from "react/jsx-runtime";
-const Route$5 = createRootRoute({
+const Route$b = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -131,59 +131,119 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
-const $$splitComponentImporter$4 = () => import("./settings-B6UdRlA-.js");
-const Route$4 = createFileRoute("/settings")({
+const $$splitComponentImporter$a = () => import("./terms-of-service-BI2AY9DY.js");
+const Route$a = createFileRoute("/terms-of-service")({
+  component: lazyRouteComponent($$splitComponentImporter$a, "component")
+});
+const $$splitComponentImporter$9 = () => import("./support-jZiYmrSh.js");
+const Route$9 = createFileRoute("/support")({
+  component: lazyRouteComponent($$splitComponentImporter$9, "component")
+});
+const $$splitComponentImporter$8 = () => import("./settings-B6UdRlA-.js");
+const Route$8 = createFileRoute("/settings")({
+  component: lazyRouteComponent($$splitComponentImporter$8, "component")
+});
+const $$splitComponentImporter$7 = () => import("./search-builder-C9apQK4j.js");
+const Route$7 = createFileRoute("/search-builder")({
+  component: lazyRouteComponent($$splitComponentImporter$7, "component")
+});
+const $$splitComponentImporter$6 = () => import("./privacy-policy-w00uo2us.js");
+const Route$6 = createFileRoute("/privacy-policy")({
+  component: lazyRouteComponent($$splitComponentImporter$6, "component")
+});
+const $$splitComponentImporter$5 = () => import("./opportunity-5TBYfp5s.js");
+const Route$5 = createFileRoute("/opportunity")({
+  component: lazyRouteComponent($$splitComponentImporter$5, "component")
+});
+const $$splitComponentImporter$4 = () => import("./dashboard-BWcMFq3N.js");
+const Route$4 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./search-builder-C9apQK4j.js");
-const Route$3 = createFileRoute("/search-builder")({
+const $$splitComponentImporter$3 = () => import("./cookie-policy-BheJRTHf.js");
+const Route$3 = createFileRoute("/cookie-policy")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./opportunity-5TBYfp5s.js");
-const Route$2 = createFileRoute("/opportunity")({
+const $$splitComponentImporter$2 = () => import("./contact-DNzN_cXo.js");
+const Route$2 = createFileRoute("/contact")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./dashboard-BWcMFq3N.js");
-const Route$1 = createFileRoute("/dashboard")({
+const $$splitComponentImporter$1 = () => import("./about-yq8Ksgrl.js");
+const Route$1 = createFileRoute("/about")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-BODbWn3L.js");
+const $$splitComponentImporter = () => import("./index-CX3XPwsZ.js");
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
-const SettingsRoute = Route$4.update({
+const TermsOfServiceRoute = Route$a.update({
+  id: "/terms-of-service",
+  path: "/terms-of-service",
+  getParentRoute: () => Route$b
+});
+const SupportRoute = Route$9.update({
+  id: "/support",
+  path: "/support",
+  getParentRoute: () => Route$b
+});
+const SettingsRoute = Route$8.update({
   id: "/settings",
   path: "/settings",
-  getParentRoute: () => Route$5
+  getParentRoute: () => Route$b
 });
-const SearchBuilderRoute = Route$3.update({
+const SearchBuilderRoute = Route$7.update({
   id: "/search-builder",
   path: "/search-builder",
-  getParentRoute: () => Route$5
+  getParentRoute: () => Route$b
 });
-const OpportunityRoute = Route$2.update({
+const PrivacyPolicyRoute = Route$6.update({
+  id: "/privacy-policy",
+  path: "/privacy-policy",
+  getParentRoute: () => Route$b
+});
+const OpportunityRoute = Route$5.update({
   id: "/opportunity",
   path: "/opportunity",
-  getParentRoute: () => Route$5
+  getParentRoute: () => Route$b
 });
-const DashboardRoute = Route$1.update({
+const DashboardRoute = Route$4.update({
   id: "/dashboard",
   path: "/dashboard",
-  getParentRoute: () => Route$5
+  getParentRoute: () => Route$b
+});
+const CookiePolicyRoute = Route$3.update({
+  id: "/cookie-policy",
+  path: "/cookie-policy",
+  getParentRoute: () => Route$b
+});
+const ContactRoute = Route$2.update({
+  id: "/contact",
+  path: "/contact",
+  getParentRoute: () => Route$b
+});
+const AboutRoute = Route$1.update({
+  id: "/about",
+  path: "/about",
+  getParentRoute: () => Route$b
 });
 const IndexRoute = Route.update({
   id: "/",
   path: "/",
-  getParentRoute: () => Route$5
+  getParentRoute: () => Route$b
 });
 const rootRouteChildren = {
   IndexRoute,
+  AboutRoute,
+  ContactRoute,
+  CookiePolicyRoute,
   DashboardRoute,
   OpportunityRoute,
+  PrivacyPolicyRoute,
   SearchBuilderRoute,
-  SettingsRoute
+  SettingsRoute,
+  SupportRoute,
+  TermsOfServiceRoute
 };
-const routeTree = Route$5._addFileChildren(rootRouteChildren)._addFileTypes();
+const routeTree = Route$b._addFileChildren(rootRouteChildren)._addFileTypes();
 const getRouter = () => {
   const router = createRouter({
     routeTree,
