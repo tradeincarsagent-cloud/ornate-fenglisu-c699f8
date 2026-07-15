@@ -575,8 +575,8 @@ function DashboardPage() {
       /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Review Top Opportunity" }),
       /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "Create New Search" })
     ] }),
-    /* @__PURE__ */ jsxs("section", { className: "mb-8 space-y-6 sm:space-y-8", children: [
-      /* @__PURE__ */ jsxs("div", { children: [
+    /* @__PURE__ */ jsxs("section", { className: "dashboard-mobile-radar-flow mb-8 flex flex-col gap-6 sm:gap-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "dashboard-intelligence-brief", children: [
         /* @__PURE__ */ jsx("div", { className: "mb-3 md:hidden", children: /* @__PURE__ */ jsx("p", { className: "min-h-[1.2rem] text-xs text-on-surface-variant transition-opacity duration-200", style: {
           opacity: greetingSummaryVisible ? 1 : 0
         }, children: greetingSummaries[greetingSummaryIndex] }) }),
@@ -616,9 +616,9 @@ function DashboardPage() {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
-        /* @__PURE__ */ jsx("h3", { className: "text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
-        /* @__PURE__ */ jsxs("div", { className: "radar-container mt-6 premium-radar-shell", children: [
+      /* @__PURE__ */ jsx("article", { className: "dashboard-radar-section dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8", children: /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-panel radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
+        /* @__PURE__ */ jsx("h3", { className: "dashboard-radar-title text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
+        /* @__PURE__ */ jsxs("div", { className: "dashboard-radar-container radar-container mt-6 premium-radar-shell", children: [
           /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
           /* @__PURE__ */ jsxs("div", { className: "radar-scope premium-radar-scope", children: [
             /* @__PURE__ */ jsx("div", { className: "radar-map-overlay", "aria-hidden": "true", children: /* @__PURE__ */ jsxs("svg", { viewBox: "0 0 320 320", children: [
@@ -685,7 +685,7 @@ function DashboardPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: `ai-switch-panel mt-8${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
+        /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-control ai-switch-panel mt-8${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             setAiSearchLive((v) => !v);
@@ -707,9 +707,9 @@ function DashboardPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("section", { className: "mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6", children: [
+        /* @__PURE__ */ jsxs("section", { className: "dashboard-radar-operations mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6", children: [
           /* @__PURE__ */ jsx("p", { className: "text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85", children: "AI Operations Panel" }),
-          /* @__PURE__ */ jsx("dl", { className: "mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3", children: operationsPanelItems.map((item, index) => /* @__PURE__ */ jsxs("div", { className: `flex min-h-[72px] flex-col justify-between gap-3 px-4 py-3 sm:min-h-[104px] sm:gap-4 sm:px-5 sm:py-4 ${index < operationsPanelItems.length - 1 ? "border-b border-outline-variant/18" : ""} ${index % 2 === 0 ? "sm:border-r sm:border-outline-variant/18" : ""} ${index >= operationsPanelItems.length - 2 ? "sm:border-b-0" : ""} ${index % 3 !== 2 ? "xl:border-r xl:border-outline-variant/18" : "xl:border-r-0"} ${index >= operationsPanelItems.length - 3 ? "xl:border-b-0" : ""}`, children: [
+          /* @__PURE__ */ jsx("dl", { className: "dashboard-radar-operations-grid mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3", children: operationsPanelItems.map((item, index) => /* @__PURE__ */ jsxs("div", { className: `flex min-h-[72px] flex-col justify-between gap-3 px-4 py-3 sm:min-h-[104px] sm:gap-4 sm:px-5 sm:py-4 ${index < operationsPanelItems.length - 1 ? "border-b border-outline-variant/18" : ""} ${index % 2 === 0 ? "sm:border-r sm:border-outline-variant/18" : ""} ${index >= operationsPanelItems.length - 2 ? "sm:border-b-0" : ""} ${index % 3 !== 2 ? "xl:border-r xl:border-outline-variant/18" : "xl:border-r-0"} ${index >= operationsPanelItems.length - 3 ? "xl:border-b-0" : ""}`, children: [
             /* @__PURE__ */ jsx("dt", { className: "font-label-caps text-label-caps uppercase tracking-[0.18em] text-on-surface-variant/90", children: item.label }),
             /* @__PURE__ */ jsxs("dd", { className: `flex items-center gap-2 text-[1.05rem] font-semibold tracking-[0.01em] text-on-surface ${item.tone === "accent" ? "text-primary" : ""}`, children: [
               item.tone === "live" ? /* @__PURE__ */ jsx("span", { className: "h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.55)]", "aria-hidden": "true" }) : null,
@@ -717,7 +717,7 @@ function DashboardPage() {
               /* @__PURE__ */ jsx("span", { className: "tabular-nums", children: item.value })
             ] })
           ] }, item.label)) }),
-          /* @__PURE__ */ jsx("p", { className: "mt-3 text-center text-xs text-on-surface-variant/55", children: "Demonstration data — live source connections coming soon." })
+          /* @__PURE__ */ jsx("p", { className: "dashboard-radar-operations-note mt-3 text-center text-xs text-on-surface-variant/55", children: "Demonstration data — live source connections coming soon." })
         ] }),
         /* @__PURE__ */ jsxs("article", { className: "dashboard-border timeline-mobile-shell mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between", children: [

@@ -614,8 +614,8 @@ function DashboardPage() {
             </div>
 
             {/* ── Morning Intelligence ─────────────────────────────────── */}
-            <section className="mb-8 space-y-6 sm:space-y-8">
-              <div>
+            <section className="dashboard-mobile-radar-flow mb-8 flex flex-col gap-6 sm:gap-8">
+              <div className="dashboard-intelligence-brief">
                 {/* ── Mobile-only rotating summary ────────────────────── */}
                 <div className="mb-3 md:hidden">
                   <p
@@ -670,11 +670,11 @@ function DashboardPage() {
               </div>
 
               {/* ── AI Search Radar ──────────────────────────────────── */}
-              <article className="dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8">
-                <div className={`radar-glass-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
-                <h3 className="text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
+              <article className="dashboard-radar-section dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8">
+                <div className={`dashboard-radar-panel radar-glass-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
+                <h3 className="dashboard-radar-title text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
 
-                <div className="radar-container mt-6 premium-radar-shell">
+                <div className="dashboard-radar-container radar-container mt-6 premium-radar-shell">
                   <div className="radar-frame" />
 
                   <div className="radar-scope premium-radar-scope">
@@ -773,7 +773,7 @@ function DashboardPage() {
                 </div>
 
                 <div
-                  className={`ai-switch-panel mt-8${aiSearchLive ? ' ai-switch-panel-live' : ' ai-switch-panel-paused'}`}
+                  className={`dashboard-radar-control ai-switch-panel mt-8${aiSearchLive ? ' ai-switch-panel-live' : ' ai-switch-panel-paused'}`}
                     role="switch"
                     aria-checked={aiSearchLive}
                     tabIndex={0}
@@ -802,9 +802,9 @@ function DashboardPage() {
                     </div>
                   </div>
 
-                  <section className="mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6">
+                  <section className="dashboard-radar-operations mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6">
                     <p className="text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85">AI Operations Panel</p>
-                    <dl className="mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3">
+                    <dl className="dashboard-radar-operations-grid mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3">
                       {operationsPanelItems.map((item, index) => (
                         <div
                           key={item.label}
@@ -833,7 +833,7 @@ function DashboardPage() {
                         </div>
                       ))}
                     </dl>
-                    <p className="mt-3 text-center text-xs text-on-surface-variant/55">
+                    <p className="dashboard-radar-operations-note mt-3 text-center text-xs text-on-surface-variant/55">
                       Demonstration data — live source connections coming soon.
                     </p>
                   </section>
