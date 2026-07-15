@@ -543,9 +543,9 @@ function DashboardPage() {
       ]}
     >
       <div className="mx-auto w-full max-w-container-max">
-            <div className="mb-5 flex items-start justify-between gap-4">
+            <div className="mb-5 flex flex-col items-start gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
               <h1 className="text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
-              <div className="shrink-0">
+              <div className="shrink-0 self-start sm:self-auto">
                 <TicaShield />
               </div>
             </div>
@@ -615,7 +615,7 @@ function DashboardPage() {
                 </div>
 
                 <h2 className="mb-3 text-headline-md font-headline-md text-on-surface sm:mb-4">Morning Intelligence Brief</h2>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5">
+                <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5">
                   {summaryCards.map((card, index) => (
                     <article
                       key={card.title}
@@ -936,7 +936,7 @@ function DashboardPage() {
 
               <div className="mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
                 <h3 className="mb-3 text-body-md font-body-md font-medium text-on-surface sm:mb-4">Top Opportunity Comparison</h3>
-                <div className="hidden overflow-x-auto md:block">
+                <div className="hidden overflow-x-auto lg:block">
                   <table className="min-w-full text-left text-sm text-on-surface">
                     <thead className="border-b border-outline-variant/30 text-xs uppercase tracking-widest text-on-surface-variant">
                       <tr>
@@ -958,15 +958,15 @@ function DashboardPage() {
                     </tbody>
                   </table>
                 </div>
-                <div className="space-y-3 md:hidden">
+                <div className="space-y-3 lg:hidden">
                   {topOpportunityComparison.map((row, index) => (
                     <article key={`${row.vehicle}-${row.opportunityScore}-${index}`} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3.5">
                       <dl className="grid grid-cols-1 gap-2.5">
                         <div>
                           <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Vehicle Name</dt>
-                          <dd className="mt-0.5 text-body-md font-body-md text-on-surface">{row.vehicle}</dd>
+                          <dd className="mt-0.5 break-words text-body-md font-body-md text-on-surface">{row.vehicle}</dd>
                         </div>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
                           <div>
                             <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Opportunity Score</dt>
                             <dd className="mt-0.5 text-body-md font-body-md text-on-surface">{row.opportunityScore}</dd>
@@ -1108,7 +1108,7 @@ function DashboardPage() {
               <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
 
               {/* Desktop table (unchanged, hidden on mobile) */}
-              <div className="hidden overflow-x-auto md:block">
+              <div className="hidden overflow-x-auto lg:block">
                 <table className="w-full min-w-[640px] border-separate border-spacing-y-2 text-left">
                   <thead>
                     <tr className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">
@@ -1146,7 +1146,7 @@ function DashboardPage() {
               </div>
 
               {/* Mobile cards (hidden on md+) */}
-              <div className="space-y-3 md:hidden">
+              <div className="space-y-3 lg:hidden">
                 {recentOpportunities.map((opportunity, index) => (
                   <article
                     key={opportunity.vehicle}
@@ -1155,10 +1155,10 @@ function DashboardPage() {
                     }`}
                   >
                     <div className="mb-3">
-                      <p className="text-body-md font-body-md font-medium text-on-surface">{opportunity.vehicle}</p>
-                      <p className="text-sm text-on-surface-variant">{opportunity.source}</p>
+                      <p className="break-words text-body-md font-body-md font-medium text-on-surface">{opportunity.vehicle}</p>
+                      <p className="break-words text-sm text-on-surface-variant">{opportunity.source}</p>
                     </div>
-                    <div className="mb-4 grid grid-cols-3 gap-2 rounded-lg bg-surface-container p-3">
+                    <div className="mb-4 grid grid-cols-1 gap-2 rounded-lg bg-surface-container p-3 min-[420px]:grid-cols-3">
                       <div className="text-center">
                         <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Price</p>
                         <p className="text-sm font-medium text-on-surface">{opportunity.priceDisplay}</p>
@@ -1172,17 +1172,17 @@ function DashboardPage() {
                         <p className="text-sm font-medium text-on-surface">{opportunity.confidenceDisplay}</p>
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col gap-2 min-[420px]:grid min-[420px]:grid-cols-3">
                       <Link
                         to="/opportunity"
-                        className="flex min-h-11 flex-1 items-center justify-center rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
+                        className="flex min-h-11 items-center justify-center rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
                       >
                         Review
                       </Link>
-                      <button className="min-h-11 flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
+                      <button className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
                         Save
                       </button>
-                      <button className="min-h-11 flex-1 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
+                      <button className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
                         Dismiss
                       </button>
                     </div>
@@ -1214,12 +1214,12 @@ function DashboardPage() {
                           aria-expanded={expandedSearches[index]}
                         >
                           <div className="min-w-0 text-left">
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
                               <span
                                 className="mission-status-dot flex-shrink-0"
                                 style={{ background: statusCfg.color, boxShadow: `0 0 6px ${statusCfg.glow}` }}
                               />
-                              <p className="text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
+                              <p className="break-words text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
                             </div>
                             <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 pl-4">
                               <p className="text-sm text-on-surface-variant">Last Scan: {search.lastScan}</p>
@@ -1234,7 +1234,7 @@ function DashboardPage() {
                         {expandedSearches[index] && (
                           <div className="mt-3 space-y-3">
                             {/* Detail list */}
-                            <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
+                            <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
                               <div>
                                 <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicle Type</dt>
                                 <dd className="mt-0.5 text-sm text-on-surface">{search.vehicleType}</dd>
@@ -1308,14 +1308,14 @@ function DashboardPage() {
                               ⚡ {search.liveMessages[missionMsgIndices[index]]}
                             </p>
                             {/* Action buttons */}
-                            <div className="flex gap-2">
-                              <button className="min-h-11 flex-1 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75">
+                            <div className="flex flex-col gap-2 min-[420px]:flex-row">
+                              <button className="min-h-11 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75 min-[420px]:flex-1">
                                 Run Now
                               </button>
                               <div className="relative">
                                 <button
                                   onClick={(e) => { e.stopPropagation(); setOpenMoreMenu(openMoreMenu === index ? null : index) }}
-                                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40"
+                                  className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40 min-[420px]:w-auto"
                                   aria-haspopup="true"
                                   aria-expanded={openMoreMenu === index}
                                 >
