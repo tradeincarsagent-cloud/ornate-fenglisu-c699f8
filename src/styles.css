@@ -1287,6 +1287,10 @@ body > div {
     animation: drawerSlideIn 220ms ease-out;
   }
 
+  .radar-glass-panel {
+    padding: 1rem;
+  }
+
   .timeline-mobile-shell {
     padding: 0;
     border: 0;

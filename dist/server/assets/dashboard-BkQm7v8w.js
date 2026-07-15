@@ -516,12 +516,9 @@ function DashboardPage() {
     ] }),
     /* @__PURE__ */ jsxs("section", { className: "mb-8 space-y-6 sm:space-y-8", children: [
       /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-3 md:hidden", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-on-surface", children: "Good Morning, Jonathan." }),
-          /* @__PURE__ */ jsx("p", { className: "mt-0.5 min-h-[1.2rem] text-xs text-on-surface-variant transition-opacity duration-200", style: {
-            opacity: greetingSummaryVisible ? 1 : 0
-          }, children: greetingSummaries[greetingSummaryIndex] })
-        ] }),
+        /* @__PURE__ */ jsx("div", { className: "mb-3 md:hidden", children: /* @__PURE__ */ jsx("p", { className: "min-h-[1.2rem] text-xs text-on-surface-variant transition-opacity duration-200", style: {
+          opacity: greetingSummaryVisible ? 1 : 0
+        }, children: greetingSummaries[greetingSummaryIndex] }) }),
         /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface sm:mb-4", children: "Morning Intelligence Brief" }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-5", children: summaryCards.map((card, index) => /* @__PURE__ */ jsxs("article", { className: `dashboard-border flex min-h-[44px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? " hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0" : ""}`, children: [
           /* @__PURE__ */ jsxs("p", { className: "text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md", children: [
