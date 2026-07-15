@@ -1392,23 +1392,28 @@ function LandingPage() {
             <p className="font-body-md text-body-md text-on-surface-variant max-w-sm">
               An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals.
             </p>
-            <p className="font-body-md text-body-md text-on-surface-variant">© 2026 Trade in Cars Agent (TICA). All rights reserved.</p>
+            <div className="mx-auto h-16 w-28" />
+            <div className="space-y-1.5 text-center">
+              <p className="font-body-md text-body-md text-on-surface-variant">© 2026 Trade in Cars Agent (TICA)</p>
+              <p className="font-body-md text-body-md text-on-surface-variant">All rights reserved.</p>
+              <p className="font-body-md text-body-md text-on-surface-variant">Built for modern vehicle dealers.</p>
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-            <div className="flex flex-col gap-4">
-              <span className="font-label-caps text-label-caps text-primary">PLATFORM</span>
+            <div className="flex flex-col gap-3.5">
+              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">PLATFORM</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#how-it-works">How It Works</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#pricing">Pricing</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/dashboard">Dealer Command Centre</a>
             </div>
-            <div className="flex flex-col gap-4">
-              <span className="font-label-caps text-label-caps text-primary">COMPANY</span>
+            <div className="flex flex-col gap-3.5">
+              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">COMPANY</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">About TICA</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Contact</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Support</a>
             </div>
-            <div className="flex flex-col gap-4">
-              <span className="font-label-caps text-label-caps text-primary">LEGAL</span>
+            <div className="flex flex-col gap-3.5">
+              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">LEGAL</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Privacy Policy</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Terms of Service</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Cookie Policy</a>
