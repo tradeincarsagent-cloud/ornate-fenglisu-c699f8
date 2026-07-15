@@ -560,11 +560,10 @@ function DashboardPage() {
             {/* ── Morning Intelligence ─────────────────────────────────── */}
             <section className="mb-8 space-y-6 sm:space-y-8">
               <div>
-                {/* ── Mobile-only compact greeting ────────────────────── */}
+                {/* ── Mobile-only rotating summary ────────────────────── */}
                 <div className="mb-3 md:hidden">
-                  <p className="text-sm font-semibold text-on-surface">Good Morning, Jonathan.</p>
                   <p
-                    className="mt-0.5 min-h-[1.2rem] text-xs text-on-surface-variant transition-opacity duration-200"
+                    className="min-h-[1.2rem] text-xs text-on-surface-variant transition-opacity duration-200"
                     style={{ opacity: greetingSummaryVisible ? 1 : 0 }}
                   >
                     {greetingSummaries[greetingSummaryIndex]}
