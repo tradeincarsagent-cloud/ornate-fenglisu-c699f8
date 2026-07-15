@@ -1399,21 +1399,21 @@ function LandingPage() {
               <p className="font-body-md text-body-md text-on-surface-variant">Built for modern vehicle dealers.</p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-14 md:w-full md:max-w-2xl md:mx-auto">
-            <div className="flex flex-col gap-3.5 md:items-center">
-              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">PLATFORM</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[17px] md:gap-14 md:w-full md:max-w-2xl md:mx-auto">
+            <div className="flex flex-col gap-[11px] md:gap-3.5 md:items-center">
+              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]">PLATFORM</span>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="#how-it-works">How It Works</a>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="#pricing">Pricing</a>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/dashboard">Dealer Command Centre</a>
             </div>
-            <div className="flex flex-col gap-3.5 md:items-center">
-              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">COMPANY</span>
+            <div className="flex flex-col gap-[11px] md:gap-3.5 md:items-center">
+              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]">COMPANY</span>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/about">About TICA</a>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/contact">Contact</a>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/support">Support</a>
             </div>
-            <div className="flex flex-col gap-3.5 md:items-center">
-              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">LEGAL</span>
+            <div className="flex flex-col gap-[11px] md:gap-3.5 md:items-center">
+              <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]">LEGAL</span>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/privacy-policy">Privacy Policy</a>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/terms-of-service">Terms of Service</a>
               <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/cookie-policy">Cookie Policy</a>
