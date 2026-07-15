@@ -1106,7 +1106,6 @@ function LandingPage() {
           description: "Features already planned and actively being developed.",
           status: "In Development",
           statusClass: "bg-primary/20 text-primary",
-          mobileBadgeClass: "max-md:px-2 max-md:py-[3px]",
           iconClass: "text-primary",
           icon: "schedule",
           items: ["Mobile App", "Push Notifications", "Motorcycle Support", "Vans & Commercial Vehicles", "International Search", "Dealer Insights", "Vehicle Watchlists"]
@@ -1115,14 +1114,13 @@ function LandingPage() {
           description: "Our long-term vision for the future of intelligent vehicle sourcing.",
           status: "Future Vision",
           statusClass: "bg-purple-500/15 text-purple-400",
-          mobileBadgeClass: "max-md:px-2 max-md:py-[3px]",
           iconClass: "text-purple-400",
           icon: "rocket_launch",
           items: ["AI Negotiation Assistant", "Price Prediction AI", "Profit Estimator", "Vehicle History Integration", "Auction Integrations", "API Integrations", "Multi-language Support", "Multi-user Dealer Accounts"]
         }].map((phase) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-3", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-3 max-md:gap-4", children: [
             /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: phase.version }),
-            /* @__PURE__ */ jsx("span", { className: `text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${phase.statusClass}${phase.mobileBadgeClass ? ` ${phase.mobileBadgeClass}` : ""}`, children: phase.status })
+            /* @__PURE__ */ jsx("span", { className: `text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full max-md:w-[124px] max-md:px-[11px] max-md:py-[3.8px] max-md:text-[11px] max-md:leading-[1.1] max-md:text-center max-md:whitespace-nowrap ${phase.statusClass}`, children: phase.status })
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-6", children: phase.description }),
           /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: phase.items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-on-surface-variant", children: [
