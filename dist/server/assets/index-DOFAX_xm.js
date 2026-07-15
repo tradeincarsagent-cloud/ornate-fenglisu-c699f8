@@ -1264,22 +1264,34 @@ function LandingPage() {
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-[14px] md:gap-14 md:w-full md:max-w-2xl md:mx-auto", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[9px] md:gap-3.5 md:items-center", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]", children: "PLATFORM" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "#how-it-works", children: "How It Works" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "#pricing", children: "Pricing" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/dashboard", children: "Dealer Command Centre" })
+          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px] max-md:font-semibold max-md:tracking-[0.12em]", children: "PLATFORM" }),
+          /* @__PURE__ */ jsxs("div", { className: "footer-mobile-link-row", children: [
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "#how-it-works", children: "How It Works" }),
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "footer-mobile-link-separator", children: "/" }),
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "#pricing", children: "Pricing" }),
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "footer-mobile-link-separator", children: "/" }),
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/dashboard", children: "Dealer Command Centre" })
+          ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[9px] md:gap-3.5 md:items-center", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]", children: "COMPANY" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/about", children: "About TICA" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/contact", children: "Contact" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/support", children: "Support" })
+          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px] max-md:font-semibold max-md:tracking-[0.12em]", children: "COMPANY" }),
+          /* @__PURE__ */ jsxs("div", { className: "footer-mobile-link-row", children: [
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/about", children: "About TICA" }),
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "footer-mobile-link-separator", children: "/" }),
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/contact", children: "Contact" }),
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "footer-mobile-link-separator", children: "/" }),
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/support", children: "Support" })
+          ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[9px] md:gap-3.5 md:items-center", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px]", children: "LEGAL" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/privacy-policy", children: "Privacy Policy" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/terms-of-service", children: "Terms of Service" }),
-          /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/cookie-policy", children: "Cookie Policy" })
+          /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px] max-md:font-semibold max-md:tracking-[0.12em]", children: "LEGAL" }),
+          /* @__PURE__ */ jsxs("div", { className: "footer-mobile-link-row", children: [
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/privacy-policy", children: "Privacy Policy" }),
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "footer-mobile-link-separator", children: "/" }),
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/terms-of-service", children: "Terms of Service" }),
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "footer-mobile-link-separator", children: "/" }),
+            /* @__PURE__ */ jsx("a", { className: "footer-link-premium font-body-md text-body-md text-on-surface-variant", href: "/cookie-policy", children: "Cookie Policy" })
+          ] })
         ] })
       ] })
     ] }) }),
