@@ -635,12 +635,17 @@ function LandingPage() {
                 <p className="text-xs text-on-surface-variant">
                   Built specifically for independent dealers, professional buyers and used vehicle specialists.
                 </p>
-                <p className="text-xs text-on-surface-variant flex items-center gap-2">
+                <p className="hidden md:flex text-xs text-on-surface-variant items-center gap-2">
                   <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                   </svg>
                   Card required. No charge today. Cancel anytime before your trial ends.
                 </p>
+                <div className="md:hidden text-xs text-on-surface-variant text-center leading-tight space-y-1">
+                  <p>✓ Secure Stripe checkout</p>
+                  <p>✓ No charge today</p>
+                  <p>✓ Cancel anytime during your 14-day trial</p>
+                </div>
               </div>
               <div className="flex items-center gap-6 pt-8 border-t border-outline-variant/20">
                 <div className="flex -space-x-3">
