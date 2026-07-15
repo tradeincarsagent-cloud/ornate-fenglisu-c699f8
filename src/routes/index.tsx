@@ -1381,9 +1381,9 @@ function LandingPage() {
         </section>
       </main>
 
-      <footer className="bg-surface-container-lowest w-full py-20 border-t border-outline-variant/20">
-        <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter">
-          <div className="space-y-6">
+      <footer className="bg-surface-container-lowest w-full py-20 max-md:py-14 border-t border-outline-variant/20">
+        <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-12 md:gap-gutter">
+          <div className="space-y-6 max-md:space-y-5">
             <div className="flex items-center mb-6">
               <div className="logo-bezel rounded-lg p-1">
                 <img alt="Trade In Cars Agent Logo" className="h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" />
@@ -1392,24 +1392,26 @@ function LandingPage() {
             <p className="font-body-md text-body-md text-on-surface-variant max-w-sm">
               An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals.
             </p>
-            <p className="font-body-md text-body-md text-on-surface-variant">© 2026 Trade in Cars Agent. All rights reserved.</p>
+            <p className="font-body-md text-body-md text-on-surface-variant">© 2026 Trade in Cars Agent (TICA). All rights reserved.</p>
           </div>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             <div className="flex flex-col gap-4">
               <span className="font-label-caps text-label-caps text-primary">PLATFORM</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#how-it-works">How It Works</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#pricing">Pricing</a>
-              {/* TODO: Remove preview links before production launch. */}
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm" href="/dashboard">Dealer Command Centre Preview</a>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm" href="/opportunity">AI Buying Report Preview</a>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all text-sm" href="/search-builder">AI Search Builder Preview</a>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">API Docs</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/dashboard">Dealer Command Centre</a>
             </div>
             <div className="flex flex-col gap-4">
-              <span className="font-label-caps text-label-caps text-primary">LEGAL &amp; SUPPORT</span>
+              <span className="font-label-caps text-label-caps text-primary">COMPANY</span>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">About TICA</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Contact</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Support</a>
+            </div>
+            <div className="flex flex-col gap-4">
+              <span className="font-label-caps text-label-caps text-primary">LEGAL</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Privacy Policy</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Terms of Service</a>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Contact Support</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Cookie Policy</a>
             </div>
           </div>
         </div>
