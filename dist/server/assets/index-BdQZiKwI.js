@@ -1279,7 +1279,7 @@ function LandingPage() {
     /* @__PURE__ */ jsx("button", { "aria-label": "Back to top", className: "back-to-top-btn", onClick: scrollToTop, style: {
       opacity: showBackToTop ? 1 : 0,
       pointerEvents: showBackToTop ? "auto" : "none"
-    }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "22", viewBox: "0 0 22 22", width: "22", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M11 17V5M5 11l6-6 6 6", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.2" }) }) })
+    }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "26", viewBox: "0 0 24 24", width: "26", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M5 15l7-7 7 7", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5" }) }) })
   ] });
 }
 export {
