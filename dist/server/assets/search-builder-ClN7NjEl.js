@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-DBXDg_m-.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-C7qUGBbC.js";
 const VEHICLE_TYPES = ["Cars", "Classic Cars", "Pickups", "Vans & Light Commercials", "Motorcycles"];
 const VEHICLE_TYPE_EMOJI = {
   "Cars": "🚗",

@@ -555,29 +555,29 @@ function DashboardPage() {
       ]}
     >
       <div className="mx-auto w-full max-w-container-max">
-            <div className="mb-5 flex flex-col items-start gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-              <h1 className="text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
+            <div className="dashboard-hero-header flex flex-col items-start gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+              <h1 className="dashboard-hero-h1 text-headline-lg font-headline-lg text-primary">Dealer Command Centre</h1>
               <div className="shrink-0 self-start sm:self-auto">
                 <TicaShield />
               </div>
             </div>
-            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6">
-              <div className="flex flex-col gap-6">
-                <div className="space-y-2">
+            <section className="dashboard-border mb-4 sm:mb-6 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6">
+              <div className="flex flex-col gap-5">
+                <div className="space-y-1.5">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/90">AI Daily Briefing</p>
                   <h2 className="text-headline-md font-headline-md text-on-surface">Good Morning Jonathan,</h2>
                   <p className="text-sm text-on-surface-variant">5 vehicles need attention today. Start with your strongest profit opportunity.</p>
                 </div>
 
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-2.5 md:grid-cols-3">
                   {dailyBriefingCards.map((card) => (
                     <article
                       key={card.label}
-                      className="rounded-2xl border border-outline-variant/35 bg-surface/55 p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
+                      className="rounded-2xl border border-outline-variant/35 bg-surface/55 p-3.5 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
                     >
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/85">{card.label}</p>
-                      <p className="mt-2 text-lg font-semibold text-on-surface">{card.value}</p>
-                      <p className="mt-1 text-sm text-on-surface-variant">{card.detail}</p>
+                      <p className="mt-1.5 text-xl font-bold text-on-surface">{card.value}</p>
+                      <p className="mt-0.5 text-sm text-on-surface-variant">{card.detail}</p>
                     </article>
                   ))}
                 </div>
@@ -598,23 +598,24 @@ function DashboardPage() {
               </div>
             </section>
 
-            <div className="mb-7 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:flex-wrap">
-              <Link
-                to="/opportunity"
-                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
-              >
-                Review Top Opportunity
-              </Link>
-              <Link
-                to="/search-builder"
-                className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
-              >
-                Create New Search
-              </Link>
-            </div>
-
             {/* ── Morning Intelligence ─────────────────────────────────── */}
-            <section className="dashboard-mobile-radar-flow mb-8 flex flex-col gap-6 sm:gap-8">
+            <section className="dashboard-mobile-radar-flow mb-5 sm:mb-8 flex flex-col gap-6 sm:gap-8">
+              {/* CTA buttons — on mobile these render between radar (order 1) and intel brief (order 3) */}
+              <div className="dashboard-cta-buttons flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Link
+                  to="/opportunity"
+                  className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
+                >
+                  Review Top Opportunity
+                </Link>
+                <Link
+                  to="/search-builder"
+                  className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
+                >
+                  Create New Search
+                </Link>
+              </div>
+
               <div className="dashboard-intelligence-brief">
                 {/* ── Mobile-only rotating summary ────────────────────── */}
                 <div className="mb-3 md:hidden">
@@ -637,14 +638,14 @@ function DashboardPage() {
                         <span className="block">{card.icon}</span>
                         <span>{card.title}</span>
                       </p>
-                      <p className="mt-0.5 text-[1.5rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
+                      <p className="mt-0.5 text-[1.65rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
                     </article>
                   ))}
                 </div>
 
                 {/* ── Mobile: Today's Best Buy featured card ────────────── */}
-                <article className="best-buy-mobile-accent dashboard-border mt-2 rounded-xl bg-surface-container-high p-4 sm:hidden">
-                  <div className="mb-2.5 flex items-center justify-between">
+                <article className="best-buy-mobile-accent dashboard-border mt-1.5 rounded-xl bg-surface-container-high p-3.5 sm:hidden">
+                  <div className="mb-2 flex items-center justify-between">
                     <p className="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">🏆 Today's Best Buy</p>
                     <span className="rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary">⭐ AI Pick</span>
                   </div>
@@ -652,11 +653,11 @@ function DashboardPage() {
                   <div className="mb-2 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-on-surface-variant">
                     <div>
                       <span className="uppercase tracking-widest">Price</span>
-                      <p className="font-semibold text-on-surface">{featuredOpportunity.listPriceDisplay}</p>
+                      <p className="text-sm font-bold text-on-surface">{featuredOpportunity.listPriceDisplay}</p>
                     </div>
                     <div>
                       <span className="uppercase tracking-widest">Est. Profit</span>
-                      <p className="font-semibold text-on-surface">{featuredOpportunity.dashboardEstimatedProfitDisplay}</p>
+                      <p className="text-sm font-bold text-primary">{featuredOpportunity.dashboardEstimatedProfitDisplay}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -802,13 +803,13 @@ function DashboardPage() {
                     </div>
                   </div>
 
-                  <section className="dashboard-radar-operations mt-8 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-5 md:p-6">
+                  <section className="dashboard-radar-operations mt-6 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-4 md:p-6">
                     <p className="text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85">AI Operations Panel</p>
-                    <dl className="dashboard-radar-operations-grid mt-4 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3">
+                    <dl className="dashboard-radar-operations-grid mt-3 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3">
                       {operationsPanelItems.map((item, index) => (
                         <div
                           key={item.label}
-                          className={`flex min-h-[72px] flex-col justify-between gap-3 px-4 py-3 sm:min-h-[104px] sm:gap-4 sm:px-5 sm:py-4 ${
+                          className={`flex min-h-[64px] flex-col justify-between gap-2.5 px-4 py-2.5 sm:min-h-[104px] sm:gap-4 sm:px-5 sm:py-4 ${
                             index < operationsPanelItems.length - 1 ? 'border-b border-outline-variant/18' : ''
                           } ${
                             index % 2 === 0 ? 'sm:border-r sm:border-outline-variant/18' : ''
@@ -820,9 +821,9 @@ function DashboardPage() {
                             index >= operationsPanelItems.length - 3 ? 'xl:border-b-0' : ''
                           }`}
                         >
-                          <dt className="font-label-caps text-label-caps uppercase tracking-[0.18em] text-on-surface-variant/90">{item.label}</dt>
+                          <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/80">{item.label}</dt>
                           <dd
-                            className={`flex items-center gap-2 text-[1.05rem] font-semibold tracking-[0.01em] text-on-surface ${
+                            className={`flex items-center gap-2 text-[1.1rem] font-bold tracking-[0.01em] text-on-surface ${
                               item.tone === 'accent' ? 'text-primary' : ''
                             }`}
                           >
@@ -833,7 +834,7 @@ function DashboardPage() {
                         </div>
                       ))}
                     </dl>
-                    <p className="dashboard-radar-operations-note mt-3 text-center text-xs text-on-surface-variant/55">
+                    <p className="dashboard-radar-operations-note mt-2.5 text-center text-xs text-on-surface-variant/55">
                       Demonstration data — live source connections coming soon.
                     </p>
                   </section>
@@ -881,36 +882,36 @@ function DashboardPage() {
             </section>
 
             {/* ── AI Recommendation ────────────────────────────────────── */}
-            <section className="best-buy-mobile-accent dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+            <section className="best-buy-mobile-accent dashboard-border mb-5 sm:mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Today's Best Buy</h2>
-              <p className="mb-5 max-w-[20rem] text-sm text-on-surface-variant">Certified by the TICA Decision Engine.</p>
+              <p className="mb-3 max-w-[20rem] text-sm text-on-surface-variant">Certified by the TICA Decision Engine.</p>
 
               {/* Mobile premium badge */}
-              <div className="mb-5 md:hidden">
+              <div className="mb-3 md:hidden">
                 <span className="rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
                   ⭐ Today's AI Pick
                 </span>
               </div>
 
-              <div className="mb-7 grid grid-cols-1 gap-4 md:mb-8 md:grid-cols-2">
+              <div className="mb-5 grid grid-cols-1 gap-3 md:mb-8 md:grid-cols-2">
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
+                  <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
                   <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.vehicle}</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Year</p>
+                  <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Year</p>
                   <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.year}</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Price</p>
-                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.listPriceDisplay}</p>
+                  <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Price</p>
+                  <p className="text-body-md font-body-md font-semibold text-on-surface">{featuredOpportunity.listPriceDisplay}</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Estimated Profit</p>
-                  <p className="text-body-md font-body-md text-on-surface">{featuredOpportunity.dashboardEstimatedProfitDisplay}</p>
+                  <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Estimated Profit</p>
+                  <p className="text-[1.1rem] font-bold text-primary">{featuredOpportunity.dashboardEstimatedProfitDisplay}</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">AI Confidence</p>
+                  <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">AI Confidence</p>
                   <div className="flex items-center gap-2">
                     <div className="h-2 w-32 overflow-hidden rounded-full bg-surface-container-high">
                       <div
@@ -918,45 +919,45 @@ function DashboardPage() {
                         style={{ width: `${decisionModel.weightedDecisionScore}%` }}
                       />
                     </div>
-                    <span className="text-body-md font-body-md text-on-surface">{decisionModel.weightedDecisionScore}%</span>
+                    <span className="text-body-md font-body-md font-semibold text-on-surface">{decisionModel.weightedDecisionScore}%</span>
                   </div>
-                  <p className="mt-1 text-xs font-semibold text-primary">High Confidence</p>
+                  <p className="mt-0.5 text-xs font-semibold text-primary">High Confidence</p>
                 </div>
                 <div>
-                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>
+                  <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Reason</p>
                   {featuredOpportunity.dashboardReasonLines.map((reason) => (
                     <p key={reason} className="text-body-md font-body-md text-on-surface-variant">{reason}</p>
                   ))}
                 </div>
               </div>
 
-              <div className="mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                <h3 className="mb-3 text-body-md font-body-md font-medium text-on-surface">Why TICA Chose This Vehicle</h3>
-                <ul className="mb-4 space-y-2 text-sm text-on-surface-variant">
+              <div className="mb-5 sm:mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+                <h3 className="mb-2.5 text-body-md font-body-md font-medium text-on-surface">Why TICA Chose This Vehicle</h3>
+                <ul className="mb-3 space-y-1.5 text-sm text-on-surface-variant">
                   {recommendationEvidencePoints.map((point, index) => (
                     <li key={point}>{index === recommendationEvidencePoints.length - 1 ? '🟡' : '🟢'} {point}</li>
                   ))}
                 </ul>
-                <div className="mb-3 border-t border-outline-variant/20 pt-3">
-                  <h4 className="mb-2 text-body-sm font-body-sm font-medium text-on-surface">Things to Consider</h4>
+                <div className="mb-2.5 border-t border-outline-variant/20 pt-2.5">
+                  <h4 className="mb-1.5 text-body-sm font-body-sm font-medium text-on-surface">Things to Consider</h4>
                   <ul className="space-y-1.5 text-sm text-on-surface-variant">
                     {recommendationCautionPoints.map((point) => (
                       <li key={point}>⚠ {point}</li>
                     ))}
                   </ul>
                 </div>
-                <div className="mb-3 border-t border-outline-variant/20 pt-3">
+                <div className="mb-2.5 border-t border-outline-variant/20 pt-2.5">
                   <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Opportunity Score</p>
-                  <p className="text-headline-sm font-headline-sm text-on-surface">94 / 100</p>
+                  <p className="text-[1.4rem] font-bold text-primary">94 <span className="text-sm font-normal text-on-surface-variant">/ 100</span></p>
                 </div>
-                <div className="border-t border-outline-variant/20 pt-3">
+                <div className="border-t border-outline-variant/20 pt-2.5">
                   <p className="mb-0.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">TICA Decision</p>
-                  <p className="text-body-md font-body-md font-semibold text-on-surface">🟢 BUY</p>
+                  <p className="text-body-md font-body-md font-bold text-on-surface">🟢 BUY</p>
                 </div>
               </div>
 
-              <div className="mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                <h3 className="mb-3 text-body-md font-body-md font-medium text-on-surface sm:mb-4">Top Opportunity Comparison</h3>
+              <div className="mb-5 sm:mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+                <h3 className="mb-2.5 text-body-md font-body-md font-medium text-on-surface sm:mb-4">Top Opportunity Comparison</h3>
                 <div className="hidden overflow-x-auto lg:block">
                   <table className="min-w-full text-left text-sm text-on-surface">
                     <thead className="border-b border-outline-variant/30 text-xs uppercase tracking-widest text-on-surface-variant">
@@ -979,22 +980,22 @@ function DashboardPage() {
                     </tbody>
                   </table>
                 </div>
-                <div className="space-y-3 lg:hidden">
+                <div className="space-y-2 lg:hidden">
                   {topOpportunityComparison.map((row, index) => (
-                    <article key={`${row.vehicle}-${row.opportunityScore}-${index}`} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3.5">
-                      <dl className="grid grid-cols-1 gap-2.5">
+                    <article key={`${row.vehicle}-${row.opportunityScore}-${index}`} className="rounded-xl border border-outline-variant/25 bg-surface-container px-3.5 py-3">
+                      <dl className="grid grid-cols-1 gap-2">
                         <div>
                           <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Vehicle Name</dt>
                           <dd className="mt-0.5 break-words text-body-md font-body-md text-on-surface">{row.vehicle}</dd>
                         </div>
-                        <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
+                        <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2">
                           <div>
                             <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Opportunity Score</dt>
-                            <dd className="mt-0.5 text-body-md font-body-md text-on-surface">{row.opportunityScore}</dd>
+                            <dd className="mt-0.5 text-sm font-bold text-primary">{row.opportunityScore}</dd>
                           </div>
                           <div>
                             <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Estimated Profit</dt>
-                            <dd className="mt-0.5 text-body-md font-body-md text-on-surface">{row.estimatedProfit}</dd>
+                            <dd className="mt-0.5 text-sm font-bold text-primary">{row.estimatedProfit}</dd>
                           </div>
                           <div>
                             <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Days to Sell</dt>
@@ -1010,8 +1011,8 @@ function DashboardPage() {
                   ))}
                 </div>
 
-                <div className="mt-4 border-t border-outline-variant/20 pt-4">
-                  <h4 className="mb-2 text-sm font-semibold text-on-surface">Why the top vehicle ranks first</h4>
+                <div className="mt-3 border-t border-outline-variant/20 pt-3">
+                  <h4 className="mb-1.5 text-sm font-semibold text-on-surface">Why the top vehicle ranks first</h4>
                   <ul className="space-y-1.5 text-sm text-on-surface-variant">
                     {topOpportunityReasons.map((reason) => (
                       <li key={reason}>• {reason}</li>
@@ -1021,7 +1022,7 @@ function DashboardPage() {
               </div>
 
               {/* ── Opportunity History ───────────────────────────────── */}
-              <div className="mb-6 rounded-xl border border-outline-variant/30 bg-surface-container-high">
+              <div className="mb-4 sm:mb-6 rounded-xl border border-outline-variant/30 bg-surface-container-high">
                 <button
                   type="button"
                   onClick={() => setOpportunityHistoryOpen((v) => !v)}
@@ -1125,8 +1126,8 @@ function DashboardPage() {
             </section>
 
             {/* ── Recent Opportunities ─────────────────────────────────── */}
-            <section className="dashboard-border mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-              <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
+            <section className="dashboard-border mb-5 sm:mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+              <h2 className="mb-2.5 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
 
               {/* Desktop table (unchanged, hidden on mobile) */}
               <div className="hidden overflow-x-auto lg:block">
@@ -1167,30 +1168,30 @@ function DashboardPage() {
               </div>
 
               {/* Mobile cards (hidden on md+) */}
-              <div className="space-y-3 lg:hidden">
+              <div className="space-y-2.5 lg:hidden">
                 {recentOpportunities.map((opportunity, index) => (
                   <article
                     key={opportunity.vehicle}
-                    className={`rounded-xl bg-surface-container-high p-4 transition-all ${
+                    className={`rounded-xl bg-surface-container-high p-3.5 transition-all ${
                       highlightedOpportunity === index ? 'opportunity-row-highlight' : ''
                     }`}
                   >
-                    <div className="mb-3">
+                    <div className="mb-2.5">
                       <p className="break-words text-body-md font-body-md font-medium text-on-surface">{opportunity.vehicle}</p>
                       <p className="break-words text-sm text-on-surface-variant">{opportunity.source}</p>
                     </div>
-                    <div className="mb-4 grid grid-cols-1 gap-2 rounded-lg bg-surface-container p-3 min-[420px]:grid-cols-3">
+                    <div className="mb-3 grid grid-cols-1 gap-1.5 rounded-lg bg-surface-container p-2.5 min-[420px]:grid-cols-3">
                       <div className="text-center">
-                        <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Price</p>
-                        <p className="text-sm font-medium text-on-surface">{opportunity.priceDisplay}</p>
+                        <p className="mb-0.5 text-xs uppercase tracking-widest text-on-surface-variant">Price</p>
+                        <p className="text-sm font-semibold text-on-surface">{opportunity.priceDisplay}</p>
                       </div>
                       <div className="text-center">
-                        <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Profit</p>
-                        <p className="text-sm font-medium text-primary">{opportunity.estimatedProfitDisplay}</p>
+                        <p className="mb-0.5 text-xs uppercase tracking-widest text-on-surface-variant">Profit</p>
+                        <p className="text-sm font-bold text-primary">{opportunity.estimatedProfitDisplay}</p>
                       </div>
                       <div className="text-center">
-                        <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Conf.</p>
-                        <p className="text-sm font-medium text-on-surface">{opportunity.confidenceDisplay}</p>
+                        <p className="mb-0.5 text-xs uppercase tracking-widest text-on-surface-variant">Conf.</p>
+                        <p className="text-sm font-semibold text-on-surface">{opportunity.confidenceDisplay}</p>
                       </div>
                     </div>
                     <div className="flex flex-col gap-2 min-[420px]:grid min-[420px]:grid-cols-3">
@@ -1218,14 +1219,14 @@ function DashboardPage() {
             )}
             <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
-              <p className="mb-4 text-sm text-on-surface-variant">Search jobs currently being monitored by TICA.</p>
-              <div className="space-y-3">
+              <p className="mb-3 text-sm text-on-surface-variant">Search jobs currently being monitored by TICA.</p>
+              <div className="space-y-2.5">
                 {activeSearches.map((search, index) => {
                   const statusCfg = missionStatusConfig[search.status]
                   return (
                     <article
                       key={search.name}
-                      className={`rounded-xl bg-surface-container-high p-4 transition-all ${highlightedMission === index ? 'mission-card-highlight' : ''}`}
+                      className={`rounded-xl bg-surface-container-high p-3.5 transition-all ${highlightedMission === index ? 'mission-card-highlight' : ''}`}
                     >
                      {/* Collapsible card with action buttons */}
                      <div>
@@ -1242,9 +1243,9 @@ function DashboardPage() {
                               />
                               <p className="break-words text-body-md font-body-md font-medium text-on-surface">{search.name}</p>
                             </div>
-                            <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 pl-4">
+                            <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 pl-4">
                               <p className="text-sm text-on-surface-variant">Last Scan: {search.lastScan}</p>
-                              <p className="text-sm font-semibold text-primary">{search.opportunities} Opp.</p>
+                              <p className="text-sm font-bold text-primary">{search.opportunities} Opp.</p>
                             </div>
                           </div>
                           <span className="flex-shrink-0 text-on-surface-variant">
@@ -1253,9 +1254,9 @@ function DashboardPage() {
                         </button>
 
                         {expandedSearches[index] && (
-                          <div className="mt-3 space-y-3">
+                          <div className="mt-2.5 space-y-2.5">
                             {/* Detail list */}
-                            <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
+                            <dl className="grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
                               <div>
                                 <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicle Type</dt>
                                 <dd className="mt-0.5 text-sm text-on-surface">{search.vehicleType}</dd>
@@ -1278,7 +1279,7 @@ function DashboardPage() {
                               </div>
                               <div>
                                 <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicles Analysed Today</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
+                                <dd className="mt-0.5 text-sm font-semibold text-on-surface">{counterFormatter.format(search.vehiclesAnalysedToday)}</dd>
                               </div>
                               <div>
                                 <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Rejected Listings</dt>
@@ -1286,17 +1287,17 @@ function DashboardPage() {
                               </div>
                               <div>
                                 <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Qualified Opportunities</dt>
-                                <dd className="mt-0.5 text-sm font-semibold text-primary">{search.qualifiedOpportunities}</dd>
+                                <dd className="mt-0.5 text-sm font-bold text-primary">{search.qualifiedOpportunities}</dd>
                               </div>
                               <div>
                                 <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Today's Best Opp. Score</dt>
-                                <dd className="mt-0.5 text-sm text-on-surface">{search.bestOpportunityScore}</dd>
+                                <dd className="mt-0.5 text-sm font-semibold text-on-surface">{search.bestOpportunityScore}</dd>
                               </div>
                             </dl>
                             {/* Sources Being Scanned */}
                             <div>
-                              <p className="mb-1.5 text-xs uppercase tracking-widest text-on-surface-variant">Sources Being Scanned</p>
-                              <div className="flex flex-wrap gap-1.5">
+                              <p className="mb-1 text-xs uppercase tracking-widest text-on-surface-variant">Sources Being Scanned</p>
+                              <div className="flex flex-wrap gap-1">
                                 {search.sources.map((src) => (
                                   <span key={src} className="rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant">
                                     {src}
@@ -1308,7 +1309,7 @@ function DashboardPage() {
                             <div>
                               <div className="mb-1 flex items-center justify-between">
                                 <span className="text-xs uppercase tracking-widest text-on-surface-variant">Search Progress</span>
-                                <span className="text-xs font-medium text-on-surface">{search.progress}%</span>
+                                <span className="text-xs font-semibold text-on-surface">{search.progress}%</span>
                               </div>
                               <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
                                 <div

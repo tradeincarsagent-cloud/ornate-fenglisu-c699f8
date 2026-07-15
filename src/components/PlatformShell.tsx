@@ -144,7 +144,7 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="platform-shell-header border-b border-outline-variant/25 bg-surface-container px-5 py-4 md:px-10">
             <div className="relative flex items-center lg:hidden">
-              <div className="mx-auto logo-bezel w-40 rounded-lg p-1 sm:w-44">
+              <div className="mx-auto logo-bezel w-36 rounded-lg p-1 sm:w-44">
                 <img src={LOGO_SRC} alt="Trade In Cars Agent Logo" className="h-auto w-full object-contain logo-blend" />
               </div>
               <button
