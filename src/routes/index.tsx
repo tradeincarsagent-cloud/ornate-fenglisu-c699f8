@@ -641,7 +641,7 @@ function LandingPage() {
                   </svg>
                   Card required. No charge today. Cancel anytime before your trial ends.
                 </p>
-                <div className="md:hidden text-xs text-on-surface-variant text-center leading-tight space-y-1">
+                <div className="md:hidden text-xs text-on-surface-variant text-center leading-snug flex flex-col gap-0.5">
                   <p>✓ Secure Stripe checkout</p>
                   <p>✓ No charge today</p>
                   <p>✓ Cancel anytime during your 14-day trial</p>
