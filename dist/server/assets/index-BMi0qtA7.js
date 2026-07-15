@@ -389,6 +389,7 @@ function LandingPage() {
   const [opportunitiesVisible, setOpportunitiesVisible] = useState(true);
   const [trialOverlayVisible, setTrialOverlayVisible] = useState(false);
   const [trialOverlayShowing, setTrialOverlayShowing] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   function openModal(plan) {
     setSelectedPlan(plan);
     setSubmissionError("");
@@ -425,6 +426,21 @@ function LandingPage() {
     setTrialOverlayVisible(false);
     setTimeout(() => setTrialOverlayShowing(false), 400);
   }
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+  useEffect(() => {
+    function onScroll() {
+      setShowBackToTop(window.scrollY > 500);
+    }
+    window.addEventListener("scroll", onScroll, {
+      passive: true
+    });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   function handleFormValueChange(e) {
     const {
       name,
@@ -1259,7 +1275,11 @@ function LandingPage() {
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "Contact Support" })
         ] })
       ] })
-    ] }) })
+    ] }) }),
+    /* @__PURE__ */ jsx("button", { "aria-label": "Back to top", className: "back-to-top-btn", onClick: scrollToTop, style: {
+      opacity: showBackToTop ? 1 : 0,
+      pointerEvents: showBackToTop ? "auto" : "none"
+    }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "22", viewBox: "0 0 22 22", width: "22", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M11 17V5M5 11l6-6 6 6", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.2" }) }) })
   ] });
 }
 export {

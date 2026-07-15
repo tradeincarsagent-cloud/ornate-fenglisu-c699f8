@@ -358,6 +358,7 @@ function LandingPage() {
   const [opportunitiesVisible, setOpportunitiesVisible] = useState(true)
   const [trialOverlayVisible, setTrialOverlayVisible] = useState(false)
   const [trialOverlayShowing, setTrialOverlayShowing] = useState(false)
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   function openModal(plan: TrialPlan) {
     setSelectedPlan(plan)
@@ -398,6 +399,18 @@ function LandingPage() {
     setTrialOverlayVisible(false)
     setTimeout(() => setTrialOverlayShowing(false), 400)
   }
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    function onScroll() {
+      setShowBackToTop(window.scrollY > 500)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   function handleFormValueChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget
@@ -1401,6 +1414,19 @@ function LandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Back to Top button */}
+      <button
+        aria-label="Back to top"
+        className="back-to-top-btn"
+        onClick={scrollToTop}
+        style={{ opacity: showBackToTop ? 1 : 0, pointerEvents: showBackToTop ? 'auto' : 'none' }}
+        type="button"
+      >
+        <svg aria-hidden="true" fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 17V5M5 11l6-6 6 6" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" />
+        </svg>
+      </button>
     </>
   )
 }
