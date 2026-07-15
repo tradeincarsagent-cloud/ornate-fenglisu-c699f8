@@ -615,9 +615,14 @@ function LandingPage() {
               /* @__PURE__ */ jsx("a", { className: "border border-outline text-on-surface px-8 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all", href: "#how-it-works", children: "See How It Works" })
             ] }),
             /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Built specifically for independent dealers, professional buyers and used vehicle specialists." }),
-            /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxs("p", { className: "hidden md:flex text-xs text-on-surface-variant items-center gap-2", children: [
               /* @__PURE__ */ jsx("svg", { className: "w-4 h-4 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
               "Card required. No charge today. Cancel anytime before your trial ends."
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "md:hidden text-xs text-on-surface-variant text-center leading-tight space-y-1", children: [
+              /* @__PURE__ */ jsx("p", { children: "✓ Secure Stripe checkout" }),
+              /* @__PURE__ */ jsx("p", { children: "✓ No charge today" }),
+              /* @__PURE__ */ jsx("p", { children: "✓ Cancel anytime during your 14-day trial" })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6 pt-8 border-t border-outline-variant/20", children: [
