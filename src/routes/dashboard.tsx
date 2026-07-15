@@ -60,6 +60,18 @@ function getSweepIntensity(sweepAngle: number, angleDeg: number) {
   return Math.min(1, 0.24 + primaryGlow * 0.64 + trailingGlow * 0.36)
 }
 
+function UnitedKingdomFlag() {
+  return (
+    <svg aria-hidden="true" className="radar-centre-flag-icon" viewBox="0 0 36 24">
+      <rect width="36" height="24" rx="3" fill="#0A2B6B" />
+      <path d="M0 0 36 24M36 0 0 24" stroke="#fff" strokeWidth="5" />
+      <path d="M0 0 36 24M36 0 0 24" stroke="#E2434B" strokeWidth="2.4" />
+      <path d="M18 0v24M0 12h36" stroke="#fff" strokeWidth="7" />
+      <path d="M18 0v24M0 12h36" stroke="#E2434B" strokeWidth="3.8" />
+    </svg>
+  )
+}
+
 function VehicleGlyph({ type }: { type: RadarContactType }) {
   if (type === 'van') {
     return (
@@ -722,6 +734,12 @@ function DashboardPage() {
                       aria-hidden="true"
                       style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }}
                     />
+
+                    <div className="radar-centre-flag" aria-hidden="true">
+                      <div className="radar-centre-flag-shell">
+                        <UnitedKingdomFlag />
+                      </div>
+                    </div>
 
                     {radarContacts.map((contact) => {
                       const intensity = aiSearchLive ? getSweepIntensity(sweepAngle, contact.angleDeg) : 0.22
