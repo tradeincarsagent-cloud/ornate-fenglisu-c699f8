@@ -1894,3 +1894,12 @@ body > div {
     transition: box-shadow 0.2s ease, background-color 0.2s ease;
   }
 }
+
+/* ── Roadmap cards: mobile heading + badge two-column grid ───────────── */
+/* On very narrow screens (≤360 px) stack the badge beneath the heading  */
+@media (max-width: 360px) {
+  .roadmap-phase-header {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+}

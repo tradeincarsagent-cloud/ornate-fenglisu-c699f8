@@ -1117,10 +1117,10 @@ function LandingPage() {
           iconClass: "text-purple-400",
           icon: "rocket_launch",
           items: ["AI Negotiation Assistant", "Price Prediction AI", "Profit Estimator", "Vehicle History Integration", "Auction Integrations", "API Integrations", "Multi-language Support", "Multi-user Dealer Accounts"]
-        }].map((phase) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-3 max-md:gap-4", children: [
-            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md", children: phase.version }),
-            /* @__PURE__ */ jsx("span", { className: `text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full max-md:w-[124px] max-md:px-[11px] max-md:py-[3.8px] max-md:text-[11px] max-md:leading-[1.1] max-md:text-center max-md:whitespace-nowrap ${phase.statusClass}`, children: phase.status })
+        }].map((phase) => /* @__PURE__ */ jsxs("div", { className: "bg-surface-container p-8 max-md:px-5 rounded-2xl border border-outline-variant/20 flex flex-col h-full", children: [
+          /* @__PURE__ */ jsxs("div", { className: "roadmap-phase-header flex items-center justify-between mb-3 max-md:grid max-md:grid-cols-[1fr_auto] max-md:items-start max-md:gap-x-3", children: [
+            /* @__PURE__ */ jsx("h3", { className: "font-headline-md text-headline-md max-md:min-w-0", children: phase.version }),
+            /* @__PURE__ */ jsx("span", { className: `text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full max-md:w-[68px] max-md:min-w-[68px] max-md:max-w-[44%] max-md:px-2 max-md:py-1.5 max-md:text-[9px] max-md:leading-[1.4] max-md:tracking-[0.05em] max-md:text-center max-md:rounded-lg ${phase.statusClass}`, children: phase.status })
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant text-sm mb-6", children: phase.description }),
           /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: phase.items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-on-surface-variant", children: [
