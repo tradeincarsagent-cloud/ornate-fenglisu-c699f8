@@ -1382,37 +1382,38 @@ function LandingPage() {
       </main>
 
       <footer className="bg-surface-container-lowest w-full py-20 max-md:py-14 border-t border-outline-variant/20">
-        <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-12 md:gap-gutter">
-          <div className="space-y-6 max-md:space-y-5">
-            <div className="flex items-center mb-6">
+        <div className="max-w-[1200px] mx-auto px-margin-desktop grid grid-cols-1 md:flex md:flex-col md:items-center gap-12 md:gap-10">
+          <div className="space-y-6 max-md:space-y-5 md:space-y-0 md:flex md:flex-col md:items-center md:gap-5">
+            <div className="relative flex items-center mb-6 md:mb-0 md:justify-center">
+              <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(20,147,255,0.18) 0%, transparent 70%)', filter: 'blur(24px)' }} />
               <div className="logo-bezel rounded-lg p-1">
                 <img alt="Trade In Cars Agent Logo" className="h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" />
               </div>
             </div>
-            <p className="font-body-md text-body-md text-on-surface-variant max-w-sm">
+            <p className="font-body-md text-body-md text-on-surface-variant max-w-sm md:text-center">
               An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals.
             </p>
-            <div className="mx-auto h-16 w-28" />
+            <div className="mx-auto h-16 w-28 md:hidden" />
             <div className="space-y-1.5 text-center">
               <p className="font-body-md text-body-md text-on-surface-variant">© 2026 Trade in Cars Agent (TICA)</p>
               <p className="font-body-md text-body-md text-on-surface-variant">All rights reserved.</p>
               <p className="font-body-md text-body-md text-on-surface-variant">Built for modern vehicle dealers.</p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-            <div className="flex flex-col gap-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-14 md:w-full md:max-w-2xl md:mx-auto">
+            <div className="flex flex-col gap-3.5 md:items-center">
               <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">PLATFORM</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#how-it-works">How It Works</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#pricing">Pricing</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/dashboard">Dealer Command Centre</a>
             </div>
-            <div className="flex flex-col gap-3.5">
+            <div className="flex flex-col gap-3.5 md:items-center">
               <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">COMPANY</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/about">About TICA</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/contact">Contact</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/support">Support</a>
             </div>
-            <div className="flex flex-col gap-3.5">
+            <div className="flex flex-col gap-3.5 md:items-center">
               <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">LEGAL</span>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/privacy-policy">Privacy Policy</a>
               <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/terms-of-service">Terms of Service</a>

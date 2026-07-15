@@ -1252,35 +1252,41 @@ function LandingPage() {
         ] })
       ] }) }) }) })
     ] }),
-    /* @__PURE__ */ jsx("footer", { className: "bg-surface-container-lowest w-full py-20 max-md:py-14 border-t border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-12 md:gap-gutter", children: [
-      /* @__PURE__ */ jsxs("div", { className: "space-y-6 max-md:space-y-5", children: [
-        /* @__PURE__ */ jsx("div", { className: "flex items-center mb-6", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" }) }) }),
-        /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant max-w-sm", children: "An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals." }),
-        /* @__PURE__ */ jsx("div", { className: "mx-auto h-16 w-28" }),
+    /* @__PURE__ */ jsx("footer", { className: "bg-surface-container-lowest w-full py-20 max-md:py-14 border-t border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1200px] mx-auto px-margin-desktop grid grid-cols-1 md:flex md:flex-col md:items-center gap-12 md:gap-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "space-y-6 max-md:space-y-5 md:space-y-0 md:flex md:flex-col md:items-center md:gap-5", children: [
+        /* @__PURE__ */ jsxs("div", { className: "relative flex items-center mb-6 md:mb-0 md:justify-center", children: [
+          /* @__PURE__ */ jsx("div", { className: "hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 rounded-full pointer-events-none", style: {
+            background: "radial-gradient(ellipse at center, rgba(20,147,255,0.18) 0%, transparent 70%)",
+            filter: "blur(24px)"
+          } }),
+          /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend", src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" }) })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant max-w-sm md:text-center", children: "An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals." }),
+        /* @__PURE__ */ jsx("div", { className: "mx-auto h-16 w-28 md:hidden" }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 text-center", children: [
           /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "© 2026 Trade in Cars Agent (TICA)" }),
           /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "All rights reserved." }),
           /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "Built for modern vehicle dealers." })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3.5", children: [
+      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-14 md:w-full md:max-w-2xl md:mx-auto", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3.5 md:items-center", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)]", children: "PLATFORM" }),
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#how-it-works", children: "How It Works" }),
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#pricing", children: "Pricing" }),
           /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "/dashboard", children: "Dealer Command Centre" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3.5", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3.5 md:items-center", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)]", children: "COMPANY" }),
-          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "About TICA" }),
-          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "Contact" }),
-          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "Support" })
+          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "/about", children: "About TICA" }),
+          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "/contact", children: "Contact" }),
+          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "/support", children: "Support" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3.5", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3.5 md:items-center", children: [
           /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps text-primary [filter:brightness(1.1)]", children: "LEGAL" }),
-          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "Privacy Policy" }),
-          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "Terms of Service" }),
-          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "#", children: "Cookie Policy" })
+          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "/privacy-policy", children: "Privacy Policy" }),
+          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "/terms-of-service", children: "Terms of Service" }),
+          /* @__PURE__ */ jsx("a", { className: "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all", href: "/cookie-policy", children: "Cookie Policy" })
         ] })
       ] })
     ] }) }),
