@@ -619,7 +619,7 @@ function LandingPage() {
               /* @__PURE__ */ jsx("svg", { className: "w-4 h-4 text-primary", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ jsx("path", { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }) }),
               "Card required. No charge today. Cancel anytime before your trial ends."
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "md:hidden text-xs text-on-surface-variant text-center leading-tight space-y-1", children: [
+            /* @__PURE__ */ jsxs("div", { className: "md:hidden text-xs text-on-surface-variant text-center leading-snug flex flex-col gap-0.5", children: [
               /* @__PURE__ */ jsx("p", { children: "✓ Secure Stripe checkout" }),
               /* @__PURE__ */ jsx("p", { children: "✓ No charge today" }),
               /* @__PURE__ */ jsx("p", { children: "✓ Cancel anytime during your 14-day trial" })
