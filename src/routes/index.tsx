@@ -1383,17 +1383,16 @@ function LandingPage() {
 
       <footer className="bg-surface-container-lowest w-full py-20 max-md:py-14 border-t border-outline-variant/20">
         <div className="max-w-[1200px] mx-auto px-margin-desktop grid grid-cols-1 md:flex md:flex-col md:items-center gap-12 md:gap-6">
-          <div className="space-y-6 max-md:space-y-5 md:space-y-0 md:flex md:flex-col md:items-center md:gap-5">
-            <div className="relative flex items-center mb-6 md:mb-0 md:justify-center">
+          <div className="space-y-6 max-md:flex max-md:flex-col max-md:items-center max-md:gap-3 max-md:space-y-0 md:space-y-0 md:flex md:flex-col md:items-center md:gap-5">
+            <div className="relative flex items-center justify-center md:mb-0 md:justify-center">
               <div className="logo-bezel rounded-lg p-1">
                 <img alt="Trade In Cars Agent Logo" className="h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" />
               </div>
             </div>
-            <p className="font-body-md text-body-md text-on-surface-variant max-w-sm md:text-center">
+            <p className="font-body-md text-body-md text-on-surface-variant max-w-sm max-md:max-w-[22rem] max-md:mx-auto max-md:text-center md:text-center">
               An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals.
             </p>
-            <div className="mx-auto h-16 w-28 md:hidden" />
-            <div className="space-y-0.5 text-center">
+            <div className="space-y-px text-center max-md:pt-0.5">
               <p className="font-body-md text-body-md text-on-surface-variant">© 2026 Trade in Cars Agent (TICA)</p>
               <p className="font-body-md text-body-md text-on-surface-variant">All rights reserved.</p>
               <p className="font-body-md text-body-md text-on-surface-variant">Built for modern vehicle dealers.</p>
