@@ -1408,15 +1408,15 @@ function LandingPage() {
             </div>
             <div className="flex flex-col gap-3.5">
               <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">COMPANY</span>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">About TICA</a>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Contact</a>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Support</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/about">About TICA</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/contact">Contact</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/support">Support</a>
             </div>
             <div className="flex flex-col gap-3.5">
               <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)]">LEGAL</span>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Privacy Policy</a>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Terms of Service</a>
-              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Cookie Policy</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/privacy-policy">Privacy Policy</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/terms-of-service">Terms of Service</a>
+              <a className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="/cookie-policy">Cookie Policy</a>
             </div>
           </div>
         </div>
