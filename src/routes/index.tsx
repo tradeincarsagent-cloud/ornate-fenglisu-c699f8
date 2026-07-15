@@ -1199,7 +1199,6 @@ function LandingPage() {
                   description: 'Features already planned and actively being developed.',
                   status: 'In Development',
                   statusClass: 'bg-primary/20 text-primary',
-                  mobileBadgeClass: 'max-md:px-2 max-md:py-[3px]',
                   iconClass: 'text-primary',
                   icon: 'schedule',
                   items: [
@@ -1217,7 +1216,6 @@ function LandingPage() {
                   description: 'Our long-term vision for the future of intelligent vehicle sourcing.',
                   status: 'Future Vision',
                   statusClass: 'bg-purple-500/15 text-purple-400',
-                  mobileBadgeClass: 'max-md:px-2 max-md:py-[3px]',
                   iconClass: 'text-purple-400',
                   icon: 'rocket_launch',
                   items: [
@@ -1233,9 +1231,9 @@ function LandingPage() {
                 },
               ].map(phase => (
                 <div key={phase.version} className="bg-surface-container p-8 rounded-2xl border border-outline-variant/20 flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center justify-between mb-3 max-md:gap-4">
                     <h3 className="font-headline-md text-headline-md">{phase.version}</h3>
-                    <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${phase.statusClass}${phase.mobileBadgeClass ? ` ${phase.mobileBadgeClass}` : ''}`}>{phase.status}</span>
+                    <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full max-md:w-[124px] max-md:px-[11px] max-md:py-[3.8px] max-md:text-[11px] max-md:leading-[1.1] max-md:text-center max-md:whitespace-nowrap ${phase.statusClass}`}>{phase.status}</span>
                   </div>
                   <p className="text-on-surface-variant text-sm mb-6">{phase.description}</p>
                   <ul className="space-y-3">
