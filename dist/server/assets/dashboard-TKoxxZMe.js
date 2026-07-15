@@ -23,42 +23,110 @@ const missionStatusConfig = {
     emoji: "🔵"
   }
 };
+const radarRingInsets = [6, 14, 22, 30, 38, 46];
+const radarGridAngles = Array.from({
+  length: 24
+}, (_, index) => index * 15);
 const radarContacts = [{
   id: "contact-1",
   x: 0.63,
   y: 0.24,
   vehicleType: "car",
   opportunityIndex: 0,
-  angleDeg: 35.8
+  angleDeg: 35.8,
+  label: "Audi RS5",
+  heading: "036°",
+  source: "Auto Trader"
 }, {
   id: "contact-2",
   x: 0.29,
   y: 0.61,
   vehicleType: "pickup",
   opportunityIndex: 1,
-  angleDeg: 239.7
+  angleDeg: 239.7,
+  label: "Range Rover",
+  heading: "240°",
+  source: "Motorway"
 }, {
   id: "contact-3",
   x: 0.74,
   y: 0.47,
   vehicleType: "van",
   opportunityIndex: 2,
-  angleDeg: 85.2
+  angleDeg: 85.2,
+  label: "Mercedes A45",
+  heading: "085°",
+  source: "Dealer trade"
 }, {
   id: "contact-4",
   x: 0.57,
   y: 0.7,
   vehicleType: "motorcycle",
   opportunityIndex: 3,
-  angleDeg: 161.6
+  angleDeg: 161.6,
+  label: "Golf R",
+  heading: "162°",
+  source: "Retail listing"
 }, {
   id: "contact-5",
   x: 0.18,
   y: 0.33,
-  vehicleType: "car",
+  vehicleType: "suv",
   opportunityIndex: 4,
-  angleDeg: 208.1
+  angleDeg: 208.1,
+  label: "Porsche Macan",
+  heading: "208°",
+  source: "Fleet source"
 }];
+function getSweepIntensity(sweepAngle, angleDeg) {
+  const circularDifference = Math.abs((sweepAngle - angleDeg + 540) % 360 - 180);
+  const trailingDifference = (sweepAngle - angleDeg + 360) % 360;
+  const primaryGlow = Math.max(0, 1 - circularDifference / 24);
+  const trailingGlow = trailingDifference <= 72 ? 1 - trailingDifference / 72 : 0;
+  return Math.min(1, 0.24 + primaryGlow * 0.64 + trailingGlow * 0.36);
+}
+function VehicleGlyph({
+  type
+}) {
+  if (type === "van") {
+    return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+      /* @__PURE__ */ jsx("path", { d: "M5 18.5h3.1l2.7-6.1c.5-1.1 1.5-1.9 2.7-1.9H21c1.2 0 2.2.6 2.8 1.5l2.9 4.5H29a1 1 0 0 1 1 1v4h-2.2a2.8 2.8 0 0 1-5.5 0h-9.8a2.8 2.8 0 0 1-5.5 0H5v-3Z" }),
+      /* @__PURE__ */ jsx("path", { d: "M14.5 13h5.4c.8 0 1.5.4 1.9 1l1.7 2.8H12.4l1-2.2c.2-.4.6-.6 1.1-.6Z" }),
+      /* @__PURE__ */ jsx("circle", { cx: "9.5", cy: "21.5", r: "1.8" }),
+      /* @__PURE__ */ jsx("circle", { cx: "24.8", cy: "21.5", r: "1.8" })
+    ] });
+  }
+  if (type === "pickup") {
+    return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+      /* @__PURE__ */ jsx("path", { d: "M4.5 18.4h3.4l2.1-4.3c.6-1.1 1.6-1.8 2.8-1.8h5.4c1.1 0 2.1.5 2.8 1.4l1.6 2.2h2.6c.9 0 1.6.7 1.6 1.6v4h-2.2a2.8 2.8 0 0 1-5.5 0H12a2.8 2.8 0 0 1-5.5 0H4.5v-3.1Z" }),
+      /* @__PURE__ */ jsx("path", { d: "M13 14.8h6.3l1.4 1.9H12l.4-.8c.2-.7.9-1.1 1.6-1.1Z" }),
+      /* @__PURE__ */ jsx("circle", { cx: "9.2", cy: "21.6", r: "1.8" }),
+      /* @__PURE__ */ jsx("circle", { cx: "23.7", cy: "21.6", r: "1.8" })
+    ] });
+  }
+  if (type === "motorcycle") {
+    return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+      /* @__PURE__ */ jsx("circle", { cx: "9.3", cy: "22", r: "3.2", fill: "none", stroke: "currentColor", strokeWidth: "2" }),
+      /* @__PURE__ */ jsx("circle", { cx: "23", cy: "22", r: "3.2", fill: "none", stroke: "currentColor", strokeWidth: "2" }),
+      /* @__PURE__ */ jsx("path", { d: "m11.5 22 5.2-7.8h4.1l2.4 3.8H18l-2.5 4Z", fill: "none", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2" }),
+      /* @__PURE__ */ jsx("path", { d: "m15.2 14.2 2.3 3.8", fill: "none", stroke: "currentColor", strokeLinecap: "round", strokeWidth: "2" })
+    ] });
+  }
+  if (type === "suv") {
+    return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+      /* @__PURE__ */ jsx("path", { d: "M4 18h2.8l2-4.8c.5-1.2 1.7-2 3-2h8.9c1.2 0 2.3.6 2.9 1.6l2.2 3.8.2.6H29a1 1 0 0 1 1 1v3.8h-2.1a3 3 0 0 1-5.8 0H10.2a3 3 0 0 1-5.8 0H3v-4Z" }),
+      /* @__PURE__ */ jsx("path", { d: "M12.5 12.8h7.1c.8 0 1.5.4 1.9 1.1l1.4 2.4H10.4l1-2.3c.3-.7.6-1.2 1.1-1.2Z" }),
+      /* @__PURE__ */ jsx("circle", { cx: "7.8", cy: "21.7", r: "1.9" }),
+      /* @__PURE__ */ jsx("circle", { cx: "24.6", cy: "21.7", r: "1.9" })
+    ] });
+  }
+  return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-vehicle-icon", viewBox: "0 0 32 32", children: [
+    /* @__PURE__ */ jsx("path", { d: "M5 18.5h2.6l2.4-4.7c.7-1.4 2.2-2.3 3.8-2.3h5.8c1.5 0 2.9.7 3.8 1.9l2 3H27c1.1 0 2 .9 2 2v3.1h-2.2a3 3 0 0 1-5.8 0h-10a3 3 0 0 1-5.8 0H5v-3Z" }),
+    /* @__PURE__ */ jsx("path", { d: "M13.6 14h5.9c.7 0 1.4.3 1.8.9l1.2 1.6H11.8l.9-1.8c.2-.4.6-.7.9-.7Z" }),
+    /* @__PURE__ */ jsx("circle", { cx: "8.8", cy: "21.5", r: "1.9" }),
+    /* @__PURE__ */ jsx("circle", { cx: "23.6", cy: "21.5", r: "1.9" })
+  ] });
+}
 const timelineTemplates = [{
   id: "timeline-audi-rs5",
   message: "Audi RS5 Sportback detected below market price.",
@@ -242,7 +310,7 @@ function DashboardPage() {
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
   const [highlightedMission, setHighlightedMission] = useState(null);
   const [priorityContactId, setPriorityContactId] = useState(null);
-  const [contactIntensity, setContactIntensity] = useState(() => radarContacts.map(() => 0.22));
+  const [sweepAngle, setSweepAngle] = useState(0);
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false);
   const [aiSearchLive, setAiSearchLive] = useState(true);
   const [timelineEvents, setTimelineEvents] = useState(initialTimelineEvents);
@@ -265,31 +333,15 @@ function DashboardPage() {
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   useEffect(() => {
     if (!aiSearchLive) return;
-    const sweepDurationMs = 3600;
-    const sweepHeadOffsetDeg = 60;
-    const sweepTrailDegrees = 128;
-    const baseIntensity = 0.16;
-    const updateSweep = () => {
-      const elapsed = Date.now() % sweepDurationMs;
-      const baseAngle = elapsed / sweepDurationMs * 360;
-      const sweepHeadAngle = (baseAngle + sweepHeadOffsetDeg) % 360;
-      setContactIntensity(radarContacts.map((contact) => {
-        const trailingDelta = (sweepHeadAngle - contact.angleDeg + 360) % 360;
-        if (trailingDelta > sweepTrailDegrees) return baseIntensity;
-        const normalizedTrail = trailingDelta / sweepTrailDegrees;
-        const trailFade = Math.exp(-normalizedTrail * 3.1);
-        const beamHitFlash = Math.exp(-((trailingDelta / 8) ** 2));
-        const nextIntensity = baseIntensity + trailFade * 0.66 + beamHitFlash * 0.24;
-        return Math.min(1, nextIntensity);
-      }));
-    };
-    updateSweep();
-    const sweepInterval = setInterval(updateSweep, 60);
-    return () => clearInterval(sweepInterval);
+    const sweepDurationMs = 5400;
+    const startedAt = performance.now();
+    const intervalId = window.setInterval(() => {
+      setSweepAngle((performance.now() - startedAt) / sweepDurationMs * 360 % 360);
+    }, 80);
+    return () => window.clearInterval(intervalId);
   }, [aiSearchLive]);
   useEffect(() => {
     if (!aiSearchLive) {
-      setContactIntensity(radarContacts.map(() => 0.22));
       setPriorityContactId(null);
       setRadarDetectionGlow(false);
       setHighlightedOpportunity(null);
@@ -557,22 +609,70 @@ function DashboardPage() {
       ] }),
       /* @__PURE__ */ jsx("article", { className: "dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8", children: /* @__PURE__ */ jsxs("div", { className: `radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
         /* @__PURE__ */ jsx("h3", { className: "text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
-        /* @__PURE__ */ jsxs("div", { className: "radar-container mt-6", children: [
+        /* @__PURE__ */ jsxs("div", { className: "radar-container mt-6 premium-radar-shell", children: [
           /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
-          /* @__PURE__ */ jsxs("div", { className: "radar-scope", children: [
-            /* @__PURE__ */ jsx("div", { className: "radar-ring radar-ring-1" }),
-            /* @__PURE__ */ jsx("div", { className: "radar-ring radar-ring-2" }),
-            /* @__PURE__ */ jsx("div", { className: "radar-ring radar-ring-3" }),
-            /* @__PURE__ */ jsx("div", { className: "radar-crosshair radar-crosshair-horizontal" }),
-            /* @__PURE__ */ jsx("div", { className: "radar-crosshair radar-crosshair-vertical" }),
-            /* @__PURE__ */ jsx("div", { className: "radar-sweep", style: {
+          /* @__PURE__ */ jsxs("div", { className: "radar-scope premium-radar-scope", children: [
+            /* @__PURE__ */ jsx("div", { className: "radar-map-overlay", "aria-hidden": "true", children: /* @__PURE__ */ jsxs("svg", { viewBox: "0 0 320 320", children: [
+              /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M50 114c16-17 36-28 60-29 13-1 24 3 36 1 18-3 28-18 43-22 19-5 45 6 60 24-7 9-12 17-13 27-1 11 9 18 18 24 9 7 15 16 17 29-22 6-48 2-66 14-17 11-24 33-43 40-17 6-35-4-52-10-21-8-46-10-58-29-10-14-8-33-1-49 7-18 20-32 33-44 6-5 12-10 16-16-19 1-37 16-50 40-9-9-9-20 0-30Z" }),
+              /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M214 90c8-10 20-16 33-16 10 0 18 4 24 11-5 10-16 17-26 23-10 5-22 7-31 2 1-8-2-14 0-20Z" }),
+              /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M116 193c14-5 29-5 40 1 9 4 17 12 19 22-13 3-25 10-31 21-16 0-30-11-37-24-5-8-4-15 9-20Z" }),
+              /* @__PURE__ */ jsxs("g", { className: "radar-road-network", children: [
+                /* @__PURE__ */ jsx("line", { x1: "157", y1: "222", x2: "140", y2: "182", strokeWidth: "0.9" }),
+                /* @__PURE__ */ jsx("line", { x1: "140", y1: "182", x2: "138", y2: "152", strokeWidth: "0.9" }),
+                /* @__PURE__ */ jsx("line", { x1: "138", y1: "152", x2: "130", y2: "94", strokeWidth: "0.8" }),
+                /* @__PURE__ */ jsx("line", { x1: "157", y1: "222", x2: "112", y2: "210", strokeWidth: "0.8" }),
+                /* @__PURE__ */ jsx("line", { x1: "157", y1: "222", x2: "153", y2: "155", strokeWidth: "0.8" }),
+                /* @__PURE__ */ jsx("line", { x1: "140", y1: "182", x2: "153", y2: "155", strokeWidth: "0.7" }),
+                /* @__PURE__ */ jsx("line", { x1: "138", y1: "152", x2: "153", y2: "155", strokeWidth: "0.7" })
+              ] }),
+              /* @__PURE__ */ jsxs("g", { className: "radar-data-points", children: [
+                /* @__PURE__ */ jsx("circle", { cx: "157", cy: "222", r: "3" }),
+                /* @__PURE__ */ jsx("circle", { cx: "140", cy: "182", r: "2.2" }),
+                /* @__PURE__ */ jsx("circle", { cx: "138", cy: "152", r: "2.2" }),
+                /* @__PURE__ */ jsx("circle", { cx: "130", cy: "94", r: "2" }),
+                /* @__PURE__ */ jsx("circle", { cx: "112", cy: "210", r: "2" }),
+                /* @__PURE__ */ jsx("circle", { cx: "153", cy: "155", r: "2" })
+              ] })
+            ] }) }),
+            radarGridAngles.map((angle) => /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-grid-line", style: {
+              transform: `translate(-50%, -50%) rotate(${angle}deg)`
+            } }, angle)),
+            radarRingInsets.map((inset, index) => /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: `radar-ring ${index % 2 === 0 ? "radar-ring-major" : "radar-ring-minor"}`, style: {
+              inset: `${inset}%`
+            } }, inset)),
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-crosshair radar-crosshair-horizontal" }),
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-crosshair radar-crosshair-vertical" }),
+            /* @__PURE__ */ jsx("div", { className: "radar-sweep", "aria-hidden": "true", style: {
               animationPlayState: aiSearchLive ? "running" : "paused"
             } }),
-            radarContacts.map((contact, index) => /* @__PURE__ */ jsx("span", { className: `radar-contact${priorityContactId === contact.id ? " radar-contact-priority" : ""}`, "data-vehicle-type": contact.vehicleType, style: {
-              top: `${contact.y * 100}%`,
-              left: `${contact.x * 100}%`,
-              "--radar-contact-intensity": `${contactIntensity[index] ?? 0.22}`
-            } }, contact.id))
+            /* @__PURE__ */ jsx("div", { className: "radar-sweep-glow", "aria-hidden": "true", style: {
+              animationPlayState: aiSearchLive ? "running" : "paused"
+            } }),
+            radarContacts.map((contact) => {
+              const intensity = aiSearchLive ? getSweepIntensity(sweepAngle, contact.angleDeg) : 0.22;
+              const contactStyle = {
+                left: `${contact.x * 100}%`,
+                top: `${contact.y * 100}%`,
+                "--radar-contact-intensity": intensity.toFixed(3)
+              };
+              return /* @__PURE__ */ jsxs("div", { className: `radar-contact${priorityContactId === contact.id ? " radar-contact-priority" : ""}`, style: contactStyle, children: [
+                /* @__PURE__ */ jsx("span", { className: "radar-contact-halo" }),
+                /* @__PURE__ */ jsx(VehicleGlyph, { type: contact.vehicleType }),
+                /* @__PURE__ */ jsxs("span", { className: "radar-contact-caption", children: [
+                  /* @__PURE__ */ jsx("span", { className: "radar-contact-title", children: contact.label }),
+                  /* @__PURE__ */ jsxs("span", { className: "radar-contact-meta", children: [
+                    contact.heading,
+                    " • ",
+                    contact.source
+                  ] })
+                ] })
+              ] }, contact.id);
+            }),
+            /* @__PURE__ */ jsx("div", { className: "radar-centre-point", "aria-hidden": "true" }),
+            /* @__PURE__ */ jsxs("div", { className: "radar-status-chip", "aria-hidden": "true", children: [
+              /* @__PURE__ */ jsx("span", { className: "radar-status-dot" }),
+              aiSearchLive ? "🇬🇧 UK MARKET • LIVE SCAN" : "⏸ SEARCH PAUSED"
+            ] })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: `ai-switch-panel mt-8${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
