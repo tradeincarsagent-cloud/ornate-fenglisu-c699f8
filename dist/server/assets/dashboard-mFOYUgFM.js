@@ -85,6 +85,15 @@ function getSweepIntensity(sweepAngle, angleDeg) {
   const trailingGlow = trailingDifference <= 72 ? 1 - trailingDifference / 72 : 0;
   return Math.min(1, 0.24 + primaryGlow * 0.64 + trailingGlow * 0.36);
 }
+function UnitedKingdomFlag() {
+  return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-centre-flag-icon", viewBox: "0 0 36 24", children: [
+    /* @__PURE__ */ jsx("rect", { width: "36", height: "24", rx: "3", fill: "#0A2B6B" }),
+    /* @__PURE__ */ jsx("path", { d: "M0 0 36 24M36 0 0 24", stroke: "#fff", strokeWidth: "5" }),
+    /* @__PURE__ */ jsx("path", { d: "M0 0 36 24M36 0 0 24", stroke: "#E2434B", strokeWidth: "2.4" }),
+    /* @__PURE__ */ jsx("path", { d: "M18 0v24M0 12h36", stroke: "#fff", strokeWidth: "7" }),
+    /* @__PURE__ */ jsx("path", { d: "M18 0v24M0 12h36", stroke: "#E2434B", strokeWidth: "3.8" })
+  ] });
+}
 function VehicleGlyph({
   type
 }) {
@@ -648,6 +657,7 @@ function DashboardPage() {
             /* @__PURE__ */ jsx("div", { className: "radar-sweep-glow", "aria-hidden": "true", style: {
               animationPlayState: aiSearchLive ? "running" : "paused"
             } }),
+            /* @__PURE__ */ jsx("div", { className: "radar-centre-flag", "aria-hidden": "true", children: /* @__PURE__ */ jsx("div", { className: "radar-centre-flag-shell", children: /* @__PURE__ */ jsx(UnitedKingdomFlag, {}) }) }),
             radarContacts.map((contact) => {
               const intensity = aiSearchLive ? getSweepIntensity(sweepAngle, contact.angleDeg) : 0.22;
               const contactStyle = {
