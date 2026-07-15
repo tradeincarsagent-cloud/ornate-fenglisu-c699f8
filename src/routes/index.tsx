@@ -1403,9 +1403,7 @@ function LandingPage() {
               <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px] max-md:font-semibold max-md:tracking-[0.12em]">PLATFORM</span>
               <div className="footer-mobile-link-row">
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="#how-it-works">How It Works</a>
-                <span aria-hidden="true" className="footer-mobile-link-separator">/</span>
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="#pricing">Pricing</a>
-                <span aria-hidden="true" className="footer-mobile-link-separator">/</span>
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/dashboard">Dealer Command Centre</a>
               </div>
             </div>
@@ -1413,9 +1411,7 @@ function LandingPage() {
               <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px] max-md:font-semibold max-md:tracking-[0.12em]">COMPANY</span>
               <div className="footer-mobile-link-row">
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/about">About TICA</a>
-                <span aria-hidden="true" className="footer-mobile-link-separator">/</span>
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/contact">Contact</a>
-                <span aria-hidden="true" className="footer-mobile-link-separator">/</span>
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/support">Support</a>
               </div>
             </div>
@@ -1423,9 +1419,7 @@ function LandingPage() {
               <span className="font-label-caps text-label-caps text-primary [filter:brightness(1.1)] max-md:text-[11px] max-md:font-semibold max-md:tracking-[0.12em]">LEGAL</span>
               <div className="footer-mobile-link-row">
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/privacy-policy">Privacy Policy</a>
-                <span aria-hidden="true" className="footer-mobile-link-separator">/</span>
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/terms-of-service">Terms of Service</a>
-                <span aria-hidden="true" className="footer-mobile-link-separator">/</span>
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/cookie-policy">Cookie Policy</a>
               </div>
             </div>
