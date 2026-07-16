@@ -401,6 +401,12 @@ body > div {
   overflow: visible;
 }
 
+.dashboard-radar-fit {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .radar-frame {
   position: absolute;
   inset: -6px;
@@ -1424,18 +1430,25 @@ body > div {
     margin-top: 0.6rem;
     width: min(100%, 23rem);
     max-width: min(96vw, 380px);
+    padding: 0.55rem;
+    overflow: hidden;
+  }
+
+  .dashboard-radar-container .dashboard-radar-fit {
+    transform: scale(0.88);
+    transform-origin: center;
   }
 
   .dashboard-radar-container .radar-frame {
-    inset: -7px;
+    inset: -3px;
   }
 
   .dashboard-radar-container .radar-frame::before {
-    inset: 9px;
+    inset: 8px;
   }
 
   .dashboard-radar-container .radar-frame::after {
-    inset: 22px;
+    inset: 20px;
   }
 
   .dashboard-radar-container .radar-centre-flag-shell {
@@ -1703,9 +1716,9 @@ body > div {
   }
 
   .dashboard-radar-notification {
-    width: min(8.3rem, calc(50% - 0.72rem));
-    right: 0.18rem;
-    top: -0.2rem;
+    width: min(7.65rem, calc(50% - 0.72rem));
+    right: 0.14rem;
+    top: 0;
   }
 }
 
@@ -2292,6 +2305,10 @@ body > div {
     width: min(100%, 18.6rem);
   }
 
+  .dashboard-radar-container .dashboard-radar-fit {
+    transform: scale(0.84);
+  }
+
   .dashboard-radar-container .radar-status-chip {
     max-width: calc(100% - 1.35rem);
     gap: 0.26rem;
@@ -2304,9 +2321,9 @@ body > div {
   }
 
   .dashboard-radar-notification {
-    width: min(7.75rem, calc(50% - 0.64rem));
-    right: 0.1rem;
-    top: -0.15rem;
+    width: min(7.15rem, calc(50% - 0.64rem));
+    right: 0.08rem;
+    top: 0;
   }
 
   .roadmap-phase-header {
