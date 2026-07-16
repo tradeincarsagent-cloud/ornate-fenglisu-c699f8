@@ -83,13 +83,32 @@ const radarContacts = [{
   heading: "208°",
   source: "Fleet source"
 }];
-const dashboardRadarOpportunity = {
-  title: "Opportunity Found",
+const radarOpportunities = [{
   vehicle: "BMW M3 Competition 2020",
   margin: "£3,200",
   confidence: "97%",
-  stamp: "Live • 12s"
-};
+  timerStart: 12
+}, {
+  vehicle: "Audi RS5 Sportback 2021",
+  margin: "£2,850",
+  confidence: "91%",
+  timerStart: 8
+}, {
+  vehicle: "Mercedes A45 AMG 2022",
+  margin: "£1,950",
+  confidence: "85%",
+  timerStart: 6
+}, {
+  vehicle: "Porsche Macan S 2021",
+  margin: "£4,100",
+  confidence: "93%",
+  timerStart: 15
+}, {
+  vehicle: "Volkswagen Golf R 2023",
+  margin: "£1,420",
+  confidence: "78%",
+  timerStart: 11
+}];
 function getSweepIntensity(sweepAngle, angleDeg) {
   const circularDifference = Math.abs((sweepAngle - angleDeg + 540) % 360 - 180);
   const trailingDifference = (sweepAngle - angleDeg + 360) % 360;
@@ -352,7 +371,12 @@ function DashboardPage() {
   const [greetingSummaryIndex, setGreetingSummaryIndex] = useState(0);
   const [greetingSummaryVisible, setGreetingSummaryVisible] = useState(true);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [radarOpportunityVisible, setRadarOpportunityVisible] = useState(false);
+  const [radarOpportunityKey, setRadarOpportunityKey] = useState(0);
+  const [radarOpportunityIndex, setRadarOpportunityIndex] = useState(0);
+  const [radarOpportunityTimer, setRadarOpportunityTimer] = useState(0);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
+  const radarOpportunityCursorRef = useRef(0);
   useEffect(() => {
     if (!aiSearchLive) return;
     const sweepDurationMs = 5400;
@@ -368,6 +392,7 @@ function DashboardPage() {
       setRadarDetectionGlow(false);
       setHighlightedOpportunity(null);
       setActiveTimelineEventId(null);
+      setRadarOpportunityVisible(false);
       return;
     }
   }, [aiSearchLive]);
@@ -396,6 +421,12 @@ function DashboardPage() {
       if (template.missionIndex !== void 0) {
         setHighlightedMission(template.missionIndex);
       }
+      const oppIdx = radarOpportunityCursorRef.current;
+      radarOpportunityCursorRef.current = (radarOpportunityCursorRef.current + 1) % radarOpportunities.length;
+      setRadarOpportunityIndex(oppIdx);
+      setRadarOpportunityTimer(radarOpportunities[oppIdx].timerStart);
+      setRadarOpportunityKey((k) => k + 1);
+      setRadarOpportunityVisible(true);
       schedule(() => setPriorityContactId(null), 1600);
       schedule(() => setRadarDetectionGlow(false), 1e3);
       schedule(() => setHighlightedOpportunity(null), 1700);
@@ -403,6 +434,7 @@ function DashboardPage() {
       if (template.missionIndex !== void 0) {
         schedule(() => setHighlightedMission(null), 1700);
       }
+      schedule(() => setRadarOpportunityVisible(false), 7100);
       schedule(runTimelineActivity, 11e3 + Math.random() * 4e3);
     };
     schedule(runTimelineActivity, 9e3);
@@ -507,6 +539,13 @@ function DashboardPage() {
       if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId);
     };
   }, []);
+  useEffect(() => {
+    if (!radarOpportunityVisible) return;
+    const intervalId = window.setInterval(() => {
+      setRadarOpportunityTimer((t) => t + 1);
+    }, 1e3);
+    return () => window.clearInterval(intervalId);
+  }, [radarOpportunityVisible]);
   useEffect(() => {
     const onScroll = () => {
       setShowBackToTop(window.scrollY > 300);
@@ -732,23 +771,27 @@ function DashboardPage() {
                 aiSearchLive ? "🇬🇧 UK MARKET • LIVE SCAN" : "⏸ SEARCH PAUSED"
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification", "aria-hidden": "true", children: [
+            radarOpportunityVisible && /* @__PURE__ */ jsxs("div", { className: "radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification", "aria-live": "polite", "aria-atomic": "true", children: [
               /* @__PURE__ */ jsxs("div", { className: "radar-notification-header", children: [
-                /* @__PURE__ */ jsx("span", { className: "radar-notification-label", children: dashboardRadarOpportunity.title }),
-                /* @__PURE__ */ jsx("span", { className: "radar-notification-stamp", children: dashboardRadarOpportunity.stamp })
+                /* @__PURE__ */ jsx("span", { className: "radar-notification-label", children: "Opportunity Found" }),
+                /* @__PURE__ */ jsxs("span", { className: "radar-notification-stamp", children: [
+                  "Live • ",
+                  radarOpportunityTimer,
+                  "s"
+                ] })
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "radar-notification-vehicle", children: dashboardRadarOpportunity.vehicle }),
+              /* @__PURE__ */ jsx("p", { className: "radar-notification-vehicle", children: radarOpportunities[radarOpportunityIndex].vehicle }),
               /* @__PURE__ */ jsxs("div", { className: "radar-notification-metrics", children: [
                 /* @__PURE__ */ jsxs("div", { className: "radar-notification-metric", children: [
                   /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-label", children: "Estimated Margin" }),
-                  /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-value", children: dashboardRadarOpportunity.margin })
+                  /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-value", children: radarOpportunities[radarOpportunityIndex].margin })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "radar-notification-metric", children: [
                   /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-label", children: "Confidence" }),
-                  /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-value", children: dashboardRadarOpportunity.confidence })
+                  /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-value", children: radarOpportunities[radarOpportunityIndex].confidence })
                 ] })
               ] })
-            ] })
+            ] }, radarOpportunityKey)
           ] }),
           /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-control ai-switch-panel mt-8${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
             if (e.key === "Enter" || e.key === " ") {
