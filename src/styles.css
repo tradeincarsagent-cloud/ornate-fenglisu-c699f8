@@ -1427,12 +1427,12 @@ body > div {
   }
 
   .dashboard-radar-container {
-    margin-top: 0.6rem;
+    margin-top: 1.5rem;
     width: min(100%, 23rem);
     max-width: min(96vw, 380px);
     padding: 0.55rem;
     overflow: visible;
-    --radar-bearing-radius: calc(50vw - 3rem);
+    --radar-bearing-radius: calc(50vw - 2.4rem);
     --radar-tick-radius: calc(50vw - 3.1rem);
   }
 
@@ -1442,7 +1442,7 @@ body > div {
   }
 
   .dashboard-radar-container .radar-bearing-label {
-    font-size: 0.5rem;
+    font-size: 0.46rem;
   }
 
   .dashboard-radar-container .radar-frame {
