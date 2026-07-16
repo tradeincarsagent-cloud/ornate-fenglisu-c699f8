@@ -723,24 +723,25 @@ function DashboardPage() {
                 <h3 className="dashboard-radar-title text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
 
                 <div className="dashboard-radar-container radar-container mt-6 glass-card rounded-full p-2 glow-border premium-radar-shell">
-                  <div className="radar-frame" />
+                  <div className="dashboard-radar-fit">
+                    <div className="radar-frame" />
 
-                  {degreeMarks.map((degree) => {
-                    const labelStyle: CSSProperties = {
-                      transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-bearing-radius) * -1)) rotate(${-degree}deg)`,
-                    }
-                    const tickStyle: CSSProperties = {
-                      transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-tick-radius) * -1))`,
-                    }
-                    return (
-                      <div key={degree}>
-                        <span className="radar-bearing-label" style={labelStyle}>{degree}°</span>
-                        <span className="radar-bearing-tick" style={tickStyle} />
-                      </div>
-                    )
-                  })}
+                    {degreeMarks.map((degree) => {
+                      const labelStyle: CSSProperties = {
+                        transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-bearing-radius) * -1)) rotate(${-degree}deg)`,
+                      }
+                      const tickStyle: CSSProperties = {
+                        transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-tick-radius) * -1))`,
+                      }
+                      return (
+                        <div key={degree}>
+                          <span className="radar-bearing-label" style={labelStyle}>{degree}°</span>
+                          <span className="radar-bearing-tick" style={tickStyle} />
+                        </div>
+                      )
+                    })}
 
-                  <div className="radar-scope premium-radar-scope">
+                    <div className="radar-scope premium-radar-scope">
                     <div className="radar-map-overlay" aria-hidden="true">
                       <svg viewBox="0 0 320 320">
                         <path className="radar-map-path" d="M50 114c16-17 36-28 60-29 13-1 24 3 36 1 18-3 28-18 43-22 19-5 45 6 60 24-7 9-12 17-13 27-1 11 9 18 18 24 9 7 15 16 17 29-22 6-48 2-66 14-17 11-24 33-43 40-17 6-35-4-52-10-21-8-46-10-58-29-10-14-8-33-1-49 7-18 20-32 33-44 6-5 12-10 16-16-19 1-37 16-50 40-9-9-9-20 0-30Z" />
@@ -831,32 +832,33 @@ function DashboardPage() {
                       <span className="radar-status-dot" />
                       {aiSearchLive ? '🇬🇧 UK MARKET • LIVE SCAN' : '⏸ SEARCH PAUSED'}
                     </div>
-                  </div>
-
-                  {radarOpportunityVisible && (
-                    <div
-                      key={radarOpportunityKey}
-                      className="radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification"
-                      aria-live="polite"
-                      aria-atomic="true"
-                    >
-                      <div className="radar-notification-header">
-                        <span className="radar-notification-label">Opportunity Found</span>
-                        <span className="radar-notification-stamp">Live • {radarOpportunityTimer}s</span>
-                      </div>
-                      <p className="radar-notification-vehicle">{radarOpportunities[radarOpportunityIndex].vehicle}</p>
-                      <div className="radar-notification-metrics">
-                        <div className="radar-notification-metric">
-                          <span className="radar-notification-metric-label">Estimated Margin</span>
-                          <span className="radar-notification-metric-value">{radarOpportunities[radarOpportunityIndex].margin}</span>
-                        </div>
-                        <div className="radar-notification-metric">
-                          <span className="radar-notification-metric-label">Confidence</span>
-                          <span className="radar-notification-metric-value">{radarOpportunities[radarOpportunityIndex].confidence}</span>
-                        </div>
-                      </div>
                     </div>
-                  )}
+
+                    {radarOpportunityVisible && (
+                      <div
+                        key={radarOpportunityKey}
+                        className="radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification"
+                        aria-live="polite"
+                        aria-atomic="true"
+                      >
+                        <div className="radar-notification-header">
+                          <span className="radar-notification-label">Opportunity Found</span>
+                          <span className="radar-notification-stamp">Live • {radarOpportunityTimer}s</span>
+                        </div>
+                        <p className="radar-notification-vehicle">{radarOpportunities[radarOpportunityIndex].vehicle}</p>
+                        <div className="radar-notification-metrics">
+                          <div className="radar-notification-metric">
+                            <span className="radar-notification-metric-label">Estimated Margin</span>
+                            <span className="radar-notification-metric-value">{radarOpportunities[radarOpportunityIndex].margin}</span>
+                          </div>
+                          <div className="radar-notification-metric">
+                            <span className="radar-notification-metric-label">Confidence</span>
+                            <span className="radar-notification-metric-value">{radarOpportunities[radarOpportunityIndex].confidence}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div
