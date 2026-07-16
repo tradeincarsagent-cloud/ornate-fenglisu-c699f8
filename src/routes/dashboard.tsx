@@ -33,6 +33,7 @@ type TimelineEvent = TimelineTemplate & {
 
 const radarRingInsets = [6, 14, 22, 30, 38, 46]
 const radarGridAngles = Array.from({ length: 24 }, (_, index) => index * 15)
+const degreeMarks = Array.from({ length: 12 }, (_, index) => index * 30)
 
 const radarContacts: Array<{
   id: string
@@ -62,7 +63,7 @@ function getSweepIntensity(sweepAngle: number, angleDeg: number) {
 
 function UnitedKingdomFlag() {
   return (
-    <svg aria-hidden="true" className="radar-centre-flag-icon" viewBox="0 0 36 24">
+    <svg aria-hidden="true" className="uk-flag-icon" viewBox="0 0 36 24">
       <rect width="36" height="24" rx="3" fill="#0A2B6B" />
       <path d="M0 0 36 24M36 0 0 24" stroke="#fff" strokeWidth="5" />
       <path d="M0 0 36 24M36 0 0 24" stroke="#E2434B" strokeWidth="2.4" />
@@ -687,11 +688,26 @@ function DashboardPage() {
 
               {/* ── AI Search Radar ──────────────────────────────────── */}
               <article className="dashboard-radar-section dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8">
-                <div className={`dashboard-radar-panel radar-glass-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
+                <div className={`dashboard-radar-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
                 <h3 className="dashboard-radar-title text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
 
-                <div className="dashboard-radar-container radar-container mt-6 premium-radar-shell">
+                <div className="dashboard-radar-container radar-container mt-6 glass-card rounded-full p-2 glow-border premium-radar-shell">
                   <div className="radar-frame" />
+
+                  {degreeMarks.map((degree) => {
+                    const labelStyle: CSSProperties = {
+                      transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-bearing-radius) * -1)) rotate(${-degree}deg)`,
+                    }
+                    const tickStyle: CSSProperties = {
+                      transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-tick-radius) * -1))`,
+                    }
+                    return (
+                      <div key={degree}>
+                        <span className="radar-bearing-label" style={labelStyle}>{degree}°</span>
+                        <span className="radar-bearing-tick" style={tickStyle} />
+                      </div>
+                    )
+                  })}
 
                   <div className="radar-scope premium-radar-scope">
                     <div className="radar-map-overlay" aria-hidden="true">
@@ -751,10 +767,9 @@ function DashboardPage() {
                       style={{ animationPlayState: aiSearchLive ? 'running' : 'paused' }}
                     />
 
-                    <div className="radar-centre-flag" aria-hidden="true">
-                      <div className="radar-centre-flag-shell">
-                        <UnitedKingdomFlag />
-                      </div>
+                    <div className="radar-flag-marker" aria-hidden="true">
+                      <span className="radar-flag-pole" />
+                      <UnitedKingdomFlag />
                     </div>
 
                     {radarContacts.map((contact) => {

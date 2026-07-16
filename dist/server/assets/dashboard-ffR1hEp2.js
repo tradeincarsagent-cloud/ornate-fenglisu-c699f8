@@ -27,6 +27,9 @@ const radarRingInsets = [6, 14, 22, 30, 38, 46];
 const radarGridAngles = Array.from({
   length: 24
 }, (_, index) => index * 15);
+const degreeMarks = Array.from({
+  length: 12
+}, (_, index) => index * 30);
 const radarContacts = [{
   id: "contact-1",
   x: 0.63,
@@ -86,7 +89,7 @@ function getSweepIntensity(sweepAngle, angleDeg) {
   return Math.min(1, 0.24 + primaryGlow * 0.64 + trailingGlow * 0.36);
 }
 function UnitedKingdomFlag() {
-  return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "radar-centre-flag-icon", viewBox: "0 0 36 24", children: [
+  return /* @__PURE__ */ jsxs("svg", { "aria-hidden": "true", className: "uk-flag-icon", viewBox: "0 0 36 24", children: [
     /* @__PURE__ */ jsx("rect", { width: "36", height: "24", rx: "3", fill: "#0A2B6B" }),
     /* @__PURE__ */ jsx("path", { d: "M0 0 36 24M36 0 0 24", stroke: "#fff", strokeWidth: "5" }),
     /* @__PURE__ */ jsx("path", { d: "M0 0 36 24M36 0 0 24", stroke: "#E2434B", strokeWidth: "2.4" }),
@@ -634,10 +637,25 @@ function DashboardPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("article", { className: "dashboard-radar-section dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8", children: /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-panel radar-glass-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
+        /* @__PURE__ */ jsx("article", { className: "dashboard-radar-section dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8", children: /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
           /* @__PURE__ */ jsx("h3", { className: "dashboard-radar-title text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
-          /* @__PURE__ */ jsxs("div", { className: "dashboard-radar-container radar-container mt-6 premium-radar-shell", children: [
+          /* @__PURE__ */ jsxs("div", { className: "dashboard-radar-container radar-container mt-6 glass-card rounded-full p-2 glow-border premium-radar-shell", children: [
             /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
+            degreeMarks.map((degree) => {
+              const labelStyle = {
+                transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-bearing-radius) * -1)) rotate(${-degree}deg)`
+              };
+              const tickStyle = {
+                transform: `translate(-50%, -50%) rotate(${degree}deg) translateY(calc(var(--radar-tick-radius) * -1))`
+              };
+              return /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("span", { className: "radar-bearing-label", style: labelStyle, children: [
+                  degree,
+                  "°"
+                ] }),
+                /* @__PURE__ */ jsx("span", { className: "radar-bearing-tick", style: tickStyle })
+              ] }, degree);
+            }),
             /* @__PURE__ */ jsxs("div", { className: "radar-scope premium-radar-scope", children: [
               /* @__PURE__ */ jsx("div", { className: "radar-map-overlay", "aria-hidden": "true", children: /* @__PURE__ */ jsxs("svg", { viewBox: "0 0 320 320", children: [
                 /* @__PURE__ */ jsx("path", { className: "radar-map-path", d: "M50 114c16-17 36-28 60-29 13-1 24 3 36 1 18-3 28-18 43-22 19-5 45 6 60 24-7 9-12 17-13 27-1 11 9 18 18 24 9 7 15 16 17 29-22 6-48 2-66 14-17 11-24 33-43 40-17 6-35-4-52-10-21-8-46-10-58-29-10-14-8-33-1-49 7-18 20-32 33-44 6-5 12-10 16-16-19 1-37 16-50 40-9-9-9-20 0-30Z" }),
@@ -675,7 +693,10 @@ function DashboardPage() {
               /* @__PURE__ */ jsx("div", { className: "radar-sweep-glow", "aria-hidden": "true", style: {
                 animationPlayState: aiSearchLive ? "running" : "paused"
               } }),
-              /* @__PURE__ */ jsx("div", { className: "radar-centre-flag", "aria-hidden": "true", children: /* @__PURE__ */ jsx("div", { className: "radar-centre-flag-shell", children: /* @__PURE__ */ jsx(UnitedKingdomFlag, {}) }) }),
+              /* @__PURE__ */ jsxs("div", { className: "radar-flag-marker", "aria-hidden": "true", children: [
+                /* @__PURE__ */ jsx("span", { className: "radar-flag-pole" }),
+                /* @__PURE__ */ jsx(UnitedKingdomFlag, {})
+              ] }),
               radarContacts.map((contact) => {
                 const intensity = aiSearchLive ? getSweepIntensity(sweepAngle, contact.angleDeg) : 0.22;
                 const contactStyle = {
