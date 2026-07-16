@@ -45,13 +45,22 @@ const radarContacts: Array<{
   label: string
   heading: string
   source: string
+  labelPosition?: 'left'
 }> = [
-  { id: 'contact-1', x: 0.63, y: 0.24, vehicleType: 'car', opportunityIndex: 0, angleDeg: 35.8, label: 'Audi RS5', heading: '036°', source: 'Auto Trader' },
+  { id: 'contact-1', x: 0.41, y: 0.32, vehicleType: 'car', opportunityIndex: 0, angleDeg: 35.8, label: 'Audi RS5', heading: '036°', source: 'Auto Trader', labelPosition: 'left' },
   { id: 'contact-2', x: 0.29, y: 0.61, vehicleType: 'pickup', opportunityIndex: 1, angleDeg: 239.7, label: 'Range Rover', heading: '240°', source: 'Motorway' },
-  { id: 'contact-3', x: 0.74, y: 0.47, vehicleType: 'van', opportunityIndex: 2, angleDeg: 85.2, label: 'Mercedes A45', heading: '085°', source: 'Dealer trade' },
+  { id: 'contact-3', x: 0.7, y: 0.47, vehicleType: 'van', opportunityIndex: 2, angleDeg: 85.2, label: 'Mercedes A45', heading: '085°', source: 'Dealer trade', labelPosition: 'left' },
   { id: 'contact-4', x: 0.57, y: 0.7, vehicleType: 'motorcycle', opportunityIndex: 3, angleDeg: 161.6, label: 'Golf R', heading: '162°', source: 'Retail listing' },
   { id: 'contact-5', x: 0.18, y: 0.33, vehicleType: 'suv', opportunityIndex: 4, angleDeg: 208.1, label: 'Porsche Macan', heading: '208°', source: 'Fleet source' },
 ]
+
+const dashboardRadarOpportunity = {
+  title: 'Opportunity Found',
+  vehicle: 'BMW M3 Competition 2020',
+  margin: '£3,200',
+  confidence: '97%',
+  stamp: 'Live • 12s',
+} as const
 
 function getSweepIntensity(sweepAngle: number, angleDeg: number) {
   const circularDifference = Math.abs(((sweepAngle - angleDeg + 540) % 360) - 180)
@@ -782,7 +791,7 @@ function DashboardPage() {
                       return (
                         <div
                           key={contact.id}
-                          className={`radar-contact${priorityContactId === contact.id ? ' radar-contact-priority' : ''}`}
+                          className={`radar-contact${contact.labelPosition === 'left' ? ' radar-contact-label-left' : ''}${priorityContactId === contact.id ? ' radar-contact-priority' : ''}`}
                           style={contactStyle}
                         >
                           <span className="radar-contact-halo" />
@@ -799,6 +808,24 @@ function DashboardPage() {
                     <div className="radar-status-chip" aria-hidden="true">
                       <span className="radar-status-dot" />
                       {aiSearchLive ? '🇬🇧 UK MARKET • LIVE SCAN' : '⏸ SEARCH PAUSED'}
+                    </div>
+                  </div>
+
+                  <div className="radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification" aria-hidden="true">
+                    <div className="radar-notification-header">
+                      <span className="radar-notification-label">{dashboardRadarOpportunity.title}</span>
+                      <span className="radar-notification-stamp">{dashboardRadarOpportunity.stamp}</span>
+                    </div>
+                    <p className="radar-notification-vehicle">{dashboardRadarOpportunity.vehicle}</p>
+                    <div className="radar-notification-metrics">
+                      <div className="radar-notification-metric">
+                        <span className="radar-notification-metric-label">Estimated Margin</span>
+                        <span className="radar-notification-metric-value">{dashboardRadarOpportunity.margin}</span>
+                      </div>
+                      <div className="radar-notification-metric">
+                        <span className="radar-notification-metric-label">Confidence</span>
+                        <span className="radar-notification-metric-value">{dashboardRadarOpportunity.confidence}</span>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -32,14 +32,15 @@ const degreeMarks = Array.from({
 }, (_, index) => index * 30);
 const radarContacts = [{
   id: "contact-1",
-  x: 0.63,
-  y: 0.24,
+  x: 0.41,
+  y: 0.32,
   vehicleType: "car",
   opportunityIndex: 0,
   angleDeg: 35.8,
   label: "Audi RS5",
   heading: "036°",
-  source: "Auto Trader"
+  source: "Auto Trader",
+  labelPosition: "left"
 }, {
   id: "contact-2",
   x: 0.29,
@@ -52,14 +53,15 @@ const radarContacts = [{
   source: "Motorway"
 }, {
   id: "contact-3",
-  x: 0.74,
+  x: 0.7,
   y: 0.47,
   vehicleType: "van",
   opportunityIndex: 2,
   angleDeg: 85.2,
   label: "Mercedes A45",
   heading: "085°",
-  source: "Dealer trade"
+  source: "Dealer trade",
+  labelPosition: "left"
 }, {
   id: "contact-4",
   x: 0.57,
@@ -81,6 +83,13 @@ const radarContacts = [{
   heading: "208°",
   source: "Fleet source"
 }];
+const dashboardRadarOpportunity = {
+  title: "Opportunity Found",
+  vehicle: "BMW M3 Competition 2020",
+  margin: "£3,200",
+  confidence: "97%",
+  stamp: "Live • 12s"
+};
 function getSweepIntensity(sweepAngle, angleDeg) {
   const circularDifference = Math.abs((sweepAngle - angleDeg + 540) % 360 - 180);
   const trailingDifference = (sweepAngle - angleDeg + 360) % 360;
@@ -704,7 +713,7 @@ function DashboardPage() {
                   top: `${contact.y * 100}%`,
                   "--radar-contact-intensity": intensity.toFixed(3)
                 };
-                return /* @__PURE__ */ jsxs("div", { className: `radar-contact${priorityContactId === contact.id ? " radar-contact-priority" : ""}`, style: contactStyle, children: [
+                return /* @__PURE__ */ jsxs("div", { className: `radar-contact${contact.labelPosition === "left" ? " radar-contact-label-left" : ""}${priorityContactId === contact.id ? " radar-contact-priority" : ""}`, style: contactStyle, children: [
                   /* @__PURE__ */ jsx("span", { className: "radar-contact-halo" }),
                   /* @__PURE__ */ jsx(VehicleGlyph, { type: contact.vehicleType }),
                   /* @__PURE__ */ jsxs("span", { className: "radar-contact-caption", children: [
@@ -721,6 +730,23 @@ function DashboardPage() {
               /* @__PURE__ */ jsxs("div", { className: "radar-status-chip", "aria-hidden": "true", children: [
                 /* @__PURE__ */ jsx("span", { className: "radar-status-dot" }),
                 aiSearchLive ? "🇬🇧 UK MARKET • LIVE SCAN" : "⏸ SEARCH PAUSED"
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification", "aria-hidden": "true", children: [
+              /* @__PURE__ */ jsxs("div", { className: "radar-notification-header", children: [
+                /* @__PURE__ */ jsx("span", { className: "radar-notification-label", children: dashboardRadarOpportunity.title }),
+                /* @__PURE__ */ jsx("span", { className: "radar-notification-stamp", children: dashboardRadarOpportunity.stamp })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "radar-notification-vehicle", children: dashboardRadarOpportunity.vehicle }),
+              /* @__PURE__ */ jsxs("div", { className: "radar-notification-metrics", children: [
+                /* @__PURE__ */ jsxs("div", { className: "radar-notification-metric", children: [
+                  /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-label", children: "Estimated Margin" }),
+                  /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-value", children: dashboardRadarOpportunity.margin })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "radar-notification-metric", children: [
+                  /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-label", children: "Confidence" }),
+                  /* @__PURE__ */ jsx("span", { className: "radar-notification-metric-value", children: dashboardRadarOpportunity.confidence })
+                ] })
               ] })
             ] })
           ] }),
