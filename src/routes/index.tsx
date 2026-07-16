@@ -628,7 +628,7 @@ function LandingPage() {
                 Save Hours Every Week.
               </h1>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition.
+                Trade In Cars Agent (TICA) is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition.
               </p>
               <div className="hero-mobile-radar-wrap relative flex items-center justify-center overflow-visible pt-2 md:hidden">
                 <HeroRadar />
