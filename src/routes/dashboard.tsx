@@ -348,6 +348,7 @@ function DashboardPage() {
   const [missionMsgVisible, setMissionMsgVisible] = useState<boolean[]>(() => activeSearches.map(() => true))
   const [greetingSummaryIndex, setGreetingSummaryIndex] = useState(0)
   const [greetingSummaryVisible, setGreetingSummaryVisible] = useState(true)
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
 
@@ -526,9 +527,23 @@ function DashboardPage() {
     }
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => {
+      setShowBackToTop(window.scrollY > 300)
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const toggleSearch = (index: number) => {
     setExpandedSearches((prev) => ({ ...prev, [index]: !prev[index] }))
     setOpenMoreMenu(null)
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const operationsPanelItems = [
@@ -1361,6 +1376,17 @@ function DashboardPage() {
               </div>
             </section>
       </div>
+      <button
+        aria-label="Back to top"
+        className="back-to-top-btn"
+        onClick={scrollToTop}
+        style={{ opacity: showBackToTop ? 1 : 0, pointerEvents: showBackToTop ? 'auto' : 'none' }}
+        type="button"
+      >
+        <svg aria-hidden="true" fill="none" height="26" viewBox="0 0 24 24" width="26" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 15l7-7 7 7" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
+        </svg>
+      </button>
     </PlatformShell>
   )
 }
