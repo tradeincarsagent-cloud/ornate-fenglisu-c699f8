@@ -687,7 +687,7 @@ function DashboardPage() {
         ] }),
         /* @__PURE__ */ jsx("article", { className: "dashboard-radar-section dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8", children: /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-panel flex flex-col ${radarDetectionGlow ? "radar-detection-glow" : ""}`, children: [
           /* @__PURE__ */ jsx("h3", { className: "dashboard-radar-title text-center text-headline-md font-headline-md text-on-surface", children: "Live AI Search Radar" }),
-          /* @__PURE__ */ jsxs("div", { className: "dashboard-radar-container radar-container mt-6 glass-card rounded-full p-2 glow-border premium-radar-shell", children: [
+          /* @__PURE__ */ jsx("div", { className: "dashboard-radar-container radar-container mt-6 glass-card rounded-full p-2 glow-border premium-radar-shell", children: /* @__PURE__ */ jsxs("div", { className: "dashboard-radar-fit", children: [
             /* @__PURE__ */ jsx("div", { className: "radar-frame" }),
             degreeMarks.map((degree) => {
               const labelStyle = {
@@ -792,7 +792,7 @@ function DashboardPage() {
                 ] })
               ] })
             ] }, radarOpportunityKey)
-          ] }),
+          ] }) }),
           /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-control ai-switch-panel mt-8${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
