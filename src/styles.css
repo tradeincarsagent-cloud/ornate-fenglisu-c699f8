@@ -1016,9 +1016,9 @@ body > div {
 }
 
 .dashboard-radar-notification {
-  width: clamp(11.4rem, 30vw, 13.25rem);
-  right: clamp(-0.45rem, 0.8vw, 0.4rem);
-  top: clamp(0.9rem, 10%, 1.3rem);
+  width: clamp(10.9rem, 28vw, 12.6rem);
+  right: clamp(-0.2rem, 0.6vw, 0.28rem);
+  top: clamp(-1rem, -0.4vw, -0.35rem);
   animation: none;
 }
 
@@ -1687,9 +1687,9 @@ body > div {
   }
 
   .dashboard-radar-notification {
-    width: min(8.65rem, calc(50% - 0.8rem));
-    right: 0.2rem;
-    top: 0.95rem;
+    width: min(8.3rem, calc(50% - 0.72rem));
+    right: 0.18rem;
+    top: -0.2rem;
   }
 }
 
@@ -1761,9 +1761,9 @@ body > div {
   }
 
   .dashboard-radar-notification {
-    width: min(10.4rem, calc(50% - 0.9rem));
-    right: 0.35rem;
-    top: 1rem;
+    width: min(9.9rem, calc(50% - 0.78rem));
+    right: 0.3rem;
+    top: -0.5rem;
   }
 }
 
@@ -2288,9 +2288,9 @@ body > div {
   }
 
   .dashboard-radar-notification {
-    width: min(8rem, calc(50% - 0.72rem));
-    right: 0.12rem;
-    top: 0.82rem;
+    width: min(7.75rem, calc(50% - 0.64rem));
+    right: 0.1rem;
+    top: -0.15rem;
   }
 
   .roadmap-phase-header {

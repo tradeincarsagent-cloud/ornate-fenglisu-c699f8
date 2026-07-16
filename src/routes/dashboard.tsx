@@ -47,9 +47,9 @@ const radarContacts: Array<{
   source: string
   labelPosition?: 'left'
 }> = [
-  { id: 'contact-1', x: 0.63, y: 0.24, vehicleType: 'car', opportunityIndex: 0, angleDeg: 35.8, label: 'Audi RS5', heading: '036°', source: 'Auto Trader', labelPosition: 'left' },
+  { id: 'contact-1', x: 0.41, y: 0.32, vehicleType: 'car', opportunityIndex: 0, angleDeg: 35.8, label: 'Audi RS5', heading: '036°', source: 'Auto Trader', labelPosition: 'left' },
   { id: 'contact-2', x: 0.29, y: 0.61, vehicleType: 'pickup', opportunityIndex: 1, angleDeg: 239.7, label: 'Range Rover', heading: '240°', source: 'Motorway' },
-  { id: 'contact-3', x: 0.74, y: 0.47, vehicleType: 'van', opportunityIndex: 2, angleDeg: 85.2, label: 'Mercedes A45', heading: '085°', source: 'Dealer trade', labelPosition: 'left' },
+  { id: 'contact-3', x: 0.7, y: 0.47, vehicleType: 'van', opportunityIndex: 2, angleDeg: 85.2, label: 'Mercedes A45', heading: '085°', source: 'Dealer trade', labelPosition: 'left' },
   { id: 'contact-4', x: 0.57, y: 0.7, vehicleType: 'motorcycle', opportunityIndex: 3, angleDeg: 161.6, label: 'Golf R', heading: '162°', source: 'Retail listing' },
   { id: 'contact-5', x: 0.18, y: 0.33, vehicleType: 'suv', opportunityIndex: 4, angleDeg: 208.1, label: 'Porsche Macan', heading: '208°', source: 'Fleet source' },
 ]
