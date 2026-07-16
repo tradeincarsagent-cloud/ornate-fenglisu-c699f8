@@ -54,13 +54,13 @@ const radarContacts: Array<{
   { id: 'contact-5', x: 0.18, y: 0.33, vehicleType: 'suv', opportunityIndex: 4, angleDeg: 208.1, label: 'Porsche Macan', heading: '208°', source: 'Fleet source' },
 ]
 
-const dashboardRadarOpportunity = {
-  title: 'Opportunity Found',
-  vehicle: 'BMW M3 Competition 2020',
-  margin: '£3,200',
-  confidence: '97%',
-  stamp: 'Live • 12s',
-} as const
+const radarOpportunities = [
+  { vehicle: 'BMW M3 Competition 2020', margin: '£3,200', confidence: '97%', timerStart: 12 },
+  { vehicle: 'Audi RS5 Sportback 2021', margin: '£2,850', confidence: '91%', timerStart: 8 },
+  { vehicle: 'Mercedes A45 AMG 2022', margin: '£1,950', confidence: '85%', timerStart: 6 },
+  { vehicle: 'Porsche Macan S 2021', margin: '£4,100', confidence: '93%', timerStart: 15 },
+  { vehicle: 'Volkswagen Golf R 2023', margin: '£1,420', confidence: '78%', timerStart: 11 },
+] as const
 
 function getSweepIntensity(sweepAngle: number, angleDeg: number) {
   const circularDifference = Math.abs(((sweepAngle - angleDeg + 540) % 360) - 180)
@@ -359,8 +359,13 @@ function DashboardPage() {
   const [greetingSummaryIndex, setGreetingSummaryIndex] = useState(0)
   const [greetingSummaryVisible, setGreetingSummaryVisible] = useState(true)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [radarOpportunityVisible, setRadarOpportunityVisible] = useState(false)
+  const [radarOpportunityKey, setRadarOpportunityKey] = useState(0)
+  const [radarOpportunityIndex, setRadarOpportunityIndex] = useState(0)
+  const [radarOpportunityTimer, setRadarOpportunityTimer] = useState(0)
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
+  const radarOpportunityCursorRef = useRef(0)
 
   useEffect(() => {
     if (!aiSearchLive) return
@@ -379,6 +384,7 @@ function DashboardPage() {
       setRadarDetectionGlow(false)
       setHighlightedOpportunity(null)
       setActiveTimelineEventId(null)
+      setRadarOpportunityVisible(false)
       return
     }
   }, [aiSearchLive])
@@ -411,6 +417,13 @@ function DashboardPage() {
         setHighlightedMission(template.missionIndex)
       }
 
+      const oppIdx = radarOpportunityCursorRef.current
+      radarOpportunityCursorRef.current = (radarOpportunityCursorRef.current + 1) % radarOpportunities.length
+      setRadarOpportunityIndex(oppIdx)
+      setRadarOpportunityTimer(radarOpportunities[oppIdx].timerStart)
+      setRadarOpportunityKey((k) => k + 1)
+      setRadarOpportunityVisible(true)
+
       schedule(() => setPriorityContactId(null), 1600)
       schedule(() => setRadarDetectionGlow(false), 1000)
       schedule(() => setHighlightedOpportunity(null), 1700)
@@ -418,6 +431,7 @@ function DashboardPage() {
       if (template.missionIndex !== undefined) {
         schedule(() => setHighlightedMission(null), 1700)
       }
+      schedule(() => setRadarOpportunityVisible(false), 7100)
       schedule(runTimelineActivity, 11000 + Math.random() * 4000)
     }
 
@@ -536,6 +550,14 @@ function DashboardPage() {
       if (fadeTimeoutId !== null) window.clearTimeout(fadeTimeoutId)
     }
   }, [])
+
+  useEffect(() => {
+    if (!radarOpportunityVisible) return
+    const intervalId = window.setInterval(() => {
+      setRadarOpportunityTimer((t) => t + 1)
+    }, 1000)
+    return () => window.clearInterval(intervalId)
+  }, [radarOpportunityVisible])
 
   useEffect(() => {
     const onScroll = () => {
@@ -811,23 +833,30 @@ function DashboardPage() {
                     </div>
                   </div>
 
-                  <div className="radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification" aria-hidden="true">
-                    <div className="radar-notification-header">
-                      <span className="radar-notification-label">{dashboardRadarOpportunity.title}</span>
-                      <span className="radar-notification-stamp">{dashboardRadarOpportunity.stamp}</span>
-                    </div>
-                    <p className="radar-notification-vehicle">{dashboardRadarOpportunity.vehicle}</p>
-                    <div className="radar-notification-metrics">
-                      <div className="radar-notification-metric">
-                        <span className="radar-notification-metric-label">Estimated Margin</span>
-                        <span className="radar-notification-metric-value">{dashboardRadarOpportunity.margin}</span>
+                  {radarOpportunityVisible && (
+                    <div
+                      key={radarOpportunityKey}
+                      className="radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification"
+                      aria-live="polite"
+                      aria-atomic="true"
+                    >
+                      <div className="radar-notification-header">
+                        <span className="radar-notification-label">Opportunity Found</span>
+                        <span className="radar-notification-stamp">Live • {radarOpportunityTimer}s</span>
                       </div>
-                      <div className="radar-notification-metric">
-                        <span className="radar-notification-metric-label">Confidence</span>
-                        <span className="radar-notification-metric-value">{dashboardRadarOpportunity.confidence}</span>
+                      <p className="radar-notification-vehicle">{radarOpportunities[radarOpportunityIndex].vehicle}</p>
+                      <div className="radar-notification-metrics">
+                        <div className="radar-notification-metric">
+                          <span className="radar-notification-metric-label">Estimated Margin</span>
+                          <span className="radar-notification-metric-value">{radarOpportunities[radarOpportunityIndex].margin}</span>
+                        </div>
+                        <div className="radar-notification-metric">
+                          <span className="radar-notification-metric-label">Confidence</span>
+                          <span className="radar-notification-metric-value">{radarOpportunities[radarOpportunityIndex].confidence}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 <div

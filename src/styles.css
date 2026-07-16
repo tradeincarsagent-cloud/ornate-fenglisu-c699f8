@@ -1019,7 +1019,7 @@ body > div {
   width: clamp(10.9rem, 28vw, 12.6rem);
   right: clamp(-0.2rem, 0.6vw, 0.28rem);
   top: clamp(-1rem, -0.4vw, -0.35rem);
-  animation: none;
+  animation: radarOpportunityLifecycle 7s ease forwards;
 }
 
 .opportunity-row-highlight {
@@ -1222,6 +1222,22 @@ body > div {
   100% {
     opacity: 0;
     transform: translateY(-12px) scale(1.02);
+  }
+}
+
+@keyframes radarOpportunityLifecycle {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.94);
+  }
+  8%,
+  80% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(1.02);
   }
 }
 
