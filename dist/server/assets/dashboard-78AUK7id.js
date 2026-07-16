@@ -352,7 +352,16 @@ function DashboardPage() {
   const [priorityContactId, setPriorityContactId] = useState(null);
   const [sweepAngle, setSweepAngle] = useState(0);
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false);
-  const [aiSearchLive, setAiSearchLive] = useState(true);
+  const [soundOn, setSoundOn] = useState(() => {
+    try {
+      return localStorage.getItem("tica-sound-on") === "1";
+    } catch {
+      return false;
+    }
+  });
+  const audioCtxRef = useRef(null);
+  const soundOnRef = useRef(soundOn);
+  const pingSkipFirstRef = useRef(true);
   const [timelineEvents, setTimelineEvents] = useState(initialTimelineEvents);
   const [activeTimelineEventId, setActiveTimelineEventId] = useState(null);
   const [liveCounters, setLiveCounters] = useState({
@@ -378,26 +387,17 @@ function DashboardPage() {
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   const radarOpportunityCursorRef = useRef(0);
   useEffect(() => {
-    if (!aiSearchLive) return;
+    soundOnRef.current = soundOn;
+  }, [soundOn]);
+  useEffect(() => {
     const sweepDurationMs = 5400;
     const startedAt = performance.now();
     const intervalId = window.setInterval(() => {
       setSweepAngle((performance.now() - startedAt) / sweepDurationMs * 360 % 360);
     }, 80);
     return () => window.clearInterval(intervalId);
-  }, [aiSearchLive]);
+  }, []);
   useEffect(() => {
-    if (!aiSearchLive) {
-      setPriorityContactId(null);
-      setRadarDetectionGlow(false);
-      setHighlightedOpportunity(null);
-      setActiveTimelineEventId(null);
-      setRadarOpportunityVisible(false);
-      return;
-    }
-  }, [aiSearchLive]);
-  useEffect(() => {
-    if (!aiSearchLive) return;
     let cancelled = false;
     const timeoutIds = [];
     const schedule = (fn, ms) => {
@@ -442,9 +442,8 @@ function DashboardPage() {
       cancelled = true;
       timeoutIds.forEach((id) => window.clearTimeout(id));
     };
-  }, [aiSearchLive]);
+  }, []);
   useEffect(() => {
-    if (!aiSearchLive) return;
     let cancelled = false;
     const timeoutIds = [];
     const schedule = (fn, ms) => {
@@ -469,13 +468,8 @@ function DashboardPage() {
       cancelled = true;
       timeoutIds.forEach((id) => window.clearTimeout(id));
     };
-  }, [aiSearchLive]);
+  }, []);
   useEffect(() => {
-    if (!aiSearchLive) {
-      setActiveAiStatusMessage("Monitoring paused — awaiting resume…");
-      setAiStatusMessageVisible(true);
-      return;
-    }
     let messageIndex = 0;
     let fadeTimeoutId = null;
     setActiveAiStatusMessage(aiStatusMessages[0]);
@@ -497,12 +491,8 @@ function DashboardPage() {
         window.clearTimeout(fadeTimeoutId);
       }
     };
-  }, [aiSearchLive]);
+  }, []);
   useEffect(() => {
-    if (!aiSearchLive) {
-      setMissionMsgVisible(activeSearches.map(() => true));
-      return;
-    }
     const fadeMs = 220;
     const intervalMs = 4500;
     const staggerMs = 1400;
@@ -523,7 +513,7 @@ function DashboardPage() {
         if (id !== null) window.clearTimeout(id);
       });
     };
-  }, [aiSearchLive]);
+  }, []);
   useEffect(() => {
     let fadeTimeoutId = null;
     const intervalId = window.setInterval(() => {
@@ -546,6 +536,42 @@ function DashboardPage() {
     }, 1e3);
     return () => window.clearInterval(intervalId);
   }, [radarOpportunityVisible]);
+  useEffect(() => {
+    if (pingSkipFirstRef.current) {
+      pingSkipFirstRef.current = false;
+      return;
+    }
+    if (!soundOnRef.current) return;
+    const ctx = audioCtxRef.current;
+    if (!ctx || ctx.state !== "running") return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(1047, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(660, ctx.currentTime + 0.18);
+    gain.gain.setValueAtTime(1e-4, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.16, ctx.currentTime + 0.03);
+    gain.gain.exponentialRampToValueAtTime(1e-4, ctx.currentTime + 0.32);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.35);
+  }, [radarOpportunityKey]);
+  const toggleSound = () => {
+    const newSoundOn = !soundOn;
+    if (newSoundOn) {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioContext();
+      } else if (audioCtxRef.current.state === "suspended") {
+        audioCtxRef.current.resume();
+      }
+    }
+    setSoundOn(newSoundOn);
+    try {
+      localStorage.setItem("tica-sound-on", newSoundOn ? "1" : "0");
+    } catch {
+    }
+  };
   useEffect(() => {
     const onScroll = () => {
       setShowBackToTop(window.scrollY > 300);
@@ -571,8 +597,8 @@ function DashboardPage() {
   };
   const operationsPanelItems = [{
     label: "Status",
-    value: aiSearchLive ? "Searching" : "Paused",
-    tone: aiSearchLive ? "live" : "paused"
+    value: "Searching",
+    tone: "live"
   }, {
     label: "Sources Active",
     value: "5"
@@ -588,7 +614,7 @@ function DashboardPage() {
     tone: "accent"
   }, {
     label: "Last Scan",
-    value: aiSearchLive ? "Moments ago" : "Paused"
+    value: "Moments ago"
   }];
   return /* @__PURE__ */ jsxs(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
@@ -736,17 +762,17 @@ function DashboardPage() {
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-crosshair radar-crosshair-horizontal" }),
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "radar-crosshair radar-crosshair-vertical" }),
               /* @__PURE__ */ jsx("div", { className: "radar-sweep", "aria-hidden": "true", style: {
-                animationPlayState: aiSearchLive ? "running" : "paused"
+                animationPlayState: "running"
               } }),
               /* @__PURE__ */ jsx("div", { className: "radar-sweep-glow", "aria-hidden": "true", style: {
-                animationPlayState: aiSearchLive ? "running" : "paused"
+                animationPlayState: "running"
               } }),
               /* @__PURE__ */ jsxs("div", { className: "radar-flag-marker", "aria-hidden": "true", children: [
                 /* @__PURE__ */ jsx("span", { className: "radar-flag-pole" }),
                 /* @__PURE__ */ jsx(UnitedKingdomFlag, {})
               ] }),
               radarContacts.map((contact) => {
-                const intensity = aiSearchLive ? getSweepIntensity(sweepAngle, contact.angleDeg) : 0.22;
+                const intensity = getSweepIntensity(sweepAngle, contact.angleDeg);
                 const contactStyle = {
                   left: `${contact.x * 100}%`,
                   top: `${contact.y * 100}%`,
@@ -768,7 +794,7 @@ function DashboardPage() {
               /* @__PURE__ */ jsx("div", { className: "radar-centre-point", "aria-hidden": "true" }),
               /* @__PURE__ */ jsxs("div", { className: "radar-status-chip", "aria-hidden": "true", children: [
                 /* @__PURE__ */ jsx("span", { className: "radar-status-dot" }),
-                aiSearchLive ? "🇬🇧 UK MARKET • LIVE SCAN" : "⏸ SEARCH PAUSED"
+                "🇬🇧 UK MARKET • LIVE SCAN"
               ] })
             ] }),
             radarOpportunityVisible && /* @__PURE__ */ jsxs("div", { className: "radar-notification radar-notification-upper-right radar-notification-primary dashboard-radar-notification", "aria-live": "polite", "aria-atomic": "true", children: [
@@ -793,10 +819,10 @@ function DashboardPage() {
               ] })
             ] }, radarOpportunityKey)
           ] }) }),
-          /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-control ai-switch-panel mt-8${aiSearchLive ? " ai-switch-panel-live" : " ai-switch-panel-paused"}`, role: "switch", "aria-checked": aiSearchLive, tabIndex: 0, onClick: () => setAiSearchLive((v) => !v), onKeyDown: (e) => {
+          /* @__PURE__ */ jsxs("div", { className: `dashboard-radar-control ai-switch-panel mt-8${soundOn ? " ai-switch-panel-sound-on" : " ai-switch-panel-sound-off"}`, role: "switch", "aria-checked": soundOn, "aria-label": "Opportunity notification sound", tabIndex: 0, onClick: toggleSound, onKeyDown: (e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
-              setAiSearchLive((v) => !v);
+              toggleSound();
             }
           }, children: [
             /* @__PURE__ */ jsx("span", { className: "ai-switch-screw ai-switch-screw-tl" }),
@@ -805,13 +831,22 @@ function DashboardPage() {
             /* @__PURE__ */ jsx("span", { className: "ai-switch-screw ai-switch-screw-br" }),
             /* @__PURE__ */ jsx("p", { className: "ai-switch-title", children: "AI Search Control" }),
             /* @__PURE__ */ jsxs("div", { className: "ai-switch-rockers", children: [
-              /* @__PURE__ */ jsxs("div", { className: `ai-switch-rocker ai-switch-rocker-live${aiSearchLive ? " ai-switch-rocker-active" : ""}`, children: [
-                /* @__PURE__ */ jsx("span", { className: `ai-switch-led${aiSearchLive ? " ai-switch-led-on-live" : ""}` }),
-                /* @__PURE__ */ jsx("span", { className: "ai-switch-rocker-label", children: "LIVE" })
+              /* @__PURE__ */ jsxs("div", { className: `ai-switch-rocker ai-switch-rocker-sound-on${soundOn ? " ai-switch-rocker-active" : ""}`, children: [
+                /* @__PURE__ */ jsx("span", { className: `ai-switch-led${soundOn ? " ai-switch-led-on-sound-on" : ""}` }),
+                /* @__PURE__ */ jsxs("svg", { className: "ai-switch-rocker-icon", "aria-hidden": "true", viewBox: "0 0 20 20", fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", children: [
+                  /* @__PURE__ */ jsx("path", { d: "M9.5 3.5a.5.5 0 0 0-.8-.4L4.8 6.5H2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.8l3.9 3.4a.5.5 0 0 0 .8-.4V3.5Z" }),
+                  /* @__PURE__ */ jsx("path", { d: "M13.3 6.7a.75.75 0 0 1 1.06 0A6 6 0 0 1 16 10.5a6 6 0 0 1-1.64 4.14.75.75 0 0 1-1.06-1.06A4.5 4.5 0 0 0 14.5 10.5a4.5 4.5 0 0 0-1.2-3.06.75.75 0 0 1 0-1.06Z" }),
+                  /* @__PURE__ */ jsx("path", { d: "M11.3 8.7a.75.75 0 0 1 1.06 0A3.25 3.25 0 0 1 13.25 10.5a3.25 3.25 0 0 1-.89 2.22.75.75 0 0 1-1.06-1.06 1.75 1.75 0 0 0 .45-1.16 1.75 1.75 0 0 0-.45-1.19.75.75 0 0 1 0-1.06Z", fillOpacity: "0.7" })
+                ] }),
+                /* @__PURE__ */ jsx("span", { className: "ai-switch-rocker-label", children: "SOUND ON" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: `ai-switch-rocker ai-switch-rocker-paused${!aiSearchLive ? " ai-switch-rocker-active" : ""}`, children: [
-                /* @__PURE__ */ jsx("span", { className: `ai-switch-led${!aiSearchLive ? " ai-switch-led-on-paused" : ""}` }),
-                /* @__PURE__ */ jsx("span", { className: "ai-switch-rocker-label", children: "PAUSED" })
+              /* @__PURE__ */ jsxs("div", { className: `ai-switch-rocker ai-switch-rocker-sound-off${!soundOn ? " ai-switch-rocker-active" : ""}`, children: [
+                /* @__PURE__ */ jsx("span", { className: `ai-switch-led${!soundOn ? " ai-switch-led-on-sound-off" : ""}` }),
+                /* @__PURE__ */ jsxs("svg", { className: "ai-switch-rocker-icon", "aria-hidden": "true", viewBox: "0 0 20 20", fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", children: [
+                  /* @__PURE__ */ jsx("path", { d: "M9.5 3.5a.5.5 0 0 0-.8-.4L4.8 6.5H2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.8l3.9 3.4a.5.5 0 0 0 .8-.4V3.5Z" }),
+                  /* @__PURE__ */ jsx("path", { d: "M14.03 8.47a.75.75 0 0 0-1.06 1.06L14.44 11l-1.47 1.47a.75.75 0 1 0 1.06 1.06L15.5 12.06l1.47 1.47a.75.75 0 1 0 1.06-1.06L16.56 11l1.47-1.47a.75.75 0 0 0-1.06-1.06L15.5 9.94l-1.47-1.47Z", fillOpacity: "0.85" })
+                ] }),
+                /* @__PURE__ */ jsx("span", { className: "ai-switch-rocker-label", children: "SOUND OFF" })
               ] })
             ] })
           ] }),

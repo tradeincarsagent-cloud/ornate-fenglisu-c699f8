@@ -1965,6 +1965,26 @@ body > div {
   color: rgba(251, 191, 36, 0.88);
 }
 
+/* Sound ON — active label: green */
+.ai-switch-rocker-sound-on.ai-switch-rocker-active .ai-switch-rocker-label {
+  color: rgba(74, 222, 128, 0.92);
+}
+
+/* Sound ON — active icon: green */
+.ai-switch-rocker-sound-on.ai-switch-rocker-active .ai-switch-rocker-icon {
+  color: rgba(74, 222, 128, 0.88);
+}
+
+/* Sound OFF — active label: amber */
+.ai-switch-rocker-sound-off.ai-switch-rocker-active .ai-switch-rocker-label {
+  color: rgba(251, 191, 36, 0.88);
+}
+
+/* Sound OFF — active icon: amber */
+.ai-switch-rocker-sound-off.ai-switch-rocker-active .ai-switch-rocker-icon {
+  color: rgba(251, 191, 36, 0.8);
+}
+
 /* Subtle outer glow when LIVE */
 .ai-switch-panel-live {
   box-shadow:
@@ -1981,6 +2001,52 @@ body > div {
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     0 0 0 1px rgba(251, 191, 36, 0.12),
     0 0 20px rgba(251, 191, 36, 0.06);
+}
+
+/* Subtle outer glow when SOUND ON */
+.ai-switch-panel-sound-on {
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(74, 222, 128, 0.1),
+    0 0 20px rgba(74, 222, 128, 0.06);
+}
+
+/* Subtle outer glow when SOUND OFF */
+.ai-switch-panel-sound-off {
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(251, 191, 36, 0.12),
+    0 0 20px rgba(251, 191, 36, 0.06);
+}
+
+/* SOUND ON LED — green */
+.ai-switch-led-on-sound-on {
+  background: rgba(74, 222, 128, 0.92);
+  border-color: rgba(74, 222, 128, 0.45);
+  box-shadow:
+    0 0 7px rgba(74, 222, 128, 0.8),
+    0 0 18px rgba(74, 222, 128, 0.28);
+}
+
+/* SOUND OFF LED — amber */
+.ai-switch-led-on-sound-off {
+  background: rgba(251, 191, 36, 0.88);
+  border-color: rgba(251, 191, 36, 0.45);
+  box-shadow:
+    0 0 7px rgba(251, 191, 36, 0.75),
+    0 0 18px rgba(251, 191, 36, 0.22);
+}
+
+/* Speaker SVG icon inside rocker */
+.ai-switch-rocker-icon {
+  width: 18px;
+  height: 18px;
+  color: rgba(148, 163, 184, 0.38);
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+  pointer-events: none;
 }
 
 .traffic-light-shell {
