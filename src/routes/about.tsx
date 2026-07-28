@@ -12,7 +12,7 @@ function AboutPage() {
           <span className="font-label-caps text-label-caps uppercase tracking-widest text-primary">Company</span>
           <h1 className="font-headline-lg text-headline-lg md:text-display-lg">About Trade in Cars Agent (TICA)</h1>
           <p className="font-body-md text-body-md text-on-surface-variant">
-            BUILT TO CHANGE THE WAY DEALERS BUY VEHICLES
+            Built for Dealers. Powered by AI. Focused on Finding Better Vehicles.
           </p>
           <p className="font-body-md text-body-md text-on-surface-variant">
             Trade in Cars Agent (TICA) is an AI-powered vehicle sourcing platform built exclusively for independent vehicle dealers.
@@ -25,9 +25,8 @@ function AboutPage() {
             Rather than replacing the dealer, TICA works alongside them as a 24-hour AI buying assistant, continuously analysing markets, identifying opportunities, monitoring pricing, and learning how every dealership prefers to buy vehicles.
           </p>
           <p className="font-body-md text-body-md text-on-surface-variant">
-            We believe the future of vehicle sourcing is not more searching.
+            We believe the future of vehicle sourcing isn't about searching harder—it's about finding smarter.
           </p>
-          <p className="font-body-md text-body-md text-on-surface-variant">It is better intelligence.</p>
         </div>
 
         <div className="space-y-4 rounded-xl border border-outline-variant/30 bg-surface-container-low p-6 md:p-8">
@@ -42,8 +41,8 @@ function AboutPage() {
           <p className="font-body-md text-body-md text-on-surface-variant">
             As TICA continues to evolve, new AI capabilities, intelligent sourcing tools, Trade Outs™, dealer collaboration features and marketplace integrations will continue to transform the way dealerships discover, evaluate and purchase vehicles.
           </p>
-          <p className="font-body-md text-body-md text-on-surface-variant">THE FUTURE DOESN'T SEARCH.</p>
-          <p className="font-body-md text-body-md text-on-surface-variant">IT FINDS.</p>
+          <p className="font-headline-md text-headline-md md:text-headline-lg font-bold text-on-surface">The Future Doesn't Search. It Finds.</p>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-2">Welcome to the next generation of AI-powered vehicle sourcing.</p>
         </div>
 
         <div>
