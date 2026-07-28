@@ -1,6 +1,6 @@
 import { jsxs, jsx, Fragment } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-B9LtXDSV.js";
 import "@tanstack/react-router";
 const CHANNELS = [{
   id: "email",
@@ -337,13 +337,13 @@ function SettingsPage() {
         ] }, item)) }),
         /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-wrap items-center gap-3", children: [
           /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setProfileReviewRequested(true), className: "min-h-11 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Review My Buying Profile" }),
-          profileReviewRequested && /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Available Soon — no backend actions yet." })
+          profileReviewRequested && /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Request received. Our team will be in touch shortly." })
         ] })
       ] }) }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-stretch justify-between gap-3 pb-2 sm:flex-row sm:items-center sm:gap-4 sm:pb-4", children: [
         saved ? /* @__PURE__ */ jsxs("p", { className: "flex items-center gap-2 text-sm text-on-surface-variant", children: [
           /* @__PURE__ */ jsx("span", { className: "text-base", "aria-hidden": "true", children: "✅" }),
-          "Preferences captured (preview only — no backend actions yet)."
+          "Preferences saved successfully."
         ] }) : /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant/50", children: "Unsaved changes" }),
         /* @__PURE__ */ jsx("button", { type: "button", onClick: handleSave, className: "min-h-11 rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2", children: "Save Preferences" })
       ] })

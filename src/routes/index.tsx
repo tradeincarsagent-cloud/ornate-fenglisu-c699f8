@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect, useState, type CSSProperties } from 'react'
 
 export const Route = createFileRoute('/')({
@@ -35,7 +35,7 @@ const opportunityExamples = [
   { name: 'Toyota Hilux Invincible X 2020', askingPrice: '£24,750', confidence: '95%', estimatedProfit: '+£2,300', ticaCertified: true, detectedAt: '53 minutes ago' },
   { name: 'Mercedes E220 2019', askingPrice: '£18,495', confidence: '92%', estimatedProfit: '+£1,850', ticaCertified: false, detectedAt: '3 hours ago' },
   { name: 'Mercedes G-Class 2018', askingPrice: '£69,950', confidence: '91%', estimatedProfit: '+£4,400', ticaCertified: false, detectedAt: '5 hours ago' },
-  { name: 'Harley-Davidson Fat Boy 2019', askingPrice: '£13,995', confidence: '90%', estimatedProfit: '+£1,200', ticaCertified: false, detectedAt: '2 hours ago' },
+  { name: 'Land Rover Discovery Sport HSE 2020', askingPrice: '£21,995', confidence: '90%', estimatedProfit: '+£2,100', ticaCertified: false, detectedAt: '2 hours ago' },
   { name: 'Ford Transit Custom 2022', askingPrice: '£19,995', confidence: '96%', estimatedProfit: '+£2,450', ticaCertified: true, detectedAt: '35 minutes ago' },
   { name: 'Porsche Cayman 2019', askingPrice: '£41,250', confidence: '94%', estimatedProfit: '+£3,100', ticaCertified: true, detectedAt: '27 minutes ago' },
 ]
@@ -342,6 +342,7 @@ function HeroRadar() {
 }
 
 function LandingPage() {
+  const navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<TrialPlan>('professional')
   const [submissionError, setSubmissionError] = useState('')
@@ -597,7 +598,7 @@ function LandingPage() {
         <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20 lg:h-36">
           <div className="flex items-center flex-shrink-0 gap-4">
             <div className="logo-bezel rounded-lg p-1">
-              <img alt="Trade In Cars Agent Logo" className="h-[60px] sm:h-12 lg:h-32 w-auto max-w-[175px] sm:max-w-none object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS" />
+              <img alt="Trade In Cars Agent Logo" className="h-[60px] sm:h-12 lg:h-32 w-auto max-w-[175px] sm:max-w-none object-contain logo-blend" src="/tica-logo.svg" />
             </div>
           </div>
           <div className="hidden lg:flex items-center gap-8 mx-6">
@@ -782,7 +783,7 @@ function LandingPage() {
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-[9px] text-on-surface-variant">{car.ticaCertified ? '✅ TICA Certified™' : 'TICA Review Queue'}</span>
-                      <button type="button" className="text-[9px] text-primary/90 hover:text-primary transition-colors font-semibold whitespace-nowrap">View AI Analysis →</button>
+                      <button type="button" onClick={() => navigate({ to: '/opportunity' })} className="text-[9px] text-primary/90 hover:text-primary transition-colors font-semibold whitespace-nowrap">View AI Analysis →</button>
                     </div>
                   </div>
                   {/* Desktop card — md+ (unchanged) */}
@@ -806,7 +807,7 @@ function LandingPage() {
                       </div>
                       <p className="text-sm text-on-surface-variant">{car.ticaCertified ? '✅ TICA Certified™' : 'TICA Review Queue'}</p>
                       <p className="text-xs text-on-surface-variant">Detected {car.detectedAt}</p>
-                      <button type="button" className="text-xs text-primary/90 hover:text-primary transition-colors font-semibold">
+                      <button type="button" onClick={() => navigate({ to: '/opportunity' })} className="text-xs text-primary/90 hover:text-primary transition-colors font-semibold">
                         View AI Analysis →
                       </button>
                     </div>
@@ -988,7 +989,7 @@ function LandingPage() {
               </div>
             </div>
             <div className="flex justify-center">
-              <button onClick={() => scrollToSection('dashboard-preview')} className="preview-btn-glow border border-primary/50 text-primary px-6 py-3 lg:px-10 lg:py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95 flex items-center gap-2">
+              <button onClick={() => navigate({ to: '/dashboard' })} className="preview-btn-glow border border-primary/50 text-primary px-6 py-3 lg:px-10 lg:py-4 rounded-full font-bold hover:bg-primary/10 transition-all uppercase tracking-widest text-sm active:scale-95 flex items-center gap-2">
                 <span className="material-symbols-outlined lg:hidden shrink-0" style={{fontSize:'16px'}}>space_dashboard</span>
                 Enter My AI Command Centre
               </button>
@@ -1345,7 +1346,7 @@ function LandingPage() {
                       Trusted AI Certification
                     </span>
                     <img
-                      src="https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f"
+                      src="/tica-shield.svg"
                       alt="TICA Certified shield"
                       className="tica-certified-shield h-auto w-36"
                       decoding="async"
@@ -1386,7 +1387,7 @@ function LandingPage() {
           <div className="space-y-6 max-md:flex max-md:flex-col max-md:items-center max-md:gap-3 max-md:space-y-0 md:space-y-0 md:flex md:flex-col md:items-center md:gap-5">
             <div className="relative flex items-center justify-center max-md:w-full md:mb-0 md:justify-center">
               <div className="logo-bezel rounded-lg p-1">
-                <img alt="Trade In Cars Agent Logo" className="h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKabmcvwQji3POw6DCSvZmOlFghhxBc4xSqvnkr647RPhuwklQMj0qzeFAToJIwomZJ_vSqpJW-nFPicV6qwiERTB5gIicgsv858anTVXqtchn1gMvh_dyWm1Wvc7fEF3NQhc_WF3zkfzaB76Awi-HDvQvgxUkHQXX42Rei9TPDQU5c2GXIrC7Szkpm32QDSGvg8ix3zOZ635ai7fd7NGDqKODHr0HGWrWxgUo7hH_0BD9-CO2cITGXq8W7O_fFnhhCyFwBCHWmVHG" />
+                <img alt="Trade In Cars Agent Logo" className="h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend" src="/tica-logo.svg" />
               </div>
             </div>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-sm max-md:max-w-[22rem] max-md:mx-auto max-md:text-center md:text-center">

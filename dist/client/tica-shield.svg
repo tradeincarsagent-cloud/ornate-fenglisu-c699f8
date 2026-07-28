@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none">
+  <!-- Shield outer shape -->
+  <path d="M100 8 L188 40 L188 120 C188 170 148 210 100 232 C52 210 12 170 12 120 L12 40 Z"
+        fill="#0c1324" stroke="#1493ff" stroke-width="2.5"/>
+  <!-- Shield inner highlight -->
+  <path d="M100 22 L175 50 L175 120 C175 163 140 198 100 218 C60 198 25 163 25 120 L25 50 Z"
+        fill="none" stroke="#1493ff" stroke-width="1" opacity="0.3"/>
+  <!-- Gradient-like inner fill -->
+  <path d="M100 22 L175 50 L175 120 C175 163 140 198 100 218 C60 198 25 163 25 120 L25 50 Z"
+        fill="#1493ff" opacity="0.06"/>
+  <!-- TICA text -->
+  <text x="100" y="108" font-family="'Hanken Grotesk', 'Inter', sans-serif" font-size="38" font-weight="800" fill="#1493ff" text-anchor="middle" letter-spacing="-1">TICA</text>
+  <!-- Star/certified mark -->
+  <text x="100" y="142" font-family="'Inter', sans-serif" font-size="10" font-weight="600" fill="white" text-anchor="middle" letter-spacing="2" opacity="0.8">CERTIFIED™</text>
+  <!-- Bottom line decoration -->
+  <line x1="60" y1="155" x2="140" y2="155" stroke="#1493ff" stroke-width="1" opacity="0.4"/>
+  <!-- Checkmark circle at top -->
+  <circle cx="100" cy="52" r="16" fill="#1493ff" opacity="0.15"/>
+  <circle cx="100" cy="52" r="16" stroke="#1493ff" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <text x="100" y="57.5" font-family="sans-serif" font-size="16" fill="#1493ff" text-anchor="middle">✓</text>
+</svg>
