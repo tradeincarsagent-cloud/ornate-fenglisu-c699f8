@@ -222,7 +222,7 @@ const bmwM3DecisionModel: TicaDecisionModel = {
   weightedDecisionScore: 89,
   weightedDecisionScoreDisplay: '89 / 100',
   recommendedAction: 'BUY',
-  recommendedActionDisplay: 'BUY NOW',
+  recommendedActionDisplay: 'BUY',
   factors: {
     overallOpportunityScore: {
       label: 'Overall Opportunity Score',
