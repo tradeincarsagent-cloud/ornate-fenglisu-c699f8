@@ -1412,7 +1412,8 @@ function LandingPage() {
               <div className="footer-mobile-link-row">
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/about">About TICA</a>
                 <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/contact">Contact</a>
-                <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/support">Support</a>
+                {/* Version 1: Support temporarily redirects to Contact. Replace with dedicated Support Centre in a future release. */}
+                <a className="footer-link-premium font-body-md text-body-md text-on-surface-variant" href="/contact">Support</a>
               </div>
             </div>
             <div className="flex flex-col gap-[9px] md:gap-3.5 md:items-center">
