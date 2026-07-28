@@ -173,13 +173,13 @@ export function PlatformShell({ children, navItems }: { children: ReactNode; nav
                 </p>
               </div>
               <nav aria-label="Application footer links" className="flex flex-wrap items-center justify-start gap-y-1 text-xs text-on-surface-variant sm:justify-end">
-                <a href="#" className="transition-colors hover:text-primary">Support</a>
+                <Link to="/support" className="transition-colors hover:text-primary">Support</Link>
                 <span aria-hidden="true" className="mx-2 select-none"> • </span>
-                <a href="#" className="transition-colors hover:text-primary">Privacy</a>
+                <Link to="/privacy-policy" className="transition-colors hover:text-primary">Privacy</Link>
                 <span aria-hidden="true" className="mx-2 select-none"> • </span>
-                <a href="#" className="transition-colors hover:text-primary">Terms</a>
+                <Link to="/terms-of-service" className="transition-colors hover:text-primary">Terms</Link>
                 <span aria-hidden="true" className="mx-2 select-none"> • </span>
-                <a href="#" className="transition-colors hover:text-primary">Contact</a>
+                <Link to="/contact" className="transition-colors hover:text-primary">Contact</Link>
               </nav>
             </div>
           </footer>

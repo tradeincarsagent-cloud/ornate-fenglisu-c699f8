@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
-import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-BeZ6IcbA.js";
+import { useState, useEffect, useRef } from "react";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
 const VEHICLE_TYPES = ["Cars", "Classic Cars", "Pickups", "Vans & Light Commercials", "Motorcycles"];
 const VEHICLE_TYPE_EMOJI = {
   "Cars": "🚗",
@@ -251,6 +251,17 @@ function SearchBuilderPage() {
   const [missionCreated, setMissionCreated] = useState(false);
   const [manualMake, setManualMake] = useState("");
   const [manualModel, setManualModel] = useState("");
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      setShowBackToTop(window.scrollY > 300);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, {
+      passive: true
+    });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const activeVehicleType = selectedVehicleType ?? "Cars";
   const isOtherMake = make === OTHER_MAKE_OPTION;
   const baseModelOptions = !isOtherMake && make ? MODELS_BY_VEHICLE_TYPE[activeVehicleType][make] ?? [] : [];
@@ -307,6 +318,12 @@ function SearchBuilderPage() {
   }];
   const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" ");
   const missionName = missionNameBase || selectedVehicleType || "Vehicle Search";
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
   return /* @__PURE__ */ jsx(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
     href: "/dashboard"
@@ -582,7 +599,11 @@ function SearchBuilderPage() {
           /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "View AI Buying Report" })
         ] })
       ] })
-    ] })
+    ] }),
+    /* @__PURE__ */ jsx("button", { "aria-label": "Back to top", className: "back-to-top-btn", onClick: scrollToTop, style: {
+      opacity: showBackToTop ? 1 : 0,
+      pointerEvents: showBackToTop ? "auto" : "none"
+    }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "26", viewBox: "0 0 24 24", width: "26", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M5 15l7-7 7 7", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5" }) }) })
   ] }) });
 }
 export {

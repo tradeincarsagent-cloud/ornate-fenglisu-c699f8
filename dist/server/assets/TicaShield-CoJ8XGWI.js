@@ -134,13 +134,13 @@ function PlatformShell({ children, navItems }) {
             ] })
           ] }),
           /* @__PURE__ */ jsxs("nav", { "aria-label": "Application footer links", className: "flex flex-wrap items-center justify-start gap-y-1 text-xs text-on-surface-variant sm:justify-end", children: [
-            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Support" }),
+            /* @__PURE__ */ jsx(Link, { to: "/support", className: "transition-colors hover:text-primary", children: "Support" }),
             /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "mx-2 select-none", children: " • " }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Privacy" }),
+            /* @__PURE__ */ jsx(Link, { to: "/privacy-policy", className: "transition-colors hover:text-primary", children: "Privacy" }),
             /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "mx-2 select-none", children: " • " }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Terms" }),
+            /* @__PURE__ */ jsx(Link, { to: "/terms-of-service", className: "transition-colors hover:text-primary", children: "Terms" }),
             /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "mx-2 select-none", children: " • " }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "transition-colors hover:text-primary", children: "Contact" })
+            /* @__PURE__ */ jsx(Link, { to: "/contact", className: "transition-colors hover:text-primary", children: "Contact" })
           ] })
         ] }) })
       ] })
