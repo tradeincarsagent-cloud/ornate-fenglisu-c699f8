@@ -1390,7 +1390,7 @@ function LandingPage() {
               </div>
             </div>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-sm max-md:max-w-[22rem] max-md:mx-auto max-md:text-center md:text-center">
-              An AI-assisted vehicle sourcing platform for dealers, traders and sourcing professionals.
+              The AI-powered vehicle sourcing platform for independent vehicle dealers.
             </p>
             <div className="space-y-px text-center max-md:pt-0.5">
               <p className="font-body-md text-body-md text-on-surface-variant">© 2026 Trade in Cars Agent (TICA)</p>
