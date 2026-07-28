@@ -131,7 +131,7 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
-const $$splitComponentImporter$a = () => import("./terms-of-service-BI2AY9DY.js");
+const $$splitComponentImporter$a = () => import("./terms-of-service-BuKuKumS.js");
 const Route$a = createFileRoute("/terms-of-service")({
   component: lazyRouteComponent($$splitComponentImporter$a, "component")
 });
