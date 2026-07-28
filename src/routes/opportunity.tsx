@@ -22,9 +22,18 @@ function OpportunityPage() {
   const decisionModel = featuredOpportunity.decisionModel
   const decisionAction = decisionModel.recommendedAction
   const decisionActionDisplay = decisionModel.recommendedActionDisplay
-  const isBuyVerdict = decisionActionDisplay === 'BUY' || decisionAction === 'BUY'
-  const buyVerdictClassName = isBuyVerdict ? 'text-[#10b981]' : 'text-on-surface'
-  const buyVerdictGlowStyle = isBuyVerdict ? { textShadow: '0 0 10px rgba(16, 185, 129, 0.35)' } : undefined
+  const normalizedDecisionAction = (decisionActionDisplay || decisionAction).toUpperCase()
+  const isBuyVerdict = normalizedDecisionAction === 'BUY'
+  const isReviewVerdict = normalizedDecisionAction === 'REVIEW'
+  const isPassVerdict = normalizedDecisionAction === 'PASS'
+  const decisionVerdictClassName = isBuyVerdict
+    ? 'tica-decision-buy'
+    : isReviewVerdict
+      ? 'tica-decision-review'
+      : isPassVerdict
+        ? 'tica-decision-pass'
+        : 'text-on-surface'
+  const decisionVerdictGlowClassName = isBuyVerdict ? 'tica-decision-buy-glow' : ''
   const keyMetrics = [
    { label: 'Confidence', value: featuredOpportunity.confidenceDisplay },
    { label: 'Opportunity Score', value: decisionModel.factors.overallOpportunityScore.displayValue },
@@ -40,7 +49,7 @@ function OpportunityPage() {
   ]
   const verdictMetrics = [
    { label: 'Confidence', value: featuredOpportunity.confidenceDisplay, valueClassName: 'text-primary' },
-   { label: 'Risk Level', value: featuredOpportunity.riskLevel, valueClassName: 'text-[#4ade80]' },
+   { label: 'Risk Level', value: featuredOpportunity.riskLevel, valueClassName: 'tica-decision-buy' },
    { label: 'Est. Gross Profit', value: featuredOpportunity.estimatedGrossProfitDisplay, valueClassName: 'text-on-surface' },
    { label: 'Days to Sell', value: featuredOpportunity.daysToSellDisplay, valueClassName: 'text-on-surface' },
   ]
@@ -132,13 +141,13 @@ function OpportunityPage() {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-5">
             <div className="verdict-card-premium flex flex-col items-center justify-center gap-3 rounded-2xl px-4 py-5 text-center sm:px-8 sm:py-8 lg:min-w-[320px]">
               <div className="traffic-light-shell" aria-label="AI buying verdict traffic light">
-                <div className="traffic-light-lens traffic-light-lens-green-active" aria-hidden="true" />
-                <div className="traffic-light-lens" aria-hidden="true" />
-                <div className="traffic-light-lens" aria-hidden="true" />
+                <div className={`traffic-light-lens ${isBuyVerdict ? 'traffic-light-lens-buy-active' : ''}`} aria-hidden="true" />
+                <div className={`traffic-light-lens ${isReviewVerdict ? 'traffic-light-lens-review-active' : ''}`} aria-hidden="true" />
+                <div className={`traffic-light-lens ${isPassVerdict ? 'traffic-light-lens-pass-active' : ''}`} aria-hidden="true" />
               </div>
               <div className="space-y-1.5">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary/80">AI Buying Verdict</p>
-                <p className={`text-[30px] font-semibold leading-none tracking-[0.02em] ${buyVerdictClassName} sm:text-[40px]`} style={buyVerdictGlowStyle}>
+                <p className={`text-[30px] font-semibold leading-none tracking-[0.02em] ${decisionVerdictClassName} ${decisionVerdictGlowClassName} sm:text-[40px]`}>
                   {decisionActionDisplay}
                 </p>
                 <p className="text-body-sm font-body-sm text-on-surface">TICA Confidence: {featuredOpportunity.confidenceDisplay}</p>
@@ -153,9 +162,9 @@ function OpportunityPage() {
                     <div className="legend-traffic-light-lens legend-lens-red" aria-hidden="true" />
                   </div>
                   <div className="flex flex-col gap-[6px] py-[7px] text-xs font-semibold leading-none">
-                    <span className="flex h-[30px] items-center text-[#4ade80]">BUY</span>
-                    <span className="flex h-[30px] items-center text-[#f59e0b]">REVIEW</span>
-                    <span className="flex h-[30px] items-center text-[#ef4444]">PASS</span>
+                    <span className="tica-decision-buy flex h-[30px] items-center">BUY</span>
+                    <span className="tica-decision-review flex h-[30px] items-center">REVIEW</span>
+                    <span className="tica-decision-pass flex h-[30px] items-center">PASS</span>
                   </div>
                 </div>
               </div>
@@ -186,7 +195,7 @@ function OpportunityPage() {
           <ul className="mt-3 space-y-2.5 text-body-sm font-body-sm text-on-surface">
             {verdictReasons.map((reason) => (
               <li key={reason} className="flex items-center gap-2">
-                <span className="text-[#4ade80]">✓</span>
+                <span className="tica-decision-buy">✓</span>
                 <span>{reason}</span>
               </li>
             ))}
@@ -214,7 +223,7 @@ function OpportunityPage() {
             </div>
             <div className="verdict-card-premium rounded-2xl p-4 sm:p-6">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.2em] text-primary/80">AI Verdict</p>
-              <p className={`mt-4 text-[52px] font-semibold leading-none ${buyVerdictClassName} sm:text-[68px]`} style={buyVerdictGlowStyle}>
+              <p className={`mt-4 text-[52px] font-semibold leading-none ${decisionVerdictClassName} ${decisionVerdictGlowClassName} sm:text-[68px]`}>
                 {decisionAction}
               </p>
             </div>
@@ -255,9 +264,9 @@ function OpportunityPage() {
           {featuredOpportunity.checklist.map((item) => {
              const statusToneClass =
                item.tone === 'positive'
-                 ? 'text-[#4ade80]'
+                 ? 'tica-decision-buy'
                  : item.tone === 'warning'
-                   ? 'text-[#facc15]'
+                   ? 'tica-decision-review'
                    : 'text-primary'
 
              return (
@@ -321,7 +330,7 @@ function OpportunityPage() {
           <div className="rounded-xl border border-primary/30 bg-primary-container/20 px-4 py-4 sm:px-6 sm:py-5">
             <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
               {buyingSummaryLead}
-              <span className="font-semibold text-on-surface">{decisionAction}</span>
+              <span className={`font-semibold ${decisionVerdictClassName}`}>{decisionAction}</span>
               {buyingSummaryTail}
             </p>
           </div>
@@ -351,7 +360,7 @@ function OpportunityPage() {
             <div className="timeline-status-panel">
               <p className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">AI Reasoning</p>
               <p className="mt-2 text-body-md font-body-md text-on-surface">
-                <span className="mr-2 text-emerald-400">🟢</span>
+                <span className="tica-decision-buy mr-2">🟢</span>
                 BUY signal confirmed
               </p>
               <p className="mt-1 text-sm text-on-surface-variant">Placeholder investigation checkpoints shown in decision order.</p>
