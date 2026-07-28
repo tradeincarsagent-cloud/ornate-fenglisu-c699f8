@@ -148,7 +148,7 @@ function PlatformShell({ children, navItems }) {
   ] });
 }
 const TICA_SHIELD_SRC = "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f";
-function TicaShield() {
+function TicaShield({ size = "md" }) {
   const [open, setOpen] = useState(false);
   const [popupPos, setPopupPos] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -234,7 +234,7 @@ function TicaShield() {
                 {
                   src: TICA_SHIELD_SRC,
                   alt: "TICA Certified shield",
-                  className: "block h-auto w-12 sm:w-[4.5rem] md:w-24",
+                  className: size === "lg" ? "block h-auto w-14 sm:w-[5.25rem] md:w-28" : "block h-auto w-12 sm:w-[4.5rem] md:w-24",
                   decoding: "async"
                 }
               ) }),

@@ -616,7 +616,7 @@ function LandingPage() {
             /* @__PURE__ */ jsx("br", {}),
             "Save Hours Every Week."
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition." }),
+          /* @__PURE__ */ jsx("p", { className: "font-body-lg text-body-lg text-on-surface-variant max-w-xl", children: "Trade In Cars Agent (TICA) is your AI Buying Employee, working 24/7 to monitor the market, identify high-confidence buying opportunities and help you source better vehicles before the competition." }),
           /* @__PURE__ */ jsxs("div", { className: "hero-mobile-radar-wrap relative flex items-center justify-center overflow-visible pt-2 md:hidden", children: [
             /* @__PURE__ */ jsx(HeroRadar, {}),
             /* @__PURE__ */ jsx("div", { className: "absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 blur-[100px] rounded-full" }),

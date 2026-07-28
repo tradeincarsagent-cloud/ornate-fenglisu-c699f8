@@ -16,7 +16,7 @@ const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c7
  *   • Hover / tap: glow brightens smoothly, certification popup fades in.
  *   • On close: returns to ambient (or steady, if already opened) glow.
  */
-export function TicaShield() {
+export function TicaShield({ size = 'md' }: { size?: 'md' | 'lg' }) {
   const [open, setOpen] = useState(false)
   const [popupPos, setPopupPos] = useState<{ top: number; right: number; left?: number } | null>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -104,11 +104,11 @@ export function TicaShield() {
           !hasOpened && !isHovered ? 'tica-shield-pulsing' : '',
           isHovered ? 'tica-shield-hovered' : '',
         ].join(' ').trim()}>
-          {/* w-14 sm:w-[4.5rem] md:w-24 — consistent size across all authenticated pages */}
+          {/* w-14 sm:w-[5.25rem] md:w-28 (lg) / w-12 sm:w-[4.5rem] md:w-24 (md) — consistent size across all authenticated pages */}
           <img
             src={TICA_SHIELD_SRC}
             alt="TICA Certified shield"
-            className="block h-auto w-12 sm:w-[4.5rem] md:w-24"
+            className={size === 'lg' ? 'block h-auto w-14 sm:w-[5.25rem] md:w-28' : 'block h-auto w-12 sm:w-[4.5rem] md:w-24'}
             decoding="async"
           />
         </div>

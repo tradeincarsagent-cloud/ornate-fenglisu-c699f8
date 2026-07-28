@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
@@ -48,6 +49,21 @@ function OpportunityPage() {
   ]
   const vehicleInfo = featuredOpportunity.vehicleInfo
   const [buyingSummaryLead, buyingSummaryTail = ''] = featuredOpportunity.buyingSummary.split(decisionAction)
+
+  const [showBackToTop, setShowBackToTop] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowBackToTop(window.scrollY > 300)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <PlatformShell
@@ -103,7 +119,7 @@ function OpportunityPage() {
               </p>
             </div>
             <div className="self-end sm:self-auto">
-              <TicaShield />
+              <TicaShield size="lg" />
             </div>
           </div>
         </header>
@@ -374,6 +390,17 @@ function OpportunityPage() {
           </div>
         </section>
       </div>
+      <button
+        aria-label="Back to top"
+        className="back-to-top-btn"
+        onClick={scrollToTop}
+        style={{ opacity: showBackToTop ? 1 : 0, pointerEvents: showBackToTop ? 'auto' : 'none' }}
+        type="button"
+      >
+        <svg aria-hidden="true" fill="none" height="26" viewBox="0 0 24 24" width="26" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 15l7-7 7 7" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
+        </svg>
+      </button>
     </PlatformShell>
   )
 }

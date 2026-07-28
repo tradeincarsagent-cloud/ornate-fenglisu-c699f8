@@ -15,7 +15,7 @@ const bmwM3CompetitionScoring = {
 const bmwM3DecisionModel = {
   weightedDecisionScore: 89,
   recommendedAction: "BUY",
-  recommendedActionDisplay: "BUY NOW",
+  recommendedActionDisplay: "BUY",
   factors: {
     overallOpportunityScore: {
       displayValue: "97 / 100",

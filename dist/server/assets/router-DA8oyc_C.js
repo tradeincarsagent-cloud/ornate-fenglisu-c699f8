@@ -139,11 +139,11 @@ const $$splitComponentImporter$9 = () => import("./support-jZiYmrSh.js");
 const Route$9 = createFileRoute("/support")({
   component: lazyRouteComponent($$splitComponentImporter$9, "component")
 });
-const $$splitComponentImporter$8 = () => import("./settings-CZ_dp9cS.js");
+const $$splitComponentImporter$8 = () => import("./settings-YXVElRce.js");
 const Route$8 = createFileRoute("/settings")({
   component: lazyRouteComponent($$splitComponentImporter$8, "component")
 });
-const $$splitComponentImporter$7 = () => import("./search-builder-ClN7NjEl.js");
+const $$splitComponentImporter$7 = () => import("./search-builder-C3IWlLgd.js");
 const Route$7 = createFileRoute("/search-builder")({
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
@@ -151,11 +151,11 @@ const $$splitComponentImporter$6 = () => import("./privacy-policy-w00uo2us.js");
 const Route$6 = createFileRoute("/privacy-policy")({
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$5 = () => import("./opportunity-BDtF4T0z.js");
+const $$splitComponentImporter$5 = () => import("./opportunity-DPGHaPZM.js");
 const Route$5 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-const $$splitComponentImporter$4 = () => import("./dashboard-78AUK7id.js");
+const $$splitComponentImporter$4 = () => import("./dashboard--8OBa6rF.js");
 const Route$4 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
@@ -171,7 +171,7 @@ const $$splitComponentImporter$1 = () => import("./about-yq8Ksgrl.js");
 const Route$1 = createFileRoute("/about")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-BKmAZcuG.js");
+const $$splitComponentImporter = () => import("./index-C1ztUBVL.js");
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
