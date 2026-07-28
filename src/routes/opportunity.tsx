@@ -22,6 +22,9 @@ function OpportunityPage() {
   const decisionModel = featuredOpportunity.decisionModel
   const decisionAction = decisionModel.recommendedAction
   const decisionActionDisplay = decisionModel.recommendedActionDisplay
+  const isBuyVerdict = decisionActionDisplay === 'BUY' || decisionAction === 'BUY'
+  const buyVerdictClassName = isBuyVerdict ? 'text-[#10b981]' : 'text-on-surface'
+  const buyVerdictGlowStyle = isBuyVerdict ? { textShadow: '0 0 10px rgba(16, 185, 129, 0.35)' } : undefined
   const keyMetrics = [
    { label: 'Confidence', value: featuredOpportunity.confidenceDisplay },
    { label: 'Opportunity Score', value: decisionModel.factors.overallOpportunityScore.displayValue },
@@ -135,7 +138,9 @@ function OpportunityPage() {
               </div>
               <div className="space-y-1.5">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary/80">AI Buying Verdict</p>
-                <p className="text-[30px] font-semibold leading-none tracking-[0.02em] text-on-surface sm:text-[40px]">{decisionActionDisplay}</p>
+                <p className={`text-[30px] font-semibold leading-none tracking-[0.02em] ${buyVerdictClassName} sm:text-[40px]`} style={buyVerdictGlowStyle}>
+                  {decisionActionDisplay}
+                </p>
                 <p className="text-body-sm font-body-sm text-on-surface">TICA Confidence: {featuredOpportunity.confidenceDisplay}</p>
                 <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">Recommended Action by TICA AI</p>
               </div>
@@ -209,7 +214,9 @@ function OpportunityPage() {
             </div>
             <div className="verdict-card-premium rounded-2xl p-4 sm:p-6">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.2em] text-primary/80">AI Verdict</p>
-              <p className="mt-4 text-[52px] font-semibold leading-none text-on-surface sm:text-[68px]">{decisionAction}</p>
+              <p className={`mt-4 text-[52px] font-semibold leading-none ${buyVerdictClassName} sm:text-[68px]`} style={buyVerdictGlowStyle}>
+                {decisionAction}
+              </p>
             </div>
           </div>
         </section>
@@ -219,7 +226,17 @@ function OpportunityPage() {
             {keyMetrics.map((metric) => (
               <div key={metric.label} className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
                 <dt className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">{metric.label}</dt>
-                <dd className="mt-2 text-body-lg font-body-lg text-on-surface">{metric.value}</dd>
+                <dd
+                  className={`mt-2 text-body-lg font-body-lg ${
+                    metric.label === 'Demand Rating'
+                      ? 'text-[#d4af37]'
+                      : metric.label === 'Opportunity Score'
+                        ? 'text-primary'
+                        : 'text-on-surface'
+                  }`}
+                >
+                  {metric.value}
+                </dd>
               </div>
             ))}
           </dl>
