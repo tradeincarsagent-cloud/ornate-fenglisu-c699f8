@@ -1,4 +1,5 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
+import { PublicInfoCloseButton } from '@/components/PublicInfoCloseButton'
 
 export const Route = createFileRoute('/terms-of-service')({
   component: TermsOfServicePage,
@@ -7,7 +8,8 @@ export const Route = createFileRoute('/terms-of-service')({
 function TermsOfServicePage() {
   return (
     <main className="min-h-screen bg-surface text-on-surface">
-      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-margin-mobile py-14 md:px-margin-desktop md:py-20">
+      <section className="relative mx-auto flex w-full max-w-4xl flex-col gap-8 px-margin-mobile py-14 md:px-margin-desktop md:py-20">
+        <PublicInfoCloseButton />
         <div className="space-y-3">
           <span className="font-label-caps text-label-caps uppercase tracking-widest text-primary">Legal</span>
           <h1 className="font-headline-lg text-headline-lg md:text-display-lg text-primary">Terms of Service</h1>
@@ -80,11 +82,6 @@ function TermsOfServicePage() {
           </p>
         </article>
 
-        <div>
-          <Link className="font-body-md text-body-md text-primary hover:opacity-85 transition-all" to="/">
-            ← Back to Home
-          </Link>
-        </div>
       </section>
     </main>
   )
