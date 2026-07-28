@@ -1,7 +1,9 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import { Link } from "@tanstack/react-router";
+import { P as PublicInfoCloseButton } from "./PublicInfoCloseButton-CUcRyI6Q.js";
+import "@tanstack/react-router";
 function TermsOfServicePage() {
-  return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-surface text-on-surface", children: /* @__PURE__ */ jsxs("section", { className: "mx-auto flex w-full max-w-4xl flex-col gap-8 px-margin-mobile py-14 md:px-margin-desktop md:py-20", children: [
+  return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-surface text-on-surface", children: /* @__PURE__ */ jsxs("section", { className: "relative mx-auto flex w-full max-w-4xl flex-col gap-8 px-margin-mobile py-14 md:px-margin-desktop md:py-20", children: [
+    /* @__PURE__ */ jsx(PublicInfoCloseButton, {}),
     /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
       /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps uppercase tracking-widest text-primary", children: "Legal" }),
       /* @__PURE__ */ jsx("h1", { className: "font-headline-lg text-headline-lg md:text-display-lg text-primary", children: "Terms of Service" })
@@ -44,8 +46,7 @@ function TermsOfServicePage() {
         ] })
       ] }),
       /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant border-t border-outline-variant/30 pt-6", children: "By using Trade in Cars Agent (TICA), you acknowledge these Terms of Service and agree to use the platform responsibly, professionally and in accordance with applicable laws." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(Link, { className: "font-body-md text-body-md text-primary hover:opacity-85 transition-all", to: "/", children: "← Back to Home" }) })
+    ] })
   ] }) });
 }
 export {
