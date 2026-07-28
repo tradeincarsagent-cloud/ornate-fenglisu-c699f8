@@ -621,7 +621,7 @@ function DashboardPage() {
     href: "/dashboard",
     active: true
   }, {
-    label: "AI Search Finder",
+    label: "AI Search Missions",
     href: "/search-builder"
   }, {
     label: "AI Buying Report",
@@ -630,7 +630,7 @@ function DashboardPage() {
     label: "Settings",
     isSectionLabel: true
   }, {
-    label: "Notification Preferences",
+    label: "TICA Preferences",
     href: "/settings"
   }, {
     label: "Future Features",
