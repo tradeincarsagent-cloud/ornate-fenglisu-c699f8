@@ -81,10 +81,10 @@ function OpportunityPage() {
     <PlatformShell
       navItems={[
         { label: 'Dealer Command Centre', href: '/dashboard' },
-        { label: 'AI Search Finder', href: '/search-builder' },
+        { label: 'AI Search Missions', href: '/search-builder' },
         { label: 'AI Buying Report', href: '/opportunity', active: true },
         { label: 'Settings', isSectionLabel: true },
-        { label: 'Notification Preferences', href: '/settings' },
+        { label: 'TICA Preferences', href: '/settings' },
         { label: 'Future Features', isSectionLabel: true },
         { label: 'Vehicle History & MOT', disabled: true },
         { label: 'Watchlist', disabled: true },

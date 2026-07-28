@@ -311,7 +311,7 @@ function SearchBuilderPage() {
     label: "Dealer Command Centre",
     href: "/dashboard"
   }, {
-    label: "AI Search Finder",
+    label: "AI Search Missions",
     href: "/search-builder",
     active: true
   }, {
@@ -321,7 +321,7 @@ function SearchBuilderPage() {
     label: "Settings",
     isSectionLabel: true
   }, {
-    label: "Notification Preferences",
+    label: "TICA Preferences",
     href: "/settings"
   }, {
     label: "Future Features",
