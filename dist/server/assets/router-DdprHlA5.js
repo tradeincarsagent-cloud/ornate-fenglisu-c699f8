@@ -163,15 +163,15 @@ const $$splitComponentImporter$3 = () => import("./cookie-policy-BheJRTHf.js");
 const Route$3 = createFileRoute("/cookie-policy")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./contact-DNzN_cXo.js");
+const $$splitComponentImporter$2 = () => import("./contact-xtL_UnCC.js");
 const Route$2 = createFileRoute("/contact")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./about-SgyiIy8Z.js");
+const $$splitComponentImporter$1 = () => import("./about-DIptj6yY.js");
 const Route$1 = createFileRoute("/about")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-C1ztUBVL.js");
+const $$splitComponentImporter = () => import("./index-xs09mAor.js");
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
