@@ -151,7 +151,7 @@ const $$splitComponentImporter$6 = () => import("./privacy-policy-w00uo2us.js");
 const Route$6 = createFileRoute("/privacy-policy")({
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$5 = () => import("./opportunity-DPGHaPZM.js");
+const $$splitComponentImporter$5 = () => import("./opportunity-C5J6FKtD.js");
 const Route$5 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });

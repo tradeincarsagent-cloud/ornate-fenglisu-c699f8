@@ -13,6 +13,10 @@ function OpportunityPage() {
   const decisionModel = featuredOpportunity.decisionModel;
   const decisionAction = decisionModel.recommendedAction;
   const decisionActionDisplay = decisionModel.recommendedActionDisplay;
+  const buyVerdictClassName = "text-[#10b981]";
+  const buyVerdictGlowStyle = {
+    textShadow: "0 0 10px rgba(16, 185, 129, 0.35)"
+  };
   const keyMetrics = [{
     label: "Confidence",
     value: featuredOpportunity.confidenceDisplay
@@ -144,7 +148,7 @@ function OpportunityPage() {
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-1.5", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary/80", children: "AI Buying Verdict" }),
-              /* @__PURE__ */ jsx("p", { className: "text-[30px] font-semibold leading-none tracking-[0.02em] text-on-surface sm:text-[40px]", children: decisionActionDisplay }),
+              /* @__PURE__ */ jsx("p", { className: `text-[30px] font-semibold leading-none tracking-[0.02em] ${buyVerdictClassName} sm:text-[40px]`, style: buyVerdictGlowStyle, children: decisionActionDisplay }),
               /* @__PURE__ */ jsxs("p", { className: "text-body-sm font-body-sm text-on-surface", children: [
                 "TICA Confidence: ",
                 featuredOpportunity.confidenceDisplay
@@ -194,12 +198,12 @@ function OpportunityPage() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "verdict-card-premium rounded-2xl p-4 sm:p-6", children: [
           /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.2em] text-primary/80", children: "AI Verdict" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-4 text-[52px] font-semibold leading-none text-on-surface sm:text-[68px]", children: decisionAction })
+          /* @__PURE__ */ jsx("p", { className: `mt-4 text-[52px] font-semibold leading-none ${buyVerdictClassName} sm:text-[68px]`, style: buyVerdictGlowStyle, children: decisionAction })
         ] })
       ] }) }),
       /* @__PURE__ */ jsx("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: /* @__PURE__ */ jsx("dl", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5", children: keyMetrics.map((metric) => /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
         /* @__PURE__ */ jsx("dt", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant", children: metric.label }),
-        /* @__PURE__ */ jsx("dd", { className: "mt-2 text-body-lg font-body-lg text-on-surface", children: metric.value })
+        /* @__PURE__ */ jsx("dd", { className: `mt-2 text-body-lg font-body-lg ${metric.label === "Demand Rating" ? "text-[#d4af37]" : metric.label === "Opportunity Score" ? "text-primary" : "text-on-surface"}`, children: metric.value })
       ] }, metric.label)) }) }),
       /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "AI Opportunity Analysis" }),
