@@ -159,7 +159,7 @@ const $$splitComponentImporter$4 = () => import("./dashboard-Dc1oVyd5.js");
 const Route$4 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./cookie-policy-BheJRTHf.js");
+const $$splitComponentImporter$3 = () => import("./cookie-policy-DTpXtze8.js");
 const Route$3 = createFileRoute("/cookie-policy")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
