@@ -24,8 +24,8 @@ type DealerProfile = Record<DealerProfileFieldKey, string>
 
 const CHANNELS: Array<{ id: NotificationChannel; label: string; description: string; badge?: string }> = [
   { id: 'email', label: 'Email Notifications', description: 'Receive alerts to your registered email address.' },
-  { id: 'push', label: 'Push Notifications', description: 'Browser and mobile push alerts.', badge: 'Placeholder' },
-  { id: 'sms', label: 'SMS Notifications', description: 'Text message alerts to your phone.', badge: 'Placeholder' },
+  { id: 'push', label: 'Push Notifications', description: 'Browser and mobile push alerts.', badge: 'Available Soon' },
+  { id: 'sms', label: 'SMS Notifications', description: 'Text message alerts to your phone.', badge: 'Available Soon' },
 ]
 
 const EVENTS: Array<{ id: NotificationEvent; label: string; description: string }> = [
@@ -302,6 +302,16 @@ function SettingsPage() {
   const [profileReviewRequested, setProfileReviewRequested] = useState(false)
 
   const [saved, setSaved] = useState(false)
+  const [showBackToTop, setShowBackToTop] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowBackToTop(window.scrollY > 300)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   function handleChannelChange(id: NotificationChannel, value: PriorityLevel) {
     setChannelPrefs((prev) => ({ ...prev, [id]: value }))
@@ -325,6 +335,10 @@ function SettingsPage() {
 
   function handleSave() {
     setSaved(true)
+  }
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
@@ -360,7 +374,7 @@ function SettingsPage() {
           <div>
             <p className="text-sm font-semibold text-on-surface">Teach mode is active</p>
             <p className="mt-0.5 text-sm text-on-surface-variant">
-              These controls are placeholders for now. Use them to define how TICA should prioritize opportunities and
+              These controls are in preview for now. Use them to define how TICA should prioritize opportunities and
               where to focus your buying strategy.
             </p>
           </div>
@@ -437,31 +451,10 @@ function SettingsPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-dashed border-primary/30 bg-surface-container-low p-4 sm:p-6">
-          <div className="flex flex-col gap-4 rounded-2xl border border-outline-variant/25 bg-surface-container-high/40 p-4 sm:p-5">
-            <div>
-              <p className="text-title-md font-title-md text-on-surface">Future Email Notifications</p>
-              <p className="mt-1 text-sm text-on-surface-variant">
-                Placeholder only — reserve this header space for notification emails.
-              </p>
-            </div>
-            <div className="max-w-sm rounded-2xl border border-outline-variant/25 bg-surface-container px-4 py-4">
-              <div className="rounded-xl border border-dashed border-primary/35 bg-primary/5 px-4 py-4 text-center">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-                  TICA shield reserved here
-                </p>
-              </div>
-              <p className="mt-4 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">
-                Today&apos;s Best Buy
-              </p>
-            </div>
-          </div>
-        </section>
-
         <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
           <h2 className="mb-1 text-title-md font-title-md text-on-surface">Dealer Profile</h2>
           <p className="mb-4 text-sm text-on-surface-variant">
-            Placeholder fields to begin teaching TICA how your dealership buys vehicles.
+            Profile fields to begin teaching TICA how your dealership buys vehicles.
           </p>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -486,7 +479,7 @@ function SettingsPage() {
         <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
           <h2 className="mb-1 text-title-md font-title-md text-on-surface">Buying Style</h2>
           <p className="mb-4 text-sm text-on-surface-variant">
-            Choose one premium placeholder profile so TICA can learn your preferred buying posture.
+            Choose one premium profile so TICA can learn your preferred buying posture.
           </p>
 
           <div role="radiogroup" aria-label="Buying Style" className="grid gap-4 md:grid-cols-3">
@@ -569,7 +562,7 @@ function SettingsPage() {
                     <span className="text-sm font-medium text-on-surface">{item}</span>
                   </div>
                   <span className="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">
-                    Placeholder
+                    Coming Soon
                   </span>
                 </div>
               ))}
@@ -584,7 +577,7 @@ function SettingsPage() {
                 Review My Buying Profile
               </button>
               {profileReviewRequested && (
-                <p className="text-xs text-on-surface-variant">Placeholder only — no backend actions yet.</p>
+                <p className="text-xs text-on-surface-variant">Available Soon — no backend actions yet.</p>
               )}
             </div>
           </div>
@@ -594,7 +587,7 @@ function SettingsPage() {
           {saved ? (
             <p className="flex items-center gap-2 text-sm text-on-surface-variant">
               <span className="text-base" aria-hidden="true">✅</span>
-              Preferences captured (placeholder only — no backend actions yet).
+              Preferences captured (preview only — no backend actions yet).
             </p>
           ) : (
             <p className="text-sm text-on-surface-variant/50">Unsaved changes</p>
@@ -608,6 +601,17 @@ function SettingsPage() {
           </button>
         </div>
       </div>
+      <button
+        aria-label="Back to top"
+        className="back-to-top-btn"
+        onClick={scrollToTop}
+        style={{ opacity: showBackToTop ? 1 : 0, pointerEvents: showBackToTop ? 'auto' : 'none' }}
+        type="button"
+      >
+        <svg aria-hidden="true" fill="none" height="26" viewBox="0 0 24 24" width="26" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 15l7-7 7 7" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
+        </svg>
+      </button>
     </PlatformShell>
   )
 }
