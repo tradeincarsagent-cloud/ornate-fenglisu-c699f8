@@ -167,7 +167,7 @@ const $$splitComponentImporter$2 = () => import("./contact-DNzN_cXo.js");
 const Route$2 = createFileRoute("/contact")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./about-yq8Ksgrl.js");
+const $$splitComponentImporter$1 = () => import("./about-SgyiIy8Z.js");
 const Route$1 = createFileRoute("/about")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
