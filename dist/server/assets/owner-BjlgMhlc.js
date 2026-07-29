@@ -284,27 +284,24 @@ function PlaceholderTableRow({
   ] });
 }
 function LiveClock() {
+  const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState(() => /* @__PURE__ */ new Date());
-  const rafRef = useRef(null);
+  const intervalRef = useRef(null);
   useEffect(() => {
-    let last = 0;
-    function tick(ts) {
-      if (ts - last >= 1e3) {
-        setTime(/* @__PURE__ */ new Date());
-        last = ts;
-      }
-      rafRef.current = requestAnimationFrame(tick);
-    }
-    rafRef.current = requestAnimationFrame(tick);
+    setMounted(true);
+    setTime(/* @__PURE__ */ new Date());
+    intervalRef.current = window.setInterval(() => {
+      setTime(/* @__PURE__ */ new Date());
+    }, 1e3);
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      if (intervalRef.current !== null) window.clearInterval(intervalRef.current);
     };
   }, []);
-  return /* @__PURE__ */ jsx("span", { className: "tabular-nums text-on-surface-variant text-sm", children: time.toLocaleTimeString("en-GB", {
+  return /* @__PURE__ */ jsx("span", { suppressHydrationWarning: true, className: "tabular-nums text-on-surface text-sm font-medium", children: mounted ? time.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit"
-  }) });
+  }) : "--:--:--" });
 }
 function OwnerPage() {
   const [showBackTop, setShowBackTop] = useState(false);
@@ -364,15 +361,29 @@ function OwnerPage() {
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Private" }),
         /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/25 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-primary", children: "Owner Only" })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between", children: [
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "Owner Command Centre" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-body-md text-on-surface-variant", children: "Operational Control Centre for Trade in Cars Agent" })
+      /* @__PURE__ */ jsxs("div", { className: "mb-3 flex flex-col gap-4 sm:gap-5 md:flex-row md:items-start md:justify-between", children: [
+        /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+          /* @__PURE__ */ jsx("h1", { className: "text-headline-lg font-headline-lg text-primary", children: "TICA Operations Centre" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm font-semibold text-on-surface md:text-body-md", children: "Owner Dashboard — Jonathan Huber" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-body-md text-on-surface-variant", children: "Managing the Trade in Cars Agent Platform" }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-emerald-400/20 bg-surface-container-high/65 px-4 py-3", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxs("span", { className: "relative flex h-2.5 w-2.5", "aria-hidden": "true", children: [
+                /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-full bg-emerald-400/45 animate-pulse" }),
+                /* @__PURE__ */ jsx("span", { className: "relative h-2.5 w-2.5 rounded-full bg-emerald-300" })
+              ] }),
+              /* @__PURE__ */ jsx("span", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300", children: "TICA Live" })
+            ] }),
+            /* @__PURE__ */ jsx("span", { className: "hidden h-4 w-px bg-outline-variant/30 sm:block", "aria-hidden": "true" }),
+            /* @__PURE__ */ jsx("span", { className: "text-sm text-on-surface-variant", children: "All Systems Operational" }),
+            /* @__PURE__ */ jsx("span", { className: "hidden h-4 w-px bg-outline-variant/30 md:block", "aria-hidden": "true" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm text-on-surface-variant", children: [
+              /* @__PURE__ */ jsx("span", { className: "uppercase tracking-[0.14em] text-[11px] font-semibold text-on-surface-variant/80", children: "Local Time" }),
+              /* @__PURE__ */ jsx(LiveClock, {})
+            ] })
+          ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex shrink-0 flex-col items-start gap-2 sm:items-end", children: [
-          /* @__PURE__ */ jsx(TicaShield, {}),
-          /* @__PURE__ */ jsx(LiveClock, {})
-        ] })
+        /* @__PURE__ */ jsx("div", { className: "flex shrink-0 items-start md:justify-end", children: /* @__PURE__ */ jsx(TicaShield, {}) })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-3 rounded-xl border border-primary/15 bg-primary/5 px-4 py-3", children: [
         /* @__PURE__ */ jsx("span", { className: "text-lg", "aria-hidden": "true", children: "🔐" }),
