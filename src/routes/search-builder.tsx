@@ -970,7 +970,7 @@ function SearchBuilderPage() {
 
           {/* ── Mission Summary Sidebar ──────────────────────────────── */}
           <aside className="mt-5 sm:mt-8 lg:mt-0">
-            <div className="lg:sticky lg:top-8">
+            <div>
             {/* AI Readiness Indicator */}
             <div className="mb-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
               <div className="mb-2 flex items-center justify-between gap-2">
@@ -1024,7 +1024,7 @@ function SearchBuilderPage() {
                 ))}
               </ul>
             </div>
-            </div>{/* end sticky wrapper */}
+            </div>
           </aside>
         </div>
         <button
