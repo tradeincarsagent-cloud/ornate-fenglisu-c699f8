@@ -2,6 +2,13 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
+import {
+  type TicaMission,
+  type ValidationError,
+  validateMissionInput,
+  createMission,
+  saveMission,
+} from '../lib/mission'
 
 export const Route = createFileRoute('/search-builder')({
   component: SearchBuilderPage,
@@ -350,10 +357,12 @@ function SearchBuilderPage() {
   const [advancedOpen, setAdvancedOpen] = useState(false)
   const [searchPriority, setSearchPriority] = useState<(typeof SEARCH_PRIORITIES)[number]['value'] | null>(null)
   const [notifications, setNotifications] = useState<Set<string>>(new Set())
-  const [missionCreated, setMissionCreated] = useState(false)
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([])
+  const [deployedMission, setDeployedMission] = useState<TicaMission | null>(null)
   const [manualMake, setManualMake] = useState('')
   const [manualModel, setManualModel] = useState('')
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const deployButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const onScroll = () => {
@@ -441,6 +450,45 @@ function SearchBuilderPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  function hasError(field: ValidationError['field']) {
+    return validationErrors.some((e) => e.field === field)
+  }
+
+  function handleDeploy() {
+    const buyingPriorityLabel =
+      SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? ''
+
+    const input = {
+      vehicleType: selectedVehicleType ?? '',
+      make: effectiveMake,
+      model: effectiveModel,
+      yearFrom,
+      yearTo,
+      maxMileage,
+      fuelType,
+      transmission,
+      serviceHistory,
+      budget: maxBudget,
+      targetProfit: minProfit,
+      buyingPriority: buyingPriorityLabel,
+      notificationPreferences: Array.from(notifications),
+      selectedMarketplaces: [...PHASE_ONE_SOURCES],
+    }
+
+    const errors = validateMissionInput(input)
+    setValidationErrors(errors)
+
+    if (errors.length > 0) {
+      // Scroll the deploy button area into view so the error summary is visible
+      deployButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+
+    const mission = createMission(input)
+    saveMission(mission)
+    setDeployedMission(mission)
+  }
+
   return (
     <PlatformShell
       navItems={[
@@ -513,11 +561,16 @@ function SearchBuilderPage() {
         <div className="space-y-5 sm:space-y-8 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_340px]">
           <div className="space-y-5 sm:space-y-8 lg:col-start-1 lg:row-start-1">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+          <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('vehicleType') ? 'border-error/60' : 'border-outline-variant/30'}`}>
             <div className="mb-5">
               <StepMarker step="01" />
               <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the vehicle category you want your AI to monitor.</p>
+              {hasError('vehicleType') && (
+                <p className="mt-2 text-body-sm font-body-sm text-error">
+                  {validationErrors.find((e) => e.field === 'vehicleType')?.message}
+                </p>
+              )}
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
               {VEHICLE_TYPES.map((type) => {
@@ -612,10 +665,15 @@ function SearchBuilderPage() {
                     placeholder="e.g. 30000"
                     min="0"
                     value={maxBudget}
-                    onChange={(e) => setMaxBudget(e.target.value)}
-                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                    onChange={(e) => { setMaxBudget(e.target.value); if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== 'budget')) }}
+                    className={`min-h-11 w-full rounded-lg border bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:ring-1 ${hasError('budget') ? 'border-error/60 focus:border-error focus:ring-error/30' : 'border-outline-variant/40 focus:border-primary focus:ring-primary/30'}`}
                   />
                 </div>
+                {hasError('budget') && (
+                  <p className="text-body-sm font-body-sm text-error">
+                    {validationErrors.find((e) => e.field === 'budget')?.message}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2 lg:col-span-3 xl:col-span-1">
                 <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="min-profit">What's your minimum profit target?</label>
@@ -747,13 +805,18 @@ function SearchBuilderPage() {
 
           <div className="space-y-5 sm:space-y-8 lg:col-span-2 lg:row-start-2 lg:mt-8">
           {/* ── Section 3: Search Priority ───────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+          <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('buyingPriority') ? 'border-error/60' : 'border-outline-variant/30'}`}>
             <div className="mb-5">
               <StepMarker step="03" />
               <h2 className="text-headline-md font-headline-md text-on-surface">How should I rank the opportunities?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
                 Tell your AI how to prioritise results for this mission.
               </p>
+              {hasError('buyingPriority') && (
+                <p className="mt-2 text-body-sm font-body-sm text-error">
+                  {validationErrors.find((e) => e.field === 'buyingPriority')?.message}
+                </p>
+              )}
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-6">
               {SEARCH_PRIORITIES.map(({ label, value, description }, idx) => {
@@ -925,9 +988,23 @@ function SearchBuilderPage() {
                 ))}
               </div>
             </div>
+            {validationErrors.length > 0 && (
+              <div className="mb-4 rounded-xl border border-error/40 bg-error/8 px-4 py-3" role="alert">
+                <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-error">Before deploying, please complete the following:</p>
+                <ul className="space-y-1">
+                  {validationErrors.map((err) => (
+                    <li key={err.field} className="flex items-start gap-2 text-body-sm font-body-sm text-error">
+                      <span className="mt-px shrink-0" aria-hidden="true">•</span>
+                      {err.message}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <button
+              ref={deployButtonRef}
               type="button"
-              onClick={() => setMissionCreated(true)}
+              onClick={handleDeploy}
               className="mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-4 sm:py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
             >
               <span>⚡</span>
@@ -941,18 +1018,18 @@ function SearchBuilderPage() {
             </p>
           </section>
 
-          {missionCreated && (
+          {deployedMission && (
             <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8" aria-live="polite">
               <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Created</p>
               <h2 className="mt-2 text-headline-lg font-headline-lg text-on-surface">AI Search Mission Created</h2>
               <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Mission Name</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">{missionName}</p>
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Mission ID</p>
+                  <p className="mt-2 text-body-md font-body-md text-on-surface">{deployedMission.missionId}</p>
                 </div>
                 <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
                   <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Status</p>
-                  <p className="mt-2 text-body-md font-body-md text-primary">Active</p>
+                  <p className="mt-2 text-body-md font-body-md text-primary">{deployedMission.status}</p>
                 </div>
                 <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
                   <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Notification Preferences</p>
@@ -1052,6 +1129,67 @@ function SearchBuilderPage() {
           </svg>
         </button>
       </div>
+
+      {/* ── Deployment Confirmation Modal ──────────────────────────────────── */}
+      {deployedMission && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mission-modal-title"
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" aria-hidden="true" />
+
+          {/* Card */}
+          <div className="relative z-10 w-full max-w-lg rounded-2xl border border-primary/30 bg-surface-container p-6 shadow-2xl shadow-primary/10 sm:p-8">
+            {/* Header */}
+            <div className="mb-5 flex items-start gap-3">
+              <span className="text-2xl" aria-hidden="true">⚡</span>
+              <div>
+                <h2 id="mission-modal-title" className="text-headline-md font-headline-md text-on-surface">
+                  AI Search Mission Deployed
+                </h2>
+                <p className="mt-1 text-body-md font-body-md text-on-surface-variant">
+                  TICA has received your mission and is preparing it for AI validation.
+                </p>
+              </div>
+            </div>
+
+            {/* Mission details */}
+            <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+                <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Mission ID</p>
+                <p className="mt-1 text-body-md font-body-md font-semibold text-primary">{deployedMission.missionId}</p>
+              </div>
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+                <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Status</p>
+                <p className="mt-1 text-body-md font-body-md font-semibold text-on-surface">{deployedMission.status}</p>
+              </div>
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+                <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
+                <p className="mt-1 text-body-md font-body-md font-semibold text-on-surface">
+                  {[deployedMission.vehicleType, deployedMission.vehicleRequirements.make, deployedMission.vehicleRequirements.model].filter(Boolean).join(' / ') || 'Not specified'}
+                </p>
+              </div>
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+                <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Budget</p>
+                <p className="mt-1 text-body-md font-body-md font-semibold text-on-surface">
+                  {deployedMission.budget ? `Up to £${Number(deployedMission.budget).toLocaleString('en-GB')}` : 'Not specified'}
+                </p>
+              </div>
+            </div>
+
+            {/* Action */}
+            <Link
+              to="/dashboard"
+              className="flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary shadow-lg shadow-primary/20 transition-all hover:brightness-110"
+            >
+              View Mission in Dashboard
+            </Link>
+          </div>
+        </div>
+      )}
     </PlatformShell>
   )
 }
