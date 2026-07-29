@@ -429,8 +429,8 @@ function SearchBuilderPage() {
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 xl:grid-cols-[1fr_340px]", children: [
-      /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8", children: [
+    /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_340px]", children: [
+      /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8 lg:col-start-1 lg:row-start-1", children: [
         /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
             /* @__PURE__ */ jsx(StepMarker, { step: "01" }),
@@ -510,20 +510,22 @@ function SearchBuilderPage() {
               ] })
             ] }) })
           ] })
-        ] }),
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8 lg:col-span-2 lg:row-start-2 lg:mt-8", children: [
         /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
             /* @__PURE__ */ jsx(StepMarker, { step: "03" }),
             /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "How should I rank the opportunities?" }),
             /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Tell your AI how to prioritise results for this mission." })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: SEARCH_PRIORITIES.map(({
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-6", children: SEARCH_PRIORITIES.map(({
             label,
             value,
             description
-          }) => {
+          }, idx) => {
             const selected = searchPriority === value;
-            return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setSearchPriority(value), "aria-pressed": selected, className: `relative flex min-h-24 min-w-[240px] flex-1 basis-[240px] flex-col items-start justify-center rounded-xl border px-4 py-4 text-left transition-all duration-200 ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface hover:border-primary/40"}`, children: [
+            return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setSearchPriority(value), "aria-pressed": selected, className: `relative flex min-h-24 w-full flex-col items-start justify-center rounded-xl border px-4 py-4 text-left transition-all duration-200 ${idx < 3 ? "xl:col-span-2" : "xl:col-span-3"} ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface hover:border-primary/40"}`, children: [
               selected && /* @__PURE__ */ jsx("span", { className: "absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
               /* @__PURE__ */ jsx("span", { className: "text-body-md font-body-md font-semibold", children: label }),
               /* @__PURE__ */ jsx("span", { className: `mt-1 text-body-sm font-body-sm ${selected ? "text-primary/90" : "text-on-surface-variant"}`, children: description })
@@ -539,7 +541,7 @@ function SearchBuilderPage() {
           /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Available / Phase 1" }),
-              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-3", children: PHASE_ONE_SOURCES.map((source) => /* @__PURE__ */ jsxs("div", { className: "flex min-w-[240px] flex-1 basis-[240px] items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-4 py-3.5 shadow-sm shadow-primary/5", children: [
+              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-3 md:grid-cols-2", children: PHASE_ONE_SOURCES.map((source, idx) => /* @__PURE__ */ jsxs("div", { className: `flex items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-4 py-3.5 shadow-sm shadow-primary/5 ${PHASE_ONE_SOURCES.length % 2 !== 0 && idx === PHASE_ONE_SOURCES.length - 1 ? "md:col-span-2" : ""}`, children: [
                 /* @__PURE__ */ jsx("span", { className: "flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-primary bg-primary text-on-primary", "aria-hidden": "true", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
                 /* @__PURE__ */ jsx("span", { className: "flex-1 text-body-md font-body-md text-on-surface", children: source }),
                 /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary", children: "Phase 1" })
@@ -547,7 +549,7 @@ function SearchBuilderPage() {
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Planned Integrations" }),
-              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-3", children: PLANNED_INTEGRATIONS.map((source) => /* @__PURE__ */ jsxs("div", { className: "flex min-w-[240px] flex-1 basis-[240px] cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-4 py-3.5 opacity-60", "aria-disabled": "true", children: [
+              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-3 md:grid-cols-2", children: PLANNED_INTEGRATIONS.map((source, idx) => /* @__PURE__ */ jsxs("div", { className: `flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-4 py-3.5 opacity-60 ${PLANNED_INTEGRATIONS.length % 2 !== 0 && idx === PLANNED_INTEGRATIONS.length - 1 ? "md:col-span-2" : ""}`, "aria-disabled": "true", children: [
                 /* @__PURE__ */ jsx("span", { className: "flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-outline-variant/40 bg-transparent", "aria-hidden": "true" }),
                 /* @__PURE__ */ jsx("span", { className: "flex-1 text-body-md font-body-md text-on-surface-variant", children: source }),
                 /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant", children: "Coming Soon" })
@@ -567,7 +569,7 @@ function SearchBuilderPage() {
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-primary/20 bg-surface-container-high p-0 shadow-md shadow-primary/5 md:p-4", children: [
-            /* @__PURE__ */ jsx("div", { className: "flex flex-col md:flex-row md:flex-wrap md:gap-4", children: NOTIFICATION_OPTIONS.map((option, idx) => {
+            /* @__PURE__ */ jsx("div", { className: "flex flex-col md:grid md:grid-cols-2 md:gap-4", children: NOTIFICATION_OPTIONS.map((option, idx) => {
               const selected = notifications.has(option.value);
               return /* @__PURE__ */ jsxs("div", { className: "md:min-w-[240px] md:flex-1 md:basis-[240px] md:overflow-hidden md:rounded-xl md:border md:border-outline-variant/20 md:bg-surface-container md:shadow-sm md:shadow-primary/5", children: [
                 /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => {
@@ -633,7 +635,7 @@ function SearchBuilderPage() {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("aside", { className: "mt-5 sm:mt-8 lg:mt-0", children: /* @__PURE__ */ jsxs("div", { children: [
+      /* @__PURE__ */ jsx("aside", { className: "mt-5 sm:mt-8 lg:col-start-2 lg:row-start-1 lg:mt-0", children: /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center justify-between gap-2", children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Readiness" }),

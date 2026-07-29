@@ -510,8 +510,8 @@ function SearchBuilderPage() {
           </div>
         </div>
 
-        <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 xl:grid-cols-[1fr_340px]">
-          <div className="space-y-5 sm:space-y-8">
+        <div className="space-y-5 sm:space-y-8 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_340px]">
+          <div className="space-y-5 sm:space-y-8 lg:col-start-1 lg:row-start-1">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
@@ -743,7 +743,9 @@ function SearchBuilderPage() {
               )}
             </div>
           </section>
+            </div>
 
+          <div className="space-y-5 sm:space-y-8 lg:col-span-2 lg:row-start-2 lg:mt-8">
           {/* ── Section 3: Search Priority ───────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
@@ -753,8 +755,8 @@ function SearchBuilderPage() {
                 Tell your AI how to prioritise results for this mission.
               </p>
             </div>
-            <div className="flex flex-wrap gap-4">
-              {SEARCH_PRIORITIES.map(({ label, value, description }) => {
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-6">
+              {SEARCH_PRIORITIES.map(({ label, value, description }, idx) => {
                 const selected = searchPriority === value
                 return (
                   <button
@@ -762,7 +764,9 @@ function SearchBuilderPage() {
                     type="button"
                     onClick={() => setSearchPriority(value)}
                     aria-pressed={selected}
-                    className={`relative flex min-h-24 min-w-[240px] flex-1 basis-[240px] flex-col items-start justify-center rounded-xl border px-4 py-4 text-left transition-all duration-200 ${
+                    className={`relative flex min-h-24 w-full flex-col items-start justify-center rounded-xl border px-4 py-4 text-left transition-all duration-200 ${
+                      idx < 3 ? 'xl:col-span-2' : 'xl:col-span-3'
+                    } ${
                       selected
                         ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
                         : 'border-outline-variant/40 bg-surface-container-high text-on-surface hover:border-primary/40'
@@ -793,11 +797,13 @@ function SearchBuilderPage() {
             <div className="space-y-6">
               <div>
                 <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Available / Phase 1</p>
-                <div className="flex flex-wrap gap-3">
-                  {PHASE_ONE_SOURCES.map((source) => (
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  {PHASE_ONE_SOURCES.map((source, idx) => (
                     <div
                       key={source}
-                      className="flex min-w-[240px] flex-1 basis-[240px] items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-4 py-3.5 shadow-sm shadow-primary/5"
+                      className={`flex items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-4 py-3.5 shadow-sm shadow-primary/5 ${
+                        PHASE_ONE_SOURCES.length % 2 !== 0 && idx === PHASE_ONE_SOURCES.length - 1 ? 'md:col-span-2' : ''
+                      }`}
                     >
                       <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-primary bg-primary text-on-primary" aria-hidden="true">
                         <CheckIcon />
@@ -811,11 +817,13 @@ function SearchBuilderPage() {
 
               <div>
                 <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Planned Integrations</p>
-                <div className="flex flex-wrap gap-3">
-                  {PLANNED_INTEGRATIONS.map((source) => (
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  {PLANNED_INTEGRATIONS.map((source, idx) => (
                     <div
                       key={source}
-                      className="flex min-w-[240px] flex-1 basis-[240px] cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-4 py-3.5 opacity-60"
+                      className={`flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-4 py-3.5 opacity-60 ${
+                        PLANNED_INTEGRATIONS.length % 2 !== 0 && idx === PLANNED_INTEGRATIONS.length - 1 ? 'md:col-span-2' : ''
+                      }`}
                       aria-disabled="true"
                     >
                       <span
@@ -851,7 +859,7 @@ function SearchBuilderPage() {
 
             {/* Single premium TICA card */}
             <div className="rounded-2xl border border-primary/20 bg-surface-container-high p-0 shadow-md shadow-primary/5 md:p-4">
-              <div className="flex flex-col md:flex-row md:flex-wrap md:gap-4">
+              <div className="flex flex-col md:grid md:grid-cols-2 md:gap-4">
               {NOTIFICATION_OPTIONS.map((option, idx) => {
                 const selected = notifications.has(option.value)
                 return (
@@ -974,7 +982,7 @@ function SearchBuilderPage() {
           </div>
 
           {/* ── Mission Summary Sidebar ──────────────────────────────── */}
-          <aside className="mt-5 sm:mt-8 lg:mt-0">
+          <aside className="mt-5 sm:mt-8 lg:col-start-2 lg:row-start-1 lg:mt-0">
             <div>
             {/* AI Readiness Indicator */}
             <div className="mb-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
@@ -1031,7 +1039,7 @@ function SearchBuilderPage() {
             </div>
             </div>
           </aside>
-        </div>
+          </div>
         <button
           aria-label="Back to top"
           className="back-to-top-btn"
