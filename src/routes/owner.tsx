@@ -208,7 +208,7 @@ function LiveClock() {
   }, [])
 
   return (
-    <span className="tabular-nums text-on-surface-variant text-sm">
+    <span className="tabular-nums text-on-surface text-sm font-medium">
       {time.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
     </span>
   )
@@ -257,16 +257,36 @@ function OwnerPage() {
               Owner Only
             </span>
           </div>
-          <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <h1 className="text-headline-lg font-headline-lg text-primary">Owner Command Centre</h1>
-              <p className="mt-1 text-body-md font-body-md text-on-surface-variant">
-                Operational Control Centre for Trade in Cars Agent
+          <div className="mb-3 flex flex-col gap-4 sm:gap-5 md:flex-row md:items-start md:justify-between">
+            <div className="min-w-0">
+              <h1 className="text-headline-lg font-headline-lg text-primary">TICA Operations Centre</h1>
+              <p className="mt-1 text-sm font-semibold text-on-surface md:text-body-md">
+                Owner Dashboard — Jonathan Huber
               </p>
+              <p className="mt-1 text-body-md font-body-md text-on-surface-variant">
+                Managing the Trade in Cars Agent Platform
+              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-emerald-400/20 bg-surface-container-high/65 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+                    <span className="absolute inset-0 rounded-full bg-emerald-400/45 animate-pulse" />
+                    <span className="relative h-2.5 w-2.5 rounded-full bg-emerald-300" />
+                  </span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
+                    TICA Live
+                  </span>
+                </div>
+                <span className="hidden h-4 w-px bg-outline-variant/30 sm:block" aria-hidden="true" />
+                <span className="text-sm text-on-surface-variant">All Systems Operational</span>
+                <span className="hidden h-4 w-px bg-outline-variant/30 md:block" aria-hidden="true" />
+                <div className="flex items-center gap-2 text-sm text-on-surface-variant">
+                  <span className="uppercase tracking-[0.14em] text-[11px] font-semibold text-on-surface-variant/80">Local Time</span>
+                  <LiveClock />
+                </div>
+              </div>
             </div>
-            <div className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
+            <div className="flex shrink-0 items-start md:justify-end">
               <TicaShield />
-              <LiveClock />
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3 rounded-xl border border-primary/15 bg-primary/5 px-4 py-3">
