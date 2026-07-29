@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
+import { loadMission, type TicaMission } from '../lib/mission'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -214,6 +215,19 @@ const activityTimeFormatter = new Intl.DateTimeFormat('en-GB', {
 
 const counterFormatter = new Intl.NumberFormat('en-GB')
 
+function formatMissionPounds(value: string): string {
+  const num = Number(value)
+  return isNaN(num) || num <= 0 ? value : `£${num.toLocaleString('en-GB')}`
+}
+
+function deriveMissionName(mission: TicaMission): string {
+  const req = mission.vehicleRequirements
+  if (req.make && req.model) return `${req.make} ${req.model} Search`
+  if (req.make) return `${req.make} Search`
+  if (mission.vehicleType) return `${mission.vehicleType} Search`
+  return 'AI Search Mission'
+}
+
 function ChevronIcon({ open }: { open: boolean }) {
   return (
     <svg
@@ -368,6 +382,8 @@ function DashboardPage() {
   const [radarOpportunityKey, setRadarOpportunityKey] = useState(0)
   const [radarOpportunityIndex, setRadarOpportunityIndex] = useState(0)
   const [radarOpportunityTimer, setRadarOpportunityTimer] = useState(0)
+  const [storedMission, setStoredMission] = useState<TicaMission | null>(null)
+  const [storedMissionExpanded, setStoredMissionExpanded] = useState(true)
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
   const radarOpportunityCursorRef = useRef(0)
@@ -375,6 +391,10 @@ function DashboardPage() {
   useEffect(() => {
     soundOnRef.current = soundOn
   }, [soundOn])
+
+  useEffect(() => {
+    setStoredMission(loadMission())
+  }, [])
 
   useEffect(() => {
     const sweepDurationMs = 5400
@@ -1340,6 +1360,110 @@ function DashboardPage() {
               <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
               <p className="mb-3 text-sm text-on-surface-variant">Search jobs currently being monitored by TICA.</p>
               <div className="space-y-2.5">
+                {/* ── Stored mission from Search Builder ── */}
+                {storedMission ? (
+                  <article className="rounded-xl bg-surface-container-high p-3.5">
+                    <div>
+                      <button
+                        onClick={() => setStoredMissionExpanded((v) => !v)}
+                        className="flex w-full items-center justify-between gap-3"
+                        aria-expanded={storedMissionExpanded}
+                      >
+                        <div className="min-w-0 text-left">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span
+                              className="mission-status-dot flex-shrink-0"
+                              style={{ background: 'rgba(251,191,36,0.88)', boxShadow: '0 0 6px rgba(251,191,36,0.5)' }}
+                            />
+                            <p className="break-words text-body-md font-body-md font-medium text-on-surface">{deriveMissionName(storedMission)}</p>
+                            <span className="rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary">NEW MISSION</span>
+                          </div>
+                          <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 pl-4">
+                            <p className="text-sm text-on-surface-variant">ID: {storedMission.missionId}</p>
+                            <p className="text-sm text-on-surface-variant">{storedMission.status}</p>
+                          </div>
+                        </div>
+                        <span className="flex-shrink-0 text-on-surface-variant">
+                          <ChevronIcon open={storedMissionExpanded} />
+                        </span>
+                      </button>
+
+                      {storedMissionExpanded && (
+                        <div className="mt-2.5 space-y-2.5">
+                          <dl className="grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Mission ID</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{storedMission.missionId}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Vehicle Type</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{storedMission.vehicleType || '—'}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Make &amp; Model</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">
+                                {storedMission.vehicleRequirements.make && storedMission.vehicleRequirements.model
+                                  ? `${storedMission.vehicleRequirements.make} ${storedMission.vehicleRequirements.model}`
+                                  : storedMission.vehicleRequirements.make || storedMission.vehicleRequirements.model || '—'}
+                              </dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Budget</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">
+                                {storedMission.budget ? `Up to ${formatMissionPounds(storedMission.budget)}` : '—'}
+                              </dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Target Profit</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">
+                                {storedMission.targetProfit ? `${formatMissionPounds(storedMission.targetProfit)}+` : '—'}
+                              </dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Search Area</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{storedMission.searchArea || '—'}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Buying Priority</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">{storedMission.buyingPriority || '—'}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Status</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">🟡 {storedMission.status}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Current Stage</dt>
+                              <dd className="mt-0.5 text-sm text-on-surface">Waiting for AI Validation</dd>
+                            </div>
+                          </dl>
+                          {/* Progress bar */}
+                          <div>
+                            <div className="mb-1 flex items-center justify-between">
+                              <span className="text-xs uppercase tracking-widest text-on-surface-variant">Search Progress</span>
+                              <span className="text-xs font-semibold text-on-surface">{storedMission.progress}%</span>
+                            </div>
+                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
+                              <div
+                                className="h-full rounded-full"
+                                style={{ width: `${storedMission.progress}%`, background: 'rgba(251,191,36,0.88)', boxShadow: '0 0 4px rgba(251,191,36,0.5)' }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                ) : (
+                  <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 text-center">
+                    <p className="mb-3 text-sm text-on-surface-variant">No AI Search Mission has been deployed yet.</p>
+                    <Link
+                      to="/search-builder"
+                      className="inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
+                    >
+                      Create AI Search Mission
+                    </Link>
+                  </div>
+                )}
                 {activeSearches.map((search, index) => {
                   const statusCfg = missionStatusConfig[search.status]
                   return (

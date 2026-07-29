@@ -143,7 +143,7 @@ const $$splitComponentImporter$b = () => import("./settings-BgJYzgWl.js");
 const Route$b = createFileRoute("/settings")({
   component: lazyRouteComponent($$splitComponentImporter$b, "component")
 });
-const $$splitComponentImporter$a = () => import("./search-builder-CZDNuoeA.js");
+const $$splitComponentImporter$a = () => import("./search-builder-DkeD7l3l.js");
 const Route$a = createFileRoute("/search-builder")({
   component: lazyRouteComponent($$splitComponentImporter$a, "component")
 });
@@ -159,7 +159,7 @@ const $$splitComponentImporter$7 = () => import("./opportunity-Bum08JNt.js");
 const Route$7 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-const $$splitComponentImporter$6 = () => import("./dashboard-CqInXgUq.js");
+const $$splitComponentImporter$6 = () => import("./dashboard-0c_dOEvy.js");
 const Route$6 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
