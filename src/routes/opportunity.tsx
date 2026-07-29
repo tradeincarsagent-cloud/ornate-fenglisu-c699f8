@@ -85,6 +85,8 @@ function OpportunityPage() {
         { label: 'AI Buying Report', href: '/opportunity', active: true },
         { label: 'Settings', isSectionLabel: true },
         { label: 'TICA Preferences', href: '/settings' },
+        { label: 'Owner', isSectionLabel: true },
+        { label: 'Owner Command Centre', href: '/owner' },
         { label: 'Future Features', isSectionLabel: true },
         { label: 'Vehicle History & MOT', disabled: true },
         { label: 'Watchlist', disabled: true },
