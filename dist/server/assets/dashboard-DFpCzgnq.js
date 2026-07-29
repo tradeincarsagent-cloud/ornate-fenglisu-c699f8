@@ -633,6 +633,12 @@ function DashboardPage() {
     label: "TICA Preferences",
     href: "/settings"
   }, {
+    label: "Owner",
+    isSectionLabel: true
+  }, {
+    label: "Owner Command Centre",
+    href: "/owner"
+  }, {
     label: "Future Features",
     isSectionLabel: true
   }, {

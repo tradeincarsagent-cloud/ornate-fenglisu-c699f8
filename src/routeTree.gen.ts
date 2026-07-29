@@ -14,6 +14,7 @@ import { Route as SupportRouteImport } from './routes/support'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SearchBuilderRouteImport } from './routes/search-builder'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as OwnerRouteImport } from './routes/owner'
 import { Route as OpportunityRouteImport } from './routes/opportunity'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
@@ -44,6 +45,11 @@ const SearchBuilderRoute = SearchBuilderRouteImport.update({
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OwnerRoute = OwnerRouteImport.update({
+  id: '/owner',
+  path: '/owner',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpportunityRoute = OpportunityRouteImport.update({
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/cookie-policy': typeof CookiePolicyRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
+  '/owner': typeof OwnerRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/search-builder': typeof SearchBuilderRoute
   '/settings': typeof SettingsRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/cookie-policy': typeof CookiePolicyRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
+  '/owner': typeof OwnerRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/search-builder': typeof SearchBuilderRoute
   '/settings': typeof SettingsRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/cookie-policy': typeof CookiePolicyRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
+  '/owner': typeof OwnerRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/search-builder': typeof SearchBuilderRoute
   '/settings': typeof SettingsRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/cookie-policy'
     | '/dashboard'
     | '/opportunity'
+    | '/owner'
     | '/privacy-policy'
     | '/search-builder'
     | '/settings'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/cookie-policy'
     | '/dashboard'
     | '/opportunity'
+    | '/owner'
     | '/privacy-policy'
     | '/search-builder'
     | '/settings'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/cookie-policy'
     | '/dashboard'
     | '/opportunity'
+    | '/owner'
     | '/privacy-policy'
     | '/search-builder'
     | '/settings'
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   CookiePolicyRoute: typeof CookiePolicyRoute
   DashboardRoute: typeof DashboardRoute
   OpportunityRoute: typeof OpportunityRoute
+  OwnerRoute: typeof OwnerRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   SearchBuilderRoute: typeof SearchBuilderRoute
   SettingsRoute: typeof SettingsRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/owner': {
+      id: '/owner'
+      path: '/owner'
+      fullPath: '/owner'
+      preLoaderRoute: typeof OwnerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/opportunity': {
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   CookiePolicyRoute: CookiePolicyRoute,
   DashboardRoute: DashboardRoute,
   OpportunityRoute: OpportunityRoute,
+  OwnerRoute: OwnerRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   SearchBuilderRoute: SearchBuilderRoute,
   SettingsRoute: SettingsRoute,
