@@ -21,6 +21,7 @@ import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OwnerIndexRouteImport } from './routes/owner.index'
 import { Route as OwnerIntelligenceRouteImport } from './routes/owner.intelligence'
 
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
@@ -83,6 +84,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerIndexRoute = OwnerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OwnerRoute,
+} as any)
 const OwnerIntelligenceRoute = OwnerIntelligenceRouteImport.update({
   id: '/intelligence',
   path: '/intelligence',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/owner/intelligence': typeof OwnerIntelligenceRoute
+  '/owner/': typeof OwnerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -111,13 +118,13 @@ export interface FileRoutesByTo {
   '/cookie-policy': typeof CookiePolicyRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
-  '/owner': typeof OwnerRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/search-builder': typeof SearchBuilderRoute
   '/settings': typeof SettingsRoute
   '/support': typeof SupportRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/owner/intelligence': typeof OwnerIntelligenceRoute
+  '/owner': typeof OwnerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +141,7 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/owner/intelligence': typeof OwnerIntelligenceRoute
+  '/owner/': typeof OwnerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +159,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/terms-of-service'
     | '/owner/intelligence'
+    | '/owner/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -159,13 +168,13 @@ export interface FileRouteTypes {
     | '/cookie-policy'
     | '/dashboard'
     | '/opportunity'
-    | '/owner'
     | '/privacy-policy'
     | '/search-builder'
     | '/settings'
     | '/support'
     | '/terms-of-service'
     | '/owner/intelligence'
+    | '/owner'
   id:
     | '__root__'
     | '/'
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/terms-of-service'
     | '/owner/intelligence'
+    | '/owner/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -284,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/': {
+      id: '/owner/'
+      path: '/'
+      fullPath: '/owner/'
+      preLoaderRoute: typeof OwnerIndexRouteImport
+      parentRoute: typeof OwnerRoute
+    }
     '/owner/intelligence': {
       id: '/owner/intelligence'
       path: '/intelligence'
@@ -296,10 +313,12 @@ declare module '@tanstack/react-router' {
 
 interface OwnerRouteChildren {
   OwnerIntelligenceRoute: typeof OwnerIntelligenceRoute
+  OwnerIndexRoute: typeof OwnerIndexRoute
 }
 
 const OwnerRouteChildren: OwnerRouteChildren = {
   OwnerIntelligenceRoute: OwnerIntelligenceRoute,
+  OwnerIndexRoute: OwnerIndexRoute,
 }
 
 const OwnerRouteWithChildren = OwnerRoute._addFileChildren(OwnerRouteChildren)

@@ -108,6 +108,9 @@ function OpportunityPage() {
     label: "Owner Command Centre",
     href: "/owner"
   }, {
+    label: "🧠 TICA Intelligence",
+    href: "/owner/intelligence"
+  }, {
     label: "Future Features",
     isSectionLabel: true
   }, {
