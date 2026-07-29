@@ -105,7 +105,7 @@ function OpportunityPage() {
     label: "Owner",
     isSectionLabel: true
   }, {
-    label: "Owner Command Centre",
+    label: "TICA Operations Centre",
     href: "/owner"
   }, {
     label: "🧠 TICA Intelligence",
