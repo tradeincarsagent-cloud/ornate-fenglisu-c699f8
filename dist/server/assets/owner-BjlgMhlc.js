@@ -284,27 +284,24 @@ function PlaceholderTableRow({
   ] });
 }
 function LiveClock() {
+  const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState(() => /* @__PURE__ */ new Date());
-  const rafRef = useRef(null);
+  const intervalRef = useRef(null);
   useEffect(() => {
-    let last = 0;
-    function tick(ts) {
-      if (ts - last >= 1e3) {
-        setTime(/* @__PURE__ */ new Date());
-        last = ts;
-      }
-      rafRef.current = requestAnimationFrame(tick);
-    }
-    rafRef.current = requestAnimationFrame(tick);
+    setMounted(true);
+    setTime(/* @__PURE__ */ new Date());
+    intervalRef.current = window.setInterval(() => {
+      setTime(/* @__PURE__ */ new Date());
+    }, 1e3);
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      if (intervalRef.current !== null) window.clearInterval(intervalRef.current);
     };
   }, []);
-  return /* @__PURE__ */ jsx("span", { className: "tabular-nums text-on-surface text-sm font-medium", children: time.toLocaleTimeString("en-GB", {
+  return /* @__PURE__ */ jsx("span", { suppressHydrationWarning: true, className: "tabular-nums text-on-surface text-sm font-medium", children: mounted ? time.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit"
-  }) });
+  }) : "--:--:--" });
 }
 function OwnerPage() {
   const [showBackTop, setShowBackTop] = useState(false);
