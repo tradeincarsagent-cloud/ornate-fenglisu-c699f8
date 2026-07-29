@@ -1,7 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
+import { loadMission } from '../lib/mission'
+import type { TicaMission } from '../lib/mission'
 
 export const Route = createFileRoute('/owner/')({
   component: OwnerPage,
@@ -186,6 +188,119 @@ function PlaceholderTableRow({ label }: { label: string }) {
   )
 }
 
+// ─── Active Mission Panel ─────────────────────────────────────────────────────
+
+function formatBudget(raw: string): string {
+  const n = Number(raw.replace(/[^0-9.]/g, ''))
+  if (isNaN(n) || n === 0) return raw
+  return `£${n.toLocaleString('en-GB')}`
+}
+
+function buildVehicleLabel(m: TicaMission): string {
+  const { make, model } = m.vehicleRequirements
+  const parts = [make, model].filter(Boolean)
+  if (parts.length > 0) return parts.join(' ')
+  return m.vehicleType || '—'
+}
+
+function ActiveMissionPanel({ mission }: { mission: TicaMission }) {
+  const [timelineTs, setTimelineTs] = useState('')
+
+  useEffect(() => {
+    const d = new Date()
+    setTimelineTs(
+      d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) +
+        ' · ' +
+        d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+    )
+  }, [])
+
+  const fields: { label: string; value: string; mono?: boolean }[] = [
+    { label: 'Mission ID', value: mission.missionId, mono: true },
+    { label: 'Vehicle', value: buildVehicleLabel(mission) },
+    { label: 'Budget', value: formatBudget(mission.budget) },
+    { label: 'Search Area', value: mission.searchArea || 'United Kingdom' },
+    { label: 'Buying Priority', value: mission.buyingPriority || '—' },
+    { label: 'Current Stage', value: 'Waiting for AI Validation' },
+    { label: 'Status', value: 'Mission Created' },
+  ]
+
+  return (
+    <div className="mt-5 space-y-5">
+      {/* AI Status Indicator */}
+      <div className="flex items-center gap-3 rounded-xl border border-blue-400/25 bg-blue-400/5 px-4 py-3">
+        <span className="flex h-2.5 w-2.5 shrink-0 rounded-full bg-blue-400" aria-hidden="true" />
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-300">AI Employee Online</p>
+          <p className="text-xs text-on-surface-variant">Ready to begin validation.</p>
+        </div>
+      </div>
+
+      {/* Mission detail grid */}
+      <div>
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60">Active AI Search Mission</p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {fields.map((f) => (
+            <div key={f.label} className="rounded-xl border border-outline-variant/25 bg-surface/40 px-4 py-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70">{f.label}</p>
+              <p className={`mt-1 text-sm font-semibold ${f.mono ? 'font-mono text-primary' : 'text-on-surface'}`}>{f.value}</p>
+            </div>
+          ))}
+          {/* Progress */}
+          <div className="rounded-xl border border-outline-variant/25 bg-surface/40 px-4 py-3">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70">Progress</p>
+            <p className="mt-1 text-sm font-semibold text-on-surface">{mission.progress ?? 0}%</p>
+            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-surface-container-high">
+              <div
+                className="h-1.5 rounded-full bg-primary transition-all duration-500"
+                style={{ width: `${mission.progress ?? 0}%` }}
+                role="progressbar"
+                aria-valuenow={mission.progress ?? 0}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label={`Mission progress: ${mission.progress ?? 0}%`}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* AI Activity Timeline */}
+      <div>
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60">AI Activity Timeline</p>
+        <ol className="space-y-0">
+          <li className="relative flex gap-4 pl-6">
+            {/* vertical line + dot */}
+            <span className="absolute left-[7px] top-2 h-full w-px bg-outline-variant/20" aria-hidden="true" />
+            <span className="absolute left-0 top-[5px] flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/15" aria-hidden="true">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            </span>
+            <div className="pb-4">
+              <p className="text-sm font-medium text-on-surface">Mission received from Search Builder.</p>
+              <p suppressHydrationWarning className="mt-0.5 text-xs text-on-surface-variant/60">{timelineTs || '—'}</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+function MissionEmptyState() {
+  return (
+    <div className="mt-5 flex flex-col items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface/30 px-6 py-8 text-center">
+      <span className="text-3xl" aria-hidden="true">🔍</span>
+      <p className="text-sm font-medium text-on-surface-variant">No active AI Search Mission.</p>
+      <Link
+        to="/search-builder"
+        className="inline-flex min-h-10 items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary transition-all hover:brightness-110"
+      >
+        Create Search Mission
+      </Link>
+    </div>
+  )
+}
+
 // ─── Live clock ───────────────────────────────────────────────────────────────
 
 function LiveClock() {
@@ -215,6 +330,11 @@ function LiveClock() {
 
 function OwnerPage() {
   const [showBackTop, setShowBackTop] = useState(false)
+  const [activeMission, setActiveMission] = useState<TicaMission | null>(null)
+
+  useEffect(() => {
+    setActiveMission(loadMission())
+  }, [])
 
   useEffect(() => {
     function onScroll() {
@@ -428,7 +548,17 @@ function OwnerPage() {
 
         {/* ── AI Operations ──────────────────────────────────────────── */}
         <SectionCard title="AI Operations" icon="⚙️">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Active mission display */}
+          {activeMission ? (
+            <ActiveMissionPanel mission={activeMission} />
+          ) : (
+            <MissionEmptyState />
+          )}
+
+          {/* Engine metrics */}
+          <div className="mt-6">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60">Engine Metrics</p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <article className="rounded-xl border border-outline-variant/25 bg-surface/40 p-4">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70">AI Engine Status</p>
               <div className="mt-2 flex items-center gap-2">
@@ -472,6 +602,7 @@ function OwnerPage() {
                 ))}
               </div>
             </article>
+          </div>
           </div>
           <p className="mt-4 text-xs text-on-surface-variant/60">Real-time AI metrics integration planned. Values are demo data.</p>
         </SectionCard>

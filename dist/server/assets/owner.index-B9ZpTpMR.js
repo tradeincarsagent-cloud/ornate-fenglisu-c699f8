@@ -1,7 +1,8 @@
 import { jsx, jsxs } from "react/jsx-runtime";
+import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
-import "@tanstack/react-router";
+import { l as loadMission } from "./mission-DGVAjlBD.js";
 const kpiCards = [{
   label: "Total Dealers",
   value: "142",
@@ -283,6 +284,105 @@ function PlaceholderTableRow({
     /* @__PURE__ */ jsx("span", { className: "text-sm text-on-surface-variant", children: label })
   ] });
 }
+function formatBudget(raw) {
+  const n = Number(raw.replace(/[^0-9.]/g, ""));
+  if (isNaN(n) || n === 0) return raw;
+  return `£${n.toLocaleString("en-GB")}`;
+}
+function buildVehicleLabel(m) {
+  const {
+    make,
+    model
+  } = m.vehicleRequirements;
+  const parts = [make, model].filter(Boolean);
+  if (parts.length > 0) return parts.join(" ");
+  return m.vehicleType || "—";
+}
+function ActiveMissionPanel({
+  mission
+}) {
+  const [timelineTs, setTimelineTs] = useState("");
+  useEffect(() => {
+    const d = /* @__PURE__ */ new Date();
+    setTimelineTs(d.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    }) + " · " + d.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit"
+    }));
+  }, []);
+  const fields = [{
+    label: "Mission ID",
+    value: mission.missionId,
+    mono: true
+  }, {
+    label: "Vehicle",
+    value: buildVehicleLabel(mission)
+  }, {
+    label: "Budget",
+    value: formatBudget(mission.budget)
+  }, {
+    label: "Search Area",
+    value: mission.searchArea || "United Kingdom"
+  }, {
+    label: "Buying Priority",
+    value: mission.buyingPriority || "—"
+  }, {
+    label: "Current Stage",
+    value: "Waiting for AI Validation"
+  }, {
+    label: "Status",
+    value: "Mission Created"
+  }];
+  return /* @__PURE__ */ jsxs("div", { className: "mt-5 space-y-5", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 rounded-xl border border-blue-400/25 bg-blue-400/5 px-4 py-3", children: [
+      /* @__PURE__ */ jsx("span", { className: "flex h-2.5 w-2.5 shrink-0 rounded-full bg-blue-400", "aria-hidden": "true" }),
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-300", children: "AI Employee Online" }),
+        /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Ready to begin validation." })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs("div", { children: [
+      /* @__PURE__ */ jsx("p", { className: "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60", children: "Active AI Search Mission" }),
+      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4", children: [
+        fields.map((f) => /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 px-4 py-3", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: f.label }),
+          /* @__PURE__ */ jsx("p", { className: `mt-1 text-sm font-semibold ${f.mono ? "font-mono text-primary" : "text-on-surface"}`, children: f.value })
+        ] }, f.label)),
+        /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 px-4 py-3", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "Progress" }),
+          /* @__PURE__ */ jsxs("p", { className: "mt-1 text-sm font-semibold text-on-surface", children: [
+            mission.progress ?? 0,
+            "%"
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "mt-2 h-1.5 w-full overflow-hidden rounded-full bg-surface-container-high", children: /* @__PURE__ */ jsx("div", { className: "h-1.5 rounded-full bg-primary transition-all duration-500", style: {
+            width: `${mission.progress ?? 0}%`
+          }, role: "progressbar", "aria-valuenow": mission.progress ?? 0, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": `Mission progress: ${mission.progress ?? 0}%` }) })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs("div", { children: [
+      /* @__PURE__ */ jsx("p", { className: "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60", children: "AI Activity Timeline" }),
+      /* @__PURE__ */ jsx("ol", { className: "space-y-0", children: /* @__PURE__ */ jsxs("li", { className: "relative flex gap-4 pl-6", children: [
+        /* @__PURE__ */ jsx("span", { className: "absolute left-[7px] top-2 h-full w-px bg-outline-variant/20", "aria-hidden": "true" }),
+        /* @__PURE__ */ jsx("span", { className: "absolute left-0 top-[5px] flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/15", "aria-hidden": "true", children: /* @__PURE__ */ jsx("span", { className: "h-1.5 w-1.5 rounded-full bg-primary" }) }),
+        /* @__PURE__ */ jsxs("div", { className: "pb-4", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface", children: "Mission received from Search Builder." }),
+          /* @__PURE__ */ jsx("p", { suppressHydrationWarning: true, className: "mt-0.5 text-xs text-on-surface-variant/60", children: timelineTs || "—" })
+        ] })
+      ] }) })
+    ] })
+  ] });
+}
+function MissionEmptyState() {
+  return /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-col items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface/30 px-6 py-8 text-center", children: [
+    /* @__PURE__ */ jsx("span", { className: "text-3xl", "aria-hidden": "true", children: "🔍" }),
+    /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface-variant", children: "No active AI Search Mission." }),
+    /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-10 items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary transition-all hover:brightness-110", children: "Create Search Mission" })
+  ] });
+}
 function LiveClock() {
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState(() => /* @__PURE__ */ new Date());
@@ -305,6 +405,10 @@ function LiveClock() {
 }
 function OwnerPage() {
   const [showBackTop, setShowBackTop] = useState(false);
+  const [activeMission, setActiveMission] = useState(null);
+  useEffect(() => {
+    setActiveMission(loadMission());
+  }, []);
   useEffect(() => {
     function onScroll() {
       setShowBackTop(window.scrollY > 400);
@@ -480,50 +584,54 @@ function OwnerPage() {
       /* @__PURE__ */ jsx("p", { className: "mt-3 text-xs text-on-surface-variant/60", children: "Showing top 5 of 218 active missions. Full mission management coming soon." })
     ] }),
     /* @__PURE__ */ jsxs(SectionCard, { title: "AI Operations", icon: "⚙️", children: [
-      /* @__PURE__ */ jsxs("div", { className: "grid gap-4 sm:grid-cols-2 lg:grid-cols-3", children: [
-        /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "AI Engine Status" }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-2 flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx("span", { className: "h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(74,222,128,0.6)]" }),
-            /* @__PURE__ */ jsx("p", { className: "text-xl font-bold text-emerald-300", children: "Operational" })
+      activeMission ? /* @__PURE__ */ jsx(ActiveMissionPanel, { mission: activeMission }) : /* @__PURE__ */ jsx(MissionEmptyState, {}),
+      /* @__PURE__ */ jsxs("div", { className: "mt-6", children: [
+        /* @__PURE__ */ jsx("p", { className: "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60", children: "Engine Metrics" }),
+        /* @__PURE__ */ jsxs("div", { className: "grid gap-4 sm:grid-cols-2 lg:grid-cols-3", children: [
+          /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "AI Engine Status" }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-2 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("span", { className: "h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(74,222,128,0.6)]" }),
+              /* @__PURE__ */ jsx("p", { className: "text-xl font-bold text-emerald-300", children: "Operational" })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "All scan workers healthy · 34 active threads" })
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "All scan workers healthy · 34 active threads" })
-        ] }),
-        /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "Vehicles Scanned Today" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-xl font-bold text-on-surface", children: "84,312" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "Across Auto Trader, Motorway, dealer feeds" })
-        ] }),
-        /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "Opportunities Surfaced" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-xl font-bold text-primary", children: "1,047" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "↑ 12% vs yesterday's 934" })
-        ] }),
-        /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "Avg Scan Latency" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-xl font-bold text-on-surface", children: "1.4s" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "Target: <2s · Last 24 hrs avg" })
-        ] }),
-        /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "AI Model" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-xl font-bold text-on-surface", children: "TICA-1" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "Scoring v2.3 · Last retrained 14 Jul 2025" })
-        ] }),
-        /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "API Health" }),
-          /* @__PURE__ */ jsx("div", { className: "mt-2 space-y-1.5", children: [{
-            name: "Auto Trader",
-            ok: true
-          }, {
-            name: "Motorway",
-            ok: true
-          }, {
-            name: "Formspree",
-            ok: true
-          }].map((api) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-xs text-on-surface-variant", children: api.name }),
-            /* @__PURE__ */ jsx("span", { className: `text-xs font-medium ${api.ok ? "text-emerald-300" : "text-red-300"}`, children: api.ok ? "🟢 OK" : "🔴 Down" })
-          ] }, api.name)) })
+          /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "Vehicles Scanned Today" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-2 text-xl font-bold text-on-surface", children: "84,312" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "Across Auto Trader, Motorway, dealer feeds" })
+          ] }),
+          /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "Opportunities Surfaced" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-2 text-xl font-bold text-primary", children: "1,047" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "↑ 12% vs yesterday's 934" })
+          ] }),
+          /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "Avg Scan Latency" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-2 text-xl font-bold text-on-surface", children: "1.4s" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "Target: <2s · Last 24 hrs avg" })
+          ] }),
+          /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "AI Model" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-2 text-xl font-bold text-on-surface", children: "TICA-1" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-on-surface-variant", children: "Scoring v2.3 · Last retrained 14 Jul 2025" })
+          ] }),
+          /* @__PURE__ */ jsxs("article", { className: "rounded-xl border border-outline-variant/25 bg-surface/40 p-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant/70", children: "API Health" }),
+            /* @__PURE__ */ jsx("div", { className: "mt-2 space-y-1.5", children: [{
+              name: "Auto Trader",
+              ok: true
+            }, {
+              name: "Motorway",
+              ok: true
+            }, {
+              name: "Formspree",
+              ok: true
+            }].map((api) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-xs text-on-surface-variant", children: api.name }),
+              /* @__PURE__ */ jsx("span", { className: `text-xs font-medium ${api.ok ? "text-emerald-300" : "text-red-300"}`, children: api.ok ? "🟢 OK" : "🔴 Down" })
+            ] }, api.name)) })
+          ] })
         ] })
       ] }),
       /* @__PURE__ */ jsx("p", { className: "mt-4 text-xs text-on-surface-variant/60", children: "Real-time AI metrics integration planned. Values are demo data." })
