@@ -21,6 +21,7 @@ import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OwnerIntelligenceRouteImport } from './routes/owner.intelligence'
 
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
   id: '/terms-of-service',
@@ -82,6 +83,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerIntelligenceRoute = OwnerIntelligenceRouteImport.update({
+  id: '/intelligence',
+  path: '/intelligence',
+  getParentRoute: () => OwnerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -90,12 +96,13 @@ export interface FileRoutesByFullPath {
   '/cookie-policy': typeof CookiePolicyRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
-  '/owner': typeof OwnerRoute
+  '/owner': typeof OwnerRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/search-builder': typeof SearchBuilderRoute
   '/settings': typeof SettingsRoute
   '/support': typeof SupportRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/owner/intelligence': typeof OwnerIntelligenceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -104,12 +111,13 @@ export interface FileRoutesByTo {
   '/cookie-policy': typeof CookiePolicyRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
-  '/owner': typeof OwnerRoute
+  '/owner': typeof OwnerRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/search-builder': typeof SearchBuilderRoute
   '/settings': typeof SettingsRoute
   '/support': typeof SupportRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/owner/intelligence': typeof OwnerIntelligenceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -119,12 +127,13 @@ export interface FileRoutesById {
   '/cookie-policy': typeof CookiePolicyRoute
   '/dashboard': typeof DashboardRoute
   '/opportunity': typeof OpportunityRoute
-  '/owner': typeof OwnerRoute
+  '/owner': typeof OwnerRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/search-builder': typeof SearchBuilderRoute
   '/settings': typeof SettingsRoute
   '/support': typeof SupportRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/owner/intelligence': typeof OwnerIntelligenceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/support'
     | '/terms-of-service'
+    | '/owner/intelligence'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/support'
     | '/terms-of-service'
+    | '/owner/intelligence'
   id:
     | '__root__'
     | '/'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/support'
     | '/terms-of-service'
+    | '/owner/intelligence'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -178,7 +190,7 @@ export interface RootRouteChildren {
   CookiePolicyRoute: typeof CookiePolicyRoute
   DashboardRoute: typeof DashboardRoute
   OpportunityRoute: typeof OpportunityRoute
-  OwnerRoute: typeof OwnerRoute
+  OwnerRoute: typeof OwnerRouteWithChildren
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   SearchBuilderRoute: typeof SearchBuilderRoute
   SettingsRoute: typeof SettingsRoute
@@ -272,8 +284,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/intelligence': {
+      id: '/owner/intelligence'
+      path: '/intelligence'
+      fullPath: '/owner/intelligence'
+      preLoaderRoute: typeof OwnerIntelligenceRouteImport
+      parentRoute: typeof OwnerRoute
+    }
   }
 }
+
+interface OwnerRouteChildren {
+  OwnerIntelligenceRoute: typeof OwnerIntelligenceRoute
+}
+
+const OwnerRouteChildren: OwnerRouteChildren = {
+  OwnerIntelligenceRoute: OwnerIntelligenceRoute,
+}
+
+const OwnerRouteWithChildren = OwnerRoute._addFileChildren(OwnerRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -282,7 +311,7 @@ const rootRouteChildren: RootRouteChildren = {
   CookiePolicyRoute: CookiePolicyRoute,
   DashboardRoute: DashboardRoute,
   OpportunityRoute: OpportunityRoute,
-  OwnerRoute: OwnerRoute,
+  OwnerRoute: OwnerRouteWithChildren,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   SearchBuilderRoute: SearchBuilderRoute,
   SettingsRoute: SettingsRoute,
