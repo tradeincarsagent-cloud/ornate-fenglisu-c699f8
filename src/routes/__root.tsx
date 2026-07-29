@@ -7,21 +7,8 @@ export const Route = createRootRoute({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
       { title: 'Trade In Cars Agent | AI-Powered Dealer Stock Acquisition' },
-      { name: 'description', content: 'Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities, analyse market data, and source profitable stock faster than ever.' },
-      { property: 'og:title', content: 'Trade In Cars Agent | AI-Powered Dealer Stock Acquisition' },
-      { property: 'og:description', content: 'Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities and source profitable stock faster.' },
-      { property: 'og:image', content: '/tica-certified-shield.png' },
-      { property: 'og:type', content: 'website' },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'Trade In Cars Agent | AI-Powered Dealer Stock Acquisition' },
-      { name: 'twitter:description', content: 'Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities and source profitable stock faster.' },
-      { name: 'twitter:image', content: '/tica-certified-shield.png' },
     ],
     links: [
-      {
-        rel: 'icon',
-        href: '/favicon.ico',
-      },
       {
         rel: 'preconnect',
         href: 'https://fonts.googleapis.com',
@@ -115,26 +102,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           },
           fontFamily: {
             "label-caps": ["JetBrains Mono"],
-            "body-sm": ["Inter"],
             "body-lg": ["Inter"],
             "headline-lg-mobile": ["Hanken Grotesk"],
             "body-md": ["Inter"],
             "headline-md": ["Hanken Grotesk"],
             "headline-lg": ["Hanken Grotesk"],
-            "title-md": ["Hanken Grotesk"],
-            "title-lg": ["Hanken Grotesk"],
             "display-lg": ["Hanken Grotesk"]
           },
           fontSize: {
             "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.1em", fontWeight: "600" }],
-            "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }],
             "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
             "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "700" }],
             "body-md": ["16px", { lineHeight: "1.5", fontWeight: "400" }],
             "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
             "headline-lg": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
-            "title-md": ["20px", { lineHeight: "1.3", fontWeight: "600" }],
-            "title-lg": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
             "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "800" }]
           }
         }

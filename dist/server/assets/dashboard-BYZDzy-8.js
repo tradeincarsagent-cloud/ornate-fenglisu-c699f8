@@ -1,7 +1,7 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-DFTzDcT5.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-C5-9jSk-.js";
 const missionStatusConfig = {
   Monitoring: {
@@ -866,7 +866,7 @@ function DashboardPage() {
             /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between", children: [
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("h3", { className: "text-headline-md font-headline-md text-on-surface", children: "AI Activity Timeline" }),
-                /* @__PURE__ */ jsx("p", { className: "mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant", children: "Live AI activity from the Dealer Command Centre operations flow." })
+                /* @__PURE__ */ jsx("p", { className: "mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant", children: "Live placeholder activity from the Dealer Command Centre AI operations flow." })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "timeline-status-panel", children: [
                 /* @__PURE__ */ jsx("p", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Status" }),
@@ -1051,9 +1051,9 @@ function DashboardPage() {
           /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("dismissed"), className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error", children: "Dismiss" }),
           /* @__PURE__ */ jsx("button", { onClick: () => setRecAction("reminded"), className: "min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-tertiary/40", children: "Remind Me Tomorrow" })
         ] }),
-        recAction === "saved" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-primary", children: "✓ Saved to Watchlist." }),
-        recAction === "dismissed" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "✓ Opportunity dismissed." }),
-        recAction === "reminded" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-tertiary", children: "✓ Reminder scheduled." })
+        recAction === "saved" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-primary", children: "✓ Saved to Watchlist (placeholder)" }),
+        recAction === "dismissed" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "✓ Opportunity dismissed (placeholder)" }),
+        recAction === "reminded" && /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-tertiary", children: "✓ Reminder scheduled (placeholder)" })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "dashboard-border mb-5 sm:mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsx("h2", { className: "mb-2.5 text-headline-md font-headline-md text-on-surface", children: "Recent Opportunities" }),

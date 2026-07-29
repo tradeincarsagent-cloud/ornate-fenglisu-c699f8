@@ -960,7 +960,7 @@ function DashboardPage() {
                       <div>
                         <h3 className="text-headline-md font-headline-md text-on-surface">AI Activity Timeline</h3>
                         <p className="mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant">
-                          Live AI activity from the Dealer Command Centre operations flow.
+                          Live placeholder activity from the Dealer Command Centre AI operations flow.
                         </p>
                       </div>
 
@@ -1229,15 +1229,15 @@ function DashboardPage() {
                 </button>
               </div>
 
-              {/* Action feedback */}
+              {/* Placeholder feedback */}
               {recAction === 'saved' && (
-                <p className="mt-4 text-body-sm font-body-sm text-primary">✓ Saved to Watchlist.</p>
+                <p className="mt-4 text-body-sm font-body-sm text-primary">✓ Saved to Watchlist (placeholder)</p>
               )}
               {recAction === 'dismissed' && (
-                <p className="mt-4 text-body-sm font-body-sm text-on-surface-variant">✓ Opportunity dismissed.</p>
+                <p className="mt-4 text-body-sm font-body-sm text-on-surface-variant">✓ Opportunity dismissed (placeholder)</p>
               )}
               {recAction === 'reminded' && (
-                <p className="mt-4 text-body-sm font-body-sm text-tertiary">✓ Reminder scheduled.</p>
+                <p className="mt-4 text-body-sm font-body-sm text-tertiary">✓ Reminder scheduled (placeholder)</p>
               )}
             </section>
 

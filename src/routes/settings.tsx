@@ -577,7 +577,7 @@ function SettingsPage() {
                 Review My Buying Profile
               </button>
               {profileReviewRequested && (
-                <p className="text-xs text-on-surface-variant">Request received. Our team will be in touch shortly.</p>
+                <p className="text-xs text-on-surface-variant">Available Soon — no backend actions yet.</p>
               )}
             </div>
           </div>
@@ -587,7 +587,7 @@ function SettingsPage() {
           {saved ? (
             <p className="flex items-center gap-2 text-sm text-on-surface-variant">
               <span className="text-base" aria-hidden="true">✅</span>
-              Preferences saved successfully.
+              Preferences captured (preview only — no backend actions yet).
             </p>
           ) : (
             <p className="text-sm text-on-surface-variant/50">Unsaved changes</p>
