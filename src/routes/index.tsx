@@ -598,7 +598,7 @@ function LandingPage() {
         <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20 lg:h-36">
           <div className="flex items-center flex-shrink-0 gap-4">
             <div className="logo-bezel rounded-lg p-1">
-              <img alt="Trade In Cars Agent Logo" className="h-[60px] sm:h-12 lg:h-32 w-auto max-w-[175px] sm:max-w-none object-contain logo-blend" src="/tica-logo.svg" />
+              <img alt="Trade In Cars Agent Logo" className="h-[60px] sm:h-12 lg:h-32 w-auto max-w-[175px] sm:max-w-none object-contain logo-blend" src="/tica-logo.png" />
             </div>
           </div>
           <div className="hidden lg:flex items-center gap-8 mx-6">
@@ -1346,7 +1346,7 @@ function LandingPage() {
                       Trusted AI Certification
                     </span>
                     <img
-                      src="/tica-shield.svg"
+                      src="/tica-certified-shield.png"
                       alt="TICA Certified shield"
                       className="tica-certified-shield h-auto w-36"
                       decoding="async"
@@ -1387,7 +1387,7 @@ function LandingPage() {
           <div className="space-y-6 max-md:flex max-md:flex-col max-md:items-center max-md:gap-3 max-md:space-y-0 md:space-y-0 md:flex md:flex-col md:items-center md:gap-5">
             <div className="relative flex items-center justify-center max-md:w-full md:mb-0 md:justify-center">
               <div className="logo-bezel rounded-lg p-1">
-                <img alt="Trade In Cars Agent Logo" className="h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend" src="/tica-logo.svg" />
+                <img alt="Trade In Cars Agent Logo" className="h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend" src="/tica-logo.png" />
               </div>
             </div>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-sm max-md:max-w-[22rem] max-md:mx-auto max-md:text-center md:text-center">

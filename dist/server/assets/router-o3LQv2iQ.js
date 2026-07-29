@@ -9,12 +9,12 @@ const Route$b = createRootRoute({
       { name: "description", content: "Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities, analyse market data, and source profitable stock faster than ever." },
       { property: "og:title", content: "Trade In Cars Agent | AI-Powered Dealer Stock Acquisition" },
       { property: "og:description", content: "Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities and source profitable stock faster." },
-      { property: "og:image", content: "/tica-shield.svg" },
+      { property: "og:image", content: "/tica-certified-shield.png" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Trade In Cars Agent | AI-Powered Dealer Stock Acquisition" },
       { name: "twitter:description", content: "Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities and source profitable stock faster." },
-      { name: "twitter:image", content: "/tica-shield.svg" }
+      { name: "twitter:image", content: "/tica-certified-shield.png" }
     ],
     links: [
       {
@@ -158,11 +158,11 @@ const $$splitComponentImporter$9 = () => import("./support-D1VGkr-d.js");
 const Route$9 = createFileRoute("/support")({
   component: lazyRouteComponent($$splitComponentImporter$9, "component")
 });
-const $$splitComponentImporter$8 = () => import("./settings-kEVhFsFv.js");
+const $$splitComponentImporter$8 = () => import("./settings-B0ad_bnf.js");
 const Route$8 = createFileRoute("/settings")({
   component: lazyRouteComponent($$splitComponentImporter$8, "component")
 });
-const $$splitComponentImporter$7 = () => import("./search-builder-649PCoiP.js");
+const $$splitComponentImporter$7 = () => import("./search-builder-f7ZiOWmR.js");
 const Route$7 = createFileRoute("/search-builder")({
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
@@ -170,11 +170,11 @@ const $$splitComponentImporter$6 = () => import("./privacy-policy-BBXE8Yn5.js");
 const Route$6 = createFileRoute("/privacy-policy")({
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$5 = () => import("./opportunity-DU22-aEw.js");
+const $$splitComponentImporter$5 = () => import("./opportunity-DliMcSvT.js");
 const Route$5 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-const $$splitComponentImporter$4 = () => import("./dashboard-Cpb0wHeS.js");
+const $$splitComponentImporter$4 = () => import("./dashboard-DseFnEYX.js");
 const Route$4 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
@@ -190,7 +190,7 @@ const $$splitComponentImporter$1 = () => import("./about-C3nk08eS.js");
 const Route$1 = createFileRoute("/about")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-D_nSz1Tb.js");
+const $$splitComponentImporter = () => import("./index-Bnq3bbgX.js");
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
