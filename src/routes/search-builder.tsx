@@ -510,7 +510,7 @@ function SearchBuilderPage() {
           </div>
         </div>
 
-        <div className="lg:grid lg:grid-cols-[1fr_320px] lg:items-start lg:gap-8 xl:grid-cols-[1fr_340px]">
+        <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 xl:grid-cols-[1fr_340px]">
           <div className="space-y-5 sm:space-y-8">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
@@ -969,7 +969,8 @@ function SearchBuilderPage() {
           </div>
 
           {/* ── Mission Summary Sidebar ──────────────────────────────── */}
-          <aside className="mt-5 sm:mt-8 lg:mt-0 lg:sticky lg:top-6">
+          <aside className="mt-5 sm:mt-8 lg:mt-0">
+            <div className="lg:sticky lg:top-8">
             {/* AI Readiness Indicator */}
             <div className="mb-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
               <div className="mb-2 flex items-center justify-between gap-2">
@@ -1023,6 +1024,7 @@ function SearchBuilderPage() {
                 ))}
               </ul>
             </div>
+            </div>{/* end sticky wrapper */}
           </aside>
         </div>
         <button
