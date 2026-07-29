@@ -189,27 +189,24 @@ function PlaceholderTableRow({ label }: { label: string }) {
 // ─── Live clock ───────────────────────────────────────────────────────────────
 
 function LiveClock() {
+  const [mounted, setMounted] = useState(false)
   const [time, setTime] = useState(() => new Date())
-  const rafRef = useRef<number | null>(null)
+  const intervalRef = useRef<number | null>(null)
 
   useEffect(() => {
-    let last = 0
-    function tick(ts: number) {
-      if (ts - last >= 1000) {
-        setTime(new Date())
-        last = ts
-      }
-      rafRef.current = requestAnimationFrame(tick)
-    }
-    rafRef.current = requestAnimationFrame(tick)
+    setMounted(true)
+    setTime(new Date())
+    intervalRef.current = window.setInterval(() => {
+      setTime(new Date())
+    }, 1000)
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+      if (intervalRef.current !== null) window.clearInterval(intervalRef.current)
     }
   }, [])
 
   return (
-    <span className="tabular-nums text-on-surface text-sm font-medium">
-      {time.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+    <span suppressHydrationWarning className="tabular-nums text-on-surface text-sm font-medium">
+      {mounted ? time.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '--:--:--'}
     </span>
   )
 }
