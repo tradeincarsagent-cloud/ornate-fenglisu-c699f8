@@ -413,6 +413,30 @@ function SearchBuilderPage() {
   const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ')
   const missionName = missionNameBase || selectedVehicleType || 'Vehicle Search'
 
+  const mileageSummary = maxMileage ? `Under ${Number(maxMileage).toLocaleString('en-GB')} miles` : 'Not yet specified'
+  const vehicleSummary = [selectedVehicleType, effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' / ') || 'Not yet selected'
+
+  const missionSummaryItems = [
+    { label: 'Vehicle', value: vehicleSummary },
+    { label: 'Budget', value: budgetSummary },
+    { label: 'Search Area', value: 'United Kingdom' },
+    { label: 'Mileage', value: mileageSummary },
+    { label: 'Minimum Profit Target', value: targetProfitSummary },
+    { label: 'Search Frequency', value: 'Every 30 minutes' },
+    { label: 'Estimated AI Scan Capacity', value: 'Thousands of listings per day (demo)' },
+  ] as const
+
+  const readinessFields = [
+    selectedVehicleType !== null,
+    effectiveMake !== '',
+    effectiveModel !== '',
+    maxBudget !== '',
+    minProfit !== '',
+    searchPriority !== null,
+    notifications.size > 0,
+  ]
+  const missionReadiness = Math.round((readinessFields.filter(Boolean).length / readinessFields.length) * 100)
+
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -438,13 +462,13 @@ function SearchBuilderPage() {
         {/* ── Page title ──────────────────────────────────────────────── */}
         <div className="mb-5 md:mb-8">
           <div className="mb-3 flex items-start justify-between gap-4">
-            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Search Finder</p>
+            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Mission Briefing</p>
             <div className="shrink-0">
               <TicaShield />
             </div>
           </div>
-          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">Brief Your AI Employee in Under 60 Seconds</h1>
-          <p className="text-body-md font-body-md text-on-surface-variant">Tell TICA exactly what you’re looking for and brief your AI Employee to work continuously, finding the best buying opportunities before everyone else.</p>
+          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">AI Mission Briefing Centre</h1>
+          <p className="text-body-md font-body-md text-on-surface-variant">Tell TICA exactly what you're looking for and your AI will continuously search for matching opportunities.</p>
         </div>
 
         {/* ── Powered by TICA Intelligence ────────────────────────────── */}
@@ -486,13 +510,14 @@ function SearchBuilderPage() {
           </div>
         </div>
 
-        <div className="space-y-5 sm:space-y-8">
+        <div className="lg:grid lg:grid-cols-[1fr_320px] lg:items-start lg:gap-8 xl:grid-cols-[1fr_340px]">
+          <div className="space-y-5 sm:space-y-8">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="01" />
               <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Choose the makes and models you want your AI Employee to monitor.</p>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the vehicle category you want your AI to monitor.</p>
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
               {VEHICLE_TYPES.map((type) => {
@@ -528,14 +553,14 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="02" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">Tell me a bit more about it</h2>
+              <h2 className="text-headline-md font-headline-md text-on-surface">Which make, model and budget?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
-                Set your buying budget and minimum profit target so your AI Employee only finds opportunities that match your goals.
+                Narrow down the vehicle and set your budget and profit target so your AI only surfaces opportunities that match your goals.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Make</label>
+                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Which make?</label>
                 <SearchableCombobox
                   id="make"
                   options={makeOptions}
@@ -556,7 +581,7 @@ function SearchBuilderPage() {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
+                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Which model?</label>
                 <SearchableCombobox
                   id="model"
                   options={modelOptions}
@@ -578,7 +603,7 @@ function SearchBuilderPage() {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-budget">Maximum Budget</label>
+                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-budget">What's your ideal budget?</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
                   <input
@@ -593,7 +618,7 @@ function SearchBuilderPage() {
                 </div>
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2 lg:col-span-3 xl:col-span-1">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="min-profit">Minimum Estimated Profit</label>
+                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="min-profit">What's your minimum profit target?</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
                   <input
@@ -617,7 +642,7 @@ function SearchBuilderPage() {
                 className="flex w-full items-center justify-between px-5 py-4 text-left"
                 aria-expanded={advancedOpen}
               >
-                <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Advanced Filters</span>
+                <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Refine Further</span>
                 <svg
                   width="18"
                   height="18"
@@ -637,7 +662,7 @@ function SearchBuilderPage() {
                 <div className="border-t border-outline-variant/30 px-5 pb-5 pt-5">
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-from">Year From</label>
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-from">Earliest year?</label>
                       <input
                         id="year-from"
                         type="number"
@@ -650,7 +675,7 @@ function SearchBuilderPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-to">Year To</label>
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-to">Latest year?</label>
                       <input
                         id="year-to"
                         type="number"
@@ -663,7 +688,7 @@ function SearchBuilderPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-mileage">Maximum Mileage</label>
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-mileage">Maximum mileage?</label>
                       <input
                         id="max-mileage"
                         type="number"
@@ -675,7 +700,7 @@ function SearchBuilderPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="fuel-type">Fuel Type</label>
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="fuel-type">Fuel preference?</label>
                       <select
                         id="fuel-type"
                         value={fuelType}
@@ -688,7 +713,7 @@ function SearchBuilderPage() {
                       </select>
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="transmission">Transmission</label>
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="transmission">Transmission preference?</label>
                       <select
                         id="transmission"
                         value={transmission}
@@ -701,7 +726,7 @@ function SearchBuilderPage() {
                       </select>
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="service-history">Service History</label>
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="service-history">Service history requirement?</label>
                       <select
                         id="service-history"
                         value={serviceHistory}
@@ -723,9 +748,9 @@ function SearchBuilderPage() {
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
               <StepMarker step="03" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">Search Priority</h2>
+              <h2 className="text-headline-md font-headline-md text-on-surface">How should I rank the opportunities?</h2>
               <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
-                Tell your AI Employee how to rank opportunities for this mission.
+                Tell your AI how to prioritise results for this mission.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -887,21 +912,19 @@ function SearchBuilderPage() {
                 ))}
               </div>
             </div>
-            {/* ── What Happens Next panel ──────────────────────────────── */}
-            <div className="mx-auto mb-5 w-full max-w-md rounded-xl border border-primary/25 bg-primary/8 px-5 py-4">
-              <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary">What Happens Next?</p>
-              <p className="text-body-sm font-body-sm text-on-surface-variant">Once you start your AI Search Finder, your AI Employee will continuously monitor your selected marketplaces, analyse new listings, compare market values, and notify you whenever a high-confidence opportunity matches your buying strategy.</p>
-            </div>
             <button
               type="button"
               onClick={() => setMissionCreated(true)}
               className="mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-4 sm:py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
             >
               <span>⚡</span>
-              Activate My AI Employee
+              Deploy AI Search Mission
             </button>
-            <p className="mt-4 text-body-md font-body-md text-on-surface-variant">
-              Live AI scanning will be available in a future platform release.
+            <p className="mt-3 text-body-sm font-body-sm text-on-surface-variant">
+              Your AI will immediately begin analysing connected vehicle sources using these requirements.
+            </p>
+            <p className="mt-1 text-body-sm font-body-sm text-on-surface-variant/60">
+              (Demonstration only.)
             </p>
           </section>
 
@@ -943,6 +966,64 @@ function SearchBuilderPage() {
               </div>
             </section>
           )}
+          </div>
+
+          {/* ── Mission Summary Sidebar ──────────────────────────────── */}
+          <aside className="mt-5 sm:mt-8 lg:mt-0 lg:sticky lg:top-6">
+            {/* AI Readiness Indicator */}
+            <div className="mb-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Readiness</p>
+                <span className="text-body-md font-body-md font-semibold text-on-surface">{missionReadiness}% Complete</span>
+              </div>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-high">
+                <div
+                  className="h-2 rounded-full bg-primary transition-all duration-500"
+                  style={{ width: `${missionReadiness}%` }}
+                  role="progressbar"
+                  aria-valuenow={missionReadiness}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label={`Mission readiness: ${missionReadiness}% complete`}
+                />
+              </div>
+              <p className="mt-2 text-body-sm font-body-sm text-on-surface-variant">
+                {missionReadiness === 100 ? 'All key details briefed. Ready to deploy.' : 'Complete the briefing to deploy your AI mission.'}
+              </p>
+            </div>
+
+            {/* Mission Summary Panel */}
+            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
+              <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Summary</p>
+              <div className="space-y-3">
+                {missionSummaryItems.map((item) => (
+                  <div key={item.label} className="flex flex-col gap-0.5">
+                    <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
+                    <p className={`text-body-sm font-body-sm font-semibold ${item.value === 'Not yet selected' || item.value === 'Not yet specified' ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* What Happens Next */}
+            <div className="mt-4 rounded-2xl border border-primary/25 bg-primary/8 p-4 sm:p-5">
+              <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary">What happens next?</p>
+              <ul className="space-y-1.5">
+                {[
+                  'Mission created.',
+                  'AI validates the criteria.',
+                  'AI searches connected sources.',
+                  'Opportunities are ranked.',
+                  'High-confidence vehicles appear in your dashboard.',
+                ].map((step) => (
+                  <li key={step} className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface-variant">
+                    <span className="mt-px shrink-0 text-primary" aria-hidden="true">•</span>
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
         </div>
         <button
           aria-label="Back to top"
