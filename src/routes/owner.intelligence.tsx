@@ -198,12 +198,42 @@ const decisionPriorityClasses: Record<DecisionItem['priority'], string> = {
   Monitor: 'border-amber-400/25 bg-amber-400/10 text-amber-300',
 }
 
-function SectionCard({ title, eyebrow, children }: { title: string; eyebrow?: string; children: React.ReactNode }) {
+const missionStages = [
+  'Mission Received',
+  'AI Validation',
+  'Source Scanning',
+  'Opportunity Analysis',
+  'AI Confidence Score',
+  'Buying Report Generated',
+  'Dealer Notified',
+]
+
+const activeMission = {
+  id: 'MSN-1042',
+  dealer: 'Premier Auto Group',
+  vehicle: 'Volkswagen Golf GTI Clubsport',
+  budget: '£35,000',
+  currentStage: 'Opportunity Analysis',
+  currentStageIndex: 3,
+  progress: 68,
+  eta: '2 minutes',
+}
+
+const activityLog = [
+  { event: 'Mission received', time: '09:14:32' },
+  { event: 'AI validation complete', time: '09:14:38' },
+  { event: 'Scanning connected sources', time: '09:15:02' },
+  { event: 'Opportunity detected', time: '09:16:47' },
+  { event: 'Calculating confidence score', time: 'Live' },
+]
+
+function SectionCard({ title, eyebrow, subtitle, children }: { title: string; eyebrow?: string; subtitle?: string; children: React.ReactNode }) {
   return (
     <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-high/80 shadow-[0_8px_32px_rgba(2,6,23,0.22)] backdrop-blur-sm overflow-hidden">
       <div className="border-b border-outline-variant/20 px-5 py-4 md:px-6">
         {eyebrow ? <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80">{eyebrow}</p> : null}
         <h2 className="mt-1 text-body-lg font-semibold text-on-surface">{title}</h2>
+        {subtitle ? <p className="mt-1 text-sm text-on-surface-variant">{subtitle}</p> : null}
       </div>
       <div className="px-5 py-4 md:px-6">{children}</div>
     </section>
@@ -363,6 +393,170 @@ function OwnerIntelligencePage() {
             </div>
           </div>
         </section>
+
+        <SectionCard
+          title="Mission Processing Engine"
+          subtitle="Live AI workflow for active dealer search missions."
+        >
+          {/* Pipeline — desktop horizontal */}
+          <div className="hidden lg:flex items-start gap-1">
+            {missionStages.map((stage, i) => {
+              const status = i < activeMission.currentStageIndex ? 'completed' : i === activeMission.currentStageIndex ? 'active' : 'upcoming'
+              return (
+                <div key={stage} className="flex items-start gap-1 flex-1 min-w-0">
+                  <div
+                    className={`flex-1 min-w-0 rounded-xl border p-3 ${
+                      status === 'completed'
+                        ? 'border-emerald-400/25 bg-emerald-400/10'
+                        : status === 'active'
+                          ? 'border-primary/35 bg-primary/10 ring-1 ring-primary/15'
+                          : 'border-outline-variant/15 bg-surface/20'
+                    }`}
+                  >
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span
+                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
+                          status === 'completed'
+                            ? 'bg-emerald-400/20 text-emerald-300'
+                            : status === 'active'
+                              ? 'bg-primary/20 text-primary'
+                              : 'bg-surface-container-high text-on-surface-variant/40'
+                        }`}
+                      >
+                        {status === 'completed' ? '✓' : i + 1}
+                      </span>
+                      {status === 'active' && (
+                        <span className="relative flex h-2 w-2" aria-hidden="true">
+                          <span className="absolute inset-0 rounded-full bg-primary/45 animate-pulse" />
+                          <span className="relative h-2 w-2 rounded-full bg-primary" />
+                        </span>
+                      )}
+                    </div>
+                    <p
+                      className={`text-[11px] font-semibold leading-tight ${
+                        status === 'completed' ? 'text-emerald-300' : status === 'active' ? 'text-primary' : 'text-on-surface-variant/50'
+                      }`}
+                    >
+                      {stage}
+                    </p>
+                  </div>
+                  {i < missionStages.length - 1 && (
+                    <div className="flex items-center self-start mt-4 px-0.5 text-outline-variant/35 text-xs shrink-0" aria-hidden="true">
+                      →
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Pipeline — mobile/tablet vertical stepper */}
+          <div className="lg:hidden space-y-1.5">
+            {missionStages.map((stage, i) => {
+              const status = i < activeMission.currentStageIndex ? 'completed' : i === activeMission.currentStageIndex ? 'active' : 'upcoming'
+              return (
+                <div key={stage} className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 ${
+                      status === 'completed'
+                        ? 'border-emerald-400/15 bg-emerald-400/5'
+                        : status === 'active'
+                          ? 'border-primary/25 bg-primary/5'
+                          : 'border-outline-variant/10 bg-surface/15'
+                    }`}>                  <div
+                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold border ${
+                      status === 'completed'
+                        ? 'bg-emerald-400/20 text-emerald-300 border-emerald-400/25'
+                        : status === 'active'
+                          ? 'bg-primary/20 text-primary border-primary/35'
+                          : 'bg-surface-container-high text-on-surface-variant/40 border-outline-variant/20'
+                    }`}
+                  >
+                    {status === 'completed' ? '✓' : i + 1}
+                  </div>
+                  <p
+                    className={`flex-1 text-sm font-medium ${
+                      status === 'completed' ? 'text-emerald-300' : status === 'active' ? 'text-primary' : 'text-on-surface-variant/50'
+                    }`}
+                  >
+                    {stage}
+                  </p>
+                  {status === 'active' && (
+                    <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
+                      <span className="absolute inset-0 rounded-full bg-primary/45 animate-pulse" />
+                      <span className="relative h-2 w-2 rounded-full bg-primary" />
+                    </span>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Mission card + activity panel */}
+          <div className="mt-5 grid gap-4 md:grid-cols-[1fr_268px]">
+            {/* Active mission card */}
+            <div className="rounded-2xl border border-primary/25 bg-primary/5 p-4 sm:p-5">
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80">Active Mission</p>
+                  <h3 className="mt-1 text-base font-bold text-on-surface">{activeMission.id}</h3>
+                </div>
+                <span className="rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary shrink-0">
+                  In Progress
+                </span>
+              </div>
+              <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm sm:grid-cols-4">
+                <div>
+                  <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Dealer</dt>
+                  <dd className="mt-1 font-medium text-on-surface">{activeMission.dealer}</dd>
+                </div>
+                <div className="col-span-2 sm:col-span-1">
+                  <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Vehicle</dt>
+                  <dd className="mt-1 font-medium text-on-surface">{activeMission.vehicle}</dd>
+                </div>
+                <div>
+                  <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Budget</dt>
+                  <dd className="mt-1 font-semibold text-primary">{activeMission.budget}</dd>
+                </div>
+                <div>
+                  <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Est. Completion</dt>
+                  <dd className="mt-1 font-medium text-on-surface">{activeMission.eta}</dd>
+                </div>
+              </dl>
+              <div className="mt-4">
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">{activeMission.currentStage}</p>
+                  <span className="text-sm font-bold tabular-nums text-primary">{activeMission.progress}%</span>
+                </div>
+                <div className="h-2 overflow-hidden rounded-full bg-surface-container-high">
+                  <div className="h-full rounded-full bg-primary/70" style={{ width: `${activeMission.progress}%` }} />
+                </div>
+                <p className="mt-2 text-xs leading-5 text-on-surface-variant">
+                  Scanning trade and retail channels for matching stock against mission criteria.
+                </p>
+              </div>
+            </div>
+
+            {/* AI activity panel */}
+            <div className="rounded-2xl border border-outline-variant/20 bg-surface/35 p-4 sm:p-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70 mb-3">AI Activity</p>
+              <div className="space-y-3">
+                {activityLog.map((entry, i) => (
+                  <div key={entry.event} className="flex items-start gap-3">
+                    <span
+                      className={`mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full ${
+                        i === activityLog.length - 1 ? 'bg-primary' : 'bg-emerald-400'
+                      }`}
+                      aria-hidden="true"
+                    />
+                    <div className="min-w-0">
+                      <p className="text-sm text-on-surface">{entry.event}</p>
+                      <p className="mt-0.5 text-[11px] tabular-nums text-on-surface-variant/50">{entry.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </SectionCard>
 
         <SectionCard title="Opportunity Radar" eyebrow="What looks strongest right now">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

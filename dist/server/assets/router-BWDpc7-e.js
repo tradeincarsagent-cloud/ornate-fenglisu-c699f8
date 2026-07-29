@@ -183,7 +183,7 @@ const $$splitComponentImporter$1 = () => import("./owner.index-Cg7S6Lok.js");
 const Route$1 = createFileRoute("/owner/")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./owner.intelligence-qWYeu2eq.js");
+const $$splitComponentImporter = () => import("./owner.intelligence-MqtEE0fo.js");
 const Route = createFileRoute("/owner/intelligence")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
