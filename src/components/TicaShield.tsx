@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-const TICA_SHIELD_SRC = '/tica-shield.svg'
+const TICA_SHIELD_SRC = '/tica-certified-shield.png'
 
 /**
  * TicaShield — TICA Certified™ official trust mark.

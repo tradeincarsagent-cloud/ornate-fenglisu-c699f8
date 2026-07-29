@@ -595,7 +595,7 @@ function LandingPage() {
       ] })
     ] }) }),
     /* @__PURE__ */ jsx("nav", { className: "relative w-full bg-background/80 border-b border-outline-variant/30 shadow-sm", children: /* @__PURE__ */ jsxs("div", { className: "max-w-container-max mx-auto px-4 md:px-margin-desktop flex justify-between items-center h-20 lg:h-36", children: [
-      /* @__PURE__ */ jsx("div", { className: "flex items-center flex-shrink-0 gap-4", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-[60px] sm:h-12 lg:h-32 w-auto max-w-[175px] sm:max-w-none object-contain logo-blend", src: "/tica-logo.svg" }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "flex items-center flex-shrink-0 gap-4", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-[60px] sm:h-12 lg:h-32 w-auto max-w-[175px] sm:max-w-none object-contain logo-blend", src: "/tica-logo.png" }) }) }),
       /* @__PURE__ */ jsxs("div", { className: "hidden lg:flex items-center gap-8 mx-6", children: [
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#how-it-works", children: "How It Works" }),
         /* @__PURE__ */ jsx("a", { className: "font-body-md text-on-surface-variant hover:text-primary transition-colors duration-300", href: "#ai-technology", children: "AI Technology" }),
@@ -1227,7 +1227,7 @@ function LandingPage() {
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-10 text-center", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-5", children: [
             /* @__PURE__ */ jsx("span", { className: "font-label-caps text-label-caps tracking-widest block uppercase text-on-surface-variant/80", children: "Trusted AI Certification" }),
-            /* @__PURE__ */ jsx("img", { src: "/tica-shield.svg", alt: "TICA Certified shield", className: "tica-certified-shield h-auto w-36", decoding: "async" }),
+            /* @__PURE__ */ jsx("img", { src: "/tica-certified-shield.png", alt: "TICA Certified shield", className: "tica-certified-shield h-auto w-36", decoding: "async" }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
               /* @__PURE__ */ jsx("p", { className: "font-semibold text-xl text-white tracking-wide", children: "Professional AI Buying Confidence" }),
               /* @__PURE__ */ jsx("p", { className: "text-on-surface-variant font-medium", children: "Only opportunities that pass TICA's AI confidence analysis receive the TICA Certified™ badge before being recommended." })
@@ -1262,7 +1262,7 @@ function LandingPage() {
     ] }),
     /* @__PURE__ */ jsx("footer", { className: "bg-surface-container-lowest w-full py-20 max-md:py-14 border-t border-outline-variant/20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1200px] mx-auto px-margin-desktop grid grid-cols-1 md:flex md:flex-col md:items-center gap-12 md:gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-6 max-md:flex max-md:flex-col max-md:items-center max-md:gap-3 max-md:space-y-0 md:space-y-0 md:flex md:flex-col md:items-center md:gap-5", children: [
-        /* @__PURE__ */ jsx("div", { className: "relative flex items-center justify-center max-md:w-full md:mb-0 md:justify-center", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend", src: "/tica-logo.svg" }) }) }),
+        /* @__PURE__ */ jsx("div", { className: "relative flex items-center justify-center max-md:w-full md:mb-0 md:justify-center", children: /* @__PURE__ */ jsx("div", { className: "logo-bezel rounded-lg p-1", children: /* @__PURE__ */ jsx("img", { alt: "Trade In Cars Agent Logo", className: "h-16 md:h-20 lg:h-24 w-auto object-contain logo-blend", src: "/tica-logo.png" }) }) }),
         /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant max-w-sm max-md:max-w-[22rem] max-md:mx-auto max-md:text-center md:text-center", children: "The AI-powered vehicle sourcing platform for independent vehicle dealers." }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-px text-center max-md:pt-0.5", children: [
           /* @__PURE__ */ jsx("p", { className: "font-body-md text-body-md text-on-surface-variant", children: "© 2026 Trade in Cars Agent (TICA)" }),

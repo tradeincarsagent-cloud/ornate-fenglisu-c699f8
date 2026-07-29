@@ -10,12 +10,12 @@ export const Route = createRootRoute({
       { name: 'description', content: 'Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities, analyse market data, and source profitable stock faster than ever.' },
       { property: 'og:title', content: 'Trade In Cars Agent | AI-Powered Dealer Stock Acquisition' },
       { property: 'og:description', content: 'Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities and source profitable stock faster.' },
-      { property: 'og:image', content: '/tica-shield.svg' },
+      { property: 'og:image', content: '/tica-certified-shield.png' },
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: 'Trade In Cars Agent | AI-Powered Dealer Stock Acquisition' },
       { name: 'twitter:description', content: 'Trade In Cars Agent (TICA) is the AI-powered vehicle sourcing platform for UK car dealerships. Identify high-confidence buying opportunities and source profitable stock faster.' },
-      { name: 'twitter:image', content: '/tica-shield.svg' },
+      { name: 'twitter:image', content: '/tica-certified-shield.png' },
     ],
     links: [
       {
