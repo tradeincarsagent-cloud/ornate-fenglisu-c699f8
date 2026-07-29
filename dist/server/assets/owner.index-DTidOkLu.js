@@ -443,7 +443,7 @@ function OwnerPage() {
     label: "Owner",
     isSectionLabel: true
   }, {
-    label: "Owner Command Centre",
+    label: "TICA Operations Centre",
     href: "/owner",
     active: true
   }, {
