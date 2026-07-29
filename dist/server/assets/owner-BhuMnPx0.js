@@ -356,6 +356,7 @@ function OwnerPage() {
     disabled: true
   }];
   return /* @__PURE__ */ jsx(PlatformShell, { navItems, children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-6 sm:space-y-8", children: [
+    /* @__PURE__ */ jsx("nav", { "aria-label": "Breadcrumb", className: "flex items-center gap-1.5", children: /* @__PURE__ */ jsx("span", { className: "text-[11px] font-medium text-on-surface-variant/50 tracking-wide", children: "Operations Centre" }) }),
     /* @__PURE__ */ jsxs("header", { children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-1 flex items-center gap-2", children: [
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Private" }),
@@ -381,9 +382,32 @@ function OwnerPage() {
               /* @__PURE__ */ jsx("span", { className: "uppercase tracking-[0.14em] text-[11px] font-semibold text-on-surface-variant/80", children: "Local Time" }),
               /* @__PURE__ */ jsx(LiveClock, {})
             ] })
-          ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-1 gap-2 rounded-xl border border-outline-variant/20 bg-surface-container-high/40 px-4 py-2.5 sm:grid-cols-3 sm:gap-x-6", children: [{
+            label: "AI Searches Running",
+            value: "34"
+          }, {
+            label: "Vehicles Scanned Today",
+            value: "84,312"
+          }, {
+            label: "New Opportunities Today",
+            value: "1,047"
+          }].map((stat) => /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-2", children: [
+            /* @__PURE__ */ jsx("span", { className: "text-sm font-bold tabular-nums text-on-surface", children: stat.value }),
+            /* @__PURE__ */ jsx("span", { className: "text-[11px] text-on-surface-variant/60", children: stat.label })
+          ] }, stat.label)) })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "flex shrink-0 items-start md:justify-end", children: /* @__PURE__ */ jsx(TicaShield, {}) })
+        /* @__PURE__ */ jsxs("div", { className: "flex shrink-0 flex-col items-center gap-2 md:items-end", children: [
+          /* @__PURE__ */ jsx(TicaShield, {}),
+          /* @__PURE__ */ jsxs("div", { className: "text-center md:text-right", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/50", children: "Platform Status" }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-0.5 flex items-center justify-center gap-1.5 md:justify-end", children: [
+              /* @__PURE__ */ jsx("span", { className: "h-1.5 w-1.5 rounded-full bg-emerald-400", "aria-hidden": "true" }),
+              /* @__PURE__ */ jsx("span", { className: "text-xs font-medium text-emerald-300", children: "Production" })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[10px] text-on-surface-variant/40", children: "Version 1.0" })
+          ] })
+        ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-3 rounded-xl border border-primary/15 bg-primary/5 px-4 py-3", children: [
         /* @__PURE__ */ jsx("span", { className: "text-lg", "aria-hidden": "true", children: "🔐" }),

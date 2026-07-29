@@ -246,6 +246,11 @@ function OwnerPage() {
     <PlatformShell navItems={navItems}>
       <div className="mx-auto w-full max-w-container-max space-y-6 sm:space-y-8">
 
+        {/* ── Breadcrumb ─────────────────────────────────────────────── */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5">
+          <span className="text-[11px] font-medium text-on-surface-variant/50 tracking-wide">Operations Centre</span>
+        </nav>
+
         {/* ── Header ─────────────────────────────────────────────────── */}
         <header>
           <div className="mb-1 flex items-center gap-2">
@@ -281,9 +286,30 @@ function OwnerPage() {
                   <LiveClock />
                 </div>
               </div>
+              {/* ── Executive Snapshot ───────────────────────────────── */}
+              <div className="mt-3 grid grid-cols-1 gap-2 rounded-xl border border-outline-variant/20 bg-surface-container-high/40 px-4 py-2.5 sm:grid-cols-3 sm:gap-x-6">
+                {([
+                  { label: 'AI Searches Running', value: '34' },
+                  { label: 'Vehicles Scanned Today', value: '84,312' },
+                  { label: 'New Opportunities Today', value: '1,047' },
+                ] as const).map((stat) => (
+                  <div key={stat.label} className="flex items-baseline gap-2">
+                    <span className="text-sm font-bold tabular-nums text-on-surface">{stat.value}</span>
+                    <span className="text-[11px] text-on-surface-variant/60">{stat.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex shrink-0 items-start md:justify-end">
+            <div className="flex shrink-0 flex-col items-center gap-2 md:items-end">
               <TicaShield />
+              <div className="text-center md:text-right">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/50">Platform Status</p>
+                <div className="mt-0.5 flex items-center justify-center gap-1.5 md:justify-end">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+                  <span className="text-xs font-medium text-emerald-300">Production</span>
+                </div>
+                <p className="mt-0.5 text-[10px] text-on-surface-variant/40">Version 1.0</p>
+              </div>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3 rounded-xl border border-primary/15 bg-primary/5 px-4 py-3">
