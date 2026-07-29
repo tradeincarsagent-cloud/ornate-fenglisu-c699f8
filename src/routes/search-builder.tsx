@@ -510,9 +510,8 @@ function SearchBuilderPage() {
           </div>
         </div>
 
-        <div className="space-y-5 sm:space-y-8">
-          <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 xl:grid-cols-[1fr_340px]">
-            <div className="space-y-5 sm:space-y-8">
+        <div className="space-y-5 sm:space-y-8 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_340px]">
+          <div className="space-y-5 sm:space-y-8 lg:col-start-1 lg:row-start-1">
           {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
@@ -745,9 +744,8 @@ function SearchBuilderPage() {
             </div>
           </section>
             </div>
-          </div>
 
-          <div className="space-y-5 sm:space-y-8">
+          <div className="space-y-5 sm:space-y-8 lg:col-span-2 lg:row-start-2 lg:mt-8">
           {/* ── Section 3: Search Priority ───────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
             <div className="mb-5">
@@ -984,7 +982,7 @@ function SearchBuilderPage() {
           </div>
 
           {/* ── Mission Summary Sidebar ──────────────────────────────── */}
-          <aside className="mt-5 sm:mt-8 lg:mt-0">
+          <aside className="mt-5 sm:mt-8 lg:col-start-2 lg:row-start-1 lg:mt-0">
             <div>
             {/* AI Readiness Indicator */}
             <div className="mb-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
@@ -1041,7 +1039,7 @@ function SearchBuilderPage() {
             </div>
             </div>
           </aside>
-        </div>
+          </div>
         <button
           aria-label="Back to top"
           className="back-to-top-btn"

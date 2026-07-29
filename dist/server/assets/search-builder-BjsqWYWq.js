@@ -429,8 +429,8 @@ function SearchBuilderPage() {
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8", children: [
-      /* @__PURE__ */ jsx("div", { className: "lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 xl:grid-cols-[1fr_340px]", children: /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8", children: [
+    /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_340px]", children: [
+      /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8 lg:col-start-1 lg:row-start-1", children: [
         /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
             /* @__PURE__ */ jsx(StepMarker, { step: "01" }),
@@ -511,8 +511,8 @@ function SearchBuilderPage() {
             ] }) })
           ] })
         ] })
-      ] }) }),
-      /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8", children: [
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-8 lg:col-span-2 lg:row-start-2 lg:mt-8", children: [
         /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
             /* @__PURE__ */ jsx(StepMarker, { step: "03" }),
@@ -635,7 +635,7 @@ function SearchBuilderPage() {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("aside", { className: "mt-5 sm:mt-8 lg:mt-0", children: /* @__PURE__ */ jsxs("div", { children: [
+      /* @__PURE__ */ jsx("aside", { className: "mt-5 sm:mt-8 lg:col-start-2 lg:row-start-1 lg:mt-0", children: /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", children: [
           /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center justify-between gap-2", children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Readiness" }),
