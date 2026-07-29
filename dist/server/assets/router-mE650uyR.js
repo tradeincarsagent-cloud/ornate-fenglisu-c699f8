@@ -179,7 +179,7 @@ const $$splitComponentImporter$2 = () => import("./index-xs09mAor.js");
 const Route$2 = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./owner.index-Cg7S6Lok.js");
+const $$splitComponentImporter$1 = () => import("./owner.index-B9ZpTpMR.js");
 const Route$1 = createFileRoute("/owner/")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
