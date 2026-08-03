@@ -2,7 +2,7 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-C5-9jSk-.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-ZRinpF5O.js";
 const {
   featuredOpportunity
 } = opportunityIntelligencePlaceholder;
@@ -211,16 +211,16 @@ function OpportunityPage() {
           /* @__PURE__ */ jsx("span", { className: "text-body-sm font-semibold text-on-surface", children: "Analysis Complete" })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8", children: [
-        /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface sm:mb-5", children: "AI Buying Verdict" }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-5", children: [
-          /* @__PURE__ */ jsxs("div", { className: "verdict-card-premium flex flex-col items-center justify-center gap-3 rounded-2xl px-4 py-5 text-center sm:px-8 sm:py-8 lg:min-w-[320px]", children: [
+      /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-5", children: [
+        /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "AI Buying Verdict" }),
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "verdict-card-premium flex flex-col items-center justify-center gap-2.5 rounded-2xl px-4 py-4 text-center sm:px-5 sm:py-5 lg:min-w-[300px]", children: [
             /* @__PURE__ */ jsxs("div", { className: "traffic-light-shell", "aria-label": "AI buying verdict traffic light", children: [
               /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${isBuyVerdict ? "traffic-light-lens-buy-active" : ""}`, "aria-hidden": "true" }),
               /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${isReviewVerdict ? "traffic-light-lens-review-active" : ""}`, "aria-hidden": "true" }),
               /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${isPassVerdict ? "traffic-light-lens-pass-active" : ""}`, "aria-hidden": "true" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-1.5", children: [
+            /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary/80", children: "AI Buying Verdict" }),
               /* @__PURE__ */ jsx("p", { className: `text-[30px] font-semibold leading-none tracking-[0.02em] ${decisionVerdictClassName} ${decisionVerdictGlowClassName} sm:text-[40px]`, children: decisionActionDisplay }),
               /* @__PURE__ */ jsxs("p", { className: "text-body-sm font-body-sm text-on-surface", children: [
@@ -229,24 +229,71 @@ function OpportunityPage() {
               ] }),
               /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant", children: "Recommended Action by TICA AI" })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", "aria-label": "Verdict colour key", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-3 py-2.5 text-left", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", "aria-label": "Verdict colour key", children: [
               /* @__PURE__ */ jsxs("div", { className: "legend-traffic-light shrink-0", children: [
                 /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-green", "aria-hidden": "true" }),
                 /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-amber", "aria-hidden": "true" }),
                 /* @__PURE__ */ jsx("div", { className: "legend-traffic-light-lens legend-lens-red", "aria-hidden": "true" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[6px] py-[7px] text-xs font-semibold leading-none", children: [
-                /* @__PURE__ */ jsx("span", { className: "tica-decision-buy flex h-[30px] items-center", children: "BUY" }),
-                /* @__PURE__ */ jsx("span", { className: "tica-decision-review flex h-[30px] items-center", children: "REVIEW" }),
-                /* @__PURE__ */ jsx("span", { className: "tica-decision-pass flex h-[30px] items-center", children: "PASS" })
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-[5px] py-[5px] text-xs font-semibold leading-none", children: [
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-buy flex h-[26px] items-center", children: "BUY" }),
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-review flex h-[26px] items-center", children: "REVIEW" }),
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-pass flex h-[26px] items-center", children: "PASS" })
               ] })
             ] }) }),
-            /* @__PURE__ */ jsx("div", { className: "verdict-metrics-group mt-1 grid w-full grid-cols-2 auto-rows-fr gap-2", children: verdictMetrics.map((metric, index) => /* @__PURE__ */ jsxs("div", { className: `flex h-full min-h-[88px] flex-col justify-center rounded-xl border bg-surface-container-high px-3 py-3 text-center ${index === 0 ? "border-primary/20" : "border-outline-variant/25"}`, children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.08em] text-on-surface-variant sm:tracking-[0.15em]", children: metric.label }),
-              /* @__PURE__ */ jsx("p", { className: `mt-1 text-body-md font-semibold sm:text-body-lg ${metric.valueClassName}`, children: metric.value })
+            /* @__PURE__ */ jsx("div", { className: "verdict-metrics-group grid w-full grid-cols-2 gap-2", children: verdictMetrics.map((metric, index) => /* @__PURE__ */ jsxs("div", { className: `flex flex-col justify-center rounded-xl border bg-surface-container-high px-3 py-2.5 text-center ${index === 0 ? "border-primary/20" : "border-outline-variant/25"}`, children: [
+              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.08em] text-on-surface-variant sm:tracking-[0.12em]", children: metric.label }),
+              /* @__PURE__ */ jsx("p", { className: `mt-1 text-body-sm font-semibold sm:text-body-md ${metric.valueClassName}`, children: metric.value })
             ] }, metric.label)) })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "flex min-w-0 flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:px-6 sm:py-6", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface-variant", children: featuredOpportunity.verdictNarrative }) })
+          /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 flex-1 flex-col rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:px-5 sm:py-5", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "TICA Executive Recommendation" }),
+            /* @__PURE__ */ jsxs("ul", { className: "flex-1 space-y-2", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  "Asking price ",
+                  featuredOpportunity.listPriceDisplay,
+                  " below estimated market value (",
+                  featuredOpportunity.estimatedRetailValueDisplay,
+                  ")"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  "Estimated profit ",
+                  featuredOpportunity.estimatedGrossProfitDisplay,
+                  " exceeds target"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  "Strong current market demand — ",
+                  featuredOpportunity.demandRatingDisplay
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  "Low overall buying risk — ",
+                  featuredOpportunity.riskLevel
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  "Estimated retail margin is excellent — ",
+                  featuredOpportunity.scoring.estimatedProfitScore.status
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-4 border-t border-outline-variant/25 pt-4", children: [
+              /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Recommended Action" }),
+              /* @__PURE__ */ jsx("p", { className: "text-body-md font-semibold text-on-surface", children: "Contact the seller today." })
+            ] })
+          ] })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4", children: [

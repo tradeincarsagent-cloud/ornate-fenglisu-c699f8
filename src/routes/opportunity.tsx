@@ -247,16 +247,16 @@ function OpportunityPage() {
           )}
         </section>
 
-        <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8">
-          <h2 className="mb-4 text-headline-md font-headline-md text-on-surface sm:mb-5">AI Buying Verdict</h2>
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-5">
-            <div className="verdict-card-premium flex flex-col items-center justify-center gap-3 rounded-2xl px-4 py-5 text-center sm:px-8 sm:py-8 lg:min-w-[320px]">
+        <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-5">
+          <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">AI Buying Verdict</h2>
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-4">
+            <div className="verdict-card-premium flex flex-col items-center justify-center gap-2.5 rounded-2xl px-4 py-4 text-center sm:px-5 sm:py-5 lg:min-w-[300px]">
               <div className="traffic-light-shell" aria-label="AI buying verdict traffic light">
                 <div className={`traffic-light-lens ${isBuyVerdict ? 'traffic-light-lens-buy-active' : ''}`} aria-hidden="true" />
                 <div className={`traffic-light-lens ${isReviewVerdict ? 'traffic-light-lens-review-active' : ''}`} aria-hidden="true" />
                 <div className={`traffic-light-lens ${isPassVerdict ? 'traffic-light-lens-pass-active' : ''}`} aria-hidden="true" />
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.18em] text-primary/80">AI Buying Verdict</p>
                 <p className={`text-[30px] font-semibold leading-none tracking-[0.02em] ${decisionVerdictClassName} ${decisionVerdictGlowClassName} sm:text-[40px]`}>
                   {decisionActionDisplay}
@@ -264,7 +264,7 @@ function OpportunityPage() {
                 <p className="text-body-sm font-body-sm text-on-surface">TICA Confidence: {featuredOpportunity.confidenceDisplay}</p>
                 <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">Recommended Action by TICA AI</p>
               </div>
-              <div className="w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-4 py-3 text-left">
+              <div className="w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-3 py-2.5 text-left">
                 {/* Compact visual traffic light legend – shown on all screen sizes */}
                 <div className="flex items-center gap-3" aria-label="Verdict colour key">
                   <div className="legend-traffic-light shrink-0">
@@ -272,31 +272,55 @@ function OpportunityPage() {
                     <div className="legend-traffic-light-lens legend-lens-amber" aria-hidden="true" />
                     <div className="legend-traffic-light-lens legend-lens-red" aria-hidden="true" />
                   </div>
-                  <div className="flex flex-col gap-[6px] py-[7px] text-xs font-semibold leading-none">
-                    <span className="tica-decision-buy flex h-[30px] items-center">BUY</span>
-                    <span className="tica-decision-review flex h-[30px] items-center">REVIEW</span>
-                    <span className="tica-decision-pass flex h-[30px] items-center">PASS</span>
+                  <div className="flex flex-col gap-[5px] py-[5px] text-xs font-semibold leading-none">
+                    <span className="tica-decision-buy flex h-[26px] items-center">BUY</span>
+                    <span className="tica-decision-review flex h-[26px] items-center">REVIEW</span>
+                    <span className="tica-decision-pass flex h-[26px] items-center">PASS</span>
                   </div>
                 </div>
               </div>
-              <div className="verdict-metrics-group mt-1 grid w-full grid-cols-2 auto-rows-fr gap-2">
+              <div className="verdict-metrics-group grid w-full grid-cols-2 gap-2">
                 {verdictMetrics.map((metric, index) => (
                   <div
                     key={metric.label}
-                    className={`flex h-full min-h-[88px] flex-col justify-center rounded-xl border bg-surface-container-high px-3 py-3 text-center ${
+                    className={`flex flex-col justify-center rounded-xl border bg-surface-container-high px-3 py-2.5 text-center ${
                       index === 0 ? 'border-primary/20' : 'border-outline-variant/25'
                     }`}
                   >
-                    <p className="text-label-caps font-label-caps uppercase tracking-[0.08em] text-on-surface-variant sm:tracking-[0.15em]">{metric.label}</p>
-                    <p className={`mt-1 text-body-md font-semibold sm:text-body-lg ${metric.valueClassName}`}>{metric.value}</p>
+                    <p className="text-label-caps font-label-caps uppercase tracking-[0.08em] text-on-surface-variant sm:tracking-[0.12em]">{metric.label}</p>
+                    <p className={`mt-1 text-body-sm font-semibold sm:text-body-md ${metric.valueClassName}`}>{metric.value}</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="flex min-w-0 flex-1 items-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:px-6 sm:py-6">
-              <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
-                {featuredOpportunity.verdictNarrative}
-              </p>
+            <div className="flex min-w-0 flex-1 flex-col rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:px-5 sm:py-5">
+              <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Executive Recommendation</p>
+              <ul className="flex-1 space-y-2">
+                <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
+                  <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
+                  <span>Asking price {featuredOpportunity.listPriceDisplay} below estimated market value ({featuredOpportunity.estimatedRetailValueDisplay})</span>
+                </li>
+                <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
+                  <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
+                  <span>Estimated profit {featuredOpportunity.estimatedGrossProfitDisplay} exceeds target</span>
+                </li>
+                <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
+                  <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
+                  <span>Strong current market demand — {featuredOpportunity.demandRatingDisplay}</span>
+                </li>
+                <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
+                  <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
+                  <span>Low overall buying risk — {featuredOpportunity.riskLevel}</span>
+                </li>
+                <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
+                  <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
+                  <span>Estimated retail margin is excellent — {featuredOpportunity.scoring.estimatedProfitScore.status}</span>
+                </li>
+              </ul>
+              <div className="mt-4 border-t border-outline-variant/25 pt-4">
+                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Recommended Action</p>
+                <p className="text-body-md font-semibold text-on-surface">Contact the seller today.</p>
+              </div>
             </div>
           </div>
         </section>

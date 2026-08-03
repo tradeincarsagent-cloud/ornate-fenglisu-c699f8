@@ -56,7 +56,6 @@ const opportunityIntelligencePlaceholder = {
       "Strong resale potential.",
       "Located only 42 miles away."
     ],
-    verdictNarrative: `"This vehicle currently represents one of today's strongest buying opportunities based on market pricing, dealer demand and estimated resale margin. We recommend reviewing vehicle history and service records before proceeding."`,
     analysisSummary: "This M3 Competition presents a strong margin profile with high market demand, stable retail velocity, and a purchase price positioned well below projected forecourt value. The pricing spread and demand indicators support a confident stock turn opportunity for premium performance inventory.",
     buyingSummary: "This opportunity has been ranked as a BUY because the asking price is below current market value, dealer demand is strong, and estimated resale margins are above average. Before purchasing, we recommend confirming MOT history, service records and vehicle history.",
     negotiation: {
