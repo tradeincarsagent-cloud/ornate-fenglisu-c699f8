@@ -2,7 +2,7 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-C5-9jSk-.js";
+import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-ZRinpF5O.js";
 import { l as loadMission } from "./mission-DGVAjlBD.js";
 const missionStatusConfig = {
   Monitoring: {
