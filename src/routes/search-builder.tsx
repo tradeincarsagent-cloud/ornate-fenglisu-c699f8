@@ -662,90 +662,103 @@ function SearchBuilderPage() {
               aria-describedby={!hasSelectedVehicleCategory ? stepTwoInstructionId : undefined}
               className={`min-w-0 border-0 p-0 ${hasSelectedVehicleCategory ? '' : 'pointer-events-none'}`}
             >
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Which make?</label>
-                <SearchableCombobox
-                  id="make"
-                  options={makeOptions}
-                  value={make}
-                  onChange={handleMakeChange}
-                  placeholder={SELECT_MAKE_OPTION}
-                  clearOptionLabel={SELECT_MAKE_OPTION}
-                  disabled={!hasSelectedVehicleCategory}
-                />
-                {isOtherMake && (
-                  <input
-                    id="manual-make"
-                    type="text"
-                    placeholder="Enter Make"
-                    value={manualMake}
-                    onChange={(e) => setManualMake(e.target.value)}
-                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                  />
-                )}
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Which model?</label>
-                <SearchableCombobox
-                  id="model"
-                  options={modelOptions}
-                  value={model}
-                  onChange={handleModelChange}
-                  placeholder={make ? SELECT_MODEL_OPTION : 'Select a make first'}
-                  clearOptionLabel={SELECT_MODEL_OPTION}
-                  disabled={!hasSelectedVehicleCategory || !make || modelOptions.length === 0}
-                />
-                {isOtherModel && (
-                  <input
-                    id="manual-model"
-                    type="text"
-                    placeholder="Enter Model"
-                    value={manualModel}
-                    onChange={(e) => setManualModel(e.target.value)}
-                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                  />
-                )}
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-budget">What's your ideal budget?</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
-                  <input
-                    id="max-budget"
-                    type="number"
-                    placeholder="e.g. 30000"
-                    min="0"
-                    value={maxBudget}
-                    onChange={(e) => { setMaxBudget(e.target.value); if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== 'budget')) }}
-                    className={`min-h-11 w-full rounded-lg border bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:ring-1 ${hasError('budget') ? 'border-error/60 focus:border-error focus:ring-error/30' : 'border-outline-variant/40 focus:border-primary focus:ring-primary/30'}`}
-                  />
+            <div className="flex flex-col gap-4">
+              {/* Group 1: Vehicle Selection */}
+              <div>
+                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant/60">Vehicle Selection</p>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Make</label>
+                    <SearchableCombobox
+                      id="make"
+                      options={makeOptions}
+                      value={make}
+                      onChange={handleMakeChange}
+                      placeholder={SELECT_MAKE_OPTION}
+                      clearOptionLabel={SELECT_MAKE_OPTION}
+                      disabled={!hasSelectedVehicleCategory}
+                    />
+                    {isOtherMake && (
+                      <input
+                        id="manual-make"
+                        type="text"
+                        placeholder="Enter Make"
+                        value={manualMake}
+                        onChange={(e) => setManualMake(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      />
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
+                    <SearchableCombobox
+                      id="model"
+                      options={modelOptions}
+                      value={model}
+                      onChange={handleModelChange}
+                      placeholder={make ? SELECT_MODEL_OPTION : 'Select a make first'}
+                      clearOptionLabel={SELECT_MODEL_OPTION}
+                      disabled={!hasSelectedVehicleCategory || !make || modelOptions.length === 0}
+                    />
+                    {isOtherModel && (
+                      <input
+                        id="manual-model"
+                        type="text"
+                        placeholder="Enter Model"
+                        value={manualModel}
+                        onChange={(e) => setManualModel(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      />
+                    )}
+                  </div>
                 </div>
-                {hasError('budget') && (
-                  <p className="text-body-sm font-body-sm text-error">
-                    {validationErrors.find((e) => e.field === 'budget')?.message}
-                  </p>
-                )}
               </div>
-              <div className="flex flex-col gap-2 sm:col-span-2 lg:col-span-3 xl:col-span-1">
-                <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="min-profit">What's your minimum profit target?</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
-                  <input
-                    id="min-profit"
-                    type="number"
-                    placeholder="e.g. 1500"
-                    min="0"
-                    value={minProfit}
-                    onChange={(e) => setMinProfit(e.target.value)}
-                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                  />
+
+              {/* Group 2: Buying Criteria */}
+              <div>
+                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant/60">Buying Criteria</p>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-budget">Budget</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
+                      <input
+                        id="max-budget"
+                        type="number"
+                        placeholder="e.g. 30000"
+                        min="0"
+                        value={maxBudget}
+                        onChange={(e) => { setMaxBudget(e.target.value); if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== 'budget')) }}
+                        className={`min-h-11 w-full rounded-lg border bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:ring-1 ${hasError('budget') ? 'border-error/60 focus:border-error focus:ring-error/30' : 'border-outline-variant/40 focus:border-primary focus:ring-primary/30'}`}
+                      />
+                    </div>
+                    {hasError('budget') && (
+                      <p className="text-body-sm font-body-sm text-error">
+                        {validationErrors.find((e) => e.field === 'budget')?.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="min-profit">Minimum Profit</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
+                      <input
+                        id="min-profit"
+                        type="number"
+                        placeholder="e.g. 1500"
+                        min="0"
+                        value={minProfit}
+                        onChange={(e) => setMinProfit(e.target.value)}
+                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* ── Advanced Filters ─────────────────────────────────────── */}
-            <div className="mt-5 rounded-xl border border-outline-variant/30 bg-surface-container-high">
+            <div className="mt-4 rounded-xl border border-outline-variant/30 bg-surface-container-high">
               <button
                 type="button"
                 onClick={() => setAdvancedOpen((o) => !o)}
