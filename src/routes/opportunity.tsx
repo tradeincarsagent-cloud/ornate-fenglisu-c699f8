@@ -63,6 +63,9 @@ function OpportunityPage() {
   const [buyingSummaryLead, buyingSummaryTail = ''] = featuredOpportunity.buyingSummary.split(decisionAction)
 
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [analysisStep, setAnalysisStep] = useState(0)
+  const [analysisComplete, setAnalysisComplete] = useState(false)
+  const [dotPulsing, setDotPulsing] = useState(true)
 
   useEffect(() => {
     const onScroll = () => {
@@ -71,6 +74,16 @@ function OpportunityPage() {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = []
+    for (let i = 0; i < 5; i++) {
+      timers.push(setTimeout(() => setAnalysisStep(i + 1), 200 + i * 400))
+    }
+    timers.push(setTimeout(() => setAnalysisComplete(true), 200 + 4 * 400 + 600))
+    timers.push(setTimeout(() => setDotPulsing(false), 2500))
+    return () => timers.forEach(clearTimeout)
   }, [])
 
   const scrollToTop = () => {
@@ -186,6 +199,52 @@ function OpportunityPage() {
               </p>
             </div>
           </div>
+        </section>
+
+        {/* AI Analysis Status Banner */}
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6" aria-label="TICA analysis status">
+          <div className="mb-4 flex items-center gap-2.5">
+            <span
+              className={`inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--tica-decision-buy)] ${dotPulsing ? 'tica-status-dot-pulse' : ''}`}
+              aria-hidden="true"
+            />
+            <p className="text-label-caps font-label-caps font-semibold uppercase tracking-widest text-on-surface">
+              TICA Analysis Complete
+            </p>
+          </div>
+          <div className="space-y-2 pl-5">
+            {(['Market Analysis', 'Pricing Validation', 'Demand Analysis', 'Profit Projection', 'Risk Assessment'] as const).map(
+              (step, index) => (
+                <div
+                  key={step}
+                  className="flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant"
+                  style={{
+                    opacity: analysisStep > index ? 1 : 0,
+                    transform: analysisStep > index ? 'translateY(0)' : 'translateY(5px)',
+                    transition: 'opacity 0.35s ease-out, transform 0.35s ease-out',
+                  }}
+                >
+                  <span className="tica-decision-buy font-semibold">✓</span>
+                  <span>{step}</span>
+                </div>
+              ),
+            )}
+          </div>
+          <p
+            className="mt-4 pl-5 text-body-sm font-body-sm text-on-surface-variant/70"
+            style={{
+              opacity: analysisStep >= 5 ? 1 : 0,
+              transition: 'opacity 0.4s ease-out',
+            }}
+          >
+            Completed in 12.4 seconds
+          </p>
+          {analysisComplete && (
+            <div className="tica-analysis-complete-reveal mt-3 flex items-center gap-2 pl-5">
+              <span className="tica-decision-buy font-semibold">✔</span>
+              <span className="text-body-sm font-semibold text-on-surface">Analysis Complete</span>
+            </div>
+          )}
         </section>
 
         <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8">

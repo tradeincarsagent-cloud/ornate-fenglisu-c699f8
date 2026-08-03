@@ -69,6 +69,9 @@ function OpportunityPage() {
   const vehicleInfo = featuredOpportunity.vehicleInfo;
   const [buyingSummaryLead, buyingSummaryTail = ""] = featuredOpportunity.buyingSummary.split(decisionAction);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [analysisStep, setAnalysisStep] = useState(0);
+  const [analysisComplete, setAnalysisComplete] = useState(false);
+  const [dotPulsing, setDotPulsing] = useState(true);
   useEffect(() => {
     const onScroll = () => {
       setShowBackToTop(window.scrollY > 300);
@@ -78,6 +81,15 @@ function OpportunityPage() {
       passive: true
     });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  useEffect(() => {
+    const timers = [];
+    for (let i = 0; i < 5; i++) {
+      timers.push(setTimeout(() => setAnalysisStep(i + 1), 200 + i * 400));
+    }
+    timers.push(setTimeout(() => setAnalysisComplete(true), 200 + 4 * 400 + 600));
+    timers.push(setTimeout(() => setDotPulsing(false), 2500));
+    return () => timers.forEach(clearTimeout);
   }, []);
   const scrollToTop = () => {
     window.scrollTo({
@@ -175,6 +187,28 @@ function OpportunityPage() {
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Days to Sell" }),
             /* @__PURE__ */ jsx("p", { className: "mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: featuredOpportunity.daysToSellDisplay })
           ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", "aria-label": "TICA analysis status", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center gap-2.5", children: [
+          /* @__PURE__ */ jsx("span", { className: `inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--tica-decision-buy)] ${dotPulsing ? "tica-status-dot-pulse" : ""}`, "aria-hidden": "true" }),
+          /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps font-semibold uppercase tracking-widest text-on-surface", children: "TICA Analysis Complete" })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "space-y-2 pl-5", children: ["Market Analysis", "Pricing Validation", "Demand Analysis", "Profit Projection", "Risk Assessment"].map((step, index) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant", style: {
+          opacity: analysisStep > index ? 1 : 0,
+          transform: analysisStep > index ? "translateY(0)" : "translateY(5px)",
+          transition: "opacity 0.35s ease-out, transform 0.35s ease-out"
+        }, children: [
+          /* @__PURE__ */ jsx("span", { className: "tica-decision-buy font-semibold", children: "✓" }),
+          /* @__PURE__ */ jsx("span", { children: step })
+        ] }, step)) }),
+        /* @__PURE__ */ jsx("p", { className: "mt-4 pl-5 text-body-sm font-body-sm text-on-surface-variant/70", style: {
+          opacity: analysisStep >= 5 ? 1 : 0,
+          transition: "opacity 0.4s ease-out"
+        }, children: "Completed in 12.4 seconds" }),
+        analysisComplete && /* @__PURE__ */ jsxs("div", { className: "tica-analysis-complete-reveal mt-3 flex items-center gap-2 pl-5", children: [
+          /* @__PURE__ */ jsx("span", { className: "tica-decision-buy font-semibold", children: "✔" }),
+          /* @__PURE__ */ jsx("span", { className: "text-body-sm font-semibold text-on-surface", children: "Analysis Complete" })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8", children: [
