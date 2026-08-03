@@ -14,8 +14,13 @@ export const Route = createFileRoute('/search-builder')({
   component: SearchBuilderPage,
 })
 
-const VEHICLE_TYPES = ['Cars', 'Classic Cars', 'Pickups', 'Vans & Light Commercials', 'Motorcycles'] as const
+const AVAILABLE_VEHICLE_TYPES = ['Cars', 'Classic Cars', 'Pickups', 'Vans & Light Commercials'] as const
+const COMING_SOON_VEHICLE_TYPES = ['Motorcycles'] as const
+const VEHICLE_TYPES = [...AVAILABLE_VEHICLE_TYPES, ...COMING_SOON_VEHICLE_TYPES] as const
 type VehicleType = (typeof VEHICLE_TYPES)[number]
+type AvailableVehicleType = (typeof AVAILABLE_VEHICLE_TYPES)[number]
+
+const AVAILABLE_VEHICLE_TYPE_SET = new Set<VehicleType>(AVAILABLE_VEHICLE_TYPES)
 
 const VEHICLE_TYPE_EMOJI: Record<VehicleType, string> = {
   'Cars': '🚗',
@@ -343,7 +348,7 @@ function SearchableCombobox({
 }
 
 function SearchBuilderPage() {
-  const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleType | null>(null)
+  const [selectedVehicleType, setSelectedVehicleType] = useState<AvailableVehicleType | null>(null)
   const [make, setMake] = useState('')
   const [model, setModel] = useState('')
   const [yearFrom, setYearFrom] = useState('')
@@ -373,7 +378,10 @@ function SearchBuilderPage() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const activeVehicleType: VehicleType = selectedVehicleType ?? 'Cars'
+  const hasSelectedVehicleCategory =
+    selectedVehicleType !== null && AVAILABLE_VEHICLE_TYPE_SET.has(selectedVehicleType)
+  const activeVehicleType: AvailableVehicleType = hasSelectedVehicleCategory ? selectedVehicleType : 'Cars'
+  const stepTwoInstructionId = 'vehicle-category-required-message'
   const isOtherMake = make === OTHER_MAKE_OPTION
   const baseModelOptions = !isOtherMake && make ? MODELS_BY_VEHICLE_TYPE[activeVehicleType][make] ?? [] : []
   const makeOptions = [...MAKES_BY_VEHICLE_TYPE[activeVehicleType], OTHER_MAKE_OPTION]
@@ -381,12 +389,15 @@ function SearchBuilderPage() {
 
   const isOtherModel = model === OTHER_MODEL_OPTION
 
-  const handleVehicleTypeChange = (type: VehicleType) => {
+  const handleVehicleTypeChange = (type: AvailableVehicleType) => {
     setSelectedVehicleType(type)
     setMake('')
     setModel('')
     setManualMake('')
     setManualModel('')
+    if (validationErrors.length > 0) {
+      setValidationErrors((prev) => prev.filter((error) => error.field !== 'vehicleType'))
+    }
   }
 
   const handleMakeChange = (val: string) => {
@@ -475,7 +486,15 @@ function SearchBuilderPage() {
       selectedMarketplaces: [...PHASE_ONE_SOURCES],
     }
 
-    const errors = validateMissionInput(input)
+    const errors = validateMissionInput(input).filter((error) => error.field !== 'vehicleType')
+
+    if (!hasSelectedVehicleCategory) {
+      errors.unshift({
+        field: 'vehicleType',
+        message: 'Select Cars, Classic Cars, Pickups, or Vans & Light Commercials to continue.',
+      })
+    }
+
     setValidationErrors(errors)
 
     if (errors.length > 0) {
@@ -575,21 +594,33 @@ function SearchBuilderPage() {
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
               {VEHICLE_TYPES.map((type) => {
                 const selected = selectedVehicleType === type
+                const comingSoon = !AVAILABLE_VEHICLE_TYPE_SET.has(type)
                 return (
                   <button
                     key={type}
                     type="button"
-                    onClick={() => handleVehicleTypeChange(type)}
+                    onClick={() => {
+                      if (!comingSoon) handleVehicleTypeChange(type as AvailableVehicleType)
+                    }}
+                    disabled={comingSoon}
+                    aria-disabled={comingSoon}
                     className={`group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${
-                      selected
+                      comingSoon
+                        ? 'cursor-not-allowed border-outline-variant/20 bg-surface-container text-on-surface-variant opacity-60'
+                        : selected
                         ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
                         : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:bg-surface-container-high hover:text-on-surface'
                     }`}
-                    aria-pressed={selected}
+                    aria-pressed={comingSoon ? undefined : selected}
                   >
                     {selected && (
                       <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary">
                         <CheckIcon />
+                      </span>
+                    )}
+                    {comingSoon && (
+                      <span className="absolute right-3 top-3 rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant">
+                        Coming Soon
                       </span>
                     )}
                     <span className="text-2xl">
@@ -603,7 +634,10 @@ function SearchBuilderPage() {
           </section>
 
           {/* ── Section 2: Vehicle Details ───────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+          <section
+            className={`rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasSelectedVehicleCategory ? '' : 'opacity-60'}`}
+            aria-disabled={!hasSelectedVehicleCategory}
+          >
             <div className="mb-5">
               <StepMarker step="02" />
               <h2 className="text-headline-md font-headline-md text-on-surface">Which make, model and budget?</h2>
@@ -611,6 +645,23 @@ function SearchBuilderPage() {
                 Narrow down the vehicle and set your budget and profit target so your AI only surfaces opportunities that match your goals.
               </p>
             </div>
+            {!hasSelectedVehicleCategory && (
+              <div
+                id={stepTwoInstructionId}
+                className="mb-5 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3"
+                role="status"
+              >
+                <p className="text-body-sm font-body-sm text-on-surface-variant">
+                  Please select a vehicle category in Step 01 to continue.
+                </p>
+              </div>
+            )}
+            <fieldset
+              disabled={!hasSelectedVehicleCategory}
+              aria-disabled={!hasSelectedVehicleCategory}
+              aria-describedby={!hasSelectedVehicleCategory ? stepTwoInstructionId : undefined}
+              className={`min-w-0 border-0 p-0 ${hasSelectedVehicleCategory ? '' : 'pointer-events-none'}`}
+            >
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col gap-2">
                 <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Which make?</label>
@@ -621,6 +672,7 @@ function SearchBuilderPage() {
                   onChange={handleMakeChange}
                   placeholder={SELECT_MAKE_OPTION}
                   clearOptionLabel={SELECT_MAKE_OPTION}
+                  disabled={!hasSelectedVehicleCategory}
                 />
                 {isOtherMake && (
                   <input
@@ -642,7 +694,7 @@ function SearchBuilderPage() {
                   onChange={handleModelChange}
                   placeholder={make ? SELECT_MODEL_OPTION : 'Select a make first'}
                   clearOptionLabel={SELECT_MODEL_OPTION}
-                  disabled={!make || modelOptions.length === 0}
+                  disabled={!hasSelectedVehicleCategory || !make || modelOptions.length === 0}
                 />
                 {isOtherModel && (
                   <input
@@ -697,7 +749,8 @@ function SearchBuilderPage() {
               <button
                 type="button"
                 onClick={() => setAdvancedOpen((o) => !o)}
-                className="flex w-full items-center justify-between px-5 py-4 text-left"
+                disabled={!hasSelectedVehicleCategory}
+                className={`flex w-full items-center justify-between px-5 py-4 text-left ${hasSelectedVehicleCategory ? '' : 'cursor-not-allowed'}`}
                 aria-expanded={advancedOpen}
               >
                 <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Refine Further</span>
@@ -800,6 +853,7 @@ function SearchBuilderPage() {
                 </div>
               )}
             </div>
+            </fieldset>
           </section>
             </div>
 
