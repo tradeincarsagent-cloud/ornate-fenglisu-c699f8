@@ -510,37 +510,47 @@ function SearchBuilderPage() {
             ] }),
             !hasSelectedVehicleCategory && /* @__PURE__ */ jsx("div", { id: stepTwoInstructionId, className: "mb-5 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3", role: "status", children: /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "Please select a vehicle category in Step 01 to continue." }) }),
             /* @__PURE__ */ jsxs("fieldset", { disabled: !hasSelectedVehicleCategory, "aria-disabled": !hasSelectedVehicleCategory, "aria-describedby": !hasSelectedVehicleCategory ? stepTwoInstructionId : void 0, className: `min-w-0 border-0 p-0 ${hasSelectedVehicleCategory ? "" : "pointer-events-none"}`, children: [
-              /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Which make?" }),
-                  /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: makeOptions, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION, disabled: !hasSelectedVehicleCategory }),
-                  isOtherMake && /* @__PURE__ */ jsx("input", { id: "manual-make", type: "text", placeholder: "Enter Make", value: manualMake, onChange: (e) => setManualMake(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant/60", children: "Vehicle Selection" }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                      /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Make" }),
+                      /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: makeOptions, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION, disabled: !hasSelectedVehicleCategory }),
+                      isOtherMake && /* @__PURE__ */ jsx("input", { id: "manual-make", type: "text", placeholder: "Enter Make", value: manualMake, onChange: (e) => setManualMake(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                      /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Model" }),
+                      /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: handleModelChange, placeholder: make ? SELECT_MODEL_OPTION : "Select a make first", clearOptionLabel: SELECT_MODEL_OPTION, disabled: !hasSelectedVehicleCategory || !make || modelOptions.length === 0 }),
+                      isOtherModel && /* @__PURE__ */ jsx("input", { id: "manual-model", type: "text", placeholder: "Enter Model", value: manualModel, onChange: (e) => setManualModel(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                    ] })
+                  ] })
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Which model?" }),
-                  /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: handleModelChange, placeholder: make ? SELECT_MODEL_OPTION : "Select a make first", clearOptionLabel: SELECT_MODEL_OPTION, disabled: !hasSelectedVehicleCategory || !make || modelOptions.length === 0 }),
-                  isOtherModel && /* @__PURE__ */ jsx("input", { id: "manual-model", type: "text", placeholder: "Enter Model", value: manualModel, onChange: (e) => setManualModel(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-budget", children: "What's your ideal budget?" }),
-                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant", children: "£" }),
-                    /* @__PURE__ */ jsx("input", { id: "max-budget", type: "number", placeholder: "e.g. 30000", min: "0", value: maxBudget, onChange: (e) => {
-                      setMaxBudget(e.target.value);
-                      if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e2) => e2.field !== "budget"));
-                    }, className: `min-h-11 w-full rounded-lg border bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:ring-1 ${hasError("budget") ? "border-error/60 focus:border-error focus:ring-error/30" : "border-outline-variant/40 focus:border-primary focus:ring-primary/30"}` })
-                  ] }),
-                  hasError("budget") && /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "budget")?.message })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 sm:col-span-2 lg:col-span-3 xl:col-span-1", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "min-profit", children: "What's your minimum profit target?" }),
-                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant", children: "£" }),
-                    /* @__PURE__ */ jsx("input", { id: "min-profit", type: "number", placeholder: "e.g. 1500", min: "0", value: minProfit, onChange: (e) => setMinProfit(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant/60", children: "Buying Criteria" }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                      /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-budget", children: "Budget" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant", children: "£" }),
+                        /* @__PURE__ */ jsx("input", { id: "max-budget", type: "number", placeholder: "e.g. 30000", min: "0", value: maxBudget, onChange: (e) => {
+                          setMaxBudget(e.target.value);
+                          if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e2) => e2.field !== "budget"));
+                        }, className: `min-h-11 w-full rounded-lg border bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:ring-1 ${hasError("budget") ? "border-error/60 focus:border-error focus:ring-error/30" : "border-outline-variant/40 focus:border-primary focus:ring-primary/30"}` })
+                      ] }),
+                      hasError("budget") && /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "budget")?.message })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                      /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "min-profit", children: "Minimum Profit" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant", children: "£" }),
+                        /* @__PURE__ */ jsx("input", { id: "min-profit", type: "number", placeholder: "e.g. 1500", min: "0", value: minProfit, onChange: (e) => setMinProfit(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                      ] })
+                    ] })
                   ] })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "mt-5 rounded-xl border border-outline-variant/30 bg-surface-container-high", children: [
+              /* @__PURE__ */ jsxs("div", { className: "mt-4 rounded-xl border border-outline-variant/30 bg-surface-container-high", children: [
                 /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setAdvancedOpen((o) => !o), disabled: !hasSelectedVehicleCategory, className: `flex w-full items-center justify-between px-5 py-4 text-left ${hasSelectedVehicleCategory ? "" : "cursor-not-allowed"}`, "aria-expanded": advancedOpen, children: [
                   /* @__PURE__ */ jsx("span", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Refine Further" }),
                   /* @__PURE__ */ jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", className: `shrink-0 text-on-surface-variant transition-transform duration-200 ${advancedOpen ? "rotate-180" : ""}`, children: /* @__PURE__ */ jsx("polyline", { points: "6 9 12 15 18 9" }) })
