@@ -3,7 +3,10 @@ import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
 import { v as validateMissionInput, c as createMission, s as saveMission } from "./mission-DGVAjlBD.js";
-const VEHICLE_TYPES = ["Cars", "Classic Cars", "Pickups", "Vans & Light Commercials", "Motorcycles"];
+const AVAILABLE_VEHICLE_TYPES = ["Cars", "Classic Cars", "Pickups", "Vans & Light Commercials"];
+const COMING_SOON_VEHICLE_TYPES = ["Motorcycles"];
+const VEHICLE_TYPES = [...AVAILABLE_VEHICLE_TYPES, ...COMING_SOON_VEHICLE_TYPES];
+const AVAILABLE_VEHICLE_TYPE_SET = new Set(AVAILABLE_VEHICLE_TYPES);
 const VEHICLE_TYPE_EMOJI = {
   "Cars": "🚗",
   "Classic Cars": "🏎️",
@@ -265,7 +268,9 @@ function SearchBuilderPage() {
     });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const activeVehicleType = selectedVehicleType ?? "Cars";
+  const hasSelectedVehicleCategory = selectedVehicleType !== null && AVAILABLE_VEHICLE_TYPE_SET.has(selectedVehicleType);
+  const activeVehicleType = hasSelectedVehicleCategory ? selectedVehicleType : "Cars";
+  const stepTwoInstructionId = "vehicle-category-required-message";
   const isOtherMake = make === OTHER_MAKE_OPTION;
   const baseModelOptions = !isOtherMake && make ? MODELS_BY_VEHICLE_TYPE[activeVehicleType][make] ?? [] : [];
   const makeOptions = [...MAKES_BY_VEHICLE_TYPE[activeVehicleType], OTHER_MAKE_OPTION];
@@ -277,6 +282,9 @@ function SearchBuilderPage() {
     setModel("");
     setManualMake("");
     setManualModel("");
+    if (validationErrors.length > 0) {
+      setValidationErrors((prev) => prev.filter((error) => error.field !== "vehicleType"));
+    }
   };
   const handleMakeChange = (val) => {
     setMake(val);
@@ -373,7 +381,13 @@ function SearchBuilderPage() {
       notificationPreferences: Array.from(notifications),
       selectedMarketplaces: [...PHASE_ONE_SOURCES]
     };
-    const errors = validateMissionInput(input);
+    const errors = validateMissionInput(input).filter((error) => error.field !== "vehicleType");
+    if (!hasSelectedVehicleCategory) {
+      errors.unshift({
+        field: "vehicleType",
+        message: "Select Cars, Classic Cars, Pickups, or Vans & Light Commercials to continue."
+      });
+    }
     setValidationErrors(errors);
     if (errors.length > 0) {
       deployButtonRef.current?.scrollIntoView({
@@ -477,80 +491,87 @@ function SearchBuilderPage() {
             ] }),
             /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5", children: VEHICLE_TYPES.map((type) => {
               const selected = selectedVehicleType === type;
-              return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => handleVehicleTypeChange(type), className: `group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:bg-surface-container-high hover:text-on-surface"}`, "aria-pressed": selected, children: [
+              const comingSoon = !AVAILABLE_VEHICLE_TYPE_SET.has(type);
+              return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => {
+                if (!comingSoon) handleVehicleTypeChange(type);
+              }, disabled: comingSoon, "aria-disabled": comingSoon, className: `group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${comingSoon ? "cursor-not-allowed border-outline-variant/20 bg-surface-container text-on-surface-variant opacity-60" : selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:bg-surface-container-high hover:text-on-surface"}`, "aria-pressed": comingSoon ? void 0 : selected, children: [
                 selected && /* @__PURE__ */ jsx("span", { className: "absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
+                comingSoon && /* @__PURE__ */ jsx("span", { className: "absolute right-3 top-3 rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant", children: "Coming Soon" }),
                 /* @__PURE__ */ jsx("span", { className: "text-2xl", children: VEHICLE_TYPE_EMOJI[type] }),
                 /* @__PURE__ */ jsx("span", { className: "text-body-md font-body-md font-semibold", children: type })
               ] }, type);
             }) })
           ] }),
-          /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
+          /* @__PURE__ */ jsxs("section", { className: `rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasSelectedVehicleCategory ? "" : "opacity-60"}`, "aria-disabled": !hasSelectedVehicleCategory, children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-5", children: [
               /* @__PURE__ */ jsx(StepMarker, { step: "02" }),
               /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Which make, model and budget?" }),
               /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: "Narrow down the vehicle and set your budget and profit target so your AI only surfaces opportunities that match your goals." })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Which make?" }),
-                /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: makeOptions, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION }),
-                isOtherMake && /* @__PURE__ */ jsx("input", { id: "manual-make", type: "text", placeholder: "Enter Make", value: manualMake, onChange: (e) => setManualMake(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Which model?" }),
-                /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: handleModelChange, placeholder: make ? SELECT_MODEL_OPTION : "Select a make first", clearOptionLabel: SELECT_MODEL_OPTION, disabled: !make || modelOptions.length === 0 }),
-                isOtherModel && /* @__PURE__ */ jsx("input", { id: "manual-model", type: "text", placeholder: "Enter Model", value: manualModel, onChange: (e) => setManualModel(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-budget", children: "What's your ideal budget?" }),
-                /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                  /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant", children: "£" }),
-                  /* @__PURE__ */ jsx("input", { id: "max-budget", type: "number", placeholder: "e.g. 30000", min: "0", value: maxBudget, onChange: (e) => {
-                    setMaxBudget(e.target.value);
-                    if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e2) => e2.field !== "budget"));
-                  }, className: `min-h-11 w-full rounded-lg border bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:ring-1 ${hasError("budget") ? "border-error/60 focus:border-error focus:ring-error/30" : "border-outline-variant/40 focus:border-primary focus:ring-primary/30"}` })
+            !hasSelectedVehicleCategory && /* @__PURE__ */ jsx("div", { id: stepTwoInstructionId, className: "mb-5 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3", role: "status", children: /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: "Please select a vehicle category in Step 01 to continue." }) }),
+            /* @__PURE__ */ jsxs("fieldset", { disabled: !hasSelectedVehicleCategory, "aria-disabled": !hasSelectedVehicleCategory, "aria-describedby": !hasSelectedVehicleCategory ? stepTwoInstructionId : void 0, className: `min-w-0 border-0 p-0 ${hasSelectedVehicleCategory ? "" : "pointer-events-none"}`, children: [
+              /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "make", children: "Which make?" }),
+                  /* @__PURE__ */ jsx(SearchableCombobox, { id: "make", options: makeOptions, value: make, onChange: handleMakeChange, placeholder: SELECT_MAKE_OPTION, clearOptionLabel: SELECT_MAKE_OPTION, disabled: !hasSelectedVehicleCategory }),
+                  isOtherMake && /* @__PURE__ */ jsx("input", { id: "manual-make", type: "text", placeholder: "Enter Make", value: manualMake, onChange: (e) => setManualMake(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
                 ] }),
-                hasError("budget") && /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "budget")?.message })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 sm:col-span-2 lg:col-span-3 xl:col-span-1", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "min-profit", children: "What's your minimum profit target?" }),
-                /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                  /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant", children: "£" }),
-                  /* @__PURE__ */ jsx("input", { id: "min-profit", type: "number", placeholder: "e.g. 1500", min: "0", value: minProfit, onChange: (e) => setMinProfit(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "model", children: "Which model?" }),
+                  /* @__PURE__ */ jsx(SearchableCombobox, { id: "model", options: modelOptions, value: model, onChange: handleModelChange, placeholder: make ? SELECT_MODEL_OPTION : "Select a make first", clearOptionLabel: SELECT_MODEL_OPTION, disabled: !hasSelectedVehicleCategory || !make || modelOptions.length === 0 }),
+                  isOtherModel && /* @__PURE__ */ jsx("input", { id: "manual-model", type: "text", placeholder: "Enter Model", value: manualModel, onChange: (e) => setManualModel(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-budget", children: "What's your ideal budget?" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant", children: "£" }),
+                    /* @__PURE__ */ jsx("input", { id: "max-budget", type: "number", placeholder: "e.g. 30000", min: "0", value: maxBudget, onChange: (e) => {
+                      setMaxBudget(e.target.value);
+                      if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e2) => e2.field !== "budget"));
+                    }, className: `min-h-11 w-full rounded-lg border bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:ring-1 ${hasError("budget") ? "border-error/60 focus:border-error focus:ring-error/30" : "border-outline-variant/40 focus:border-primary focus:ring-primary/30"}` })
+                  ] }),
+                  hasError("budget") && /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "budget")?.message })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 sm:col-span-2 lg:col-span-3 xl:col-span-1", children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "min-profit", children: "What's your minimum profit target?" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant", children: "£" }),
+                    /* @__PURE__ */ jsx("input", { id: "min-profit", type: "number", placeholder: "e.g. 1500", min: "0", value: minProfit, onChange: (e) => setMinProfit(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                  ] })
                 ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-5 rounded-xl border border-outline-variant/30 bg-surface-container-high", children: [
+                /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setAdvancedOpen((o) => !o), disabled: !hasSelectedVehicleCategory, className: `flex w-full items-center justify-between px-5 py-4 text-left ${hasSelectedVehicleCategory ? "" : "cursor-not-allowed"}`, "aria-expanded": advancedOpen, children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Refine Further" }),
+                  /* @__PURE__ */ jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", className: `shrink-0 text-on-surface-variant transition-transform duration-200 ${advancedOpen ? "rotate-180" : ""}`, children: /* @__PURE__ */ jsx("polyline", { points: "6 9 12 15 18 9" }) })
+                ] }),
+                advancedOpen && /* @__PURE__ */ jsx("div", { className: "border-t border-outline-variant/30 px-5 pb-5 pt-5", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "year-from", children: "Earliest year?" }),
+                    /* @__PURE__ */ jsx("input", { id: "year-from", type: "number", placeholder: "e.g. 2018", min: "1990", max: "2030", value: yearFrom, onChange: (e) => setYearFrom(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "year-to", children: "Latest year?" }),
+                    /* @__PURE__ */ jsx("input", { id: "year-to", type: "number", placeholder: "e.g. 2024", min: "1990", max: "2030", value: yearTo, onChange: (e) => setYearTo(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-mileage", children: "Maximum mileage?" }),
+                    /* @__PURE__ */ jsx("input", { id: "max-mileage", type: "number", placeholder: "e.g. 60000", min: "0", value: maxMileage, onChange: (e) => setMaxMileage(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "fuel-type", children: "Fuel preference?" }),
+                    /* @__PURE__ */ jsx("select", { id: "fuel-type", value: fuelType, onChange: (e) => setFuelType(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30", children: FUEL_TYPES.map((ft) => /* @__PURE__ */ jsx("option", { value: ft === "Any" ? "" : ft, children: ft }, ft)) })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "transmission", children: "Transmission preference?" }),
+                    /* @__PURE__ */ jsx("select", { id: "transmission", value: transmission, onChange: (e) => setTransmission(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30", children: TRANSMISSION_TYPES.map((tt) => /* @__PURE__ */ jsx("option", { value: tt === "Any" ? "" : tt, children: tt }, tt)) })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "service-history", children: "Service history requirement?" }),
+                    /* @__PURE__ */ jsx("select", { id: "service-history", value: serviceHistory, onChange: (e) => setServiceHistory(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30", children: SERVICE_HISTORY_OPTIONS.map((sh) => /* @__PURE__ */ jsx("option", { value: sh === "Any" ? "" : sh, children: sh }, sh)) })
+                  ] })
+                ] }) })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-5 rounded-xl border border-outline-variant/30 bg-surface-container-high", children: [
-              /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setAdvancedOpen((o) => !o), className: "flex w-full items-center justify-between px-5 py-4 text-left", "aria-expanded": advancedOpen, children: [
-                /* @__PURE__ */ jsx("span", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Refine Further" }),
-                /* @__PURE__ */ jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", className: `shrink-0 text-on-surface-variant transition-transform duration-200 ${advancedOpen ? "rotate-180" : ""}`, children: /* @__PURE__ */ jsx("polyline", { points: "6 9 12 15 18 9" }) })
-              ] }),
-              advancedOpen && /* @__PURE__ */ jsx("div", { className: "border-t border-outline-variant/30 px-5 pb-5 pt-5", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "year-from", children: "Earliest year?" }),
-                  /* @__PURE__ */ jsx("input", { id: "year-from", type: "number", placeholder: "e.g. 2018", min: "1990", max: "2030", value: yearFrom, onChange: (e) => setYearFrom(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "year-to", children: "Latest year?" }),
-                  /* @__PURE__ */ jsx("input", { id: "year-to", type: "number", placeholder: "e.g. 2024", min: "1990", max: "2030", value: yearTo, onChange: (e) => setYearTo(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "max-mileage", children: "Maximum mileage?" }),
-                  /* @__PURE__ */ jsx("input", { id: "max-mileage", type: "number", placeholder: "e.g. 60000", min: "0", value: maxMileage, onChange: (e) => setMaxMileage(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "fuel-type", children: "Fuel preference?" }),
-                  /* @__PURE__ */ jsx("select", { id: "fuel-type", value: fuelType, onChange: (e) => setFuelType(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30", children: FUEL_TYPES.map((ft) => /* @__PURE__ */ jsx("option", { value: ft === "Any" ? "" : ft, children: ft }, ft)) })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "transmission", children: "Transmission preference?" }),
-                  /* @__PURE__ */ jsx("select", { id: "transmission", value: transmission, onChange: (e) => setTransmission(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30", children: TRANSMISSION_TYPES.map((tt) => /* @__PURE__ */ jsx("option", { value: tt === "Any" ? "" : tt, children: tt }, tt)) })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "service-history", children: "Service history requirement?" }),
-                  /* @__PURE__ */ jsx("select", { id: "service-history", value: serviceHistory, onChange: (e) => setServiceHistory(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30", children: SERVICE_HISTORY_OPTIONS.map((sh) => /* @__PURE__ */ jsx("option", { value: sh === "Any" ? "" : sh, children: sh }, sh)) })
-                ] })
-              ] }) })
             ] })
           ] })
         ] }),

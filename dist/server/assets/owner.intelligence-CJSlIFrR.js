@@ -1,7 +1,8 @@
-import { jsx, jsxs } from "react/jsx-runtime";
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
+import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
-import "@tanstack/react-router";
+import { l as loadMission } from "./mission-DGVAjlBD.js";
 const opportunityCards = [{
   title: "Best Opportunity Today",
   vehicle: "2021 Porsche Macan S",
@@ -206,33 +207,16 @@ const decisionPriorityClasses = {
   Today: "border-primary/25 bg-primary/10 text-primary",
   Monitor: "border-amber-400/25 bg-amber-400/10 text-amber-300"
 };
-const missionStages = ["Mission Received", "AI Validation", "Source Scanning", "Opportunity Analysis", "AI Confidence Score", "Buying Report Generated", "Dealer Notified"];
-const activeMission = {
-  id: "MSN-1042",
-  dealer: "Premier Auto Group",
-  vehicle: "Volkswagen Golf GTI Clubsport",
-  budget: "£35,000",
-  currentStage: "Opportunity Analysis",
-  currentStageIndex: 3,
-  progress: 68,
-  eta: "2 minutes"
-};
-const activityLog = [{
-  event: "Mission received",
-  time: "09:14:32"
-}, {
-  event: "AI validation complete",
-  time: "09:14:38"
-}, {
-  event: "Scanning connected sources",
-  time: "09:15:02"
-}, {
-  event: "Opportunity detected",
-  time: "09:16:47"
-}, {
-  event: "Calculating confidence score",
-  time: "Live"
-}];
+const missionStages = ["Mission Received", "AI Validation", "Source Scanning", "Opportunity Analysis", "Buying Report Generation", "Dealer Notification"];
+const ACTIVE_STAGE_INDEX = 1;
+const PROCESSING_STATUS = "Mission Created";
+const PROCESSING_STAGE = "Waiting for AI Validation";
+function formatVehicle(mission) {
+  return [mission.vehicleType, mission.vehicleRequirements.make, mission.vehicleRequirements.model].filter(Boolean).join(" / ") || "Not specified";
+}
+function formatBudget(budget) {
+  return budget ? `Up to £${Number(budget).toLocaleString("en-GB")}` : "Not specified";
+}
 function SectionCard({
   title,
   eyebrow,
@@ -270,12 +254,23 @@ function LiveClock() {
 }
 function OwnerIntelligencePage() {
   const [showBackTop, setShowBackTop] = useState(false);
+  const [activeMission, setActiveMission] = useState(null);
+  const [missionLoaded, setMissionLoaded] = useState(false);
+  const [activityTimestamp, setActivityTimestamp] = useState("");
   useEffect(() => {
     const onScroll = () => setShowBackTop(window.scrollY > 400);
     window.addEventListener("scroll", onScroll, {
       passive: true
     });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  useEffect(() => {
+    setActiveMission(loadMission());
+    setActivityTimestamp((/* @__PURE__ */ new Date()).toLocaleString("en-GB", {
+      dateStyle: "short",
+      timeStyle: "medium"
+    }));
+    setMissionLoaded(true);
   }, []);
   const scrollToTop = () => {
     window.scrollTo({
@@ -396,88 +391,95 @@ function OwnerIntelligencePage() {
         ] }, item)) })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsxs(SectionCard, { title: "Mission Processing Engine", subtitle: "Live AI workflow for active dealer search missions.", children: [
+    /* @__PURE__ */ jsx(SectionCard, { title: "Mission Processing Engine", subtitle: "Live AI workflow for active dealer search missions.", children: missionLoaded && activeMission ? /* @__PURE__ */ jsxs(Fragment, { children: [
       /* @__PURE__ */ jsx("div", { className: "hidden lg:flex items-start gap-1", children: missionStages.map((stage, i) => {
-        const status = i < activeMission.currentStageIndex ? "completed" : i === activeMission.currentStageIndex ? "active" : "upcoming";
-        return /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-1 flex-1 min-w-0", children: [
-          /* @__PURE__ */ jsxs("div", { className: `flex-1 min-w-0 rounded-xl border p-3 ${status === "completed" ? "border-emerald-400/25 bg-emerald-400/10" : status === "active" ? "border-primary/35 bg-primary/10 ring-1 ring-primary/15" : "border-outline-variant/15 bg-surface/20"}`, children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 mb-2", children: [
-              /* @__PURE__ */ jsx("span", { className: `flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${status === "completed" ? "bg-emerald-400/20 text-emerald-300" : status === "active" ? "bg-primary/20 text-primary" : "bg-surface-container-high text-on-surface-variant/40"}`, children: status === "completed" ? "✓" : i + 1 }),
-              status === "active" && /* @__PURE__ */ jsxs("span", { className: "relative flex h-2 w-2", "aria-hidden": "true", children: [
-                /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-full bg-primary/45 animate-pulse" }),
-                /* @__PURE__ */ jsx("span", { className: "relative h-2 w-2 rounded-full bg-primary" })
-              ] })
-            ] }),
+        const status = i < ACTIVE_STAGE_INDEX ? "completed" : i === ACTIVE_STAGE_INDEX ? "active" : "upcoming";
+        return /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 flex-1 items-start gap-1", children: [
+          /* @__PURE__ */ jsxs("div", { className: `min-w-0 flex-1 rounded-xl border p-3 ${status === "completed" ? "border-emerald-400/25 bg-emerald-400/10" : status === "active" ? "border-primary/35 bg-primary/10 ring-1 ring-primary/15" : "border-outline-variant/15 bg-surface/20"}`, children: [
+            /* @__PURE__ */ jsx("div", { className: "mb-2 flex items-center gap-1.5", children: /* @__PURE__ */ jsx("span", { className: `flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${status === "completed" ? "bg-emerald-400/20 text-emerald-300" : status === "active" ? "bg-primary/20 text-primary" : "bg-surface-container-high text-on-surface-variant/40"}`, children: status === "completed" ? "✓" : i + 1 }) }),
             /* @__PURE__ */ jsx("p", { className: `text-[11px] font-semibold leading-tight ${status === "completed" ? "text-emerald-300" : status === "active" ? "text-primary" : "text-on-surface-variant/50"}`, children: stage })
           ] }),
-          i < missionStages.length - 1 && /* @__PURE__ */ jsx("div", { className: "flex items-center self-start mt-4 px-0.5 text-outline-variant/35 text-xs shrink-0", "aria-hidden": "true", children: "→" })
+          i < missionStages.length - 1 ? /* @__PURE__ */ jsx("div", { className: "mt-4 flex shrink-0 self-start px-0.5 text-xs text-outline-variant/35", "aria-hidden": "true", children: "→" }) : null
         ] }, stage);
       }) }),
-      /* @__PURE__ */ jsx("div", { className: "lg:hidden space-y-1.5", children: missionStages.map((stage, i) => {
-        const status = i < activeMission.currentStageIndex ? "completed" : i === activeMission.currentStageIndex ? "active" : "upcoming";
+      /* @__PURE__ */ jsx("div", { className: "space-y-1.5 lg:hidden", children: missionStages.map((stage, i) => {
+        const status = i < ACTIVE_STAGE_INDEX ? "completed" : i === ACTIVE_STAGE_INDEX ? "active" : "upcoming";
         return /* @__PURE__ */ jsxs("div", { className: `flex items-center gap-3 rounded-xl border px-3 py-2.5 ${status === "completed" ? "border-emerald-400/15 bg-emerald-400/5" : status === "active" ? "border-primary/25 bg-primary/5" : "border-outline-variant/10 bg-surface/15"}`, children: [
-          "                  ",
-          /* @__PURE__ */ jsx("div", { className: `flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold border ${status === "completed" ? "bg-emerald-400/20 text-emerald-300 border-emerald-400/25" : status === "active" ? "bg-primary/20 text-primary border-primary/35" : "bg-surface-container-high text-on-surface-variant/40 border-outline-variant/20"}`, children: status === "completed" ? "✓" : i + 1 }),
-          /* @__PURE__ */ jsx("p", { className: `flex-1 text-sm font-medium ${status === "completed" ? "text-emerald-300" : status === "active" ? "text-primary" : "text-on-surface-variant/50"}`, children: stage }),
-          status === "active" && /* @__PURE__ */ jsxs("span", { className: "relative flex h-2 w-2 shrink-0", "aria-hidden": "true", children: [
-            /* @__PURE__ */ jsx("span", { className: "absolute inset-0 rounded-full bg-primary/45 animate-pulse" }),
-            /* @__PURE__ */ jsx("span", { className: "relative h-2 w-2 rounded-full bg-primary" })
-          ] })
+          /* @__PURE__ */ jsx("div", { className: `flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[10px] font-bold ${status === "completed" ? "border-emerald-400/25 bg-emerald-400/20 text-emerald-300" : status === "active" ? "border-primary/35 bg-primary/20 text-primary" : "border-outline-variant/20 bg-surface-container-high text-on-surface-variant/40"}`, children: status === "completed" ? "✓" : i + 1 }),
+          /* @__PURE__ */ jsx("p", { className: `flex-1 text-sm font-medium ${status === "completed" ? "text-emerald-300" : status === "active" ? "text-primary" : "text-on-surface-variant/50"}`, children: stage })
         ] }, stage);
       }) }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-5 grid gap-4 md:grid-cols-[1fr_268px]", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mt-5 grid gap-4 lg:grid-cols-[minmax(0,1fr)_268px]", children: [
         /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-primary/25 bg-primary/5 p-4 sm:p-5", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-3 mb-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-start justify-between gap-3", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "Active Mission" }),
-              /* @__PURE__ */ jsx("h3", { className: "mt-1 text-base font-bold text-on-surface", children: activeMission.id })
+              /* @__PURE__ */ jsx("h3", { className: "mt-1 text-base font-bold text-on-surface", children: activeMission.missionId })
             ] }),
-            /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary shrink-0", children: "In Progress" })
+            /* @__PURE__ */ jsx("span", { className: "shrink-0 rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary", children: PROCESSING_STATUS })
           ] }),
-          /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-2 gap-x-4 gap-y-3 text-sm sm:grid-cols-4", children: [
+          /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-1 gap-x-4 gap-y-3 text-sm sm:grid-cols-2 xl:grid-cols-3", children: [
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Dealer" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.dealer })
+              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Mission ID" }),
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.missionId })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "col-span-2 sm:col-span-1", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Vehicle" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.vehicle })
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: formatVehicle(activeMission) })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Budget" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-semibold text-primary", children: activeMission.budget })
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-semibold text-primary", children: formatBudget(activeMission.budget) })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Est. Completion" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.eta })
+              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Search Area" }),
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.searchArea || "Not specified" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Buying Priority" }),
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.buyingPriority || "Not specified" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Current Stage" }),
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: PROCESSING_STAGE })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Status" }),
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: PROCESSING_STATUS })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "mt-4", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-1.5", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.14em] text-primary", children: activeMission.currentStage }),
-              /* @__PURE__ */ jsxs("span", { className: "text-sm font-bold tabular-nums text-primary", children: [
-                activeMission.progress,
-                "%"
-              ] })
+            /* @__PURE__ */ jsxs("div", { className: "mb-1.5 flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.14em] text-primary", children: PROCESSING_STAGE }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm font-bold tabular-nums text-primary", children: "0%" })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "h-2 overflow-hidden rounded-full bg-surface-container-high", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full bg-primary/70", style: {
-              width: `${activeMission.progress}%`
-            } }) }),
-            /* @__PURE__ */ jsx("p", { className: "mt-2 text-xs leading-5 text-on-surface-variant", children: "Scanning trade and retail channels for matching stock against mission criteria." })
+            /* @__PURE__ */ jsx("div", { className: "h-2 overflow-hidden rounded-full bg-surface-container-high", children: /* @__PURE__ */ jsx("div", { className: "h-full w-0 rounded-full bg-primary/70" }) })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/20 bg-surface/35 p-4 sm:p-5", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70 mb-3", children: "AI Activity" }),
-          /* @__PURE__ */ jsx("div", { className: "space-y-3", children: activityLog.map((entry, i) => /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
-            /* @__PURE__ */ jsx("span", { className: `mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full ${i === activityLog.length - 1 ? "bg-primary" : "bg-emerald-400"}`, "aria-hidden": "true" }),
-            /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface", children: entry.event }),
-              /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[11px] tabular-nums text-on-surface-variant/50", children: entry.time })
+        /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/20 bg-surface/35 p-4 sm:p-5", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70", children: "AI Activity" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-primary", "aria-hidden": "true" }),
+              /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface", children: "Mission accepted from TICA Operations Centre." }),
+                /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[11px] tabular-nums text-on-surface-variant/50", children: activityTimestamp })
+              ] })
             ] })
-          ] }, entry.event)) })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/20 bg-surface/35 p-4 sm:p-5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70", children: "AI Engine Status" }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-primary", children: "AI Validation Ready" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Awaiting validation process." })
+            ] })
+          ] })
         ] })
       ] })
-    ] }),
+    ] }) : missionLoaded ? /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/20 bg-surface/35 p-6 text-center sm:p-8", children: [
+      /* @__PURE__ */ jsx("p", { className: "text-base font-semibold text-on-surface", children: "No active AI Search Mission available." }),
+      /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "mt-4 inline-flex min-h-12 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary shadow-lg shadow-primary/20 transition-all hover:brightness-110", children: "Create AI Search Mission" })
+    ] }) : null }),
     /* @__PURE__ */ jsx(SectionCard, { title: "Opportunity Radar", eyebrow: "What looks strongest right now", children: /* @__PURE__ */ jsx("div", { className: "grid gap-4 md:grid-cols-2 xl:grid-cols-4", children: opportunityCards.map((card) => /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/20 bg-surface/35 p-4", children: [
       /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/80", children: card.title }),
       /* @__PURE__ */ jsx("h3", { className: "mt-2 text-base font-semibold text-on-surface", children: card.vehicle }),
