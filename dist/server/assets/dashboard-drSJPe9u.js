@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-ZRinpF5O.js";
-import { l as loadMission } from "./mission-DGVAjlBD.js";
+import { l as loadMission, M as MISSION_STAGES } from "./mission-BlUhdbKx.js";
 const missionStatusConfig = {
   Monitoring: {
     color: "rgba(74, 222, 128, 0.9)",
@@ -1190,7 +1190,7 @@ function DashboardPage() {
                 ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Current Stage" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: "Waiting for AI Validation" })
+                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.currentStage || MISSION_STAGES[0] })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [

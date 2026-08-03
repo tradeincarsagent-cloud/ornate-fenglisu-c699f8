@@ -3,6 +3,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
+import { loadMission, MISSION_STAGES, type TicaMission } from '../lib/mission'
 
 export const Route = createFileRoute('/opportunity')({
   component: OpportunityPage,
@@ -58,6 +59,11 @@ function OpportunityPage() {
   const [analysisComplete, setAnalysisComplete] = useState(false)
   const [dotPulsing, setDotPulsing] = useState(true)
   const [meterAnimated, setMeterAnimated] = useState(false)
+  const [activeMission, setActiveMission] = useState<TicaMission | null>(null)
+
+  useEffect(() => {
+    setActiveMission(loadMission())
+  }, [])
 
   useEffect(() => {
     const onScroll = () => {
@@ -145,6 +151,39 @@ function OpportunityPage() {
             </div>
           </div>
         </header>
+
+        {/* Mission Engine Status — reads from the shared Mission Engine */}
+        {activeMission && (
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="Mission status">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80">Mission Status</p>
+                <p className="mt-0.5 text-sm font-semibold text-on-surface">{activeMission.missionId}</p>
+              </div>
+              <span className="rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary">
+                {activeMission.status || 'Mission Created'}
+              </span>
+            </div>
+            <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-4">
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Current Stage</dt>
+                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.currentStage || MISSION_STAGES[0]}</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Progress</dt>
+                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.progress ?? 0}%</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">AI Activity</dt>
+                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.currentAiActivity || '—'}</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Est. Time Remaining</dt>
+                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.estimatedTimeRemaining || '—'}</dd>
+              </div>
+            </dl>
+          </section>
+        )}
 
         {/* Executive Summary — answers "Should I buy this?" within 3-5 seconds */}
         <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">

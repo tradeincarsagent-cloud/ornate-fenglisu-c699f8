@@ -2,7 +2,7 @@ import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
-import { l as loadMission } from "./mission-DGVAjlBD.js";
+import { l as loadMission, M as MISSION_STAGES } from "./mission-BlUhdbKx.js";
 const opportunityCards = [{
   title: "Best Opportunity Today",
   vehicle: "2021 Porsche Macan S",
@@ -207,10 +207,9 @@ const decisionPriorityClasses = {
   Today: "border-primary/25 bg-primary/10 text-primary",
   Monitor: "border-amber-400/25 bg-amber-400/10 text-amber-300"
 };
-const missionStages = ["Mission Received", "AI Validation", "Source Scanning", "Opportunity Analysis", "Buying Report Generation", "Dealer Notification"];
-const ACTIVE_STAGE_INDEX = 1;
+const ACTIVE_STAGE_INDEX = 0;
 const PROCESSING_STATUS = "Mission Created";
-const PROCESSING_STAGE = "Waiting for AI Validation";
+const PROCESSING_STAGE = "Mission Created";
 function formatVehicle(mission) {
   return [mission.vehicleType, mission.vehicleRequirements.make, mission.vehicleRequirements.model].filter(Boolean).join(" / ") || "Not specified";
 }
@@ -392,18 +391,20 @@ function OwnerIntelligencePage() {
       ] })
     ] }) }),
     /* @__PURE__ */ jsx(SectionCard, { title: "Mission Processing Engine", subtitle: "Live AI workflow for active dealer search missions.", children: missionLoaded && activeMission ? /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("div", { className: "hidden lg:flex items-start gap-1", children: missionStages.map((stage, i) => {
-        const status = i < ACTIVE_STAGE_INDEX ? "completed" : i === ACTIVE_STAGE_INDEX ? "active" : "upcoming";
+      /* @__PURE__ */ jsx("div", { className: "hidden lg:flex items-start gap-1", children: MISSION_STAGES.map((stage, i) => {
+        const activeIdx = activeMission.currentStageIndex ?? ACTIVE_STAGE_INDEX;
+        const status = i < activeIdx ? "completed" : i === activeIdx ? "active" : "upcoming";
         return /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 flex-1 items-start gap-1", children: [
           /* @__PURE__ */ jsxs("div", { className: `min-w-0 flex-1 rounded-xl border p-3 ${status === "completed" ? "border-emerald-400/25 bg-emerald-400/10" : status === "active" ? "border-primary/35 bg-primary/10 ring-1 ring-primary/15" : "border-outline-variant/15 bg-surface/20"}`, children: [
             /* @__PURE__ */ jsx("div", { className: "mb-2 flex items-center gap-1.5", children: /* @__PURE__ */ jsx("span", { className: `flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${status === "completed" ? "bg-emerald-400/20 text-emerald-300" : status === "active" ? "bg-primary/20 text-primary" : "bg-surface-container-high text-on-surface-variant/40"}`, children: status === "completed" ? "✓" : i + 1 }) }),
             /* @__PURE__ */ jsx("p", { className: `text-[11px] font-semibold leading-tight ${status === "completed" ? "text-emerald-300" : status === "active" ? "text-primary" : "text-on-surface-variant/50"}`, children: stage })
           ] }),
-          i < missionStages.length - 1 ? /* @__PURE__ */ jsx("div", { className: "mt-4 flex shrink-0 self-start px-0.5 text-xs text-outline-variant/35", "aria-hidden": "true", children: "→" }) : null
+          i < MISSION_STAGES.length - 1 ? /* @__PURE__ */ jsx("div", { className: "mt-4 flex shrink-0 self-start px-0.5 text-xs text-outline-variant/35", "aria-hidden": "true", children: "→" }) : null
         ] }, stage);
       }) }),
-      /* @__PURE__ */ jsx("div", { className: "space-y-1.5 lg:hidden", children: missionStages.map((stage, i) => {
-        const status = i < ACTIVE_STAGE_INDEX ? "completed" : i === ACTIVE_STAGE_INDEX ? "active" : "upcoming";
+      /* @__PURE__ */ jsx("div", { className: "space-y-1.5 lg:hidden", children: MISSION_STAGES.map((stage, i) => {
+        const activeIdx = activeMission.currentStageIndex ?? ACTIVE_STAGE_INDEX;
+        const status = i < activeIdx ? "completed" : i === activeIdx ? "active" : "upcoming";
         return /* @__PURE__ */ jsxs("div", { className: `flex items-center gap-3 rounded-xl border px-3 py-2.5 ${status === "completed" ? "border-emerald-400/15 bg-emerald-400/5" : status === "active" ? "border-primary/25 bg-primary/5" : "border-outline-variant/10 bg-surface/15"}`, children: [
           /* @__PURE__ */ jsx("div", { className: `flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[10px] font-bold ${status === "completed" ? "border-emerald-400/25 bg-emerald-400/20 text-emerald-300" : status === "active" ? "border-primary/35 bg-primary/20 text-primary" : "border-outline-variant/20 bg-surface-container-high text-on-surface-variant/40"}`, children: status === "completed" ? "✓" : i + 1 }),
           /* @__PURE__ */ jsx("p", { className: `flex-1 text-sm font-medium ${status === "completed" ? "text-emerald-300" : status === "active" ? "text-primary" : "text-on-surface-variant/50"}`, children: stage })
@@ -416,7 +417,7 @@ function OwnerIntelligencePage() {
               /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "Active Mission" }),
               /* @__PURE__ */ jsx("h3", { className: "mt-1 text-base font-bold text-on-surface", children: activeMission.missionId })
             ] }),
-            /* @__PURE__ */ jsx("span", { className: "shrink-0 rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary", children: PROCESSING_STATUS })
+            /* @__PURE__ */ jsx("span", { className: "shrink-0 rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary", children: activeMission.status || PROCESSING_STATUS })
           ] }),
           /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-1 gap-x-4 gap-y-3 text-sm sm:grid-cols-2 xl:grid-cols-3", children: [
             /* @__PURE__ */ jsxs("div", { children: [
@@ -441,19 +442,28 @@ function OwnerIntelligencePage() {
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Current Stage" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: PROCESSING_STAGE })
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.currentStage || PROCESSING_STAGE })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Status" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: PROCESSING_STATUS })
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.status || PROCESSING_STATUS })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Est. Time Remaining" }),
+              /* @__PURE__ */ jsx("dd", { className: "mt-1 font-medium text-on-surface", children: activeMission.estimatedTimeRemaining || "—" })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "mt-4", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-1.5 flex items-center justify-between", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.14em] text-primary", children: PROCESSING_STAGE }),
-              /* @__PURE__ */ jsx("span", { className: "text-sm font-bold tabular-nums text-primary", children: "0%" })
+              /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.14em] text-primary", children: activeMission.currentStage || PROCESSING_STAGE }),
+              /* @__PURE__ */ jsxs("span", { className: "text-sm font-bold tabular-nums text-primary", children: [
+                activeMission.progress ?? 0,
+                "%"
+              ] })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "h-2 overflow-hidden rounded-full bg-surface-container-high", children: /* @__PURE__ */ jsx("div", { className: "h-full w-0 rounded-full bg-primary/70" }) })
+            /* @__PURE__ */ jsx("div", { className: "h-2 overflow-hidden rounded-full bg-surface-container-high", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full bg-primary/70", style: {
+              width: `${activeMission.progress ?? 0}%`
+            }, role: "progressbar", "aria-valuenow": activeMission.progress ?? 0, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": `Mission progress: ${activeMission.progress ?? 0}%` }) })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
@@ -462,7 +472,7 @@ function OwnerIntelligencePage() {
             /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
               /* @__PURE__ */ jsx("span", { className: "mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-primary", "aria-hidden": "true" }),
               /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface", children: "Mission accepted from TICA Operations Centre." }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface", children: activeMission.currentAiActivity || "Mission accepted from TICA Operations Centre." }),
                 /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[11px] tabular-nums text-on-surface-variant/50", children: activityTimestamp })
               ] })
             ] })
@@ -470,8 +480,8 @@ function OwnerIntelligencePage() {
           /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/20 bg-surface/35 p-4 sm:p-5", children: [
             /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70", children: "AI Engine Status" }),
             /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-primary", children: "AI Validation Ready" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Awaiting validation process." })
+              /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-primary", children: activeMission.currentStage || "Mission Created" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: activeMission.currentAiActivity || "Awaiting AI validation." })
             ] })
           ] })
         ] })

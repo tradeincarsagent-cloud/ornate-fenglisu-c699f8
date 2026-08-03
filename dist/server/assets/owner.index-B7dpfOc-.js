@@ -2,7 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
-import { l as loadMission } from "./mission-DGVAjlBD.js";
+import { l as loadMission, M as MISSION_STAGES } from "./mission-BlUhdbKx.js";
 const kpiCards = [{
   label: "Total Dealers",
   value: "142",
@@ -331,17 +331,20 @@ function ActiveMissionPanel({
     value: mission.buyingPriority || "—"
   }, {
     label: "Current Stage",
-    value: "Waiting for AI Validation"
+    value: mission.currentStage || MISSION_STAGES[0]
   }, {
     label: "Status",
-    value: "Mission Created"
+    value: mission.status || "Mission Created"
+  }, {
+    label: "Est. Time Remaining",
+    value: mission.estimatedTimeRemaining || "—"
   }];
   return /* @__PURE__ */ jsxs("div", { className: "mt-5 space-y-5", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 rounded-xl border border-blue-400/25 bg-blue-400/5 px-4 py-3", children: [
       /* @__PURE__ */ jsx("span", { className: "flex h-2.5 w-2.5 shrink-0 rounded-full bg-blue-400", "aria-hidden": "true" }),
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-300", children: "AI Employee Online" }),
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: "Ready to begin validation." })
+        /* @__PURE__ */ jsx("p", { className: "text-xs text-on-surface-variant", children: mission.currentAiActivity || "Ready to begin validation." })
       ] })
     ] }),
     /* @__PURE__ */ jsxs("div", { children: [
@@ -369,7 +372,7 @@ function ActiveMissionPanel({
         /* @__PURE__ */ jsx("span", { className: "absolute left-[7px] top-2 h-full w-px bg-outline-variant/20", "aria-hidden": "true" }),
         /* @__PURE__ */ jsx("span", { className: "absolute left-0 top-[5px] flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/15", "aria-hidden": "true", children: /* @__PURE__ */ jsx("span", { className: "h-1.5 w-1.5 rounded-full bg-primary" }) }),
         /* @__PURE__ */ jsxs("div", { className: "pb-4", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface", children: "Mission received from Search Builder." }),
+          /* @__PURE__ */ jsx("p", { className: "text-sm font-medium text-on-surface", children: mission.currentAiActivity || "Mission received from Search Builder." }),
           /* @__PURE__ */ jsx("p", { suppressHydrationWarning: true, className: "mt-0.5 text-xs text-on-surface-variant/60", children: timelineTs || "—" })
         ] })
       ] }) })

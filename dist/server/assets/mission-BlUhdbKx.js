@@ -1,5 +1,15 @@
 const MISSION_STORAGE_KEY = "tica_active_mission";
 const MISSION_COUNTER_KEY = "tica_mission_counter";
+const MISSION_STAGES = [
+  "Mission Created",
+  "AI Validation",
+  "Source Connection",
+  "Market Search",
+  "Opportunity Analysis",
+  "Buying Report Generation",
+  "Dealer Notification",
+  "Completed"
+];
 function validateMissionInput(input) {
   const errors = [];
   const hasVehicleInfo = input.vehicleType !== "" || input.make.trim() !== "" || input.model.trim() !== "";
@@ -38,9 +48,11 @@ function generateMissionId() {
   return `MSN-${counter}`;
 }
 function createMission(input) {
+  const now = (/* @__PURE__ */ new Date()).toISOString();
   return {
     missionId: generateMissionId(),
-    createdAt: (/* @__PURE__ */ new Date()).toISOString(),
+    createdAt: now,
+    lastUpdated: now,
     dealerName: "Demo Dealer",
     vehicleType: input.vehicleType,
     vehicleRequirements: {
@@ -61,9 +73,16 @@ function createMission(input) {
     notificationPreferences: input.notificationPreferences,
     status: "Mission Created",
     progress: 0,
-    currentStage: "Mission Received",
+    currentStage: MISSION_STAGES[0],
+    currentStageIndex: 0,
+    currentAiActivity: "Mission accepted. Awaiting AI validation.",
+    estimatedTimeRemaining: "Calculating…",
     aiConfidence: "Pending"
   };
+}
+function getMissionStageIndex(stageName) {
+  const idx = MISSION_STAGES.indexOf(stageName);
+  return idx >= 0 ? idx : 0;
 }
 function saveMission(mission) {
   try {
@@ -75,12 +94,20 @@ function loadMission() {
   try {
     const raw = localStorage.getItem(MISSION_STORAGE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    return {
+      lastUpdated: parsed.createdAt ?? (/* @__PURE__ */ new Date()).toISOString(),
+      currentStageIndex: getMissionStageIndex(parsed.currentStage ?? ""),
+      currentAiActivity: "Mission accepted. Awaiting AI validation.",
+      estimatedTimeRemaining: "—",
+      ...parsed
+    };
   } catch {
     return null;
   }
 }
 export {
+  MISSION_STAGES as M,
   createMission as c,
   loadMission as l,
   saveMission as s,
