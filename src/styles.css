@@ -2440,6 +2440,26 @@ body > div {
   }
 }
 
+/* ── AI Analysis Status Banner ──────────────────────────────────────── */
+@keyframes ticaStatusDotPulse {
+  0%   { box-shadow: 0 0 0 0   rgba(var(--tica-decision-buy-rgb), 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(var(--tica-decision-buy-rgb), 0);    }
+  100% { box-shadow: 0 0 0 0   rgba(var(--tica-decision-buy-rgb), 0);    }
+}
+
+.tica-status-dot-pulse {
+  animation: ticaStatusDotPulse 0.85s ease-out 3;
+}
+
+@keyframes ticaAnalysisFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.tica-analysis-complete-reveal {
+  animation: ticaAnalysisFadeIn 0.4s ease-out forwards;
+}
+
 /* ── Back to Top floating button ─────────────────────────────────────── */
 .back-to-top-btn {
   position: fixed;
