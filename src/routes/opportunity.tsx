@@ -139,6 +139,55 @@ function OpportunityPage() {
           </div>
         </header>
 
+        {/* Executive Summary — answers "Should I buy this?" within 3-5 seconds */}
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
+          <p className="mb-4 text-label-caps font-label-caps uppercase tracking-widest text-primary">Executive Summary</p>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {/* AI Verdict */}
+            <div className="flex flex-col items-center justify-center rounded-xl border border-primary/25 bg-surface-container-high px-3 py-5 text-center">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">AI Verdict</p>
+              <p className={`mt-2 text-[28px] font-semibold leading-none sm:text-[32px] ${decisionVerdictClassName} ${decisionVerdictGlowClassName}`}>
+                {normalizedDecisionAction}
+              </p>
+            </div>
+            {/* TICA Confidence */}
+            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">TICA Confidence</p>
+              <p className="mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
+                {featuredOpportunity.confidenceDisplay}
+              </p>
+            </div>
+            {/* Estimated Gross Profit */}
+            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Est. Gross Profit</p>
+              <p className="mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
+                {featuredOpportunity.estimatedGrossProfitDisplay}
+              </p>
+            </div>
+            {/* Estimated Retail Value */}
+            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Est. Retail Value</p>
+              <p className="mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
+                {featuredOpportunity.estimatedRetailValueDisplay}
+              </p>
+            </div>
+            {/* Opportunity Score */}
+            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Opportunity Score</p>
+              <p className="mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
+                {decisionModel.factors.overallOpportunityScore.displayValue}
+              </p>
+            </div>
+            {/* Estimated Days to Sell */}
+            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Days to Sell</p>
+              <p className="mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
+                {featuredOpportunity.daysToSellDisplay}
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8">
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface sm:mb-5">AI Buying Verdict</h2>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-5">
