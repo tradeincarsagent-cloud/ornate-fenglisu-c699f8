@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
-import { loadMission, type TicaMission } from '../lib/mission'
+import { loadMission, MISSION_STAGES, type TicaMission } from '../lib/mission'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -1433,7 +1433,7 @@ function DashboardPage() {
                             </div>
                             <div>
                               <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Current Stage</dt>
-                              <dd className="mt-0.5 text-sm text-on-surface">Waiting for AI Validation</dd>
+                              <dd className="mt-0.5 text-sm text-on-surface">{storedMission.currentStage || MISSION_STAGES[0]}</dd>
                             </div>
                           </dl>
                           {/* Progress bar */}

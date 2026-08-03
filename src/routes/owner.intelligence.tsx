@@ -2,7 +2,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
-import { loadMission, type TicaMission } from '../lib/mission'
+import { loadMission, MISSION_STAGES, type TicaMission } from '../lib/mission'
 
 export const Route = createFileRoute('/owner/intelligence')({
   component: OwnerIntelligencePage,
@@ -199,18 +199,9 @@ const decisionPriorityClasses: Record<DecisionItem['priority'], string> = {
   Monitor: 'border-amber-400/25 bg-amber-400/10 text-amber-300',
 }
 
-const missionStages = [
-  'Mission Received',
-  'AI Validation',
-  'Source Scanning',
-  'Opportunity Analysis',
-  'Buying Report Generation',
-  'Dealer Notification',
-]
-
-const ACTIVE_STAGE_INDEX = 1
+const ACTIVE_STAGE_INDEX = 0
 const PROCESSING_STATUS = 'Mission Created'
-const PROCESSING_STAGE = 'Waiting for AI Validation'
+const PROCESSING_STAGE = 'Mission Created'
 
 function formatVehicle(mission: TicaMission) {
   return [mission.vehicleType, mission.vehicleRequirements.make, mission.vehicleRequirements.model].filter(Boolean).join(' / ') || 'Not specified'
@@ -409,8 +400,9 @@ function OwnerIntelligencePage() {
             <>
               {/* Pipeline — desktop horizontal */}
               <div className="hidden lg:flex items-start gap-1">
-                {missionStages.map((stage, i) => {
-                  const status = i < ACTIVE_STAGE_INDEX ? 'completed' : i === ACTIVE_STAGE_INDEX ? 'active' : 'upcoming'
+                {MISSION_STAGES.map((stage, i) => {
+                  const activeIdx = activeMission.currentStageIndex ?? ACTIVE_STAGE_INDEX
+                  const status = i < activeIdx ? 'completed' : i === activeIdx ? 'active' : 'upcoming'
                   return (
                     <div key={stage} className="flex min-w-0 flex-1 items-start gap-1">
                       <div
@@ -443,7 +435,7 @@ function OwnerIntelligencePage() {
                           {stage}
                         </p>
                       </div>
-                      {i < missionStages.length - 1 ? (
+                      {i < MISSION_STAGES.length - 1 ? (
                         <div className="mt-4 flex shrink-0 self-start px-0.5 text-xs text-outline-variant/35" aria-hidden="true">
                           →
                         </div>
@@ -455,8 +447,9 @@ function OwnerIntelligencePage() {
 
               {/* Pipeline — mobile/tablet vertical stepper */}
               <div className="space-y-1.5 lg:hidden">
-                {missionStages.map((stage, i) => {
-                  const status = i < ACTIVE_STAGE_INDEX ? 'completed' : i === ACTIVE_STAGE_INDEX ? 'active' : 'upcoming'
+                {MISSION_STAGES.map((stage, i) => {
+                  const activeIdx = activeMission.currentStageIndex ?? ACTIVE_STAGE_INDEX
+                  const status = i < activeIdx ? 'completed' : i === activeIdx ? 'active' : 'upcoming'
                   return (
                     <div
                       key={stage}
@@ -499,7 +492,7 @@ function OwnerIntelligencePage() {
                       <h3 className="mt-1 text-base font-bold text-on-surface">{activeMission.missionId}</h3>
                     </div>
                     <span className="shrink-0 rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
-                      {PROCESSING_STATUS}
+                      {activeMission.status || PROCESSING_STATUS}
                     </span>
                   </div>
                   <dl className="grid grid-cols-1 gap-x-4 gap-y-3 text-sm sm:grid-cols-2 xl:grid-cols-3">
@@ -525,20 +518,32 @@ function OwnerIntelligencePage() {
                     </div>
                     <div>
                       <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Current Stage</dt>
-                      <dd className="mt-1 font-medium text-on-surface">{PROCESSING_STAGE}</dd>
+                      <dd className="mt-1 font-medium text-on-surface">{activeMission.currentStage || PROCESSING_STAGE}</dd>
                     </div>
                     <div>
                       <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Status</dt>
-                      <dd className="mt-1 font-medium text-on-surface">{PROCESSING_STATUS}</dd>
+                      <dd className="mt-1 font-medium text-on-surface">{activeMission.status || PROCESSING_STATUS}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Est. Time Remaining</dt>
+                      <dd className="mt-1 font-medium text-on-surface">{activeMission.estimatedTimeRemaining || '—'}</dd>
                     </div>
                   </dl>
                   <div className="mt-4">
                     <div className="mb-1.5 flex items-center justify-between">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">{PROCESSING_STAGE}</p>
-                      <span className="text-sm font-bold tabular-nums text-primary">0%</span>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">{activeMission.currentStage || PROCESSING_STAGE}</p>
+                      <span className="text-sm font-bold tabular-nums text-primary">{activeMission.progress ?? 0}%</span>
                     </div>
                     <div className="h-2 overflow-hidden rounded-full bg-surface-container-high">
-                      <div className="h-full w-0 rounded-full bg-primary/70" />
+                      <div
+                        className="h-full rounded-full bg-primary/70"
+                        style={{ width: `${activeMission.progress ?? 0}%` }}
+                        role="progressbar"
+                        aria-valuenow={activeMission.progress ?? 0}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-label={`Mission progress: ${activeMission.progress ?? 0}%`}
+                      />
                     </div>
                   </div>
                 </div>
@@ -549,7 +554,7 @@ function OwnerIntelligencePage() {
                     <div className="flex items-start gap-3">
                       <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
                       <div className="min-w-0">
-                        <p className="text-sm text-on-surface">Mission accepted from TICA Operations Centre.</p>
+                        <p className="text-sm text-on-surface">{activeMission.currentAiActivity || 'Mission accepted from TICA Operations Centre.'}</p>
                         <p className="mt-0.5 text-[11px] tabular-nums text-on-surface-variant/50">{activityTimestamp}</p>
                       </div>
                     </div>
@@ -558,8 +563,8 @@ function OwnerIntelligencePage() {
                   <div className="rounded-2xl border border-outline-variant/20 bg-surface/35 p-4 sm:p-5">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/70">AI Engine Status</p>
                     <div className="mt-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
-                      <p className="text-sm font-semibold text-primary">AI Validation Ready</p>
-                      <p className="mt-1 text-sm text-on-surface-variant">Awaiting validation process.</p>
+                      <p className="text-sm font-semibold text-primary">{activeMission.currentStage || 'Mission Created'}</p>
+                      <p className="mt-1 text-sm text-on-surface-variant">{activeMission.currentAiActivity || 'Awaiting AI validation.'}</p>
                     </div>
                   </div>
                 </div>

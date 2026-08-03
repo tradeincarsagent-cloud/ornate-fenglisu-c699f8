@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
-import { loadMission } from '../lib/mission'
+import { loadMission, MISSION_STAGES } from '../lib/mission'
 import type { TicaMission } from '../lib/mission'
 
 export const Route = createFileRoute('/owner/')({
@@ -221,8 +221,9 @@ function ActiveMissionPanel({ mission }: { mission: TicaMission }) {
     { label: 'Budget', value: formatBudget(mission.budget) },
     { label: 'Search Area', value: mission.searchArea || 'United Kingdom' },
     { label: 'Buying Priority', value: mission.buyingPriority || '—' },
-    { label: 'Current Stage', value: 'Waiting for AI Validation' },
-    { label: 'Status', value: 'Mission Created' },
+    { label: 'Current Stage', value: mission.currentStage || MISSION_STAGES[0] },
+    { label: 'Status', value: mission.status || 'Mission Created' },
+    { label: 'Est. Time Remaining', value: mission.estimatedTimeRemaining || '—' },
   ]
 
   return (
@@ -232,7 +233,7 @@ function ActiveMissionPanel({ mission }: { mission: TicaMission }) {
         <span className="flex h-2.5 w-2.5 shrink-0 rounded-full bg-blue-400" aria-hidden="true" />
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-300">AI Employee Online</p>
-          <p className="text-xs text-on-surface-variant">Ready to begin validation.</p>
+          <p className="text-xs text-on-surface-variant">{mission.currentAiActivity || 'Ready to begin validation.'}</p>
         </div>
       </div>
 
@@ -276,7 +277,7 @@ function ActiveMissionPanel({ mission }: { mission: TicaMission }) {
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             </span>
             <div className="pb-4">
-              <p className="text-sm font-medium text-on-surface">Mission received from Search Builder.</p>
+              <p className="text-sm font-medium text-on-surface">{mission.currentAiActivity || 'Mission received from Search Builder.'}</p>
               <p suppressHydrationWarning className="mt-0.5 text-xs text-on-surface-variant/60">{timelineTs || '—'}</p>
             </div>
           </li>

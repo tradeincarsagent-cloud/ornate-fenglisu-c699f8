@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-ZRinpF5O.js";
+import { l as loadMission, M as MISSION_STAGES } from "./mission-BlUhdbKx.js";
 const {
   featuredOpportunity
 } = opportunityIntelligencePlaceholder;
@@ -43,6 +44,10 @@ function OpportunityPage() {
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [dotPulsing, setDotPulsing] = useState(true);
   const [meterAnimated, setMeterAnimated] = useState(false);
+  const [activeMission, setActiveMission] = useState(null);
+  useEffect(() => {
+    setActiveMission(loadMission());
+  }, []);
   useEffect(() => {
     const onScroll = () => {
       setShowBackToTop(window.scrollY > 300);
@@ -130,6 +135,36 @@ function OpportunityPage() {
             ] })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx(TicaShield, { size: "lg" }) })
+        ] })
+      ] }),
+      activeMission && /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", "aria-label": "Mission status", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3", children: [
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "Mission Status" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-sm font-semibold text-on-surface", children: activeMission.missionId })
+          ] }),
+          /* @__PURE__ */ jsx("span", { className: "rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary", children: activeMission.status || "Mission Created" })
+        ] }),
+        /* @__PURE__ */ jsxs("dl", { className: "mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-4", children: [
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Current Stage" }),
+            /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.currentStage || MISSION_STAGES[0] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Progress" }),
+            /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 font-medium text-on-surface", children: [
+              activeMission.progress ?? 0,
+              "%"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "AI Activity" }),
+            /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.currentAiActivity || "—" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Est. Time Remaining" }),
+            /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.estimatedTimeRemaining || "—" })
+          ] })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", children: [
