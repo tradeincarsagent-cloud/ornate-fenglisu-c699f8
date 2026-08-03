@@ -68,10 +68,15 @@ function OpportunityPage() {
   }];
   const vehicleInfo = featuredOpportunity.vehicleInfo;
   const [buyingSummaryLead, buyingSummaryTail = ""] = featuredOpportunity.buyingSummary.split(decisionAction);
+  const confidencePercent = parseFloat(featuredOpportunity.confidenceDisplay);
+  const meterZone = confidencePercent >= 67 ? "buy" : confidencePercent >= 34 ? "review" : "pass";
+  const meterLabel = meterZone === "buy" ? "BUY NOW" : meterZone === "review" ? "REVIEW" : "PASS";
+  const meterSentence = meterZone === "buy" ? "TICA considers this one of today's strongest buying opportunities based on pricing, resale demand and projected profit." : meterZone === "review" ? "TICA flags this opportunity for further review — some indicators are positive but caution is advised before committing." : "TICA does not recommend this vehicle at current pricing — margins and demand indicators fall below buying thresholds.";
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [dotPulsing, setDotPulsing] = useState(true);
+  const [meterAnimated, setMeterAnimated] = useState(false);
   useEffect(() => {
     const onScroll = () => {
       setShowBackToTop(window.scrollY > 300);
@@ -89,6 +94,7 @@ function OpportunityPage() {
     }
     timers.push(setTimeout(() => setAnalysisComplete(true), 200 + 4 * 400 + 600));
     timers.push(setTimeout(() => setDotPulsing(false), 2500));
+    timers.push(setTimeout(() => setMeterAnimated(true), 120));
     return () => timers.forEach(clearTimeout);
   }, []);
   const scrollToTop = () => {
@@ -210,6 +216,42 @@ function OpportunityPage() {
           /* @__PURE__ */ jsx("span", { className: "tica-decision-buy font-semibold", children: "✔" }),
           /* @__PURE__ */ jsx("span", { className: "text-body-sm font-semibold text-on-surface", children: "Analysis Complete" })
         ] })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", "aria-label": "Dealer Decision Meter", children: [
+        /* @__PURE__ */ jsx("p", { className: "mb-4 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Dealer Decision Meter" }),
+        /* @__PURE__ */ jsx("div", { className: "mb-5 flex flex-col items-center gap-1 text-center sm:flex-row sm:items-center sm:gap-4 sm:text-left", children: /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant", children: "TICA Recommendation" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-1 text-[32px] font-semibold leading-none sm:text-[38px]", style: {
+            color: meterZone === "buy" ? "var(--tica-decision-buy)" : meterZone === "review" ? "var(--tica-decision-review)" : "var(--tica-decision-pass)",
+            textShadow: meterZone === "buy" ? "0 0 12px rgba(24,168,107,0.35)" : meterZone === "review" ? "0 0 12px rgba(212,165,55,0.35)" : "0 0 12px rgba(179,58,63,0.35)"
+          }, children: meterLabel }),
+          /* @__PURE__ */ jsxs("p", { className: "mt-1 text-body-sm font-body-sm text-on-surface-variant", children: [
+            featuredOpportunity.confidenceDisplay,
+            " Confidence"
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsxs("div", { className: "ddm-bar-wrapper", children: [
+          /* @__PURE__ */ jsxs("div", { className: "ddm-zone-labels", "aria-hidden": "true", children: [
+            /* @__PURE__ */ jsx("span", { className: "ddm-zone-label ddm-zone-label-pass", children: "PASS" }),
+            /* @__PURE__ */ jsx("span", { className: "ddm-zone-label ddm-zone-label-review", children: "REVIEW" }),
+            /* @__PURE__ */ jsx("span", { className: "ddm-zone-label ddm-zone-label-buy", children: "BUY NOW" })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "ddm-bar-track", role: "meter", "aria-label": `Decision meter: ${meterLabel} at ${featuredOpportunity.confidenceDisplay} confidence`, "aria-valuenow": confidencePercent, "aria-valuemin": 0, "aria-valuemax": 100, children: /* @__PURE__ */ jsxs("div", { className: "ddm-indicator", style: {
+            left: meterAnimated ? `${confidencePercent}%` : "0%",
+            transition: meterAnimated ? "left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)" : "none"
+          }, "aria-hidden": "true", children: [
+            /* @__PURE__ */ jsx("div", { className: "ddm-indicator-pin" }),
+            /* @__PURE__ */ jsx("div", { className: "ddm-indicator-label", style: {
+              color: meterZone === "buy" ? "var(--tica-decision-buy)" : meterZone === "review" ? "var(--tica-decision-review)" : "var(--tica-decision-pass)"
+            }, children: featuredOpportunity.confidenceDisplay })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxs("p", { className: "mt-5 text-body-sm font-body-sm italic leading-relaxed text-on-surface-variant", children: [
+          '"',
+          meterSentence,
+          '"'
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-2 text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant/50", children: "Updated using current market intelligence." })
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-5", children: [
         /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "AI Buying Verdict" }),

@@ -2509,3 +2509,95 @@ body > div {
     right: 32px;
   }
 }
+
+/* ── Dealer Decision Meter ───────────────────────────────────────────── */
+
+.ddm-bar-wrapper {
+  position: relative;
+  padding-top: 0.25rem;
+}
+
+.ddm-zone-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.ddm-zone-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.ddm-zone-label-pass {
+  color: var(--tica-decision-pass);
+  opacity: 0.85;
+}
+
+.ddm-zone-label-review {
+  color: var(--tica-decision-review);
+  opacity: 0.85;
+  text-align: center;
+  flex: 1;
+}
+
+.ddm-zone-label-buy {
+  color: var(--tica-decision-buy);
+  opacity: 0.85;
+}
+
+.ddm-bar-track {
+  position: relative;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--tica-decision-pass) 0%,
+    var(--tica-decision-pass-light) 16%,
+    var(--tica-decision-review) 33%,
+    var(--tica-decision-review) 50%,
+    var(--tica-decision-review-light) 60%,
+    var(--tica-decision-buy-light) 72%,
+    var(--tica-decision-buy) 100%
+  );
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.28),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: visible;
+  margin-bottom: 1.75rem;
+}
+
+.ddm-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ddm-indicator-pin {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid rgba(20, 147, 255, 0.9);
+  box-shadow:
+    0 0 0 3px rgba(20, 147, 255, 0.22),
+    0 3px 8px rgba(0, 0, 0, 0.35);
+}
+
+.ddm-indicator-label {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
