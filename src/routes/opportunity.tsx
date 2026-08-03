@@ -62,10 +62,21 @@ function OpportunityPage() {
   const vehicleInfo = featuredOpportunity.vehicleInfo
   const [buyingSummaryLead, buyingSummaryTail = ''] = featuredOpportunity.buyingSummary.split(decisionAction)
 
+  const confidencePercent = parseFloat(featuredOpportunity.confidenceDisplay) // e.g. 97 from "97%"
+  const meterZone = confidencePercent >= 67 ? 'buy' : confidencePercent >= 34 ? 'review' : 'pass'
+  const meterLabel = meterZone === 'buy' ? 'BUY NOW' : meterZone === 'review' ? 'REVIEW' : 'PASS'
+  const meterSentence =
+    meterZone === 'buy'
+      ? 'TICA considers this one of today\'s strongest buying opportunities based on pricing, resale demand and projected profit.'
+      : meterZone === 'review'
+        ? 'TICA flags this opportunity for further review — some indicators are positive but caution is advised before committing.'
+        : 'TICA does not recommend this vehicle at current pricing — margins and demand indicators fall below buying thresholds.'
+
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [analysisStep, setAnalysisStep] = useState(0)
   const [analysisComplete, setAnalysisComplete] = useState(false)
   const [dotPulsing, setDotPulsing] = useState(true)
+  const [meterAnimated, setMeterAnimated] = useState(false)
 
   useEffect(() => {
     const onScroll = () => {
@@ -83,6 +94,8 @@ function OpportunityPage() {
     }
     timers.push(setTimeout(() => setAnalysisComplete(true), 200 + 4 * 400 + 600))
     timers.push(setTimeout(() => setDotPulsing(false), 2500))
+    // Trigger meter slide-in after a brief paint delay
+    timers.push(setTimeout(() => setMeterAnimated(true), 120))
     return () => timers.forEach(clearTimeout)
   }, [])
 
@@ -245,6 +258,87 @@ function OpportunityPage() {
               <span className="text-body-sm font-semibold text-on-surface">Analysis Complete</span>
             </div>
           )}
+        </section>
+
+        {/* ── Dealer Decision Meter ─────────────────────────────────────── */}
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6" aria-label="Dealer Decision Meter">
+          <p className="mb-4 text-label-caps font-label-caps uppercase tracking-widest text-primary">Dealer Decision Meter</p>
+
+          {/* Recommendation headline */}
+          <div className="mb-5 flex flex-col items-center gap-1 text-center sm:flex-row sm:items-center sm:gap-4 sm:text-left">
+            <div>
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">TICA Recommendation</p>
+              <p
+                className="mt-1 text-[32px] font-semibold leading-none sm:text-[38px]"
+                style={{
+                  color:
+                    meterZone === 'buy'
+                      ? 'var(--tica-decision-buy)'
+                      : meterZone === 'review'
+                        ? 'var(--tica-decision-review)'
+                        : 'var(--tica-decision-pass)',
+                  textShadow:
+                    meterZone === 'buy'
+                      ? '0 0 12px rgba(24,168,107,0.35)'
+                      : meterZone === 'review'
+                        ? '0 0 12px rgba(212,165,55,0.35)'
+                        : '0 0 12px rgba(179,58,63,0.35)',
+                }}
+              >
+                {meterLabel}
+              </p>
+              <p className="mt-1 text-body-sm font-body-sm text-on-surface-variant">
+                {featuredOpportunity.confidenceDisplay} Confidence
+              </p>
+            </div>
+          </div>
+
+          {/* Gradient bar + indicator */}
+          <div className="ddm-bar-wrapper">
+            {/* Zone labels */}
+            <div className="ddm-zone-labels" aria-hidden="true">
+              <span className="ddm-zone-label ddm-zone-label-pass">PASS</span>
+              <span className="ddm-zone-label ddm-zone-label-review">REVIEW</span>
+              <span className="ddm-zone-label ddm-zone-label-buy">BUY NOW</span>
+            </div>
+            {/* Bar track */}
+            <div className="ddm-bar-track" role="meter" aria-label={`Decision meter: ${meterLabel} at ${featuredOpportunity.confidenceDisplay} confidence`} aria-valuenow={confidencePercent} aria-valuemin={0} aria-valuemax={100}>
+              {/* Indicator */}
+              <div
+                className="ddm-indicator"
+                style={{
+                  left: meterAnimated ? `${confidencePercent}%` : '0%',
+                  transition: meterAnimated ? 'left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none',
+                }}
+                aria-hidden="true"
+              >
+                <div className="ddm-indicator-pin" />
+                <div
+                  className="ddm-indicator-label"
+                  style={{
+                    color:
+                      meterZone === 'buy'
+                        ? 'var(--tica-decision-buy)'
+                        : meterZone === 'review'
+                          ? 'var(--tica-decision-review)'
+                          : 'var(--tica-decision-pass)',
+                  }}
+                >
+                  {featuredOpportunity.confidenceDisplay}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* AI context sentence */}
+          <p className="mt-5 text-body-sm font-body-sm italic leading-relaxed text-on-surface-variant">
+            "{meterSentence}"
+          </p>
+
+          {/* Caption */}
+          <p className="mt-2 text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant/50">
+            Updated using current market intelligence.
+          </p>
         </section>
 
         <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-5">
