@@ -34,25 +34,6 @@ function OpportunityPage() {
         ? 'tica-decision-pass'
         : 'text-on-surface'
   const decisionVerdictGlowClassName = isBuyVerdict ? 'tica-decision-buy-glow' : ''
-  const keyMetrics = [
-   { label: 'Confidence', value: featuredOpportunity.confidenceDisplay },
-   { label: 'Opportunity Score', value: decisionModel.factors.overallOpportunityScore.displayValue },
-   { label: 'Estimated Retail Value', value: featuredOpportunity.estimatedRetailValueDisplay },
-   { label: 'Estimated Gross Profit', value: featuredOpportunity.estimatedGrossProfitDisplay },
-   { label: 'Demand Rating', value: featuredOpportunity.demandRatingDisplay },
-  ]
-  const verdictReasons = [
-   'Asking price is 6% below estimated market value.',
-   'Estimated resale demand is High.',
-   'Estimated gross profit £4,255.',
-   'Risk assessment: Low.',
-  ]
-  const verdictMetrics = [
-   { label: 'Confidence', value: featuredOpportunity.confidenceDisplay, valueClassName: 'text-primary' },
-   { label: 'Risk Level', value: featuredOpportunity.riskLevel, valueClassName: 'tica-decision-buy' },
-   { label: 'Est. Gross Profit', value: featuredOpportunity.estimatedGrossProfitDisplay, valueClassName: 'text-on-surface' },
-   { label: 'Days to Sell', value: featuredOpportunity.daysToSellDisplay, valueClassName: 'text-on-surface' },
-  ]
   const investigationTimeline = [
    { time: '09:02', message: '✓ Price reduced by £850 (from £32,845 to £31,995).' },
    { time: '09:04', message: '↑ Dealer demand increased (+12% buyer interest in 24 hours).' },
@@ -120,7 +101,7 @@ function OpportunityPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max space-y-4 sm:space-y-6">
+      <div className="mx-auto w-full max-w-container-max space-y-3 sm:space-y-4">
         <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
           {/* Future exported PDF buying reports should reuse the TICA shield as the official TICA certification mark. */}
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center">
@@ -166,7 +147,7 @@ function OpportunityPage() {
         </header>
 
         {/* Executive Summary — answers "Should I buy this?" within 3-5 seconds */}
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
           <p className="mb-4 text-label-caps font-label-caps uppercase tracking-widest text-primary">Executive Summary</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {/* AI Verdict */}
@@ -178,21 +159,21 @@ function OpportunityPage() {
             </div>
             {/* TICA Confidence */}
             <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">TICA Confidence</p>
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Confidence</p>
               <p className="mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
                 {featuredOpportunity.confidenceDisplay}
               </p>
             </div>
             {/* Estimated Gross Profit */}
             <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Est. Gross Profit</p>
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Gross Profit</p>
               <p className="mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
                 {featuredOpportunity.estimatedGrossProfitDisplay}
               </p>
             </div>
             {/* Estimated Retail Value */}
             <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Est. Retail Value</p>
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Retail Value</p>
               <p className="mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
                 {featuredOpportunity.estimatedRetailValueDisplay}
               </p>
@@ -215,7 +196,7 @@ function OpportunityPage() {
         </section>
 
         {/* AI Analysis Status Banner */}
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6" aria-label="TICA analysis status">
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="TICA analysis status">
           <div className="mb-4 flex items-center gap-2.5">
             <span
               className={`inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--tica-decision-buy)] ${dotPulsing ? 'tica-status-dot-pulse' : ''}`}
@@ -261,7 +242,7 @@ function OpportunityPage() {
         </section>
 
         {/* ── Dealer Decision Meter ─────────────────────────────────────── */}
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6" aria-label="Dealer Decision Meter">
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="Dealer Decision Meter">
           <p className="mb-4 text-label-caps font-label-caps uppercase tracking-widest text-primary">Dealer Decision Meter</p>
 
           {/* Recommendation headline */}
@@ -355,8 +336,7 @@ function OpportunityPage() {
                 <p className={`text-[30px] font-semibold leading-none tracking-[0.02em] ${decisionVerdictClassName} ${decisionVerdictGlowClassName} sm:text-[40px]`}>
                   {decisionActionDisplay}
                 </p>
-                <p className="text-body-sm font-body-sm text-on-surface">TICA Confidence: {featuredOpportunity.confidenceDisplay}</p>
-                <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">Recommended Action by TICA AI</p>
+                <p className="text-body-sm font-body-sm uppercase tracking-[0.14em] text-on-surface-variant">Recommended by TICA</p>
               </div>
               <div className="w-full rounded-xl border border-primary/15 bg-surface-container-high/70 px-3 py-2.5 text-left">
                 {/* Compact visual traffic light legend – shown on all screen sizes */}
@@ -373,22 +353,9 @@ function OpportunityPage() {
                   </div>
                 </div>
               </div>
-              <div className="verdict-metrics-group grid w-full grid-cols-2 gap-2">
-                {verdictMetrics.map((metric, index) => (
-                  <div
-                    key={metric.label}
-                    className={`flex flex-col justify-center rounded-xl border bg-surface-container-high px-3 py-2.5 text-center ${
-                      index === 0 ? 'border-primary/20' : 'border-outline-variant/25'
-                    }`}
-                  >
-                    <p className="text-label-caps font-label-caps uppercase tracking-[0.08em] text-on-surface-variant sm:tracking-[0.12em]">{metric.label}</p>
-                    <p className={`mt-1 text-body-sm font-semibold sm:text-body-md ${metric.valueClassName}`}>{metric.value}</p>
-                  </div>
-                ))}
-              </div>
             </div>
             <div className="flex min-w-0 flex-1 flex-col rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-4 sm:px-5 sm:py-5">
-              <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Executive Recommendation</p>
+              <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Why TICA Recommends This</p>
               <ul className="flex-1 space-y-2">
                 <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
                   <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
@@ -419,83 +386,43 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4">
-          <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Why TICA Recommends This</p>
-          <ul className="mt-3 space-y-2.5 text-body-sm font-body-sm text-on-surface">
-            {verdictReasons.map((reason) => (
-              <li key={reason} className="flex items-center gap-2">
-                <span className="tica-decision-buy">✓</span>
-                <span>{reason}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4 rounded-xl border border-primary/20 bg-surface-container-high/60 px-4 py-3">
-            <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Summary</p>
-            <p className="text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
-              Based on current market conditions, TICA considers this a high-confidence buying opportunity.
-            </p>
-          </div>
-        </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5 md:p-6">
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
-            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-5">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">Target Vehicle</p>
-              <h2 className="mt-2 text-headline-lg font-headline-lg text-on-surface">{featuredOpportunity.vehicle}</h2>
-              <div className="mt-3 grid grid-cols-1 gap-2 text-body-md font-body-md text-on-surface sm:grid-cols-2 sm:gap-3">
+        <section className="dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-5">
+          <p className="mb-3 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">Target Vehicle</p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-headline-lg font-headline-lg text-on-surface">{featuredOpportunity.vehicle}</h2>
+              <div className="mt-3 grid grid-cols-2 gap-3">
                 <p>
                   <span className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Year</span>
                   <span className="mt-1 block text-body-lg font-body-lg text-on-surface">{featuredOpportunity.year}</span>
                 </p>
                 <p>
-                  <span className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Asking price</span>
+                  <span className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Asking Price</span>
                   <span className="mt-1 block text-body-lg font-body-lg text-primary">{featuredOpportunity.listPriceDisplay}</span>
                 </p>
               </div>
-              <div className="mt-4 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container">
-                <img
-                  src={featuredOpportunity.heroImageSrc}
-                  alt={featuredOpportunity.heroImageAlt}
-                  className="h-auto max-h-[190px] w-full object-cover md:max-h-[160px] lg:max-h-[140px]"
-                />
-              </div>
             </div>
-            <div className="verdict-card-premium rounded-2xl p-4 sm:p-5">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.2em] text-primary/80">AI Verdict</p>
-              <p className={`mt-3 text-[38px] font-semibold leading-none ${decisionVerdictClassName} ${decisionVerdictGlowClassName} sm:text-[46px]`}>
-                {decisionAction}
-              </p>
-              <dl className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                {keyMetrics.map((metric) => (
-                  <div key={metric.label} className="rounded-xl border border-outline-variant/30 bg-surface-container-high/80 p-3">
-                    <dt className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">{metric.label}</dt>
-                    <dd
-                      className={`mt-1.5 text-body-md font-body-md ${
-                        metric.label === 'Demand Rating'
-                          ? 'text-[#d4af37]'
-                          : metric.label === 'Opportunity Score'
-                            ? 'text-primary'
-                            : 'text-on-surface'
-                      }`}
-                    >
-                      {metric.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+            <div className="overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container sm:w-52 md:w-60">
+              <img
+                src={featuredOpportunity.heroImageSrc}
+                alt={featuredOpportunity.heroImageAlt}
+                className="h-auto max-h-[160px] w-full object-cover sm:max-h-[130px] md:max-h-[120px]"
+              />
             </div>
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-          <h2 className="text-headline-md font-headline-md text-on-surface">AI Opportunity Analysis</h2>
+
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+          <h2 className="text-headline-md font-headline-md text-on-surface">Opportunity Analysis</h2>
           <p className="mt-3 max-w-3xl text-body-md font-body-md text-on-surface-variant">
             {featuredOpportunity.analysisSummary}
           </p>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-          <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Buying Checklist</h2>
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+          <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">AI Buying Checklist</h2>
           <div className="space-y-3">
           {featuredOpportunity.checklist.map((item) => {
              const statusToneClass =
@@ -521,28 +448,28 @@ function OpportunityPage() {
              )
           })}
           </div>
-          <p className="mt-5 text-body-sm font-body-sm text-on-surface-variant/70 italic">
+          <p className="mt-4 text-body-sm font-body-sm text-on-surface-variant/70 italic">
             Complete vehicle history, MOT and verification services will be available through trusted data providers in a future release.
           </p>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-          <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">AI Negotiation Advice</h2>
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+          <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Negotiation Advice</h2>
           <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Suggested Opening Offer</p>
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Opening Offer</p>
               <p className="mt-2 text-body-lg font-semibold text-on-surface">{featuredOpportunity.negotiation.openingOfferDisplay}</p>
             </div>
             <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Likely Acceptance Range</p>
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Acceptance Range</p>
               <p className="mt-2 text-body-lg font-semibold text-on-surface">{featuredOpportunity.negotiation.likelyAcceptanceRangeDisplay}</p>
             </div>
             <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Negotiation Confidence</p>
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Confidence</p>
               <p className="mt-2 text-body-lg font-semibold text-primary">{featuredOpportunity.negotiation.confidenceDisplay}</p>
             </div>
             <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 sm:col-span-2 lg:col-span-1">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Negotiation Advice</p>
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-on-surface-variant">Advice</p>
               <p className="mt-2 text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
                 {featuredOpportunity.negotiation.advice}
               </p>
@@ -561,9 +488,9 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-          <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">AI Buying Summary</h2>
-          <div className="rounded-xl border border-primary/30 bg-primary-container/20 px-4 py-4 sm:px-6 sm:py-5">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+          <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Buying Summary</h2>
+          <div className="rounded-xl border border-primary/30 bg-primary-container/20 px-4 py-4">
             <p className="text-body-md font-body-md leading-relaxed text-on-surface-variant">
               {buyingSummaryLead}
               <span className={`font-semibold ${decisionVerdictClassName}`}>{decisionAction}</span>
@@ -572,7 +499,7 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Vehicle Information</h2>
           <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {vehicleInfo.map((item) => (
@@ -584,11 +511,11 @@ function OpportunityPage() {
           </dl>
         </section>
 
-        <section className="dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <section className="dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <h2 className="text-headline-md font-headline-md text-on-surface">AI Investigation Timeline</h2>
-              <p className="mt-2 max-w-2xl text-body-md font-body-md text-on-surface-variant">
+              <h2 className="text-headline-md font-headline-md text-on-surface">Investigation Timeline</h2>
+              <p className="mt-1.5 max-w-2xl text-body-md font-body-md text-on-surface-variant">
                 The AI reasoning process behind this recommendation.
               </p>
             </div>
@@ -603,7 +530,7 @@ function OpportunityPage() {
             </div>
           </div>
 
-          <div className="timeline-list mt-6" aria-label="AI investigation timeline">
+          <div className="timeline-list mt-4" aria-label="AI investigation timeline">
             {investigationTimeline.map((event) => (
               <article key={`${event.time}-${event.message}`} className="timeline-entry">
                 <p className="timeline-entry-time">{event.time}</p>
@@ -614,16 +541,16 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-          <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Dealer Notes</h2>
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+          <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Dealer Notes</h2>
           <textarea
             placeholder="Add internal notes, call outcomes, valuation observations, and next actions..."
             className="h-44 w-full resize-y rounded-xl border border-outline-variant/35 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-all placeholder:text-on-surface-variant/70 focus:border-primary/60 sm:h-40"
           />
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
-          <h2 className="mb-5 text-headline-md font-headline-md text-on-surface">Actions</h2>
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+          <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Actions</h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
             <button className="min-h-11 rounded-xl bg-primary px-5 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110">
               Save Opportunity
