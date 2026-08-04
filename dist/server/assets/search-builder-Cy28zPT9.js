@@ -1,8 +1,9 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { v as validateMissionInput, c as createMission, s as saveMission } from "./mission-BlUhdbKx.js";
+import "react-dom";
 const AVAILABLE_VEHICLE_TYPES = ["Cars", "Classic Cars", "Pickups", "Vans & Light Commercials"];
 const COMING_SOON_VEHICLE_TYPES = ["Motorcycles"];
 const VEHICLE_TYPES = [...AVAILABLE_VEHICLE_TYPES, ...COMING_SOON_VEHICLE_TYPES];

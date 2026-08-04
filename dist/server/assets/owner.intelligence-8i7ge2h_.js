@@ -1,8 +1,9 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { l as loadMission, M as MISSION_STAGES } from "./mission-BlUhdbKx.js";
+import "react-dom";
 const opportunityCards = [{
   title: "Best Opportunity Today",
   vehicle: "2021 Porsche Macan S",

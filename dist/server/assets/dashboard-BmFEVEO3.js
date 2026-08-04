@@ -1,9 +1,10 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
 import { l as loadMission, M as MISSION_STAGES } from "./mission-BlUhdbKx.js";
+import "react-dom";
 const radarRingInsets = [6, 14, 22, 30, 38, 46];
 const radarGridAngles = Array.from({
   length: 24

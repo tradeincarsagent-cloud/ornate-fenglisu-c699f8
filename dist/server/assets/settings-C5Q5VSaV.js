@@ -1,7 +1,8 @@
 import { jsxs, jsx, Fragment } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import "@tanstack/react-router";
+import "react-dom";
 const CHANNELS = [{
   id: "email",
   label: "Email Notifications",
