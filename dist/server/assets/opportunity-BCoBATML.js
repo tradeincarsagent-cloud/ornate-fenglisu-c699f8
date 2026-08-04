@@ -1,9 +1,10 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
 import { l as loadMission } from "./mission-BlUhdbKx.js";
+import "react-dom";
 const {
   featuredOpportunity
 } = opportunityIntelligencePlaceholder;
@@ -797,7 +798,7 @@ function OpportunityPage() {
             /* @__PURE__ */ jsx("dd", { className: "mt-1 text-body-md font-body-md text-on-surface", children: item.value })
           ] }, item.label)) })
         ] }),
-        /* @__PURE__ */ jsxs("section", { className: "opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-2.5 sm:p-3.5", ref: setRevealRef(3), children: [
+        /* @__PURE__ */ jsxs("section", { className: "opp-scroll-hidden dashboard-border rounded-2xl p-2.5 sm:p-3.5", ref: setRevealRef(3), children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 border-b border-outline-variant/25 pb-2.5", children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "TICA Vehicle Intelligence™" }),
             /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
@@ -915,10 +916,6 @@ function OpportunityPage() {
                 /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-primary/20 bg-primary-container/10 px-3 py-3", children: [
                   /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Final TICA Advice" }),
                   /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface", children: ticaVehicleIntelligence.dealerVerdict.finalAdvice })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "mt-3 flex flex-wrap gap-2.5", children: [
-                  /* @__PURE__ */ jsx("button", { type: "button", className: "opp-btn-primary min-h-10 rounded-xl border border-primary/30 bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary", children: "Save Opportunity" }),
-                  /* @__PURE__ */ jsx("button", { type: "button", className: "opp-btn-secondary min-h-10 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-2 text-body-sm font-semibold text-on-surface-variant", children: "Generate Dealer Report" })
                 ] })
               ] })
             ] }),

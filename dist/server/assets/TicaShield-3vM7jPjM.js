@@ -1,6 +1,7 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 const LOGO_SRC = "https://lh3.googleusercontent.com/aida-public/AB6AXuAR0zAqkpc9M5h5mGe9z2WcicARCRnB_Rx3WcLMIjNi7lzzu0j7EvaLIJ168vhnz5N5saDVjnRGO0bTHz9Y_eWfymIxIFuS4ZO5p4KxTSsUVMvghGc2t52js5ghTlZAFj435U74gnBLfe7WxUxz4ReqHBoED4fiC1nPfKjdHwy6BC-0i89fc3l4Rmqtbn5ppQqvOFdLYBvQqxQh0hwaKLrTj4AgmVuWOxRqxGHJn2Pq00Cu-MIdtDYd8oUAb9bHOEqCSs7sbNF1HIPS";
 function HamburgerIcon() {
   return /* @__PURE__ */ jsxs("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", children: [
@@ -184,6 +185,7 @@ function TicaShield({ size = "md" }) {
   };
   useEffect(() => {
     if (!open) return;
+    document.body.style.overflow = "hidden";
     const handleWindowChange = () => updatePopupPos();
     const handleOutside = (e) => {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
@@ -196,6 +198,7 @@ function TicaShield({ size = "md" }) {
     document.addEventListener("mousedown", handleOutside);
     document.addEventListener("touchstart", handleOutside);
     return () => {
+      document.body.style.overflow = "";
       window.removeEventListener("resize", handleWindowChange);
       window.removeEventListener("scroll", handleWindowChange);
       document.removeEventListener("mousedown", handleOutside);
@@ -242,40 +245,60 @@ function TicaShield({ size = "md" }) {
             ]
           }
         ),
-        popupPos && /* @__PURE__ */ jsx(
-          "div",
-          {
-            role: "tooltip",
-            "aria-hidden": !open,
-            style: { top: popupPos.top, right: popupPos.right, left: popupPos.left },
-            className: [
-              "tica-popup",
-              "fixed z-[9999] w-[min(22rem,calc(100vw-1.5rem))] sm:w-[22rem] md:w-[441px]",
-              "rounded-2xl sm:rounded-3xl border border-white/10",
-              "bg-zinc-900/90 backdrop-blur-xl",
-              "shadow-[0_20px_64px_rgba(0,0,0,0.75)]",
-              "p-4 sm:p-8",
-              open ? "tica-popup--visible" : "tica-popup--hidden"
-            ].join(" "),
-            children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 sm:gap-6 text-center", children: [
-              /* @__PURE__ */ jsx(
-                "img",
-                {
-                  src: TICA_SHIELD_SRC,
-                  alt: "TICA Certified shield",
-                  className: "h-auto w-28 sm:w-44",
-                  decoding: "async"
-                }
-              ),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 sm:space-y-2", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-base font-bold tracking-wide text-white", children: "🛡 TICA Certified™" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[12px] text-zinc-400 leading-snug", children: "Powered by the TICA Decision Engine" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[12px] font-semibold text-primary/90 tracking-wide", children: "Recommends. You Decide." })
-              ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-[11px] text-zinc-400 leading-relaxed", children: "Every TICA Certified recommendation has been analysed using the TICA Opportunity Intelligence Engine and TICA Decision Engine to help dealers make informed buying decisions." }),
-              /* @__PURE__ */ jsx("div", { className: "w-full rounded-2xl border border-primary/20 bg-primary/5 px-5 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "Official Trust Mark · Trade in Cars Agent" }) })
-            ] })
-          }
+        popupPos && createPortal(
+          /* @__PURE__ */ jsxs(Fragment, { children: [
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                "aria-hidden": "true",
+                onClick: () => {
+                  setOpen(false);
+                  setIsHovered(false);
+                },
+                className: [
+                  "fixed inset-0 z-[99998]",
+                  open ? "pointer-events-auto" : "pointer-events-none"
+                ].join(" "),
+                style: { background: "transparent" }
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                role: "tooltip",
+                "aria-hidden": !open,
+                style: { top: popupPos.top, right: popupPos.right, left: popupPos.left },
+                className: [
+                  "tica-popup",
+                  "fixed z-[99999] w-[min(22rem,calc(100vw-1.5rem))] sm:w-[22rem] md:w-[441px]",
+                  "rounded-2xl sm:rounded-3xl border border-white/10",
+                  "bg-zinc-900/90 backdrop-blur-xl",
+                  "shadow-[0_20px_64px_rgba(0,0,0,0.75)]",
+                  "p-4 sm:p-8",
+                  open ? "tica-popup--visible" : "tica-popup--hidden"
+                ].join(" "),
+                children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 sm:gap-6 text-center", children: [
+                  /* @__PURE__ */ jsx(
+                    "img",
+                    {
+                      src: TICA_SHIELD_SRC,
+                      alt: "TICA Certified shield",
+                      className: "h-auto w-28 sm:w-44",
+                      decoding: "async"
+                    }
+                  ),
+                  /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 sm:space-y-2", children: [
+                    /* @__PURE__ */ jsx("p", { className: "text-base font-bold tracking-wide text-white", children: "🛡 TICA Certified™" }),
+                    /* @__PURE__ */ jsx("p", { className: "text-[12px] text-zinc-400 leading-snug", children: "Powered by the TICA Decision Engine" }),
+                    /* @__PURE__ */ jsx("p", { className: "text-[12px] font-semibold text-primary/90 tracking-wide", children: "Recommends. You Decide." })
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-[11px] text-zinc-400 leading-relaxed", children: "Every TICA Certified recommendation has been analysed using the TICA Opportunity Intelligence Engine and TICA Decision Engine to help dealers make informed buying decisions." }),
+                  /* @__PURE__ */ jsx("div", { className: "w-full rounded-2xl border border-primary/20 bg-primary/5 px-5 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "Official Trust Mark · Trade in Cars Agent" }) })
+                ] })
+              }
+            )
+          ] }),
+          document.body
         )
       ]
     }

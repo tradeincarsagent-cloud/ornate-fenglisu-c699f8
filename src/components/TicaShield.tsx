@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f'
 
@@ -59,6 +60,7 @@ export function TicaShield({ size = 'md' }: { size?: 'md' | 'lg' }) {
 
   useEffect(() => {
     if (!open) return
+    document.body.style.overflow = 'hidden'
     const handleWindowChange = () => updatePopupPos()
     const handleOutside = (e: MouseEvent | TouchEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -71,6 +73,7 @@ export function TicaShield({ size = 'md' }: { size?: 'md' | 'lg' }) {
     document.addEventListener('mousedown', handleOutside)
     document.addEventListener('touchstart', handleOutside)
     return () => {
+      document.body.style.overflow = ''
       window.removeEventListener('resize', handleWindowChange)
       window.removeEventListener('scroll', handleWindowChange)
       document.removeEventListener('mousedown', handleOutside)
@@ -119,45 +122,58 @@ export function TicaShield({ size = 'md' }: { size?: 'md' | 'lg' }) {
         </div>
       </button>
 
-      {/* Premium glass certification popup — fixed positioning avoids overflow-hidden parent clipping */}
-      {popupPos && (
-        <div
-          role="tooltip"
-          aria-hidden={!open}
-          style={{ top: popupPos.top, right: popupPos.right, left: popupPos.left }}
-          className={[
-            'tica-popup',
-            'fixed z-[9999] w-[min(22rem,calc(100vw-1.5rem))] sm:w-[22rem] md:w-[441px]',
-            'rounded-2xl sm:rounded-3xl border border-white/10',
-            'bg-zinc-900/90 backdrop-blur-xl',
-            'shadow-[0_20px_64px_rgba(0,0,0,0.75)]',
-            'p-4 sm:p-8',
-            open ? 'tica-popup--visible' : 'tica-popup--hidden',
-          ].join(' ')}
-        >
-          <div className="flex flex-col items-center gap-4 sm:gap-6 text-center">
-            <img
-              src={TICA_SHIELD_SRC}
-              alt="TICA Certified shield"
-              className="h-auto w-28 sm:w-44"
-              decoding="async"
-            />
-            <div className="space-y-1.5 sm:space-y-2">
-              <p className="text-base font-bold tracking-wide text-white">🛡 TICA Certified™</p>
-              <p className="text-[12px] text-zinc-400 leading-snug">Powered by the TICA Decision Engine</p>
-              <p className="text-[12px] font-semibold text-primary/90 tracking-wide">Recommends. You Decide.</p>
-            </div>
-            <p className="text-[11px] text-zinc-400 leading-relaxed">
-              Every TICA Certified recommendation has been analysed using the TICA Opportunity Intelligence Engine and
-              TICA Decision Engine to help dealers make informed buying decisions.
-            </p>
-            <div className="w-full rounded-2xl border border-primary/20 bg-primary/5 px-5 py-4">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/80">
-                Official Trust Mark · Trade in Cars Agent
+      {/* Premium glass certification popup — rendered in a portal at document root so no parent stacking context can trap it */}
+      {popupPos && createPortal(
+        <>
+          {/* Full-viewport backdrop — closes popup on click */}
+          <div
+            aria-hidden="true"
+            onClick={() => { setOpen(false); setIsHovered(false) }}
+            className={[
+              'fixed inset-0 z-[99998]',
+              open ? 'pointer-events-auto' : 'pointer-events-none',
+            ].join(' ')}
+            style={{ background: 'transparent' }}
+          />
+          <div
+            role="tooltip"
+            aria-hidden={!open}
+            style={{ top: popupPos.top, right: popupPos.right, left: popupPos.left }}
+            className={[
+              'tica-popup',
+              'fixed z-[99999] w-[min(22rem,calc(100vw-1.5rem))] sm:w-[22rem] md:w-[441px]',
+              'rounded-2xl sm:rounded-3xl border border-white/10',
+              'bg-zinc-900/90 backdrop-blur-xl',
+              'shadow-[0_20px_64px_rgba(0,0,0,0.75)]',
+              'p-4 sm:p-8',
+              open ? 'tica-popup--visible' : 'tica-popup--hidden',
+            ].join(' ')}
+          >
+            <div className="flex flex-col items-center gap-4 sm:gap-6 text-center">
+              <img
+                src={TICA_SHIELD_SRC}
+                alt="TICA Certified shield"
+                className="h-auto w-28 sm:w-44"
+                decoding="async"
+              />
+              <div className="space-y-1.5 sm:space-y-2">
+                <p className="text-base font-bold tracking-wide text-white">🛡 TICA Certified™</p>
+                <p className="text-[12px] text-zinc-400 leading-snug">Powered by the TICA Decision Engine</p>
+                <p className="text-[12px] font-semibold text-primary/90 tracking-wide">Recommends. You Decide.</p>
+              </div>
+              <p className="text-[11px] text-zinc-400 leading-relaxed">
+                Every TICA Certified recommendation has been analysed using the TICA Opportunity Intelligence Engine and
+                TICA Decision Engine to help dealers make informed buying decisions.
               </p>
+              <div className="w-full rounded-2xl border border-primary/20 bg-primary/5 px-5 py-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/80">
+                  Official Trust Mark · Trade in Cars Agent
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </>,
+        document.body
       )}
     </div>
   )

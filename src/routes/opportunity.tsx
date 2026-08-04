@@ -908,7 +908,7 @@ function OpportunityPage() {
           </dl>
         </section>
 
-        <section className="opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-2.5 sm:p-3.5" ref={setRevealRef(3)}>
+        <section className="opp-scroll-hidden dashboard-border rounded-2xl p-2.5 sm:p-3.5" ref={setRevealRef(3)}>
           <div className="flex flex-col gap-1 border-b border-outline-variant/25 pb-2.5">
             <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Vehicle Intelligence™</p>
             <div className="max-w-3xl">
@@ -1076,21 +1076,6 @@ function OpportunityPage() {
                   <p className="mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface">
                     {ticaVehicleIntelligence.dealerVerdict.finalAdvice}
                   </p>
-                </div>
-
-                <div className="mt-3 flex flex-wrap gap-2.5">
-                  <button
-                    type="button"
-                    className="opp-btn-primary min-h-10 rounded-xl border border-primary/30 bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary"
-                  >
-                    Save Opportunity
-                  </button>
-                  <button
-                    type="button"
-                    className="opp-btn-secondary min-h-10 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-2 text-body-sm font-semibold text-on-surface-variant"
-                  >
-                    Generate Dealer Report
-                  </button>
                 </div>
               </article>
             </div>
