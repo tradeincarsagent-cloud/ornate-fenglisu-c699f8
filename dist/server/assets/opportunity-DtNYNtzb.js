@@ -948,6 +948,57 @@ function OpportunityPage() {
             ] }),
             /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 border-b border-outline-variant/25 pb-3", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "TICA Vehicle History Centre™" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "text-title-lg font-semibold text-on-surface", children: "TICA Vehicle History Centre™" }),
+                  /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "Live vehicle history intelligence." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "mt-3 space-y-1.5", children: [{
+                status: "green",
+                label: "Finance Status",
+                value: "Clear"
+              }, {
+                status: "green",
+                label: "Insurance Write-Off",
+                value: "None Recorded"
+              }, {
+                status: "green",
+                label: "Police Stolen Check",
+                value: "No Record Found"
+              }, {
+                status: "green",
+                label: "Mileage History",
+                value: "Consistent"
+              }, {
+                status: "amber",
+                label: "Number of Previous Keepers",
+                value: "3 Registered"
+              }, {
+                status: "amber",
+                label: "Outstanding Recalls",
+                value: "1 Recall Outstanding"
+              }, {
+                status: "green",
+                label: "Import / Export Status",
+                value: "UK Supplied"
+              }, {
+                status: "green",
+                label: "VIN Verification",
+                value: "Matches DVLA Records"
+              }].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-2", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: item.label }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 shrink-0", children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-sm leading-none", "aria-hidden": "true", children: item.status === "green" ? "🟢" : "🟡" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-body-sm font-semibold text-on-surface", children: item.value })
+                ] })
+              ] }, item.label)) }),
+              /* @__PURE__ */ jsx("button", { className: "mt-3 w-full rounded-xl border border-primary/40 bg-primary px-4 py-3 text-sm font-semibold text-on-primary shadow-sm transition-all hover:opacity-90 active:scale-[0.99]", children: "Run Live Vehicle History Check" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-2 text-center text-[11px] text-on-surface-variant/60", children: "Vehicle history will be retrieved from connected data providers." }),
+              /* @__PURE__ */ jsx("div", { className: "hidden", "aria-hidden": "true", "data-provider-logos": "reserved" })
+            ] }),
+            /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 border-b border-outline-variant/25 pb-3", children: [
                 /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "TICA Questions to Ask the Seller™" }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("h3", { className: "text-title-lg font-semibold text-on-surface", children: "Questions to Ask the Seller" }),
