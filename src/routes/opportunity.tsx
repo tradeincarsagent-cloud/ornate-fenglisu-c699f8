@@ -257,6 +257,7 @@ function OpportunityPage() {
 
   const confidencePercent = parseFloat(featuredOpportunity.confidenceDisplay) // e.g. 97 from "97%"
   const meterZone = confidencePercent >= 67 ? 'buy' : confidencePercent >= 34 ? 'review' : 'pass'
+  const meterLabel = unifiedRecommendation
   const meterSentence =
     meterZone === 'buy'
       ? 'TICA considers this one of today\'s strongest buying opportunities based on pricing, resale demand and projected profit.'
