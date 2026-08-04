@@ -4,26 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-CoJ8XGWI.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-ZRinpF5O.js";
 import { l as loadMission, M as MISSION_STAGES } from "./mission-BlUhdbKx.js";
-const missionStatusConfig = {
-  Monitoring: {
-    color: "rgba(74, 222, 128, 0.9)",
-    glow: "rgba(74, 222, 128, 0.55)",
-    label: "Monitoring",
-    emoji: "🟢"
-  },
-  Waiting: {
-    color: "rgba(251, 191, 36, 0.88)",
-    glow: "rgba(251, 191, 36, 0.5)",
-    label: "Waiting",
-    emoji: "🟡"
-  },
-  Updating: {
-    color: "rgba(56, 189, 248, 0.9)",
-    glow: "rgba(56, 189, 248, 0.5)",
-    label: "Updating",
-    emoji: "🔵"
-  }
-};
 const radarRingInsets = [6, 14, 22, 30, 38, 46];
 const radarGridAngles = Array.from({
   length: 24
@@ -182,8 +162,7 @@ const timelineTemplates = [{
   id: "timeline-mercedes-search",
   message: "Dealer Network search completed for Mercedes A45 AMG.",
   contactId: "contact-3",
-  opportunityIndex: 2,
-  missionIndex: 2
+  opportunityIndex: 2
 }, {
   id: "timeline-porsche-opportunity",
   message: "New Porsche Macan S opportunity added to Recent Opportunities.",
@@ -193,8 +172,7 @@ const timelineTemplates = [{
   id: "timeline-golf-mission",
   message: "AI Search Mission updated for Volkswagen Golf R.",
   contactId: "contact-4",
-  opportunityIndex: 3,
-  missionIndex: 0
+  opportunityIndex: 3
 }];
 const initialTimelineEvents = [{
   ...timelineTemplates[0],
@@ -305,62 +283,9 @@ function DashboardPage() {
     detail: featuredOpportunity.scoring.estimatedProfitScore.status
   }];
   const recentOpportunities = dashboardRecentOpportunities;
-  const activeSearches = [{
-    name: "BMW M3 UK Search",
-    status: "Monitoring",
-    lastScan: "2 minutes ago",
-    opportunities: 3,
-    vehicleType: "Car",
-    searchArea: "UK Nationwide",
-    budget: "Up to £35,000",
-    nextScan: "13 minutes",
-    progress: 78,
-    vehiclesAnalysedToday: 4821,
-    rejectedListings: 112,
-    qualifiedOpportunities: 3,
-    bestOpportunityScore: 94,
-    missionUpdate: "One opportunity promoted to Today's Best Buy.",
-    sources: ["Auto Trader UK", "Facebook Marketplace", "Motors.co.uk", "CarGurus", "Dealer Auctions", "Classic Cars"],
-    liveMessages: ["Scanning 6 marketplaces…", "Analysing new listings…", "Comparing prices…", "Checking dealer demand…"]
-  }, {
-    name: "SUVs under £28k",
-    status: "Waiting",
-    lastScan: "11 minutes ago",
-    opportunities: 9,
-    vehicleType: "SUV",
-    searchArea: "South East England",
-    budget: "Up to £28,000",
-    nextScan: "4 minutes",
-    progress: 42,
-    vehiclesAnalysedToday: 2309,
-    rejectedListings: 87,
-    qualifiedOpportunities: 9,
-    bestOpportunityScore: 81,
-    missionUpdate: "No new qualifying listings during the last scan.",
-    sources: ["Auto Trader UK", "Motors.co.uk", "CarGurus", "Dealer Auctions"],
-    liveMessages: ["Checking dealer demand…", "Searching for price reductions…", "Analysing new listings…", "Scanning 4 marketplaces…"]
-  }, {
-    name: "Low-mileage hybrids",
-    status: "Updating",
-    lastScan: "1 minute ago",
-    opportunities: 6,
-    vehicleType: "Hybrid / EV",
-    searchArea: "UK Nationwide",
-    budget: "Up to £22,000",
-    nextScan: "19 minutes",
-    progress: 61,
-    vehiclesAnalysedToday: 3144,
-    rejectedListings: 98,
-    qualifiedOpportunities: 6,
-    bestOpportunityScore: 76,
-    missionUpdate: "Price reduction detected on one monitored vehicle.",
-    sources: ["Auto Trader UK", "Facebook Marketplace", "Motors.co.uk", "CarGurus", "Classic Cars"],
-    liveMessages: ["Scanning 5 marketplaces…", "Comparing prices…", "Checking dealer demand…", "Searching for price reductions…"]
-  }];
   const recommendationEvidencePoints = [decisionModel.factors.overallOpportunityScore.summary, decisionModel.factors.dealerDemand.summary, decisionModel.factors.estimatedProfit.summary, decisionModel.factors.timeOnMarket.summary, decisionModel.factors.vehicleHistory.summary];
   const recommendationCautionPoints = ["Vehicle history has not yet been verified.", "Service history should be confirmed.", "Seller response time is currently unknown."];
   const [highlightedOpportunity, setHighlightedOpportunity] = useState(null);
-  const [highlightedMission, setHighlightedMission] = useState(null);
   const [priorityContactId, setPriorityContactId] = useState(null);
   const [sweepAngle, setSweepAngle] = useState(0);
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false);
@@ -381,14 +306,10 @@ function DashboardPage() {
     matchesFound: 24,
     highPriorityMatches: 3
   });
-  const [expandedSearches, setExpandedSearches] = useState(() => Object.fromEntries(activeSearches.map((_, i) => [i, true])));
-  const [openMoreMenu, setOpenMoreMenu] = useState(null);
   const [recAction, setRecAction] = useState(null);
   const [opportunityHistoryOpen, setOpportunityHistoryOpen] = useState(false);
   const [activeAiStatusMessage, setActiveAiStatusMessage] = useState(aiStatusMessages[0]);
   const [aiStatusMessageVisible, setAiStatusMessageVisible] = useState(true);
-  const [missionMsgIndices, setMissionMsgIndices] = useState(() => activeSearches.map(() => 0));
-  const [missionMsgVisible, setMissionMsgVisible] = useState(() => activeSearches.map(() => true));
   const [greetingSummaryIndex, setGreetingSummaryIndex] = useState(0);
   const [greetingSummaryVisible, setGreetingSummaryVisible] = useState(true);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -435,9 +356,6 @@ function DashboardPage() {
       setRadarDetectionGlow(true);
       setHighlightedOpportunity(template.opportunityIndex);
       setActiveTimelineEventId(eventId);
-      if (template.missionIndex !== void 0) {
-        setHighlightedMission(template.missionIndex);
-      }
       const oppIdx = radarOpportunityCursorRef.current;
       radarOpportunityCursorRef.current = (radarOpportunityCursorRef.current + 1) % radarOpportunities.length;
       setRadarOpportunityIndex(oppIdx);
@@ -448,9 +366,6 @@ function DashboardPage() {
       schedule(() => setRadarDetectionGlow(false), 1e3);
       schedule(() => setHighlightedOpportunity(null), 1700);
       schedule(() => setActiveTimelineEventId(null), 1900);
-      if (template.missionIndex !== void 0) {
-        schedule(() => setHighlightedMission(null), 1700);
-      }
       schedule(() => setRadarOpportunityVisible(false), 7100);
       schedule(runTimelineActivity, 11e3 + Math.random() * 4e3);
     };
@@ -507,28 +422,6 @@ function DashboardPage() {
       if (fadeTimeoutId !== null) {
         window.clearTimeout(fadeTimeoutId);
       }
-    };
-  }, []);
-  useEffect(() => {
-    const fadeMs = 220;
-    const intervalMs = 4500;
-    const staggerMs = 1400;
-    const fadeTimeoutIds = activeSearches.map(() => null);
-    const intervalIds = activeSearches.map((_, i) => {
-      return window.setInterval(() => {
-        setMissionMsgVisible((prev) => prev.map((v, j) => j === i ? false : v));
-        if (fadeTimeoutIds[i] !== null) window.clearTimeout(fadeTimeoutIds[i]);
-        fadeTimeoutIds[i] = window.setTimeout(() => {
-          setMissionMsgIndices((prev) => prev.map((idx, j) => j === i ? (idx + 1) % activeSearches[i].liveMessages.length : idx));
-          setMissionMsgVisible((prev) => prev.map((v, j) => j === i ? true : v));
-        }, fadeMs);
-      }, intervalMs + i * staggerMs);
-    });
-    return () => {
-      intervalIds.forEach((id) => window.clearInterval(id));
-      fadeTimeoutIds.forEach((id) => {
-        if (id !== null) window.clearTimeout(id);
-      });
     };
   }, []);
   useEffect(() => {
@@ -599,13 +492,6 @@ function DashboardPage() {
     });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const toggleSearch = (index) => {
-    setExpandedSearches((prev) => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-    setOpenMoreMenu(null);
-  };
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -1125,208 +1011,91 @@ function DashboardPage() {
           ] })
         ] }, opportunity.vehicle)) })
       ] }),
-      openMoreMenu !== null && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-10 md:hidden", onClick: () => setOpenMoreMenu(null), "aria-hidden": "true" }),
       /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8", children: [
         /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "AI Search Missions" }),
         /* @__PURE__ */ jsx("p", { className: "mb-3 text-sm text-on-surface-variant", children: "Search jobs currently being monitored by TICA." }),
-        /* @__PURE__ */ jsxs("div", { className: "space-y-2.5", children: [
-          storedMission ? /* @__PURE__ */ jsx("article", { className: "rounded-xl bg-surface-container-high p-3.5", children: /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsxs("button", { onClick: () => setStoredMissionExpanded((v) => !v), className: "flex w-full items-center justify-between gap-3", "aria-expanded": storedMissionExpanded, children: [
-              /* @__PURE__ */ jsxs("div", { className: "min-w-0 text-left", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
-                  /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: {
-                    background: "rgba(251,191,36,0.88)",
-                    boxShadow: "0 0 6px rgba(251,191,36,0.5)"
-                  } }),
-                  /* @__PURE__ */ jsx("p", { className: "break-words text-body-md font-body-md font-medium text-on-surface", children: deriveMissionName(storedMission) }),
-                  /* @__PURE__ */ jsx("span", { className: "rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary", children: "NEW MISSION" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "mt-1 flex flex-wrap gap-x-4 gap-y-0.5 pl-4", children: [
-                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
-                    "ID: ",
-                    storedMission.missionId
-                  ] }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant", children: storedMission.status })
-                ] })
+        /* @__PURE__ */ jsx("div", { className: "space-y-2.5", children: storedMission ? /* @__PURE__ */ jsx("article", { className: "rounded-xl bg-surface-container-high p-3.5", children: /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsxs("button", { onClick: () => setStoredMissionExpanded((v) => !v), className: "flex w-full items-center justify-between gap-3", "aria-expanded": storedMissionExpanded, children: [
+            /* @__PURE__ */ jsxs("div", { className: "min-w-0 text-left", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: {
+                  background: "rgba(251,191,36,0.88)",
+                  boxShadow: "0 0 6px rgba(251,191,36,0.5)"
+                } }),
+                /* @__PURE__ */ jsx("p", { className: "break-words text-body-md font-body-md font-medium text-on-surface", children: deriveMissionName(storedMission) }),
+                /* @__PURE__ */ jsx("span", { className: "rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary", children: "NEW MISSION" })
               ] }),
-              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 text-on-surface-variant", children: /* @__PURE__ */ jsx(ChevronIcon, { open: storedMissionExpanded }) })
+              /* @__PURE__ */ jsxs("div", { className: "mt-1 flex flex-wrap gap-x-4 gap-y-0.5 pl-4", children: [
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
+                  "ID: ",
+                  storedMission.missionId
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant", children: storedMission.status })
+              ] })
             ] }),
-            storedMissionExpanded && /* @__PURE__ */ jsxs("div", { className: "mt-2.5 space-y-2.5", children: [
-              /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2", children: [
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Mission ID" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.missionId })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicle Type" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.vehicleType || "—" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Make & Model" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.vehicleRequirements.make && storedMission.vehicleRequirements.model ? `${storedMission.vehicleRequirements.make} ${storedMission.vehicleRequirements.model}` : storedMission.vehicleRequirements.make || storedMission.vehicleRequirements.model || "—" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Budget" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.budget ? `Up to ${formatMissionPounds(storedMission.budget)}` : "—" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Target Profit" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.targetProfit ? `${formatMissionPounds(storedMission.targetProfit)}+` : "—" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Search Area" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.searchArea || "—" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Buying Priority" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.buyingPriority || "—" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Status" }),
-                  /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 text-sm text-on-surface", children: [
-                    "🟡 ",
-                    storedMission.status
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Current Stage" }),
-                  /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.currentStage || MISSION_STAGES[0] })
+            /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 text-on-surface-variant", children: /* @__PURE__ */ jsx(ChevronIcon, { open: storedMissionExpanded }) })
+          ] }),
+          storedMissionExpanded && /* @__PURE__ */ jsxs("div", { className: "mt-2.5 space-y-2.5", children: [
+            /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Mission ID" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.missionId })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicle Type" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.vehicleType || "—" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Make & Model" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.vehicleRequirements.make && storedMission.vehicleRequirements.model ? `${storedMission.vehicleRequirements.make} ${storedMission.vehicleRequirements.model}` : storedMission.vehicleRequirements.make || storedMission.vehicleRequirements.model || "—" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Budget" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.budget ? `Up to ${formatMissionPounds(storedMission.budget)}` : "—" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Target Profit" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.targetProfit ? `${formatMissionPounds(storedMission.targetProfit)}+` : "—" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Search Area" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.searchArea || "—" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Buying Priority" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.buyingPriority || "—" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Status" }),
+                /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 text-sm text-on-surface", children: [
+                  "🟡 ",
+                  storedMission.status
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsxs("div", { className: "mb-1 flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Search Progress" }),
-                  /* @__PURE__ */ jsxs("span", { className: "text-xs font-semibold text-on-surface", children: [
-                    storedMission.progress,
-                    "%"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full", style: {
-                  width: `${storedMission.progress}%`,
-                  background: "rgba(251,191,36,0.88)",
-                  boxShadow: "0 0 4px rgba(251,191,36,0.5)"
-                } }) })
+                /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Current Stage" }),
+                /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: storedMission.currentStage || MISSION_STAGES[0] })
               ] })
-            ] })
-          ] }) }) : /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 text-center", children: [
-            /* @__PURE__ */ jsx("p", { className: "mb-3 text-sm text-on-surface-variant", children: "No AI Search Mission has been deployed yet." }),
-            /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Create AI Search Mission" })
-          ] }),
-          activeSearches.map((search, index) => {
-            const statusCfg = missionStatusConfig[search.status];
-            return /* @__PURE__ */ jsx("article", { className: `rounded-xl bg-surface-container-high p-3.5 transition-all ${highlightedMission === index ? "mission-card-highlight" : ""}`, children: /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs("button", { onClick: () => toggleSearch(index), className: "flex w-full items-center justify-between gap-3", "aria-expanded": expandedSearches[index], children: [
-                /* @__PURE__ */ jsxs("div", { className: "min-w-0 text-left", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
-                    /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: {
-                      background: statusCfg.color,
-                      boxShadow: `0 0 6px ${statusCfg.glow}`
-                    } }),
-                    /* @__PURE__ */ jsx("p", { className: "break-words text-body-md font-body-md font-medium text-on-surface", children: search.name })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "mt-1 flex flex-wrap gap-x-4 gap-y-0.5 pl-4", children: [
-                    /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
-                      "Last Scan: ",
-                      search.lastScan
-                    ] }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-sm font-bold text-primary", children: [
-                      search.opportunities,
-                      " Opp."
-                    ] })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 text-on-surface-variant", children: /* @__PURE__ */ jsx(ChevronIcon, { open: expandedSearches[index] }) })
-              ] }),
-              expandedSearches[index] && /* @__PURE__ */ jsxs("div", { className: "mt-2.5 space-y-2.5", children: [
-                /* @__PURE__ */ jsxs("dl", { className: "grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2", children: [
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicle Type" }),
-                    /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.vehicleType })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Search Area" }),
-                    /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.searchArea })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Budget" }),
-                    /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.budget })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Status" }),
-                    /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 text-sm text-on-surface", children: [
-                      statusCfg.emoji,
-                      " ",
-                      statusCfg.label
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Next Scan" }),
-                    /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.nextScan })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Vehicles Analysed Today" }),
-                    /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-on-surface", children: counterFormatter.format(search.vehiclesAnalysedToday) })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Rejected Listings" }),
-                    /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm text-on-surface", children: search.rejectedListings })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Qualified Opportunities" }),
-                    /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-bold text-primary", children: search.qualifiedOpportunities })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Today's Best Opp. Score" }),
-                    /* @__PURE__ */ jsx("dd", { className: "mt-0.5 text-sm font-semibold text-on-surface", children: search.bestOpportunityScore })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs uppercase tracking-widest text-on-surface-variant", children: "Sources Being Scanned" }),
-                  /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1", children: search.sources.map((src) => /* @__PURE__ */ jsx("span", { className: "rounded-md border border-outline-variant/30 bg-surface-container px-2 py-0.5 text-xs text-on-surface-variant", children: src }, src)) })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsxs("div", { className: "mb-1 flex items-center justify-between", children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Search Progress" }),
-                    /* @__PURE__ */ jsxs("span", { className: "text-xs font-semibold text-on-surface", children: [
-                      search.progress,
-                      "%"
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full", style: {
-                    width: `${search.progress}%`,
-                    background: statusCfg.color,
-                    boxShadow: `0 0 4px ${statusCfg.glow}`
-                  } }) })
-                ] }),
-                /* @__PURE__ */ jsxs("p", { className: "text-xs text-on-surface-variant/60", children: [
-                  "Mission Update — ",
-                  search.missionUpdate
-                ] }),
-                /* @__PURE__ */ jsxs("p", { className: "text-xs font-medium text-primary/75", style: {
-                  opacity: missionMsgVisible[index] ? 1 : 0,
-                  transition: "opacity 0.22s ease"
-                }, children: [
-                  "⚡ ",
-                  search.liveMessages[missionMsgIndices[index]]
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 min-[420px]:flex-row", children: [
-                  /* @__PURE__ */ jsx("button", { className: "min-h-11 rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75 min-[420px]:flex-1", children: "Run Now" }),
-                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                    /* @__PURE__ */ jsx("button", { onClick: (e) => {
-                      e.stopPropagation();
-                      setOpenMoreMenu(openMoreMenu === index ? null : index);
-                    }, className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40 min-[420px]:w-auto", "aria-haspopup": "true", "aria-expanded": openMoreMenu === index, children: "More" }),
-                    openMoreMenu === index && /* @__PURE__ */ jsxs("div", { className: "absolute right-0 bottom-full z-20 mb-2 w-36 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-high shadow-lg", children: [
-                      /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-on-surface transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Edit" }),
-                      /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-on-surface-variant transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Pause" }),
-                      /* @__PURE__ */ jsx("button", { className: "w-full px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-surface-container-highest active:bg-surface-container-highest", children: "Delete" })
-                    ] })
-                  ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("div", { className: "mb-1 flex items-center justify-between", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Search Progress" }),
+                /* @__PURE__ */ jsxs("span", { className: "text-xs font-semibold text-on-surface", children: [
+                  storedMission.progress,
+                  "%"
                 ] })
-              ] })
-            ] }) }, search.name);
-          })
-        ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full", style: {
+                width: `${storedMission.progress}%`,
+                background: "rgba(251,191,36,0.88)",
+                boxShadow: "0 0 4px rgba(251,191,36,0.5)"
+              } }) })
+            ] })
+          ] })
+        ] }) }) : /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 text-center", children: [
+          /* @__PURE__ */ jsx("p", { className: "mb-3 text-sm text-on-surface-variant", children: "No AI Search Mission has been deployed yet." }),
+          /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75", children: "Create AI Search Mission" })
+        ] }) })
       ] })
     ] }),
     /* @__PURE__ */ jsx("button", { "aria-label": "Back to top", className: "back-to-top-btn", onClick: scrollToTop, style: {

@@ -159,7 +159,7 @@ const $$splitComponentImporter$7 = () => import("./opportunity-DLBRIEKt.js");
 const Route$7 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-const $$splitComponentImporter$6 = () => import("./dashboard-drSJPe9u.js");
+const $$splitComponentImporter$6 = () => import("./dashboard-BqLKlqUq.js");
 const Route$6 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
