@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
@@ -266,12 +266,35 @@ function OpportunityPage() {
         ? 'TICA flags this opportunity for further review — some indicators are positive but caution is advised before committing.'
         : 'TICA does not recommend this vehicle at current pricing — margins and demand indicators fall below buying thresholds.'
 
+  // ── State ──────────────────────────────────────────────────────────────
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [analysisStep, setAnalysisStep] = useState(0)
   const [analysisComplete, setAnalysisComplete] = useState(false)
   const [dotPulsing, setDotPulsing] = useState(true)
   const [meterAnimated, setMeterAnimated] = useState(false)
+  const [meterGlowing, setMeterGlowing] = useState(false)
   const [activeMission, setActiveMission] = useState<TicaMission | null>(null)
+  // AI Thinking overlay
+  const [thinkingVisible, setThinkingVisible] = useState(true)
+  const [thinkingExiting, setThinkingExiting] = useState(false)
+  const [thinkingStep, setThinkingStep] = useState(0)
+  // Staggered card entrance
+  const [pageReady, setPageReady] = useState(false)
+  // Executive summary stat counters
+  const [statValues, setStatValues] = useState({ confidence: 0, profit: 0, retail: 0, score: 0, days: 0 })
+  // Timeline animation
+  const [timelineVisible, setTimelineVisible] = useState(0)
+  // Badge sweep
+  const [badgeSweep, setBadgeSweep] = useState(false)
+  // Hero image index
+  const [heroImageIdx, setHeroImageIdx] = useState(0)
+  // Scroll-reveal refs
+  const revealRefs = useRef<(HTMLElement | null)[]>([])
+
+  // ── Helpers ────────────────────────────────────────────────────────────
+  const setRevealRef = useCallback((i: number) => (el: HTMLElement | null) => {
+    revealRefs.current[i] = el
+  }, [])
 
   useEffect(() => {
     setActiveMission(loadMission())
@@ -286,6 +309,33 @@ function OpportunityPage() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // AI Thinking overlay — runs for ~2.5s then fades out
+  const thinkingSteps = [
+    'Market Intelligence',
+    'Vehicle History',
+    'Pricing Model',
+    'Profit Projection',
+    'Risk Assessment',
+    'Dealer Recommendation',
+  ]
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = []
+    const stepDelay = 320
+    thinkingSteps.forEach((_, i) => {
+      timers.push(setTimeout(() => setThinkingStep(i + 1), 300 + i * stepDelay))
+    })
+    // Begin exit
+    timers.push(setTimeout(() => setThinkingExiting(true), 300 + thinkingSteps.length * stepDelay + 200))
+    // Remove overlay
+    timers.push(setTimeout(() => {
+      setThinkingVisible(false)
+      setPageReady(true)
+    }, 300 + thinkingSteps.length * stepDelay + 580))
+    return () => timers.forEach(clearTimeout)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Existing analysis steps
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = []
     for (let i = 0; i < 5; i++) {
@@ -293,17 +343,121 @@ function OpportunityPage() {
     }
     timers.push(setTimeout(() => setAnalysisComplete(true), 200 + 4 * 400 + 600))
     timers.push(setTimeout(() => setDotPulsing(false), 2500))
-    // Trigger meter slide-in after a brief paint delay
     timers.push(setTimeout(() => setMeterAnimated(true), 120))
+    timers.push(setTimeout(() => setMeterGlowing(true), 1250))
     return () => timers.forEach(clearTimeout)
   }, [])
+
+  // Executive summary stat counters
+  useEffect(() => {
+    const targetValues = { confidence: 97, profit: 4255, retail: 36250, score: 97, days: 9 }
+    const duration = 1100
+    const fps = 60
+    const steps = Math.round(duration / (1000 / fps))
+    let frame = 0
+    const timer = setInterval(() => {
+      frame++
+      const progress = Math.min(frame / steps, 1)
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setStatValues({
+        confidence: Math.round(targetValues.confidence * eased),
+        profit: Math.round(targetValues.profit * eased),
+        retail: Math.round(targetValues.retail * eased),
+        score: Math.round(targetValues.score * eased),
+        days: Math.round(targetValues.days * eased),
+      })
+      if (progress >= 1) clearInterval(timer)
+    }, 1000 / fps)
+    // Start after thinking overlay exits (~2.8s offset)
+    const outer = setTimeout(() => {}, 2800)
+    return () => {
+      clearTimeout(outer)
+      clearInterval(timer)
+    }
+  }, [])
+
+  // Timeline sequential reveal
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = []
+    investigationTimeline.forEach((_, i) => {
+      timers.push(setTimeout(() => setTimelineVisible(i + 1), 3400 + i * 280))
+    })
+    return () => timers.forEach(clearTimeout)
+  }, [])
+
+  // Badge sweep every ~13s
+  useEffect(() => {
+    const run = () => {
+      setBadgeSweep(false)
+      // micro delay to allow class removal to take effect
+      const t = setTimeout(() => setBadgeSweep(true), 40)
+      return t
+    }
+    const t0 = setTimeout(() => {
+      run()
+      const interval = setInterval(run, 13000)
+      return () => clearInterval(interval)
+    }, 4000)
+    return () => clearTimeout(t0)
+  }, [])
+
+  // Scroll-reveal via IntersectionObserver
+  useEffect(() => {
+    const els = revealRefs.current.filter(Boolean) as HTMLElement[]
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('opp-scroll-visible')
+            obs.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.06 },
+    )
+    els.forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [pageReady])
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  // Stagger delay helper
+  const stagger = (i: number) => ({ animationDelay: `${i * 80}ms` })
+
   return (
-    <PlatformShell
+    <>
+      {/* AI Thinking Overlay */}
+      {thinkingVisible && (
+        <div
+          className={`opp-thinking-overlay ${thinkingExiting ? 'opp-thinking-overlay--exit' : 'opp-thinking-overlay--enter'}`}
+          aria-live="polite"
+          aria-label="TICA AI analysing"
+        >
+          <div className="flex flex-col items-center gap-6 px-6 text-center">
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-primary/80">TICA AI</p>
+              <p className="text-[22px] font-semibold text-on-surface sm:text-[26px]">Analysing…</p>
+            </div>
+            <div className="flex flex-col items-start gap-2.5">
+              {thinkingSteps.map((step, i) => (
+                <p
+                  key={step}
+                  className="opp-thinking-step flex items-center gap-2.5 text-[15px] font-medium text-on-surface"
+                  style={thinkingStep > i ? { animationDelay: '0ms' } : { opacity: 0, animationName: 'none' }}
+                >
+                  <span className="tica-decision-buy font-bold text-[17px]">✓</span>
+                  {step}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <PlatformShell
       navItems={[
         { label: 'Dealer Command Centre', href: '/dashboard' },
         { label: 'AI Search Missions', href: '/search-builder' },
@@ -319,8 +473,11 @@ function OpportunityPage() {
         { label: 'Subscription', disabled: true },
       ]}
     >
-      <div className="mx-auto w-full max-w-container-max space-y-3 sm:space-y-4">
-        <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
+      <div className={`mx-auto w-full max-w-container-max space-y-3 sm:space-y-4 ${pageReady ? 'opp-page-enter' : 'opacity-0'}`}>
+        <header
+          className="opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6"
+          style={stagger(0)}
+        >
           {/* Future exported PDF buying reports should reuse the TICA shield as the official TICA certification mark. */}
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center">
             <div>
@@ -329,13 +486,13 @@ function OpportunityPage() {
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <Link
                 to="/dashboard"
-                className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary sm:w-auto"
+                className="opp-btn-secondary inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface sm:w-auto"
               >
                 Return to Dashboard
               </Link>
               <Link
                 to="/search-builder"
-                className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-body-md font-body-md text-on-primary transition-all hover:brightness-110 sm:w-auto"
+                className="opp-btn-primary inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-body-md font-body-md text-on-primary sm:w-auto"
               >
                 Create New AI Search
               </Link>
@@ -359,14 +516,16 @@ function OpportunityPage() {
               </p>
             </div>
             <div className="self-end sm:self-auto">
-              <TicaShield size="lg" />
+              <div className={`opp-badge-sweep rounded-2xl ${badgeSweep ? 'opp-badge-sweep-play' : ''}`}>
+                <TicaShield size="lg" />
+              </div>
             </div>
           </div>
         </header>
 
         {/* Mission Engine Status — reads from the shared Mission Engine */}
         {activeMission && (
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="Mission status">
+          <section className="opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="Mission status" style={stagger(1)}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80">Mission Status</p>
@@ -398,56 +557,56 @@ function OpportunityPage() {
         )}
 
         {/* Executive Summary — answers "Should I buy this?" within 3-5 seconds */}
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
+        <section className="opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" style={stagger(2)}>
           <p className="mb-4 text-label-caps font-label-caps uppercase tracking-widest text-primary">Executive Summary</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {/* AI Verdict */}
-            <div className="flex flex-col items-center justify-center rounded-xl border border-primary/25 bg-surface-container-high px-3 py-5 text-center">
+            <div className={`opp-card-hover flex flex-col items-center justify-center rounded-xl border border-primary/25 bg-surface-container-high px-3 py-5 text-center ${isBuyVerdict ? 'opp-buy-glow' : ''}`}>
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">TICA Recommendation™</p>
-              <p className={`mt-2 text-[28px] font-semibold leading-none sm:text-[32px] ${decisionVerdictClassName} ${decisionVerdictGlowClassName}`}>
+              <p className={`opp-stat-animate mt-2 text-[28px] font-semibold leading-none sm:text-[32px] ${decisionVerdictClassName} ${decisionVerdictGlowClassName}`}>
                 {normalizedDecisionAction}
               </p>
             </div>
             {/* TICA Confidence */}
-            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+            <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Confidence</p>
-              <p className="mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
-                {unifiedConfidence}
+              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
+                {statValues.confidence}%
               </p>
             </div>
             {/* Estimated Gross Profit */}
-            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+            <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Gross Profit</p>
-              <p className="mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                {featuredOpportunity.estimatedGrossProfitDisplay}
+              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
+                £{statValues.profit.toLocaleString('en-GB')}
               </p>
             </div>
             {/* Estimated Retail Value */}
-            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+            <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Retail Value</p>
-              <p className="mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                {featuredOpportunity.estimatedRetailValueDisplay}
+              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
+                £{statValues.retail.toLocaleString('en-GB')}
               </p>
             </div>
             {/* Opportunity Score */}
-            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+            <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Opportunity Score</p>
-              <p className="mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
-                {decisionModel.factors.overallOpportunityScore.displayValue}
+              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
+                {statValues.score}
               </p>
             </div>
             {/* Estimated Days to Sell */}
-            <div className="flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
+            <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Days to Sell</p>
-              <p className="mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                {featuredOpportunity.daysToSellDisplay}
+              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
+                {statValues.days}
               </p>
             </div>
           </div>
         </section>
 
         {/* TICA Opportunity Ranking™ — premium signature feature */}
-        <section className="rounded-2xl border border-primary/30 bg-surface-container-low p-4 sm:p-5" aria-label="TICA Opportunity Ranking">
+        <section className="opp-card-stagger opp-card-hover rounded-2xl border border-primary/30 bg-surface-container-low p-4 sm:p-5" aria-label="TICA Opportunity Ranking" style={stagger(3)}>
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Opportunity Ranking™</p>
@@ -488,11 +647,11 @@ function OpportunityPage() {
         </section>
 
         {/* AI Analysis Complete — compact completion card */}
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low px-4 py-3 sm:px-5" aria-label="TICA analysis status">
+        <section className="opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low px-4 py-3 sm:px-5" aria-label="TICA analysis status" style={stagger(4)}>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
               <span
-                className={`inline-block h-2 w-2 shrink-0 rounded-full bg-[var(--tica-decision-buy)] ${dotPulsing ? 'tica-status-dot-pulse' : ''}`}
+                className="opp-status-dot-breathe inline-block h-2 w-2 shrink-0 rounded-full bg-[var(--tica-decision-buy)]"
                 aria-hidden="true"
               />
               <p className="text-label-caps font-label-caps font-semibold uppercase tracking-widest text-on-surface">
@@ -529,7 +688,7 @@ function OpportunityPage() {
         </section>
 
         {/* ── Dealer Decision Meter ─────────────────────────────────────── */}
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="Dealer Decision Meter">
+        <section className="opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="Dealer Decision Meter" style={stagger(5)}>
           <p className="mb-4 text-label-caps font-label-caps uppercase tracking-widest text-primary">Dealer Decision Meter</p>
 
           {/* Recommendation headline */}
@@ -562,7 +721,7 @@ function OpportunityPage() {
           </div>
 
           {/* Gradient bar + indicator */}
-          <div className="ddm-bar-wrapper">
+          <div className={`ddm-bar-wrapper ${meterGlowing && meterZone === 'buy' ? 'opp-meter-glowing' : ''}`}>
             {/* Zone labels */}
             <div className="ddm-zone-labels" aria-hidden="true">
               <span className="ddm-zone-label ddm-zone-label-pass">PASS</span>
@@ -609,7 +768,7 @@ function OpportunityPage() {
           </p>
         </section>
 
-        <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-5">
+        <section className={`opp-card-stagger dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-5 ${isBuyVerdict ? 'opp-buy-glow' : ''}`} style={stagger(6)}>
           <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">AI Buying Verdict</h2>
           <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-4">
             <div className="verdict-card-premium flex flex-col items-center justify-center gap-2 rounded-2xl px-4 py-3.5 text-center sm:px-4.5 sm:py-4 lg:min-w-[250px]">
@@ -677,7 +836,7 @@ function OpportunityPage() {
         </section>
 
         {/* Dealer Notes — immediately after Final Recommendation */}
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+        <section className="opp-card-stagger opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(0)} style={stagger(7)}>
           <h2 className="mb-2 text-headline-md font-headline-md text-on-surface">Dealer Notes</h2>
           <p className="mb-3 text-body-sm font-body-sm text-on-surface-variant">Record your offer price, call outcomes, next actions and observations.</p>
           <textarea
@@ -687,7 +846,7 @@ function OpportunityPage() {
         </section>
 
 
-        <section className="dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-5">
+        <section className="opp-scroll-hidden dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-5" ref={setRevealRef(1)}>
           <p className="mb-3 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">Target Vehicle</p>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
             <div className="min-w-0 flex-1">
@@ -704,21 +863,27 @@ function OpportunityPage() {
               </div>
             </div>
             <div className="min-w-0 flex-1 sm:w-56 md:w-64">
-              {/* Hero image */}
+              {/* Hero image with fade transition */}
               <div className="overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container">
                 <img
+                  key={heroImageIdx}
                   src={featuredOpportunity.heroImageSrc}
                   alt={featuredOpportunity.heroImageAlt}
                   className="h-[160px] w-full object-cover sm:h-[140px]"
+                  style={{ animation: 'opp-page-fadein 0.4s ease-out both' }}
                 />
               </div>
-              {/* Thumbnail strip */}
+              {/* Thumbnail strip with hover preview */}
               <div className="mt-1.5 grid grid-cols-4 gap-1.5">
                 {[1, 2, 3, 4].map((n) => (
                   <div
                     key={n}
-                    className="aspect-[4/3] rounded-lg border border-outline-variant/30 bg-surface-container-high flex items-center justify-center overflow-hidden"
+                    className="opp-thumb aspect-[4/3] rounded-lg border border-outline-variant/30 bg-surface-container-high flex items-center justify-center overflow-hidden"
                     aria-label={`Vehicle photo ${n + 1}`}
+                    onClick={() => setHeroImageIdx(n - 1)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setHeroImageIdx(n - 1)}
                   >
                     <svg className="h-5 w-5 text-on-surface-variant/25" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" />
@@ -731,7 +896,7 @@ function OpportunityPage() {
         </section>
 
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+        <section className="opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(2)}>
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Vehicle Information</h2>
           <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {vehicleInfo.map((item) => (
@@ -743,7 +908,7 @@ function OpportunityPage() {
           </dl>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-2.5 sm:p-3.5">
+        <section className="opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-2.5 sm:p-3.5" ref={setRevealRef(3)}>
           <div className="flex flex-col gap-1 border-b border-outline-variant/25 pb-2.5">
             <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Vehicle Intelligence™</p>
             <div className="max-w-3xl">
@@ -916,13 +1081,13 @@ function OpportunityPage() {
                 <div className="mt-3 flex flex-wrap gap-2.5">
                   <button
                     type="button"
-                    className="min-h-10 rounded-xl border border-primary/30 bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary transition hover:bg-primary/90"
+                    className="opp-btn-primary min-h-10 rounded-xl border border-primary/30 bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary"
                   >
                     Save Opportunity
                   </button>
                   <button
                     type="button"
-                    className="min-h-10 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-2 text-body-sm font-semibold text-on-surface-variant"
+                    className="opp-btn-secondary min-h-10 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-2 text-body-sm font-semibold text-on-surface-variant"
                   >
                     Generate Dealer Report
                   </button>
@@ -1192,7 +1357,7 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-5">
+        <section className="opp-scroll-hidden dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(4)}>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
               <h2 className="text-headline-md font-headline-md text-on-surface">Investigation Timeline</h2>
@@ -1212,35 +1377,54 @@ function OpportunityPage() {
           </div>
 
           <div className="timeline-list mt-4" aria-label="AI investigation timeline">
-            {investigationTimeline.map((event) => (
-              <article key={`${event.time}-${event.message}`} className="timeline-entry">
+            {investigationTimeline.map((event, i) => (
+              <article
+                key={`${event.time}-${event.message}`}
+                className="timeline-entry opp-timeline-step"
+                style={timelineVisible > i ? { animationDelay: `${i * 60}ms` } : { opacity: 0, animationName: 'none' }}
+              >
                 <p className="timeline-entry-time">{event.time}</p>
                 <div className="timeline-entry-dot" aria-hidden="true" />
                 <p className="timeline-entry-message">{event.message}</p>
               </article>
             ))}
+            {/* BUY Signal Confirmed finale */}
+            <article
+              className="timeline-entry opp-timeline-step"
+              style={timelineVisible >= investigationTimeline.length
+                ? { animationDelay: `${investigationTimeline.length * 60 + 80}ms` }
+                : { opacity: 0, animationName: 'none' }
+              }
+            >
+              <p className="timeline-entry-time" />
+              <div className="timeline-entry-dot" aria-hidden="true" />
+              <p className="timeline-entry-message">
+                <span className="opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[var(--tica-decision-buy)] align-middle" aria-hidden="true" />
+                <span className="tica-decision-buy font-semibold">BUY Signal Confirmed</span>
+              </p>
+            </article>
           </div>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+        <section className="opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(5)}>
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Actions</h2>
           {/* Primary actions */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <button
               type="button"
-              className="min-h-12 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary transition-all hover:brightness-110 active:scale-[0.98]"
+              className="opp-btn-primary min-h-12 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary"
             >
               Save Opportunity
             </button>
             <button
               type="button"
-              className="min-h-12 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface transition-all hover:border-primary/70 hover:text-primary active:scale-[0.98]"
+              className="opp-btn-secondary min-h-12 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
             >
               Contact Seller
             </button>
             <button
               type="button"
-              className="min-h-12 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface transition-all hover:border-primary/70 hover:text-primary active:scale-[0.98]"
+              className="opp-btn-secondary min-h-12 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
             >
               Generate Dealer Report (PDF)
             </button>
@@ -1249,19 +1433,19 @@ function OpportunityPage() {
           <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
             <button
               type="button"
-              className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant transition-all hover:text-on-surface active:scale-[0.98]"
+              className="opp-btn-secondary min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
             >
               Run Live Vehicle History Check
             </button>
             <button
               type="button"
-              className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant transition-all hover:text-on-surface active:scale-[0.98]"
+              className="opp-btn-secondary min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
             >
               Add to Watchlist
             </button>
             <Link
               to="/dashboard"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant transition-all hover:text-on-surface active:scale-[0.98]"
+              className="opp-btn-secondary inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
             >
               Return to Dashboard
             </Link>
@@ -1280,5 +1464,6 @@ function OpportunityPage() {
         </svg>
       </button>
     </PlatformShell>
+    </>
   )
 }
