@@ -690,33 +690,33 @@ function OpportunityPage() {
         </section>
 
         <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
-          <div className="flex flex-col gap-2 border-b border-outline-variant/25 pb-4 sm:pb-5">
+          <div className="flex flex-col gap-1.5 border-b border-outline-variant/25 pb-3 sm:pb-4">
             <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Vehicle Intelligence™</p>
             <div className="max-w-3xl">
               <h2 className="text-headline-md font-headline-md text-on-surface">TICA Vehicle Intelligence™</h2>
-              <p className="mt-2 text-body-md font-body-md leading-relaxed text-on-surface-variant">
+              <p className="mt-1.5 text-body-md font-body-md leading-relaxed text-on-surface-variant">
                 AI-powered model knowledge based on known ownership issues, manufacturer data, technician experience and real-world reliability trends.
               </p>
             </div>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.45fr_0.95fr]">
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+          <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.45fr_0.95fr]">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Professional Intelligence Card</p>
-                  <h3 className="mt-2 text-title-lg font-semibold text-on-surface">⚠ Known Model Issues</h3>
+                  <h3 className="mt-1.5 text-title-lg font-semibold text-on-surface">⚠ Known Model Issues</h3>
                 </div>
                 <div className="rounded-full border border-outline-variant/30 bg-surface-container px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">
                   AI model knowledge
                 </div>
               </div>
 
-              <div className="mt-4 space-y-3">
+              <div className="mt-3 space-y-2">
                 {ticaVehicleIntelligence.modelIssues.map((issue) => {
                   const tone = issueToneConfig[issue.tone]
                   return (
-                    <div key={issue.title} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3">
+                    <div key={issue.title} className="rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5">
                       <div className="flex items-start gap-3">
                         <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${tone.dotClassName}`} aria-hidden="true" />
                         <div className="min-w-0">
@@ -724,7 +724,7 @@ function OpportunityPage() {
                             <p className="text-body-md font-body-md text-on-surface">• {issue.title}</p>
                             <span className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${tone.className}`}>{tone.label}</span>
                           </div>
-                          <p className="mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">{issue.detail}</p>
+                          <p className="mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">{issue.detail}</p>
                         </div>
                       </div>
                     </div>
@@ -733,51 +733,51 @@ function OpportunityPage() {
               </div>
             </article>
 
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Risk Indicator</p>
-              <h3 className="mt-2 text-title-lg font-semibold text-on-surface">Overall Ownership Risk</h3>
-              <div className="mt-4 rounded-2xl border border-outline-variant/30 bg-surface-container px-4 py-4">
+              <h3 className="mt-1.5 text-title-lg font-semibold text-on-surface">Overall Ownership Risk</h3>
+              <div className="mt-3 rounded-2xl border border-outline-variant/30 bg-surface-container px-3 py-3">
                 <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
                   <span>Low</span>
                   <span>Medium</span>
                   <span>High</span>
                 </div>
-                <div className="mt-3 h-3 rounded-full bg-[linear-gradient(90deg,var(--tica-decision-buy)_0%,var(--tica-decision-buy)_33%,var(--tica-decision-review)_33%,var(--tica-decision-review)_66%,var(--tica-decision-pass)_66%,var(--tica-decision-pass)_100%)]" />
-                <div className="mt-4 flex items-center justify-between rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3">
+                <div className="mt-2.5 h-2.5 rounded-full bg-[linear-gradient(90deg,var(--tica-decision-buy)_0%,var(--tica-decision-buy)_33%,var(--tica-decision-review)_33%,var(--tica-decision-review)_66%,var(--tica-decision-pass)_66%,var(--tica-decision-pass)_100%)]" />
+                <div className="mt-3 flex items-center justify-between rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5">
                   <div>
                     <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Current signal</p>
-                    <p className={`mt-1 text-body-lg font-semibold ${ownershipRiskToneClass}`}>🟡 {ticaVehicleIntelligence.ownershipRisk.level}</p>
+                    <p className={`mt-0.5 text-body-lg font-semibold ${ownershipRiskToneClass}`}>🟡 {ticaVehicleIntelligence.ownershipRisk.level}</p>
                   </div>
                   <div className="h-4 w-4 rounded-full bg-[var(--tica-decision-review)] shadow-[0_0_14px_rgba(212,165,55,0.45)]" aria-hidden="true" />
                 </div>
-                <p className="mt-3 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
+                <p className="mt-2 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
                   {ticaVehicleIntelligence.ownershipRisk.description}
                 </p>
               </div>
             </article>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_1fr]">
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
-              <div className="flex flex-col gap-2 border-b border-outline-variant/25 pb-4">
+          <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.5fr_1fr]">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
+              <div className="flex flex-col gap-1.5 border-b border-outline-variant/25 pb-3">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Inspection Checklist™</p>
                 <div>
                   <h3 className="text-title-lg font-semibold text-on-surface">AI Inspection Checklist™</h3>
-                  <p className="mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">Key areas TICA recommends inspecting before purchase.</p>
+                  <p className="mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">Key areas TICA recommends inspecting before purchase.</p>
                 </div>
               </div>
-              <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2">
+              <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-2">
                 {ticaVehicleIntelligence.inspectionChecklist.map((section) => (
-                  <section key={section.category} className="rounded-xl border border-outline-variant/25 bg-surface-container p-4">
+                  <section key={section.category} className="rounded-xl border border-outline-variant/25 bg-surface-container p-3">
                     <div className="flex items-center justify-between gap-3">
                       <h4 className="text-body-md font-semibold text-on-surface">{section.category}</h4>
                       <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Inspection Area</span>
                     </div>
-                    <div className="mt-3 space-y-2.5">
+                    <div className="mt-2 space-y-1.5">
                       {section.items.map((item) => {
                         const status = checklistStatusConfig[item.status]
                         return (
-                          <div key={item.label} className="flex items-start justify-between gap-3 rounded-xl border border-outline-variant/20 bg-surface-container-high px-3 py-2.5">
+                          <div key={item.label} className="flex items-start justify-between gap-2.5 rounded-xl border border-outline-variant/20 bg-surface-container-high px-2.5 py-1.5">
                             <p className="text-body-sm font-body-sm text-on-surface">{item.label}</p>
                             <div className="flex shrink-0 items-center gap-2">
                               <span className={`h-2.5 w-2.5 rounded-full ${status.dotClassName}`} aria-hidden="true" />
@@ -792,18 +792,18 @@ function OpportunityPage() {
               </div>
             </article>
 
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Running Cost Intelligence</p>
-              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                 {ticaVehicleIntelligence.runningCosts.map((item) => {
                   const tone = issueToneConfig[item.tone]
                   return (
-                    <div key={item.label} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3">
+                    <div key={item.label} className="rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5">
                       <div className="flex items-start justify-between gap-3">
                         <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">{item.label}</p>
                         <span className={`mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full ${tone.dotClassName}`} aria-hidden="true" />
                       </div>
-                      <p className="mt-3 text-body-sm font-semibold leading-relaxed text-on-surface">{item.value}</p>
+                      <p className="mt-2 text-body-sm font-semibold leading-relaxed text-on-surface">{item.value}</p>
                     </div>
                   )
                 })}
@@ -811,17 +811,17 @@ function OpportunityPage() {
             </article>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_0.8fr]">
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+          <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.5fr_0.8fr]">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Inspection Advice</p>
-              <div className="mt-4 rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-4">
-                <p className="text-body-md font-body-md leading-relaxed text-on-surface">{ticaVehicleIntelligence.inspectionAdvice}</p>
+              <div className="mt-2 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2">
+                <p className="text-body-sm font-body-sm leading-relaxed text-on-surface">{ticaVehicleIntelligence.inspectionAdvice}</p>
               </div>
             </article>
 
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Future Ready Architecture</p>
-              <div className="mt-4 space-y-2.5">
+              <div className="mt-2.5 space-y-1.5">
                 {[
                   'Manufacturer Technical Data',
                   'DVSA / MOT records',
@@ -832,12 +832,12 @@ function OpportunityPage() {
                   'Community reliability reports',
                   'AI learning engine',
                 ].map((source) => (
-                  <div key={source} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3 text-body-sm font-body-sm text-on-surface">
+                  <div key={source} className="rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2 text-body-sm font-body-sm text-on-surface">
                     {source}
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
+              <p className="mt-2.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
                 Each intelligence block is structured as a standalone data field so live feeds can replace demo values without redesigning the report layout.
               </p>
             </article>
