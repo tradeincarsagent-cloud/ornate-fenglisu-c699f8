@@ -2076,16 +2076,16 @@ body > div {
 }
 
 .traffic-light-shell {
-  width: 98px;
-  border-radius: 18px;
+  width: 54px;
+  border-radius: 12px;
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
   border: 1px solid rgba(148, 163, 184, 0.28);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.08),
-    0 14px 30px rgba(2, 6, 23, 0.4);
-  padding: 10px;
+    0 10px 24px rgba(2, 6, 23, 0.36);
+  padding: 6px;
   display: grid;
-  gap: 9px;
+  gap: 5px;
 }
 
 .traffic-light-lens {
@@ -2294,16 +2294,16 @@ body > div {
 
 /* ── Recommendation legend — compact traffic light (mobile only) ────────── */
 .legend-traffic-light {
-  width: 44px;
-  border-radius: 12px;
+  width: 30px;
+  border-radius: 9px;
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
   border: 1px solid rgba(148, 163, 184, 0.28);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.08),
-    0 8px 20px rgba(2, 6, 23, 0.4);
-  padding: 7px;
+    0 6px 16px rgba(2, 6, 23, 0.36);
+  padding: 4px;
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 
 .legend-traffic-light-lens {
