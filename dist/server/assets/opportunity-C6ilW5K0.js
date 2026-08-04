@@ -111,6 +111,53 @@ const ticaVehicleIntelligence = {
     }]
   }],
   inspectionAdvice: "Pay particular attention to the timing belt replacement history and inspect for evidence of regular servicing. These checks are likely to have the greatest impact on long-term ownership costs.",
+  dealerVerdict: {
+    recommendation: "BUY — SUBJECT TO VERIFICATION",
+    confidence: "92%",
+    strengths: ["Strong retail demand", "ULEZ compliant", "Competitive running costs", "Good fuel economy", "Attractive projected margin", "Seller location is practical for collection"],
+    verificationItems: [{
+      label: "Wet timing belt replacement invoice",
+      tone: "high"
+    }, {
+      label: "Water-pump and tensioner history",
+      tone: "warning"
+    }, {
+      label: "Complete service invoices",
+      tone: "high"
+    }, {
+      label: "Recall status",
+      tone: "warning"
+    }, {
+      label: "Outstanding finance check",
+      tone: "high"
+    }],
+    commercialDecision: [{
+      label: "Recommended Offer",
+      value: "£30,750",
+      tone: "review"
+    }, {
+      label: "Expected Purchase Range",
+      value: "£31,250–£31,750",
+      tone: "default"
+    }, {
+      label: "Walk-Away Price",
+      value: "£32,000",
+      tone: "pass"
+    }, {
+      label: "Preparation Allowance",
+      value: "£850",
+      tone: "default"
+    }, {
+      label: "Estimated Retail Value",
+      value: "£36,250",
+      tone: "buy"
+    }, {
+      label: "Projected Gross Profit",
+      value: "£3,650–£4,150",
+      tone: "buy"
+    }],
+    finalAdvice: "Proceed only after confirming the wet-belt replacement history, service invoices and finance status. If satisfactory, contact the seller today and begin negotiations at £30,750."
+  },
   runningCosts: [{
     label: "Typical Annual Service Cost",
     value: "£390–£540",
@@ -698,6 +745,63 @@ function OpportunityPage() {
               /* @__PURE__ */ jsxs("div", { className: "mt-2 flex items-start gap-2.5 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5", children: [
                 /* @__PURE__ */ jsx("span", { className: "mt-0.5 shrink-0 text-base leading-none", children: "💡" }),
                 /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-relaxed text-on-surface", children: ticaVehicleIntelligence.inspectionAdvice })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("article", { className: "hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5 xl:block", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-start justify-between gap-3 border-b border-outline-variant/25 pb-3", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "TICA Dealer Verdict™" }),
+                  /* @__PURE__ */ jsx("h3", { className: "mt-1 text-title-lg font-semibold text-on-surface", children: "Final Dealer Recommendation" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "rounded-full border border-[rgba(var(--tica-decision-buy-rgb),0.28)] bg-[rgba(var(--tica-decision-buy-rgb),0.14)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] tica-decision-buy", children: [
+                  "Confidence ",
+                  ticaVehicleIntelligence.dealerVerdict.confidence
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-[rgba(var(--tica-decision-buy-rgb),0.24)] bg-[rgba(var(--tica-decision-buy-rgb),0.08)] px-3 py-3", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant", children: "Main Recommendation" }),
+                /* @__PURE__ */ jsxs("div", { className: "mt-2 flex items-center justify-between gap-3", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-body-lg font-semibold tracking-[0.01em] tica-decision-buy", children: ticaVehicleIntelligence.dealerVerdict.recommendation }),
+                  /* @__PURE__ */ jsx("div", { className: "h-3 w-3 shrink-0 rounded-full bg-[var(--tica-decision-buy)] shadow-[0_0_12px_rgba(var(--tica-decision-buy-rgb),0.5)]", "aria-hidden": "true" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-3 grid grid-cols-2 gap-3", children: [
+                /* @__PURE__ */ jsxs("section", { className: "rounded-xl border border-outline-variant/25 bg-surface-container p-3", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Strengths" }),
+                  /* @__PURE__ */ jsx("div", { className: "mt-2 grid grid-cols-2 gap-x-3 gap-y-2", children: ticaVehicleIntelligence.dealerVerdict.strengths.map((strength) => /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-2", children: [
+                    /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-0.5 text-[11px] font-semibold", children: "●" }),
+                    /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-snug text-on-surface", children: strength })
+                  ] }, strength)) })
+                ] }),
+                /* @__PURE__ */ jsxs("section", { className: "rounded-xl border border-outline-variant/25 bg-surface-container p-3", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Items to Verify" }),
+                  /* @__PURE__ */ jsx("div", { className: "mt-2 space-y-2", children: ticaVehicleIntelligence.dealerVerdict.verificationItems.map((item) => {
+                    const toneClass = item.tone === "high" ? "tica-decision-pass" : "tica-decision-review";
+                    const toneDotClass = item.tone === "high" ? "bg-[var(--tica-decision-pass)]" : "bg-[var(--tica-decision-review)]";
+                    return /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-2.5 rounded-lg border border-outline-variant/20 bg-surface-container-high px-2.5 py-2", children: [
+                      /* @__PURE__ */ jsx("span", { className: `mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${toneDotClass}`, "aria-hidden": "true" }),
+                      /* @__PURE__ */ jsx("p", { className: `text-body-sm font-body-sm leading-snug ${toneClass}`, children: item.label })
+                    ] }, item.label);
+                  }) })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("section", { className: "mt-3 rounded-xl border border-outline-variant/25 bg-surface-container p-3", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Commercial Decision" }),
+                /* @__PURE__ */ jsx("div", { className: "mt-2 grid grid-cols-2 gap-2.5", children: ticaVehicleIntelligence.dealerVerdict.commercialDecision.map((item) => {
+                  const valueClassName = item.tone === "buy" ? "tica-decision-buy" : item.tone === "review" ? "tica-decision-review" : item.tone === "pass" ? "tica-decision-pass" : "text-on-surface";
+                  return /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/20 bg-surface-container-high px-3 py-2.5", children: [
+                    /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant", children: item.label }),
+                    /* @__PURE__ */ jsx("p", { className: `mt-1 text-body-sm font-semibold ${valueClassName}`, children: item.value })
+                  ] }, item.label);
+                }) })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-primary/20 bg-primary-container/10 px-3 py-3", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Final TICA Advice" }),
+                /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface", children: ticaVehicleIntelligence.dealerVerdict.finalAdvice })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-3 flex flex-wrap gap-2.5", children: [
+                /* @__PURE__ */ jsx("button", { type: "button", className: "min-h-10 rounded-xl border border-primary/30 bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary transition hover:bg-primary/90", children: "Save Opportunity" }),
+                /* @__PURE__ */ jsx("button", { type: "button", className: "min-h-10 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-2 text-body-sm font-semibold text-on-surface-variant", children: "Generate Dealer Report" })
               ] })
             ] })
           ] }),
