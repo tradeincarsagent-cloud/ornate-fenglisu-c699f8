@@ -257,7 +257,6 @@ function OpportunityPage() {
 
   const confidencePercent = parseFloat(featuredOpportunity.confidenceDisplay) // e.g. 97 from "97%"
   const meterZone = confidencePercent >= 67 ? 'buy' : confidencePercent >= 34 ? 'review' : 'pass'
-  const meterLabel = meterZone === 'buy' ? 'BUY NOW' : meterZone === 'review' ? 'REVIEW' : 'PASS'
   const meterSentence =
     meterZone === 'buy'
       ? 'TICA considers this one of today\'s strongest buying opportunities based on pricing, resale demand and projected profit.'
@@ -530,7 +529,7 @@ function OpportunityPage() {
             <div className="ddm-zone-labels" aria-hidden="true">
               <span className="ddm-zone-label ddm-zone-label-pass">PASS</span>
               <span className="ddm-zone-label ddm-zone-label-review">REVIEW</span>
-              <span className="ddm-zone-label ddm-zone-label-buy">BUY NOW</span>
+              <span className="ddm-zone-label ddm-zone-label-buy">BUY</span>
             </div>
             {/* Bar track */}
             <div className="ddm-bar-track" role="meter" aria-label={`Decision meter: ${unifiedRecommendation} at ${unifiedConfidence} confidence`} aria-valuenow={confidencePercent} aria-valuemin={0} aria-valuemax={100}>
