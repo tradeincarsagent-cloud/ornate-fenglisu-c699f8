@@ -921,7 +921,7 @@ function OpportunityPage() {
 
           <div className="mt-2.5 grid grid-cols-1 items-start gap-4 xl:grid-cols-[1.45fr_0.95fr] xl:items-start">
             {/* Left column */}
-            <div className="flex flex-col items-start gap-4 self-start">
+            <div className="flex flex-col gap-4 self-start">
               <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
@@ -1079,7 +1079,7 @@ function OpportunityPage() {
                 </div>
               </article>
 
-              <section className="hidden w-full rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3 xl:block">
+              <section className="hidden w-full self-start rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3 xl:block">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                   <div className="min-w-0">
                     <h2 className="text-headline-md font-headline-md text-on-surface">Investigation Timeline</h2>
@@ -1129,7 +1129,7 @@ function OpportunityPage() {
             </div>
 
             {/* Right column */}
-            <div className="flex flex-col items-start gap-4 self-start">
+            <div className="flex flex-col gap-4 self-start">
               <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3">
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Risk Indicator</p>
