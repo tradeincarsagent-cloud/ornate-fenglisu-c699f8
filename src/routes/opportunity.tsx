@@ -82,6 +82,35 @@ const ticaVehicleIntelligence = {
   ],
   inspectionAdvice:
     'Pay particular attention to the timing belt replacement history and inspect for evidence of regular servicing. These checks are likely to have the greatest impact on long-term ownership costs.',
+  dealerVerdict: {
+    recommendation: 'BUY — SUBJECT TO VERIFICATION',
+    confidence: '92%',
+    strengths: [
+      'Strong retail demand',
+      'ULEZ compliant',
+      'Competitive running costs',
+      'Good fuel economy',
+      'Attractive projected margin',
+      'Seller location is practical for collection',
+    ],
+    verificationItems: [
+      { label: 'Wet timing belt replacement invoice', tone: 'high' as const },
+      { label: 'Water-pump and tensioner history', tone: 'warning' as const },
+      { label: 'Complete service invoices', tone: 'high' as const },
+      { label: 'Recall status', tone: 'warning' as const },
+      { label: 'Outstanding finance check', tone: 'high' as const },
+    ],
+    commercialDecision: [
+      { label: 'Recommended Offer', value: '£30,750', tone: 'review' as const },
+      { label: 'Expected Purchase Range', value: '£31,250–£31,750', tone: 'default' as const },
+      { label: 'Walk-Away Price', value: '£32,000', tone: 'pass' as const },
+      { label: 'Preparation Allowance', value: '£850', tone: 'default' as const },
+      { label: 'Estimated Retail Value', value: '£36,250', tone: 'buy' as const },
+      { label: 'Projected Gross Profit', value: '£3,650–£4,150', tone: 'buy' as const },
+    ],
+    finalAdvice:
+      'Proceed only after confirming the wet-belt replacement history, service invoices and finance status. If satisfactory, contact the seller today and begin negotiations at £30,750.',
+  },
   runningCosts: [
     { label: 'Typical Annual Service Cost', value: '£390–£540', tone: 'info' },
     { label: 'Timing Belt / Chain', value: 'Wet belt — invoice recommended', tone: 'warning' },
@@ -823,6 +852,102 @@ function OpportunityPage() {
                 <div className="mt-2 flex items-start gap-2.5 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5">
                   <span className="mt-0.5 shrink-0 text-base leading-none">💡</span>
                   <p className="text-body-sm font-body-sm leading-relaxed text-on-surface">{ticaVehicleIntelligence.inspectionAdvice}</p>
+                </div>
+              </article>
+
+              <article className="hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5 xl:block">
+                <div className="flex flex-wrap items-start justify-between gap-3 border-b border-outline-variant/25 pb-3">
+                  <div>
+                    <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Dealer Verdict™</p>
+                    <h3 className="mt-1 text-title-lg font-semibold text-on-surface">Final Dealer Recommendation</h3>
+                  </div>
+                  <div className="rounded-full border border-[rgba(var(--tica-decision-buy-rgb),0.28)] bg-[rgba(var(--tica-decision-buy-rgb),0.14)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] tica-decision-buy">
+                    Confidence {ticaVehicleIntelligence.dealerVerdict.confidence}
+                  </div>
+                </div>
+
+                <div className="mt-3 rounded-xl border border-[rgba(var(--tica-decision-buy-rgb),0.24)] bg-[rgba(var(--tica-decision-buy-rgb),0.08)] px-3 py-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Main Recommendation</p>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <p className="text-body-lg font-semibold tracking-[0.01em] tica-decision-buy">
+                      {ticaVehicleIntelligence.dealerVerdict.recommendation}
+                    </p>
+                    <div className="h-3 w-3 shrink-0 rounded-full bg-[var(--tica-decision-buy)] shadow-[0_0_12px_rgba(var(--tica-decision-buy-rgb),0.5)]" aria-hidden="true" />
+                  </div>
+                </div>
+
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <section className="rounded-xl border border-outline-variant/25 bg-surface-container p-3">
+                    <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary">Strengths</p>
+                    <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2">
+                      {ticaVehicleIntelligence.dealerVerdict.strengths.map((strength) => (
+                        <div key={strength} className="flex items-start gap-2">
+                          <span className="tica-decision-buy mt-0.5 text-[11px] font-semibold">●</span>
+                          <p className="text-body-sm font-body-sm leading-snug text-on-surface">{strength}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+
+                  <section className="rounded-xl border border-outline-variant/25 bg-surface-container p-3">
+                    <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary">Items to Verify</p>
+                    <div className="mt-2 space-y-2">
+                      {ticaVehicleIntelligence.dealerVerdict.verificationItems.map((item) => {
+                        const toneClass = item.tone === 'high' ? 'tica-decision-pass' : 'tica-decision-review'
+                        const toneDotClass = item.tone === 'high' ? 'bg-[var(--tica-decision-pass)]' : 'bg-[var(--tica-decision-review)]'
+                        return (
+                          <div key={item.label} className="flex items-start gap-2.5 rounded-lg border border-outline-variant/20 bg-surface-container-high px-2.5 py-2">
+                            <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${toneDotClass}`} aria-hidden="true" />
+                            <p className={`text-body-sm font-body-sm leading-snug ${toneClass}`}>{item.label}</p>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </section>
+                </div>
+
+                <section className="mt-3 rounded-xl border border-outline-variant/25 bg-surface-container p-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary">Commercial Decision</p>
+                  <div className="mt-2 grid grid-cols-2 gap-2.5">
+                    {ticaVehicleIntelligence.dealerVerdict.commercialDecision.map((item) => {
+                      const valueClassName =
+                        item.tone === 'buy'
+                          ? 'tica-decision-buy'
+                          : item.tone === 'review'
+                            ? 'tica-decision-review'
+                            : item.tone === 'pass'
+                              ? 'tica-decision-pass'
+                              : 'text-on-surface'
+                      return (
+                        <div key={item.label} className="rounded-xl border border-outline-variant/20 bg-surface-container-high px-3 py-2.5">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant">{item.label}</p>
+                          <p className={`mt-1 text-body-sm font-semibold ${valueClassName}`}>{item.value}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </section>
+
+                <div className="mt-3 rounded-xl border border-primary/20 bg-primary-container/10 px-3 py-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary">Final TICA Advice</p>
+                  <p className="mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface">
+                    {ticaVehicleIntelligence.dealerVerdict.finalAdvice}
+                  </p>
+                </div>
+
+                <div className="mt-3 flex flex-wrap gap-2.5">
+                  <button
+                    type="button"
+                    className="min-h-10 rounded-xl border border-primary/30 bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary transition hover:bg-primary/90"
+                  >
+                    Save Opportunity
+                  </button>
+                  <button
+                    type="button"
+                    className="min-h-10 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-2 text-body-sm font-semibold text-on-surface-variant"
+                  >
+                    Generate Dealer Report
+                  </button>
                 </div>
               </article>
             </div>
