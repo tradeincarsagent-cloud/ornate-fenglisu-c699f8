@@ -605,7 +605,7 @@ function OpportunityPage() {
             /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "AI-powered model knowledge based on known ownership issues, manufacturer data, technician experience and real-world reliability trends." })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.45fr_0.95fr]", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 items-start gap-2.5 xl:grid-cols-[1.45fr_0.95fr]", children: [
           /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-3", children: [
               /* @__PURE__ */ jsxs("div", { children: [
@@ -631,7 +631,7 @@ function OpportunityPage() {
               ] }) }, issue.title);
             }) })
           ] }),
-          /* @__PURE__ */ jsxs("article", { className: "flex flex-col justify-center rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3", children: [
+          /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-2", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "AI Risk Indicator" }),
               /* @__PURE__ */ jsx("span", { className: "text-body-sm font-semibold text-on-surface-variant", children: "Overall Ownership Risk" })
@@ -657,7 +657,7 @@ function OpportunityPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.5fr_1fr]", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 items-start gap-2.5 xl:grid-cols-[1.5fr_1fr]", children: [
           /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1.5 border-b border-outline-variant/25 pb-3", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "AI Inspection Checklist™" }),
@@ -697,7 +697,7 @@ function OpportunityPage() {
             }) })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.5fr_0.8fr]", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 items-start gap-2.5 xl:grid-cols-[1.5fr_0.8fr]", children: [
           /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high px-3.5 py-3", children: [
             /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2.5", children: /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "TICA Inspection Advice" }) }),
             /* @__PURE__ */ jsxs("div", { className: "mt-2 flex items-start gap-2.5 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5", children: [
