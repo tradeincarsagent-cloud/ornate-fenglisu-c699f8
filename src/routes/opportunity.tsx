@@ -919,9 +919,9 @@ function OpportunityPage() {
             </div>
           </div>
 
-          <div className="mt-2.5 grid grid-cols-1 items-start gap-4 xl:grid-cols-[1.45fr_0.95fr]">
+          <div className="mt-2.5 grid grid-cols-1 items-start gap-4 xl:grid-cols-[1.45fr_0.95fr] xl:items-start">
             {/* Left column */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col items-start gap-4 self-start">
               <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
@@ -1078,10 +1078,58 @@ function OpportunityPage() {
                   </p>
                 </div>
               </article>
+
+              <section className="hidden w-full rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3 xl:block">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="min-w-0">
+                    <h2 className="text-headline-md font-headline-md text-on-surface">Investigation Timeline</h2>
+                    <p className="mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
+                      The AI reasoning process behind this recommendation.
+                    </p>
+                  </div>
+
+                  <div className="w-full rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5 lg:max-w-[220px]">
+                    <p className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">AI Reasoning</p>
+                    <p className="mt-1.5 text-body-sm font-body-sm text-on-surface">
+                      <span className="tica-decision-buy mr-2">🟢</span>
+                      BUY signal confirmed
+                    </p>
+                    <p className="mt-1 text-[11px] leading-relaxed text-on-surface-variant">Placeholder investigation checkpoints shown in decision order.</p>
+                  </div>
+                </div>
+
+                <div className="timeline-list mt-3" aria-label="AI investigation timeline">
+                  {investigationTimeline.map((event, i) => (
+                    <article
+                      key={`${event.time}-${event.message}`}
+                      className="timeline-entry opp-timeline-step"
+                      style={timelineVisible > i ? { animationDelay: `${i * 60}ms` } : { opacity: 0, animationName: 'none' }}
+                    >
+                      <p className="timeline-entry-time text-[11px] sm:text-[11px]">{event.time}</p>
+                      <div className="timeline-entry-dot" aria-hidden="true" />
+                      <p className="timeline-entry-message text-body-sm font-body-sm">{event.message}</p>
+                    </article>
+                  ))}
+                  <article
+                    className="timeline-entry opp-timeline-step"
+                    style={timelineVisible >= investigationTimeline.length
+                      ? { animationDelay: `${investigationTimeline.length * 60 + 80}ms` }
+                      : { opacity: 0, animationName: 'none' }
+                    }
+                  >
+                    <p className="timeline-entry-time" />
+                    <div className="timeline-entry-dot" aria-hidden="true" />
+                    <p className="timeline-entry-message text-body-sm font-body-sm">
+                      <span className="opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[var(--tica-decision-buy)] align-middle" aria-hidden="true" />
+                      <span className="tica-decision-buy font-semibold">BUY Signal Confirmed</span>
+                    </p>
+                  </article>
+                </div>
+              </section>
             </div>
 
             {/* Right column */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col items-start gap-4 self-start">
               <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3">
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Risk Indicator</p>
@@ -1342,7 +1390,7 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="opp-scroll-hidden dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(4)}>
+        <section className="opp-scroll-hidden dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-5 xl:hidden" ref={setRevealRef(4)}>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
               <h2 className="text-headline-md font-headline-md text-on-surface">Investigation Timeline</h2>
