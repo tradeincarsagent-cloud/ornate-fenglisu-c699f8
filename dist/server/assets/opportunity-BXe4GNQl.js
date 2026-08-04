@@ -806,8 +806,8 @@ function OpportunityPage() {
               /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "AI-powered model knowledge based on known ownership issues, manufacturer data, technician experience and real-world reliability trends." })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 items-start gap-4 xl:grid-cols-[1.45fr_0.95fr]", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 items-start gap-4 xl:grid-cols-[1.45fr_0.95fr] xl:items-start", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 self-start", children: [
               /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5", children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-3", children: [
                   /* @__PURE__ */ jsxs("div", { children: [
@@ -917,9 +917,50 @@ function OpportunityPage() {
                   /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Final TICA Advice" }),
                   /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface", children: ticaVehicleIntelligence.dealerVerdict.finalAdvice })
                 ] })
+              ] }),
+              /* @__PURE__ */ jsxs("section", { className: "hidden w-full self-start rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3 xl:block", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+                    /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Investigation Timeline" }),
+                    /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "The AI reasoning process behind this recommendation." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "w-full rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5 lg:max-w-[220px]", children: [
+                    /* @__PURE__ */ jsx("p", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Reasoning" }),
+                    /* @__PURE__ */ jsxs("p", { className: "mt-1.5 text-body-sm font-body-sm text-on-surface", children: [
+                      /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mr-2", children: "🟢" }),
+                      "BUY signal confirmed"
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "mt-1 text-[11px] leading-relaxed text-on-surface-variant", children: "Placeholder investigation checkpoints shown in decision order." })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "timeline-list mt-3", "aria-label": "AI investigation timeline", children: [
+                  investigationTimeline.map((event, i) => /* @__PURE__ */ jsxs("article", { className: "timeline-entry opp-timeline-step", style: timelineVisible > i ? {
+                    animationDelay: `${i * 60}ms`
+                  } : {
+                    opacity: 0,
+                    animationName: "none"
+                  }, children: [
+                    /* @__PURE__ */ jsx("p", { className: "timeline-entry-time text-[11px] sm:text-[11px]", children: event.time }),
+                    /* @__PURE__ */ jsx("div", { className: "timeline-entry-dot", "aria-hidden": "true" }),
+                    /* @__PURE__ */ jsx("p", { className: "timeline-entry-message text-body-sm font-body-sm", children: event.message })
+                  ] }, `${event.time}-${event.message}`)),
+                  /* @__PURE__ */ jsxs("article", { className: "timeline-entry opp-timeline-step", style: timelineVisible >= investigationTimeline.length ? {
+                    animationDelay: `${investigationTimeline.length * 60 + 80}ms`
+                  } : {
+                    opacity: 0,
+                    animationName: "none"
+                  }, children: [
+                    /* @__PURE__ */ jsx("p", { className: "timeline-entry-time" }),
+                    /* @__PURE__ */ jsx("div", { className: "timeline-entry-dot", "aria-hidden": "true" }),
+                    /* @__PURE__ */ jsxs("p", { className: "timeline-entry-message text-body-sm font-body-sm", children: [
+                      /* @__PURE__ */ jsx("span", { className: "opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[var(--tica-decision-buy)] align-middle", "aria-hidden": "true" }),
+                      /* @__PURE__ */ jsx("span", { className: "tica-decision-buy font-semibold", children: "BUY Signal Confirmed" })
+                    ] })
+                  ] })
+                ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 self-start", children: [
               /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3", children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-2", children: [
                   /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "AI Risk Indicator" }),
@@ -1179,7 +1220,7 @@ function OpportunityPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("section", { className: "opp-scroll-hidden dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-5", ref: setRevealRef(4), children: [
+        /* @__PURE__ */ jsxs("section", { className: "opp-scroll-hidden dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-5 xl:hidden", ref: setRevealRef(4), children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("h2", { className: "text-headline-md font-headline-md text-on-surface", children: "Investigation Timeline" }),
