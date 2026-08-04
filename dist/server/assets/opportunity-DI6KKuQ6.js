@@ -147,6 +147,42 @@ const ticaVehicleIntelligence = {
   ownershipRisk: {
     level: "Medium",
     description: "Based on known reliability patterns and ownership trends."
+  },
+  sellerQuestions: {
+    questions: [{
+      id: 1,
+      text: "Has the wet timing belt been replaced, and is there an invoice?",
+      priority: "high"
+    }, {
+      id: 2,
+      text: "Was the water pump, tensioners and coolant replaced at the same time?",
+      priority: "high"
+    }, {
+      id: 3,
+      text: "Which engine oil specification has been used during servicing?",
+      priority: "important"
+    }, {
+      id: 4,
+      text: "Has the vehicle required frequent oil top-ups between services?",
+      priority: "important"
+    }, {
+      id: 5,
+      text: "Have there been any DPF, emissions or engine warning lights?",
+      priority: "important"
+    }, {
+      id: 6,
+      text: "Is the complete service history available with supporting invoices?",
+      priority: "high"
+    }, {
+      id: 7,
+      text: "Have all manufacturer recalls and service campaigns been completed?",
+      priority: "important"
+    }, {
+      id: 8,
+      text: "Are both keys, the handbook pack and the locking-wheel key present?",
+      priority: "general"
+    }],
+    dealerTip: "Ask for photographs of service invoices and supporting documents before travelling to inspect the vehicle."
   }
 };
 function ChevronRightIcon() {
@@ -707,6 +743,42 @@ function OpportunityPage() {
             /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high px-3.5 py-3", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "Future Ready Architecture" }),
               /* @__PURE__ */ jsx("div", { className: "mt-2 space-y-1", children: ["Manufacturer Technical Data", "DVSA / MOT records", "Recall databases", "Warranty information", "Technical Service Bulletins", "Dealer repair statistics", "Community reliability reports", "AI learning engine"].map((source) => /* @__PURE__ */ jsx("div", { className: "rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-1 text-body-sm font-body-sm text-on-surface-variant", children: source }, source)) })
+            ] }),
+            /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 border-b border-outline-variant/25 pb-3", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "TICA Questions to Ask the Seller™" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "text-title-lg font-semibold text-on-surface", children: "Questions to Ask the Seller" }),
+                  /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "Vehicle-specific questions recommended before purchase." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "mt-2.5 space-y-1.5", children: ticaVehicleIntelligence.sellerQuestions.questions.map((q) => {
+                const priorityConfig = q.priority === "high" ? {
+                  label: "High Priority",
+                  className: "text-[var(--tica-decision-pass)]",
+                  bg: "bg-[color-mix(in_srgb,var(--tica-decision-pass)_12%,transparent)]"
+                } : q.priority === "important" ? {
+                  label: "Important",
+                  className: "text-[var(--tica-decision-review)]",
+                  bg: "bg-[color-mix(in_srgb,var(--tica-decision-review)_12%,transparent)]"
+                } : {
+                  label: "General",
+                  className: "text-primary",
+                  bg: "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)]"
+                };
+                return /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-2.5 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-1.5", children: [
+                  /* @__PURE__ */ jsxs("span", { className: "mt-0.5 shrink-0 text-[11px] font-semibold tabular-nums text-on-surface-variant", children: [
+                    q.id,
+                    "."
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "min-w-0 flex-1 text-body-sm font-body-sm leading-snug text-on-surface", children: q.text }),
+                  /* @__PURE__ */ jsx("span", { className: `shrink-0 self-start rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] ${priorityConfig.className} ${priorityConfig.bg}`, children: priorityConfig.label })
+                ] }, q.id);
+              }) }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-2.5 flex items-start gap-2 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "mt-0.5 shrink-0 text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant", children: "Dealer Tip:" }),
+                /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-snug text-on-surface-variant", children: ticaVehicleIntelligence.sellerQuestions.dealerTip })
+              ] })
             ] })
           ] })
         ] })
