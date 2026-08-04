@@ -8,7 +8,6 @@ const bmwM3DecisionModel = {
   weightedDecisionScore: 89,
   factors: {
     overallOpportunityScore: {
-      displayValue: "97 / 100",
       summary: "Highest-weight roll-up opportunity score remains very strong."
     },
     estimatedProfit: {
@@ -34,7 +33,6 @@ const opportunityIntelligencePlaceholder = {
     estimatedRetailValueDisplay: "£36,250",
     estimatedGrossProfitDisplay: "£4,255",
     riskLevel: "LOW",
-    daysToSellDisplay: "9 Days",
     confidenceDisplay: "97%",
     demandRatingDisplay: "★★★★★",
     decisionModel: bmwM3DecisionModel,
