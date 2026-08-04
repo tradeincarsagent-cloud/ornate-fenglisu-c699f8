@@ -25,8 +25,92 @@ const ticaVehicleIntelligence = {
     title: "Oil dilution can occur if used mainly for short journeys.",
     detail: "Review service frequency and ask about repeated DPF regenerations or frequent top-ups."
   }],
-  inspectionPoints: ["Cold start performance", "Turbo operation", "Gearbox changes smoothly", "Suspension noises", "Steering alignment", "Brake wear", "Air conditioning", "Electrical equipment", "Dashboard warning lights"],
-  ownershipAdvice: ["Verify complete service history.", "Confirm manufacturer recalls have been completed.", "Ask when the timing belt or chain was last replaced.", "Confirm both remote keys are supplied.", "Check tyre brand consistency.", "Inspect for signs of previous accident repair."],
+  inspectionChecklist: [{
+    category: "Exterior",
+    items: [{
+      label: "Paint consistency",
+      status: "verified"
+    }, {
+      label: "Panel alignment",
+      status: "check"
+    }, {
+      label: "Corrosion / rust inspection",
+      status: "check"
+    }, {
+      label: "Glass and lighting",
+      status: "verified"
+    }, {
+      label: "Alloy wheel condition",
+      status: "check"
+    }, {
+      label: "Tyre wear pattern",
+      status: "high"
+    }]
+  }, {
+    category: "Mechanical",
+    items: [{
+      label: "Cold engine start",
+      status: "verified"
+    }, {
+      label: "Timing belt / chain evidence",
+      status: "high"
+    }, {
+      label: "Oil leaks",
+      status: "check"
+    }, {
+      label: "Coolant condition",
+      status: "check"
+    }, {
+      label: "Suspension noises",
+      status: "check"
+    }, {
+      label: "Gearbox operation",
+      status: "verified"
+    }]
+  }, {
+    category: "Interior",
+    items: [{
+      label: "Dashboard warning lights",
+      status: "verified"
+    }, {
+      label: "Air conditioning",
+      status: "check"
+    }, {
+      label: "Electrical equipment",
+      status: "check"
+    }, {
+      label: "Seat wear versus mileage",
+      status: "check"
+    }, {
+      label: "Spare key present",
+      status: "notAvailable"
+    }, {
+      label: "Service book available",
+      status: "verified"
+    }]
+  }, {
+    category: "Documentation",
+    items: [{
+      label: "VIN matches paperwork",
+      status: "verified"
+    }, {
+      label: "MOT history reviewed",
+      status: "verified"
+    }, {
+      label: "Service invoices checked",
+      status: "high"
+    }, {
+      label: "Outstanding finance check",
+      status: "notAvailable"
+    }, {
+      label: "Recall status",
+      status: "check"
+    }, {
+      label: "Number of owners confirmed",
+      status: "verified"
+    }]
+  }],
+  inspectionAdvice: "Pay particular attention to the timing belt replacement history and inspect for evidence of regular servicing. These checks are likely to have the greatest impact on long-term ownership costs.",
   runningCosts: [{
     label: "Typical Annual Service Cost",
     value: "£390–£540",
@@ -109,6 +193,28 @@ function OpportunityPage() {
       label: "High Priority",
       className: "tica-decision-pass",
       dotClassName: "bg-[var(--tica-decision-pass)]"
+    }
+  };
+  const checklistStatusConfig = {
+    verified: {
+      label: "Verified",
+      className: "tica-decision-buy",
+      dotClassName: "bg-[var(--tica-decision-buy)]"
+    },
+    check: {
+      label: "Check Required",
+      className: "tica-decision-review",
+      dotClassName: "bg-[var(--tica-decision-review)]"
+    },
+    high: {
+      label: "High Priority",
+      className: "tica-decision-pass",
+      dotClassName: "bg-[var(--tica-decision-pass)]"
+    },
+    notAvailable: {
+      label: "Not Available Yet",
+      className: "text-on-surface-variant",
+      dotClassName: "bg-outline-variant"
     }
   };
   const confidencePercent = parseFloat(featuredOpportunity.confidenceDisplay);
@@ -549,26 +655,35 @@ function OpportunityPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.05fr_0.95fr]", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_1fr]", children: [
           /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "Common Inspection Points" }),
-            /* @__PURE__ */ jsx("div", { className: "mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2", children: ticaVehicleIntelligence.inspectionPoints.map((point) => /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3 text-body-sm font-body-sm text-on-surface", children: [
-              /* @__PURE__ */ jsx("span", { className: "tica-decision-buy font-semibold", children: "✓" }),
-              /* @__PURE__ */ jsx("span", { className: "ml-2", children: point })
-            ] }, point)) })
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 border-b border-outline-variant/25 pb-4", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "AI Inspection Checklist™" }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-title-lg font-semibold text-on-surface", children: "AI Inspection Checklist™" }),
+                /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "Key areas TICA recommends inspecting before purchase." })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2", children: ticaVehicleIntelligence.inspectionChecklist.map((section) => /* @__PURE__ */ jsxs("section", { className: "rounded-xl border border-outline-variant/25 bg-surface-container p-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3", children: [
+                /* @__PURE__ */ jsx("h4", { className: "text-body-md font-semibold text-on-surface", children: section.category }),
+                /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant", children: "Inspection Area" })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "mt-3 space-y-2.5", children: section.items.map((item) => {
+                const status = checklistStatusConfig[item.status];
+                return /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-3 rounded-xl border border-outline-variant/20 bg-surface-container-high px-3 py-2.5", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface", children: item.label }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex shrink-0 items-center gap-2", children: [
+                    /* @__PURE__ */ jsx("span", { className: `h-2.5 w-2.5 rounded-full ${status.dotClassName}`, "aria-hidden": "true" }),
+                    /* @__PURE__ */ jsx("span", { className: `text-[10px] font-semibold uppercase tracking-[0.12em] ${status.className}`, children: status.label })
+                  ] })
+                ] }, item.label);
+              }) })
+            ] }, section.category)) })
           ] }),
           /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "Ownership Tips" }),
-            /* @__PURE__ */ jsx("div", { className: "mt-4 space-y-3", children: ticaVehicleIntelligence.ownershipAdvice.map((advice) => /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3", children: /* @__PURE__ */ jsxs("p", { className: "text-body-sm font-body-sm leading-relaxed text-on-surface", children: [
-              "• ",
-              advice
-            ] }) }, advice)) })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_0.8fr]", children: [
-          /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "Running Cost Intelligence" }),
-            /* @__PURE__ */ jsx("div", { className: "mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4", children: ticaVehicleIntelligence.runningCosts.map((item) => {
+            /* @__PURE__ */ jsx("div", { className: "mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2", children: ticaVehicleIntelligence.runningCosts.map((item) => {
               const tone = issueToneConfig[item.tone];
               return /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3", children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-3", children: [
@@ -578,6 +693,12 @@ function OpportunityPage() {
                 /* @__PURE__ */ jsx("p", { className: "mt-3 text-body-sm font-semibold leading-relaxed text-on-surface", children: item.value })
               ] }, item.label);
             }) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_0.8fr]", children: [
+          /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "TICA Inspection Advice" }),
+            /* @__PURE__ */ jsx("div", { className: "mt-4 rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md leading-relaxed text-on-surface", children: ticaVehicleIntelligence.inspectionAdvice }) })
           ] }),
           /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
             /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "Future Ready Architecture" }),
