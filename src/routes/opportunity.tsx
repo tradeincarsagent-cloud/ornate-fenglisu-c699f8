@@ -34,25 +34,54 @@ const ticaVehicleIntelligence = {
       detail: 'Review service frequency and ask about repeated DPF regenerations or frequent top-ups.',
     },
   ],
-  inspectionPoints: [
-    'Cold start performance',
-    'Turbo operation',
-    'Gearbox changes smoothly',
-    'Suspension noises',
-    'Steering alignment',
-    'Brake wear',
-    'Air conditioning',
-    'Electrical equipment',
-    'Dashboard warning lights',
+  inspectionChecklist: [
+    {
+      category: 'Exterior',
+      items: [
+        { label: 'Paint consistency', status: 'verified' },
+        { label: 'Panel alignment', status: 'check' },
+        { label: 'Corrosion / rust inspection', status: 'check' },
+        { label: 'Glass and lighting', status: 'verified' },
+        { label: 'Alloy wheel condition', status: 'check' },
+        { label: 'Tyre wear pattern', status: 'high' },
+      ],
+    },
+    {
+      category: 'Mechanical',
+      items: [
+        { label: 'Cold engine start', status: 'verified' },
+        { label: 'Timing belt / chain evidence', status: 'high' },
+        { label: 'Oil leaks', status: 'check' },
+        { label: 'Coolant condition', status: 'check' },
+        { label: 'Suspension noises', status: 'check' },
+        { label: 'Gearbox operation', status: 'verified' },
+      ],
+    },
+    {
+      category: 'Interior',
+      items: [
+        { label: 'Dashboard warning lights', status: 'verified' },
+        { label: 'Air conditioning', status: 'check' },
+        { label: 'Electrical equipment', status: 'check' },
+        { label: 'Seat wear versus mileage', status: 'check' },
+        { label: 'Spare key present', status: 'notAvailable' },
+        { label: 'Service book available', status: 'verified' },
+      ],
+    },
+    {
+      category: 'Documentation',
+      items: [
+        { label: 'VIN matches paperwork', status: 'verified' },
+        { label: 'MOT history reviewed', status: 'verified' },
+        { label: 'Service invoices checked', status: 'high' },
+        { label: 'Outstanding finance check', status: 'notAvailable' },
+        { label: 'Recall status', status: 'check' },
+        { label: 'Number of owners confirmed', status: 'verified' },
+      ],
+    },
   ],
-  ownershipAdvice: [
-    'Verify complete service history.',
-    'Confirm manufacturer recalls have been completed.',
-    'Ask when the timing belt or chain was last replaced.',
-    'Confirm both remote keys are supplied.',
-    'Check tyre brand consistency.',
-    'Inspect for signs of previous accident repair.',
-  ],
+  inspectionAdvice:
+    'Pay particular attention to the timing belt replacement history and inspect for evidence of regular servicing. These checks are likely to have the greatest impact on long-term ownership costs.',
   runningCosts: [
     { label: 'Typical Annual Service Cost', value: '£390–£540', tone: 'info' },
     { label: 'Timing Belt / Chain', value: 'Wet belt — invoice recommended', tone: 'warning' },
@@ -122,6 +151,32 @@ function OpportunityPage() {
       label: 'High Priority',
       className: 'tica-decision-pass',
       dotClassName: 'bg-[var(--tica-decision-pass)]',
+    },
+  }
+
+  const checklistStatusConfig: Record<
+    'verified' | 'check' | 'high' | 'notAvailable',
+    { label: string; className: string; dotClassName: string }
+  > = {
+    verified: {
+      label: 'Verified',
+      className: 'tica-decision-buy',
+      dotClassName: 'bg-[var(--tica-decision-buy)]',
+    },
+    check: {
+      label: 'Check Required',
+      className: 'tica-decision-review',
+      dotClassName: 'bg-[var(--tica-decision-review)]',
+    },
+    high: {
+      label: 'High Priority',
+      className: 'tica-decision-pass',
+      dotClassName: 'bg-[var(--tica-decision-pass)]',
+    },
+    notAvailable: {
+      label: 'Not Available Yet',
+      className: 'text-on-surface-variant',
+      dotClassName: 'bg-outline-variant',
     },
   }
 
@@ -702,35 +757,44 @@ function OpportunityPage() {
             </article>
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_1fr]">
             <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Common Inspection Points</p>
-              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {ticaVehicleIntelligence.inspectionPoints.map((point) => (
-                  <div key={point} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3 text-body-sm font-body-sm text-on-surface">
-                    <span className="tica-decision-buy font-semibold">✓</span>
-                    <span className="ml-2">{point}</span>
-                  </div>
+              <div className="flex flex-col gap-2 border-b border-outline-variant/25 pb-4">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Inspection Checklist™</p>
+                <div>
+                  <h3 className="text-title-lg font-semibold text-on-surface">AI Inspection Checklist™</h3>
+                  <p className="mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">Key areas TICA recommends inspecting before purchase.</p>
+                </div>
+              </div>
+              <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2">
+                {ticaVehicleIntelligence.inspectionChecklist.map((section) => (
+                  <section key={section.category} className="rounded-xl border border-outline-variant/25 bg-surface-container p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <h4 className="text-body-md font-semibold text-on-surface">{section.category}</h4>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Inspection Area</span>
+                    </div>
+                    <div className="mt-3 space-y-2.5">
+                      {section.items.map((item) => {
+                        const status = checklistStatusConfig[item.status]
+                        return (
+                          <div key={item.label} className="flex items-start justify-between gap-3 rounded-xl border border-outline-variant/20 bg-surface-container-high px-3 py-2.5">
+                            <p className="text-body-sm font-body-sm text-on-surface">{item.label}</p>
+                            <div className="flex shrink-0 items-center gap-2">
+                              <span className={`h-2.5 w-2.5 rounded-full ${status.dotClassName}`} aria-hidden="true" />
+                              <span className={`text-[10px] font-semibold uppercase tracking-[0.12em] ${status.className}`}>{status.label}</span>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </section>
                 ))}
               </div>
             </article>
 
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Ownership Tips</p>
-              <div className="mt-4 space-y-3">
-                {ticaVehicleIntelligence.ownershipAdvice.map((advice) => (
-                  <div key={advice} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3">
-                    <p className="text-body-sm font-body-sm leading-relaxed text-on-surface">• {advice}</p>
-                  </div>
-                ))}
-              </div>
-            </article>
-          </div>
-
-          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_0.8fr]">
             <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Running Cost Intelligence</p>
-              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {ticaVehicleIntelligence.runningCosts.map((item) => {
                   const tone = issueToneConfig[item.tone]
                   return (
@@ -743,6 +807,15 @@ function OpportunityPage() {
                     </div>
                   )
                 })}
+              </div>
+            </article>
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_0.8fr]">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Inspection Advice</p>
+              <div className="mt-4 rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-4">
+                <p className="text-body-md font-body-md leading-relaxed text-on-surface">{ticaVehicleIntelligence.inspectionAdvice}</p>
               </div>
             </article>
 
