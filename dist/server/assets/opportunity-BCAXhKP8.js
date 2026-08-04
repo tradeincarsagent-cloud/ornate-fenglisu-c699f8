@@ -296,7 +296,7 @@ function OpportunityPage() {
   };
   const confidencePercent = parseFloat(featuredOpportunity.confidenceDisplay);
   const meterZone = confidencePercent >= 67 ? "buy" : confidencePercent >= 34 ? "review" : "pass";
-  const meterLabel = meterZone === "buy" ? "BUY NOW" : meterZone === "review" ? "REVIEW" : "PASS";
+  const meterLabel = unifiedRecommendation;
   const meterSentence = meterZone === "buy" ? "TICA considers this one of today's strongest buying opportunities based on pricing, resale demand and projected profit." : meterZone === "review" ? "TICA flags this opportunity for further review — some indicators are positive but caution is advised before committing." : "TICA does not recommend this vehicle at current pricing — margins and demand indicators fall below buying thresholds.";
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
@@ -491,7 +491,7 @@ function OpportunityPage() {
           /* @__PURE__ */ jsxs("div", { className: "ddm-zone-labels", "aria-hidden": "true", children: [
             /* @__PURE__ */ jsx("span", { className: "ddm-zone-label ddm-zone-label-pass", children: "PASS" }),
             /* @__PURE__ */ jsx("span", { className: "ddm-zone-label ddm-zone-label-review", children: "REVIEW" }),
-            /* @__PURE__ */ jsx("span", { className: "ddm-zone-label ddm-zone-label-buy", children: "BUY NOW" })
+            /* @__PURE__ */ jsx("span", { className: "ddm-zone-label ddm-zone-label-buy", children: "BUY" })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "ddm-bar-track", role: "meter", "aria-label": `Decision meter: ${unifiedRecommendation} at ${unifiedConfidence} confidence`, "aria-valuenow": confidencePercent, "aria-valuemin": 0, "aria-valuemax": 100, children: /* @__PURE__ */ jsxs("div", { className: "ddm-indicator", style: {
             left: meterAnimated ? `${confidencePercent}%` : "0%",
