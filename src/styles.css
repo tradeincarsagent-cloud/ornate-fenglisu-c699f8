@@ -8,6 +8,7 @@
   --tica-decision-buy-light: #7ce3b8;
   --tica-decision-buy-dark: #0f5a3e;
   --tica-decision-review: #d4a537;
+  --tica-decision-review-rgb: 212, 165, 55;
   --tica-decision-review-light: #f1d175;
   --tica-decision-review-dark: #7a5a1f;
   --tica-decision-pass: #b33a3f;
@@ -2076,16 +2077,16 @@ body > div {
 }
 
 .traffic-light-shell {
-  width: 54px;
-  border-radius: 12px;
+  width: 40px;
+  border-radius: 10px;
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
   border: 1px solid rgba(148, 163, 184, 0.28);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.08),
-    0 10px 24px rgba(2, 6, 23, 0.36);
-  padding: 6px;
+    0 8px 18px rgba(2, 6, 23, 0.36);
+  padding: 5px;
   display: grid;
-  gap: 5px;
+  gap: 4px;
 }
 
 .traffic-light-lens {

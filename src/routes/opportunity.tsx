@@ -120,6 +120,7 @@ const ticaVehicleIntelligence = {
     { label: 'ULEZ Status', value: 'Compliant', tone: 'info' },
     { label: 'Known High Cost Repairs', value: 'Turbo / belt-related work', tone: 'high' },
     { label: 'Dealer Demand Rating', value: 'Strong retail demand', tone: 'info' },
+    { label: 'Typical Parts Availability', value: 'Good', tone: 'info' },
   ],
   ownershipRisk: {
     level: 'Medium',
@@ -445,50 +446,86 @@ function OpportunityPage() {
           </div>
         </section>
 
-        {/* AI Analysis Status Banner */}
-        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="TICA analysis status">
-          <div className="mb-4 flex items-center gap-2.5">
-            <span
-              className={`inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--tica-decision-buy)] ${dotPulsing ? 'tica-status-dot-pulse' : ''}`}
-              aria-hidden="true"
-            />
-            <p className="text-label-caps font-label-caps font-semibold uppercase tracking-widest text-on-surface">
-              TICA Analysis Complete
+        {/* TICA Opportunity Ranking™ — premium signature feature */}
+        <section className="rounded-2xl border border-primary/30 bg-surface-container-low p-4 sm:p-5" aria-label="TICA Opportunity Ranking">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Opportunity Ranking™</p>
+              <div className="mt-1 flex items-center gap-2">
+                <span className="text-[22px] leading-none" aria-label="5 stars">★★★★★</span>
+                <span className="text-body-md font-semibold text-on-surface">Gold Opportunity</span>
+              </div>
+            </div>
+            <div className="rounded-xl border border-primary/25 bg-primary/10 px-4 py-2 text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">Today's Ranking</p>
+              <p className="mt-0.5 text-body-lg font-semibold text-on-surface">#3 Best Opportunity Found Today</p>
+            </div>
+          </div>
+          <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-5">
+            <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Dealer Confidence</p>
+              <p className="mt-1 text-[22px] font-semibold leading-none text-primary">97%</p>
+            </div>
+            <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Profit Potential</p>
+              <p className="mt-1 text-[18px] leading-none tica-decision-buy" aria-label="5 stars">★★★★★</p>
+            </div>
+            <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Market Demand</p>
+              <p className="mt-1 text-[18px] leading-none tica-decision-buy" aria-label="5 stars">★★★★★</p>
+            </div>
+            <div className="rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Risk Rating</p>
+              <p className="mt-1 text-[18px] leading-none" aria-label="2 out of 5 stars">
+                <span className="tica-decision-pass">★★</span><span className="text-on-surface-variant/30">☆☆☆</span>
+              </p>
+            </div>
+            <div className="col-span-2 rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center sm:col-span-1">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Est. Days To Sell</p>
+              <p className="mt-1 text-[22px] font-semibold leading-none text-on-surface">9 Days</p>
+            </div>
+          </div>
+        </section>
+
+        {/* AI Analysis Complete — compact completion card */}
+        <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low px-4 py-3 sm:px-5" aria-label="TICA analysis status">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <span
+                className={`inline-block h-2 w-2 shrink-0 rounded-full bg-[var(--tica-decision-buy)] ${dotPulsing ? 'tica-status-dot-pulse' : ''}`}
+                aria-hidden="true"
+              />
+              <p className="text-label-caps font-label-caps font-semibold uppercase tracking-widest text-on-surface">
+                AI Analysis Complete
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              {(['Market Analysis', 'Pricing Validation', 'Demand Analysis', 'Profit Projection', 'Risk Assessment'] as const).map(
+                (step, index) => (
+                  <span
+                    key={step}
+                    className="flex items-center gap-1 text-[11px] font-semibold text-on-surface-variant"
+                    style={{
+                      opacity: analysisStep > index ? 1 : 0,
+                      transition: 'opacity 0.35s ease-out',
+                    }}
+                  >
+                    <span className="tica-decision-buy font-bold">✓</span>
+                    {step}
+                  </span>
+                ),
+              )}
+            </div>
+            <p
+              className="text-[11px] text-on-surface-variant/70 shrink-0"
+              style={{
+                opacity: analysisStep >= 5 ? 1 : 0,
+                transition: 'opacity 0.4s ease-out',
+              }}
+            >
+              Completed in 12.4 seconds
             </p>
           </div>
-          <div className="space-y-2 pl-5">
-            {(['Market Analysis', 'Pricing Validation', 'Demand Analysis', 'Profit Projection', 'Risk Assessment'] as const).map(
-              (step, index) => (
-                <div
-                  key={step}
-                  className="flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant"
-                  style={{
-                    opacity: analysisStep > index ? 1 : 0,
-                    transform: analysisStep > index ? 'translateY(0)' : 'translateY(5px)',
-                    transition: 'opacity 0.35s ease-out, transform 0.35s ease-out',
-                  }}
-                >
-                  <span className="tica-decision-buy font-semibold">✓</span>
-                  <span>{step}</span>
-                </div>
-              ),
-            )}
-          </div>
-          <p
-            className="mt-4 pl-5 text-body-sm font-body-sm text-on-surface-variant/70"
-            style={{
-              opacity: analysisStep >= 5 ? 1 : 0,
-              transition: 'opacity 0.4s ease-out',
-            }}
-          >
-            Completed in 12.4 seconds
-          </p>
-          {analysisComplete && (
-            <div className="tica-analysis-complete-reveal mt-3 flex items-center gap-2 pl-5">
-              <span className="tica-decision-buy font-semibold">✔</span>
-              <span className="text-body-sm font-semibold text-on-surface">Analysis Complete</span>
-            </div>
-          )}
         </section>
 
         {/* ── Dealer Decision Meter ─────────────────────────────────────── */}
@@ -639,6 +676,16 @@ function OpportunityPage() {
           </div>
         </section>
 
+        {/* Dealer Notes — immediately after Final Recommendation */}
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+          <h2 className="mb-2 text-headline-md font-headline-md text-on-surface">Dealer Notes</h2>
+          <p className="mb-3 text-body-sm font-body-sm text-on-surface-variant">Record your offer price, call outcomes, next actions and observations.</p>
+          <textarea
+            placeholder="e.g. Offer price: £30,750 · Call seller Monday · Await HPI · Reserve vehicle..."
+            className="h-36 w-full resize-y rounded-xl border border-outline-variant/35 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-all placeholder:text-on-surface-variant/70 focus:border-primary/60 sm:h-32"
+          />
+        </section>
+
 
         <section className="dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-5">
           <p className="mb-3 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">Target Vehicle</p>
@@ -656,12 +703,29 @@ function OpportunityPage() {
                 </p>
               </div>
             </div>
-            <div className="overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container sm:w-52 md:w-60">
-              <img
-                src={featuredOpportunity.heroImageSrc}
-                alt={featuredOpportunity.heroImageAlt}
-                className="h-auto max-h-[160px] w-full object-cover sm:max-h-[130px] md:max-h-[120px]"
-              />
+            <div className="min-w-0 flex-1 sm:w-56 md:w-64">
+              {/* Hero image */}
+              <div className="overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container">
+                <img
+                  src={featuredOpportunity.heroImageSrc}
+                  alt={featuredOpportunity.heroImageAlt}
+                  className="h-[160px] w-full object-cover sm:h-[140px]"
+                />
+              </div>
+              {/* Thumbnail strip */}
+              <div className="mt-1.5 grid grid-cols-4 gap-1.5">
+                {[1, 2, 3, 4].map((n) => (
+                  <div
+                    key={n}
+                    className="aspect-[4/3] rounded-lg border border-outline-variant/30 bg-surface-container-high flex items-center justify-center overflow-hidden"
+                    aria-label={`Vehicle photo ${n + 1}`}
+                  >
+                    <svg className="h-5 w-5 text-on-surface-variant/25" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" />
+                    </svg>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -1031,40 +1095,53 @@ function OpportunityPage() {
               </article>
 
               {/* TICA Vehicle History Centre™ */}
-              <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
+              <article className="rounded-2xl border border-primary/25 bg-surface-container-high p-3.5">
                 {/* Card header */}
                 <div className="flex flex-col gap-1 border-b border-outline-variant/25 pb-3">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Vehicle History Centre™</p>
                   <div>
                     <h3 className="text-title-lg font-semibold text-on-surface">TICA Vehicle History Centre™</h3>
-                    <p className="mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">Live vehicle history intelligence.</p>
+                    <p className="mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">Premium vehicle verification — every check in one place.</p>
                   </div>
                 </div>
 
-                {/* History check items */}
-                <div className="mt-3 space-y-1.5">
+                {/* Premium verification cards grid */}
+                <div className="mt-3 grid grid-cols-1 gap-2">
                   {[
-                    { status: 'green', label: 'Finance Status', value: 'Clear' },
-                    { status: 'green', label: 'Insurance Write-Off', value: 'None Recorded' },
-                    { status: 'green', label: 'Police Stolen Check', value: 'No Record Found' },
-                    { status: 'green', label: 'Mileage History', value: 'Consistent' },
-                    { status: 'amber', label: 'Number of Previous Keepers', value: '3 Registered' },
-                    { status: 'amber', label: 'Outstanding Recalls', value: '1 Recall Outstanding' },
-                    { status: 'green', label: 'Import / Export Status', value: 'UK Supplied' },
-                    { status: 'green', label: 'VIN Verification', value: 'Matches DVLA Records' },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-center justify-between gap-3 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-2">
-                      <p className="text-body-sm font-body-sm text-on-surface-variant">{item.label}</p>
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <span className="text-sm leading-none" aria-hidden="true">{item.status === 'green' ? '🟢' : '🟡'}</span>
-                        <p className="text-body-sm font-semibold text-on-surface">{item.value}</p>
+                    { status: 'clear', icon: '💳', label: 'Finance Check', value: 'Clear', detail: 'No outstanding finance recorded' },
+                    { status: 'clear', icon: '🚔', label: 'Police Stolen Check', value: 'No Record Found', detail: 'Not listed as stolen on PNC' },
+                    { status: 'clear', icon: '🛡', label: 'Insurance Write-Off', value: 'None Recorded', detail: 'No Cat A, B, S or N markers' },
+                    { status: 'clear', icon: '📏', label: 'Mileage Verification', value: 'Consistent', detail: 'Mileage aligns with MOT and service history' },
+                    { status: 'clear', icon: '🔎', label: 'VIN Verification', value: 'Matches DVLA Records', detail: 'VIN matches official DVLA registration' },
+                    { status: 'attention', icon: '⚠️', label: 'Outstanding Recalls', value: '1 Recall Outstanding', detail: 'Contact manufacturer before purchase' },
+                    { status: 'attention', icon: '👤', label: 'Previous Owners', value: '3 Registered Keepers', detail: 'Within expected range for age and mileage' },
+                    { status: 'clear', icon: '🌍', label: 'Import / Export Status', value: 'UK Supplied', detail: 'No import or export flags recorded' },
+                  ].map((item) => {
+                    const isAttention = item.status === 'attention'
+                    const borderClass = isAttention ? 'border-[rgba(var(--tica-decision-review-rgb),0.3)]' : 'border-[rgba(var(--tica-decision-buy-rgb),0.2)]'
+                    const bgClass = isAttention ? 'bg-[rgba(var(--tica-decision-review-rgb),0.06)]' : 'bg-surface-container'
+                    const statusClass = isAttention ? 'tica-decision-review' : 'tica-decision-buy'
+                    const dotClass = isAttention ? 'bg-[var(--tica-decision-review)]' : 'bg-[var(--tica-decision-buy)]'
+                    return (
+                      <div key={item.label} className={`flex items-start gap-3 rounded-xl border px-3 py-2.5 ${borderClass} ${bgClass}`}>
+                        <span className="mt-0.5 shrink-0 text-base leading-none" aria-hidden="true">{item.icon}</span>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="text-body-sm font-semibold text-on-surface">{item.label}</p>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <span className={`h-2 w-2 rounded-full shrink-0 ${dotClass}`} aria-hidden="true" />
+                              <span className={`text-[11px] font-semibold uppercase tracking-[0.1em] ${statusClass}`}>{item.value}</span>
+                            </div>
+                          </div>
+                          <p className="mt-0.5 text-[11px] text-on-surface-variant/70">{item.detail}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
 
                 {/* CTA button */}
-                <button className="mt-3 w-full rounded-xl border border-primary/40 bg-primary px-4 py-3 text-sm font-semibold text-on-primary shadow-sm transition-all hover:opacity-90 active:scale-[0.99]">
+                <button className="mt-4 w-full rounded-xl border border-primary/40 bg-primary px-4 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-on-primary shadow-sm transition-all hover:opacity-90 active:scale-[0.99]">
                   Run Live Vehicle History Check
                 </button>
 
@@ -1146,40 +1223,48 @@ function OpportunityPage() {
         </section>
 
         <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
-          <h2 className="mb-3 text-headline-md font-headline-md text-on-surface">Dealer Notes</h2>
-          <textarea
-            placeholder="Add internal notes, call outcomes, valuation observations, and next actions..."
-            className="h-44 w-full resize-y rounded-xl border border-outline-variant/35 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-all placeholder:text-on-surface-variant/70 focus:border-primary/60 sm:h-40"
-          />
-        </section>
-
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Actions</h2>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
-            <button className="min-h-11 rounded-xl bg-primary px-5 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110">
+          {/* Primary actions */}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <button
+              type="button"
+              className="min-h-12 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary transition-all hover:brightness-110 active:scale-[0.98]"
+            >
               Save Opportunity
             </button>
-            <button className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
-              Ignore
-            </button>
-            <button className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
+            <button
+              type="button"
+              className="min-h-12 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface transition-all hover:border-primary/70 hover:text-primary active:scale-[0.98]"
+            >
               Contact Seller
+            </button>
+            <button
+              type="button"
+              className="min-h-12 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface transition-all hover:border-primary/70 hover:text-primary active:scale-[0.98]"
+            >
+              Generate Dealer Report (PDF)
+            </button>
+          </div>
+          {/* Secondary actions */}
+          <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+            <button
+              type="button"
+              className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant transition-all hover:text-on-surface active:scale-[0.98]"
+            >
+              Run Live Vehicle History Check
+            </button>
+            <button
+              type="button"
+              className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant transition-all hover:text-on-surface active:scale-[0.98]"
+            >
+              Add to Watchlist
             </button>
             <Link
               to="/dashboard"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant transition-all hover:text-on-surface active:scale-[0.98]"
             >
               Return to Dashboard
             </Link>
-            <Link
-              to="/search-builder"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-5 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
-            >
-              Create New AI Search
-            </Link>
-            <button className="min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container-high px-5 py-3 text-body-md font-body-md text-on-surface-variant transition-all hover:text-on-surface">
-              Explain Why
-            </button>
           </div>
         </section>
       </div>
