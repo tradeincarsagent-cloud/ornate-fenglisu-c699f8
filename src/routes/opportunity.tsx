@@ -689,18 +689,18 @@ function OpportunityPage() {
           </dl>
         </section>
 
-        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
-          <div className="flex flex-col gap-1.5 border-b border-outline-variant/25 pb-3 sm:pb-4">
+        <section className="dashboard-border rounded-2xl bg-surface-container p-3 sm:p-4">
+          <div className="flex flex-col gap-1 border-b border-outline-variant/25 pb-2.5">
             <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Vehicle Intelligence™</p>
             <div className="max-w-3xl">
               <h2 className="text-headline-md font-headline-md text-on-surface">TICA Vehicle Intelligence™</h2>
-              <p className="mt-1.5 text-body-md font-body-md leading-relaxed text-on-surface-variant">
+              <p className="mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
                 AI-powered model knowledge based on known ownership issues, manufacturer data, technician experience and real-world reliability trends.
               </p>
             </div>
           </div>
 
-          <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.45fr_0.95fr]">
+          <div className="mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.45fr_0.95fr]">
             <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -733,31 +733,33 @@ function OpportunityPage() {
               </div>
             </article>
 
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Risk Indicator</p>
-              <h3 className="mt-1.5 text-title-lg font-semibold text-on-surface">Overall Ownership Risk</h3>
-              <div className="mt-3 rounded-2xl border border-outline-variant/30 bg-surface-container px-3 py-3">
+            <article className="flex flex-col justify-center rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Risk Indicator</p>
+                <span className="text-body-sm font-semibold text-on-surface-variant">Overall Ownership Risk</span>
+              </div>
+              <div className="mt-2 rounded-xl border border-outline-variant/30 bg-surface-container px-3 py-2.5">
                 <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
                   <span>Low</span>
                   <span>Medium</span>
                   <span>High</span>
                 </div>
-                <div className="mt-2.5 h-2.5 rounded-full bg-[linear-gradient(90deg,var(--tica-decision-buy)_0%,var(--tica-decision-buy)_33%,var(--tica-decision-review)_33%,var(--tica-decision-review)_66%,var(--tica-decision-pass)_66%,var(--tica-decision-pass)_100%)]" />
-                <div className="mt-3 flex items-center justify-between rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5">
+                <div className="mt-1.5 h-2 rounded-full bg-[linear-gradient(90deg,var(--tica-decision-buy)_0%,var(--tica-decision-buy)_33%,var(--tica-decision-review)_33%,var(--tica-decision-review)_66%,var(--tica-decision-pass)_66%,var(--tica-decision-pass)_100%)]" />
+                <div className="mt-2 flex items-center justify-between rounded-lg border border-outline-variant/25 bg-surface-container-high px-2.5 py-1.5">
                   <div>
                     <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Current signal</p>
-                    <p className={`mt-0.5 text-body-lg font-semibold ${ownershipRiskToneClass}`}>🟡 {ticaVehicleIntelligence.ownershipRisk.level}</p>
+                    <p className={`mt-0.5 text-body-md font-semibold ${ownershipRiskToneClass}`}>🟡 {ticaVehicleIntelligence.ownershipRisk.level}</p>
                   </div>
-                  <div className="h-4 w-4 rounded-full bg-[var(--tica-decision-review)] shadow-[0_0_14px_rgba(212,165,55,0.45)]" aria-hidden="true" />
+                  <div className="h-3.5 w-3.5 rounded-full bg-[var(--tica-decision-review)] shadow-[0_0_10px_rgba(212,165,55,0.45)]" aria-hidden="true" />
                 </div>
-                <p className="mt-2 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
+                <p className="mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
                   {ticaVehicleIntelligence.ownershipRisk.description}
                 </p>
               </div>
             </article>
           </div>
 
-          <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.5fr_1fr]">
+          <div className="mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.5fr_1fr]">
             <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <div className="flex flex-col gap-1.5 border-b border-outline-variant/25 pb-3">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Inspection Checklist™</p>
@@ -811,17 +813,20 @@ function OpportunityPage() {
             </article>
           </div>
 
-          <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[1.5fr_0.8fr]">
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
-              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Inspection Advice</p>
-              <div className="mt-2 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2">
+          <div className="mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.5fr_0.8fr]">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high px-3.5 py-3">
+              <div className="flex items-center gap-2.5">
+                <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Inspection Advice</p>
+              </div>
+              <div className="mt-2 flex items-start gap-2.5 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5">
+                <span className="mt-0.5 shrink-0 text-base leading-none">💡</span>
                 <p className="text-body-sm font-body-sm leading-relaxed text-on-surface">{ticaVehicleIntelligence.inspectionAdvice}</p>
               </div>
             </article>
 
-            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high px-3.5 py-3">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Future Ready Architecture</p>
-              <div className="mt-2.5 space-y-1.5">
+              <div className="mt-2 space-y-1">
                 {[
                   'Manufacturer Technical Data',
                   'DVSA / MOT records',
@@ -832,14 +837,11 @@ function OpportunityPage() {
                   'Community reliability reports',
                   'AI learning engine',
                 ].map((source) => (
-                  <div key={source} className="rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2 text-body-sm font-body-sm text-on-surface">
+                  <div key={source} className="rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-1 text-body-sm font-body-sm text-on-surface-variant">
                     {source}
                   </div>
                 ))}
               </div>
-              <p className="mt-2.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
-                Each intelligence block is structured as a standalone data field so live feeds can replace demo values without redesigning the report layout.
-              </p>
             </article>
           </div>
         </section>
