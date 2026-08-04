@@ -11,6 +11,64 @@ export const Route = createFileRoute('/opportunity')({
 
 const { featuredOpportunity } = opportunityIntelligencePlaceholder
 
+const ticaVehicleIntelligence = {
+  modelIssues: [
+    {
+      tone: 'warning',
+      title: 'Wet timing belt fitted on some engine variants.',
+      detail: 'Inspect service invoices for evidence of the correct belt kit and oil-spec maintenance.',
+    },
+    {
+      tone: 'high',
+      title: 'Check for evidence of timing belt replacement.',
+      detail: 'High priority if mileage or age suggests the interval is due or recently exceeded.',
+    },
+    {
+      tone: 'warning',
+      title: 'Water pump commonly replaced with timing belt.',
+      detail: 'Confirm whether the pump, tensioners and coolant refresh were completed together.',
+    },
+    {
+      tone: 'info',
+      title: 'Oil dilution can occur if used mainly for short journeys.',
+      detail: 'Review service frequency and ask about repeated DPF regenerations or frequent top-ups.',
+    },
+  ],
+  inspectionPoints: [
+    'Cold start performance',
+    'Turbo operation',
+    'Gearbox changes smoothly',
+    'Suspension noises',
+    'Steering alignment',
+    'Brake wear',
+    'Air conditioning',
+    'Electrical equipment',
+    'Dashboard warning lights',
+  ],
+  ownershipAdvice: [
+    'Verify complete service history.',
+    'Confirm manufacturer recalls have been completed.',
+    'Ask when the timing belt or chain was last replaced.',
+    'Confirm both remote keys are supplied.',
+    'Check tyre brand consistency.',
+    'Inspect for signs of previous accident repair.',
+  ],
+  runningCosts: [
+    { label: 'Typical Annual Service Cost', value: '£390–£540', tone: 'info' },
+    { label: 'Timing Belt / Chain', value: 'Wet belt — invoice recommended', tone: 'warning' },
+    { label: 'Insurance Group', value: 'Group 19', tone: 'info' },
+    { label: 'Fuel Economy', value: '52 MPG combined', tone: 'info' },
+    { label: 'Road Tax Band', value: '£190 standard rate', tone: 'info' },
+    { label: 'ULEZ Status', value: 'Compliant', tone: 'info' },
+    { label: 'Known High Cost Repairs', value: 'Turbo / belt-related work', tone: 'high' },
+    { label: 'Dealer Demand Rating', value: 'Strong retail demand', tone: 'info' },
+  ],
+  ownershipRisk: {
+    level: 'Medium',
+    description: 'Based on known reliability patterns and ownership trends.',
+  },
+}
+
 function ChevronRightIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -43,6 +101,29 @@ function OpportunityPage() {
   ]
   const vehicleInfo = featuredOpportunity.vehicleInfo
   const [buyingSummaryLead, buyingSummaryTail = ''] = featuredOpportunity.buyingSummary.split(decisionAction)
+  const ownershipRiskToneClass =
+    ticaVehicleIntelligence.ownershipRisk.level === 'Low'
+      ? 'tica-decision-buy'
+      : ticaVehicleIntelligence.ownershipRisk.level === 'Medium'
+        ? 'tica-decision-review'
+        : 'tica-decision-pass'
+  const issueToneConfig: Record<'info' | 'warning' | 'high', { label: string; className: string; dotClassName: string }> = {
+    info: {
+      label: 'Information',
+      className: 'tica-decision-buy',
+      dotClassName: 'bg-[var(--tica-decision-buy)]',
+    },
+    warning: {
+      label: 'Inspect Carefully',
+      className: 'tica-decision-review',
+      dotClassName: 'bg-[var(--tica-decision-review)]',
+    },
+    high: {
+      label: 'High Priority',
+      className: 'tica-decision-pass',
+      dotClassName: 'bg-[var(--tica-decision-pass)]',
+    },
+  }
 
   const confidencePercent = parseFloat(featuredOpportunity.confidenceDisplay) // e.g. 97 from "97%"
   const meterZone = confidencePercent >= 67 ? 'buy' : confidencePercent >= 34 ? 'review' : 'pass'
@@ -551,6 +632,143 @@ function OpportunityPage() {
               </div>
             ))}
           </dl>
+        </section>
+
+        <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5">
+          <div className="flex flex-col gap-2 border-b border-outline-variant/25 pb-4 sm:pb-5">
+            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Vehicle Intelligence™</p>
+            <div className="max-w-3xl">
+              <h2 className="text-headline-md font-headline-md text-on-surface">TICA Vehicle Intelligence™</h2>
+              <p className="mt-2 text-body-md font-body-md leading-relaxed text-on-surface-variant">
+                AI-powered model knowledge based on known ownership issues, manufacturer data, technician experience and real-world reliability trends.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.45fr_0.95fr]">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Professional Intelligence Card</p>
+                  <h3 className="mt-2 text-title-lg font-semibold text-on-surface">⚠ Known Model Issues</h3>
+                </div>
+                <div className="rounded-full border border-outline-variant/30 bg-surface-container px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">
+                  AI model knowledge
+                </div>
+              </div>
+
+              <div className="mt-4 space-y-3">
+                {ticaVehicleIntelligence.modelIssues.map((issue) => {
+                  const tone = issueToneConfig[issue.tone]
+                  return (
+                    <div key={issue.title} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3">
+                      <div className="flex items-start gap-3">
+                        <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${tone.dotClassName}`} aria-hidden="true" />
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="text-body-md font-body-md text-on-surface">• {issue.title}</p>
+                            <span className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${tone.className}`}>{tone.label}</span>
+                          </div>
+                          <p className="mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">{issue.detail}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </article>
+
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Risk Indicator</p>
+              <h3 className="mt-2 text-title-lg font-semibold text-on-surface">Overall Ownership Risk</h3>
+              <div className="mt-4 rounded-2xl border border-outline-variant/30 bg-surface-container px-4 py-4">
+                <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
+                  <span>Low</span>
+                  <span>Medium</span>
+                  <span>High</span>
+                </div>
+                <div className="mt-3 h-3 rounded-full bg-[linear-gradient(90deg,var(--tica-decision-buy)_0%,var(--tica-decision-buy)_33%,var(--tica-decision-review)_33%,var(--tica-decision-review)_66%,var(--tica-decision-pass)_66%,var(--tica-decision-pass)_100%)]" />
+                <div className="mt-4 flex items-center justify-between rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-3">
+                  <div>
+                    <p className="text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant">Current signal</p>
+                    <p className={`mt-1 text-body-lg font-semibold ${ownershipRiskToneClass}`}>🟡 {ticaVehicleIntelligence.ownershipRisk.level}</p>
+                  </div>
+                  <div className="h-4 w-4 rounded-full bg-[var(--tica-decision-review)] shadow-[0_0_14px_rgba(212,165,55,0.45)]" aria-hidden="true" />
+                </div>
+                <p className="mt-3 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
+                  {ticaVehicleIntelligence.ownershipRisk.description}
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Common Inspection Points</p>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {ticaVehicleIntelligence.inspectionPoints.map((point) => (
+                  <div key={point} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3 text-body-sm font-body-sm text-on-surface">
+                    <span className="tica-decision-buy font-semibold">✓</span>
+                    <span className="ml-2">{point}</span>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Ownership Tips</p>
+              <div className="mt-4 space-y-3">
+                {ticaVehicleIntelligence.ownershipAdvice.map((advice) => (
+                  <div key={advice} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3">
+                    <p className="text-body-sm font-body-sm leading-relaxed text-on-surface">• {advice}</p>
+                  </div>
+                ))}
+              </div>
+            </article>
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_0.8fr]">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Running Cost Intelligence</p>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {ticaVehicleIntelligence.runningCosts.map((item) => {
+                  const tone = issueToneConfig[item.tone]
+                  return (
+                    <div key={item.label} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">{item.label}</p>
+                        <span className={`mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full ${tone.dotClassName}`} aria-hidden="true" />
+                      </div>
+                      <p className="mt-3 text-body-sm font-semibold leading-relaxed text-on-surface">{item.value}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            </article>
+
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Future Ready Architecture</p>
+              <div className="mt-4 space-y-2.5">
+                {[
+                  'Manufacturer Technical Data',
+                  'DVSA / MOT records',
+                  'Recall databases',
+                  'Warranty information',
+                  'Technical Service Bulletins',
+                  'Dealer repair statistics',
+                  'Community reliability reports',
+                  'AI learning engine',
+                ].map((source) => (
+                  <div key={source} className="rounded-xl border border-outline-variant/25 bg-surface-container px-4 py-3 text-body-sm font-body-sm text-on-surface">
+                    {source}
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
+                Each intelligence block is structured as a standalone data field so live feeds can replace demo values without redesigning the report layout.
+              </p>
+            </article>
+          </div>
         </section>
 
         <section className="dashboard-border timeline-mobile-shell rounded-2xl bg-surface-container p-4 sm:p-5">
