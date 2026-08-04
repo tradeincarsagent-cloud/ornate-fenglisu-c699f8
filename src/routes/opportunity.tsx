@@ -1116,6 +1116,53 @@ function OpportunityPage() {
                 </div>
               </article>
 
+              {/* TICA Vehicle History Centre™ */}
+              <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
+                {/* Card header */}
+                <div className="flex flex-col gap-1 border-b border-outline-variant/25 pb-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Vehicle History Centre™</p>
+                  <div>
+                    <h3 className="text-title-lg font-semibold text-on-surface">TICA Vehicle History Centre™</h3>
+                    <p className="mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">Live vehicle history intelligence.</p>
+                  </div>
+                </div>
+
+                {/* History check items */}
+                <div className="mt-3 space-y-1.5">
+                  {[
+                    { status: 'green', label: 'Finance Status', value: 'Clear' },
+                    { status: 'green', label: 'Insurance Write-Off', value: 'None Recorded' },
+                    { status: 'green', label: 'Police Stolen Check', value: 'No Record Found' },
+                    { status: 'green', label: 'Mileage History', value: 'Consistent' },
+                    { status: 'amber', label: 'Number of Previous Keepers', value: '3 Registered' },
+                    { status: 'amber', label: 'Outstanding Recalls', value: '1 Recall Outstanding' },
+                    { status: 'green', label: 'Import / Export Status', value: 'UK Supplied' },
+                    { status: 'green', label: 'VIN Verification', value: 'Matches DVLA Records' },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-center justify-between gap-3 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-2">
+                      <p className="text-body-sm font-body-sm text-on-surface-variant">{item.label}</p>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className="text-sm leading-none" aria-hidden="true">{item.status === 'green' ? '🟢' : '🟡'}</span>
+                        <p className="text-body-sm font-semibold text-on-surface">{item.value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA button */}
+                <button className="mt-3 w-full rounded-xl border border-primary/40 bg-primary px-4 py-3 text-sm font-semibold text-on-primary shadow-sm transition-all hover:opacity-90 active:scale-[0.99]">
+                  Run Live Vehicle History Check
+                </button>
+
+                {/* Helper text */}
+                <p className="mt-2 text-center text-[11px] text-on-surface-variant/60">
+                  Vehicle history will be retrieved from connected data providers.
+                </p>
+
+                {/* Provider logos – reserved for future integrations, hidden until ready */}
+                <div className="hidden" aria-hidden="true" data-provider-logos="reserved" />
+              </article>
+
               <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
                 <div className="flex flex-col gap-1 border-b border-outline-variant/25 pb-3">
                   <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Questions to Ask the Seller™</p>
