@@ -96,6 +96,53 @@ const ticaVehicleIntelligence = {
     level: 'Medium',
     description: 'Based on known reliability patterns and ownership trends.',
   },
+  sellerQuestions: {
+    // Future: populate dynamically from make / model / year / engine / gearbox / known faults / service intervals / recall info / buying-report findings
+    vehicle: { make: 'Volkswagen', model: 'Golf', year: 2019, engine: '1.5 TSI', gearbox: 'DSG' },
+    questions: [
+      {
+        id: 1,
+        text: 'Has the wet timing belt been replaced, and is there an invoice?',
+        priority: 'high' as const,
+      },
+      {
+        id: 2,
+        text: 'Was the water pump, tensioners and coolant replaced at the same time?',
+        priority: 'high' as const,
+      },
+      {
+        id: 3,
+        text: 'Which engine oil specification has been used during servicing?',
+        priority: 'important' as const,
+      },
+      {
+        id: 4,
+        text: 'Has the vehicle required frequent oil top-ups between services?',
+        priority: 'important' as const,
+      },
+      {
+        id: 5,
+        text: 'Have there been any DPF, emissions or engine warning lights?',
+        priority: 'important' as const,
+      },
+      {
+        id: 6,
+        text: 'Is the complete service history available with supporting invoices?',
+        priority: 'high' as const,
+      },
+      {
+        id: 7,
+        text: 'Have all manufacturer recalls and service campaigns been completed?',
+        priority: 'important' as const,
+      },
+      {
+        id: 8,
+        text: 'Are both keys, the handbook pack and the locking-wheel key present?',
+        priority: 'general' as const,
+      },
+    ],
+    dealerTip: 'Ask for photographs of service invoices and supporting documents before travelling to inspect the vehicle.',
+  },
 }
 
 function ChevronRightIcon() {
@@ -842,6 +889,41 @@ function OpportunityPage() {
                       {source}
                     </div>
                   ))}
+                </div>
+              </article>
+
+              <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
+                <div className="flex flex-col gap-1 border-b border-outline-variant/25 pb-3">
+                  <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Questions to Ask the Seller™</p>
+                  <div>
+                    <h3 className="text-title-lg font-semibold text-on-surface">Questions to Ask the Seller</h3>
+                    <p className="mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">Vehicle-specific questions recommended before purchase.</p>
+                  </div>
+                </div>
+
+                <div className="mt-2.5 space-y-1.5">
+                  {ticaVehicleIntelligence.sellerQuestions.questions.map((q) => {
+                    const priorityConfig =
+                      q.priority === 'high'
+                        ? { label: 'High Priority', className: 'text-[var(--tica-decision-pass)]', bg: 'bg-[color-mix(in_srgb,var(--tica-decision-pass)_12%,transparent)]' }
+                        : q.priority === 'important'
+                          ? { label: 'Important', className: 'text-[var(--tica-decision-review)]', bg: 'bg-[color-mix(in_srgb,var(--tica-decision-review)_12%,transparent)]' }
+                          : { label: 'General', className: 'text-primary', bg: 'bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)]' }
+                    return (
+                      <div key={q.id} className="flex items-start gap-2.5 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-1.5">
+                        <span className="mt-0.5 shrink-0 text-[11px] font-semibold tabular-nums text-on-surface-variant">{q.id}.</span>
+                        <p className="min-w-0 flex-1 text-body-sm font-body-sm leading-snug text-on-surface">{q.text}</p>
+                        <span className={`shrink-0 self-start rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] ${priorityConfig.className} ${priorityConfig.bg}`}>
+                          {priorityConfig.label}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+
+                <div className="mt-2.5 flex items-start gap-2 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-2">
+                  <span className="mt-0.5 shrink-0 text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant">Dealer Tip:</span>
+                  <p className="text-body-sm font-body-sm leading-snug text-on-surface-variant">{ticaVehicleIntelligence.sellerQuestions.dealerTip}</p>
                 </div>
               </article>
             </div>
