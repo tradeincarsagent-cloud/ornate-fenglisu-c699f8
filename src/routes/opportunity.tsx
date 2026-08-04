@@ -700,7 +700,7 @@ function OpportunityPage() {
             </div>
           </div>
 
-          <div className="mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.45fr_0.95fr]">
+          <div className="mt-2.5 grid grid-cols-1 items-start gap-2.5 xl:grid-cols-[1.45fr_0.95fr]">
             <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -733,7 +733,7 @@ function OpportunityPage() {
               </div>
             </article>
 
-            <article className="flex flex-col justify-center rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3">
+            <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3">
               <div className="flex items-center justify-between gap-2">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Risk Indicator</p>
                 <span className="text-body-sm font-semibold text-on-surface-variant">Overall Ownership Risk</span>
@@ -759,7 +759,7 @@ function OpportunityPage() {
             </article>
           </div>
 
-          <div className="mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.5fr_1fr]">
+          <div className="mt-2.5 grid grid-cols-1 items-start gap-2.5 xl:grid-cols-[1.5fr_1fr]">
             <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5">
               <div className="flex flex-col gap-1.5 border-b border-outline-variant/25 pb-3">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">AI Inspection Checklist™</p>
@@ -813,7 +813,7 @@ function OpportunityPage() {
             </article>
           </div>
 
-          <div className="mt-2.5 grid grid-cols-1 gap-2.5 xl:grid-cols-[1.5fr_0.8fr]">
+          <div className="mt-2.5 grid grid-cols-1 items-start gap-2.5 xl:grid-cols-[1.5fr_0.8fr]">
             <article className="rounded-2xl border border-outline-variant/30 bg-surface-container-high px-3.5 py-3">
               <div className="flex items-center gap-2.5">
                 <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">TICA Inspection Advice</p>
