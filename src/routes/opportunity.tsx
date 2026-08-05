@@ -1126,6 +1126,43 @@ function OpportunityPage() {
                   </article>
                 </div>
               </section>
+
+              {/* Dealer Services Marketplace™ — compact, fills unused space opposite Questions to Ask the Seller */}
+              <article className="rounded-2xl border border-primary/25 bg-surface-container-high p-3 shadow-[0_0_18px_rgba(var(--color-primary-rgb,99,120,211),0.07)]">
+                <div className="flex items-center justify-between gap-2 border-b border-outline-variant/25 pb-2">
+                  <div>
+                    <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Dealer Services Marketplace™</p>
+                    <p className="mt-0.5 text-[11px] text-on-surface-variant">Trusted Partners. Better Buying. Coming Soon.</p>
+                  </div>
+                </div>
+
+                <div className="mt-2 grid grid-cols-3 gap-1.5">
+                  {[
+                    { icon: '💷', label: 'Dealer Finance', detail: 'Stock funding' },
+                    { icon: '🛡', label: 'Warranty', detail: 'Retail warranty' },
+                    { icon: '🚚', label: 'Transport', detail: 'Collection & delivery' },
+                    { icon: '📋', label: 'Insurance', detail: 'Dealer insurance' },
+                    { icon: '📈', label: 'Stock Funding', detail: 'Buying power' },
+                    { icon: '🤝', label: 'Trade Services', detail: 'Partner network' },
+                  ].map((card) => (
+                    <div
+                      key={card.label}
+                      className="flex flex-col gap-1 rounded-xl border border-outline-variant/20 bg-surface-container px-2.5 py-2"
+                    >
+                      <span className="text-base leading-none" aria-hidden="true">{card.icon}</span>
+                      <p className="text-[11px] font-semibold leading-snug text-on-surface">{card.label}</p>
+                      <p className="text-[10px] leading-snug text-on-surface-variant">{card.detail}</p>
+                      <span className="mt-auto inline-block self-start rounded px-1 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-primary bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)]">
+                        Coming Soon
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-2 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-1.5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-on-surface-variant">Future revenue opportunities for Trade In Cars Agent.</p>
+                </div>
+              </article>
             </div>
 
             {/* Right column */}
@@ -1387,47 +1424,6 @@ function OpportunityPage() {
                 </div>
               </article>
 
-              {/* Dealer Services Marketplace™ */}
-              <article className="rounded-2xl border border-primary/25 bg-surface-container-high p-3.5 shadow-[0_0_24px_rgba(var(--color-primary-rgb,99,120,211),0.08)]">
-                {/* Card header */}
-                <div className="flex flex-col gap-1 border-b border-outline-variant/25 pb-3">
-                  <p className="text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary">Dealer Services Marketplace™</p>
-                  <div>
-                    <h3 className="text-title-lg font-semibold text-on-surface">Dealer Services Marketplace™</h3>
-                    <p className="mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant">Trusted Partners. Better Buying. Coming Soon.</p>
-                  </div>
-                </div>
-
-                {/* Service tiles grid */}
-                <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {[
-                    { icon: '💷', label: 'Dealer Finance', detail: 'Stock funding & dealer finance' },
-                    { icon: '🛡', label: 'Warranty Solutions', detail: 'Retail warranty partners' },
-                    { icon: '🚚', label: 'Vehicle Transport', detail: 'Collection & nationwide delivery' },
-                    { icon: '📋', label: 'Insurance', detail: 'Dealer insurance solutions' },
-                    { icon: '📈', label: 'Stock Funding', detail: 'Expand buying power' },
-                    { icon: '🤝', label: 'Trade Services', detail: 'Approved partner network' },
-                  ].map((tile) => (
-                    <div
-                      key={tile.label}
-                      className="flex flex-col gap-1.5 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5"
-                    >
-                      <span className="text-xl leading-none" aria-hidden="true">{tile.icon}</span>
-                      <p className="text-body-sm font-semibold text-on-surface leading-snug">{tile.label}</p>
-                      <p className="text-[11px] leading-snug text-on-surface-variant">{tile.detail}</p>
-                      <span className="mt-auto inline-block self-start rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)]">
-                        Coming Soon
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Footer strip */}
-                <div className="mt-3 rounded-xl border border-outline-variant/20 bg-surface-container px-3 py-2.5">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant">Future revenue opportunities for Trade In Cars Agent.</p>
-                  <p className="mt-0.5 text-[11px] leading-relaxed text-on-surface-variant/70">Partner integrations will appear here once approved.</p>
-                </div>
-              </article>
             </div>
           </div>
         </section>
