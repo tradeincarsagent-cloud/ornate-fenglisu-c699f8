@@ -230,13 +230,21 @@ const AI_INTELLIGENCE_OPTIONS = [{
 const MISSION_NAME_EXAMPLES = ["Performance Hatchbacks", "Classic Mercedes", "Pickup Trucks", "Dealer Stock Replenishment"];
 const MAX_MILEAGE_STEPS = [1e4, 2e4, 3e4, 4e4, 5e4, 6e4, 75e3, 1e5, 125e3, 15e4, 2e5];
 const MAX_PRICE_STEPS = [5e3, 1e4, 15e3, 2e4, 25e3, 3e4, 4e4, 5e4, 75e3, 1e5, 15e4, 2e5];
-function CheckIcon() {
-  return /* @__PURE__ */ jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "20 6 9 17 4 12" }) });
-}
-function StepMarker({
-  step
+function MetricRow({
+  label,
+  value,
+  active,
+  valueClass
 }) {
-  return /* @__PURE__ */ jsx("p", { className: "mb-3", children: /* @__PURE__ */ jsx("span", { className: "rounded-md border border-primary/25 bg-primary/10 px-2 py-1 text-label-caps font-label-caps text-primary", children: step }) });
+  return /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-2", children: [
+    /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: label }),
+    /* @__PURE__ */ jsx("p", { className: `text-body-sm font-body-sm font-bold tabular-nums ${active ? valueClass ?? "text-on-surface" : "text-on-surface-variant/40"}`, children: value })
+  ] });
+}
+function SectionLabel({
+  children
+}) {
+  return /* @__PURE__ */ jsx("p", { className: "mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary", children });
 }
 function MultiSelectChips({
   options,
@@ -431,6 +439,66 @@ function SearchBuilderPage() {
     const fields = [missionName.trim() !== "", hasSelectedVehicleCategory, selectedMakes.size > 0, maxBudget !== "", searchAreas.size > 0, searchPriority !== null];
     return Math.round(fields.filter(Boolean).length / fields.length * 100);
   })();
+  const opportunityScore = (() => {
+    let score = 0;
+    if (hasSelectedVehicleCategory) score += 20;
+    if (selectedMakes.size > 0) score += 15;
+    if (maxBudget) score += 20;
+    if (searchAreas.size > 0) score += 20;
+    if (searchPriority) score += 15;
+    if (missionName.trim()) score += 10;
+    return score;
+  })();
+  const competitionLevel = (() => {
+    if (!hasSelectedVehicleCategory) return null;
+    const areaCount = searchAreas.size;
+    if (areaCount === 0) return null;
+    if (areaCount >= 3) return {
+      label: "HIGH",
+      color: "text-error"
+    };
+    if (areaCount === 2) return {
+      label: "MEDIUM",
+      color: "text-warning"
+    };
+    return {
+      label: "LOW",
+      color: "text-success"
+    };
+  })();
+  const missionStrength = (() => {
+    if (opportunityScore >= 80) return {
+      label: "STRONG",
+      color: "text-success"
+    };
+    if (opportunityScore >= 50) return {
+      label: "BUILDING",
+      color: "text-warning"
+    };
+    if (opportunityScore >= 20) return {
+      label: "WEAK",
+      color: "text-error"
+    };
+    return null;
+  })();
+  const estimatedDailyOpps = (() => {
+    if (!hasSelectedVehicleCategory || !maxBudget || searchAreas.size === 0) return null;
+    const base = searchAreas.size * 3;
+    const makeBonus = selectedMakes.size > 0 ? 0 : 5;
+    return base + makeBonus;
+  })();
+  const expectedProfit = (() => {
+    if (!maxBudget) return null;
+    const budget = Number(maxBudget);
+    if (budget <= 1e4) return "£800–£1,400";
+    if (budget <= 25e3) return "£1,500–£2,800";
+    if (budget <= 5e4) return "£2,500–£5,000";
+    return "£4,000–£9,000+";
+  })();
+  const aiConfidence = (() => {
+    if (aiIntelligence.size === 0) return 0;
+    return Math.round(aiIntelligence.size / AI_INTELLIGENCE_OPTIONS.length * 100);
+  })();
   return /* @__PURE__ */ jsxs(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
     href: "/dashboard"
@@ -470,199 +538,170 @@ function SearchBuilderPage() {
     disabled: true
   }], children: [
     /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-5 md:mb-8", children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-3 flex items-start justify-between gap-4", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center justify-between gap-4", children: [
+        /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Builder" }),
-          /* @__PURE__ */ jsx("div", { className: "shrink-0", children: /* @__PURE__ */ jsx(TicaShield, {}) })
+          /* @__PURE__ */ jsx("h1", { className: "mt-0.5 text-headline-lg font-headline-lg text-on-surface", children: "AI Search Missions" })
         ] }),
-        /* @__PURE__ */ jsx("h1", { className: "mb-2 text-headline-lg font-headline-lg text-on-surface", children: "AI Search Missions" }),
-        /* @__PURE__ */ jsx("p", { className: "text-body-md font-body-md text-on-surface-variant", children: "Give your AI employee a mission. It will monitor the market continuously and surface the best buying opportunities for your dealership." })
+        /* @__PURE__ */ jsxs("div", { className: "flex shrink-0 items-center gap-3", children: [
+          /* @__PURE__ */ jsx("span", { className: "hidden text-body-sm font-body-sm text-on-surface-variant sm:block", children: "Brief your AI employee" }),
+          /* @__PURE__ */ jsx(TicaShield, {})
+        ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-6 lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_320px]", children: [
-        /* @__PURE__ */ jsxs("div", { className: "space-y-5 sm:space-y-6 lg:col-start-1 lg:row-start-1", children: [
-          /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "01" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Mission Name" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "Give your mission a name so you can identify it quickly." }),
-            /* @__PURE__ */ jsx("input", { id: "mission-name", type: "text", value: missionName, onChange: (e) => setMissionName(e.target.value), placeholder: "e.g. Performance Hatchbacks", className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" }),
-            /* @__PURE__ */ jsx("div", { className: "mt-3 flex flex-wrap gap-2", children: MISSION_NAME_EXAMPLES.map((ex) => /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setMissionName(ex), className: "rounded-full border border-outline-variant/30 bg-surface-container-high px-3 py-1 text-body-sm font-body-sm text-on-surface-variant transition-colors hover:border-primary/40 hover:text-primary", children: ex }, ex)) })
+      /* @__PURE__ */ jsxs("div", { className: "space-y-3 lg:grid lg:grid-cols-[1fr_296px] lg:gap-5 lg:space-y-0 xl:grid-cols-[1fr_316px]", children: [
+        /* @__PURE__ */ jsxs("div", { className: "space-y-3 lg:col-start-1 lg:row-start-1", children: [
+          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
+            /* @__PURE__ */ jsx(SectionLabel, { children: "Mission Name" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
+              /* @__PURE__ */ jsx("input", { id: "mission-name", type: "text", value: missionName, onChange: (e) => setMissionName(e.target.value), placeholder: "e.g. Performance Hatchbacks", className: "min-h-9 min-w-[220px] flex-1 rounded-lg border border-outline-variant/40 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" }),
+              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: MISSION_NAME_EXAMPLES.map((ex) => /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setMissionName(ex), className: "rounded-full border border-outline-variant/30 bg-surface-container-high px-2.5 py-1 text-label-caps font-label-caps text-on-surface-variant transition-colors hover:border-primary/40 hover:text-primary", children: ex }, ex)) })
+            ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { className: `rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError("vehicleType") ? "border-error/60" : "border-outline-variant/30"}`, children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "02" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Vehicle Type" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "Select one or more vehicle types. Multiple selection allowed." }),
-            hasError("vehicleType") && /* @__PURE__ */ jsx("p", { className: "mb-4 text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "vehicleType")?.message }),
-            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5", children: VEHICLE_TYPES.map((type) => {
+          /* @__PURE__ */ jsxs("div", { className: `rounded-xl border bg-surface-container-low px-4 py-3 ${hasError("vehicleType") ? "border-error/60" : "border-outline-variant/30"}`, children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center justify-between gap-2", children: [
+              /* @__PURE__ */ jsx(SectionLabel, { children: "Vehicle Type" }),
+              hasError("vehicleType") && /* @__PURE__ */ jsx("span", { className: "text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "vehicleType")?.message })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-3 gap-2 sm:grid-cols-5", children: VEHICLE_TYPES.map((type) => {
               const selected = selectedVehicleTypes.has(type);
               const comingSoon = !AVAILABLE_VEHICLE_TYPE_SET.has(type);
               return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => {
                 if (!comingSoon) handleVehicleTypeToggle(type);
-              }, disabled: comingSoon, "aria-disabled": comingSoon, "aria-pressed": comingSoon ? void 0 : selected, className: `group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition-all duration-200 sm:min-h-32 sm:p-5 ${comingSoon ? "cursor-not-allowed border-outline-variant/20 bg-surface-container text-on-surface-variant opacity-50" : selected ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface"}`, children: [
-                selected && /* @__PURE__ */ jsx("span", { className: "absolute right-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) }),
-                comingSoon && /* @__PURE__ */ jsx("span", { className: "absolute right-2 top-2 rounded-full border border-outline-variant/40 bg-surface-container-high px-2 py-0.5 text-label-caps font-label-caps text-on-surface-variant", style: {
-                  fontSize: "0.6rem"
+              }, disabled: comingSoon, "aria-disabled": comingSoon, "aria-pressed": comingSoon ? void 0 : selected, className: `group relative flex flex-col items-center justify-center gap-2 rounded-lg border py-3 text-center transition-all duration-150 ${comingSoon ? "cursor-not-allowed border-outline-variant/20 bg-surface-container text-on-surface-variant opacity-50" : selected ? "border-primary bg-primary/10 text-primary shadow-md shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface"}`, children: [
+                selected && /* @__PURE__ */ jsx("span", { className: "absolute right-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx("svg", { width: "9", height: "9", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "20 6 9 17 4 12" }) }) }),
+                comingSoon && /* @__PURE__ */ jsx("span", { className: "absolute right-1.5 top-1.5 rounded-full border border-outline-variant/40 bg-surface-container-high px-1.5 py-0.5 text-label-caps font-label-caps text-on-surface-variant", style: {
+                  fontSize: "0.55rem"
                 }, children: "Soon" }),
-                /* @__PURE__ */ jsx("span", { className: "text-2xl", children: VEHICLE_TYPE_EMOJI[type] }),
-                /* @__PURE__ */ jsx("span", { className: "text-body-sm font-body-sm font-semibold leading-tight", children: type })
+                /* @__PURE__ */ jsx("span", { className: "text-xl", children: VEHICLE_TYPE_EMOJI[type] }),
+                /* @__PURE__ */ jsx("span", { className: "px-1 text-label-caps font-label-caps leading-tight", children: type })
               ] }, type);
             }) })
           ] }),
-          /* @__PURE__ */ jsxs("section", { className: `rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${!hasSelectedVehicleCategory ? "opacity-60" : ""}`, children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "03" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Make" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "Select one or more makes. Leave blank to search all makes." }),
-            !hasSelectedVehicleCategory ? /* @__PURE__ */ jsx("p", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant", children: "Select a vehicle type above to see available makes." }) : /* @__PURE__ */ jsx(MultiSelectChips, { options: availableMakes, selected: selectedMakes, onToggle: handleMakeToggle, searchable: true })
+          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2", children: [
+            /* @__PURE__ */ jsxs("div", { className: `rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3 ${!hasSelectedVehicleCategory ? "opacity-60" : ""}`, children: [
+              /* @__PURE__ */ jsx(SectionLabel, { children: "Make" }),
+              !hasSelectedVehicleCategory ? /* @__PURE__ */ jsx("p", { className: "rounded-lg border border-outline-variant/30 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface-variant", children: "Select a vehicle type first." }) : /* @__PURE__ */ jsx(MultiSelectChips, { options: availableMakes, selected: selectedMakes, onToggle: handleMakeToggle, searchable: true })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: `rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3 ${selectedMakes.size === 0 ? "opacity-60" : ""}`, children: [
+              /* @__PURE__ */ jsx(SectionLabel, { children: "Model" }),
+              selectedMakes.size === 0 ? /* @__PURE__ */ jsx("p", { className: "rounded-lg border border-outline-variant/30 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface-variant", children: "Select a make first." }) : availableModels.length === 0 ? /* @__PURE__ */ jsx("p", { className: "rounded-lg border border-outline-variant/30 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface-variant", children: "No model list — AI searches all models." }) : /* @__PURE__ */ jsx(MultiSelectChips, { options: availableModels, selected: selectedModels, onToggle: handleModelToggle, searchable: true })
+            ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { className: `rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${selectedMakes.size === 0 ? "opacity-60" : ""}`, children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "04" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Model" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "Select specific models. Leave blank to include all models." }),
-            selectedMakes.size === 0 ? /* @__PURE__ */ jsx("p", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant", children: "Select a make above to see available models." }) : availableModels.length === 0 ? /* @__PURE__ */ jsx("p", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant", children: "No model list available for selected make(s). Your AI will search all models." }) : /* @__PURE__ */ jsx(MultiSelectChips, { options: availableModels, selected: selectedModels, onToggle: handleModelToggle, searchable: true })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "05" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Year Range" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "Set the registration year window. Leave blank for any year." }),
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "year-from", children: "From" }),
-                /* @__PURE__ */ jsx("input", { id: "year-from", type: "number", placeholder: "e.g. 2018", min: "1960", max: "2030", value: yearFrom, onChange: (e) => setYearFrom(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
+            /* @__PURE__ */ jsx(SectionLabel, { children: "Criteria" }),
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-3", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Year Range" }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx("input", { id: "year-from", type: "number", placeholder: "From", min: "1960", max: "2030", value: yearFrom, onChange: (e) => setYearFrom(e.target.value), className: "min-h-9 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" }),
+                  /* @__PURE__ */ jsx("span", { className: "shrink-0 text-on-surface-variant", children: "–" }),
+                  /* @__PURE__ */ jsx("input", { id: "year-to", type: "number", placeholder: "To", min: "1960", max: "2030", value: yearTo, onChange: (e) => setYearTo(e.target.value), className: "min-h-9 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+                ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", htmlFor: "year-to", children: "To" }),
-                /* @__PURE__ */ jsx("input", { id: "year-to", type: "number", placeholder: "e.g. 2024", min: "1960", max: "2030", value: yearTo, onChange: (e) => setYearTo(e.target.value), className: "min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30" })
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Max Mileage" }),
+                /* @__PURE__ */ jsx(SliderWithInput, { id: "max-mileage", steps: MAX_MILEAGE_STEPS, value: maxMileage, onChange: setMaxMileage, label: "Maximum mileage", formatValue: (n) => `${n.toLocaleString("en-GB")} mi` })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: `mb-1.5 text-label-caps font-label-caps uppercase tracking-widest ${hasError("budget") ? "text-error" : "text-on-surface-variant"}`, children: "Max Budget" }),
+                hasError("budget") && /* @__PURE__ */ jsx("p", { className: "mb-1 text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "budget")?.message }),
+                /* @__PURE__ */ jsx(SliderWithInput, { id: "max-price", steps: MAX_PRICE_STEPS, value: maxBudget, onChange: (val) => {
+                  setMaxBudget(val);
+                  if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== "budget"));
+                }, label: "Maximum purchase price", formatValue: (n) => formatPounds(n) })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "06" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Maximum Mileage" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "Set the maximum mileage your AI should consider. Leave blank for any mileage." }),
-            /* @__PURE__ */ jsx(SliderWithInput, { id: "max-mileage", steps: MAX_MILEAGE_STEPS, value: maxMileage, onChange: setMaxMileage, label: "Maximum mileage", formatValue: (n) => `${n.toLocaleString("en-GB")} miles` })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { className: `rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError("budget") ? "border-error/60" : "border-outline-variant/30"}`, children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "07" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Maximum Purchase Price" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "Your AI will only surface opportunities within this budget." }),
-            hasError("budget") && /* @__PURE__ */ jsx("p", { className: "mb-3 text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "budget")?.message }),
-            /* @__PURE__ */ jsx(SliderWithInput, { id: "max-price", steps: MAX_PRICE_STEPS, value: maxBudget, onChange: (val) => {
-              setMaxBudget(val);
-              if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== "budget"));
-            }, label: "Maximum purchase price", formatValue: (n) => formatPounds(n) })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "08" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Search Area" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "Choose where your AI should search. Multiple selection allowed." }),
-            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3", children: SEARCH_AREA_OPTIONS.map((area) => {
-              const selected = searchAreas.has(area.value);
-              return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => handleSearchAreaToggle(area.value), "aria-pressed": selected, className: `flex items-start gap-3 rounded-xl border p-4 text-left transition-all duration-150 ${selected ? "border-primary bg-primary/10 shadow-sm shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high hover:border-primary/40"}`, children: [
-                /* @__PURE__ */ jsx("span", { className: "mt-0.5 text-xl", "aria-hidden": "true", children: area.icon }),
-                /* @__PURE__ */ jsxs("span", { className: "flex flex-col gap-0.5", children: [
-                  /* @__PURE__ */ jsx("span", { className: `text-body-md font-body-md font-semibold leading-snug ${selected ? "text-primary" : "text-on-surface"}`, children: area.label }),
-                  /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm leading-snug ${selected ? "text-primary/75" : "text-on-surface-variant"}`, children: area.description })
-                ] }),
-                selected && /* @__PURE__ */ jsx("span", { className: "ml-auto mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx(CheckIcon, {}) })
-              ] }, area.value);
-            }) })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { className: `rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError("buyingPriority") ? "border-error/60" : "border-outline-variant/30"}`, children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "09" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "Priority" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-5 text-body-md font-body-md text-on-surface-variant", children: "How should your AI rank and prioritise opportunities?" }),
-            hasError("buyingPriority") && /* @__PURE__ */ jsx("p", { className: "mb-3 text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "buyingPriority")?.message }),
-            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3 sm:grid-cols-3", children: SEARCH_PRIORITIES.map(({
-              label,
-              value,
-              icon,
-              description
-            }) => {
-              const selected = searchPriority === value;
-              return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setSearchPriority(value), "aria-pressed": selected, className: `relative flex flex-col gap-2 rounded-xl border p-4 text-left transition-all duration-150 ${selected ? "border-primary bg-primary/10 shadow-md shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high hover:border-primary/40"}`, children: [
-                selected && /* @__PURE__ */ jsx("span", { className: "absolute right-2.5 top-2.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx("svg", { width: "10", height: "10", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "20 6 9 17 4 12" }) }) }),
-                /* @__PURE__ */ jsx("span", { className: "text-xl", "aria-hidden": "true", children: icon }),
-                /* @__PURE__ */ jsx("span", { className: `text-body-md font-body-md font-semibold leading-tight ${selected ? "text-primary" : "text-on-surface"}`, children: label }),
-                /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm leading-snug ${selected ? "text-primary/75" : "text-on-surface-variant"}`, children: description })
-              ] }, value);
-            }) })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-primary/25 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high p-4 shadow-lg shadow-primary/10 sm:p-6 md:p-8", children: [
-            /* @__PURE__ */ jsx(StepMarker, { step: "10" }),
-            /* @__PURE__ */ jsx("h2", { className: "mb-1 text-headline-md font-headline-md text-on-surface", children: "AI Intelligence" }),
-            /* @__PURE__ */ jsx("p", { className: "mb-2 text-body-md font-body-md text-on-surface-variant", children: "Choose which AI-powered insights to include in your buying reports." }),
-            /* @__PURE__ */ jsxs("div", { className: "mb-5 flex items-center gap-3", children: [
-              /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setAiIntelligence(new Set(AI_INTELLIGENCE_OPTIONS.map((o) => o.value))), className: "rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-body-sm font-body-sm text-primary transition-colors hover:bg-primary/20", children: "Enable All" }),
-              /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setAiIntelligence(/* @__PURE__ */ new Set()), className: "rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-body-sm font-body-sm text-on-surface-variant transition-colors hover:border-primary/40 hover:text-on-surface", children: "Disable All" })
+          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 md:grid-cols-2", children: [
+            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
+              /* @__PURE__ */ jsx(SectionLabel, { children: "Search Area" }),
+              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-2", children: SEARCH_AREA_OPTIONS.map((area) => {
+                const selected = searchAreas.has(area.value);
+                return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => handleSearchAreaToggle(area.value), "aria-pressed": selected, className: `flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left transition-all duration-150 ${selected ? "border-primary bg-primary/10 shadow-sm shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high hover:border-primary/40"}`, children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-base", "aria-hidden": "true", children: area.icon }),
+                  /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm font-semibold leading-tight ${selected ? "text-primary" : "text-on-surface"}`, children: area.label }),
+                  selected && /* @__PURE__ */ jsx("span", { className: "ml-auto flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx("svg", { width: "8", height: "8", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "20 6 9 17 4 12" }) }) })
+                ] }, area.value);
+              }) })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2", children: AI_INTELLIGENCE_OPTIONS.map((opt) => {
+            /* @__PURE__ */ jsxs("div", { className: `rounded-xl border bg-surface-container-low px-4 py-3 ${hasError("buyingPriority") ? "border-error/60" : "border-outline-variant/30"}`, children: [
+              /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center justify-between gap-2", children: [
+                /* @__PURE__ */ jsx(SectionLabel, { children: "Priority" }),
+                hasError("buyingPriority") && /* @__PURE__ */ jsx("span", { className: "text-body-sm font-body-sm text-error", children: validationErrors.find((e) => e.field === "buyingPriority")?.message })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-3", children: SEARCH_PRIORITIES.map(({
+                label,
+                value,
+                icon
+              }) => {
+                const selected = searchPriority === value;
+                return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => setSearchPriority(value), "aria-pressed": selected, className: `relative flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left transition-all duration-150 ${selected ? "border-primary bg-primary/10 shadow-sm shadow-primary/10" : "border-outline-variant/40 bg-surface-container-high hover:border-primary/40"}`, children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-base", "aria-hidden": "true", children: icon }),
+                  /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm font-semibold leading-tight ${selected ? "text-primary" : "text-on-surface"}`, children: label }),
+                  selected && /* @__PURE__ */ jsx("span", { className: "ml-auto flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary", children: /* @__PURE__ */ jsx("svg", { width: "8", height: "8", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "20 6 9 17 4 12" }) }) })
+                ] }, value);
+              }) })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary/25 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high px-4 py-3 shadow-md shadow-primary/8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center justify-between gap-3", children: [
+              /* @__PURE__ */ jsx(SectionLabel, { children: "AI Intelligence" }),
+              /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
+                /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setAiIntelligence(new Set(AI_INTELLIGENCE_OPTIONS.map((o) => o.value))), className: "rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-label-caps font-label-caps text-primary transition-colors hover:bg-primary/20", children: "All" }),
+                /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setAiIntelligence(/* @__PURE__ */ new Set()), className: "rounded-full border border-outline-variant/40 bg-surface-container-high px-2.5 py-0.5 text-label-caps font-label-caps text-on-surface-variant transition-colors hover:border-primary/40 hover:text-on-surface", children: "None" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-2 sm:grid-cols-2", children: AI_INTELLIGENCE_OPTIONS.map((opt) => {
               const enabled = aiIntelligence.has(opt.value);
-              return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => handleAiToggle(opt.value), "aria-pressed": enabled, className: `flex items-center gap-4 rounded-xl border px-4 py-3.5 text-left transition-all duration-150 ${enabled ? "border-primary/30 bg-surface-container-high shadow-sm shadow-primary/5" : "border-outline-variant/20 bg-surface-container opacity-60"}`, children: [
-                /* @__PURE__ */ jsx("span", { className: "text-xl", "aria-hidden": "true", children: opt.icon }),
-                /* @__PURE__ */ jsxs("span", { className: "flex flex-1 flex-col gap-0.5", children: [
-                  /* @__PURE__ */ jsx("span", { className: `text-body-md font-body-md font-semibold ${enabled ? "text-on-surface" : "text-on-surface-variant"}`, children: opt.label }),
-                  /* @__PURE__ */ jsx("span", { className: "text-body-sm font-body-sm text-on-surface-variant", children: opt.description })
-                ] }),
-                /* @__PURE__ */ jsx("span", { className: `relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 transition-colors duration-200 ${enabled ? "border-primary bg-primary" : "border-outline-variant/40 bg-surface-container"}`, "aria-hidden": "true", children: /* @__PURE__ */ jsx("span", { className: `inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 ${enabled ? "translate-x-5" : "translate-x-0.5"}` }) })
+              return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => handleAiToggle(opt.value), "aria-pressed": enabled, className: `flex items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-all duration-150 ${enabled ? "border-primary/30 bg-surface-container-high shadow-sm shadow-primary/5" : "border-outline-variant/20 bg-surface-container opacity-60"}`, children: [
+                /* @__PURE__ */ jsx("span", { className: "text-lg", "aria-hidden": "true", children: opt.icon }),
+                /* @__PURE__ */ jsx("span", { className: "flex flex-1 flex-col gap-0.5", children: /* @__PURE__ */ jsx("span", { className: `text-body-sm font-body-sm font-semibold ${enabled ? "text-on-surface" : "text-on-surface-variant"}`, children: opt.label }) }),
+                /* @__PURE__ */ jsx("span", { className: `relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 transition-colors duration-200 ${enabled ? "border-primary bg-primary" : "border-outline-variant/40 bg-surface-container"}`, "aria-hidden": "true", children: /* @__PURE__ */ jsx("span", { className: `inline-block h-3 w-3 rounded-full bg-white shadow transition-transform duration-200 ${enabled ? "translate-x-4" : "translate-x-0.5"}` }) })
               ] }, opt.value);
             }) })
           ] }),
-          /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-6 rounded-2xl border border-primary/20 bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-high p-4 sm:p-5", children: [
-              /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Brief" }),
-              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2", children: [{
-                label: "Mission Name",
-                value: missionName || "Not named"
-              }, {
-                label: "Vehicle Type",
-                value: [...selectedVehicleTypes].join(", ") || "Not selected"
-              }, {
-                label: "Make",
-                value: [...selectedMakes].join(", ") || "Any"
-              }, {
-                label: "Model",
-                value: [...selectedModels].join(", ") || "Any"
-              }, {
-                label: "Budget",
-                value: maxBudget ? `Up to ${formatPounds(maxBudget)}` : "Not set"
-              }, {
-                label: "Priority",
-                value: SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? "Not set"
-              }].map((item) => /* @__PURE__ */ jsxs("div", { className: "rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: item.label }),
-                /* @__PURE__ */ jsx("p", { className: "mt-1 truncate text-body-sm font-body-sm font-semibold text-on-surface", children: item.value })
-              ] }, item.label)) })
-            ] }),
-            validationErrors.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mb-5 rounded-xl border border-error/40 bg-error/8 px-4 py-3", role: "alert", children: [
-              /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-error", children: "Please complete the following:" }),
-              /* @__PURE__ */ jsx("ul", { className: "space-y-1", children: validationErrors.map((err) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-error", children: [
+          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
+            validationErrors.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mb-3 rounded-lg border border-error/40 bg-error/8 px-3 py-2.5", role: "alert", children: [
+              /* @__PURE__ */ jsx("p", { className: "mb-1 text-label-caps font-label-caps uppercase tracking-widest text-error", children: "Please complete the following:" }),
+              /* @__PURE__ */ jsx("ul", { className: "space-y-0.5", children: validationErrors.map((err) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-1.5 text-body-sm font-body-sm text-error", children: [
                 /* @__PURE__ */ jsx("span", { className: "mt-px shrink-0", "aria-hidden": "true", children: "•" }),
                 err.message
               ] }, err.field)) })
             ] }),
-            /* @__PURE__ */ jsxs("button", { ref: deployButtonRef, type: "button", onClick: handleDeploy, className: "mx-auto flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-8 py-4 text-headline-md font-headline-md text-on-primary shadow-xl shadow-primary/25 transition-all duration-200 hover:brightness-110 active:scale-[0.98]", children: [
+            /* @__PURE__ */ jsxs("button", { ref: deployButtonRef, type: "button", onClick: handleDeploy, className: "flex min-h-12 w-full items-center justify-center gap-3 rounded-xl bg-primary px-8 py-3 text-body-lg font-body-lg font-semibold text-on-primary shadow-xl shadow-primary/25 transition-all duration-200 hover:brightness-110 active:scale-[0.98]", children: [
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "⚡" }),
               "Launch AI Search Mission"
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "mt-3 text-center text-body-sm font-body-sm text-on-surface-variant", children: "Your AI agent will begin monitoring the market immediately." })
+            /* @__PURE__ */ jsx("p", { className: "mt-2 text-center text-body-sm font-body-sm text-on-surface-variant", children: "Your AI agent begins monitoring the market immediately." })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("aside", { className: "mt-5 sm:mt-6 lg:col-start-2 lg:row-start-1 lg:mt-0", children: /* @__PURE__ */ jsxs("div", { className: "lg:sticky lg:top-6 space-y-4", children: [
-          /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center justify-between gap-2", children: [
+        /* @__PURE__ */ jsx("aside", { className: "mt-3 lg:col-start-2 lg:row-start-1 lg:mt-0", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3 lg:sticky lg:top-5", children: [
+          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-1.5 flex items-center justify-between gap-2", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Readiness" }),
-              /* @__PURE__ */ jsxs("span", { className: "text-body-md font-body-md font-semibold text-on-surface", children: [
+              /* @__PURE__ */ jsxs("span", { className: "text-body-md font-body-md font-bold text-on-surface", children: [
                 missionReadiness,
                 "%"
               ] })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "h-2 w-full overflow-hidden rounded-full bg-surface-container-high", children: /* @__PURE__ */ jsx("div", { className: "h-2 rounded-full bg-primary transition-all duration-500", style: {
+            /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-high", children: /* @__PURE__ */ jsx("div", { className: "h-1.5 rounded-full bg-primary transition-all duration-500", style: {
               width: `${missionReadiness}%`
             }, role: "progressbar", "aria-valuenow": missionReadiness, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": `Mission readiness: ${missionReadiness}% complete` }) }),
-            /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-sm font-body-sm text-on-surface-variant", children: missionReadiness === 100 ? "Ready to launch." : "Complete the mission brief to launch." })
+            /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm text-on-surface-variant", children: missionReadiness === 100 ? "✅ Ready to launch." : "Complete the mission brief to launch." })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", children: [
-            /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Summary" }),
-            /* @__PURE__ */ jsx("div", { className: "space-y-3", children: [{
+          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Live Intelligence" }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+              /* @__PURE__ */ jsx(MetricRow, { label: "Daily Opportunities", value: estimatedDailyOpps !== null ? `~${estimatedDailyOpps} vehicles` : "—", active: estimatedDailyOpps !== null }),
+              /* @__PURE__ */ jsx(MetricRow, { label: "Mission Strength", value: missionStrength ? missionStrength.label : "—", valueClass: missionStrength ? missionStrength.color : void 0, active: missionStrength !== null }),
+              /* @__PURE__ */ jsx(MetricRow, { label: "Expected Avg. Profit", value: expectedProfit ?? "—", active: expectedProfit !== null }),
+              /* @__PURE__ */ jsx(MetricRow, { label: "Competition Level", value: competitionLevel ? competitionLevel.label : "—", valueClass: competitionLevel ? competitionLevel.color : void 0, active: competitionLevel !== null }),
+              /* @__PURE__ */ jsx(MetricRow, { label: "AI Confidence", value: aiConfidence > 0 ? `${aiConfidence}%` : "—", active: aiConfidence > 0 })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Summary" }),
+            /* @__PURE__ */ jsx("div", { className: "space-y-1.5", children: [{
               label: "Vehicle",
               value: vehicleSummary
             }, {
@@ -670,9 +709,9 @@ function SearchBuilderPage() {
               value: maxBudget ? `Up to ${formatPounds(maxBudget)}` : "Not set"
             }, {
               label: "Max Mileage",
-              value: maxMileage ? `${Number(maxMileage).toLocaleString("en-GB")} miles` : "Any"
+              value: maxMileage ? `${Number(maxMileage).toLocaleString("en-GB")} mi` : "Any"
             }, {
-              label: "Year Range",
+              label: "Year",
               value: yearFrom || yearTo ? `${yearFrom || "Any"} – ${yearTo || "Any"}` : "Any"
             }, {
               label: "Search Area",
@@ -682,15 +721,15 @@ function SearchBuilderPage() {
               value: SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? "Not set"
             }, {
               label: "AI Features",
-              value: `${aiIntelligence.size} of ${AI_INTELLIGENCE_OPTIONS.length} enabled`
-            }].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-0.5", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: item.label }),
-              /* @__PURE__ */ jsx("p", { className: "break-words text-body-sm font-body-sm font-semibold text-on-surface", children: item.value })
+              value: `${aiIntelligence.size}/${AI_INTELLIGENCE_OPTIONS.length} enabled`
+            }].map((item) => /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-2", children: [
+              /* @__PURE__ */ jsx("p", { className: "shrink-0 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: item.label }),
+              /* @__PURE__ */ jsx("p", { className: "break-words text-right text-body-sm font-body-sm font-semibold text-on-surface", children: item.value })
             ] }, item.label)) })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-primary/25 bg-primary/8 p-4 sm:p-5", children: [
-            /* @__PURE__ */ jsx("p", { className: "mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "What happens next?" }),
-            /* @__PURE__ */ jsx("ul", { className: "space-y-1.5", children: ["Mission created and confirmed.", "AI validates your criteria.", "AI connects to market sources.", "Opportunities are ranked by priority.", "Best vehicles appear in your buying report."].map((step) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface-variant", children: [
+          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary/25 bg-primary/8 px-4 py-3", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "What happens next?" }),
+            /* @__PURE__ */ jsx("ul", { className: "space-y-1", children: ["Mission created and confirmed.", "AI validates your criteria.", "AI connects to market sources.", "Opportunities ranked by priority.", "Best vehicles in your buying report."].map((step) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-1.5 text-body-sm font-body-sm text-on-surface-variant", children: [
               /* @__PURE__ */ jsx("span", { className: "mt-px shrink-0 text-primary", "aria-hidden": "true", children: "•" }),
               step
             ] }, step)) })

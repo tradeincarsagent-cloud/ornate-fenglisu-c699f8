@@ -208,11 +208,18 @@ function CheckIcon() {
   )
 }
 
-function StepMarker({ step }: { step: string }) {
+function MetricRow({ label, value, active, valueClass }: { label: string; value: string; active: boolean; valueClass?: string }) {
   return (
-    <p className="mb-3">
-      <span className="rounded-md border border-primary/25 bg-primary/10 px-2 py-1 text-label-caps font-label-caps text-primary">{step}</span>
-    </p>
+    <div className="flex items-center justify-between gap-2">
+      <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{label}</p>
+      <p className={`text-body-sm font-body-sm font-bold tabular-nums ${active ? (valueClass ?? 'text-on-surface') : 'text-on-surface-variant/40'}`}>{value}</p>
+    </div>
+  )
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary">{children}</p>
   )
 }
 
@@ -539,6 +546,55 @@ function SearchBuilderPage() {
     return Math.round((fields.filter(Boolean).length / fields.length) * 100)
   })()
 
+  // ── Live intelligence panel derived values ───────────────────────────────
+  const opportunityScore = (() => {
+    let score = 0
+    if (hasSelectedVehicleCategory) score += 20
+    if (selectedMakes.size > 0) score += 15
+    if (maxBudget) score += 20
+    if (searchAreas.size > 0) score += 20
+    if (searchPriority) score += 15
+    if (missionName.trim()) score += 10
+    return score
+  })()
+
+  const competitionLevel = (() => {
+    if (!hasSelectedVehicleCategory) return null
+    const areaCount = searchAreas.size
+    if (areaCount === 0) return null
+    if (areaCount >= 3) return { label: 'HIGH', color: 'text-error' }
+    if (areaCount === 2) return { label: 'MEDIUM', color: 'text-warning' }
+    return { label: 'LOW', color: 'text-success' }
+  })()
+
+  const missionStrength = (() => {
+    if (opportunityScore >= 80) return { label: 'STRONG', color: 'text-success' }
+    if (opportunityScore >= 50) return { label: 'BUILDING', color: 'text-warning' }
+    if (opportunityScore >= 20) return { label: 'WEAK', color: 'text-error' }
+    return null
+  })()
+
+  const estimatedDailyOpps = (() => {
+    if (!hasSelectedVehicleCategory || !maxBudget || searchAreas.size === 0) return null
+    const base = searchAreas.size * 3
+    const makeBonus = selectedMakes.size > 0 ? 0 : 5
+    return base + makeBonus
+  })()
+
+  const expectedProfit = (() => {
+    if (!maxBudget) return null
+    const budget = Number(maxBudget)
+    if (budget <= 10000) return '£800–£1,400'
+    if (budget <= 25000) return '£1,500–£2,800'
+    if (budget <= 50000) return '£2,500–£5,000'
+    return '£4,000–£9,000+'
+  })()
+
+  const aiConfidence = (() => {
+    if (aiIntelligence.size === 0) return 0
+    return Math.round((aiIntelligence.size / AI_INTELLIGENCE_OPTIONS.length) * 100)
+  })()
+
   return (
     <PlatformShell
       navItems={[
@@ -558,61 +614,57 @@ function SearchBuilderPage() {
     >
       <div className="mx-auto w-full max-w-container-max">
         {/* ── Page header ─────────────────────────────────────────────── */}
-        <div className="mb-5 md:mb-8">
-          <div className="mb-3 flex items-start justify-between gap-4">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <div>
             <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Builder</p>
-            <div className="shrink-0">
-              <TicaShield />
-            </div>
+            <h1 className="mt-0.5 text-headline-lg font-headline-lg text-on-surface">AI Search Missions</h1>
           </div>
-          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">AI Search Missions</h1>
-          <p className="text-body-md font-body-md text-on-surface-variant">
-            Give your AI employee a mission. It will monitor the market continuously and surface the best buying opportunities for your dealership.
-          </p>
+          <div className="flex shrink-0 items-center gap-3">
+            <span className="hidden text-body-sm font-body-sm text-on-surface-variant sm:block">Brief your AI employee</span>
+            <TicaShield />
+          </div>
         </div>
 
-        <div className="space-y-5 sm:space-y-6 lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_320px]">
+        <div className="space-y-3 lg:grid lg:grid-cols-[1fr_296px] lg:gap-5 lg:space-y-0 xl:grid-cols-[1fr_316px]">
           {/* ── Main column ─────────────────────────────────────────────── */}
-          <div className="space-y-5 sm:space-y-6 lg:col-start-1 lg:row-start-1">
+          <div className="space-y-3 lg:col-start-1 lg:row-start-1">
 
-            {/* ── Section 1: Mission Name ──────────────────────────────── */}
-            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-              <StepMarker step="01" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Mission Name</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">Give your mission a name so you can identify it quickly.</p>
-              <input
-                id="mission-name"
-                type="text"
-                value={missionName}
-                onChange={(e) => setMissionName(e.target.value)}
-                placeholder="e.g. Performance Hatchbacks"
-                className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-              />
-              <div className="mt-3 flex flex-wrap gap-2">
-                {MISSION_NAME_EXAMPLES.map((ex) => (
-                  <button
-                    key={ex}
-                    type="button"
-                    onClick={() => setMissionName(ex)}
-                    className="rounded-full border border-outline-variant/30 bg-surface-container-high px-3 py-1 text-body-sm font-body-sm text-on-surface-variant transition-colors hover:border-primary/40 hover:text-primary"
-                  >
-                    {ex}
-                  </button>
-                ))}
+            {/* ── Row 1: Mission Name ──────────────────────────────────── */}
+            <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+              <SectionLabel>Mission Name</SectionLabel>
+              <div className="flex flex-wrap items-center gap-2">
+                <input
+                  id="mission-name"
+                  type="text"
+                  value={missionName}
+                  onChange={(e) => setMissionName(e.target.value)}
+                  placeholder="e.g. Performance Hatchbacks"
+                  className="min-h-9 min-w-[220px] flex-1 rounded-lg border border-outline-variant/40 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                />
+                <div className="flex flex-wrap gap-1.5">
+                  {MISSION_NAME_EXAMPLES.map((ex) => (
+                    <button
+                      key={ex}
+                      type="button"
+                      onClick={() => setMissionName(ex)}
+                      className="rounded-full border border-outline-variant/30 bg-surface-container-high px-2.5 py-1 text-label-caps font-label-caps text-on-surface-variant transition-colors hover:border-primary/40 hover:text-primary"
+                    >
+                      {ex}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </section>
+            </div>
 
-            {/* ── Section 2: Vehicle Type ──────────────────────────────── */}
-            <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('vehicleType') ? 'border-error/60' : 'border-outline-variant/30'}`}>
-              <StepMarker step="02" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Vehicle Type</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">Select one or more vehicle types. Multiple selection allowed.</p>
-              {hasError('vehicleType') && (
-                <p className="mb-4 text-body-sm font-body-sm text-error">
-                  {validationErrors.find((e) => e.field === 'vehicleType')?.message}
-                </p>
-              )}
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {/* ── Row 2: Vehicle Type ──────────────────────────────────── */}
+            <div className={`rounded-xl border bg-surface-container-low px-4 py-3 ${hasError('vehicleType') ? 'border-error/60' : 'border-outline-variant/30'}`}>
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <SectionLabel>Vehicle Type</SectionLabel>
+                {hasError('vehicleType') && (
+                  <span className="text-body-sm font-body-sm text-error">{validationErrors.find((e) => e.field === 'vehicleType')?.message}</span>
+                )}
+              </div>
+              <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
                 {VEHICLE_TYPES.map((type) => {
                   const selected = selectedVehicleTypes.has(type as AvailableVehicleType)
                   const comingSoon = !AVAILABLE_VEHICLE_TYPE_SET.has(type)
@@ -624,260 +676,226 @@ function SearchBuilderPage() {
                       disabled={comingSoon}
                       aria-disabled={comingSoon}
                       aria-pressed={comingSoon ? undefined : selected}
-                      className={`group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition-all duration-200 sm:min-h-32 sm:p-5 ${
+                      className={`group relative flex flex-col items-center justify-center gap-2 rounded-lg border py-3 text-center transition-all duration-150 ${
                         comingSoon
                           ? 'cursor-not-allowed border-outline-variant/20 bg-surface-container text-on-surface-variant opacity-50'
                           : selected
-                          ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
+                          ? 'border-primary bg-primary/10 text-primary shadow-md shadow-primary/10'
                           : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
                       }`}
                     >
                       {selected && (
-                        <span className="absolute right-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary">
-                          <CheckIcon />
+                        <span className="absolute right-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-on-primary">
+                          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
                         </span>
                       )}
                       {comingSoon && (
-                        <span className="absolute right-2 top-2 rounded-full border border-outline-variant/40 bg-surface-container-high px-2 py-0.5 text-label-caps font-label-caps text-on-surface-variant" style={{ fontSize: '0.6rem' }}>
+                        <span className="absolute right-1.5 top-1.5 rounded-full border border-outline-variant/40 bg-surface-container-high px-1.5 py-0.5 text-label-caps font-label-caps text-on-surface-variant" style={{ fontSize: '0.55rem' }}>
                           Soon
                         </span>
                       )}
-                      <span className="text-2xl">{VEHICLE_TYPE_EMOJI[type]}</span>
-                      <span className="text-body-sm font-body-sm font-semibold leading-tight">{type}</span>
+                      <span className="text-xl">{VEHICLE_TYPE_EMOJI[type]}</span>
+                      <span className="px-1 text-label-caps font-label-caps leading-tight">{type}</span>
                     </button>
                   )
                 })}
               </div>
-            </section>
+            </div>
 
-            {/* ── Section 3: Make ──────────────────────────────────────── */}
-            <section className={`rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${!hasSelectedVehicleCategory ? 'opacity-60' : ''}`}>
-              <StepMarker step="03" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Make</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
-                Select one or more makes. Leave blank to search all makes.
-              </p>
-              {!hasSelectedVehicleCategory ? (
-                <p className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant">
-                  Select a vehicle type above to see available makes.
-                </p>
-              ) : (
-                <MultiSelectChips
-                  options={availableMakes}
-                  selected={selectedMakes}
-                  onToggle={handleMakeToggle}
-                  searchable
-                />
-              )}
-            </section>
+            {/* ── Row 3: Make + Model ─────────────────────────────────── */}
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className={`rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3 ${!hasSelectedVehicleCategory ? 'opacity-60' : ''}`}>
+                <SectionLabel>Make</SectionLabel>
+                {!hasSelectedVehicleCategory ? (
+                  <p className="rounded-lg border border-outline-variant/30 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface-variant">
+                    Select a vehicle type first.
+                  </p>
+                ) : (
+                  <MultiSelectChips
+                    options={availableMakes}
+                    selected={selectedMakes}
+                    onToggle={handleMakeToggle}
+                    searchable
+                  />
+                )}
+              </div>
+              <div className={`rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3 ${selectedMakes.size === 0 ? 'opacity-60' : ''}`}>
+                <SectionLabel>Model</SectionLabel>
+                {selectedMakes.size === 0 ? (
+                  <p className="rounded-lg border border-outline-variant/30 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface-variant">
+                    Select a make first.
+                  </p>
+                ) : availableModels.length === 0 ? (
+                  <p className="rounded-lg border border-outline-variant/30 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface-variant">
+                    No model list — AI searches all models.
+                  </p>
+                ) : (
+                  <MultiSelectChips
+                    options={availableModels}
+                    selected={selectedModels}
+                    onToggle={handleModelToggle}
+                    searchable
+                  />
+                )}
+              </div>
+            </div>
 
-            {/* ── Section 4: Model ─────────────────────────────────────── */}
-            <section className={`rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${selectedMakes.size === 0 ? 'opacity-60' : ''}`}>
-              <StepMarker step="04" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Model</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
-                Select specific models. Leave blank to include all models.
-              </p>
-              {selectedMakes.size === 0 ? (
-                <p className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant">
-                  Select a make above to see available models.
-                </p>
-              ) : availableModels.length === 0 ? (
-                <p className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant">
-                  No model list available for selected make(s). Your AI will search all models.
-                </p>
-              ) : (
-                <MultiSelectChips
-                  options={availableModels}
-                  selected={selectedModels}
-                  onToggle={handleModelToggle}
-                  searchable
-                />
-              )}
-            </section>
-
-            {/* ── Section 5: Year Range ────────────────────────────────── */}
-            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-              <StepMarker step="05" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Year Range</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
-                Set the registration year window. Leave blank for any year.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
-                  <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-from">From</label>
-                  <input
-                    id="year-from"
-                    type="number"
-                    placeholder="e.g. 2018"
-                    min="1960"
-                    max="2030"
-                    value={yearFrom}
-                    onChange={(e) => setYearFrom(e.target.value)}
-                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+            {/* ── Row 4: Year + Mileage + Budget ─────────────────────── */}
+            <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+              <SectionLabel>Criteria</SectionLabel>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                {/* Year Range */}
+                <div>
+                  <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Year Range</p>
+                  <div className="flex items-center gap-2">
+                    <input
+                      id="year-from"
+                      type="number"
+                      placeholder="From"
+                      min="1960"
+                      max="2030"
+                      value={yearFrom}
+                      onChange={(e) => setYearFrom(e.target.value)}
+                      className="min-h-9 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                    />
+                    <span className="shrink-0 text-on-surface-variant">–</span>
+                    <input
+                      id="year-to"
+                      type="number"
+                      placeholder="To"
+                      min="1960"
+                      max="2030"
+                      value={yearTo}
+                      onChange={(e) => setYearTo(e.target.value)}
+                      className="min-h-9 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                    />
+                  </div>
+                </div>
+                {/* Max Mileage */}
+                <div>
+                  <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Max Mileage</p>
+                  <SliderWithInput
+                    id="max-mileage"
+                    steps={MAX_MILEAGE_STEPS}
+                    value={maxMileage}
+                    onChange={setMaxMileage}
+                    label="Maximum mileage"
+                    formatValue={(n) => `${n.toLocaleString('en-GB')} mi`}
                   />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-to">To</label>
-                  <input
-                    id="year-to"
-                    type="number"
-                    placeholder="e.g. 2024"
-                    min="1960"
-                    max="2030"
-                    value={yearTo}
-                    onChange={(e) => setYearTo(e.target.value)}
-                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                {/* Max Budget */}
+                <div>
+                  <p className={`mb-1.5 text-label-caps font-label-caps uppercase tracking-widest ${hasError('budget') ? 'text-error' : 'text-on-surface-variant'}`}>Max Budget</p>
+                  {hasError('budget') && (
+                    <p className="mb-1 text-body-sm font-body-sm text-error">{validationErrors.find((e) => e.field === 'budget')?.message}</p>
+                  )}
+                  <SliderWithInput
+                    id="max-price"
+                    steps={MAX_PRICE_STEPS}
+                    value={maxBudget}
+                    onChange={(val) => {
+                      setMaxBudget(val)
+                      if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== 'budget'))
+                    }}
+                    label="Maximum purchase price"
+                    formatValue={(n) => formatPounds(n)}
                   />
                 </div>
               </div>
-            </section>
+            </div>
 
-            {/* ── Section 6: Maximum Mileage ───────────────────────────── */}
-            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-              <StepMarker step="06" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Maximum Mileage</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
-                Set the maximum mileage your AI should consider. Leave blank for any mileage.
-              </p>
-              <SliderWithInput
-                id="max-mileage"
-                steps={MAX_MILEAGE_STEPS}
-                value={maxMileage}
-                onChange={setMaxMileage}
-                label="Maximum mileage"
-                formatValue={(n) => `${n.toLocaleString('en-GB')} miles`}
-              />
-            </section>
-
-            {/* ── Section 7: Maximum Purchase Price ───────────────────── */}
-            <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('budget') ? 'border-error/60' : 'border-outline-variant/30'}`}>
-              <StepMarker step="07" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Maximum Purchase Price</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
-                Your AI will only surface opportunities within this budget.
-              </p>
-              {hasError('budget') && (
-                <p className="mb-3 text-body-sm font-body-sm text-error">
-                  {validationErrors.find((e) => e.field === 'budget')?.message}
-                </p>
-              )}
-              <SliderWithInput
-                id="max-price"
-                steps={MAX_PRICE_STEPS}
-                value={maxBudget}
-                onChange={(val) => {
-                  setMaxBudget(val)
-                  if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== 'budget'))
-                }}
-                label="Maximum purchase price"
-                formatValue={(n) => formatPounds(n)}
-              />
-            </section>
-
-            {/* ── Section 8: Search Area ───────────────────────────────── */}
-            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-              <StepMarker step="08" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Search Area</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
-                Choose where your AI should search. Multiple selection allowed.
-              </p>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {SEARCH_AREA_OPTIONS.map((area) => {
-                  const selected = searchAreas.has(area.value)
-                  return (
-                    <button
-                      key={area.value}
-                      type="button"
-                      onClick={() => handleSearchAreaToggle(area.value)}
-                      aria-pressed={selected}
-                      className={`flex items-start gap-3 rounded-xl border p-4 text-left transition-all duration-150 ${
-                        selected
-                          ? 'border-primary bg-primary/10 shadow-sm shadow-primary/10'
-                          : 'border-outline-variant/40 bg-surface-container-high hover:border-primary/40'
-                      }`}
-                    >
-                      <span className="mt-0.5 text-xl" aria-hidden="true">{area.icon}</span>
-                      <span className="flex flex-col gap-0.5">
-                        <span className={`text-body-md font-body-md font-semibold leading-snug ${selected ? 'text-primary' : 'text-on-surface'}`}>{area.label}</span>
-                        <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/75' : 'text-on-surface-variant'}`}>{area.description}</span>
-                      </span>
-                      {selected && (
-                        <span className="ml-auto mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary">
-                          <CheckIcon />
-                        </span>
-                      )}
-                    </button>
-                  )
-                })}
+            {/* ── Row 5: Search Area + Priority ───────────────────────── */}
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              {/* Search Area */}
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+                <SectionLabel>Search Area</SectionLabel>
+                <div className="grid grid-cols-2 gap-2">
+                  {SEARCH_AREA_OPTIONS.map((area) => {
+                    const selected = searchAreas.has(area.value)
+                    return (
+                      <button
+                        key={area.value}
+                        type="button"
+                        onClick={() => handleSearchAreaToggle(area.value)}
+                        aria-pressed={selected}
+                        className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left transition-all duration-150 ${
+                          selected
+                            ? 'border-primary bg-primary/10 shadow-sm shadow-primary/10'
+                            : 'border-outline-variant/40 bg-surface-container-high hover:border-primary/40'
+                        }`}
+                      >
+                        <span className="text-base" aria-hidden="true">{area.icon}</span>
+                        <span className={`text-body-sm font-body-sm font-semibold leading-tight ${selected ? 'text-primary' : 'text-on-surface'}`}>{area.label}</span>
+                        {selected && (
+                          <span className="ml-auto flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                          </span>
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
-            </section>
 
-            {/* ── Section 9: Priority ──────────────────────────────────── */}
-            <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('buyingPriority') ? 'border-error/60' : 'border-outline-variant/30'}`}>
-              <StepMarker step="09" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Priority</h2>
-              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
-                How should your AI rank and prioritise opportunities?
-              </p>
-              {hasError('buyingPriority') && (
-                <p className="mb-3 text-body-sm font-body-sm text-error">
-                  {validationErrors.find((e) => e.field === 'buyingPriority')?.message}
-                </p>
-              )}
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {SEARCH_PRIORITIES.map(({ label, value, icon, description }) => {
-                  const selected = searchPriority === value
-                  return (
-                    <button
-                      key={value}
-                      type="button"
-                      onClick={() => setSearchPriority(value)}
-                      aria-pressed={selected}
-                      className={`relative flex flex-col gap-2 rounded-xl border p-4 text-left transition-all duration-150 ${
-                        selected
-                          ? 'border-primary bg-primary/10 shadow-md shadow-primary/10'
-                          : 'border-outline-variant/40 bg-surface-container-high hover:border-primary/40'
-                      }`}
-                    >
-                      {selected && (
-                        <span className="absolute right-2.5 top-2.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-primary text-on-primary">
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
-                        </span>
-                      )}
-                      <span className="text-xl" aria-hidden="true">{icon}</span>
-                      <span className={`text-body-md font-body-md font-semibold leading-tight ${selected ? 'text-primary' : 'text-on-surface'}`}>{label}</span>
-                      <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/75' : 'text-on-surface-variant'}`}>{description}</span>
-                    </button>
-                  )
-                })}
+              {/* Priority */}
+              <div className={`rounded-xl border bg-surface-container-low px-4 py-3 ${hasError('buyingPriority') ? 'border-error/60' : 'border-outline-variant/30'}`}>
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <SectionLabel>Priority</SectionLabel>
+                  {hasError('buyingPriority') && (
+                    <span className="text-body-sm font-body-sm text-error">{validationErrors.find((e) => e.field === 'buyingPriority')?.message}</span>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {SEARCH_PRIORITIES.map(({ label, value, icon }) => {
+                    const selected = searchPriority === value
+                    return (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setSearchPriority(value)}
+                        aria-pressed={selected}
+                        className={`relative flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left transition-all duration-150 ${
+                          selected
+                            ? 'border-primary bg-primary/10 shadow-sm shadow-primary/10'
+                            : 'border-outline-variant/40 bg-surface-container-high hover:border-primary/40'
+                        }`}
+                      >
+                        <span className="text-base" aria-hidden="true">{icon}</span>
+                        <span className={`text-body-sm font-body-sm font-semibold leading-tight ${selected ? 'text-primary' : 'text-on-surface'}`}>{label}</span>
+                        {selected && (
+                          <span className="ml-auto flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                          </span>
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
-            </section>
+            </div>
 
-            {/* ── Section 10: AI Intelligence ──────────────────────────── */}
-            <section className="rounded-2xl border border-primary/25 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high p-4 shadow-lg shadow-primary/10 sm:p-6 md:p-8">
-              <StepMarker step="10" />
-              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">AI Intelligence</h2>
-              <p className="mb-2 text-body-md font-body-md text-on-surface-variant">
-                Choose which AI-powered insights to include in your buying reports.
-              </p>
-              <div className="mb-5 flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setAiIntelligence(new Set(AI_INTELLIGENCE_OPTIONS.map((o) => o.value)))}
-                  className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-body-sm font-body-sm text-primary transition-colors hover:bg-primary/20"
-                >
-                  Enable All
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setAiIntelligence(new Set())}
-                  className="rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-body-sm font-body-sm text-on-surface-variant transition-colors hover:border-primary/40 hover:text-on-surface"
-                >
-                  Disable All
-                </button>
+            {/* ── Row 6: AI Intelligence ───────────────────────────────── */}
+            <div className="rounded-xl border border-primary/25 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high px-4 py-3 shadow-md shadow-primary/8">
+              <div className="mb-2 flex items-center justify-between gap-3">
+                <SectionLabel>AI Intelligence</SectionLabel>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setAiIntelligence(new Set(AI_INTELLIGENCE_OPTIONS.map((o) => o.value)))}
+                    className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-label-caps font-label-caps text-primary transition-colors hover:bg-primary/20"
+                  >
+                    All
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAiIntelligence(new Set())}
+                    className="rounded-full border border-outline-variant/40 bg-surface-container-high px-2.5 py-0.5 text-label-caps font-label-caps text-on-surface-variant transition-colors hover:border-primary/40 hover:text-on-surface"
+                  >
+                    None
+                  </button>
+                </div>
               </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {AI_INTELLIGENCE_OPTIONS.map((opt) => {
                   const enabled = aiIntelligence.has(opt.value)
                   return (
@@ -886,27 +904,25 @@ function SearchBuilderPage() {
                       type="button"
                       onClick={() => handleAiToggle(opt.value)}
                       aria-pressed={enabled}
-                      className={`flex items-center gap-4 rounded-xl border px-4 py-3.5 text-left transition-all duration-150 ${
+                      className={`flex items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-all duration-150 ${
                         enabled
                           ? 'border-primary/30 bg-surface-container-high shadow-sm shadow-primary/5'
                           : 'border-outline-variant/20 bg-surface-container opacity-60'
                       }`}
                     >
-                      <span className="text-xl" aria-hidden="true">{opt.icon}</span>
+                      <span className="text-lg" aria-hidden="true">{opt.icon}</span>
                       <span className="flex flex-1 flex-col gap-0.5">
-                        <span className={`text-body-md font-body-md font-semibold ${enabled ? 'text-on-surface' : 'text-on-surface-variant'}`}>{opt.label}</span>
-                        <span className="text-body-sm font-body-sm text-on-surface-variant">{opt.description}</span>
+                        <span className={`text-body-sm font-body-sm font-semibold ${enabled ? 'text-on-surface' : 'text-on-surface-variant'}`}>{opt.label}</span>
                       </span>
-                      {/* Toggle pill */}
                       <span
-                        className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 transition-colors duration-200 ${
+                        className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 transition-colors duration-200 ${
                           enabled ? 'border-primary bg-primary' : 'border-outline-variant/40 bg-surface-container'
                         }`}
                         aria-hidden="true"
                       >
                         <span
-                          className={`inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 ${
-                            enabled ? 'translate-x-5' : 'translate-x-0.5'
+                          className={`inline-block h-3 w-3 rounded-full bg-white shadow transition-transform duration-200 ${
+                            enabled ? 'translate-x-4' : 'translate-x-0.5'
                           }`}
                         />
                       </span>
@@ -914,36 +930,16 @@ function SearchBuilderPage() {
                   )
                 })}
               </div>
-            </section>
+            </div>
 
             {/* ── Launch ──────────────────────────────────────────────── */}
-            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-              {/* Brief summary */}
-              <div className="mb-6 rounded-2xl border border-primary/20 bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-high p-4 sm:p-5">
-                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Brief</p>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {[
-                    { label: 'Mission Name', value: missionName || 'Not named' },
-                    { label: 'Vehicle Type', value: [...selectedVehicleTypes].join(', ') || 'Not selected' },
-                    { label: 'Make', value: [...selectedMakes].join(', ') || 'Any' },
-                    { label: 'Model', value: [...selectedModels].join(', ') || 'Any' },
-                    { label: 'Budget', value: maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Not set' },
-                    { label: 'Priority', value: SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? 'Not set' },
-                  ].map((item) => (
-                    <div key={item.label} className="rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5">
-                      <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
-                      <p className="mt-1 truncate text-body-sm font-body-sm font-semibold text-on-surface">{item.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
+            <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
               {validationErrors.length > 0 && (
-                <div className="mb-5 rounded-xl border border-error/40 bg-error/8 px-4 py-3" role="alert">
-                  <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-error">Please complete the following:</p>
-                  <ul className="space-y-1">
+                <div className="mb-3 rounded-lg border border-error/40 bg-error/8 px-3 py-2.5" role="alert">
+                  <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-error">Please complete the following:</p>
+                  <ul className="space-y-0.5">
                     {validationErrors.map((err) => (
-                      <li key={err.field} className="flex items-start gap-2 text-body-sm font-body-sm text-error">
+                      <li key={err.field} className="flex items-start gap-1.5 text-body-sm font-body-sm text-error">
                         <span className="mt-px shrink-0" aria-hidden="true">•</span>
                         {err.message}
                       </li>
@@ -951,34 +947,34 @@ function SearchBuilderPage() {
                   </ul>
                 </div>
               )}
-
               <button
                 ref={deployButtonRef}
                 type="button"
                 onClick={handleDeploy}
-                className="mx-auto flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-8 py-4 text-headline-md font-headline-md text-on-primary shadow-xl shadow-primary/25 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+                className="flex min-h-12 w-full items-center justify-center gap-3 rounded-xl bg-primary px-8 py-3 text-body-lg font-body-lg font-semibold text-on-primary shadow-xl shadow-primary/25 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
               >
                 <span aria-hidden="true">⚡</span>
                 Launch AI Search Mission
               </button>
-              <p className="mt-3 text-center text-body-sm font-body-sm text-on-surface-variant">
-                Your AI agent will begin monitoring the market immediately.
+              <p className="mt-2 text-center text-body-sm font-body-sm text-on-surface-variant">
+                Your AI agent begins monitoring the market immediately.
               </p>
-            </section>
+            </div>
           </div>
 
-          {/* ── Sidebar ──────────────────────────────────────────────────── */}
-          <aside className="mt-5 sm:mt-6 lg:col-start-2 lg:row-start-1 lg:mt-0">
-            <div className="lg:sticky lg:top-6 space-y-4">
+          {/* ── Live Intelligence Panel (sidebar) ────────────────────────── */}
+          <aside className="mt-3 lg:col-start-2 lg:row-start-1 lg:mt-0">
+            <div className="space-y-3 lg:sticky lg:top-5">
+
               {/* Mission Readiness */}
-              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
-                <div className="mb-2 flex items-center justify-between gap-2">
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+                <div className="mb-1.5 flex items-center justify-between gap-2">
                   <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Readiness</p>
-                  <span className="text-body-md font-body-md font-semibold text-on-surface">{missionReadiness}%</span>
+                  <span className="text-body-md font-body-md font-bold text-on-surface">{missionReadiness}%</span>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-high">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-high">
                   <div
-                    className="h-2 rounded-full bg-primary transition-all duration-500"
+                    className="h-1.5 rounded-full bg-primary transition-all duration-500"
                     style={{ width: `${missionReadiness}%` }}
                     role="progressbar"
                     aria-valuenow={missionReadiness}
@@ -987,44 +983,78 @@ function SearchBuilderPage() {
                     aria-label={`Mission readiness: ${missionReadiness}% complete`}
                   />
                 </div>
-                <p className="mt-2 text-body-sm font-body-sm text-on-surface-variant">
-                  {missionReadiness === 100 ? 'Ready to launch.' : 'Complete the mission brief to launch.'}
+                <p className="mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+                  {missionReadiness === 100 ? '✅ Ready to launch.' : 'Complete the mission brief to launch.'}
                 </p>
               </div>
 
+              {/* Live Intelligence Metrics */}
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+                <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary">Live Intelligence</p>
+                <div className="space-y-2">
+                  <MetricRow
+                    label="Daily Opportunities"
+                    value={estimatedDailyOpps !== null ? `~${estimatedDailyOpps} vehicles` : '—'}
+                    active={estimatedDailyOpps !== null}
+                  />
+                  <MetricRow
+                    label="Mission Strength"
+                    value={missionStrength ? missionStrength.label : '—'}
+                    valueClass={missionStrength ? missionStrength.color : undefined}
+                    active={missionStrength !== null}
+                  />
+                  <MetricRow
+                    label="Expected Avg. Profit"
+                    value={expectedProfit ?? '—'}
+                    active={expectedProfit !== null}
+                  />
+                  <MetricRow
+                    label="Competition Level"
+                    value={competitionLevel ? competitionLevel.label : '—'}
+                    valueClass={competitionLevel ? competitionLevel.color : undefined}
+                    active={competitionLevel !== null}
+                  />
+                  <MetricRow
+                    label="AI Confidence"
+                    value={aiConfidence > 0 ? `${aiConfidence}%` : '—'}
+                    active={aiConfidence > 0}
+                  />
+                </div>
+              </div>
+
               {/* Mission Summary */}
-              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
-                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Summary</p>
-                <div className="space-y-3">
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+                <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Summary</p>
+                <div className="space-y-1.5">
                   {[
                     { label: 'Vehicle', value: vehicleSummary },
                     { label: 'Budget', value: maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Not set' },
-                    { label: 'Max Mileage', value: maxMileage ? `${Number(maxMileage).toLocaleString('en-GB')} miles` : 'Any' },
-                    { label: 'Year Range', value: yearFrom || yearTo ? `${yearFrom || 'Any'} – ${yearTo || 'Any'}` : 'Any' },
+                    { label: 'Max Mileage', value: maxMileage ? `${Number(maxMileage).toLocaleString('en-GB')} mi` : 'Any' },
+                    { label: 'Year', value: yearFrom || yearTo ? `${yearFrom || 'Any'} – ${yearTo || 'Any'}` : 'Any' },
                     { label: 'Search Area', value: searchAreas.size > 0 ? [...searchAreas].map((v) => SEARCH_AREA_OPTIONS.find((o) => o.value === v)?.label ?? v).join(', ') : 'Not set' },
                     { label: 'Priority', value: SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? 'Not set' },
-                    { label: 'AI Features', value: `${aiIntelligence.size} of ${AI_INTELLIGENCE_OPTIONS.length} enabled` },
+                    { label: 'AI Features', value: `${aiIntelligence.size}/${AI_INTELLIGENCE_OPTIONS.length} enabled` },
                   ].map((item) => (
-                    <div key={item.label} className="flex flex-col gap-0.5">
-                      <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
-                      <p className="break-words text-body-sm font-body-sm font-semibold text-on-surface">{item.value}</p>
+                    <div key={item.label} className="flex items-start justify-between gap-2">
+                      <p className="shrink-0 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
+                      <p className="break-words text-right text-body-sm font-body-sm font-semibold text-on-surface">{item.value}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* What happens next */}
-              <div className="rounded-2xl border border-primary/25 bg-primary/8 p-4 sm:p-5">
-                <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary">What happens next?</p>
-                <ul className="space-y-1.5">
+              <div className="rounded-xl border border-primary/25 bg-primary/8 px-4 py-3">
+                <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary">What happens next?</p>
+                <ul className="space-y-1">
                   {[
                     'Mission created and confirmed.',
                     'AI validates your criteria.',
                     'AI connects to market sources.',
-                    'Opportunities are ranked by priority.',
-                    'Best vehicles appear in your buying report.',
+                    'Opportunities ranked by priority.',
+                    'Best vehicles in your buying report.',
                   ].map((step) => (
-                    <li key={step} className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface-variant">
+                    <li key={step} className="flex items-start gap-1.5 text-body-sm font-body-sm text-on-surface-variant">
                       <span className="mt-px shrink-0 text-primary" aria-hidden="true">•</span>
                       {step}
                     </li>
