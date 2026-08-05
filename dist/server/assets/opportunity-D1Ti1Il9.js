@@ -1216,6 +1216,49 @@ function OpportunityPage() {
                   /* @__PURE__ */ jsx("span", { className: "mt-0.5 shrink-0 text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant", children: "Dealer Tip:" }),
                   /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-snug text-on-surface-variant", children: ticaVehicleIntelligence.sellerQuestions.dealerTip })
                 ] })
+              ] }),
+              /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-primary/25 bg-surface-container-high p-3.5 shadow-[0_0_24px_rgba(var(--color-primary-rgb,99,120,211),0.08)]", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 border-b border-outline-variant/25 pb-3", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "Dealer Services Marketplace™" }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("h3", { className: "text-title-lg font-semibold text-on-surface", children: "Dealer Services Marketplace™" }),
+                    /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "Trusted Partners. Better Buying. Coming Soon." })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3", children: [{
+                  icon: "💷",
+                  label: "Dealer Finance",
+                  detail: "Stock funding & dealer finance"
+                }, {
+                  icon: "🛡",
+                  label: "Warranty Solutions",
+                  detail: "Retail warranty partners"
+                }, {
+                  icon: "🚚",
+                  label: "Vehicle Transport",
+                  detail: "Collection & nationwide delivery"
+                }, {
+                  icon: "📋",
+                  label: "Insurance",
+                  detail: "Dealer insurance solutions"
+                }, {
+                  icon: "📈",
+                  label: "Stock Funding",
+                  detail: "Expand buying power"
+                }, {
+                  icon: "🤝",
+                  label: "Trade Services",
+                  detail: "Approved partner network"
+                }].map((tile) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1.5 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5", children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-xl leading-none", "aria-hidden": "true", children: tile.icon }),
+                  /* @__PURE__ */ jsx("p", { className: "text-body-sm font-semibold text-on-surface leading-snug", children: tile.label }),
+                  /* @__PURE__ */ jsx("p", { className: "text-[11px] leading-snug text-on-surface-variant", children: tile.detail }),
+                  /* @__PURE__ */ jsx("span", { className: "mt-auto inline-block self-start rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)]", children: "Coming Soon" })
+                ] }, tile.label)) }),
+                /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-outline-variant/20 bg-surface-container px-3 py-2.5", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant", children: "Future revenue opportunities for Trade In Cars Agent." }),
+                  /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-[11px] leading-relaxed text-on-surface-variant/70", children: "Partner integrations will appear here once approved." })
+                ] })
               ] })
             ] })
           ] })
