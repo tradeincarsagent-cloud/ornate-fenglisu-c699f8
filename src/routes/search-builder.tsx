@@ -81,7 +81,7 @@ const CAR_MODELS_BY_MAKE: Record<string, string[]> = {
   'Volvo': ['S60', 'S90', 'V60', 'V90', 'XC40', 'XC60', 'XC90', 'C40', 'EX30', 'EX90'],
 }
 
-const PICKUP_MAKES = ['Ford', 'Isuzu', 'Maxus', 'Mercedes-Benz', 'Mitsubishi', 'Nissan', 'Toyota', 'Volkswagen'] as const
+const PICKUP_MAKES = ['Ford', 'Isuzu', 'Maxus', 'Mercedes-Benz', 'Mitsubishi', 'Nissan', 'Toyota', 'Volkswagen']
 
 const PICKUP_MODELS_BY_MAKE: Record<string, string[]> = {
   'Ford': ['Ranger', 'Ranger Raptor'],
@@ -94,7 +94,7 @@ const PICKUP_MODELS_BY_MAKE: Record<string, string[]> = {
   'Volkswagen': ['Amarok', 'Amarok Aventura'],
 }
 
-const VAN_LIGHT_COMMERCIAL_MAKES = ['Citroen', 'Fiat', 'Ford', 'Iveco', 'MAN', 'Maxus', 'Mercedes-Benz', 'Nissan', 'Peugeot', 'Renault', 'Toyota', 'Vauxhall', 'Volkswagen'] as const
+const VAN_LIGHT_COMMERCIAL_MAKES = ['Citroen', 'Fiat', 'Ford', 'Iveco', 'MAN', 'Maxus', 'Mercedes-Benz', 'Nissan', 'Peugeot', 'Renault', 'Toyota', 'Vauxhall', 'Volkswagen']
 
 const VAN_LIGHT_COMMERCIAL_MODELS_BY_MAKE: Record<string, string[]> = {
   'Citroen': ['Berlingo Van', 'Dispatch', 'Relay'],
@@ -136,7 +136,7 @@ const CLASSIC_MODELS_BY_MAKE: Record<string, string[]> = {
   'Volkswagen': ['Beetle', 'Karmann Ghia', 'Type 3', 'Transporter T1', 'Transporter T2'],
 }
 
-const MOTORCYCLE_MAKES = ['Aprilia', 'BMW Motorrad', 'Ducati', 'Harley-Davidson', 'Honda', 'Kawasaki', 'KTM', 'Suzuki', 'Triumph', 'Yamaha'] as const
+const MOTORCYCLE_MAKES = ['Aprilia', 'BMW Motorrad', 'Ducati', 'Harley-Davidson', 'Honda', 'Kawasaki', 'KTM', 'Suzuki', 'Triumph', 'Yamaha']
 
 const MOTORCYCLE_MODELS_BY_MAKE: Record<string, string[]> = {
   'Aprilia': ['RS 660', 'Tuono 660', 'Tuareg 660', 'RSV4'],
@@ -151,7 +151,7 @@ const MOTORCYCLE_MODELS_BY_MAKE: Record<string, string[]> = {
   'Yamaha': ['MT-07', 'MT-09', 'Tracer 9', 'YZF-R1', 'NMAX 125'],
 }
 
-const MAKES_BY_VEHICLE_TYPE: Record<VehicleType, readonly string[]> = {
+const MAKES_BY_VEHICLE_TYPE: Record<VehicleType, string[]> = {
   'Cars': CAR_MAKES,
   'Classic Cars': CLASSIC_MAKES,
   'Pickups': PICKUP_MAKES,
@@ -167,60 +167,38 @@ const MODELS_BY_VEHICLE_TYPE: Record<VehicleType, Record<string, string[]>> = {
   'Motorcycles': MOTORCYCLE_MODELS_BY_MAKE,
 }
 
-const FUEL_TYPES = ['Any', 'Petrol', 'Diesel', 'Hybrid', 'Plug-in Hybrid', 'Electric', 'Mild Hybrid'] as const
-const TRANSMISSION_TYPES = ['Any', 'Automatic', 'Manual', 'Semi-Automatic'] as const
-const SERVICE_HISTORY_OPTIONS = ['Any', 'Full Service History', 'Part Service History', 'No Service History'] as const
-
-const NOTIFICATION_OPTIONS = [
-  {
-    value: 'instant',
-    label: 'Instant Alerts',
-    description: 'High-confidence opportunities only.',
-  },
-  {
-    value: 'morning',
-    label: 'Morning Intelligence Briefing',
-    description: 'Your overnight buying opportunities before your working day begins.',
-  },
-  {
-    value: 'evening',
-    label: 'Evening Market Summary',
-    description: "A summary of today's best opportunities.",
-  },
-  {
-    value: 'weekly',
-    label: 'Weekly Intelligence Report',
-    description: 'A weekly overview of market activity and buying opportunities.',
-  },
-] as const
-
 const SEARCH_PRIORITIES = [
-  { label: 'Maximum Profit', value: 'maximum-profit', description: 'Focus on opportunities with the highest expected margin.' },
-  { label: 'Fastest Sale', value: 'fastest-sale', description: 'Prioritise vehicles likely to sell quickly in your market.' },
-  { label: 'Best Value', value: 'best-value', description: 'Balance purchase price against strong retail potential.' },
-  { label: 'Rare Opportunity', value: 'rare-opportunity', description: 'Surface harder-to-find stock with standout demand.' },
-  { label: 'Balanced', value: 'balanced', description: 'Combine margin, speed, and demand for all-round results.' },
+  { label: 'Profit', value: 'profit', icon: '💰', description: 'Focus on the highest expected margin.' },
+  { label: 'Fast Selling', value: 'fast-selling', icon: '⚡', description: 'Prioritise vehicles that sell quickly.' },
+  { label: 'Rare Vehicles', value: 'rare-vehicles', icon: '💎', description: 'Surface harder-to-find stock with standout demand.' },
+  { label: 'Best Condition', value: 'best-condition', icon: '✅', description: 'Only surface the cleanest examples available.' },
+  { label: 'Low Mileage', value: 'low-mileage', icon: '🔢', description: 'Prioritise lowest mileage vehicles first.' },
+  { label: 'Highest Margin', value: 'highest-margin', icon: '📈', description: 'Maximum retail margin vs purchase price.' },
 ] as const
 
-const SELECT_MAKE_OPTION = '— Select Make —'
-const SELECT_MODEL_OPTION = '— Select Model —'
-const OTHER_MAKE_OPTION = 'Other / Enter Make'
-const OTHER_MODEL_OPTION = 'Other / Enter Model'
+const SEARCH_AREA_OPTIONS = [
+  { label: 'Nationwide', value: 'nationwide', icon: '🇬🇧', description: 'Search across the entire UK.' },
+  { label: 'Within Radius', value: 'within-radius', icon: '📍', description: 'Set a distance radius from your dealership.' },
+  { label: 'Specific Counties', value: 'specific-counties', icon: '🗺️', description: 'Target specific counties or regions.' },
+  { label: 'Auction Houses', value: 'auction-houses', icon: '🏛️', description: 'Monitor UK auction houses only.' },
+  { label: 'Dealer Websites', value: 'dealer-websites', icon: '🏢', description: 'Search dealer networks and trade listings.' },
+  { label: 'Marketplace Sources', value: 'marketplace-sources', icon: '🛒', description: 'UK marketplace platforms and classifieds.' },
+] as const
 
-const PHASE_ONE_SOURCES = [
-  'Auto Trader',
-  'Dealer Network',
-  'UK Public Vehicle Listings',
-  'Dealer Websites',
-  'Classified Vehicle Websites',
+const AI_INTELLIGENCE_OPTIONS = [
+  { label: 'Estimated Profit', value: 'estimated-profit', icon: '💰', description: 'AI-estimated profit for each opportunity.' },
+  { label: 'Risk Assessment', value: 'risk-assessment', icon: '🛡️', description: 'Flags vehicles with potential purchase risk.' },
+  { label: 'Market Demand', value: 'market-demand', icon: '📊', description: 'Current demand signals for this vehicle type.' },
+  { label: 'Price Validation', value: 'price-validation', icon: '✅', description: 'Confirms the asking price is fair or better.' },
+  { label: 'Recommended Offer', value: 'recommended-offer', icon: '🎯', description: 'AI-suggested offer based on market data.' },
+  { label: 'Dealer Questions', value: 'dealer-questions', icon: '💬', description: 'Pre-generated questions to ask the seller.' },
+  { label: 'Vehicle Intelligence', value: 'vehicle-intelligence', icon: '🧠', description: 'Deep insight: history, recalls, value trends.' },
 ] as const
-const PLANNED_INTEGRATIONS = [
-  'Facebook Marketplace',
-  'Auctions',
-  'Private Sellers',
-  'Trade Feeds',
-  'Vehicle History Providers',
-] as const
+
+const MISSION_NAME_EXAMPLES = ['Performance Hatchbacks', 'Classic Mercedes', 'Pickup Trucks', 'Dealer Stock Replenishment']
+
+const MAX_MILEAGE_STEPS = [10000, 20000, 30000, 40000, 50000, 60000, 75000, 100000, 125000, 150000, 200000]
+const MAX_PRICE_STEPS = [5000, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 75000, 100000, 150000, 200000]
 
 function CheckIcon() {
   return (
@@ -238,224 +216,256 @@ function StepMarker({ step }: { step: string }) {
   )
 }
 
-function SearchableCombobox({
-  id,
+function MultiSelectChips({
   options,
-  value,
-  onChange,
-  placeholder,
-  disabled,
-  clearOptionLabel,
+  selected,
+  onToggle,
+  searchable,
 }: {
-  id: string
   options: string[]
-  value: string
-  onChange: (val: string) => void
-  placeholder: string
-  disabled?: boolean
-  clearOptionLabel?: string
+  selected: Set<string>
+  onToggle: (val: string) => void
+  searchable?: boolean
 }) {
-  const [query, setQuery] = useState(value)
-  const [open, setOpen] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const normalizedQuery = query.trim().toLowerCase()
-  const normalizedValue = value.trim().toLowerCase()
-  const showAllOptions = normalizedQuery === '' || normalizedQuery === normalizedValue
-
-  const filtered = showAllOptions
-    ? options
-    : options.filter((o) => o.toLowerCase().includes(query.toLowerCase()))
-
-  useEffect(() => {
-    setQuery(value)
-  }, [value])
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setOpen(false)
-        if (!options.includes(query)) {
-          setQuery(value)
-        }
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [value, query, options])
+  const [query, setQuery] = useState('')
+  const filtered = query.trim() === '' ? options : options.filter((o) => o.toLowerCase().includes(query.toLowerCase()))
 
   return (
-    <div ref={containerRef} className="relative">
-      <input
-        id={id}
-        type="text"
-        value={query}
-        placeholder={placeholder}
-        disabled={disabled}
-        autoComplete="off"
-        onChange={(e) => {
-          setQuery(e.target.value)
-          setOpen(true)
-          if (e.target.value === '') onChange('')
-        }}
-        onFocus={() => { if (!disabled) setOpen(true) }}
-        className={`min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 pr-10 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
-      />
-      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-      </span>
-      {open && !disabled && filtered.length > 0 && (
-        <ul
-          role="listbox"
-          className="absolute z-50 mt-1 max-h-52 w-full overflow-auto rounded-lg border border-outline-variant/40 bg-surface-container-high shadow-lg"
-        >
-          {clearOptionLabel && (
-            <li
-              role="option"
-              aria-selected={value === ''}
-              onMouseDown={() => {
-                onChange('')
-                setQuery('')
-                setOpen(false)
-              }}
-              className={`cursor-pointer px-4 py-2.5 text-body-md font-body-md transition-colors hover:bg-primary/10 hover:text-primary ${
-                value === '' ? 'bg-primary/10 text-primary' : 'text-on-surface'
+    <div>
+      {searchable && options.length > 8 && (
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Type to filter…"
+          className="mb-3 min-h-10 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+        />
+      )}
+      <div className="flex flex-wrap gap-2">
+        {filtered.map((opt) => {
+          const isSelected = selected.has(opt)
+          return (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => onToggle(opt)}
+              aria-pressed={isSelected}
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-body-sm font-body-sm transition-all duration-150 ${
+                isSelected
+                  ? 'border-primary bg-primary/15 text-primary'
+                  : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
               }`}
             >
-              {clearOptionLabel}
-            </li>
-          )}
-          {filtered.map((option) => (
-            <li
-              key={option}
-              role="option"
-              aria-selected={value === option}
-              onMouseDown={() => {
-                onChange(option)
-                setQuery(option)
-                setOpen(false)
-              }}
-              className={`cursor-pointer px-4 py-2.5 text-body-md font-body-md transition-colors hover:bg-primary/10 hover:text-primary ${
-                value === option ? 'bg-primary/10 text-primary' : 'text-on-surface'
-              }`}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
+              {isSelected && (
+                <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center" aria-hidden="true">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                </span>
+              )}
+              {opt}
+            </button>
+          )
+        })}
+      </div>
+      {selected.size > 0 && (
+        <p className="mt-2 text-body-sm font-body-sm text-on-surface-variant">
+          {selected.size} selected
+          {' · '}
+          <button type="button" onClick={() => selected.forEach((v) => onToggle(v))} className="text-primary underline underline-offset-2 hover:no-underline">
+            Clear all
+          </button>
+        </p>
       )}
     </div>
   )
 }
 
+function SliderWithInput({
+  id,
+  steps,
+  value,
+  onChange,
+  formatValue,
+  label,
+}: {
+  id: string
+  steps: number[]
+  value: string
+  onChange: (val: string) => void
+  formatValue: (n: number) => string
+  label: string
+}) {
+  const numericValue = value ? Number(value) : 0
+  const stepIndex = steps.findIndex((s) => s >= numericValue)
+  const sliderValue = value === '' ? -1 : stepIndex >= 0 ? stepIndex : steps.length - 1
+
+  function handleSliderChange(idx: number) {
+    if (idx < 0) { onChange(''); return }
+    onChange(String(steps[idx]))
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-3">
+        <input
+          id={`${id}-manual`}
+          type="number"
+          placeholder="Any"
+          min={0}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          aria-label={`${label} manual entry`}
+          className="min-h-10 w-32 rounded-lg border border-outline-variant/40 bg-surface-container-high px-3 py-2 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+        />
+        {value && <span className="text-body-sm font-body-sm font-semibold text-primary">{formatValue(numericValue)}</span>}
+      </div>
+      <input
+        id={id}
+        type="range"
+        min={-1}
+        max={steps.length - 1}
+        step={1}
+        value={sliderValue}
+        onChange={(e) => handleSliderChange(Number(e.target.value))}
+        aria-label={label}
+        className="w-full accent-primary"
+      />
+      <div className="flex justify-between text-label-caps font-label-caps text-on-surface-variant/60">
+        <span>Any</span>
+        <span>{formatValue(steps[steps.length - 1])}</span>
+      </div>
+    </div>
+  )
+}
+
 function SearchBuilderPage() {
-  const [selectedVehicleType, setSelectedVehicleType] = useState<AvailableVehicleType | null>(null)
-  const [make, setMake] = useState('')
-  const [model, setModel] = useState('')
+  // Section 1: Mission Name
+  const [missionName, setMissionName] = useState('')
+  // Section 2: Vehicle Type (multi-select)
+  const [selectedVehicleTypes, setSelectedVehicleTypes] = useState<Set<AvailableVehicleType>>(new Set())
+  // Section 3: Makes (multi-select)
+  const [selectedMakes, setSelectedMakes] = useState<Set<string>>(new Set())
+  // Section 4: Models (multi-select)
+  const [selectedModels, setSelectedModels] = useState<Set<string>>(new Set())
+  // Section 5: Year Range
   const [yearFrom, setYearFrom] = useState('')
   const [yearTo, setYearTo] = useState('')
-  const [maxBudget, setMaxBudget] = useState('')
+  // Section 6: Max Mileage
   const [maxMileage, setMaxMileage] = useState('')
-  const [minProfit, setMinProfit] = useState('')
-  const [fuelType, setFuelType] = useState('')
-  const [transmission, setTransmission] = useState('')
-  const [serviceHistory, setServiceHistory] = useState('')
-  const [advancedOpen, setAdvancedOpen] = useState(false)
-  const [searchPriority, setSearchPriority] = useState<(typeof SEARCH_PRIORITIES)[number]['value'] | null>(null)
-  const [notifications, setNotifications] = useState<Set<string>>(new Set())
+  // Section 7: Max Price
+  const [maxBudget, setMaxBudget] = useState('')
+  // Section 8: Search Area
+  const [searchAreas, setSearchAreas] = useState<Set<string>>(new Set())
+  // Section 9: Priority
+  const [searchPriority, setSearchPriority] = useState<string | null>(null)
+  // Section 10: AI Intelligence
+  const [aiIntelligence, setAiIntelligence] = useState<Set<string>>(
+    new Set(AI_INTELLIGENCE_OPTIONS.map((o) => o.value))
+  )
+
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>([])
   const [deployedMission, setDeployedMission] = useState<TicaMission | null>(null)
-  const [manualMake, setManualMake] = useState('')
-  const [manualModel, setManualModel] = useState('')
   const [showBackToTop, setShowBackToTop] = useState(false)
   const deployButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const onScroll = () => {
-      setShowBackToTop(window.scrollY > 300)
-    }
+    const onScroll = () => setShowBackToTop(window.scrollY > 300)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const hasSelectedVehicleCategory =
-    selectedVehicleType !== null && AVAILABLE_VEHICLE_TYPE_SET.has(selectedVehicleType)
-  const activeVehicleType: AvailableVehicleType = hasSelectedVehicleCategory ? selectedVehicleType : 'Cars'
-  const stepTwoInstructionId = 'vehicle-category-required-message'
-  const isOtherMake = make === OTHER_MAKE_OPTION
-  const baseModelOptions = !isOtherMake && make ? MODELS_BY_VEHICLE_TYPE[activeVehicleType][make] ?? [] : []
-  const makeOptions = [...MAKES_BY_VEHICLE_TYPE[activeVehicleType], OTHER_MAKE_OPTION]
-  const modelOptions = make ? [...baseModelOptions, OTHER_MODEL_OPTION] : []
+  // Derive the active vehicle type for make/model lookups
+  // Use first selected type, fallback to Cars for lookup purposes
+  const activeVehicleType: AvailableVehicleType =
+    selectedVehicleTypes.size > 0
+      ? ([...selectedVehicleTypes][0] as AvailableVehicleType)
+      : 'Cars'
 
-  const isOtherModel = model === OTHER_MODEL_OPTION
+  const hasSelectedVehicleCategory = selectedVehicleTypes.size > 0
 
-  const handleVehicleTypeChange = (type: AvailableVehicleType) => {
-    setSelectedVehicleType(type)
-    setMake('')
-    setModel('')
-    setManualMake('')
-    setManualModel('')
+  // Aggregate available makes from all selected vehicle types
+  const availableMakes = Array.from(
+    new Set(
+      selectedVehicleTypes.size > 0
+        ? [...selectedVehicleTypes].flatMap((vt) => MAKES_BY_VEHICLE_TYPE[vt] ?? [])
+        : MAKES_BY_VEHICLE_TYPE['Cars']
+    )
+  ).sort()
+
+  // Aggregate available models from all selected makes across all selected vehicle types
+  const availableModels = Array.from(
+    new Set(
+      [...selectedMakes].flatMap((make) =>
+        [...(selectedVehicleTypes.size > 0 ? selectedVehicleTypes : new Set(['Cars' as VehicleType]))]
+          .flatMap((vt) => MODELS_BY_VEHICLE_TYPE[vt]?.[make] ?? [])
+      )
+    )
+  ).sort()
+
+  function handleVehicleTypeToggle(type: AvailableVehicleType) {
+    setSelectedVehicleTypes((prev) => {
+      const next = new Set(prev)
+      if (next.has(type)) next.delete(type)
+      else next.add(type)
+      return next
+    })
+    setSelectedMakes(new Set())
+    setSelectedModels(new Set())
     if (validationErrors.length > 0) {
-      setValidationErrors((prev) => prev.filter((error) => error.field !== 'vehicleType'))
+      setValidationErrors((prev) => prev.filter((e) => e.field !== 'vehicleType'))
     }
   }
 
-  const handleMakeChange = (val: string) => {
-    setMake(val)
-    setModel('')
-    setManualMake('')
-    setManualModel('')
+  function handleMakeToggle(make: string) {
+    setSelectedMakes((prev) => {
+      const next = new Set(prev)
+      if (next.has(make)) {
+        next.delete(make)
+        // Remove models belonging to this make
+        setSelectedModels((prevModels) => {
+          const nextModels = new Set(prevModels)
+          ;[...selectedVehicleTypes].forEach((vt) => {
+            (MODELS_BY_VEHICLE_TYPE[vt]?.[make] ?? []).forEach((m) => nextModels.delete(m))
+          })
+          return nextModels
+        })
+      } else {
+        next.add(make)
+      }
+      return next
+    })
   }
 
-  const handleModelChange = (val: string) => {
-    setModel(val)
-    if (val !== OTHER_MODEL_OPTION) setManualModel('')
+  function handleModelToggle(model: string) {
+    setSelectedModels((prev) => {
+      const next = new Set(prev)
+      if (next.has(model)) next.delete(model)
+      else next.add(model)
+      return next
+    })
   }
 
-  const selectedNotificationLabels = NOTIFICATION_OPTIONS.filter((o) => notifications.has(o.value)).map((o) => o.label)
-  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(' + ') : 'Not yet selected'
-  const effectiveMake = isOtherMake ? manualMake : make
-  const effectiveModel = isOtherModel ? manualModel : model
-  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? 'Not yet selected'
-  const lookingForSummary = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ') || 'Not yet selected'
-  const formatPounds = (value: string) => `£${Number(value).toLocaleString('en-GB')}`
-  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Not yet selected'
-  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : 'Not yet selected'
-  const briefSummaryItems = [
-    { label: 'Vehicle Type', value: selectedVehicleType ?? 'Not yet selected' },
-    { label: 'Looking For', value: lookingForSummary },
-    { label: 'Budget', value: budgetSummary },
-    { label: 'Target Profit', value: targetProfitSummary },
-    { label: 'Search Area', value: 'United Kingdom' },
-    { label: 'Buying Priority', value: selectedSearchPriority },
-    { label: 'Notifications', value: selectedNotificationSummary },
-  ] as const
-  const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ')
-  const missionName = missionNameBase || selectedVehicleType || 'Vehicle Search'
+  function toggleAll<T extends string>(set: Set<T>, setFn: React.Dispatch<React.SetStateAction<Set<T>>>, items: T[]) {
+    setFn(set.size === items.length ? new Set() : new Set(items))
+  }
 
-  const mileageSummary = maxMileage ? `Under ${Number(maxMileage).toLocaleString('en-GB')} miles` : 'Not yet specified'
-  const vehicleSummary = [selectedVehicleType, effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' / ') || 'Not yet selected'
+  function handleSearchAreaToggle(area: string) {
+    setSearchAreas((prev) => {
+      const next = new Set(prev)
+      if (next.has(area)) next.delete(area)
+      else next.add(area)
+      return next
+    })
+  }
 
-  const missionSummaryItems = [
-    { label: 'Vehicle', value: vehicleSummary },
-    { label: 'Budget', value: budgetSummary },
-    { label: 'Search Area', value: 'United Kingdom' },
-    { label: 'Mileage', value: mileageSummary },
-    { label: 'Minimum Profit Target', value: targetProfitSummary },
-    { label: 'Search Frequency', value: 'Every 30 minutes' },
-    { label: 'Estimated AI Scan Capacity', value: 'Thousands of listings per day (demo)' },
-  ] as const
-
-  const readinessFields = [
-    selectedVehicleType !== null,
-    effectiveMake !== '',
-    effectiveModel !== '',
-    maxBudget !== '',
-    minProfit !== '',
-    searchPriority !== null,
-    notifications.size > 0,
-  ]
-  const missionReadiness = Math.round((readinessFields.filter(Boolean).length / readinessFields.length) * 100)
+  function handleAiToggle(feature: string) {
+    setAiIntelligence((prev) => {
+      const next = new Set(prev)
+      if (next.has(feature)) next.delete(feature)
+      else next.add(feature)
+      return next
+    })
+  }
 
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -466,24 +476,26 @@ function SearchBuilderPage() {
   }
 
   function handleDeploy() {
-    const buyingPriorityLabel =
-      SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? ''
+    const primaryMake = [...selectedMakes][0] ?? ''
+    const primaryModel = [...selectedModels][0] ?? ''
+    const primaryVehicleType = [...selectedVehicleTypes][0] ?? ''
+    const buyingPriorityLabel = SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? ''
 
     const input = {
-      vehicleType: selectedVehicleType ?? '',
-      make: effectiveMake,
-      model: effectiveModel,
+      vehicleType: primaryVehicleType,
+      make: primaryMake,
+      model: primaryModel,
       yearFrom,
       yearTo,
       maxMileage,
-      fuelType,
-      transmission,
-      serviceHistory,
+      fuelType: '',
+      transmission: '',
+      serviceHistory: '',
       budget: maxBudget,
-      targetProfit: minProfit,
+      targetProfit: '',
       buyingPriority: buyingPriorityLabel,
-      notificationPreferences: Array.from(notifications),
-      selectedMarketplaces: [...PHASE_ONE_SOURCES],
+      notificationPreferences: [],
+      selectedMarketplaces: [...searchAreas],
     }
 
     const errors = validateMissionInput(input).filter((error) => error.field !== 'vehicleType')
@@ -491,14 +503,13 @@ function SearchBuilderPage() {
     if (!hasSelectedVehicleCategory) {
       errors.unshift({
         field: 'vehicleType',
-        message: 'Select Cars, Classic Cars, Pickups, or Vans & Light Commercials to continue.',
+        message: 'Select at least one vehicle type to continue.',
       })
     }
 
     setValidationErrors(errors)
 
     if (errors.length > 0) {
-      // Scroll the deploy button area into view so the error summary is visible
       deployButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
@@ -507,6 +518,26 @@ function SearchBuilderPage() {
     saveMission(mission)
     setDeployedMission(mission)
   }
+
+  const formatPounds = (value: string | number) =>
+    `£${Number(value).toLocaleString('en-GB')}`
+
+  const vehicleSummary =
+    [[...selectedVehicleTypes].join(', '), [...selectedMakes].join(', '), [...selectedModels].join(', ')]
+      .filter(Boolean)
+      .join(' / ') || 'Not yet selected'
+
+  const missionReadiness = (() => {
+    const fields = [
+      missionName.trim() !== '',
+      hasSelectedVehicleCategory,
+      selectedMakes.size > 0,
+      maxBudget !== '',
+      searchAreas.size > 0,
+      searchPriority !== null,
+    ]
+    return Math.round((fields.filter(Boolean).length / fields.length) * 100)
+  })()
 
   return (
     <PlatformShell
@@ -526,664 +557,485 @@ function SearchBuilderPage() {
       ]}
     >
       <div className="mx-auto w-full max-w-container-max">
-        {/* ── Page title ──────────────────────────────────────────────── */}
+        {/* ── Page header ─────────────────────────────────────────────── */}
         <div className="mb-5 md:mb-8">
           <div className="mb-3 flex items-start justify-between gap-4">
-            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Mission Briefing</p>
+            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Builder</p>
             <div className="shrink-0">
               <TicaShield />
             </div>
           </div>
-          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">AI Mission Briefing Centre</h1>
-          <p className="text-body-md font-body-md text-on-surface-variant">Tell TICA exactly what you're looking for and your AI will continuously search for matching opportunities.</p>
+          <h1 className="mb-2 text-headline-lg font-headline-lg text-on-surface">AI Search Missions</h1>
+          <p className="text-body-md font-body-md text-on-surface-variant">
+            Give your AI employee a mission. It will monitor the market continuously and surface the best buying opportunities for your dealership.
+          </p>
         </div>
 
-        {/* ── Powered by TICA Intelligence ────────────────────────────── */}
-        <div className="mb-5 md:mb-8">
-          <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Powered by TICA Intelligence</p>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
-            {/* TICA Smart Learning™ */}
-            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5">
-              <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">🧠</span>
-              <div>
-                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Smart Learning™</p>
-                <p className="text-body-sm font-body-sm text-on-surface-variant">Your AI Employee learns your vehicle preferences, budgets, locations and buying priorities so future searches become more relevant.</p>
-              </div>
-            </div>
-            {/* Opportunity Intelligence™ */}
-            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5">
-              <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">📊</span>
-              <div>
-                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">Opportunity Intelligence™</p>
-                <p className="text-body-sm font-body-sm text-on-surface-variant">Analyses vehicle pricing, demand, potential margin and market activity to identify stronger buying opportunities.</p>
-              </div>
-            </div>
-            {/* TICA Decision Engine™ */}
-            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5">
-              <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">⚡</span>
-              <div>
-                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Decision Engine™</p>
-                <p className="text-body-sm font-body-sm text-on-surface-variant">Turns market analysis into clear recommendations and explains why an opportunity should be reviewed, watched, bought or passed.</p>
-              </div>
-            </div>
-            {/* TICA Certified™ */}
-            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/8 px-4 py-4 sm:px-5">
-              <span className="mt-0.5 shrink-0 text-xl" aria-hidden="true">✅</span>
-              <div>
-                <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">TICA Certified™</p>
-                <p className="text-body-sm font-body-sm text-on-surface-variant">Marks opportunities that have completed TICA's analysis and meet the required confidence and buying criteria.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="space-y-5 sm:space-y-6 lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_320px]">
+          {/* ── Main column ─────────────────────────────────────────────── */}
+          <div className="space-y-5 sm:space-y-6 lg:col-start-1 lg:row-start-1">
 
-        <div className="space-y-5 sm:space-y-8 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_340px]">
-          <div className="space-y-5 sm:space-y-8 lg:col-start-1 lg:row-start-1">
-          {/* ── Section 1: Vehicle Type ──────────────────────────────── */}
-          <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('vehicleType') ? 'border-error/60' : 'border-outline-variant/30'}`}>
-            <div className="mb-5">
+            {/* ── Section 1: Mission Name ──────────────────────────────── */}
+            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
               <StepMarker step="01" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">What would you like me to find?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the vehicle category you want your AI to monitor.</p>
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Mission Name</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">Give your mission a name so you can identify it quickly.</p>
+              <input
+                id="mission-name"
+                type="text"
+                value={missionName}
+                onChange={(e) => setMissionName(e.target.value)}
+                placeholder="e.g. Performance Hatchbacks"
+                className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+              />
+              <div className="mt-3 flex flex-wrap gap-2">
+                {MISSION_NAME_EXAMPLES.map((ex) => (
+                  <button
+                    key={ex}
+                    type="button"
+                    onClick={() => setMissionName(ex)}
+                    className="rounded-full border border-outline-variant/30 bg-surface-container-high px-3 py-1 text-body-sm font-body-sm text-on-surface-variant transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    {ex}
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* ── Section 2: Vehicle Type ──────────────────────────────── */}
+            <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('vehicleType') ? 'border-error/60' : 'border-outline-variant/30'}`}>
+              <StepMarker step="02" />
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Vehicle Type</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">Select one or more vehicle types. Multiple selection allowed.</p>
               {hasError('vehicleType') && (
-                <p className="mt-2 text-body-sm font-body-sm text-error">
+                <p className="mb-4 text-body-sm font-body-sm text-error">
                   {validationErrors.find((e) => e.field === 'vehicleType')?.message}
                 </p>
               )}
-            </div>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-              {VEHICLE_TYPES.map((type) => {
-                const selected = selectedVehicleType === type
-                const comingSoon = !AVAILABLE_VEHICLE_TYPE_SET.has(type)
-                return (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => {
-                      if (!comingSoon) handleVehicleTypeChange(type as AvailableVehicleType)
-                    }}
-                    disabled={comingSoon}
-                    aria-disabled={comingSoon}
-                    className={`group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${
-                      comingSoon
-                        ? 'cursor-not-allowed border-outline-variant/20 bg-surface-container text-on-surface-variant opacity-60'
-                        : selected
-                        ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
-                        : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:bg-surface-container-high hover:text-on-surface'
-                    }`}
-                    aria-pressed={comingSoon ? undefined : selected}
-                  >
-                    {selected && (
-                      <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary">
-                        <CheckIcon />
-                      </span>
-                    )}
-                    {comingSoon && (
-                      <span className="absolute right-3 top-3 rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant">
-                        Coming Soon
-                      </span>
-                    )}
-                    <span className="text-2xl">
-                      {VEHICLE_TYPE_EMOJI[type]}
-                    </span>
-                    <span className="text-body-md font-body-md font-semibold">{type}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </section>
-
-          {/* ── Section 2: Vehicle Details ───────────────────────────── */}
-          <section
-            className={`rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasSelectedVehicleCategory ? '' : 'opacity-60'}`}
-            aria-disabled={!hasSelectedVehicleCategory}
-          >
-            <div className="mb-5">
-              <StepMarker step="02" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">Which make, model and budget?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
-                Narrow down the vehicle and set your budget and profit target so your AI only surfaces opportunities that match your goals.
-              </p>
-            </div>
-            {!hasSelectedVehicleCategory && (
-              <div
-                id={stepTwoInstructionId}
-                className="mb-5 rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3"
-                role="status"
-              >
-                <p className="text-body-sm font-body-sm text-on-surface-variant">
-                  Please select a vehicle category in Step 01 to continue.
-                </p>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+                {VEHICLE_TYPES.map((type) => {
+                  const selected = selectedVehicleTypes.has(type as AvailableVehicleType)
+                  const comingSoon = !AVAILABLE_VEHICLE_TYPE_SET.has(type)
+                  return (
+                    <button
+                      key={type}
+                      type="button"
+                      onClick={() => { if (!comingSoon) handleVehicleTypeToggle(type as AvailableVehicleType) }}
+                      disabled={comingSoon}
+                      aria-disabled={comingSoon}
+                      aria-pressed={comingSoon ? undefined : selected}
+                      className={`group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition-all duration-200 sm:min-h-32 sm:p-5 ${
+                        comingSoon
+                          ? 'cursor-not-allowed border-outline-variant/20 bg-surface-container text-on-surface-variant opacity-50'
+                          : selected
+                          ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
+                          : 'border-outline-variant/40 bg-surface-container-high text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
+                      }`}
+                    >
+                      {selected && (
+                        <span className="absolute right-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-on-primary">
+                          <CheckIcon />
+                        </span>
+                      )}
+                      {comingSoon && (
+                        <span className="absolute right-2 top-2 rounded-full border border-outline-variant/40 bg-surface-container-high px-2 py-0.5 text-label-caps font-label-caps text-on-surface-variant" style={{ fontSize: '0.6rem' }}>
+                          Soon
+                        </span>
+                      )}
+                      <span className="text-2xl">{VEHICLE_TYPE_EMOJI[type]}</span>
+                      <span className="text-body-sm font-body-sm font-semibold leading-tight">{type}</span>
+                    </button>
+                  )
+                })}
               </div>
-            )}
-            <fieldset
-              disabled={!hasSelectedVehicleCategory}
-              aria-disabled={!hasSelectedVehicleCategory}
-              aria-describedby={!hasSelectedVehicleCategory ? stepTwoInstructionId : undefined}
-              className={`min-w-0 border-0 p-0 ${hasSelectedVehicleCategory ? '' : 'pointer-events-none'}`}
-            >
-            <div className="flex flex-col gap-4">
-              {/* Group 1: Vehicle Selection */}
-              <div>
-                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant/60">Vehicle Selection</p>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="make">Make</label>
-                    <SearchableCombobox
-                      id="make"
-                      options={makeOptions}
-                      value={make}
-                      onChange={handleMakeChange}
-                      placeholder={SELECT_MAKE_OPTION}
-                      clearOptionLabel={SELECT_MAKE_OPTION}
-                      disabled={!hasSelectedVehicleCategory}
-                    />
-                    {isOtherMake && (
-                      <input
-                        id="manual-make"
-                        type="text"
-                        placeholder="Enter Make"
-                        value={manualMake}
-                        onChange={(e) => setManualMake(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
-                    <SearchableCombobox
-                      id="model"
-                      options={modelOptions}
-                      value={model}
-                      onChange={handleModelChange}
-                      placeholder={make ? SELECT_MODEL_OPTION : 'Select a make first'}
-                      clearOptionLabel={SELECT_MODEL_OPTION}
-                      disabled={!hasSelectedVehicleCategory || !make || modelOptions.length === 0}
-                    />
-                    {isOtherModel && (
-                      <input
-                        id="manual-model"
-                        type="text"
-                        placeholder="Enter Model"
-                        value={manualModel}
-                        onChange={(e) => setManualModel(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
+            </section>
 
-              {/* Group 2: Buying Criteria */}
-              <div>
-                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant/60">Buying Criteria</p>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-budget">Budget</label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
-                      <input
-                        id="max-budget"
-                        type="number"
-                        placeholder="e.g. 30000"
-                        min="0"
-                        value={maxBudget}
-                        onChange={(e) => { setMaxBudget(e.target.value); if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== 'budget')) }}
-                        className={`min-h-11 w-full rounded-lg border bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:ring-1 ${hasError('budget') ? 'border-error/60 focus:border-error focus:ring-error/30' : 'border-outline-variant/40 focus:border-primary focus:ring-primary/30'}`}
-                      />
-                    </div>
-                    {hasError('budget') && (
-                      <p className="text-body-sm font-body-sm text-error">
-                        {validationErrors.find((e) => e.field === 'budget')?.message}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="min-profit">Minimum Profit</label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-md font-body-md text-on-surface-variant">£</span>
-                      <input
-                        id="min-profit"
-                        type="number"
-                        placeholder="e.g. 1500"
-                        min="0"
-                        value={minProfit}
-                        onChange={(e) => setMinProfit(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high py-3 pl-8 pr-4 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ── Advanced Filters ─────────────────────────────────────── */}
-            <div className="mt-4 rounded-xl border border-outline-variant/30 bg-surface-container-high">
-              <button
-                type="button"
-                onClick={() => setAdvancedOpen((o) => !o)}
-                disabled={!hasSelectedVehicleCategory}
-                className={`flex w-full items-center justify-between px-5 py-4 text-left ${hasSelectedVehicleCategory ? '' : 'cursor-not-allowed'}`}
-                aria-expanded={advancedOpen}
-              >
-                <span className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Refine Further</span>
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  className={`shrink-0 text-on-surface-variant transition-transform duration-200 ${advancedOpen ? 'rotate-180' : ''}`}
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
-              {advancedOpen && (
-                <div className="border-t border-outline-variant/30 px-5 pb-5 pt-5">
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-from">Earliest year?</label>
-                      <input
-                        id="year-from"
-                        type="number"
-                        placeholder="e.g. 2018"
-                        min="1990"
-                        max="2030"
-                        value={yearFrom}
-                        onChange={(e) => setYearFrom(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-to">Latest year?</label>
-                      <input
-                        id="year-to"
-                        type="number"
-                        placeholder="e.g. 2024"
-                        min="1990"
-                        max="2030"
-                        value={yearTo}
-                        onChange={(e) => setYearTo(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-mileage">Maximum mileage?</label>
-                      <input
-                        id="max-mileage"
-                        type="number"
-                        placeholder="e.g. 60000"
-                        min="0"
-                        value={maxMileage}
-                        onChange={(e) => setMaxMileage(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="fuel-type">Fuel preference?</label>
-                      <select
-                        id="fuel-type"
-                        value={fuelType}
-                        onChange={(e) => setFuelType(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      >
-                        {FUEL_TYPES.map((ft) => (
-                          <option key={ft} value={ft === 'Any' ? '' : ft}>{ft}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="transmission">Transmission preference?</label>
-                      <select
-                        id="transmission"
-                        value={transmission}
-                        onChange={(e) => setTransmission(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      >
-                        {TRANSMISSION_TYPES.map((tt) => (
-                          <option key={tt} value={tt === 'Any' ? '' : tt}>{tt}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="service-history">Service history requirement?</label>
-                      <select
-                        id="service-history"
-                        value={serviceHistory}
-                        onChange={(e) => setServiceHistory(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      >
-                        {SERVICE_HISTORY_OPTIONS.map((sh) => (
-                          <option key={sh} value={sh === 'Any' ? '' : sh}>{sh}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            </fieldset>
-          </section>
-            </div>
-
-          <div className="space-y-5 sm:space-y-8 lg:col-span-2 lg:row-start-2 lg:mt-8">
-          {/* ── Section 3: Search Priority ───────────────────────────── */}
-          <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('buyingPriority') ? 'border-error/60' : 'border-outline-variant/30'}`}>
-            <div className="mb-5">
+            {/* ── Section 3: Make ──────────────────────────────────────── */}
+            <section className={`rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${!hasSelectedVehicleCategory ? 'opacity-60' : ''}`}>
               <StepMarker step="03" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">How should I rank the opportunities?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
-                Tell your AI how to prioritise results for this mission.
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Make</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
+                Select one or more makes. Leave blank to search all makes.
+              </p>
+              {!hasSelectedVehicleCategory ? (
+                <p className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant">
+                  Select a vehicle type above to see available makes.
+                </p>
+              ) : (
+                <MultiSelectChips
+                  options={availableMakes}
+                  selected={selectedMakes}
+                  onToggle={handleMakeToggle}
+                  searchable
+                />
+              )}
+            </section>
+
+            {/* ── Section 4: Model ─────────────────────────────────────── */}
+            <section className={`rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8 ${selectedMakes.size === 0 ? 'opacity-60' : ''}`}>
+              <StepMarker step="04" />
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Model</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
+                Select specific models. Leave blank to include all models.
+              </p>
+              {selectedMakes.size === 0 ? (
+                <p className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant">
+                  Select a make above to see available models.
+                </p>
+              ) : availableModels.length === 0 ? (
+                <p className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3 text-body-sm font-body-sm text-on-surface-variant">
+                  No model list available for selected make(s). Your AI will search all models.
+                </p>
+              ) : (
+                <MultiSelectChips
+                  options={availableModels}
+                  selected={selectedModels}
+                  onToggle={handleModelToggle}
+                  searchable
+                />
+              )}
+            </section>
+
+            {/* ── Section 5: Year Range ────────────────────────────────── */}
+            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+              <StepMarker step="05" />
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Year Range</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
+                Set the registration year window. Leave blank for any year.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-from">From</label>
+                  <input
+                    id="year-from"
+                    type="number"
+                    placeholder="e.g. 2018"
+                    min="1960"
+                    max="2030"
+                    value={yearFrom}
+                    onChange={(e) => setYearFrom(e.target.value)}
+                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-to">To</label>
+                  <input
+                    id="year-to"
+                    type="number"
+                    placeholder="e.g. 2024"
+                    min="1960"
+                    max="2030"
+                    value={yearTo}
+                    onChange={(e) => setYearTo(e.target.value)}
+                    className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* ── Section 6: Maximum Mileage ───────────────────────────── */}
+            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+              <StepMarker step="06" />
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Maximum Mileage</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
+                Set the maximum mileage your AI should consider. Leave blank for any mileage.
+              </p>
+              <SliderWithInput
+                id="max-mileage"
+                steps={MAX_MILEAGE_STEPS}
+                value={maxMileage}
+                onChange={setMaxMileage}
+                label="Maximum mileage"
+                formatValue={(n) => `${n.toLocaleString('en-GB')} miles`}
+              />
+            </section>
+
+            {/* ── Section 7: Maximum Purchase Price ───────────────────── */}
+            <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('budget') ? 'border-error/60' : 'border-outline-variant/30'}`}>
+              <StepMarker step="07" />
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Maximum Purchase Price</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
+                Your AI will only surface opportunities within this budget.
+              </p>
+              {hasError('budget') && (
+                <p className="mb-3 text-body-sm font-body-sm text-error">
+                  {validationErrors.find((e) => e.field === 'budget')?.message}
+                </p>
+              )}
+              <SliderWithInput
+                id="max-price"
+                steps={MAX_PRICE_STEPS}
+                value={maxBudget}
+                onChange={(val) => {
+                  setMaxBudget(val)
+                  if (validationErrors.length > 0) setValidationErrors((prev) => prev.filter((e) => e.field !== 'budget'))
+                }}
+                label="Maximum purchase price"
+                formatValue={(n) => formatPounds(n)}
+              />
+            </section>
+
+            {/* ── Section 8: Search Area ───────────────────────────────── */}
+            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+              <StepMarker step="08" />
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Search Area</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
+                Choose where your AI should search. Multiple selection allowed.
+              </p>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {SEARCH_AREA_OPTIONS.map((area) => {
+                  const selected = searchAreas.has(area.value)
+                  return (
+                    <button
+                      key={area.value}
+                      type="button"
+                      onClick={() => handleSearchAreaToggle(area.value)}
+                      aria-pressed={selected}
+                      className={`flex items-start gap-3 rounded-xl border p-4 text-left transition-all duration-150 ${
+                        selected
+                          ? 'border-primary bg-primary/10 shadow-sm shadow-primary/10'
+                          : 'border-outline-variant/40 bg-surface-container-high hover:border-primary/40'
+                      }`}
+                    >
+                      <span className="mt-0.5 text-xl" aria-hidden="true">{area.icon}</span>
+                      <span className="flex flex-col gap-0.5">
+                        <span className={`text-body-md font-body-md font-semibold leading-snug ${selected ? 'text-primary' : 'text-on-surface'}`}>{area.label}</span>
+                        <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/75' : 'text-on-surface-variant'}`}>{area.description}</span>
+                      </span>
+                      {selected && (
+                        <span className="ml-auto mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary">
+                          <CheckIcon />
+                        </span>
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+            </section>
+
+            {/* ── Section 9: Priority ──────────────────────────────────── */}
+            <section className={`rounded-2xl border bg-surface-container-low p-4 sm:p-6 md:p-8 ${hasError('buyingPriority') ? 'border-error/60' : 'border-outline-variant/30'}`}>
+              <StepMarker step="09" />
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Priority</h2>
+              <p className="mb-5 text-body-md font-body-md text-on-surface-variant">
+                How should your AI rank and prioritise opportunities?
               </p>
               {hasError('buyingPriority') && (
-                <p className="mt-2 text-body-sm font-body-sm text-error">
+                <p className="mb-3 text-body-sm font-body-sm text-error">
                   {validationErrors.find((e) => e.field === 'buyingPriority')?.message}
                 </p>
               )}
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-6">
-              {SEARCH_PRIORITIES.map(({ label, value, description }, idx) => {
-                const selected = searchPriority === value
-                return (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => setSearchPriority(value)}
-                    aria-pressed={selected}
-                    className={`relative flex min-h-24 w-full flex-col items-start justify-center rounded-xl border px-4 py-4 text-left transition-all duration-200 ${
-                      idx < 3 ? 'xl:col-span-2' : 'xl:col-span-3'
-                    } ${
-                      selected
-                        ? 'border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10'
-                        : 'border-outline-variant/40 bg-surface-container-high text-on-surface hover:border-primary/40'
-                    }`}
-                  >
-                    {selected && (
-                      <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-on-primary">
-                        <CheckIcon />
-                      </span>
-                    )}
-                    <span className="text-body-md font-body-md font-semibold">{label}</span>
-                    <span className={`mt-1 text-body-sm font-body-sm ${selected ? 'text-primary/90' : 'text-on-surface-variant'}`}>
-                      {description}
-                    </span>
-                  </button>
-                )
-              })}
-            </div>
-          </section>
-
-          {/* ── Section 4: Search Sources ────────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
-            <div className="mb-5">
-              <StepMarker step="04" />
-              <h2 className="text-headline-md font-headline-md text-on-surface">Where should I search?</h2>
-              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">Select the marketplaces and locations your AI Employee should scan.</p>
-            </div>
-            <div className="space-y-6">
-              <div>
-                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Available / Phase 1</p>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  {PHASE_ONE_SOURCES.map((source, idx) => (
-                    <div
-                      key={source}
-                      className={`flex items-center gap-4 rounded-xl border border-primary/20 bg-surface-container-high px-4 py-3.5 shadow-sm shadow-primary/5 ${
-                        PHASE_ONE_SOURCES.length % 2 !== 0 && idx === PHASE_ONE_SOURCES.length - 1 ? 'md:col-span-2' : ''
-                      }`}
-                    >
-                      <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-primary bg-primary text-on-primary" aria-hidden="true">
-                        <CheckIcon />
-                      </span>
-                      <span className="flex-1 text-body-md font-body-md text-on-surface">{source}</span>
-                      <span className="flex-shrink-0 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-label-caps font-label-caps text-primary">Phase 1</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Planned Integrations</p>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  {PLANNED_INTEGRATIONS.map((source, idx) => (
-                    <div
-                      key={source}
-                      className={`flex cursor-not-allowed items-center gap-4 rounded-xl border border-outline-variant/20 bg-surface-container px-4 py-3.5 opacity-60 ${
-                        PLANNED_INTEGRATIONS.length % 2 !== 0 && idx === PLANNED_INTEGRATIONS.length - 1 ? 'md:col-span-2' : ''
-                      }`}
-                      aria-disabled="true"
-                    >
-                      <span
-                        className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 border-outline-variant/40 bg-transparent"
-                        aria-hidden="true"
-                      />
-                      <span className="flex-1 text-body-md font-body-md text-on-surface-variant">{source}</span>
-                      <span className="flex-shrink-0 rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-caps font-label-caps text-on-surface-variant">Coming Soon</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high px-4 py-3.5">
-                <p className="text-body-md font-body-md text-on-surface-variant">
-                  Trade in Cars Agent is being designed to search connected marketplaces, dealer sources and trusted public vehicle listings. Some integrations will be released in later platform phases.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* ── Section 5: Notification Preferences ──────────────────── */}
-          <section className="rounded-2xl border border-primary/25 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high p-4 shadow-lg shadow-primary/10 sm:p-6 md:p-8">
-            <div className="mb-5">
-              <StepMarker step="05" />
-              <p className="mb-1 text-label-caps font-label-caps uppercase tracking-widest text-primary">🔔 Notification Preferences</p>
-              <h2 className="text-headline-md font-headline-md text-on-surface">How Should Your AI Employee Keep You Updated?</h2>
-              <div className="mt-3 space-y-1 text-body-md font-body-md text-on-surface-variant">
-                <p>Your AI Employee works continuously, 24 hours a day.</p>
-                <p>Choose how your AI Employee should keep you informed about buying opportunities.</p>
-              </div>
-            </div>
-
-            {/* Single premium TICA card */}
-            <div className="rounded-2xl border border-primary/20 bg-surface-container-high p-0 shadow-md shadow-primary/5 md:p-4">
-              <div className="flex flex-col md:grid md:grid-cols-2 md:gap-4">
-              {NOTIFICATION_OPTIONS.map((option, idx) => {
-                const selected = notifications.has(option.value)
-                return (
-                  <div
-                    key={option.value}
-                    className="md:min-w-[240px] md:flex-1 md:basis-[240px] md:overflow-hidden md:rounded-xl md:border md:border-outline-variant/20 md:bg-surface-container md:shadow-sm md:shadow-primary/5"
-                  >
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {SEARCH_PRIORITIES.map(({ label, value, icon, description }) => {
+                  const selected = searchPriority === value
+                  return (
                     <button
+                      key={value}
                       type="button"
-                      onClick={() => {
-                        setNotifications((prev) => {
-                          const next = new Set(prev)
-                          if (next.has(option.value)) next.delete(option.value)
-                          else next.add(option.value)
-                          return next
-                        })
-                      }}
+                      onClick={() => setSearchPriority(value)}
                       aria-pressed={selected}
-                      className={`flex w-full items-start gap-4 px-5 py-3.5 text-left transition-colors duration-150 md:min-h-full ${
-                        selected ? 'bg-primary/10' : 'hover:bg-surface-container md:hover:bg-surface-container-high'
+                      className={`relative flex flex-col gap-2 rounded-xl border p-4 text-left transition-all duration-150 ${
+                        selected
+                          ? 'border-primary bg-primary/10 shadow-md shadow-primary/10'
+                          : 'border-outline-variant/40 bg-surface-container-high hover:border-primary/40'
                       }`}
                     >
-                      {/* Checkbox */}
+                      {selected && (
+                        <span className="absolute right-2.5 top-2.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-primary text-on-primary">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                        </span>
+                      )}
+                      <span className="text-xl" aria-hidden="true">{icon}</span>
+                      <span className={`text-body-md font-body-md font-semibold leading-tight ${selected ? 'text-primary' : 'text-on-surface'}`}>{label}</span>
+                      <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/75' : 'text-on-surface-variant'}`}>{description}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </section>
+
+            {/* ── Section 10: AI Intelligence ──────────────────────────── */}
+            <section className="rounded-2xl border border-primary/25 bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high p-4 shadow-lg shadow-primary/10 sm:p-6 md:p-8">
+              <StepMarker step="10" />
+              <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">AI Intelligence</h2>
+              <p className="mb-2 text-body-md font-body-md text-on-surface-variant">
+                Choose which AI-powered insights to include in your buying reports.
+              </p>
+              <div className="mb-5 flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setAiIntelligence(new Set(AI_INTELLIGENCE_OPTIONS.map((o) => o.value)))}
+                  className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-body-sm font-body-sm text-primary transition-colors hover:bg-primary/20"
+                >
+                  Enable All
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAiIntelligence(new Set())}
+                  className="rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-body-sm font-body-sm text-on-surface-variant transition-colors hover:border-primary/40 hover:text-on-surface"
+                >
+                  Disable All
+                </button>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {AI_INTELLIGENCE_OPTIONS.map((opt) => {
+                  const enabled = aiIntelligence.has(opt.value)
+                  return (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => handleAiToggle(opt.value)}
+                      aria-pressed={enabled}
+                      className={`flex items-center gap-4 rounded-xl border px-4 py-3.5 text-left transition-all duration-150 ${
+                        enabled
+                          ? 'border-primary/30 bg-surface-container-high shadow-sm shadow-primary/5'
+                          : 'border-outline-variant/20 bg-surface-container opacity-60'
+                      }`}
+                    >
+                      <span className="text-xl" aria-hidden="true">{opt.icon}</span>
+                      <span className="flex flex-1 flex-col gap-0.5">
+                        <span className={`text-body-md font-body-md font-semibold ${enabled ? 'text-on-surface' : 'text-on-surface-variant'}`}>{opt.label}</span>
+                        <span className="text-body-sm font-body-sm text-on-surface-variant">{opt.description}</span>
+                      </span>
+                      {/* Toggle pill */}
                       <span
-                        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors duration-150 ${
-                          selected ? 'border-primary bg-primary text-on-primary' : 'border-outline-variant/60 bg-transparent text-transparent'
+                        className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 transition-colors duration-200 ${
+                          enabled ? 'border-primary bg-primary' : 'border-outline-variant/40 bg-surface-container'
                         }`}
                         aria-hidden="true"
                       >
-                        <CheckIcon />
-                      </span>
-                      {/* Text */}
-                      <span className="flex flex-col gap-0.5">
-                        <span className={`text-body-md font-body-md font-semibold leading-snug ${selected ? 'text-primary' : 'text-on-surface'}`}>{option.label}</span>
-                        <span className={`text-body-sm font-body-sm leading-snug ${selected ? 'text-primary/75' : 'text-on-surface-variant'}`}>{option.description}</span>
+                        <span
+                          className={`inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 ${
+                            enabled ? 'translate-x-5' : 'translate-x-0.5'
+                          }`}
+                        />
                       </span>
                     </button>
-                    {idx < NOTIFICATION_OPTIONS.length - 1 && <div className="mx-5 border-b border-outline-variant/20 md:hidden" />}
-                  </div>
-                )
-              })}
-             </div>
-
-              {/* Info strip */}
-              <div className="border-t border-outline-variant/20 px-5 py-3 text-body-sm font-body-sm text-on-surface-variant md:mt-4">
-                💡 Your AI Employee never stops searching, continuously monitoring the market and keeping you informed according to the preferences you choose.
+                  )
+                })}
               </div>
-            </div>
+            </section>
 
-            <p className="mt-4 text-body-sm font-body-sm text-on-surface-variant">You can update these preferences at any time from Settings.</p>
-          </section>
-
-          {/* ── Section 6: Activate ──────────────────────────────────── */}
-          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8">
-            <div className="mb-5 rounded-2xl border border-primary/20 bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-high p-4 text-left shadow-md shadow-primary/10 sm:p-5">
-              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Your AI Employee Brief</p>
-              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {briefSummaryItems.map((item) => (
-                  <div key={item.label} className="rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5">
-                    <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
-                    <p className="mt-1 text-body-sm font-body-sm font-semibold text-on-surface">{item.value}</p>
-                  </div>
-                ))}
+            {/* ── Launch ──────────────────────────────────────────────── */}
+            <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6 md:p-8">
+              {/* Brief summary */}
+              <div className="mb-6 rounded-2xl border border-primary/20 bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-high p-4 sm:p-5">
+                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Brief</p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {[
+                    { label: 'Mission Name', value: missionName || 'Not named' },
+                    { label: 'Vehicle Type', value: [...selectedVehicleTypes].join(', ') || 'Not selected' },
+                    { label: 'Make', value: [...selectedMakes].join(', ') || 'Any' },
+                    { label: 'Model', value: [...selectedModels].join(', ') || 'Any' },
+                    { label: 'Budget', value: maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Not set' },
+                    { label: 'Priority', value: SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? 'Not set' },
+                  ].map((item) => (
+                    <div key={item.label} className="rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5">
+                      <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
+                      <p className="mt-1 truncate text-body-sm font-body-sm font-semibold text-on-surface">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-            {validationErrors.length > 0 && (
-              <div className="mb-4 rounded-xl border border-error/40 bg-error/8 px-4 py-3" role="alert">
-                <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-error">Before deploying, please complete the following:</p>
-                <ul className="space-y-1">
-                  {validationErrors.map((err) => (
-                    <li key={err.field} className="flex items-start gap-2 text-body-sm font-body-sm text-error">
-                      <span className="mt-px shrink-0" aria-hidden="true">•</span>
-                      {err.message}
+
+              {validationErrors.length > 0 && (
+                <div className="mb-5 rounded-xl border border-error/40 bg-error/8 px-4 py-3" role="alert">
+                  <p className="mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-error">Please complete the following:</p>
+                  <ul className="space-y-1">
+                    {validationErrors.map((err) => (
+                      <li key={err.field} className="flex items-start gap-2 text-body-sm font-body-sm text-error">
+                        <span className="mt-px shrink-0" aria-hidden="true">•</span>
+                        {err.message}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <button
+                ref={deployButtonRef}
+                type="button"
+                onClick={handleDeploy}
+                className="mx-auto flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-8 py-4 text-headline-md font-headline-md text-on-primary shadow-xl shadow-primary/25 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+              >
+                <span aria-hidden="true">⚡</span>
+                Launch AI Search Mission
+              </button>
+              <p className="mt-3 text-center text-body-sm font-body-sm text-on-surface-variant">
+                Your AI agent will begin monitoring the market immediately.
+              </p>
+            </section>
+          </div>
+
+          {/* ── Sidebar ──────────────────────────────────────────────────── */}
+          <aside className="mt-5 sm:mt-6 lg:col-start-2 lg:row-start-1 lg:mt-0">
+            <div className="lg:sticky lg:top-6 space-y-4">
+              {/* Mission Readiness */}
+              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Readiness</p>
+                  <span className="text-body-md font-body-md font-semibold text-on-surface">{missionReadiness}%</span>
+                </div>
+                <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-high">
+                  <div
+                    className="h-2 rounded-full bg-primary transition-all duration-500"
+                    style={{ width: `${missionReadiness}%` }}
+                    role="progressbar"
+                    aria-valuenow={missionReadiness}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`Mission readiness: ${missionReadiness}% complete`}
+                  />
+                </div>
+                <p className="mt-2 text-body-sm font-body-sm text-on-surface-variant">
+                  {missionReadiness === 100 ? 'Ready to launch.' : 'Complete the mission brief to launch.'}
+                </p>
+              </div>
+
+              {/* Mission Summary */}
+              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
+                <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Summary</p>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Vehicle', value: vehicleSummary },
+                    { label: 'Budget', value: maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Not set' },
+                    { label: 'Max Mileage', value: maxMileage ? `${Number(maxMileage).toLocaleString('en-GB')} miles` : 'Any' },
+                    { label: 'Year Range', value: yearFrom || yearTo ? `${yearFrom || 'Any'} – ${yearTo || 'Any'}` : 'Any' },
+                    { label: 'Search Area', value: searchAreas.size > 0 ? [...searchAreas].map((v) => SEARCH_AREA_OPTIONS.find((o) => o.value === v)?.label ?? v).join(', ') : 'Not set' },
+                    { label: 'Priority', value: SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? 'Not set' },
+                    { label: 'AI Features', value: `${aiIntelligence.size} of ${AI_INTELLIGENCE_OPTIONS.length} enabled` },
+                  ].map((item) => (
+                    <div key={item.label} className="flex flex-col gap-0.5">
+                      <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
+                      <p className="break-words text-body-sm font-body-sm font-semibold text-on-surface">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* What happens next */}
+              <div className="rounded-2xl border border-primary/25 bg-primary/8 p-4 sm:p-5">
+                <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary">What happens next?</p>
+                <ul className="space-y-1.5">
+                  {[
+                    'Mission created and confirmed.',
+                    'AI validates your criteria.',
+                    'AI connects to market sources.',
+                    'Opportunities are ranked by priority.',
+                    'Best vehicles appear in your buying report.',
+                  ].map((step) => (
+                    <li key={step} className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface-variant">
+                      <span className="mt-px shrink-0 text-primary" aria-hidden="true">•</span>
+                      {step}
                     </li>
                   ))}
                 </ul>
               </div>
-            )}
-            <button
-              ref={deployButtonRef}
-              type="button"
-              onClick={handleDeploy}
-              className="mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-4 sm:py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
-            >
-              <span>⚡</span>
-              Deploy AI Search Mission
-            </button>
-            <p className="mt-3 text-body-sm font-body-sm text-on-surface-variant">
-              Your AI will immediately begin analysing connected vehicle sources using these requirements.
-            </p>
-            <p className="mt-1 text-body-sm font-body-sm text-on-surface-variant/60">
-              (Demonstration only.)
-            </p>
-          </section>
-
-          {deployedMission && (
-            <section className="dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8" aria-live="polite">
-              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Created</p>
-              <h2 className="mt-2 text-headline-lg font-headline-lg text-on-surface">AI Search Mission Created</h2>
-              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Mission ID</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">{deployedMission.missionId}</p>
-                </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Status</p>
-                  <p className="mt-2 text-body-md font-body-md text-primary">{deployedMission.status}</p>
-                </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Notification Preferences</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">{selectedNotificationSummary}</p>
-                </div>
-                <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
-                  <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Search Sources</p>
-                  <p className="mt-2 text-body-md font-body-md text-on-surface">{PHASE_ONE_SOURCES.join(', ')}</p>
-                </div>
-              </div>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  to="/dashboard"
-                  className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
-                >
-                  Return to Dealer Command Centre
-                </Link>
-                <Link
-                  to="/opportunity"
-                  className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
-                >
-                  View AI Buying Report
-                </Link>
-              </div>
-            </section>
-          )}
-          </div>
-
-          {/* ── Mission Summary Sidebar ──────────────────────────────── */}
-          <aside className="mt-5 sm:mt-8 lg:col-start-2 lg:row-start-1 lg:mt-0">
-            <div>
-            {/* AI Readiness Indicator */}
-            <div className="mb-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
-              <div className="mb-2 flex items-center justify-between gap-2">
-                <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Readiness</p>
-                <span className="text-body-md font-body-md font-semibold text-on-surface">{missionReadiness}% Complete</span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-high">
-                <div
-                  className="h-2 rounded-full bg-primary transition-all duration-500"
-                  style={{ width: `${missionReadiness}%` }}
-                  role="progressbar"
-                  aria-valuenow={missionReadiness}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-label={`Mission readiness: ${missionReadiness}% complete`}
-                />
-              </div>
-              <p className="mt-2 text-body-sm font-body-sm text-on-surface-variant">
-                {missionReadiness === 100 ? 'All key details briefed. Ready to deploy.' : 'Complete the briefing to deploy your AI mission.'}
-              </p>
-            </div>
-
-            {/* Mission Summary Panel */}
-            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
-              <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Summary</p>
-              <div className="space-y-3">
-                {missionSummaryItems.map((item) => (
-                  <div key={item.label} className="flex flex-col gap-0.5">
-                    <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
-                    <p className={`text-body-sm font-body-sm font-semibold ${item.value === 'Not yet selected' || item.value === 'Not yet specified' ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* What Happens Next */}
-            <div className="mt-4 rounded-2xl border border-primary/25 bg-primary/8 p-4 sm:p-5">
-              <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary">What happens next?</p>
-              <ul className="space-y-1.5">
-                {[
-                  'Mission created.',
-                  'AI validates the criteria.',
-                  'AI searches connected sources.',
-                  'Opportunities are ranked.',
-                  'High-confidence vehicles appear in your dashboard.',
-                ].map((step) => (
-                  <li key={step} className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface-variant">
-                    <span className="mt-px shrink-0 text-primary" aria-hidden="true">•</span>
-                    {step}
-                  </li>
-                ))}
-              </ul>
-            </div>
             </div>
           </aside>
-          </div>
+        </div>
+
+        {/* Back to Top */}
         <button
           aria-label="Back to top"
           className="back-to-top-btn"
@@ -1197,34 +1049,31 @@ function SearchBuilderPage() {
         </button>
       </div>
 
-      {/* ── Deployment Confirmation Modal ──────────────────────────────────── */}
+      {/* ── Mission Created Successfully Modal ─────────────────────────────── */}
       {deployedMission && (
         <div
           className="fixed inset-0 z-[200] flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="mission-modal-title"
+          aria-labelledby="mission-success-title"
         >
-          {/* Backdrop */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" aria-hidden="true" />
-
-          {/* Card */}
-          <div className="relative z-10 w-full max-w-lg rounded-2xl border border-primary/30 bg-surface-container p-6 shadow-2xl shadow-primary/10 sm:p-8">
-            {/* Header */}
-            <div className="mb-5 flex items-start gap-3">
-              <span className="text-2xl" aria-hidden="true">⚡</span>
-              <div>
-                <h2 id="mission-modal-title" className="text-headline-md font-headline-md text-on-surface">
-                  AI Search Mission Deployed
-                </h2>
-                <p className="mt-1 text-body-md font-body-md text-on-surface-variant">
-                  TICA has received your mission and is preparing it for AI validation.
-                </p>
+          <div className="relative z-10 w-full max-w-lg rounded-2xl border border-primary/30 bg-surface-container p-6 shadow-2xl shadow-primary/15 sm:p-8">
+            {/* Success header */}
+            <div className="mb-6 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-primary/30 bg-primary/10">
+                <span className="text-3xl" aria-hidden="true">⚡</span>
               </div>
+              <h2 id="mission-success-title" className="text-headline-lg font-headline-lg text-on-surface">
+                Mission Created Successfully
+              </h2>
+              <p className="mt-2 text-body-md font-body-md text-on-surface-variant">
+                Your AI agent is now monitoring the market.
+              </p>
             </div>
 
             {/* Mission details */}
-            <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="mb-6 grid grid-cols-2 gap-3">
               <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
                 <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Mission ID</p>
                 <p className="mt-1 text-body-md font-body-md font-semibold text-primary">{deployedMission.missionId}</p>
@@ -1233,27 +1082,33 @@ function SearchBuilderPage() {
                 <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Status</p>
                 <p className="mt-1 text-body-md font-body-md font-semibold text-on-surface">{deployedMission.status}</p>
               </div>
-              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+              <div className="col-span-2 rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
                 <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Vehicle</p>
-                <p className="mt-1 text-body-md font-body-md font-semibold text-on-surface">
-                  {[deployedMission.vehicleType, deployedMission.vehicleRequirements.make, deployedMission.vehicleRequirements.model].filter(Boolean).join(' / ') || 'Not specified'}
-                </p>
+                <p className="mt-1 text-body-md font-body-md font-semibold text-on-surface">{vehicleSummary}</p>
               </div>
-              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
+              <div className="col-span-2 rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3">
                 <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">Budget</p>
                 <p className="mt-1 text-body-md font-body-md font-semibold text-on-surface">
-                  {deployedMission.budget ? `Up to £${Number(deployedMission.budget).toLocaleString('en-GB')}` : 'Not specified'}
+                  {deployedMission.budget ? `Up to ${formatPounds(deployedMission.budget)}` : 'Not specified'}
                 </p>
               </div>
             </div>
 
-            {/* Action */}
-            <Link
-              to="/dashboard"
-              className="flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary shadow-lg shadow-primary/20 transition-all hover:brightness-110"
-            >
-              View Mission in Dashboard
-            </Link>
+            {/* Actions */}
+            <div className="flex flex-col gap-3">
+              <Link
+                to="/dashboard"
+                className="flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary shadow-lg shadow-primary/20 transition-all hover:brightness-110"
+              >
+                Return to Dealer Command Centre
+              </Link>
+              <Link
+                to="/opportunity"
+                className="flex min-h-11 w-full items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
+              >
+                View AI Buying Report
+              </Link>
+            </div>
           </div>
         </div>
       )}
