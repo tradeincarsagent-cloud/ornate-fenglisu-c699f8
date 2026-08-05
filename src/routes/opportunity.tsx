@@ -486,14 +486,16 @@ function OpportunityPage() {
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <Link
                 to="/dashboard"
-                className="opp-btn-secondary inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface sm:w-auto"
+                className="opp-btn-secondary inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface sm:w-auto"
               >
+                <span aria-hidden="true">🏠</span>
                 Return to Dashboard
               </Link>
               <Link
                 to="/search-builder"
-                className="opp-btn-primary inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-body-md font-body-md text-on-primary sm:w-auto"
+                className="opp-btn-primary inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-body-md font-body-md text-on-primary sm:w-auto"
               >
+                <span aria-hidden="true">➕</span>
                 Create New AI Search
               </Link>
             </div>
@@ -836,7 +838,7 @@ function OpportunityPage() {
         </section>
 
         {/* Dealer Notes — immediately after Final Recommendation */}
-        <section className="opp-card-stagger opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(0)} style={stagger(7)}>
+        <section className="opp-scroll-hidden opp-card-hover dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(0)}>
           <h2 className="mb-2 text-headline-md font-headline-md text-on-surface">Dealer Notes</h2>
           <p className="mb-3 text-body-sm font-body-sm text-on-surface-variant">Record your offer price, call outcomes, next actions and observations.</p>
           <textarea
@@ -846,7 +848,7 @@ function OpportunityPage() {
         </section>
 
 
-        <section className="opp-scroll-hidden dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-5" ref={setRevealRef(1)}>
+        <section className="opp-scroll-hidden opp-card-hover dashboard-border rounded-2xl border border-outline-variant/30 bg-surface-container-high p-4 sm:p-5" ref={setRevealRef(1)}>
           <p className="mb-3 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">Target Vehicle</p>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
             <div className="min-w-0 flex-1">
@@ -896,11 +898,11 @@ function OpportunityPage() {
         </section>
 
 
-        <section className="opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(2)}>
+        <section className="opp-scroll-hidden opp-card-hover dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(2)}>
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Vehicle Information</h2>
           <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {vehicleInfo.map((item) => (
-              <div key={item.label} className="rounded-xl border border-outline-variant/25 bg-surface-container-high p-4">
+              <div key={item.label} className="opp-tile-hover rounded-xl border border-outline-variant/25 bg-surface-container-high p-4">
                 <dt className="text-label-caps font-label-caps uppercase tracking-[0.15em] text-on-surface-variant">{item.label}</dt>
                 <dd className="mt-1 text-body-md font-body-md text-on-surface">{item.value}</dd>
               </div>
@@ -1062,7 +1064,7 @@ function OpportunityPage() {
                               ? 'tica-decision-pass'
                               : 'text-on-surface'
                       return (
-                        <div key={item.label} className="rounded-xl border border-outline-variant/20 bg-surface-container-high px-3 py-2.5">
+                        <div key={item.label} className="opp-tile-hover rounded-xl border border-outline-variant/20 bg-surface-container-high px-3 py-2.5">
                           <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant">{item.label}</p>
                           <p className={`mt-1 text-body-sm font-semibold ${valueClassName}`}>{item.value}</p>
                         </div>
@@ -1106,7 +1108,11 @@ function OpportunityPage() {
                       style={timelineVisible > i ? { animationDelay: `${i * 60}ms` } : { opacity: 0, animationName: 'none' }}
                     >
                       <p className="timeline-entry-time text-[11px] sm:text-[11px]">{event.time}</p>
-                      <div className="timeline-entry-dot" aria-hidden="true" />
+                      <div
+                        className={`timeline-entry-dot${timelineVisible > i ? ' opp-timeline-dot-illuminate' : ''}`}
+                        style={timelineVisible > i ? { animationDelay: `${i * 60 + 80}ms` } : undefined}
+                        aria-hidden="true"
+                      />
                       <p className="timeline-entry-message text-body-sm font-body-sm">{event.message}</p>
                     </article>
                   ))}
@@ -1118,10 +1124,14 @@ function OpportunityPage() {
                     }
                   >
                     <p className="timeline-entry-time" />
-                    <div className="timeline-entry-dot" aria-hidden="true" />
+                    <div
+                      className={`timeline-entry-dot${timelineVisible >= investigationTimeline.length ? ' opp-timeline-dot-illuminate' : ''}`}
+                      style={timelineVisible >= investigationTimeline.length ? { animationDelay: `${investigationTimeline.length * 60 + 160}ms` } : undefined}
+                      aria-hidden="true"
+                    />
                     <p className="timeline-entry-message text-body-sm font-body-sm">
                       <span className="opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[var(--tica-decision-buy)] align-middle" aria-hidden="true" />
-                      <span className="tica-decision-buy font-semibold">BUY Signal Confirmed</span>
+                      <span className={`tica-decision-buy font-semibold${timelineVisible >= investigationTimeline.length ? ' opp-buy-signal-glow' : ''}`}>BUY Signal Confirmed</span>
                     </p>
                   </article>
                 </div>
@@ -1455,7 +1465,11 @@ function OpportunityPage() {
                 style={timelineVisible > i ? { animationDelay: `${i * 60}ms` } : { opacity: 0, animationName: 'none' }}
               >
                 <p className="timeline-entry-time">{event.time}</p>
-                <div className="timeline-entry-dot" aria-hidden="true" />
+                <div
+                  className={`timeline-entry-dot${timelineVisible > i ? ' opp-timeline-dot-illuminate' : ''}`}
+                  style={timelineVisible > i ? { animationDelay: `${i * 60 + 80}ms` } : undefined}
+                  aria-hidden="true"
+                />
                 <p className="timeline-entry-message">{event.message}</p>
               </article>
             ))}
@@ -1468,10 +1482,14 @@ function OpportunityPage() {
               }
             >
               <p className="timeline-entry-time" />
-              <div className="timeline-entry-dot" aria-hidden="true" />
+              <div
+                className={`timeline-entry-dot${timelineVisible >= investigationTimeline.length ? ' opp-timeline-dot-illuminate' : ''}`}
+                style={timelineVisible >= investigationTimeline.length ? { animationDelay: `${investigationTimeline.length * 60 + 160}ms` } : undefined}
+                aria-hidden="true"
+              />
               <p className="timeline-entry-message">
                 <span className="opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[var(--tica-decision-buy)] align-middle" aria-hidden="true" />
-                <span className="tica-decision-buy font-semibold">BUY Signal Confirmed</span>
+                <span className={`tica-decision-buy font-semibold${timelineVisible >= investigationTimeline.length ? ' opp-buy-signal-glow' : ''}`}>BUY Signal Confirmed</span>
               </p>
             </article>
           </div>
@@ -1483,43 +1501,48 @@ function OpportunityPage() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <button
               type="button"
-              className="opp-btn-primary min-h-12 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary"
+              className="opp-btn-primary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary"
             >
+              <span aria-hidden="true">💾</span>
               Save Opportunity
             </button>
             <button
               type="button"
-              className="opp-btn-secondary min-h-12 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
+              className="opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
             >
+              <span aria-hidden="true">📞</span>
               Contact Seller
             </button>
-            <button
-              type="button"
-              className="opp-btn-secondary min-h-12 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
+            <Link
+              to="/search-builder"
+              className="opp-btn-primary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary"
             >
-              Generate Dealer Report (PDF)
-            </button>
+              <span aria-hidden="true">➕</span>
+              New AI Search
+            </Link>
           </div>
           {/* Secondary actions */}
           <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-            <button
-              type="button"
-              className="opp-btn-secondary min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
-            >
-              Run Live Vehicle History Check
-            </button>
-            <button
-              type="button"
-              className="opp-btn-secondary min-h-11 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
-            >
-              Add to Watchlist
-            </button>
             <Link
               to="/dashboard"
-              className="opp-btn-secondary inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
+              className="opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
             >
-              Return to Dashboard
+              <span aria-hidden="true">🏠</span>
+              Return Dashboard
             </Link>
+            <button
+              type="button"
+              className="opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
+            >
+              <span aria-hidden="true">🚫</span>
+              Ignore
+            </button>
+            <button
+              type="button"
+              className="opp-btn-secondary inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant/70 italic"
+            >
+              Explain Why
+            </button>
           </div>
         </section>
       </div>
