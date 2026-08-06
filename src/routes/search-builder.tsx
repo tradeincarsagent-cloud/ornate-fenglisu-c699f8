@@ -449,17 +449,17 @@ function SearchBuilderPage() {
 
   const selectedNotificationLabels = NOTIFICATION_OPTIONS.filter((o) => notifications.has(o.value)).map((o) => o.label)
   const selectedFrequencyLabel = SEARCH_FREQUENCY_OPTIONS.find((option) => option.value === searchFrequency)?.label ?? 'Every 30 minutes'
-  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(', ') : 'Awaiting selection'
+  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(', ') : 'Awaiting Selection'
   const compactNotificationSummary = `${selectedNotificationSummary} · ${selectedFrequencyLabel}`
   const effectiveMake = isOtherMake ? manualMake : make
   const effectiveModel = isOtherModel ? manualModel : model
-  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? 'Awaiting selection'
+  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? 'Awaiting Selection'
   const makeModelSummary = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ') || 'Any'
   const formatPounds = (value: string) => `£${Number(value).toLocaleString('en-GB')}`
-  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Awaiting selection'
-  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : 'Awaiting selection'
+  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Awaiting Selection'
+  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : 'Awaiting Selection'
   const briefSummaryItems = [
-    { label: 'Vehicle type', value: selectedVehicleType ?? 'Awaiting selection' },
+    { label: 'Vehicle type', value: selectedVehicleType ?? 'Awaiting Selection' },
     { label: 'Make and model', value: makeModelSummary },
     { label: 'Budget', value: budgetSummary },
     { label: 'Minimum profit target', value: targetProfitSummary },
@@ -468,17 +468,17 @@ function SearchBuilderPage() {
     { label: 'Notification preferences', value: selectedNotificationSummary },
     { label: 'Search frequency', value: selectedFrequencyLabel },
   ] as const
-  const mileageSummary = maxMileage ? `Under ${Number(maxMileage).toLocaleString('en-GB')} miles` : 'Not yet specified'
+  const mileageSummary = maxMileage ? `Under ${Number(maxMileage).toLocaleString('en-GB')} miles` : 'Awaiting Selection'
   const vehicleSummary = [selectedVehicleType, effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' / ') || 'Any'
 
   const missionSummaryItems = [
-    { label: 'Vehicle', value: vehicleSummary },
-    { label: 'Budget', value: budgetSummary },
-    { label: 'Search Area', value: 'United Kingdom' },
-    { label: 'Mileage', value: mileageSummary },
-    { label: 'Minimum Profit Target', value: targetProfitSummary },
-    { label: 'Estimated AI Scan Capacity', value: 'Thousands of listings per day (demo)' },
-  ] as const
+    { label: 'Vehicle', value: vehicleSummary, completed: selectedVehicleType !== null },
+    { label: 'Budget', value: budgetSummary, completed: maxBudget !== '' },
+    { label: 'Search Area', value: 'United Kingdom', completed: true },
+    { label: 'Mileage', value: mileageSummary, completed: maxMileage !== '' },
+    { label: 'Minimum Profit Target', value: targetProfitSummary, completed: minProfit !== '' },
+    { label: 'Estimated AI Scan Capacity', value: 'Thousands of listings per day (demo)', completed: true },
+  ]
 
   const readinessFields = [
     selectedVehicleType !== null,
@@ -1113,12 +1113,12 @@ function SearchBuilderPage() {
           {/* ── Section 6: Activate ──────────────────────────────────── */}
           <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8">
             <div className="mb-5 rounded-2xl border border-primary/20 bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-high p-4 text-left shadow-md shadow-primary/10 sm:p-5">
-              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Confirmation</p>
+              <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Mission Summary</p>
               <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {briefSummaryItems.map((item) => (
                   <div key={item.label} className="rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5">
                     <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
-                    <p className={`mt-1 text-body-sm font-body-sm font-semibold ${item.value === 'Awaiting selection' ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
+                    <p className={`mt-1 text-body-sm font-body-sm font-semibold ${item.value === 'Awaiting Selection' ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
                   </div>
                 ))}
               </div>
@@ -1148,7 +1148,7 @@ function SearchBuilderPage() {
               }`}
             >
               <span>⚡</span>
-              Deploy AI Employee
+              Launch AI Mission
             </button>
             {!isDeployEnabled && (
               <p className="mt-3 text-body-sm font-body-sm text-on-surface-variant">
@@ -1158,7 +1158,7 @@ function SearchBuilderPage() {
               </p>
             )}
             <p className="mt-3 text-body-sm font-body-sm text-on-surface-variant">
-              Your AI Employee will begin monitoring connected vehicle sources using these requirements.
+              Your AI Employee will immediately begin monitoring connected vehicle sources 24/7 and notify you whenever high-confidence buying opportunities are found.
             </p>
             <p className="mt-1 text-body-sm font-body-sm text-on-surface-variant/60">
               Demonstration mode
@@ -1187,21 +1187,42 @@ function SearchBuilderPage() {
                 />
               </div>
               <p className="mt-2 text-body-sm font-body-sm text-on-surface-variant">
-                {missionReadiness === 100 ? 'All key details briefed. Ready to deploy.' : 'Complete the briefing to deploy your AI mission.'}
+                {missionReadiness === 100 ? 'Mission Ready to Launch.' : 'Complete the briefing to deploy your AI mission.'}
               </p>
             </div>
 
             {/* Mission Summary Panel */}
             <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
-              <p className="mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Summary</p>
+              <div className="mb-3 flex items-center justify-between gap-2">
+                <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Mission Summary</p>
+                {missionReadiness === 100 && (
+                  <span className="text-body-sm font-body-sm font-semibold text-emerald-400">✅ Mission Ready</span>
+                )}
+              </div>
               <div className="space-y-3">
                 {missionSummaryItems.map((item) => (
                   <div key={item.label} className="flex flex-col gap-0.5">
-                    <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
-                    <p className={`text-body-sm font-body-sm font-semibold ${item.value === 'Awaiting selection' || item.value === 'Not yet specified' ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
+                      {item.completed && (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0 text-emerald-400"><polyline points="20 6 9 17 4 12" /></svg>
+                      )}
+                    </div>
+                    <p className={`text-body-sm font-body-sm font-semibold ${!item.completed && (item.value === 'Awaiting Selection' || item.value === 'Awaiting selection') ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* AI Confidence */}
+            <div className="mt-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5">
+              <p className="mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary">AI Confidence</p>
+              <p className={`text-body-md font-body-md font-semibold ${hasDeploymentStarted ? 'text-primary' : 'italic text-on-surface-variant/60'}`}>
+                {hasDeploymentStarted ? `${missionReadiness}%` : 'Awaiting Mission Analysis'}
+              </p>
+              {!hasDeploymentStarted && (
+                <p className="mt-1 text-body-sm font-body-sm text-on-surface-variant">Launch your mission to generate an AI confidence score.</p>
+              )}
             </div>
 
             {/* What Happens Next */}
