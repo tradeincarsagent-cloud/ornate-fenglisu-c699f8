@@ -274,7 +274,7 @@ function OpportunityPage() {
   const [dotPulsing, setDotPulsing] = useState(true)
   const [meterAnimated, setMeterAnimated] = useState(false)
   const [meterGlowing, setMeterGlowing] = useState(false)
-  const activeMission = useMissionProgress()
+  const { mission: activeMission } = useMissionProgress()
   // AI Thinking overlay
   const [thinkingVisible, setThinkingVisible] = useState(true)
   const [thinkingExiting, setThinkingExiting] = useState(false)
@@ -282,7 +282,7 @@ function OpportunityPage() {
   // Staggered card entrance
   const [pageReady, setPageReady] = useState(false)
   // Executive summary stat counters
-  const [statValues, setStatValues] = useState({ confidence: 0, profit: 0, retail: 0, score: 0, days: 0 })
+  const [statValues, setStatValues] = useState<{ confidence: number; profit: number; retail: number; score: number; days: number } | null>(null)
   // Timeline animation
   const [timelineVisible, setTimelineVisible] = useState(0)
   // Badge sweep
@@ -572,35 +572,35 @@ function OpportunityPage() {
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Confidence</p>
               <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
-                {statValues.confidence}%
+               {statValues !== null ? `${statValues.confidence}%` : '—'}
               </p>
             </div>
             {/* Estimated Gross Profit */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Gross Profit</p>
               <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                £{statValues.profit.toLocaleString('en-GB')}
+                {statValues !== null ? `£${statValues.profit.toLocaleString('en-GB')}` : '—'}
               </p>
             </div>
             {/* Estimated Retail Value */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Retail Value</p>
               <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                £{statValues.retail.toLocaleString('en-GB')}
+                {statValues !== null ? `£${statValues.retail.toLocaleString('en-GB')}` : '—'}
               </p>
             </div>
             {/* Opportunity Score */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Opportunity Score</p>
               <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
-                {statValues.score}
+                {statValues !== null ? statValues.score : '—'}
               </p>
             </div>
             {/* Estimated Days to Sell */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Days to Sell</p>
               <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                {statValues.days}
+                {statValues !== null ? statValues.days : '—'}
               </p>
             </div>
           </div>

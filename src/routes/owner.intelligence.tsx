@@ -251,8 +251,8 @@ function LiveClock() {
 
 function OwnerIntelligencePage() {
   const [showBackTop, setShowBackTop] = useState(false)
-  const activeMission = useMissionProgress()
-  const missionLoaded = activeMission !== null
+  const { mission: activeMission, initialized: missionInitialized } = useMissionProgress()
+  const missionLoaded = missionInitialized
   const [activityTimestamp, setActivityTimestamp] = useState('')
 
   useEffect(() => {
