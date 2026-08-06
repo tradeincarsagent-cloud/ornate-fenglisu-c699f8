@@ -2,7 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { l as loadMission, M as MISSION_STAGES } from "./mission-BlUhdbKx.js";
+import { l as loadMission, M as MISSION_STAGES } from "./mission-DGpIfAYH.js";
 import "react-dom";
 const kpiCards = [{
   label: "Total Dealers",
