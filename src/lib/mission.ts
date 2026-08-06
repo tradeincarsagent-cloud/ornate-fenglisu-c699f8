@@ -12,14 +12,77 @@ const MISSION_COUNTER_KEY = 'tica_mission_counter'
 
 export const MISSION_STAGES = [
   'Mission Created',
-  'AI Validation',
-  'Source Connection',
-  'Market Search',
-  'Opportunity Analysis',
-  'Buying Report Generation',
-  'Dealer Notification',
-  'Completed',
+  'Searching',
+  'Analysing',
+  'Ranking',
+  'Report Ready',
 ] as const
+
+// ── Demo Progress Schedule ───────────────────────────────────────────────────
+// Each entry defines when a stage becomes active (elapsedSeconds since createdAt),
+// the progress % at its start and end, and the AI activity message shown while active.
+
+export const DEMO_STAGE_SCHEDULE: Array<{
+  stage: MissionStage
+  stageIndex: number
+  startSeconds: number
+  endSeconds: number
+  progressStart: number
+  progressEnd: number
+  aiActivity: string
+  status: string
+}> = [
+  {
+    stage: 'Mission Created',
+    stageIndex: 0,
+    startSeconds: 0,
+    endSeconds: 4,
+    progressStart: 0,
+    progressEnd: 5,
+    aiActivity: 'Mission accepted. Awaiting AI validation.',
+    status: 'Mission Created',
+  },
+  {
+    stage: 'Searching',
+    stageIndex: 1,
+    startSeconds: 4,
+    endSeconds: 13,
+    progressStart: 5,
+    progressEnd: 45,
+    aiActivity: 'Scanning marketplace sources across the UK.',
+    status: 'Running',
+  },
+  {
+    stage: 'Analysing',
+    stageIndex: 2,
+    startSeconds: 13,
+    endSeconds: 22,
+    progressStart: 45,
+    progressEnd: 72,
+    aiActivity: 'Analysing vehicle history and market pricing.',
+    status: 'Running',
+  },
+  {
+    stage: 'Ranking',
+    stageIndex: 3,
+    startSeconds: 22,
+    endSeconds: 30,
+    progressStart: 72,
+    progressEnd: 92,
+    aiActivity: 'Ranking opportunities by profit potential.',
+    status: 'Running',
+  },
+  {
+    stage: 'Report Ready',
+    stageIndex: 4,
+    startSeconds: 30,
+    endSeconds: Infinity,
+    progressStart: 92,
+    progressEnd: 100,
+    aiActivity: 'Analysis complete. Buying report ready.',
+    status: 'Completed',
+  },
+]
 
 export type MissionStage = (typeof MISSION_STAGES)[number]
 
@@ -230,5 +293,52 @@ export function loadMission(): TicaMission | null {
     } as TicaMission
   } catch {
     return null
+  }
+}
+
+/**
+ * Compute the current stage, progress, and AI activity for a mission based on
+ * how much time has elapsed since it was created.
+ * Returns an updated copy of the mission — does not mutate the original.
+ * This is deterministic: calling it twice at the same time yields the same result.
+ */
+export function computeMissionProgress(mission: TicaMission): TicaMission {
+  const elapsedSeconds = (Date.now() - new Date(mission.createdAt).getTime()) / 1000
+
+  // Find the current schedule entry
+  const entry = DEMO_STAGE_SCHEDULE.find(
+    (s) => elapsedSeconds >= s.startSeconds && elapsedSeconds < s.endSeconds,
+  ) ?? DEMO_STAGE_SCHEDULE[DEMO_STAGE_SCHEDULE.length - 1]
+
+  // Interpolate progress within the stage
+  let progress: number
+  if (entry.endSeconds === Infinity) {
+    progress = entry.progressEnd
+  } else {
+    const stageDuration = entry.endSeconds - entry.startSeconds
+    const stageElapsed = Math.max(0, elapsedSeconds - entry.startSeconds)
+    const t = Math.min(stageElapsed / stageDuration, 1)
+    progress = Math.round(entry.progressStart + (entry.progressEnd - entry.progressStart) * t)
+  }
+
+  // Estimate time remaining (only show when not yet complete)
+  let estimatedTimeRemaining: string
+  if (entry.stage === 'Report Ready') {
+    estimatedTimeRemaining = '—'
+  } else {
+    const lastEntry = DEMO_STAGE_SCHEDULE[DEMO_STAGE_SCHEDULE.length - 1]
+    const secondsLeft = Math.max(0, lastEntry.startSeconds - elapsedSeconds)
+    estimatedTimeRemaining = secondsLeft > 0 ? `~${Math.ceil(secondsLeft)}s` : '—'
+  }
+
+  return {
+    ...mission,
+    currentStage: entry.stage,
+    currentStageIndex: entry.stageIndex,
+    progress,
+    status: entry.status,
+    currentAiActivity: entry.aiActivity,
+    estimatedTimeRemaining,
+    lastUpdated: new Date().toISOString(),
   }
 }

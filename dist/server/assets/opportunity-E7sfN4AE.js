@@ -3,7 +3,8 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
-import { l as loadMission } from "./mission-DGpIfAYH.js";
+import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
+import { u as useMissionProgress } from "./useMissionProgress-DUc54qVe.js";
 import "react-dom";
 const {
   featuredOpportunity
@@ -308,7 +309,7 @@ function OpportunityPage() {
   const [dotPulsing, setDotPulsing] = useState(true);
   const [meterAnimated, setMeterAnimated] = useState(false);
   const [meterGlowing, setMeterGlowing] = useState(false);
-  const [activeMission, setActiveMission] = useState(null);
+  const activeMission = useMissionProgress();
   const [thinkingVisible, setThinkingVisible] = useState(true);
   const [thinkingExiting, setThinkingExiting] = useState(false);
   const [thinkingStep, setThinkingStep] = useState(0);
@@ -326,9 +327,6 @@ function OpportunityPage() {
   const revealRefs = useRef([]);
   const setRevealRef = useCallback((i) => (el) => {
     revealRefs.current[i] = el;
-  }, []);
-  useEffect(() => {
-    setActiveMission(loadMission());
   }, []);
   useEffect(() => {
     const onScroll = () => {
@@ -537,19 +535,22 @@ function OpportunityPage() {
           /* @__PURE__ */ jsxs("dl", { className: "mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-4", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Current Stage" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: "Analysis Complete" })
+              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.currentStage || MISSION_STAGES[0] })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Progress" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: "100%" })
+              /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 font-medium text-on-surface", children: [
+                activeMission.progress ?? 0,
+                "%"
+              ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Completed In" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: "12.4 seconds" })
+              /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "AI Activity" }),
+              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.currentAiActivity || "—" })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Mission Status" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: "Completed Successfully" })
+              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.status === "Completed" ? "Completed Successfully" : activeMission.status || "Mission Created" })
             ] })
           ] })
         ] }),

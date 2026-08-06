@@ -2,7 +2,8 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
-import { loadMission, MISSION_STAGES, type TicaMission } from '../lib/mission'
+import { MISSION_STAGES, type TicaMission } from '../lib/mission'
+import { useMissionProgress } from '../lib/useMissionProgress'
 
 export const Route = createFileRoute('/owner/intelligence')({
   component: OwnerIntelligencePage,
@@ -250,8 +251,8 @@ function LiveClock() {
 
 function OwnerIntelligencePage() {
   const [showBackTop, setShowBackTop] = useState(false)
-  const [activeMission, setActiveMission] = useState<TicaMission | null>(null)
-  const [missionLoaded, setMissionLoaded] = useState(false)
+  const activeMission = useMissionProgress()
+  const missionLoaded = activeMission !== null
   const [activityTimestamp, setActivityTimestamp] = useState('')
 
   useEffect(() => {
@@ -261,14 +262,12 @@ function OwnerIntelligencePage() {
   }, [])
 
   useEffect(() => {
-    setActiveMission(loadMission())
     setActivityTimestamp(
       new Date().toLocaleString('en-GB', {
         dateStyle: 'short',
         timeStyle: 'medium',
       }),
     )
-    setMissionLoaded(true)
   }, [])
 
   const scrollToTop = () => {

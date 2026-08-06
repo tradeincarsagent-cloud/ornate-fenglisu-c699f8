@@ -3,7 +3,8 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
-import { loadMission, MISSION_STAGES, type TicaMission } from '../lib/mission'
+import { MISSION_STAGES } from '../lib/mission'
+import { useMissionProgress } from '../lib/useMissionProgress'
 
 export const Route = createFileRoute('/opportunity')({
   component: OpportunityPage,
@@ -273,7 +274,7 @@ function OpportunityPage() {
   const [dotPulsing, setDotPulsing] = useState(true)
   const [meterAnimated, setMeterAnimated] = useState(false)
   const [meterGlowing, setMeterGlowing] = useState(false)
-  const [activeMission, setActiveMission] = useState<TicaMission | null>(null)
+  const activeMission = useMissionProgress()
   // AI Thinking overlay
   const [thinkingVisible, setThinkingVisible] = useState(true)
   const [thinkingExiting, setThinkingExiting] = useState(false)
@@ -294,10 +295,6 @@ function OpportunityPage() {
   // ── Helpers ────────────────────────────────────────────────────────────
   const setRevealRef = useCallback((i: number) => (el: HTMLElement | null) => {
     revealRefs.current[i] = el
-  }, [])
-
-  useEffect(() => {
-    setActiveMission(loadMission())
   }, [])
 
   useEffect(() => {
@@ -540,19 +537,21 @@ function OpportunityPage() {
             <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-4">
               <div>
                 <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Current Stage</dt>
-                <dd className="mt-0.5 font-medium text-on-surface">Analysis Complete</dd>
+                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.currentStage || MISSION_STAGES[0]}</dd>
               </div>
               <div>
                 <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Progress</dt>
-                <dd className="mt-0.5 font-medium text-on-surface">100%</dd>
+                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.progress ?? 0}%</dd>
               </div>
               <div>
-                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Completed In</dt>
-                <dd className="mt-0.5 font-medium text-on-surface">12.4 seconds</dd>
+                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">AI Activity</dt>
+                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.currentAiActivity || '—'}</dd>
               </div>
               <div>
                 <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Mission Status</dt>
-                <dd className="mt-0.5 font-medium text-on-surface">Completed Successfully</dd>
+                <dd className="mt-0.5 font-medium text-on-surface">
+                  {activeMission.status === 'Completed' ? 'Completed Successfully' : activeMission.status || 'Mission Created'}
+                </dd>
               </div>
             </dl>
           </section>

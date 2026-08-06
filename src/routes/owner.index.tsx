@@ -2,8 +2,9 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
-import { loadMission, MISSION_STAGES } from '../lib/mission'
+import { MISSION_STAGES } from '../lib/mission'
 import type { TicaMission } from '../lib/mission'
+import { useMissionProgress } from '../lib/useMissionProgress'
 
 export const Route = createFileRoute('/owner/')({
   component: OwnerPage,
@@ -331,11 +332,7 @@ function LiveClock() {
 
 function OwnerPage() {
   const [showBackTop, setShowBackTop] = useState(false)
-  const [activeMission, setActiveMission] = useState<TicaMission | null>(null)
-
-  useEffect(() => {
-    setActiveMission(loadMission())
-  }, [])
+  const activeMission = useMissionProgress()
 
   useEffect(() => {
     function onScroll() {
