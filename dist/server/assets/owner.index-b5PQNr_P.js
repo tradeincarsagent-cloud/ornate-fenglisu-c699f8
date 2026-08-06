@@ -2,7 +2,8 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { l as loadMission, M as MISSION_STAGES } from "./mission-DGpIfAYH.js";
+import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
+import { u as useMissionProgress } from "./useMissionProgress-DUc54qVe.js";
 import "react-dom";
 const kpiCards = [{
   label: "Total Dealers",
@@ -409,10 +410,7 @@ function LiveClock() {
 }
 function OwnerPage() {
   const [showBackTop, setShowBackTop] = useState(false);
-  const [activeMission, setActiveMission] = useState(null);
-  useEffect(() => {
-    setActiveMission(loadMission());
-  }, []);
+  const activeMission = useMissionProgress();
   useEffect(() => {
     function onScroll() {
       setShowBackTop(window.scrollY > 400);

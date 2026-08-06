@@ -3,7 +3,8 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
-import { loadMission, MISSION_STAGES, type TicaMission } from '../lib/mission'
+import { MISSION_STAGES, type TicaMission } from '../lib/mission'
+import { useMissionProgress } from '../lib/useMissionProgress'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
@@ -290,7 +291,7 @@ function DashboardPage() {
   const [radarOpportunityKey, setRadarOpportunityKey] = useState(0)
   const [radarOpportunityIndex, setRadarOpportunityIndex] = useState(0)
   const [radarOpportunityTimer, setRadarOpportunityTimer] = useState(0)
-  const [storedMission, setStoredMission] = useState<TicaMission | null>(null)
+  const storedMission = useMissionProgress()
   const [storedMissionExpanded, setStoredMissionExpanded] = useState(true)
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
@@ -300,10 +301,6 @@ function DashboardPage() {
   useEffect(() => {
     soundOnRef.current = soundOn
   }, [soundOn])
-
-  useEffect(() => {
-    setStoredMission(loadMission())
-  }, [])
 
   useEffect(() => {
     const sweepDurationMs = 5400
@@ -502,13 +499,13 @@ function DashboardPage() {
   }
 
   const operationsPanelItems = useMemo(() => ([
-    { label: 'Status', value: 'Searching', tone: 'live' },
+    { label: 'Status', value: storedMission?.currentStage ?? 'Searching', tone: 'live' },
     { label: 'Sources Active', value: '5' },
     { label: 'Vehicles Checked Today', value: counterFormatter.format(liveCounters.vehiclesCheckedToday) },
     { label: 'Matches Found', value: counterFormatter.format(liveCounters.matchesFound) },
     { label: 'High Priority Matches', value: counterFormatter.format(liveCounters.highPriorityMatches), tone: 'accent' },
     { label: 'Last Scan', value: 'Moments ago' },
-  ]), [liveCounters])
+  ]), [liveCounters, storedMission?.currentStage])
 
   return (
     <PlatformShell

@@ -3,7 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
-import { l as loadMission, M as MISSION_STAGES } from "./mission-DGpIfAYH.js";
+import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
+import { u as useMissionProgress } from "./useMissionProgress-DUc54qVe.js";
 import "react-dom";
 const radarRingInsets = [6, 14, 22, 30, 38, 46];
 const radarGridAngles = Array.from({
@@ -317,7 +318,7 @@ function DashboardPage() {
   const [radarOpportunityKey, setRadarOpportunityKey] = useState(0);
   const [radarOpportunityIndex, setRadarOpportunityIndex] = useState(0);
   const [radarOpportunityTimer, setRadarOpportunityTimer] = useState(0);
-  const [storedMission, setStoredMission] = useState(null);
+  const storedMission = useMissionProgress();
   const [storedMissionExpanded, setStoredMissionExpanded] = useState(true);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   const radarOpportunityCursorRef = useRef(0);
@@ -325,9 +326,6 @@ function DashboardPage() {
   useEffect(() => {
     soundOnRef.current = soundOn;
   }, [soundOn]);
-  useEffect(() => {
-    setStoredMission(loadMission());
-  }, []);
   useEffect(() => {
     const sweepDurationMs = 5400;
     const startedAt = performance.now();
@@ -509,7 +507,7 @@ function DashboardPage() {
   };
   const operationsPanelItems = useMemo(() => [{
     label: "Status",
-    value: "Searching",
+    value: storedMission?.currentStage ?? "Searching",
     tone: "live"
   }, {
     label: "Sources Active",
@@ -527,7 +525,7 @@ function DashboardPage() {
   }, {
     label: "Last Scan",
     value: "Moments ago"
-  }], [liveCounters]);
+  }], [liveCounters, storedMission?.currentStage]);
   return /* @__PURE__ */ jsxs(PlatformShell, { navItems: [{
     label: "Dealer Command Centre",
     href: "/dashboard",

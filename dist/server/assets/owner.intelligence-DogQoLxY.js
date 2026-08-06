@@ -2,7 +2,8 @@ import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { l as loadMission, M as MISSION_STAGES } from "./mission-DGpIfAYH.js";
+import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
+import { u as useMissionProgress } from "./useMissionProgress-DUc54qVe.js";
 import "react-dom";
 const opportunityCards = [{
   title: "Best Opportunity Today",
@@ -254,8 +255,8 @@ function LiveClock() {
 }
 function OwnerIntelligencePage() {
   const [showBackTop, setShowBackTop] = useState(false);
-  const [activeMission, setActiveMission] = useState(null);
-  const [missionLoaded, setMissionLoaded] = useState(false);
+  const activeMission = useMissionProgress();
+  const missionLoaded = activeMission !== null;
   const [activityTimestamp, setActivityTimestamp] = useState("");
   useEffect(() => {
     const onScroll = () => setShowBackTop(window.scrollY > 400);
@@ -265,12 +266,10 @@ function OwnerIntelligencePage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   useEffect(() => {
-    setActiveMission(loadMission());
     setActivityTimestamp((/* @__PURE__ */ new Date()).toLocaleString("en-GB", {
       dateStyle: "short",
       timeStyle: "medium"
     }));
-    setMissionLoaded(true);
   }, []);
   const scrollToTop = () => {
     window.scrollTo({
