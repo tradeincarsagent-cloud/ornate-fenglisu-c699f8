@@ -71,6 +71,7 @@ function createMission(input) {
     buyingPriority: input.buyingPriority,
     selectedMarketplaces: input.selectedMarketplaces,
     notificationPreferences: input.notificationPreferences,
+    searchFrequency: input.searchFrequency,
     status: "Mission Created",
     progress: 0,
     currentStage: MISSION_STAGES[0],
@@ -100,6 +101,7 @@ function loadMission() {
       currentStageIndex: getMissionStageIndex(parsed.currentStage ?? ""),
       currentAiActivity: "Mission accepted. Awaiting AI validation.",
       estimatedTimeRemaining: "—",
+      searchFrequency: "Every 30 minutes",
       ...parsed
     };
   } catch {

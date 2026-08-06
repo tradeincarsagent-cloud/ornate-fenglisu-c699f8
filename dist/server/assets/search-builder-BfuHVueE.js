@@ -1,8 +1,8 @@
 import { jsxs, jsx } from "react/jsx-runtime";
-import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { v as validateMissionInput, c as createMission, s as saveMission } from "./mission-BlUhdbKx.js";
+import { v as validateMissionInput, c as createMission, s as saveMission } from "./mission-DGpIfAYH.js";
 import "react-dom";
 const AVAILABLE_VEHICLE_TYPES = ["Cars", "Classic Cars", "Pickups", "Vans & Light Commercials"];
 const COMING_SOON_VEHICLE_TYPES = ["Motorcycles"];
@@ -149,6 +149,23 @@ const NOTIFICATION_OPTIONS = [{
   label: "Weekly Intelligence Report",
   description: "A weekly overview of market activity and buying opportunities."
 }];
+const SEARCH_FREQUENCY_OPTIONS = [{
+  value: "every-5-minutes",
+  label: "Every 5 minutes"
+}, {
+  value: "every-15-minutes",
+  label: "Every 15 minutes"
+}, {
+  value: "every-30-minutes",
+  label: "Every 30 minutes"
+}, {
+  value: "hourly",
+  label: "Hourly"
+}, {
+  value: "daily",
+  label: "Daily"
+}];
+const DEPLOYMENT_SEQUENCE_STAGES = ["✓ Mission Received", "Connecting to Dealer Sources...", "Scanning Connected Marketplaces...", "Learning Dealer Preferences...", "✓ Mission Active"];
 const SEARCH_PRIORITIES = [{
   label: "Maximum Profit",
   value: "maximum-profit",
@@ -239,6 +256,7 @@ function SearchableCombobox({
   ] });
 }
 function SearchBuilderPage() {
+  const navigate = useNavigate();
   const [selectedVehicleType, setSelectedVehicleType] = useState(null);
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
@@ -253,8 +271,11 @@ function SearchBuilderPage() {
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [searchPriority, setSearchPriority] = useState(null);
   const [notifications, setNotifications] = useState(/* @__PURE__ */ new Set());
+  const [searchFrequency, setSearchFrequency] = useState("every-30-minutes");
   const [validationErrors, setValidationErrors] = useState([]);
   const [deployedMission, setDeployedMission] = useState(null);
+  const [deploymentStageIndex, setDeploymentStageIndex] = useState(-1);
+  const [hasDeploymentStarted, setHasDeploymentStarted] = useState(false);
   const [manualMake, setManualMake] = useState("");
   const [manualModel, setManualModel] = useState("");
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -297,40 +318,57 @@ function SearchBuilderPage() {
     setModel(val);
     if (val !== OTHER_MODEL_OPTION) setManualModel("");
   };
+  useEffect(() => {
+    if (!deployedMission) return;
+    const stageTimers = DEPLOYMENT_SEQUENCE_STAGES.map((_, idx) => window.setTimeout(() => setDeploymentStageIndex(idx), idx * 600));
+    const redirectTimer = window.setTimeout(() => {
+      navigate({
+        to: "/dashboard"
+      });
+    }, 3e3);
+    return () => {
+      stageTimers.forEach((timer) => window.clearTimeout(timer));
+      window.clearTimeout(redirectTimer);
+    };
+  }, [deployedMission, navigate]);
   const selectedNotificationLabels = NOTIFICATION_OPTIONS.filter((o) => notifications.has(o.value)).map((o) => o.label);
-  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(" + ") : "Not yet selected";
+  const selectedFrequencyLabel = SEARCH_FREQUENCY_OPTIONS.find((option) => option.value === searchFrequency)?.label ?? "Every 30 minutes";
+  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(", ") : "Awaiting selection";
+  const compactNotificationSummary = `${selectedNotificationSummary} · ${selectedFrequencyLabel}`;
   const effectiveMake = isOtherMake ? manualMake : make;
   const effectiveModel = isOtherModel ? manualModel : model;
-  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? "Not yet selected";
-  const lookingForSummary = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" ") || "Not yet selected";
+  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? "Awaiting selection";
+  const makeModelSummary = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" ") || "Any";
   const formatPounds = (value) => `£${Number(value).toLocaleString("en-GB")}`;
-  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : "Not yet selected";
-  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : "Not yet selected";
+  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : "Awaiting selection";
+  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : "Awaiting selection";
   const briefSummaryItems = [{
-    label: "Vehicle Type",
-    value: selectedVehicleType ?? "Not yet selected"
+    label: "Vehicle type",
+    value: selectedVehicleType ?? "Awaiting selection"
   }, {
-    label: "Looking For",
-    value: lookingForSummary
+    label: "Make and model",
+    value: makeModelSummary
   }, {
     label: "Budget",
     value: budgetSummary
   }, {
-    label: "Target Profit",
+    label: "Minimum profit target",
     value: targetProfitSummary
   }, {
-    label: "Search Area",
+    label: "Search area",
     value: "United Kingdom"
   }, {
-    label: "Buying Priority",
+    label: "Buying priority",
     value: selectedSearchPriority
   }, {
-    label: "Notifications",
+    label: "Notification preferences",
     value: selectedNotificationSummary
+  }, {
+    label: "Search frequency",
+    value: selectedFrequencyLabel
   }];
-  [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" ");
   const mileageSummary = maxMileage ? `Under ${Number(maxMileage).toLocaleString("en-GB")} miles` : "Not yet specified";
-  const vehicleSummary = [selectedVehicleType, effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" / ") || "Not yet selected";
+  const vehicleSummary = [selectedVehicleType, effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(" / ") || "Any";
   const missionSummaryItems = [{
     label: "Vehicle",
     value: vehicleSummary
@@ -347,14 +385,12 @@ function SearchBuilderPage() {
     label: "Minimum Profit Target",
     value: targetProfitSummary
   }, {
-    label: "Search Frequency",
-    value: "Every 30 minutes"
-  }, {
     label: "Estimated AI Scan Capacity",
     value: "Thousands of listings per day (demo)"
   }];
-  const readinessFields = [selectedVehicleType !== null, effectiveMake !== "", effectiveModel !== "", maxBudget !== "", minProfit !== "", searchPriority !== null, notifications.size > 0];
+  const readinessFields = [selectedVehicleType !== null, maxBudget !== "", minProfit !== "", searchPriority !== null, notifications.size > 0];
   const missionReadiness = Math.round(readinessFields.filter(Boolean).length / readinessFields.length * 100);
+  const isDeployEnabled = missionReadiness === 100 && !hasDeploymentStarted;
   function scrollToTop() {
     window.scrollTo({
       top: 0,
@@ -365,6 +401,7 @@ function SearchBuilderPage() {
     return validationErrors.some((e) => e.field === field);
   }
   function handleDeploy() {
+    if (!isDeployEnabled) return;
     const buyingPriorityLabel = SEARCH_PRIORITIES.find((p) => p.value === searchPriority)?.label ?? "";
     const input = {
       vehicleType: selectedVehicleType ?? "",
@@ -380,6 +417,7 @@ function SearchBuilderPage() {
       targetProfit: minProfit,
       buyingPriority: buyingPriorityLabel,
       notificationPreferences: Array.from(notifications),
+      searchFrequency: selectedFrequencyLabel,
       selectedMarketplaces: [...PHASE_ONE_SOURCES]
     };
     const errors = validateMissionInput(input).filter((error) => error.field !== "vehicleType");
@@ -399,6 +437,8 @@ function SearchBuilderPage() {
     }
     const mission = createMission(input);
     saveMission(mission);
+    setHasDeploymentStarted(true);
+    setDeploymentStageIndex(0);
     setDeployedMission(mission);
   }
   return /* @__PURE__ */ jsxs(PlatformShell, { navItems: [{
@@ -664,16 +704,28 @@ function SearchBuilderPage() {
                   idx < NOTIFICATION_OPTIONS.length - 1 && /* @__PURE__ */ jsx("div", { className: "mx-5 border-b border-outline-variant/20 md:hidden" })
                 ] }, option.value);
               }) }),
-              /* @__PURE__ */ jsx("div", { className: "border-t border-outline-variant/20 px-5 py-3 text-body-sm font-body-sm text-on-surface-variant md:mt-4", children: "💡 Your AI Employee never stops searching, continuously monitoring the market and keeping you informed according to the preferences you choose." })
+              /* @__PURE__ */ jsxs("div", { className: "border-t border-outline-variant/20 px-5 py-4 md:mt-4", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Search Frequency" }),
+                /* @__PURE__ */ jsx("div", { className: "mt-2 flex flex-wrap gap-2", children: SEARCH_FREQUENCY_OPTIONS.map((option) => {
+                  const selected = searchFrequency === option.value;
+                  return /* @__PURE__ */ jsx("button", { type: "button", onClick: () => setSearchFrequency(option.value), "aria-pressed": selected, className: `rounded-full border px-3 py-1.5 text-body-sm font-body-sm transition-colors ${selected ? "border-primary/50 bg-primary/12 text-primary" : "border-outline-variant/40 bg-surface-container-low text-on-surface-variant hover:border-primary/40 hover:text-primary"}`, children: option.label }, option.value);
+                }) })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "border-t border-outline-variant/20 px-5 py-3", children: /* @__PURE__ */ jsxs("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: [
+                /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: "Summary:" }),
+                " ",
+                compactNotificationSummary
+              ] }) }),
+              /* @__PURE__ */ jsx("div", { className: "border-t border-outline-variant/20 px-5 py-3 text-body-sm font-body-sm text-on-surface-variant", children: "💡 Your AI Employee never stops searching, continuously monitoring the market and keeping you informed according to the preferences you choose." })
             ] }),
             /* @__PURE__ */ jsx("p", { className: "mt-4 text-body-sm font-body-sm text-on-surface-variant", children: "You can update these preferences at any time from Settings." })
           ] }),
           /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-center sm:p-6 md:p-8", children: [
             /* @__PURE__ */ jsxs("div", { className: "mb-5 rounded-2xl border border-primary/20 bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-high p-4 text-left shadow-md shadow-primary/10 sm:p-5", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Your AI Employee Brief" }),
+              /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Confirmation" }),
               /* @__PURE__ */ jsx("div", { className: "mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2", children: briefSummaryItems.map((item) => /* @__PURE__ */ jsxs("div", { className: "rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5", children: [
                 /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: item.label }),
-                /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm font-semibold text-on-surface", children: item.value })
+                /* @__PURE__ */ jsx("p", { className: `mt-1 text-body-sm font-body-sm font-semibold ${item.value === "Awaiting selection" ? "italic text-on-surface-variant/60" : "text-on-surface"}`, children: item.value })
               ] }, item.label)) })
             ] }),
             validationErrors.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mb-4 rounded-xl border border-error/40 bg-error/8 px-4 py-3", role: "alert", children: [
@@ -683,38 +735,13 @@ function SearchBuilderPage() {
                 err.message
               ] }, err.field)) })
             ] }),
-            /* @__PURE__ */ jsxs("button", { ref: deployButtonRef, type: "button", onClick: handleDeploy, className: "mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl bg-primary px-8 py-4 sm:py-5 text-headline-md font-headline-md text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:brightness-110 active:scale-[0.98]", children: [
+            /* @__PURE__ */ jsxs("button", { ref: deployButtonRef, type: "button", onClick: handleDeploy, disabled: !isDeployEnabled, className: `mx-auto flex min-h-12 w-full max-w-md items-center justify-center gap-3 rounded-xl px-8 py-4 text-headline-md font-headline-md shadow-lg transition-all duration-200 sm:py-5 ${isDeployEnabled ? "bg-primary text-on-primary shadow-primary/20 hover:brightness-110 active:scale-[0.98]" : "cursor-not-allowed bg-outline-variant/40 text-on-surface-variant shadow-transparent"}`, children: [
               /* @__PURE__ */ jsx("span", { children: "⚡" }),
-              "Deploy AI Search Mission"
+              "Deploy AI Employee"
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "mt-3 text-body-sm font-body-sm text-on-surface-variant", children: "Your AI will immediately begin analysing connected vehicle sources using these requirements." }),
-            /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm text-on-surface-variant/60", children: "(Demonstration only.)" })
-          ] }),
-          deployedMission && /* @__PURE__ */ jsxs("section", { className: "dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-6 md:p-8", "aria-live": "polite", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Created" }),
-            /* @__PURE__ */ jsx("h2", { className: "mt-2 text-headline-lg font-headline-lg text-on-surface", children: "AI Search Mission Created" }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2", children: [
-              /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Mission ID" }),
-                /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: deployedMission.missionId })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status" }),
-                /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-primary", children: deployedMission.status })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Notification Preferences" }),
-                /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: selectedNotificationSummary })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-high p-4", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Search Sources" }),
-                /* @__PURE__ */ jsx("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: PHASE_ONE_SOURCES.join(", ") })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-6 flex flex-col gap-3 sm:flex-row", children: [
-              /* @__PURE__ */ jsx(Link, { to: "/dashboard", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110", children: "Return to Dealer Command Centre" }),
-              /* @__PURE__ */ jsx(Link, { to: "/opportunity", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary", children: "View AI Buying Report" })
-            ] })
+            !isDeployEnabled && /* @__PURE__ */ jsx("p", { className: "mt-3 text-body-sm font-body-sm text-on-surface-variant", children: hasDeploymentStarted ? "Deployment is already in progress." : "Complete all required mission fields to deploy your AI Employee." }),
+            /* @__PURE__ */ jsx("p", { className: "mt-3 text-body-sm font-body-sm text-on-surface-variant", children: "Your AI Employee will begin monitoring connected vehicle sources using these requirements." }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm text-on-surface-variant/60", children: "Demonstration mode" })
           ] })
         ] }),
         /* @__PURE__ */ jsx("aside", { className: "mt-5 sm:mt-8 lg:col-start-2 lg:row-start-1 lg:mt-0", children: /* @__PURE__ */ jsxs("div", { children: [
@@ -735,7 +762,7 @@ function SearchBuilderPage() {
             /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Mission Summary" }),
             /* @__PURE__ */ jsx("div", { className: "space-y-3", children: missionSummaryItems.map((item) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-0.5", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: item.label }),
-              /* @__PURE__ */ jsx("p", { className: `text-body-sm font-body-sm font-semibold ${item.value === "Not yet selected" || item.value === "Not yet specified" ? "italic text-on-surface-variant/60" : "text-on-surface"}`, children: item.value })
+              /* @__PURE__ */ jsx("p", { className: `text-body-sm font-body-sm font-semibold ${item.value === "Awaiting selection" || item.value === "Not yet specified" ? "italic text-on-surface-variant/60" : "text-on-surface"}`, children: item.value })
             ] }, item.label)) })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "mt-4 rounded-2xl border border-primary/25 bg-primary/8 p-4 sm:p-5", children: [
@@ -752,35 +779,21 @@ function SearchBuilderPage() {
         pointerEvents: showBackToTop ? "auto" : "none"
       }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "26", viewBox: "0 0 24 24", width: "26", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M5 15l7-7 7 7", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5" }) }) })
     ] }),
-    deployedMission && /* @__PURE__ */ jsxs("div", { className: "fixed inset-0 z-[200] flex items-center justify-center p-4", role: "dialog", "aria-modal": "true", "aria-labelledby": "mission-modal-title", children: [
+    deployedMission && /* @__PURE__ */ jsxs("div", { className: "fixed inset-0 z-[500] flex items-center justify-center p-4", role: "dialog", "aria-modal": "true", "aria-labelledby": "deployment-sequence-title", children: [
       /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", "aria-hidden": "true" }),
-      /* @__PURE__ */ jsxs("div", { className: "relative z-10 w-full max-w-lg rounded-2xl border border-primary/30 bg-surface-container p-6 shadow-2xl shadow-primary/10 sm:p-8", children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-5 flex items-start gap-3", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-2xl", "aria-hidden": "true", children: "⚡" }),
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("h2", { id: "mission-modal-title", className: "text-headline-md font-headline-md text-on-surface", children: "AI Search Mission Deployed" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-body-md text-on-surface-variant", children: "TICA has received your mission and is preparing it for AI validation." })
-          ] })
+      /* @__PURE__ */ jsxs("div", { className: "relative z-10 w-full max-w-3xl rounded-2xl border border-primary/30 bg-surface-container p-6 shadow-2xl shadow-primary/15 sm:p-8", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "AI Deployment Sequence" }),
+        /* @__PURE__ */ jsx("h2", { id: "deployment-sequence-title", className: "mt-2 text-headline-lg font-headline-lg text-on-surface", children: "Deploying AI Employee" }),
+        /* @__PURE__ */ jsxs("p", { className: "mt-2 text-body-md font-body-md text-on-surface-variant", children: [
+          "Mission ",
+          deployedMission.missionId,
+          " is being assigned to your AI employee."
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2", children: [
-          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Mission ID" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-body-md font-semibold text-primary", children: deployedMission.missionId })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Status" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-body-md font-semibold text-on-surface", children: deployedMission.status })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Vehicle" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-body-md font-semibold text-on-surface", children: [deployedMission.vehicleType, deployedMission.vehicleRequirements.make, deployedMission.vehicleRequirements.model].filter(Boolean).join(" / ") || "Not specified" })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/30 bg-surface-container-low px-4 py-3", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant", children: "Budget" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-md font-body-md font-semibold text-on-surface", children: deployedMission.budget ? `Up to £${Number(deployedMission.budget).toLocaleString("en-GB")}` : "Not specified" })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx(Link, { to: "/dashboard", className: "flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary shadow-lg shadow-primary/20 transition-all hover:brightness-110", children: "View Mission in Dashboard" })
+        /* @__PURE__ */ jsx("div", { className: "mt-6 grid gap-2", children: DEPLOYMENT_SEQUENCE_STAGES.map((stage, idx) => {
+          const isActive = idx === deploymentStageIndex;
+          const isComplete = idx < deploymentStageIndex;
+          return /* @__PURE__ */ jsx("div", { className: `rounded-lg border px-4 py-3 text-body-md font-body-md transition-all duration-300 ${isActive ? "border-primary/50 bg-primary/10 text-primary" : isComplete ? "border-primary/30 bg-surface-container-high text-on-surface" : "border-outline-variant/25 bg-surface-container-low text-on-surface-variant"}`, children: stage }, stage);
+        }) })
       ] })
     ] })
   ] });

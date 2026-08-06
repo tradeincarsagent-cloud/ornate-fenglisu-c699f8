@@ -3,7 +3,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
-import { l as loadMission } from "./mission-BlUhdbKx.js";
+import { l as loadMission } from "./mission-DGpIfAYH.js";
 import "react-dom";
 const {
   featuredOpportunity
