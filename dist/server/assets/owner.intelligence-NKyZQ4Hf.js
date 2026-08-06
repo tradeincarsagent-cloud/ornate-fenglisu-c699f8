@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
-import { u as useMissionProgress } from "./useMissionProgress-DUc54qVe.js";
+import { u as useMissionProgress } from "./useMissionProgress-Eh_UQ3Pf.js";
 import "react-dom";
 const opportunityCards = [{
   title: "Best Opportunity Today",
@@ -255,8 +255,11 @@ function LiveClock() {
 }
 function OwnerIntelligencePage() {
   const [showBackTop, setShowBackTop] = useState(false);
-  const activeMission = useMissionProgress();
-  const missionLoaded = activeMission !== null;
+  const {
+    mission: activeMission,
+    initialized: missionInitialized
+  } = useMissionProgress();
+  const missionLoaded = missionInitialized;
   const [activityTimestamp, setActivityTimestamp] = useState("");
   useEffect(() => {
     const onScroll = () => setShowBackTop(window.scrollY > 400);

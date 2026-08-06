@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
 import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
-import { u as useMissionProgress } from "./useMissionProgress-DUc54qVe.js";
+import { u as useMissionProgress } from "./useMissionProgress-Eh_UQ3Pf.js";
 import "react-dom";
 const radarRingInsets = [6, 14, 22, 30, 38, 46];
 const radarGridAngles = Array.from({
@@ -318,7 +318,10 @@ function DashboardPage() {
   const [radarOpportunityKey, setRadarOpportunityKey] = useState(0);
   const [radarOpportunityIndex, setRadarOpportunityIndex] = useState(0);
   const [radarOpportunityTimer, setRadarOpportunityTimer] = useState(0);
-  const storedMission = useMissionProgress();
+  const {
+    mission: storedMission,
+    initialized: missionInitialized
+  } = useMissionProgress();
   const [storedMissionExpanded, setStoredMissionExpanded] = useState(true);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   const radarOpportunityCursorRef = useRef(0);
@@ -1100,10 +1103,10 @@ function DashboardPage() {
               } }) })
             ] })
           ] })
-        ] }) }) : /* @__PURE__ */ jsxs("div", { className: "dcc-card dcc-hover rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 text-center", children: [
+        ] }) }) : missionInitialized ? /* @__PURE__ */ jsxs("div", { className: "dcc-card dcc-hover rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 text-center", children: [
           /* @__PURE__ */ jsx("p", { className: "mb-3 text-sm text-on-surface-variant", children: "No AI Search Mission has been deployed yet." }),
           /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "dcc-btn-primary inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-on-primary", children: "Create AI Search Mission" })
-        ] }) })
+        ] }) : null })
       ] })
     ] }),
     /* @__PURE__ */ jsx("button", { "aria-label": "Back to top", className: "back-to-top-btn", onClick: scrollToTop, style: {

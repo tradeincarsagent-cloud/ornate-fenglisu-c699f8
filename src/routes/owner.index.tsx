@@ -332,7 +332,7 @@ function LiveClock() {
 
 function OwnerPage() {
   const [showBackTop, setShowBackTop] = useState(false)
-  const activeMission = useMissionProgress()
+  const { mission: activeMission, initialized: missionInitialized } = useMissionProgress()
 
   useEffect(() => {
     function onScroll() {
@@ -549,9 +549,9 @@ function OwnerPage() {
           {/* Active mission display */}
           {activeMission ? (
             <ActiveMissionPanel mission={activeMission} />
-          ) : (
+          ) : missionInitialized ? (
             <MissionEmptyState />
-          )}
+          ) : null}
 
           {/* Engine metrics */}
           <div className="mt-6">

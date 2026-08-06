@@ -155,11 +155,11 @@ const $$splitComponentImporter$8 = () => import("./owner-BRaRwun4.js");
 const Route$8 = createFileRoute("/owner")({
   component: lazyRouteComponent($$splitComponentImporter$8, "component")
 });
-const $$splitComponentImporter$7 = () => import("./opportunity-E7sfN4AE.js");
+const $$splitComponentImporter$7 = () => import("./opportunity-CoN6jnog.js");
 const Route$7 = createFileRoute("/opportunity")({
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-const $$splitComponentImporter$6 = () => import("./dashboard-CXexMXbg.js");
+const $$splitComponentImporter$6 = () => import("./dashboard-DPiRjws4.js");
 const Route$6 = createFileRoute("/dashboard")({
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
@@ -179,11 +179,11 @@ const $$splitComponentImporter$2 = () => import("./index-xs09mAor.js");
 const Route$2 = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./owner.index-b5PQNr_P.js");
+const $$splitComponentImporter$1 = () => import("./owner.index-syT1hbYX.js");
 const Route$1 = createFileRoute("/owner/")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./owner.intelligence-DogQoLxY.js");
+const $$splitComponentImporter = () => import("./owner.intelligence-NKyZQ4Hf.js");
 const Route = createFileRoute("/owner/intelligence")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });

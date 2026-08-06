@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
 import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
-import { u as useMissionProgress } from "./useMissionProgress-DUc54qVe.js";
+import { u as useMissionProgress } from "./useMissionProgress-Eh_UQ3Pf.js";
 import "react-dom";
 const {
   featuredOpportunity
@@ -309,18 +309,14 @@ function OpportunityPage() {
   const [dotPulsing, setDotPulsing] = useState(true);
   const [meterAnimated, setMeterAnimated] = useState(false);
   const [meterGlowing, setMeterGlowing] = useState(false);
-  const activeMission = useMissionProgress();
+  const {
+    mission: activeMission
+  } = useMissionProgress();
   const [thinkingVisible, setThinkingVisible] = useState(true);
   const [thinkingExiting, setThinkingExiting] = useState(false);
   const [thinkingStep, setThinkingStep] = useState(0);
   const [pageReady, setPageReady] = useState(false);
-  const [statValues, setStatValues] = useState({
-    confidence: 0,
-    profit: 0,
-    retail: 0,
-    score: 0,
-    days: 0
-  });
+  const [statValues, setStatValues] = useState(null);
   const [timelineVisible, setTimelineVisible] = useState(0);
   const [badgeSweep, setBadgeSweep] = useState(false);
   const [heroImageIdx, setHeroImageIdx] = useState(0);
@@ -563,32 +559,23 @@ function OpportunityPage() {
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Confidence" }),
-              /* @__PURE__ */ jsxs("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]", children: [
-                statValues.confidence,
-                "%"
-              ] })
+              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]", children: statValues !== null ? `${statValues.confidence}%` : "—" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Gross Profit" }),
-              /* @__PURE__ */ jsxs("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: [
-                "£",
-                statValues.profit.toLocaleString("en-GB")
-              ] })
+              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: statValues !== null ? `£${statValues.profit.toLocaleString("en-GB")}` : "—" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Retail Value" }),
-              /* @__PURE__ */ jsxs("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: [
-                "£",
-                statValues.retail.toLocaleString("en-GB")
-              ] })
+              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: statValues !== null ? `£${statValues.retail.toLocaleString("en-GB")}` : "—" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Opportunity Score" }),
-              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]", children: statValues.score })
+              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]", children: statValues !== null ? statValues.score : "—" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Days to Sell" }),
-              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: statValues.days })
+              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: statValues !== null ? statValues.days : "—" })
             ] })
           ] })
         ] }),

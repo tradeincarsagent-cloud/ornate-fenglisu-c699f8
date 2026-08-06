@@ -3,6 +3,7 @@ import { l as loadMission, a as computeMissionProgress, s as saveMission } from 
 const POLL_INTERVAL_MS = 1e3;
 function useMissionProgress() {
   const [mission, setMission] = useState(null);
+  const [initialized, setInitialized] = useState(false);
   useEffect(() => {
     const initial = loadMission();
     if (initial) {
@@ -10,6 +11,7 @@ function useMissionProgress() {
       setMission(computed);
       saveMission(computed);
     }
+    setInitialized(true);
     const id = window.setInterval(() => {
       const current = loadMission();
       if (!current) return;
@@ -24,7 +26,7 @@ function useMissionProgress() {
     }, POLL_INTERVAL_MS);
     return () => window.clearInterval(id);
   }, []);
-  return mission;
+  return { mission, initialized };
 }
 export {
   useMissionProgress as u

@@ -9,8 +9,20 @@ import { computeMissionProgress, loadMission, saveMission, type TicaMission } fr
 
 const POLL_INTERVAL_MS = 1000
 
-export function useMissionProgress(): TicaMission | null {
+export interface MissionProgressResult {
+  /** The active mission, or null when none has been saved. */
+  mission: TicaMission | null
+  /**
+   * True after the first localStorage check has completed on the client.
+   * Use this to distinguish "not yet checked" from "checked, no mission"
+   * and avoid flashing an empty state during hydration.
+   */
+  initialized: boolean
+}
+
+export function useMissionProgress(): MissionProgressResult {
   const [mission, setMission] = useState<TicaMission | null>(null)
+  const [initialized, setInitialized] = useState(false)
 
   useEffect(() => {
     // Initial load + compute
@@ -20,6 +32,8 @@ export function useMissionProgress(): TicaMission | null {
       setMission(computed)
       saveMission(computed)
     }
+    // Mark as initialized after the first localStorage check
+    setInitialized(true)
 
     // Poll every second so progress advances smoothly
     const id = window.setInterval(() => {
@@ -44,5 +58,5 @@ export function useMissionProgress(): TicaMission | null {
     return () => window.clearInterval(id)
   }, [])
 
-  return mission
+  return { mission, initialized }
 }

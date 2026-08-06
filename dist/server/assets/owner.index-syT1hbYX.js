@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
-import { u as useMissionProgress } from "./useMissionProgress-DUc54qVe.js";
+import { u as useMissionProgress } from "./useMissionProgress-Eh_UQ3Pf.js";
 import "react-dom";
 const kpiCards = [{
   label: "Total Dealers",
@@ -410,7 +410,10 @@ function LiveClock() {
 }
 function OwnerPage() {
   const [showBackTop, setShowBackTop] = useState(false);
-  const activeMission = useMissionProgress();
+  const {
+    mission: activeMission,
+    initialized: missionInitialized
+  } = useMissionProgress();
   useEffect(() => {
     function onScroll() {
       setShowBackTop(window.scrollY > 400);
@@ -586,7 +589,7 @@ function OwnerPage() {
       /* @__PURE__ */ jsx("p", { className: "mt-3 text-xs text-on-surface-variant/60", children: "Showing top 5 of 218 active missions. Full mission management coming soon." })
     ] }),
     /* @__PURE__ */ jsxs(SectionCard, { title: "AI Operations", icon: "⚙️", children: [
-      activeMission ? /* @__PURE__ */ jsx(ActiveMissionPanel, { mission: activeMission }) : /* @__PURE__ */ jsx(MissionEmptyState, {}),
+      activeMission ? /* @__PURE__ */ jsx(ActiveMissionPanel, { mission: activeMission }) : missionInitialized ? /* @__PURE__ */ jsx(MissionEmptyState, {}) : null,
       /* @__PURE__ */ jsxs("div", { className: "mt-6", children: [
         /* @__PURE__ */ jsx("p", { className: "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60", children: "Engine Metrics" }),
         /* @__PURE__ */ jsxs("div", { className: "grid gap-4 sm:grid-cols-2 lg:grid-cols-3", children: [
