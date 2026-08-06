@@ -167,9 +167,20 @@ const MODELS_BY_VEHICLE_TYPE: Record<VehicleType, Record<string, string[]>> = {
   'Motorcycles': MOTORCYCLE_MODELS_BY_MAKE,
 }
 
-const FUEL_TYPES = ['Any', 'Petrol', 'Diesel', 'Hybrid', 'Plug-in Hybrid', 'Electric', 'Mild Hybrid'] as const
-const TRANSMISSION_TYPES = ['Any', 'Automatic', 'Manual', 'Semi-Automatic'] as const
-const SERVICE_HISTORY_OPTIONS = ['Any', 'Full Service History', 'Part Service History', 'No Service History'] as const
+const REFINE_FILTERS = [
+  { value: 'automatic-only', label: 'Automatic only' },
+  { value: 'manual-only', label: 'Manual only' },
+  { value: 'four-wheel-drive', label: 'Four-wheel drive' },
+  { value: 'ulez-compliant', label: 'ULEZ compliant' },
+  { value: 'euro-6', label: 'Euro 6' },
+  { value: 'one-owner', label: 'One owner' },
+  { value: 'full-service-history', label: 'Full service history' },
+  { value: 'dealer-listings-only', label: 'Dealer listings only' },
+  { value: 'private-seller-listings', label: 'Private seller listings' },
+  { value: 'vat-qualifying', label: 'VAT qualifying' },
+  { value: 'exclude-cat-n', label: 'Exclude Category N' },
+  { value: 'exclude-cat-s', label: 'Exclude Category S' },
+] as const
 
 const NOTIFICATION_OPTIONS = [
   {
@@ -356,16 +367,15 @@ function SearchBuilderPage() {
   const [maxBudget, setMaxBudget] = useState('')
   const [maxMileage, setMaxMileage] = useState('')
   const [minProfit, setMinProfit] = useState('')
-  const [fuelType, setFuelType] = useState('')
-  const [transmission, setTransmission] = useState('')
-  const [serviceHistory, setServiceHistory] = useState('')
   const [advancedOpen, setAdvancedOpen] = useState(false)
-  const [searchPriority, setSearchPriority] = useState<(typeof SEARCH_PRIORITIES)[number]['value'] | null>(null)
+  const [searchPriority, setSearchPriority] = useState<(typeof SEARCH_PRIORITIES)[number]['value'] | null>('balanced')
   const [notifications, setNotifications] = useState<Set<string>>(new Set())
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>([])
   const [deployedMission, setDeployedMission] = useState<TicaMission | null>(null)
   const [manualMake, setManualMake] = useState('')
   const [manualModel, setManualModel] = useState('')
+  const [anyModel, setAnyModel] = useState(false)
+  const [refineFilters, setRefineFilters] = useState<Set<string>>(new Set())
   const [showBackToTop, setShowBackToTop] = useState(false)
   const deployButtonRef = useRef<HTMLButtonElement>(null)
 
@@ -393,6 +403,7 @@ function SearchBuilderPage() {
     setSelectedVehicleType(type)
     setMake('')
     setModel('')
+    setAnyModel(false)
     setManualMake('')
     setManualModel('')
     if (validationErrors.length > 0) {
@@ -403,6 +414,7 @@ function SearchBuilderPage() {
   const handleMakeChange = (val: string) => {
     setMake(val)
     setModel('')
+    setAnyModel(false)
     setManualMake('')
     setManualModel('')
   }
@@ -413,16 +425,16 @@ function SearchBuilderPage() {
   }
 
   const selectedNotificationLabels = NOTIFICATION_OPTIONS.filter((o) => notifications.has(o.value)).map((o) => o.label)
-  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(' + ') : 'Not yet selected'
+  const selectedNotificationSummary = selectedNotificationLabels.length > 0 ? selectedNotificationLabels.join(' + ') : '— Awaiting selection —'
   const effectiveMake = isOtherMake ? manualMake : make
   const effectiveModel = isOtherModel ? manualModel : model
-  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? 'Not yet selected'
-  const lookingForSummary = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ') || 'Not yet selected'
+  const selectedSearchPriority = SEARCH_PRIORITIES.find((priority) => priority.value === searchPriority)?.label ?? '— Awaiting selection —'
+  const lookingForSummary = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ') || '— Awaiting selection —'
   const formatPounds = (value: string) => `£${Number(value).toLocaleString('en-GB')}`
-  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : 'Not yet selected'
-  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : 'Not yet selected'
+  const budgetSummary = maxBudget ? `Up to ${formatPounds(maxBudget)}` : '— Awaiting selection —'
+  const targetProfitSummary = minProfit ? `${formatPounds(minProfit)}+` : '— Awaiting selection —'
   const briefSummaryItems = [
-    { label: 'Vehicle Type', value: selectedVehicleType ?? 'Not yet selected' },
+    { label: 'Vehicle Type', value: selectedVehicleType ?? '— Awaiting selection —' },
     { label: 'Looking For', value: lookingForSummary },
     { label: 'Budget', value: budgetSummary },
     { label: 'Target Profit', value: targetProfitSummary },
@@ -433,27 +445,29 @@ function SearchBuilderPage() {
   const missionNameBase = [effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' ')
   const missionName = missionNameBase || selectedVehicleType || 'Vehicle Search'
 
-  const mileageSummary = maxMileage ? `Under ${Number(maxMileage).toLocaleString('en-GB')} miles` : 'Not yet specified'
-  const vehicleSummary = [selectedVehicleType, effectiveMake.trim(), effectiveModel.trim()].filter(Boolean).join(' / ') || 'Not yet selected'
+  const mileageSummary = maxMileage ? `Under ${Number(maxMileage).toLocaleString('en-GB')} miles` : '— Not specified —'
+  const vehicleSummary = [selectedVehicleType, effectiveMake.trim(), anyModel ? 'Any Model' : effectiveModel.trim()].filter(Boolean).join(' / ') || '— Awaiting selection —'
 
   const missionSummaryItems = [
     { label: 'Vehicle', value: vehicleSummary },
     { label: 'Budget', value: budgetSummary },
-    { label: 'Search Area', value: 'United Kingdom' },
     { label: 'Mileage', value: mileageSummary },
     { label: 'Minimum Profit Target', value: targetProfitSummary },
-    { label: 'Search Frequency', value: 'Every 30 minutes' },
-    { label: 'Estimated AI Scan Capacity', value: 'Thousands of listings per day (demo)' },
+    { label: 'Buying Priority', value: selectedSearchPriority },
+    { label: 'Search Area', value: 'United Kingdom' },
+    { label: 'Notifications', value: selectedNotificationSummary },
   ] as const
 
+  // Mission Readiness: 7 required stages (preselected search sources do NOT count)
+  const modelComplete = effectiveModel !== '' || anyModel
   const readinessFields = [
-    selectedVehicleType !== null,
-    effectiveMake !== '',
-    effectiveModel !== '',
-    maxBudget !== '',
-    minProfit !== '',
-    searchPriority !== null,
-    notifications.size > 0,
+    selectedVehicleType !== null,                // Vehicle category selected
+    effectiveMake !== '',                         // Make selected
+    modelComplete,                                // Model selected or Any Model chosen
+    maxBudget !== '',                             // Budget entered
+    minProfit !== '',                             // Minimum profit entered
+    searchPriority !== null,                      // Buying priority selected
+    notifications.size > 0,                       // At least one notification preference selected
   ]
   const missionReadiness = Math.round((readinessFields.filter(Boolean).length / readinessFields.length) * 100)
 
@@ -472,13 +486,13 @@ function SearchBuilderPage() {
     const input = {
       vehicleType: selectedVehicleType ?? '',
       make: effectiveMake,
-      model: effectiveModel,
-      yearFrom,
-      yearTo,
+      model: anyModel ? 'Any Model' : effectiveModel,
+      yearFrom: '',
+      yearTo: '',
       maxMileage,
-      fuelType,
-      transmission,
-      serviceHistory,
+      fuelType: '',
+      transmission: '',
+      serviceHistory: '',
       budget: maxBudget,
       targetProfit: minProfit,
       buyingPriority: buyingPriorityLabel,
@@ -575,6 +589,7 @@ function SearchBuilderPage() {
               </div>
             </div>
           </div>
+          <p className="mt-3 text-body-sm font-body-sm italic text-on-surface-variant/70">TICA remembers your buying habits so every mission becomes smarter.</p>
         </div>
 
         <div className="space-y-5 sm:space-y-8 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:space-y-0 xl:grid-cols-[1fr_340px]">
@@ -604,7 +619,7 @@ function SearchBuilderPage() {
                     }}
                     disabled={comingSoon}
                     aria-disabled={comingSoon}
-                    className={`group relative flex min-h-28 flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-32 sm:p-6 ${
+                    className={`group relative flex min-h-[7.6rem] flex-col items-center justify-center gap-3 rounded-xl border p-5 text-center transition-all duration-200 sm:min-h-[8.6rem] sm:p-6 ${
                       comingSoon
                         ? 'cursor-not-allowed border-outline-variant/20 bg-surface-container text-on-surface-variant opacity-60'
                         : selected
@@ -690,17 +705,28 @@ function SearchBuilderPage() {
                     )}
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
+                    <div className="flex items-center justify-between gap-2">
+                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="model">Model</label>
+                      {make && (
+                        <button
+                          type="button"
+                          onClick={() => { setAnyModel((v) => !v); setModel(''); setManualModel('') }}
+                          className={`text-label-caps font-label-caps uppercase tracking-widest transition-colors ${anyModel ? 'text-primary' : 'text-on-surface-variant/60 hover:text-on-surface-variant'}`}
+                        >
+                          {anyModel ? '✓ Any Model' : 'Any Model'}
+                        </button>
+                      )}
+                    </div>
                     <SearchableCombobox
                       id="model"
                       options={modelOptions}
                       value={model}
                       onChange={handleModelChange}
-                      placeholder={make ? SELECT_MODEL_OPTION : 'Select a make first'}
+                      placeholder={anyModel ? 'Any model accepted' : (make ? SELECT_MODEL_OPTION : 'Select a make first')}
                       clearOptionLabel={SELECT_MODEL_OPTION}
-                      disabled={!hasSelectedVehicleCategory || !make || modelOptions.length === 0}
+                      disabled={!hasSelectedVehicleCategory || !make || modelOptions.length === 0 || anyModel}
                     />
-                    {isOtherModel && (
+                    {isOtherModel && !anyModel && (
                       <input
                         id="manual-model"
                         type="text"
@@ -784,84 +810,31 @@ function SearchBuilderPage() {
               </button>
               {advancedOpen && (
                 <div className="border-t border-outline-variant/30 px-5 pb-5 pt-5">
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-from">Earliest year?</label>
-                      <input
-                        id="year-from"
-                        type="number"
-                        placeholder="e.g. 2018"
-                        min="1990"
-                        max="2030"
-                        value={yearFrom}
-                        onChange={(e) => setYearFrom(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="year-to">Latest year?</label>
-                      <input
-                        id="year-to"
-                        type="number"
-                        placeholder="e.g. 2024"
-                        min="1990"
-                        max="2030"
-                        value={yearTo}
-                        onChange={(e) => setYearTo(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="max-mileage">Maximum mileage?</label>
-                      <input
-                        id="max-mileage"
-                        type="number"
-                        placeholder="e.g. 60000"
-                        min="0"
-                        value={maxMileage}
-                        onChange={(e) => setMaxMileage(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface placeholder-on-surface-variant/50 outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="fuel-type">Fuel preference?</label>
-                      <select
-                        id="fuel-type"
-                        value={fuelType}
-                        onChange={(e) => setFuelType(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      >
-                        {FUEL_TYPES.map((ft) => (
-                          <option key={ft} value={ft === 'Any' ? '' : ft}>{ft}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="transmission">Transmission preference?</label>
-                      <select
-                        id="transmission"
-                        value={transmission}
-                        onChange={(e) => setTransmission(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      >
-                        {TRANSMISSION_TYPES.map((tt) => (
-                          <option key={tt} value={tt === 'Any' ? '' : tt}>{tt}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant" htmlFor="service-history">Service history requirement?</label>
-                      <select
-                        id="service-history"
-                        value={serviceHistory}
-                        onChange={(e) => setServiceHistory(e.target.value)}
-                        className="min-h-11 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-4 py-3 text-body-md font-body-md text-on-surface outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30"
-                      >
-                        {SERVICE_HISTORY_OPTIONS.map((sh) => (
-                          <option key={sh} value={sh === 'Any' ? '' : sh}>{sh}</option>
-                        ))}
-                      </select>
-                    </div>
+                  <div className="flex flex-wrap gap-2">
+                    {REFINE_FILTERS.map((filter) => {
+                      const active = refineFilters.has(filter.value)
+                      return (
+                        <button
+                          key={filter.value}
+                          type="button"
+                          onClick={() => setRefineFilters((prev) => {
+                            const next = new Set(prev)
+                            if (next.has(filter.value)) next.delete(filter.value)
+                            else next.add(filter.value)
+                            return next
+                          })}
+                          aria-pressed={active}
+                          className={`rounded-lg border px-3 py-1.5 text-body-sm font-body-sm transition-all duration-150 ${
+                            active
+                              ? 'border-primary bg-primary/10 text-primary'
+                              : 'border-outline-variant/40 bg-surface-container text-on-surface-variant hover:border-primary/40 hover:text-on-surface'
+                          }`}
+                        >
+                          {active && <span className="mr-1.5" aria-hidden="true">✓</span>}
+                          {filter.label}
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
               )}
@@ -1050,7 +1023,7 @@ function SearchBuilderPage() {
                 {briefSummaryItems.map((item) => (
                   <div key={item.label} className="rounded-lg border border-outline-variant/30 bg-surface-container-low px-3 py-2.5">
                     <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
-                    <p className="mt-1 text-body-sm font-body-sm font-semibold text-on-surface">{item.value}</p>
+                    <p className={`mt-1 text-body-sm font-body-sm font-semibold ${item.value.startsWith('—') ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
                   </div>
                 ))}
               </div>
@@ -1157,7 +1130,7 @@ function SearchBuilderPage() {
                 {missionSummaryItems.map((item) => (
                   <div key={item.label} className="flex flex-col gap-0.5">
                     <p className="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant">{item.label}</p>
-                    <p className={`text-body-sm font-body-sm font-semibold ${item.value === 'Not yet selected' || item.value === 'Not yet specified' ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
+                    <p className={`text-body-sm font-body-sm font-semibold ${item.value.startsWith('—') ? 'italic text-on-surface-variant/60' : 'text-on-surface'}`}>{item.value}</p>
                   </div>
                 ))}
               </div>
