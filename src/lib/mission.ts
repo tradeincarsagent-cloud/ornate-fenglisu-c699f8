@@ -49,6 +49,7 @@ export interface TicaMission {
   buyingPriority: string
   selectedMarketplaces: string[]
   notificationPreferences: string[]
+  searchFrequency: string
   /** High-level mission status label, e.g. "Mission Created", "Running", "Completed". */
   status: string
   /** 0–100 progress percentage. */
@@ -85,6 +86,7 @@ export interface MissionInput {
   targetProfit: string
   buyingPriority: string
   notificationPreferences: string[]
+  searchFrequency: string
   selectedMarketplaces: string[]
 }
 
@@ -174,6 +176,7 @@ export function createMission(input: MissionInput): TicaMission {
     buyingPriority: input.buyingPriority,
     selectedMarketplaces: input.selectedMarketplaces,
     notificationPreferences: input.notificationPreferences,
+    searchFrequency: input.searchFrequency,
     status: 'Mission Created',
     progress: 0,
     currentStage: MISSION_STAGES[0],
@@ -222,6 +225,7 @@ export function loadMission(): TicaMission | null {
       currentStageIndex: getMissionStageIndex(parsed.currentStage ?? ''),
       currentAiActivity: 'Mission accepted. Awaiting AI validation.',
       estimatedTimeRemaining: '—',
+      searchFrequency: 'Every 30 minutes',
       ...parsed,
     } as TicaMission
   } catch {
