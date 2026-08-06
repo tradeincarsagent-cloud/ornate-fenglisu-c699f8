@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
@@ -265,7 +265,6 @@ function DashboardPage() {
 
   const [highlightedOpportunity, setHighlightedOpportunity] = useState<number | null>(null)
   const [priorityContactId, setPriorityContactId] = useState<string | null>(null)
-  const [sweepAngle, setSweepAngle] = useState(0)
   const [radarDetectionGlow, setRadarDetectionGlow] = useState(false)
   const [soundOn, setSoundOn] = useState(() => {
     try { return localStorage.getItem('tica-sound-on') === '1' } catch { return false }
@@ -296,6 +295,7 @@ function DashboardPage() {
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
   const radarOpportunityCursorRef = useRef(0)
+  const radarContactRefs = useRef<Record<string, HTMLDivElement | null>>({})
 
   useEffect(() => {
     soundOnRef.current = soundOn
@@ -308,10 +308,20 @@ function DashboardPage() {
   useEffect(() => {
     const sweepDurationMs = 5400
     const startedAt = performance.now()
-    const intervalId = window.setInterval(() => {
-      setSweepAngle(((performance.now() - startedAt) / sweepDurationMs * 360) % 360)
-    }, 80)
-    return () => window.clearInterval(intervalId)
+    let frameId = 0
+
+    const updateSweep = (now: number) => {
+      const sweepAngle = ((now - startedAt) / sweepDurationMs * 360) % 360
+      radarContacts.forEach((contact) => {
+        const node = radarContactRefs.current[contact.id]
+        if (!node) return
+        node.style.setProperty('--radar-contact-intensity', getSweepIntensity(sweepAngle, contact.angleDeg).toFixed(3))
+      })
+      frameId = window.requestAnimationFrame(updateSweep)
+    }
+
+    frameId = window.requestAnimationFrame(updateSweep)
+    return () => window.cancelAnimationFrame(frameId)
   }, [])
 
   useEffect(() => {
@@ -491,14 +501,14 @@ function DashboardPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const operationsPanelItems = [
+  const operationsPanelItems = useMemo(() => ([
     { label: 'Status', value: 'Searching', tone: 'live' },
     { label: 'Sources Active', value: '5' },
     { label: 'Vehicles Checked Today', value: counterFormatter.format(liveCounters.vehiclesCheckedToday) },
     { label: 'Matches Found', value: counterFormatter.format(liveCounters.matchesFound) },
     { label: 'High Priority Matches', value: counterFormatter.format(liveCounters.highPriorityMatches), tone: 'accent' },
     { label: 'Last Scan', value: 'Moments ago' },
-  ]
+  ]), [liveCounters])
 
   return (
     <PlatformShell
@@ -524,7 +534,7 @@ function DashboardPage() {
                 <TicaShield />
               </div>
             </div>
-            <section className="dashboard-border mb-4 sm:mb-6 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6">
+            <section className="dcc-card-shell dashboard-border mb-6 sm:mb-8 rounded-2xl bg-surface-container-high/80 p-5 shadow-[0_22px_40px_rgba(2,6,23,0.28)] backdrop-blur-sm md:p-6">
               <div className="flex flex-col gap-5">
                 <div className="space-y-1.5">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/90">AI Daily Briefing</p>
@@ -536,7 +546,7 @@ function DashboardPage() {
                   {dailyBriefingCards.map((card) => (
                     <article
                       key={card.label}
-                      className="rounded-2xl border border-outline-variant/35 bg-surface/55 p-3.5 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
+                      className="dcc-card dcc-hover rounded-2xl border border-outline-variant/35 bg-surface/55 p-3.5 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
                     >
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/85">{card.label}</p>
                       <p className="mt-1.5 text-xl font-bold text-on-surface">{card.value}</p>
@@ -562,18 +572,18 @@ function DashboardPage() {
             </section>
 
             {/* ── Morning Intelligence ─────────────────────────────────── */}
-            <section className="dashboard-mobile-radar-flow mb-5 sm:mb-8 flex flex-col gap-6 sm:gap-8">
+            <section className="dashboard-mobile-radar-flow mb-6 sm:mb-8 flex flex-col gap-6 sm:gap-8">
               {/* CTA buttons — on mobile these render between radar (order 1) and intel brief (order 3) */}
               <div className="dashboard-cta-buttons flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link
                   to="/opportunity"
-                  className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary transition-all hover:brightness-110"
+                  className="dcc-btn-primary inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-body-md font-body-md text-on-primary"
                 >
                   Review Top Opportunity
                 </Link>
                 <Link
                   to="/search-builder"
-                  className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface transition-all hover:border-primary/50 hover:text-primary"
+                  className="dcc-btn-secondary inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-6 py-3 text-body-md font-body-md text-on-surface"
                 >
                   Create New Search
                 </Link>
@@ -595,19 +605,19 @@ function DashboardPage() {
                   {summaryCards.map((card, index) => (
                     <article
                       key={card.title}
-                      className={`dashboard-border flex min-h-[44px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
+                      className={`dashboard-stat-card dcc-card dcc-hover dashboard-border flex min-h-[44px] flex-col justify-between rounded-xl bg-surface-container-high p-3 text-left sm:min-h-[120px] sm:p-4 sm:text-center md:min-h-[152px] md:p-5${index === 4 ? ' hidden sm:flex sm:col-span-2 sm:mx-auto sm:w-[calc(50%-8px)] lg:col-span-1 lg:w-auto lg:mx-0' : ''}`}
                     >
                       <p className="text-xs leading-snug text-on-surface-variant md:text-body-md md:font-body-md">
-                        <span className="block">{card.icon}</span>
-                        <span>{card.title}</span>
+                        <span className="dashboard-stat-icon block" aria-hidden="true">{card.icon}</span>
+                        <span className="dashboard-stat-label">{card.title}</span>
                       </p>
-                      <p className="mt-0.5 text-[1.65rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
+                      <p className="dashboard-stat-value mt-0.5 tabular-nums text-[1.65rem] leading-tight font-bold text-primary sm:text-[1.4rem] md:mt-0 md:text-headline-lg md:font-headline-lg">{card.value}</p>
                     </article>
                   ))}
                 </div>
 
                 {/* ── Mobile: Today's Best Buy featured card ────────────── */}
-                <article className="best-buy-mobile-accent dashboard-border mt-1.5 rounded-xl bg-surface-container-high p-3.5 sm:hidden">
+                <article className="best-buy-mobile-accent dcc-card dcc-hover dashboard-border mt-1.5 rounded-xl bg-surface-container-high p-3.5 sm:hidden">
                   <div className="mb-2 flex items-center justify-between">
                     <p className="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">🏆 Today's Best Buy</p>
                     <span className="rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary">⭐ AI Pick</span>
@@ -634,7 +644,7 @@ function DashboardPage() {
               </div>
 
               {/* ── AI Search Radar ──────────────────────────────────── */}
-              <article className="dashboard-radar-section dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8">
+              <article className="dashboard-radar-section dcc-card-shell dashboard-border mx-auto w-full max-w-5xl rounded-3xl bg-surface-container-high/70 p-4 backdrop-blur-sm md:p-6 lg:p-8">
                 <div className={`dashboard-radar-panel flex flex-col ${radarDetectionGlow ? 'radar-detection-glow' : ''}`}>
                 <h3 className="dashboard-radar-title text-center text-headline-md font-headline-md text-on-surface">Live AI Search Radar</h3>
 
@@ -721,15 +731,17 @@ function DashboardPage() {
                     </div>
 
                     {radarContacts.map((contact) => {
-                      const intensity = getSweepIntensity(sweepAngle, contact.angleDeg)
                       const contactStyle = {
                         left: `${contact.x * 100}%`,
                         top: `${contact.y * 100}%`,
-                        '--radar-contact-intensity': intensity.toFixed(3),
+                        '--radar-contact-intensity': '0.24',
                       } as CSSProperties
                       return (
                         <div
                           key={contact.id}
+                          ref={(node) => {
+                            radarContactRefs.current[contact.id] = node
+                          }}
                           className={`radar-contact${contact.labelPosition === 'left' ? ' radar-contact-label-left' : ''}${priorityContactId === contact.id ? ' radar-contact-priority' : ''}`}
                           style={contactStyle}
                         >
@@ -817,23 +829,13 @@ function DashboardPage() {
                     </div>
                   </div>
 
-                  <section className="dashboard-radar-operations mt-6 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-4 md:p-6">
+                  <section className="dashboard-radar-operations dcc-card mt-6 rounded-2xl border border-outline-variant/25 bg-surface-container-high/55 p-4 md:p-6">
                     <p className="text-center font-label-caps text-label-caps uppercase tracking-[0.18em] text-primary/85">AI Operations Panel</p>
                     <dl className="dashboard-radar-operations-grid mt-3 grid overflow-hidden rounded-xl border border-outline-variant/25 bg-[linear-gradient(180deg,rgba(15,23,42,0.5),rgba(15,23,42,0.28))] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:grid-cols-2 xl:grid-cols-3">
-                      {operationsPanelItems.map((item, index) => (
+                      {operationsPanelItems.map((item) => (
                         <div
-                          key={item.label}
-                          className={`flex min-h-[64px] flex-col justify-between gap-2.5 px-4 py-2.5 sm:min-h-[104px] sm:gap-4 sm:px-5 sm:py-4 ${
-                            index < operationsPanelItems.length - 1 ? 'border-b border-outline-variant/18' : ''
-                          } ${
-                            index % 2 === 0 ? 'sm:border-r sm:border-outline-variant/18' : ''
-                          } ${
-                            index >= operationsPanelItems.length - 2 ? 'sm:border-b-0' : ''
-                          } ${
-                            index % 3 !== 2 ? 'xl:border-r xl:border-outline-variant/18' : 'xl:border-r-0'
-                          } ${
-                            index >= operationsPanelItems.length - 3 ? 'xl:border-b-0' : ''
-                          }`}
+                          key={`${item.label}-${item.value}`}
+                          className="dashboard-radar-operations-cell dcc-hover flex min-h-[64px] flex-col justify-between gap-2.5 px-4 py-2.5 sm:min-h-[104px] sm:gap-4 sm:px-5 sm:py-4"
                         >
                           <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/80">{item.label}</dt>
                           <dd
@@ -843,7 +845,7 @@ function DashboardPage() {
                           >
                             {item.tone === 'live' ? <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.55)]" aria-hidden="true" /> : null}
                             {item.tone === 'paused' ? <span className="h-2.5 w-2.5 rounded-full bg-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.45)]" aria-hidden="true" /> : null}
-                            <span className="tabular-nums">{item.value}</span>
+                            <span className="dashboard-counter-value tabular-nums">{item.value}</span>
                           </dd>
                         </div>
                       ))}
@@ -853,7 +855,7 @@ function DashboardPage() {
                     </p>
                   </section>
 
-                  <article className="dashboard-border timeline-mobile-shell mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+                  <article className="dcc-card-shell dashboard-border timeline-mobile-shell mt-6 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
                     <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                       <div>
                         <h3 className="text-headline-md font-headline-md text-on-surface">AI Activity Timeline</h3>
@@ -882,7 +884,7 @@ function DashboardPage() {
                       {timelineEvents.map((event) => (
                         <article
                           key={event.eventId}
-                          className={`timeline-entry${activeTimelineEventId === event.eventId ? ' timeline-entry-live' : ''}`}
+                          className={`timeline-entry dcc-hover${activeTimelineEventId === event.eventId ? ' timeline-entry-live' : ''}`}
                         >
                           <p className="timeline-entry-time">{event.time}</p>
                           <div className="timeline-entry-dot" aria-hidden="true" />
@@ -896,7 +898,7 @@ function DashboardPage() {
             </section>
 
             {/* ── AI Recommendation ────────────────────────────────────── */}
-            <section className="best-buy-mobile-accent dashboard-border mb-5 sm:mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+            <section className="best-buy-mobile-accent dcc-card-shell dashboard-border mb-6 sm:mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">Today's Best Buy</h2>
               <p className="mb-3 max-w-[20rem] text-sm text-on-surface-variant">Certified by the TICA Decision Engine.</p>
 
@@ -945,7 +947,7 @@ function DashboardPage() {
                 </div>
               </div>
 
-              <div className="mb-5 sm:mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <div className="dcc-card dcc-hover mb-6 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
                 <h3 className="mb-2.5 text-body-md font-body-md font-medium text-on-surface">Why TICA Chose This Vehicle</h3>
                 <ul className="mb-3 space-y-1.5 text-sm text-on-surface-variant">
                   {recommendationEvidencePoints.map((point, index) => (
@@ -970,7 +972,7 @@ function DashboardPage() {
                 </div>
               </div>
 
-              <div className="mb-5 sm:mb-8 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
+              <div className="dcc-card dcc-hover mb-6 rounded-xl border border-outline-variant/30 bg-surface-container-high p-4">
                 <h3 className="mb-2.5 text-body-md font-body-md font-medium text-on-surface sm:mb-4">Top Opportunity Comparison</h3>
                 <div className="hidden overflow-x-auto lg:block">
                   <table className="min-w-full text-left text-sm text-on-surface">
@@ -1036,7 +1038,7 @@ function DashboardPage() {
               </div>
 
               {/* ── Opportunity History ───────────────────────────────── */}
-              <div className="mb-4 sm:mb-6 rounded-xl border border-outline-variant/30 bg-surface-container-high">
+              <div className="dcc-card dcc-hover mb-6 rounded-xl border border-outline-variant/30 bg-surface-container-high">
                 <button
                   type="button"
                   onClick={() => setOpportunityHistoryOpen((v) => !v)}
@@ -1091,7 +1093,7 @@ function DashboardPage() {
               </div>
 
               {/* ── What's Changed Since Last Scan ────────────────────── */}
-              <div className="mb-6 flex items-start gap-2.5 rounded-xl border border-outline-variant/20 bg-surface-container-high px-4 py-3">
+              <div className="dcc-card dcc-hover mb-6 flex items-start gap-2.5 rounded-xl border border-outline-variant/20 bg-surface-container-high px-4 py-3">
                 <span className="mt-0.5 text-sm leading-none">📉</span>
                 <div className="min-w-0">
                   <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-on-surface-variant">What's Changed Since Last Scan</p>
@@ -1103,25 +1105,25 @@ function DashboardPage() {
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
                 <Link
                   to="/opportunity"
-                  className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 py-3 text-body-md font-body-md text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
+                  className="dcc-btn-primary inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 py-3 text-body-md font-body-md text-on-primary"
                 >
                   Review Opportunity
                 </Link>
                 <button
                   onClick={() => setRecAction('saved')}
-                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-primary/40"
+                  className="dcc-btn-secondary min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface"
                 >
                   Save Opportunity
                 </button>
                 <button
                   onClick={() => setRecAction('dismissed')}
-                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-error/40 hover:text-error"
+                  className="dcc-btn-secondary min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface"
                 >
                   Dismiss
                 </button>
                 <button
                   onClick={() => setRecAction('reminded')}
-                  className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface transition-colors hover:border-tertiary/40"
+                  className="dcc-btn-secondary min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-body-md font-body-md text-on-surface"
                 >
                   Remind Me Tomorrow
                 </button>
@@ -1140,7 +1142,7 @@ function DashboardPage() {
             </section>
 
             {/* ── Recent Opportunities ─────────────────────────────────── */}
-            <section className="dashboard-border mb-5 sm:mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+            <section className="dcc-card-shell dashboard-border mb-6 sm:mb-8 rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-2.5 text-headline-md font-headline-md text-on-surface">Recent Opportunities</h2>
 
               {/* Desktop table (unchanged, hidden on mobile) */}
@@ -1159,7 +1161,7 @@ function DashboardPage() {
                     {recentOpportunities.map((opportunity, index) => (
                       <tr
                         key={opportunity.vehicle}
-                        className={`rounded-xl bg-surface-container-high transition-all ${
+                        className={`dcc-hover rounded-xl bg-surface-container-high transition-all ${
                           highlightedOpportunity === index ? 'opportunity-row-highlight' : ''
                         }`}
                       >
@@ -1170,7 +1172,7 @@ function DashboardPage() {
                         <td className="rounded-r-xl px-4 py-3">
                           <Link
                             to="/opportunity"
-                            className="inline-flex min-h-10 items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-on-primary transition-opacity hover:opacity-90"
+                            className="dcc-btn-review inline-flex min-h-10 items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-on-primary"
                           >
                             Review
                           </Link>
@@ -1186,7 +1188,7 @@ function DashboardPage() {
                 {recentOpportunities.map((opportunity, index) => (
                   <article
                     key={opportunity.vehicle}
-                    className={`rounded-xl bg-surface-container-high p-3.5 transition-all ${
+                    className={`dcc-card dcc-hover rounded-xl bg-surface-container-high p-3.5 transition-all ${
                       highlightedOpportunity === index ? 'opportunity-row-highlight' : ''
                     }`}
                   >
@@ -1211,14 +1213,14 @@ function DashboardPage() {
                     <div className="flex flex-col gap-2 min-[420px]:grid min-[420px]:grid-cols-3">
                       <Link
                         to="/opportunity"
-                        className="flex min-h-11 items-center justify-center rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
+                        className="dcc-btn-review flex min-h-11 items-center justify-center rounded-lg bg-primary py-2.5 text-sm font-medium text-on-primary"
                       >
                         Review
                       </Link>
-                      <button className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface transition-colors hover:border-primary/40">
+                      <button className="dcc-btn-secondary min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface">
                         Save
                       </button>
-                      <button className="min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant transition-colors hover:border-outline-variant/60">
+                      <button className="dcc-btn-secondary min-h-11 rounded-lg border border-outline-variant/40 bg-surface-container py-2.5 text-sm font-medium text-on-surface-variant">
                         Dismiss
                       </button>
                     </div>
@@ -1228,13 +1230,13 @@ function DashboardPage() {
             </section>
 
             {/* ── AI Search Missions ───────────────────────────────────── */}
-            <section className="dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
+            <section className="dcc-card-shell dashboard-border rounded-2xl bg-surface-container p-4 sm:p-6 md:p-8">
               <h2 className="mb-1 text-headline-md font-headline-md text-on-surface">AI Search Missions</h2>
               <p className="mb-3 text-sm text-on-surface-variant">Search jobs currently being monitored by TICA.</p>
               <div className="space-y-2.5">
                 {/* ── Stored mission from Search Builder ── */}
                 {storedMission ? (
-                  <article className="rounded-xl bg-surface-container-high p-3.5">
+                  <article className="dcc-card dcc-hover rounded-xl bg-surface-container-high p-3.5">
                     <div>
                       <button
                         onClick={() => setStoredMissionExpanded((v) => !v)}
@@ -1326,11 +1328,11 @@ function DashboardPage() {
                     </div>
                   </article>
                 ) : (
-                  <div className="rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 text-center">
+                  <div className="dcc-card dcc-hover rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 text-center">
                     <p className="mb-3 text-sm text-on-surface-variant">No AI Search Mission has been deployed yet.</p>
                     <Link
                       to="/search-builder"
-                      className="inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-opacity hover:opacity-90 active:opacity-75"
+                      className="dcc-btn-primary inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-on-primary"
                     >
                       Create AI Search Mission
                     </Link>

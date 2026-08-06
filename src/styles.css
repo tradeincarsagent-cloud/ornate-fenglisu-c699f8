@@ -87,19 +87,19 @@ html {
 
 /* Subtle blue text glow for "TICA Certified™" label */
 .tica-certified-text {
-  text-shadow: 0 0 8px rgba(20, 147, 255, 0.45), 0 0 2px rgba(20, 147, 255, 0.20);
+  text-shadow: 0 0 10px rgba(20, 147, 255, 0.5), 0 0 3px rgba(20, 147, 255, 0.24);
 }
 
 @keyframes tica-certified-halo {
   0%, 100% {
     filter:
-      drop-shadow(0 0 10px rgba(20, 147, 255, 0.22))
-      drop-shadow(0 0 26px rgba(20, 147, 255, 0.10));
+      drop-shadow(0 0 11px rgba(20, 147, 255, 0.26))
+      drop-shadow(0 0 28px rgba(20, 147, 255, 0.12));
   }
   45%, 55% {
     filter:
-      drop-shadow(0 0 14px rgba(20, 147, 255, 0.30))
-      drop-shadow(0 0 34px rgba(20, 147, 255, 0.15));
+      drop-shadow(0 0 15px rgba(20, 147, 255, 0.34))
+      drop-shadow(0 0 36px rgba(20, 147, 255, 0.18));
   }
 }
 
@@ -160,6 +160,98 @@ html {
   border: 1px solid rgba(20, 147, 255, 0.1);
   pointer-events: none;
   border-radius: inherit;
+}
+
+.dcc-card-shell {
+  box-shadow: 0 22px 42px rgba(2, 6, 23, 0.24);
+}
+
+.dcc-card {
+  border-color: rgba(148, 163, 184, 0.24);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.dcc-hover {
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms ease, background-color 240ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dcc-hover:hover {
+    transform: translateY(-2px);
+    border-color: rgba(20, 147, 255, 0.34);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 12px 28px rgba(2, 6, 23, 0.24),
+      0 0 18px rgba(20, 147, 255, 0.16);
+  }
+}
+
+.dcc-btn-primary,
+.dcc-btn-secondary,
+.dcc-btn-review {
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease, border-color 200ms ease, background-color 200ms ease, color 200ms ease, opacity 200ms ease;
+}
+
+.dcc-btn-primary,
+.dcc-btn-review {
+  box-shadow: 0 0 0 1px rgba(20, 147, 255, 0.16), 0 8px 18px rgba(20, 147, 255, 0.22);
+}
+
+.dcc-btn-secondary {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dcc-btn-primary:hover,
+  .dcc-btn-review:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(20, 147, 255, 0.26), 0 12px 24px rgba(20, 147, 255, 0.26), 0 0 16px rgba(20, 147, 255, 0.2);
+  }
+
+  .dcc-btn-secondary:hover {
+    transform: translateY(-1px);
+    border-color: rgba(20, 147, 255, 0.46);
+    box-shadow: 0 10px 20px rgba(2, 6, 23, 0.2), 0 0 12px rgba(20, 147, 255, 0.12);
+  }
+}
+
+.dashboard-stat-card {
+  gap: 0.65rem;
+}
+
+.dashboard-stat-icon {
+  display: inline-flex;
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.dashboard-stat-label {
+  display: block;
+}
+
+.dashboard-stat-value {
+  letter-spacing: 0.01em;
+}
+
+@keyframes dashboardCounterRise {
+  from {
+    opacity: 0.7;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-counter-value {
+  animation: dashboardCounterRise 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Mobile-only subtle blue accent for Today's Best Buy card */
@@ -702,21 +794,25 @@ body > div {
 
 .premium-radar-shell .radar-sweep {
   inset: -10%;
-  background: conic-gradient(from -90deg, transparent 0deg, transparent 326deg, rgba(96, 221, 255, 0.04) 334deg, rgba(96, 221, 255, 0.14) 346deg, rgba(96, 221, 255, 0.56) 357deg, rgba(176, 239, 255, 0.82) 360deg);
+  background: conic-gradient(from -90deg, transparent 0deg, transparent 326deg, rgba(96, 221, 255, 0.05) 334deg, rgba(96, 221, 255, 0.16) 346deg, rgba(96, 221, 255, 0.53) 357deg, rgba(176, 239, 255, 0.8) 360deg);
   animation: radarSweep 5.4s linear infinite;
   mix-blend-mode: screen;
-  opacity: 0.86;
+  opacity: 0.84;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .radar-sweep-glow {
   position: absolute;
   inset: -11%;
   border-radius: 50%;
-  background: conic-gradient(from -90deg, transparent 0deg, transparent 322deg, rgba(20, 147, 255, 0.04) 334deg, rgba(20, 147, 255, 0.18) 350deg, rgba(186, 230, 253, 0.34) 360deg);
-  filter: blur(20px);
+  background: conic-gradient(from -90deg, transparent 0deg, transparent 322deg, rgba(20, 147, 255, 0.04) 334deg, rgba(20, 147, 255, 0.15) 350deg, rgba(186, 230, 253, 0.3) 360deg);
+  filter: blur(18px);
   mix-blend-mode: screen;
   animation: radarSweep 5.4s linear infinite;
-  opacity: 0.66;
+  opacity: 0.6;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .radar-centre-flag {
@@ -1054,7 +1150,7 @@ body > div {
   width: clamp(10.9rem, 28vw, 12.6rem);
   right: clamp(-0.2rem, 0.6vw, 0.28rem);
   top: clamp(-1rem, -0.4vw, -0.35rem);
-  animation: radarOpportunityLifecycle 7s ease forwards;
+  animation: radarOpportunityLifecycle 7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .opportunity-row-highlight {
@@ -1093,7 +1189,7 @@ body > div {
   position: absolute;
   top: 0.5rem;
   bottom: 0.5rem;
-  left: 4.9rem;
+  left: 5.25rem;
   width: 1px;
   background: linear-gradient(to bottom, rgba(20, 147, 255, 0.22), rgba(148, 163, 184, 0.08));
 }
@@ -1101,8 +1197,8 @@ body > div {
 .timeline-entry {
   position: relative;
   display: grid;
-  grid-template-columns: 4rem 1.15rem minmax(0, 1fr);
-  align-items: start;
+  grid-template-columns: 4.35rem 1.15rem minmax(0, 1fr);
+  align-items: center;
   gap: 0.9rem;
   padding: 0.95rem 1rem;
   border-radius: 1rem;
@@ -1129,6 +1225,8 @@ body > div {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(220, 225, 251, 0.62);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .timeline-entry-dot {
@@ -1143,7 +1241,47 @@ body > div {
 
 .timeline-entry-message {
   margin: 0;
+  line-height: 1.42;
   color: rgba(220, 225, 251, 0.94);
+}
+
+.dashboard-radar-operations-cell {
+  min-height: 6.5rem;
+  align-content: stretch;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.dashboard-radar-operations-cell:last-child {
+  border-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .dashboard-radar-operations-cell {
+    border-right: 1px solid rgba(148, 163, 184, 0.18);
+  }
+
+  .dashboard-radar-operations-cell:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .dashboard-radar-operations-cell:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .dashboard-radar-operations-cell {
+    border-right: 1px solid rgba(148, 163, 184, 0.18);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+  }
+
+  .dashboard-radar-operations-cell:nth-child(3n) {
+    border-right: 0;
+  }
+
+  .dashboard-radar-operations-cell:nth-last-child(-n + 3) {
+    border-bottom: 0;
+  }
 }
 
 .how-it-works-arrow {
@@ -1263,16 +1401,16 @@ body > div {
 @keyframes radarOpportunityLifecycle {
   0% {
     opacity: 0;
-    transform: translateY(16px) scale(0.94);
+    transform: translateY(12px) scale(0.96);
   }
-  8%,
-  80% {
+  10%,
+  82% {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-7px) scale(1.01);
   }
 }
 
