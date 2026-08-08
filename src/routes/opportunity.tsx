@@ -274,7 +274,40 @@ function OpportunityPage() {
   const [dotPulsing, setDotPulsing] = useState(true)
   const [meterAnimated, setMeterAnimated] = useState(false)
   const [meterGlowing, setMeterGlowing] = useState(false)
-  const { mission: activeMission } = useMissionProgress()
+  const { mission: activeMission, initialized: missionInitialized } = useMissionProgress()
+
+  // Derive mission-specific display values for the report
+  const missionReport = useMemo(() => {
+    if (!activeMission) return null
+    const make = activeMission.vehicleRequirements?.make || ''
+    const model = activeMission.vehicleRequirements?.model || ''
+    const vehicleName = [make, model].filter(Boolean).join(' ') || activeMission.vehicleType || 'Vehicle'
+    const budgetNum = parseFloat(activeMission.budget) || 0
+    const targetProfitNum = parseFloat(activeMission.targetProfit) || 0
+    // Scale demo financials to mission budget
+    const askingPrice = budgetNum > 0 ? Math.round(budgetNum * 0.82) : 0
+    const retailValue = budgetNum > 0 ? Math.round(budgetNum * 1.28) : 0
+    const projectedProfit = budgetNum > 0 ? Math.round(retailValue - askingPrice - Math.round(budgetNum * 0.05)) : 0
+    const formatGBP = (n: number) => n > 0 ? `£${n.toLocaleString('en-GB')}` : '—'
+    return {
+      vehicleName,
+      make,
+      model,
+      missionId: activeMission.missionId,
+      vehicleType: activeMission.vehicleType,
+      budget: activeMission.budget ? `Up to £${parseFloat(activeMission.budget).toLocaleString('en-GB')}` : '—',
+      targetProfit: activeMission.targetProfit ? `£${parseFloat(activeMission.targetProfit).toLocaleString('en-GB')}+` : '—',
+      searchArea: activeMission.searchArea || '—',
+      buyingPriority: activeMission.buyingPriority || '—',
+      budgetNum,
+      targetProfitNum,
+      retailValue,
+      projectedProfit,
+      askingPriceDisplay: formatGBP(askingPrice),
+      retailValueDisplay: formatGBP(retailValue),
+      projectedProfitDisplay: projectedProfit > 0 ? `${formatGBP(projectedProfit)}–${formatGBP(projectedProfit + Math.round(targetProfitNum * 0.2))}` : '—',
+    }
+  }, [activeMission])
   // AI Thinking overlay
   const [thinkingVisible, setThinkingVisible] = useState(true)
   const [thinkingExiting, setThinkingExiting] = useState(false)
@@ -345,33 +378,46 @@ function OpportunityPage() {
     return () => timers.forEach(clearTimeout)
   }, [])
 
-  // Executive summary stat counters
+  // Keep a ref so the stat animation (which runs once) can access the latest missionReport
+  const missionReportRef = useRef(missionReport)
+  useEffect(() => { missionReportRef.current = missionReport }, [missionReport])
+  const statAnimStarted = useRef(false)
+
+  // Executive summary stat counters — waits briefly for mission data to load from localStorage
   useEffect(() => {
-    const targetValues = { confidence: 97, profit: 4255, retail: 36250, score: 97, days: 9 }
-    const duration = 1100
-    const fps = 60
-    const steps = Math.round(duration / (1000 / fps))
-    let frame = 0
-    const timer = setInterval(() => {
-      frame++
-      const progress = Math.min(frame / steps, 1)
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setStatValues({
-        confidence: Math.round(targetValues.confidence * eased),
-        profit: Math.round(targetValues.profit * eased),
-        retail: Math.round(targetValues.retail * eased),
-        score: Math.round(targetValues.score * eased),
-        days: Math.round(targetValues.days * eased),
-      })
-      if (progress >= 1) clearInterval(timer)
-    }, 1000 / fps)
-    // Start after thinking overlay exits (~2.8s offset)
-    const outer = setTimeout(() => {}, 2800)
-    return () => {
-      clearTimeout(outer)
-      clearInterval(timer)
+    const runAnimation = () => {
+      if (statAnimStarted.current) return
+      statAnimStarted.current = true
+      const mr = missionReportRef.current
+      // Scale stats to mission values when available, otherwise use default demo values
+      const targetValues = mr && mr.retailValue > 0 ? {
+        confidence: 92,
+        profit: Math.max(mr.projectedProfit, 200),
+        retail: mr.retailValue,
+        score: 92,
+        days: 8,
+      } : { confidence: 97, profit: 4255, retail: 36250, score: 97, days: 9 }
+      const duration = 1100
+      const fps = 60
+      const steps = Math.round(duration / (1000 / fps))
+      let frame = 0
+      const timer = setInterval(() => {
+        frame++
+        const progress = Math.min(frame / steps, 1)
+        const eased = 1 - Math.pow(1 - progress, 3)
+        setStatValues({
+          confidence: Math.round(targetValues.confidence * eased),
+          profit: Math.round(targetValues.profit * eased),
+          retail: Math.round(targetValues.retail * eased),
+          score: Math.round(targetValues.score * eased),
+          days: Math.round(targetValues.days * eased),
+        })
+        if (progress >= 1) clearInterval(timer)
+      }, 1000 / fps)
     }
+    // Delay slightly to allow useMissionProgress to load from localStorage
+    const t = setTimeout(runAnimation, 350)
+    return () => clearTimeout(t)
   }, [])
 
   // Timeline sequential reveal
@@ -511,7 +557,11 @@ function OpportunityPage() {
             <div className="space-y-1">
               <h1 className="text-headline-lg font-headline-lg text-primary">AI Buying Report</h1>
               <p className="text-body-sm font-body-sm uppercase tracking-[0.2em] text-on-surface-variant">
-                Vehicle Opportunity ID: <span className="font-semibold text-on-surface">{featuredOpportunity.id}</span>
+                {missionReport ? (
+                  <>Mission ID: <span className="font-semibold text-on-surface">{missionReport.missionId}</span></>
+                ) : (
+                  <>Vehicle Opportunity ID: <span className="font-semibold text-on-surface">{featuredOpportunity.id}</span></>
+                )}
               </p>
             </div>
             <div className="self-end sm:self-auto">
@@ -523,37 +573,72 @@ function OpportunityPage() {
         </header>
 
         {/* Mission Engine Status — reads from the shared Mission Engine */}
-        {activeMission && (
+        {(activeMission || (missionInitialized && !activeMission)) && (
           <section className="opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="Mission status" style={stagger(1)}>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80">Mission Status</p>
-                <p className="mt-0.5 text-sm font-semibold text-on-surface">{activeMission.missionId}</p>
+            {activeMission ? (
+              <>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80">Mission Status</p>
+                    <p className="mt-0.5 text-sm font-semibold text-on-surface">{activeMission.missionId}</p>
+                  </div>
+                  <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-widest ${activeMission.status === 'Completed' ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400' : 'border-primary/25 bg-primary/10 text-primary'}`}>
+                    {activeMission.status === 'Completed' ? '✅ Completed Successfully' : activeMission.status || 'Mission Created'}
+                  </span>
+                </div>
+                <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-3 lg:grid-cols-4">
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Mission ID</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.missionId}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Vehicle Type</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.vehicleType || '—'}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Make &amp; Model</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{missionReport?.vehicleName || '—'}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Budget</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{missionReport?.budget || '—'}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Target Profit</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{missionReport?.targetProfit || '—'}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Search Area</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.searchArea || '—'}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Buying Priority</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.buyingPriority || '—'}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Current Stage</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.currentStage || MISSION_STAGES[0]}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Search Progress</dt>
+                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.progress ?? 0}%</dd>
+                  </div>
+                </dl>
+              </>
+            ) : (
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container p-4 text-center">
+                <p className="mb-1 text-sm font-semibold text-on-surface">Mission report data could not be loaded.</p>
+                <p className="mb-4 text-sm text-on-surface-variant">No active mission was found. Please return to the dashboard or create a new search.</p>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <a href="/dashboard" className="inline-flex items-center gap-2 rounded-lg border border-outline-variant/40 bg-surface-container-high px-4 py-2 text-sm font-medium text-on-surface transition-colors hover:bg-surface-container">
+                    Return to Dashboard
+                  </a>
+                  <a href="/search-builder" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary">
+                    Create New Search
+                  </a>
+                </div>
               </div>
-              <span className="rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary">
-                {activeMission.status || 'Mission Created'}
-              </span>
-            </div>
-            <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-4">
-              <div>
-                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Current Stage</dt>
-                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.currentStage || MISSION_STAGES[0]}</dd>
-              </div>
-              <div>
-                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Progress</dt>
-                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.progress ?? 0}%</dd>
-              </div>
-              <div>
-                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">AI Activity</dt>
-                <dd className="mt-0.5 font-medium text-on-surface">{activeMission.currentAiActivity || '—'}</dd>
-              </div>
-              <div>
-                <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Mission Status</dt>
-                <dd className="mt-0.5 font-medium text-on-surface">
-                  {activeMission.status === 'Completed' ? 'Completed Successfully' : activeMission.status || 'Mission Created'}
-                </dd>
-              </div>
-            </dl>
+            )}
           </section>
         )}
 
@@ -805,11 +890,11 @@ function OpportunityPage() {
               <ul className="flex-1 space-y-1.5">
                 <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
                   <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
-                  <span>Asking price {featuredOpportunity.listPriceDisplay} below estimated market value ({featuredOpportunity.estimatedRetailValueDisplay})</span>
+                  <span>Asking price {missionReport?.askingPriceDisplay || featuredOpportunity.listPriceDisplay} below estimated retail value ({missionReport?.retailValueDisplay || featuredOpportunity.estimatedRetailValueDisplay})</span>
                 </li>
                 <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
                   <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
-                  <span>Estimated profit {featuredOpportunity.estimatedGrossProfitDisplay} exceeds target</span>
+                  <span>Estimated profit {missionReport?.projectedProfitDisplay || featuredOpportunity.estimatedGrossProfitDisplay} exceeds target</span>
                 </li>
                 <li className="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
                   <span className="tica-decision-buy mt-px shrink-0 font-semibold">✓</span>
@@ -851,7 +936,7 @@ function OpportunityPage() {
           <p className="mb-3 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant">Target Vehicle</p>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
             <div className="min-w-0 flex-1">
-              <h2 className="text-headline-lg font-headline-lg text-on-surface">{featuredOpportunity.vehicle}</h2>
+              <h2 className="text-headline-lg font-headline-lg text-on-surface">{missionReport?.vehicleName || featuredOpportunity.vehicle}</h2>
               <div className="mt-3 grid grid-cols-2 gap-3">
                 <p>
                   <span className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Year</span>
@@ -859,7 +944,7 @@ function OpportunityPage() {
                 </p>
                 <p>
                   <span className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Asking Price</span>
-                  <span className="mt-1 block text-body-lg font-body-lg text-primary">{featuredOpportunity.listPriceDisplay}</span>
+                  <span className="mt-1 block text-body-lg font-body-lg text-primary">{missionReport?.askingPriceDisplay || featuredOpportunity.listPriceDisplay}</span>
                 </p>
               </div>
             </div>
@@ -869,7 +954,7 @@ function OpportunityPage() {
                 <img
                   key={heroImageIdx}
                   src={featuredOpportunity.heroImageSrc}
-                  alt={featuredOpportunity.heroImageAlt}
+                  alt={missionReport ? `${missionReport.vehicleName} opportunity vehicle` : featuredOpportunity.heroImageAlt}
                   className="h-[160px] w-full object-cover sm:h-[140px]"
                   style={{ animation: 'opp-page-fadein 0.4s ease-out both' }}
                 />
