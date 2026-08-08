@@ -4,6 +4,7 @@
 // in a backend API without touching any other code.
 
 export const MISSION_STORAGE_KEY = 'tica_active_mission'
+export const MISSION_PREFILL_KEY = 'tica_mission_prefill'
 const MISSION_COUNTER_KEY = 'tica_mission_counter'
 
 // ── Mission Stages ───────────────────────────────────────────────────────────

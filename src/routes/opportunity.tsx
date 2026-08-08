@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'

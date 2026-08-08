@@ -1,9 +1,9 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
-import { MISSION_STAGES, type TicaMission } from '../lib/mission'
+import { MISSION_STAGES, MISSION_PREFILL_KEY, type TicaMission } from '../lib/mission'
 import { useMissionProgress } from '../lib/useMissionProgress'
 
 export const Route = createFileRoute('/dashboard')({
@@ -236,6 +236,7 @@ function ChevronIcon({ open }: { open: boolean }) {
 }
 
 function DashboardPage() {
+  const navigate = useNavigate()
   const { dashboardRecentOpportunities, featuredOpportunity } = opportunityIntelligencePlaceholder
   const decisionModel = featuredOpportunity.decisionModel
   const summaryCards = [
@@ -1344,13 +1345,21 @@ function DashboardPage() {
                                 <span aria-hidden="true">📄</span>
                                 View Buying Report
                               </Link>
-                              <Link
-                                to="/search-builder"
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  try {
+                                    localStorage.setItem(MISSION_PREFILL_KEY, JSON.stringify(storedMission))
+                                  } catch {
+                                    // localStorage unavailable
+                                  }
+                                  navigate({ to: '/search-builder' })
+                                }}
                                 className="inline-flex items-center gap-1.5 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm font-medium text-on-surface transition-colors hover:bg-surface-container-high"
                               >
                                 <span aria-hidden="true">🔄</span>
                                 Run Again
-                              </Link>
+                              </button>
                             </div>
                           )}
                         </div>

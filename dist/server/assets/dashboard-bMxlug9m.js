@@ -1,10 +1,10 @@
 import { jsxs, jsx } from "react/jsx-runtime";
-import { Link } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
-import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
-import { u as useMissionProgress } from "./useMissionProgress-Eh_UQ3Pf.js";
+import { a as MISSION_STAGES, M as MISSION_PREFILL_KEY } from "./mission-BWK2uK5a.js";
+import { u as useMissionProgress } from "./useMissionProgress-DPrHquuK.js";
 import "react-dom";
 const radarRingInsets = [6, 14, 22, 30, 38, 46];
 const radarGridAngles = Array.from({
@@ -245,6 +245,7 @@ function ChevronIcon({
   }, children: /* @__PURE__ */ jsx("polyline", { points: "6 9 12 15 18 9" }) });
 }
 function DashboardPage() {
+  const navigate = useNavigate();
   const {
     dashboardRecentOpportunities,
     featuredOpportunity
@@ -1115,7 +1116,15 @@ function DashboardPage() {
                 /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "📄" }),
                 "View Buying Report"
               ] }),
-              /* @__PURE__ */ jsxs(Link, { to: "/search-builder", className: "inline-flex items-center gap-1.5 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm font-medium text-on-surface transition-colors hover:bg-surface-container-high", children: [
+              /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => {
+                try {
+                  localStorage.setItem(MISSION_PREFILL_KEY, JSON.stringify(storedMission));
+                } catch {
+                }
+                navigate({
+                  to: "/search-builder"
+                });
+              }, className: "inline-flex items-center gap-1.5 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm font-medium text-on-surface transition-colors hover:bg-surface-container-high", children: [
                 /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "🔄" }),
                 "Run Again"
               ] })

@@ -5,6 +5,7 @@ import { TicaShield } from '../components/TicaShield'
 import {
   type TicaMission,
   type ValidationError,
+  MISSION_PREFILL_KEY,
   validateMissionInput,
   createMission,
   saveMission,
@@ -396,6 +397,71 @@ function SearchBuilderPage() {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Run Again prefill — reads mission data written by the dashboard Run Again button,
+  // applies it to the form, then clears the key so a fresh visit is always blank.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(MISSION_PREFILL_KEY)
+      if (!raw) return
+      localStorage.removeItem(MISSION_PREFILL_KEY)
+      const mission = JSON.parse(raw) as Partial<TicaMission>
+
+      // Vehicle type
+      const vt = mission.vehicleType ?? ''
+      if (AVAILABLE_VEHICLE_TYPE_SET.has(vt as AvailableVehicleType)) {
+        setSelectedVehicleType(vt as AvailableVehicleType)
+      }
+
+      // Make
+      const prefillMake = mission.vehicleRequirements?.make ?? ''
+      const prefillModel = mission.vehicleRequirements?.model ?? ''
+      const prefillVehicleType = AVAILABLE_VEHICLE_TYPE_SET.has(vt as AvailableVehicleType)
+        ? (vt as AvailableVehicleType)
+        : 'Cars'
+      const knownMakes = MAKES_BY_VEHICLE_TYPE[prefillVehicleType] as readonly string[]
+      if (prefillMake) {
+        if (knownMakes.includes(prefillMake)) {
+          setMake(prefillMake)
+          // Model
+          const knownModels = (MODELS_BY_VEHICLE_TYPE[prefillVehicleType][prefillMake] ?? []) as string[]
+          if (prefillModel && knownModels.includes(prefillModel)) {
+            setModel(prefillModel)
+          } else if (prefillModel) {
+            setModel(OTHER_MODEL_OPTION)
+            setManualModel(prefillModel)
+          }
+        } else {
+          setMake(OTHER_MAKE_OPTION)
+          setManualMake(prefillMake)
+          if (prefillModel) setManualModel(prefillModel)
+        }
+      }
+
+      // Budget and profit (stored as raw numeric strings e.g. "6000")
+      if (mission.budget) setMaxBudget(mission.budget)
+      if (mission.targetProfit) setMinProfit(mission.targetProfit)
+
+      // Buying priority — stored as label, need to reverse-map to value
+      if (mission.buyingPriority) {
+        const match = SEARCH_PRIORITIES.find(
+          (p) => p.label.toLowerCase() === mission.buyingPriority!.toLowerCase(),
+        )
+        if (match) setSearchPriority(match.value)
+      }
+
+      // Other optional fields
+      if (mission.vehicleRequirements?.yearFrom) setYearFrom(mission.vehicleRequirements.yearFrom)
+      if (mission.vehicleRequirements?.yearTo) setYearTo(mission.vehicleRequirements.yearTo)
+      if (mission.vehicleRequirements?.maxMileage) setMaxMileage(mission.vehicleRequirements.maxMileage)
+      if (mission.vehicleRequirements?.fuelType) setFuelType(mission.vehicleRequirements.fuelType)
+      if (mission.vehicleRequirements?.transmission) setTransmission(mission.vehicleRequirements.transmission)
+      if (mission.vehicleRequirements?.serviceHistory) setServiceHistory(mission.vehicleRequirements.serviceHistory)
+    } catch {
+      // Corrupt prefill data — ignore and show blank form
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const hasSelectedVehicleCategory =
