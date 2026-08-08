@@ -1,4 +1,5 @@
 const MISSION_STORAGE_KEY = "tica_active_mission";
+const MISSION_PREFILL_KEY = "tica_mission_prefill";
 const MISSION_COUNTER_KEY = "tica_mission_counter";
 const MISSION_STAGES = [
   "Mission Created",
@@ -191,8 +192,9 @@ function computeMissionProgress(mission) {
   };
 }
 export {
-  MISSION_STAGES as M,
-  computeMissionProgress as a,
+  MISSION_PREFILL_KEY as M,
+  MISSION_STAGES as a,
+  computeMissionProgress as b,
   createMission as c,
   loadMission as l,
   saveMission as s,

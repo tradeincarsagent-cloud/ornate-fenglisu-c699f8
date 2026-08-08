@@ -1,10 +1,10 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
-import { M as MISSION_STAGES } from "./mission-DBMJYSh9.js";
-import { u as useMissionProgress } from "./useMissionProgress-Eh_UQ3Pf.js";
+import { a as MISSION_STAGES } from "./mission-BWK2uK5a.js";
+import { u as useMissionProgress } from "./useMissionProgress-DPrHquuK.js";
 import "react-dom";
 const {
   featuredOpportunity

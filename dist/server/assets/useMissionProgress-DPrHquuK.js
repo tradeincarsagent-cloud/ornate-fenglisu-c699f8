@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { l as loadMission, a as computeMissionProgress, s as saveMission } from "./mission-DBMJYSh9.js";
+import { l as loadMission, b as computeMissionProgress, s as saveMission } from "./mission-BWK2uK5a.js";
 const POLL_INTERVAL_MS = 1e3;
 function useMissionProgress() {
   const [mission, setMission] = useState(null);

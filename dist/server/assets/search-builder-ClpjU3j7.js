@@ -2,7 +2,7 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { useNavigate } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { v as validateMissionInput, c as createMission, s as saveMission } from "./mission-DBMJYSh9.js";
+import { M as MISSION_PREFILL_KEY, v as validateMissionInput, c as createMission, s as saveMission } from "./mission-BWK2uK5a.js";
 import "react-dom";
 const AVAILABLE_VEHICLE_TYPES = ["Cars", "Classic Cars", "Pickups", "Vans & Light Commercials"];
 const COMING_SOON_VEHICLE_TYPES = ["Motorcycles"];
@@ -289,6 +289,51 @@ function SearchBuilderPage() {
       passive: true
     });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(MISSION_PREFILL_KEY);
+      if (!raw) return;
+      localStorage.removeItem(MISSION_PREFILL_KEY);
+      const mission = JSON.parse(raw);
+      const vt = mission.vehicleType ?? "";
+      if (AVAILABLE_VEHICLE_TYPE_SET.has(vt)) {
+        setSelectedVehicleType(vt);
+      }
+      const prefillMake = mission.vehicleRequirements?.make ?? "";
+      const prefillModel = mission.vehicleRequirements?.model ?? "";
+      const prefillVehicleType = AVAILABLE_VEHICLE_TYPE_SET.has(vt) ? vt : "Cars";
+      const knownMakes = MAKES_BY_VEHICLE_TYPE[prefillVehicleType];
+      if (prefillMake) {
+        if (knownMakes.includes(prefillMake)) {
+          setMake(prefillMake);
+          const knownModels = MODELS_BY_VEHICLE_TYPE[prefillVehicleType][prefillMake] ?? [];
+          if (prefillModel && knownModels.includes(prefillModel)) {
+            setModel(prefillModel);
+          } else if (prefillModel) {
+            setModel(OTHER_MODEL_OPTION);
+            setManualModel(prefillModel);
+          }
+        } else {
+          setMake(OTHER_MAKE_OPTION);
+          setManualMake(prefillMake);
+          if (prefillModel) setManualModel(prefillModel);
+        }
+      }
+      if (mission.budget) setMaxBudget(mission.budget);
+      if (mission.targetProfit) setMinProfit(mission.targetProfit);
+      if (mission.buyingPriority) {
+        const match = SEARCH_PRIORITIES.find((p) => p.label.toLowerCase() === mission.buyingPriority.toLowerCase());
+        if (match) setSearchPriority(match.value);
+      }
+      if (mission.vehicleRequirements?.yearFrom) setYearFrom(mission.vehicleRequirements.yearFrom);
+      if (mission.vehicleRequirements?.yearTo) setYearTo(mission.vehicleRequirements.yearTo);
+      if (mission.vehicleRequirements?.maxMileage) setMaxMileage(mission.vehicleRequirements.maxMileage);
+      if (mission.vehicleRequirements?.fuelType) setFuelType(mission.vehicleRequirements.fuelType);
+      if (mission.vehicleRequirements?.transmission) setTransmission(mission.vehicleRequirements.transmission);
+      if (mission.vehicleRequirements?.serviceHistory) setServiceHistory(mission.vehicleRequirements.serviceHistory);
+    } catch {
+    }
   }, []);
   const hasSelectedVehicleCategory = selectedVehicleType !== null && AVAILABLE_VEHICLE_TYPE_SET.has(selectedVehicleType);
   const activeVehicleType = hasSelectedVehicleCategory ? selectedVehicleType : "Cars";
