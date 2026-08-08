@@ -1244,10 +1244,18 @@ function DashboardPage() {
                           <div className="flex flex-wrap items-center gap-2">
                             <span
                               className="mission-status-dot flex-shrink-0"
-                              style={{ background: 'rgba(251,191,36,0.88)', boxShadow: '0 0 6px rgba(251,191,36,0.5)' }}
+                              style={
+                                storedMission.status === 'Completed'
+                                  ? { background: 'rgba(34,197,94,0.88)', boxShadow: '0 0 6px rgba(34,197,94,0.5)' }
+                                  : { background: 'rgba(251,191,36,0.88)', boxShadow: '0 0 6px rgba(251,191,36,0.5)' }
+                              }
                             />
                             <p className="break-words text-body-md font-body-md font-medium text-on-surface">{deriveMissionName(storedMission)}</p>
-                            <span className="rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary">NEW MISSION</span>
+                            {storedMission.status === 'Completed' ? (
+                              <span className="rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-emerald-500/15 text-emerald-400">COMPLETED</span>
+                            ) : (
+                              <span className="rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary">NEW MISSION</span>
+                            )}
                           </div>
                           <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 pl-4">
                             <p className="text-sm text-on-surface-variant">ID: {storedMission.missionId}</p>
@@ -1300,7 +1308,9 @@ function DashboardPage() {
                             </div>
                             <div>
                               <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Status</dt>
-                              <dd className="mt-0.5 text-sm text-on-surface">🟡 {storedMission.status}</dd>
+                              <dd className="mt-0.5 text-sm text-on-surface">
+                                {storedMission.status === 'Completed' ? '✅' : '🟡'} {storedMission.status}
+                              </dd>
                             </div>
                             <div>
                               <dt className="text-xs uppercase tracking-widest text-on-surface-variant">Current Stage</dt>
@@ -1316,10 +1326,33 @@ function DashboardPage() {
                             <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
                               <div
                                 className="h-full rounded-full"
-                                style={{ width: `${storedMission.progress}%`, background: 'rgba(251,191,36,0.88)', boxShadow: '0 0 4px rgba(251,191,36,0.5)' }}
+                                style={
+                                  storedMission.status === 'Completed'
+                                    ? { width: `${storedMission.progress}%`, background: 'rgba(34,197,94,0.88)', boxShadow: '0 0 4px rgba(34,197,94,0.5)' }
+                                    : { width: `${storedMission.progress}%`, background: 'rgba(251,191,36,0.88)', boxShadow: '0 0 4px rgba(251,191,36,0.5)' }
+                                }
                               />
                             </div>
                           </div>
+                          {/* View Buying Report + Run Again — shown when mission is complete */}
+                          {storedMission.status === 'Completed' && storedMission.currentStage === 'Report Ready' && storedMission.progress >= 100 && (
+                            <div className="flex flex-wrap items-center gap-2 pt-1">
+                              <Link
+                                to="/opportunity"
+                                className="dcc-btn-primary inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary"
+                              >
+                                <span aria-hidden="true">📄</span>
+                                View Buying Report
+                              </Link>
+                              <Link
+                                to="/search-builder"
+                                className="inline-flex items-center gap-1.5 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm font-medium text-on-surface transition-colors hover:bg-surface-container-high"
+                              >
+                                <span aria-hidden="true">🔄</span>
+                                Run Again
+                              </Link>
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>

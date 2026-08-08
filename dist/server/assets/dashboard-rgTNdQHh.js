@@ -1029,12 +1029,15 @@ function DashboardPage() {
           /* @__PURE__ */ jsxs("button", { onClick: () => setStoredMissionExpanded((v) => !v), className: "flex w-full items-center justify-between gap-3", "aria-expanded": storedMissionExpanded, children: [
             /* @__PURE__ */ jsxs("div", { className: "min-w-0 text-left", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
-                /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: {
+                /* @__PURE__ */ jsx("span", { className: "mission-status-dot flex-shrink-0", style: storedMission.status === "Completed" ? {
+                  background: "rgba(34,197,94,0.88)",
+                  boxShadow: "0 0 6px rgba(34,197,94,0.5)"
+                } : {
                   background: "rgba(251,191,36,0.88)",
                   boxShadow: "0 0 6px rgba(251,191,36,0.5)"
                 } }),
                 /* @__PURE__ */ jsx("p", { className: "break-words text-body-md font-body-md font-medium text-on-surface", children: deriveMissionName(storedMission) }),
-                /* @__PURE__ */ jsx("span", { className: "rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary", children: "NEW MISSION" })
+                storedMission.status === "Completed" ? /* @__PURE__ */ jsx("span", { className: "rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-emerald-500/15 text-emerald-400", children: "COMPLETED" }) : /* @__PURE__ */ jsx("span", { className: "rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary", children: "NEW MISSION" })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "mt-1 flex flex-wrap gap-x-4 gap-y-0.5 pl-4", children: [
                 /* @__PURE__ */ jsxs("p", { className: "text-sm text-on-surface-variant", children: [
@@ -1079,7 +1082,8 @@ function DashboardPage() {
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("dt", { className: "text-xs uppercase tracking-widest text-on-surface-variant", children: "Status" }),
                 /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 text-sm text-on-surface", children: [
-                  "🟡 ",
+                  storedMission.status === "Completed" ? "✅" : "🟡",
+                  " ",
                   storedMission.status
                 ] })
               ] }),
@@ -1096,11 +1100,25 @@ function DashboardPage() {
                   "%"
                 ] })
               ] }),
-              /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full", style: {
+              /* @__PURE__ */ jsx("div", { className: "h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest", children: /* @__PURE__ */ jsx("div", { className: "h-full rounded-full", style: storedMission.status === "Completed" ? {
+                width: `${storedMission.progress}%`,
+                background: "rgba(34,197,94,0.88)",
+                boxShadow: "0 0 4px rgba(34,197,94,0.5)"
+              } : {
                 width: `${storedMission.progress}%`,
                 background: "rgba(251,191,36,0.88)",
                 boxShadow: "0 0 4px rgba(251,191,36,0.5)"
               } }) })
+            ] }),
+            storedMission.status === "Completed" && storedMission.currentStage === "Report Ready" && storedMission.progress >= 100 && /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2 pt-1", children: [
+              /* @__PURE__ */ jsxs(Link, { to: "/opportunity", className: "dcc-btn-primary inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary", children: [
+                /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "📄" }),
+                "View Buying Report"
+              ] }),
+              /* @__PURE__ */ jsxs(Link, { to: "/search-builder", className: "inline-flex items-center gap-1.5 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm font-medium text-on-surface transition-colors hover:bg-surface-container-high", children: [
+                /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "🔄" }),
+                "Run Again"
+              ] })
             ] })
           ] })
         ] }) }) : missionInitialized ? /* @__PURE__ */ jsxs("div", { className: "dcc-card dcc-hover rounded-xl border border-outline-variant/30 bg-surface-container-high p-4 text-center", children: [
