@@ -56,6 +56,14 @@ function isSpecified(value?: string) {
   return trimmed !== '' && trimmed.toLowerCase() !== 'any'
 }
 
+function getExecutiveSummaryValueClass(value: string | number) {
+  const normalized = typeof value === 'number' ? `${value}` : value.trim()
+  const isNumeric = typeof value === 'number' || /^£?\d[\d,]*(\.\d+)?%?$/.test(normalized)
+  if (isNumeric || normalized.length <= 8) return 'text-[28px] sm:text-[32px]'
+  if (normalized.length <= 16) return 'text-[21px] sm:text-[25px]'
+  return 'text-[17px] leading-tight sm:text-[21px]'
+}
+
 function formatMissionValue(value?: string, fallback = 'Awaiting live data') {
   return isSpecified(value) ? value!.trim() : fallback
 }
@@ -492,6 +500,11 @@ function OpportunityPage() {
   const meterZone = isBuyVerdict ? 'buy' : isReviewVerdict ? 'review' : 'pass'
   const meterLabel = unifiedRecommendation
   const meterSentence = reportVehicleIntelligence.dealerVerdict.summary
+  const executiveConfidenceValue = Number.isFinite(numericConfidence) && statValues !== null ? `${statValues.confidence}%` : unifiedConfidence
+  const executiveProfitValue = statValues !== null ? `£${statValues.profit.toLocaleString('en-GB')}` : '—'
+  const executiveRetailValue = statValues !== null ? `£${statValues.retail.toLocaleString('en-GB')}` : '—'
+  const executiveScoreValue = statValues !== null && statValues.score > 0 ? statValues.score : 'Awaiting live data'
+  const executiveDaysValue = statValues !== null && statValues.days > 0 ? statValues.days : 'Awaiting live data'
   // AI Thinking overlay
   const [thinkingVisible, setThinkingVisible] = useState(true)
   const [thinkingExiting, setThinkingExiting] = useState(false)
@@ -851,36 +864,36 @@ function OpportunityPage() {
             {/* TICA Confidence */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Confidence</p>
-              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
-               {Number.isFinite(numericConfidence) && statValues !== null ? `${statValues.confidence}%` : unifiedConfidence}
+              <p className={`opp-stat-animate mt-2 font-semibold leading-tight text-primary text-balance ${getExecutiveSummaryValueClass(executiveConfidenceValue)}`}>
+               {executiveConfidenceValue}
               </p>
             </div>
             {/* Estimated Gross Profit */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Gross Profit</p>
-              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                {statValues !== null ? `£${statValues.profit.toLocaleString('en-GB')}` : '—'}
+              <p className={`opp-stat-animate mt-2 font-semibold leading-tight text-on-surface text-balance ${getExecutiveSummaryValueClass(executiveProfitValue)}`}>
+                {executiveProfitValue}
               </p>
             </div>
             {/* Estimated Retail Value */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Retail Value</p>
-              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                {statValues !== null ? `£${statValues.retail.toLocaleString('en-GB')}` : '—'}
+              <p className={`opp-stat-animate mt-2 font-semibold leading-tight text-on-surface text-balance ${getExecutiveSummaryValueClass(executiveRetailValue)}`}>
+                {executiveRetailValue}
               </p>
             </div>
             {/* Opportunity Score */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Opportunity Score</p>
-              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]">
-                {statValues !== null && statValues.score > 0 ? statValues.score : 'Awaiting live data'}
+              <p className={`opp-stat-animate mt-2 font-semibold leading-tight text-primary text-balance ${getExecutiveSummaryValueClass(executiveScoreValue)}`}>
+                {executiveScoreValue}
               </p>
             </div>
             {/* Estimated Days to Sell */}
             <div className="opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center">
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">Days to Sell</p>
-              <p className="opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]">
-                {statValues !== null && statValues.days > 0 ? statValues.days : 'Awaiting live data'}
+              <p className={`opp-stat-animate mt-2 font-semibold leading-tight text-on-surface text-balance ${getExecutiveSummaryValueClass(executiveDaysValue)}`}>
+                {executiveDaysValue}
               </p>
             </div>
           </div>
@@ -934,7 +947,7 @@ function OpportunityPage() {
                 aria-hidden="true"
               />
               <p className="text-label-caps font-label-caps font-semibold uppercase tracking-widest text-on-surface">
-                AI Analysis Complete
+                AVAILABLE DATA ANALYSIS COMPLETE
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -1129,12 +1142,12 @@ function OpportunityPage() {
             </div>
             <div className="min-w-0 flex-1 sm:w-56 md:w-64">
               {/* Hero image with fade transition */}
-              <div className="overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container">
+              <div className="aspect-square overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container">
                 <img
                   key={heroImageIdx}
                   src={REPORT_PLACEHOLDER_IMAGE_SRC}
                   alt={missionReport ? `${missionReport.vehicleName} opportunity vehicle placeholder` : 'Vehicle opportunity placeholder'}
-                  className="h-[160px] w-full object-cover sm:h-[140px]"
+                  className="h-full w-full object-cover"
                   style={{ animation: 'opp-page-fadein 0.4s ease-out both' }}
                 />
               </div>
