@@ -339,39 +339,39 @@ export function loadSelectedBuyingReportMissionId(): string | null {
   } catch {
     return null
   }
+}
 
-  export function loadIgnoredBuyingReportMissionIds(): string[] {
-    try {
-      const raw = localStorage.getItem(IGNORED_REPORT_MISSION_IDS_KEY)
-      if (!raw) return []
-      const parsed = JSON.parse(raw)
-      if (!Array.isArray(parsed)) return []
-      return parsed.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
-    } catch {
-      return []
-    }
+export function loadIgnoredBuyingReportMissionIds(): string[] {
+  try {
+    const raw = localStorage.getItem(IGNORED_REPORT_MISSION_IDS_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    if (!Array.isArray(parsed)) return []
+    return parsed.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
+  } catch {
+    return []
   }
+}
 
-  export function ignoreBuyingReportMission(missionId: string): void {
-    const normalizedMissionId = missionId.trim()
-    if (!normalizedMissionId) return
+export function ignoreBuyingReportMission(missionId: string): void {
+  const normalizedMissionId = missionId.trim()
+  if (!normalizedMissionId) return
 
-    try {
-      const ignoredMissionIds = new Set(loadIgnoredBuyingReportMissionIds())
-      ignoredMissionIds.add(normalizedMissionId)
-      localStorage.setItem(IGNORED_REPORT_MISSION_IDS_KEY, JSON.stringify([...ignoredMissionIds]))
+  try {
+    const ignoredMissionIds = new Set(loadIgnoredBuyingReportMissionIds())
+    ignoredMissionIds.add(normalizedMissionId)
+    localStorage.setItem(IGNORED_REPORT_MISSION_IDS_KEY, JSON.stringify([...ignoredMissionIds]))
 
-      if (loadSelectedBuyingReportMissionId() === normalizedMissionId) {
-        localStorage.removeItem(SELECTED_REPORT_MISSION_ID_KEY)
-      }
-
-      const activeMission = loadMission()
-      if (activeMission?.missionId === normalizedMissionId) {
-        localStorage.removeItem(MISSION_STORAGE_KEY)
-      }
-    } catch {
-      // localStorage unavailable
+    if (loadSelectedBuyingReportMissionId() === normalizedMissionId) {
+      localStorage.removeItem(SELECTED_REPORT_MISSION_ID_KEY)
     }
+
+    const activeMission = loadMission()
+    if (activeMission?.missionId === normalizedMissionId) {
+      localStorage.removeItem(MISSION_STORAGE_KEY)
+    }
+  } catch {
+    // localStorage unavailable
   }
 }
 
