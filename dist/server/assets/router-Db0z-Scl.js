@@ -155,7 +155,7 @@ const $$splitComponentImporter$8 = () => import("./owner-BRaRwun4.js");
 const Route$8 = createFileRoute("/owner")({
   component: lazyRouteComponent($$splitComponentImporter$8, "component")
 });
-const $$splitComponentImporter$7 = () => import("./opportunity-DqfDfZm2.js");
+const $$splitComponentImporter$7 = () => import("./opportunity-FJJjuctR.js");
 const Route$7 = createFileRoute("/opportunity")({
   validateSearch: (search) => ({
     missionId: typeof search.missionId === "string" ? search.missionId : void 0
