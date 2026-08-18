@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES } from "./mission-DVKehJWq.js";
 import { u as useMissionProgress } from "./useMissionProgress-ChTaZnbb.js";
-import { R as Route } from "./router-BCrLm0Mh.js";
+import { R as Route } from "./router-Ci-sKawV.js";
 import "react-dom";
 function isSpecified(value) {
   const trimmed = value?.trim() ?? "";
@@ -838,7 +838,7 @@ function OpportunityPage() {
                 /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: "Awaiting active mission" })
               ] }) })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx("div", { className: `opp-badge-sweep rounded-2xl ${badgeSweep ? "opp-badge-sweep-play" : ""}`, children: /* @__PURE__ */ jsx(TicaShield, { size: "lg" }) }) })
+            /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx("div", { className: `opp-badge-sweep ${badgeSweep ? "opp-badge-sweep-play" : ""}`, children: /* @__PURE__ */ jsx(TicaShield, { size: "lg" }) }) })
           ] })
         ] }),
         (resolvedMission || missionInitialized && !resolvedMission) && /* @__PURE__ */ jsx("section", { className: "opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", "aria-label": "Mission status", style: stagger(1), children: resolvedMission ? /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -1081,7 +1081,7 @@ function OpportunityPage() {
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "w-20 shrink-0 sm:w-24", children: [
+            /* @__PURE__ */ jsxs("div", { className: "w-[6.5rem] shrink-0 sm:w-[7.75rem]", children: [
               /* @__PURE__ */ jsx("div", { className: "aspect-square overflow-hidden rounded-lg border border-outline-variant/30 bg-surface-container", children: /* @__PURE__ */ jsx("div", { className: "flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(49,64,99,0.28),rgba(11,19,31,0.94))]", style: {
                 animation: "opp-page-fadein 0.4s ease-out both"
               }, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-1 text-center", children: [
