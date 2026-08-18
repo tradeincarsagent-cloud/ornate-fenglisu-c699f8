@@ -1,11 +1,63 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
-import { useMemo, useEffect, useState, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES, d as ignoreMission } from "./mission-C3C9xkMh.js";
 import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
-import { R as Route } from "./router-AOgnQVlu.js";
+import { R as Route } from "./router-BizQYHL9.js";
 import "react-dom";
+const SAVED_OPPORTUNITIES_KEY = "tica_saved_opportunities";
+function load() {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(SAVED_OPPORTUNITIES_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+function persist(items) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(SAVED_OPPORTUNITIES_KEY, JSON.stringify(items));
+  } catch {
+  }
+}
+function isOpportunitySaved(id) {
+  return load().some((o) => o.id === id);
+}
+function saveOpportunity(opportunity) {
+  const existing = load();
+  const filtered = existing.filter((o) => o.id !== opportunity.id);
+  persist([opportunity, ...filtered]);
+}
+function removeSavedOpportunity(id) {
+  const existing = load();
+  persist(existing.filter((o) => o.id !== id));
+}
+function useSavedOpportunity(id) {
+  const [saved, setSaved] = useState(false);
+  useEffect(() => {
+    if (!id) return;
+    setSaved(isOpportunitySaved(id));
+  }, [id]);
+  const save = useCallback(
+    (opportunity) => {
+      if (!id) return;
+      saveOpportunity(opportunity);
+      setSaved(true);
+    },
+    [id]
+  );
+  const remove = useCallback(() => {
+    if (!id) return;
+    removeSavedOpportunity(id);
+    setSaved(false);
+  }, [id]);
+  return { saved, save, remove };
+}
 function isSpecified(value) {
   const trimmed = value?.trim() ?? "";
   return trimmed !== "" && trimmed.toLowerCase() !== "any";
@@ -53,6 +105,12 @@ function OpportunityPage() {
     if (!resolvedMission || !isBuyingReportReady(resolvedMission)) return;
     saveSelectedBuyingReportMissionId(resolvedMission.missionId);
   }, [resolvedMission]);
+  const savedOpportunityId = resolvedMission?.missionId;
+  const {
+    saved: isOpportunitySaved2,
+    save: doSaveOpportunity,
+    remove: doRemoveOpportunity
+  } = useSavedOpportunity(savedOpportunityId);
   const issueToneConfig = {
     info: {
       label: "Information",
@@ -100,6 +158,7 @@ function OpportunityPage() {
   const [meterGlowing, setMeterGlowing] = useState(false);
   const [showIgnoreConfirm, setShowIgnoreConfirm] = useState(false);
   const [showContactMessage, setShowContactMessage] = useState(false);
+  const [showUnsaveConfirm, setShowUnsaveConfirm] = useState(false);
   const missionReport = useMemo(() => {
     if (!resolvedMission) return null;
     const make = resolvedMission.vehicleRequirements?.make || "";
@@ -1562,7 +1621,32 @@ function OpportunityPage() {
         /* @__PURE__ */ jsxs("section", { className: "opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5", ref: setRevealRef(5), children: [
           /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "Actions" }),
           /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3", children: [
-            /* @__PURE__ */ jsxs("button", { type: "button", className: "opp-btn-primary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary", children: [
+            isOpportunitySaved2 ? /* @__PURE__ */ jsxs("button", { type: "button", className: "opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface", onClick: () => setShowUnsaveConfirm(true), children: [
+              /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "✓" }),
+              "Saved ✓"
+            ] }) : /* @__PURE__ */ jsxs("button", { type: "button", className: "opp-btn-primary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary", onClick: () => {
+              if (!missionReport) return;
+              doSaveOpportunity({
+                id: missionReport.missionId,
+                missionId: missionReport.missionId,
+                make: missionReport.make,
+                model: missionReport.model,
+                vehicleName: missionReport.vehicleName,
+                vehicleType: missionReport.vehicleType,
+                yearDisplay: missionReport.yearDisplay,
+                maxMileageDisplay: missionReport.maxMileageDisplay,
+                fuelType: missionReport.fuelType,
+                transmission: missionReport.transmission,
+                searchArea: missionReport.searchArea,
+                askingPrice: missionReport.askingPriceDisplay,
+                retailValue: missionReport.retailValueDisplay,
+                projectedProfit: missionReport.projectedProfitDisplay,
+                aiVerdict: unifiedRecommendation,
+                confidence: unifiedConfidence,
+                opportunityScore: typeof executiveScoreValue === "number" ? executiveScoreValue : 0,
+                dateSaved: (/* @__PURE__ */ new Date()).toISOString()
+              });
+            }, children: [
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "💾" }),
               "Save Opportunity"
             ] }),
@@ -1603,6 +1687,17 @@ function OpportunityPage() {
                 });
               }, children: "Yes, ignore it" }),
               /* @__PURE__ */ jsx("button", { type: "button", className: "inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-sm font-body-sm text-on-surface-variant", onClick: () => setShowIgnoreConfirm(false), children: "Cancel" })
+            ] })
+          ] }),
+          showUnsaveConfirm && /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-3 text-body-sm font-semibold text-on-surface", children: "Remove from saved opportunities?" }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4 text-body-sm text-on-surface-variant", children: "This opportunity will be removed from your saved list. The report will not be affected." }),
+            /* @__PURE__ */ jsxs("div", { className: "flex gap-2.5", children: [
+              /* @__PURE__ */ jsx("button", { type: "button", className: "inline-flex min-h-10 items-center justify-center rounded-xl bg-error px-4 py-2 text-body-sm font-semibold text-on-error", onClick: () => {
+                doRemoveOpportunity();
+                setShowUnsaveConfirm(false);
+              }, children: "Yes, remove it" }),
+              /* @__PURE__ */ jsx("button", { type: "button", className: "inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-sm font-body-sm text-on-surface-variant", onClick: () => setShowUnsaveConfirm(false), children: "Cancel" })
             ] })
           ] })
         ] })
