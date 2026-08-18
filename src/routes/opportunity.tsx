@@ -2,10 +2,18 @@ import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
-import { MISSION_STAGES } from '../lib/mission'
+import {
+  MISSION_STAGES,
+  isBuyingReportReady,
+  resolveBuyingReportMission,
+  saveSelectedBuyingReportMissionId,
+} from '../lib/mission'
 import { useMissionProgress } from '../lib/useMissionProgress'
 
 export const Route = createFileRoute('/opportunity')({
+  validateSearch: (search: Record<string, unknown>) => ({
+    missionId: typeof search.missionId === 'string' ? search.missionId : undefined,
+  }),
   component: OpportunityPage,
 })
 
@@ -88,6 +96,16 @@ function ChevronRightIcon() {
 
 function OpportunityPage() {
   const { mission: activeMission, initialized: missionInitialized } = useMissionProgress()
+  const { missionId: requestedMissionId } = Route.useSearch()
+  const resolvedMission = useMemo(() => {
+    if (!missionInitialized || typeof window === 'undefined') return activeMission
+    return resolveBuyingReportMission({ requestedMissionId, activeMission })
+  }, [activeMission, missionInitialized, requestedMissionId])
+
+  useEffect(() => {
+    if (!resolvedMission || !isBuyingReportReady(resolvedMission)) return
+    saveSelectedBuyingReportMissionId(resolvedMission.missionId)
+  }, [resolvedMission])
   const issueToneConfig: Record<'info' | 'warning' | 'high', { label: string; className: string; dotClassName: string }> = {
     info: {
       label: 'Information',
@@ -142,18 +160,18 @@ function OpportunityPage() {
 
   // Derive mission-specific display values for the report
   const missionReport = useMemo(() => {
-    if (!activeMission) return null
-    const make = activeMission.vehicleRequirements?.make || ''
-    const model = activeMission.vehicleRequirements?.model || ''
-    const yearFrom = activeMission.vehicleRequirements?.yearFrom || ''
-    const yearTo = activeMission.vehicleRequirements?.yearTo || ''
-    const maxMileage = activeMission.vehicleRequirements?.maxMileage || ''
-    const fuelType = activeMission.vehicleRequirements?.fuelType || ''
-    const transmission = activeMission.vehicleRequirements?.transmission || ''
-    const serviceHistory = activeMission.vehicleRequirements?.serviceHistory || ''
-    const vehicleName = [make, model].filter(Boolean).join(' ') || activeMission.vehicleType || 'Vehicle'
-    const budgetNum = parseFloat(activeMission.budget) || 0
-    const targetProfitNum = parseFloat(activeMission.targetProfit) || 0
+    if (!resolvedMission) return null
+    const make = resolvedMission.vehicleRequirements?.make || ''
+    const model = resolvedMission.vehicleRequirements?.model || ''
+    const yearFrom = resolvedMission.vehicleRequirements?.yearFrom || ''
+    const yearTo = resolvedMission.vehicleRequirements?.yearTo || ''
+    const maxMileage = resolvedMission.vehicleRequirements?.maxMileage || ''
+    const fuelType = resolvedMission.vehicleRequirements?.fuelType || ''
+    const transmission = resolvedMission.vehicleRequirements?.transmission || ''
+    const serviceHistory = resolvedMission.vehicleRequirements?.serviceHistory || ''
+    const vehicleName = [make, model].filter(Boolean).join(' ') || resolvedMission.vehicleType || 'Vehicle'
+    const budgetNum = parseFloat(resolvedMission.budget) || 0
+    const targetProfitNum = parseFloat(resolvedMission.targetProfit) || 0
     // All financial figures derived exclusively from this mission's budget
     const askingPrice = budgetNum > 0 ? Math.round(budgetNum * 0.82) : 0
     const retailValue = budgetNum > 0 ? Math.round(budgetNum * 1.28) : 0
@@ -176,17 +194,17 @@ function OpportunityPage() {
       vehicleName,
       make,
       model,
-      missionId: activeMission.missionId,
-      vehicleType: activeMission.vehicleType,
+      missionId: resolvedMission.missionId,
+      vehicleType: resolvedMission.vehicleType,
       yearDisplay,
       maxMileageDisplay,
       fuelType: formatMissionValue(fuelType),
       transmission: formatMissionValue(transmission),
       serviceHistory: formatMissionValue(serviceHistory, 'Requires verification'),
-      budget: activeMission.budget ? `Up to £${parseFloat(activeMission.budget).toLocaleString('en-GB')}` : '—',
-      targetProfit: activeMission.targetProfit ? `£${parseFloat(activeMission.targetProfit).toLocaleString('en-GB')}+` : '—',
-      searchArea: activeMission.searchArea || '—',
-      buyingPriority: activeMission.buyingPriority || '—',
+      budget: resolvedMission.budget ? `Up to £${parseFloat(resolvedMission.budget).toLocaleString('en-GB')}` : '—',
+      targetProfit: resolvedMission.targetProfit ? `£${parseFloat(resolvedMission.targetProfit).toLocaleString('en-GB')}+` : '—',
+      searchArea: resolvedMission.searchArea || '—',
+      buyingPriority: resolvedMission.buyingPriority || '—',
       budgetNum,
       targetProfitNum,
       retailValue,
@@ -231,10 +249,10 @@ function OpportunityPage() {
          ? `Review ${vehicleName} against live vehicle history, service records and model-specific intelligence before negotiating. If those checks are satisfactory, begin negotiations at ${formatGBP(recommendedOffer)}.`
          : `Review ${vehicleName} only after live vehicle history, service records and model-specific intelligence have been verified.`,
     }
-  }, [activeMission])
+  }, [resolvedMission])
   const reportVehicleIntelligence = useMemo<ReportVehicleIntelligence>(() => {
     const vehicleName = missionReport?.vehicleName || 'the active vehicle'
-    const fuelType = activeMission?.vehicleRequirements?.fuelType
+    const fuelType = resolvedMission?.vehicleRequirements?.fuelType
     const fuelKind = getFuelKind(fuelType)
     const fuelLabel = formatMissionValue(fuelType, 'Requires verification')
     const transmissionLabel = missionReport?.transmission || 'Requires verification'
@@ -449,7 +467,7 @@ function OpportunityPage() {
          daysToSell: 'Awaiting live data',
       },
     }
-  }, [activeMission, missionReport])
+  }, [missionReport, resolvedMission])
   const vehicleInfo = useMemo(() => {
     if (!missionReport) {
       return [
@@ -692,7 +710,7 @@ function OpportunityPage() {
     { label: 'Subscription', disabled: true },
   ]
 
-  if (missionInitialized && !activeMission) {
+  if (missionInitialized && !resolvedMission) {
     return (
       <PlatformShell navItems={platformNavItems}>
         <div className="mx-auto w-full max-w-container-max space-y-4">
@@ -816,27 +834,27 @@ function OpportunityPage() {
         </header>
 
         {/* Mission Engine Status — reads from the shared Mission Engine */}
-        {(activeMission || (missionInitialized && !activeMission)) && (
+        {(resolvedMission || (missionInitialized && !resolvedMission)) && (
           <section className="opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5" aria-label="Mission status" style={stagger(1)}>
-            {activeMission ? (
+            {resolvedMission ? (
               <>
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80">Mission Status</p>
-                    <p className="mt-0.5 text-sm font-semibold text-on-surface">{activeMission.missionId}</p>
+                    <p className="mt-0.5 text-sm font-semibold text-on-surface">{resolvedMission.missionId}</p>
                   </div>
-                  <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-widest ${activeMission.status === 'Completed' ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400' : 'border-primary/25 bg-primary/10 text-primary'}`}>
-                    {activeMission.status === 'Completed' ? '✅ Completed Successfully' : activeMission.status || 'Mission Created'}
+                  <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-widest ${resolvedMission.status === 'Completed' ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400' : 'border-primary/25 bg-primary/10 text-primary'}`}>
+                    {resolvedMission.status === 'Completed' ? '✅ Completed Successfully' : resolvedMission.status || 'Mission Created'}
                   </span>
                 </div>
                 <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-3 lg:grid-cols-4">
                   <div>
                     <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Mission ID</dt>
-                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.missionId}</dd>
+                    <dd className="mt-0.5 font-medium text-on-surface">{resolvedMission.missionId}</dd>
                   </div>
                   <div>
                     <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Vehicle Type</dt>
-                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.vehicleType || '—'}</dd>
+                    <dd className="mt-0.5 font-medium text-on-surface">{resolvedMission.vehicleType || '—'}</dd>
                   </div>
                   <div>
                     <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Make &amp; Model</dt>
@@ -852,19 +870,19 @@ function OpportunityPage() {
                   </div>
                   <div>
                     <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Search Area</dt>
-                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.searchArea || '—'}</dd>
+                    <dd className="mt-0.5 font-medium text-on-surface">{resolvedMission.searchArea || '—'}</dd>
                   </div>
                   <div>
                     <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Buying Priority</dt>
-                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.buyingPriority || '—'}</dd>
+                    <dd className="mt-0.5 font-medium text-on-surface">{resolvedMission.buyingPriority || '—'}</dd>
                   </div>
                   <div>
                     <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Current Stage</dt>
-                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.currentStage || MISSION_STAGES[0]}</dd>
+                    <dd className="mt-0.5 font-medium text-on-surface">{resolvedMission.currentStage || MISSION_STAGES[0]}</dd>
                   </div>
                   <div>
                     <dt className="text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60">Search Progress</dt>
-                    <dd className="mt-0.5 font-medium text-on-surface">{activeMission.progress ?? 0}%</dd>
+                    <dd className="mt-0.5 font-medium text-on-surface">{resolvedMission.progress ?? 0}%</dd>
                   </div>
                 </dl>
               </>

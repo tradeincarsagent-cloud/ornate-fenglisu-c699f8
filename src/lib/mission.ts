@@ -6,6 +6,8 @@
 export const MISSION_STORAGE_KEY = 'tica_active_mission'
 export const MISSION_PREFILL_KEY = 'tica_mission_prefill'
 const MISSION_COUNTER_KEY = 'tica_mission_counter'
+const MISSION_HISTORY_STORAGE_KEY = 'tica_mission_history'
+const SELECTED_REPORT_MISSION_ID_KEY = 'tica_selected_report_mission_id'
 
 // ── Mission Stages ───────────────────────────────────────────────────────────
 // Single source of truth for all 8 canonical TICA mission stages.
@@ -267,9 +269,28 @@ export function getMissionStageIndex(stageName: string): number {
 export function saveMission(mission: TicaMission): void {
   try {
     localStorage.setItem(MISSION_STORAGE_KEY, JSON.stringify(mission))
+    const history = loadMissionHistory()
+    const existingIndex = history.findIndex((item) => item.missionId === mission.missionId)
+    if (existingIndex >= 0) {
+      history[existingIndex] = mission
+    } else {
+      history.unshift(mission)
+    }
+    localStorage.setItem(MISSION_HISTORY_STORAGE_KEY, JSON.stringify(history))
   } catch {
     // localStorage unavailable
   }
+}
+
+function normalizeMission(parsed: Partial<TicaMission> & Pick<TicaMission, 'missionId'>): TicaMission {
+  return {
+    lastUpdated: parsed.lastUpdated ?? parsed.createdAt ?? new Date().toISOString(),
+    currentStageIndex: getMissionStageIndex(parsed.currentStage ?? ''),
+    currentAiActivity: 'Mission accepted. Awaiting AI validation.',
+    estimatedTimeRemaining: '—',
+    searchFrequency: 'Every 30 minutes',
+    ...parsed,
+  } as TicaMission
 }
 
 /**
@@ -283,18 +304,81 @@ export function loadMission(): TicaMission | null {
     const raw = localStorage.getItem(MISSION_STORAGE_KEY)
     if (!raw) return null
     const parsed = JSON.parse(raw) as Partial<TicaMission> & Pick<TicaMission, 'missionId'>
-    // Forward-compatibility: fill in any fields added by the Mission Engine v1
-    return {
-      lastUpdated: parsed.createdAt ?? new Date().toISOString(),
-      currentStageIndex: getMissionStageIndex(parsed.currentStage ?? ''),
-      currentAiActivity: 'Mission accepted. Awaiting AI validation.',
-      estimatedTimeRemaining: '—',
-      searchFrequency: 'Every 30 minutes',
-      ...parsed,
-    } as TicaMission
+    return normalizeMission(parsed)
   } catch {
     return null
   }
+}
+
+export function loadMissionHistory(): TicaMission[] {
+  try {
+    const raw = localStorage.getItem(MISSION_HISTORY_STORAGE_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw) as Array<Partial<TicaMission> & Pick<TicaMission, 'missionId'>>
+    if (!Array.isArray(parsed)) return []
+    return parsed
+      .filter((item): item is Partial<TicaMission> & Pick<TicaMission, 'missionId'> => typeof item?.missionId === 'string' && item.missionId.length > 0)
+      .map((item) => normalizeMission(item))
+  } catch {
+    return []
+  }
+}
+
+export function saveSelectedBuyingReportMissionId(missionId: string): void {
+  try {
+    localStorage.setItem(SELECTED_REPORT_MISSION_ID_KEY, missionId)
+  } catch {
+    // localStorage unavailable
+  }
+}
+
+export function loadSelectedBuyingReportMissionId(): string | null {
+  try {
+    return localStorage.getItem(SELECTED_REPORT_MISSION_ID_KEY)
+  } catch {
+    return null
+  }
+}
+
+export function isBuyingReportReady(mission: TicaMission | null | undefined): mission is TicaMission {
+  return Boolean(
+    mission &&
+    (mission.status === 'Completed' || mission.currentStage === 'Report Ready' || (mission.progress ?? 0) >= 100),
+  )
+}
+
+export function resolveBuyingReportMission({
+  requestedMissionId,
+  activeMission,
+}: {
+  requestedMissionId?: string
+  activeMission?: TicaMission | null
+}): TicaMission | null {
+  const missionsById = new Map<string, TicaMission>()
+  loadMissionHistory().forEach((mission) => missionsById.set(mission.missionId, mission))
+  if (activeMission) {
+    missionsById.set(activeMission.missionId, activeMission)
+  }
+
+  const findMission = (missionId?: string | null) => {
+    if (!missionId) return null
+    return missionsById.get(missionId.trim()) ?? null
+  }
+
+  const requestedMission = findMission(requestedMissionId)
+  if (requestedMission) return requestedMission
+
+  const selectedMission = findMission(loadSelectedBuyingReportMissionId())
+  if (selectedMission && isBuyingReportReady(selectedMission)) return selectedMission
+
+  const mostRecentCompletedMission = [...missionsById.values()]
+    .filter((mission) => isBuyingReportReady(mission))
+    .sort((a, b) => new Date(b.lastUpdated || b.createdAt).getTime() - new Date(a.lastUpdated || a.createdAt).getTime())[0] ?? null
+
+  if (mostRecentCompletedMission) return mostRecentCompletedMission
+  if (activeMission) return activeMission
+
+  return null
 }
 
 /**
