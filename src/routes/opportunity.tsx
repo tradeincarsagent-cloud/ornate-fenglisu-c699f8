@@ -517,11 +517,6 @@ function OpportunityPage() {
   const meterZone = isBuyVerdict ? 'buy' : isReviewVerdict ? 'review' : 'pass'
   const meterLabel = unifiedRecommendation
   const meterSentence = reportVehicleIntelligence.dealerVerdict.summary
-  const executiveConfidenceValue = Number.isFinite(numericConfidence) && statValues !== null ? `${statValues.confidence}%` : unifiedConfidence
-  const executiveProfitValue = statValues !== null ? `£${statValues.profit.toLocaleString('en-GB')}` : '—'
-  const executiveRetailValue = statValues !== null ? `£${statValues.retail.toLocaleString('en-GB')}` : '—'
-  const executiveScoreValue = statValues !== null && statValues.score > 0 ? statValues.score : 'Awaiting live data'
-  const executiveDaysValue = statValues !== null && statValues.days > 0 ? statValues.days : 'Awaiting live data'
   // AI Thinking overlay
   const [thinkingVisible, setThinkingVisible] = useState(true)
   const [thinkingExiting, setThinkingExiting] = useState(false)
@@ -530,6 +525,11 @@ function OpportunityPage() {
   const [pageReady, setPageReady] = useState(false)
   // Executive summary stat counters
   const [statValues, setStatValues] = useState<{ confidence: number; profit: number; retail: number; score: number; days: number } | null>(null)
+  const executiveConfidenceValue = Number.isFinite(numericConfidence) && statValues !== null ? `${statValues.confidence}%` : unifiedConfidence
+  const executiveProfitValue = statValues !== null ? `£${statValues.profit.toLocaleString('en-GB')}` : '—'
+  const executiveRetailValue = statValues !== null ? `£${statValues.retail.toLocaleString('en-GB')}` : '—'
+  const executiveScoreValue = statValues !== null && statValues.score > 0 ? statValues.score : 'Awaiting live data'
+  const executiveDaysValue = statValues !== null && statValues.days > 0 ? statValues.days : 'Awaiting live data'
   // Timeline animation
   const [timelineVisible, setTimelineVisible] = useState(0)
   // Badge sweep
