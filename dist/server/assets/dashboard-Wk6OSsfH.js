@@ -2,10 +2,92 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
 import { a as MISSION_STAGES, M as MISSION_PREFILL_KEY } from "./mission-BWK2uK5a.js";
 import { u as useMissionProgress } from "./useMissionProgress-DPrHquuK.js";
 import "react-dom";
+const bmwM3CompetitionScoring = {
+  // Estimated Profit Score: placeholder projection for gross margin after acquisition and prep assumptions.
+  estimatedProfitScore: {
+    status: "High Profit Potential"
+  }
+};
+const bmwM3DecisionModel = {
+  weightedDecisionScore: 89,
+  factors: {
+    overallOpportunityScore: {
+      summary: "Highest-weight roll-up opportunity score remains very strong."
+    },
+    estimatedProfit: {
+      summary: "Projected margin is comfortably above internal targets."
+    },
+    vehicleHistory: {
+      summary: "Usable profile with advisory flags that still require verification."
+    },
+    dealerDemand: {
+      summary: "Demand signals remain strong for this segment and specification."
+    },
+    timeOnMarket: {
+      summary: "Stock-turn expectations support rapid resale."
+    }
+  }
+};
+const opportunityIntelligencePlaceholder = {
+  featuredOpportunity: {
+    vehicle: "BMW M3 Competition",
+    year: "2022",
+    listPriceDisplay: "£31,995",
+    decisionModel: bmwM3DecisionModel,
+    dashboardEstimatedProfitDisplay: "£4,200",
+    dashboardReasonLines: [
+      "Recently reduced in price.",
+      "Strong resale potential.",
+      "Located only 42 miles away."
+    ],
+    scoring: bmwM3CompetitionScoring
+  },
+  dashboardRecentOpportunities: [
+    {
+      vehicle: "Audi RS5 Sportback",
+      source: "Auto Trader",
+      priceDisplay: "£37,500",
+      estimatedProfitDisplay: "£3,850",
+      priority: "High",
+      confidenceDisplay: "94%"
+    },
+    {
+      vehicle: "Range Rover Velar",
+      source: "PistonHeads",
+      priceDisplay: "£29,950",
+      estimatedProfitDisplay: "£2,400",
+      priority: "Medium",
+      confidenceDisplay: "78%"
+    },
+    {
+      vehicle: "Mercedes A45 AMG",
+      source: "Motorway",
+      priceDisplay: "£34,750",
+      estimatedProfitDisplay: "£3,120",
+      priority: "High",
+      confidenceDisplay: "91%"
+    },
+    {
+      vehicle: "Volkswagen Golf R",
+      source: "eBay Motors",
+      priceDisplay: "£24,200",
+      estimatedProfitDisplay: "£1,980",
+      priority: "Low",
+      confidenceDisplay: "65%"
+    },
+    {
+      vehicle: "Porsche Macan S",
+      source: "Auto Trader",
+      priceDisplay: "£42,000",
+      estimatedProfitDisplay: "£4,450",
+      priority: "High",
+      confidenceDisplay: "97%"
+    }
+  ]
+};
 const radarRingInsets = [6, 14, 22, 30, 38, 46];
 const radarGridAngles = Array.from({
   length: 24
