@@ -8,6 +8,7 @@ export const MISSION_PREFILL_KEY = 'tica_mission_prefill'
 const MISSION_COUNTER_KEY = 'tica_mission_counter'
 const MISSION_HISTORY_STORAGE_KEY = 'tica_mission_history'
 const SELECTED_REPORT_MISSION_ID_KEY = 'tica_selected_report_mission_id'
+const IGNORED_REPORT_MISSION_IDS_KEY = 'tica_ignored_report_mission_ids'
 
 // ── Mission Stages ───────────────────────────────────────────────────────────
 // Single source of truth for all 8 canonical TICA mission stages.
@@ -338,6 +339,40 @@ export function loadSelectedBuyingReportMissionId(): string | null {
   } catch {
     return null
   }
+
+  export function loadIgnoredBuyingReportMissionIds(): string[] {
+    try {
+      const raw = localStorage.getItem(IGNORED_REPORT_MISSION_IDS_KEY)
+      if (!raw) return []
+      const parsed = JSON.parse(raw)
+      if (!Array.isArray(parsed)) return []
+      return parsed.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
+    } catch {
+      return []
+    }
+  }
+
+  export function ignoreBuyingReportMission(missionId: string): void {
+    const normalizedMissionId = missionId.trim()
+    if (!normalizedMissionId) return
+
+    try {
+      const ignoredMissionIds = new Set(loadIgnoredBuyingReportMissionIds())
+      ignoredMissionIds.add(normalizedMissionId)
+      localStorage.setItem(IGNORED_REPORT_MISSION_IDS_KEY, JSON.stringify([...ignoredMissionIds]))
+
+      if (loadSelectedBuyingReportMissionId() === normalizedMissionId) {
+        localStorage.removeItem(SELECTED_REPORT_MISSION_ID_KEY)
+      }
+
+      const activeMission = loadMission()
+      if (activeMission?.missionId === normalizedMissionId) {
+        localStorage.removeItem(MISSION_STORAGE_KEY)
+      }
+    } catch {
+      // localStorage unavailable
+    }
+  }
 }
 
 export function isBuyingReportReady(mission: TicaMission | null | undefined): mission is TicaMission {
@@ -354,6 +389,7 @@ export function resolveBuyingReportMission({
   requestedMissionId?: string
   activeMission?: TicaMission | null
 }): TicaMission | null {
+  const ignoredMissionIds = new Set(loadIgnoredBuyingReportMissionIds())
   const missionsById = new Map<string, TicaMission>()
   loadMissionHistory().forEach((mission) => missionsById.set(mission.missionId, mission))
   if (activeMission) {
@@ -362,7 +398,9 @@ export function resolveBuyingReportMission({
 
   const findMission = (missionId?: string | null) => {
     if (!missionId) return null
-    return missionsById.get(missionId.trim()) ?? null
+    const normalizedMissionId = missionId.trim()
+    if (ignoredMissionIds.has(normalizedMissionId)) return null
+    return missionsById.get(normalizedMissionId) ?? null
   }
 
   const requestedMission = findMission(requestedMissionId)
@@ -372,11 +410,12 @@ export function resolveBuyingReportMission({
   if (selectedMission && isBuyingReportReady(selectedMission)) return selectedMission
 
   const mostRecentCompletedMission = [...missionsById.values()]
+    .filter((mission) => !ignoredMissionIds.has(mission.missionId))
     .filter((mission) => isBuyingReportReady(mission))
     .sort((a, b) => new Date(b.lastUpdated || b.createdAt).getTime() - new Date(a.lastUpdated || a.createdAt).getTime())[0] ?? null
 
   if (mostRecentCompletedMission) return mostRecentCompletedMission
-  if (activeMission) return activeMission
+  if (activeMission && !ignoredMissionIds.has(activeMission.missionId)) return activeMission
 
   return null
 }

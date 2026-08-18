@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import {
   MISSION_STAGES,
+  ignoreBuyingReportMission,
   isBuyingReportReady,
   resolveBuyingReportMission,
   saveSelectedBuyingReportMissionId,
@@ -75,6 +76,14 @@ function formatMissionValue(value?: string, fallback = 'Awaiting live data') {
   return isSpecified(value) ? value!.trim() : fallback
 }
 
+function hasSellerContactValue(value?: string) {
+  if (!value) return false
+  const normalized = value.trim()
+  if (!normalized) return false
+  const lower = normalized.toLowerCase()
+  return !['n/a', 'na', 'none', 'unknown', 'awaiting live data', 'not available'].includes(lower)
+}
+
 function getFuelKind(fuelType?: string): FuelKind {
   const normalized = fuelType?.trim().toLowerCase() ?? ''
   if (normalized.includes('plug')) return 'plugInHybrid'
@@ -95,6 +104,7 @@ function ChevronRightIcon() {
 }
 
 function OpportunityPage() {
+  const navigate = useNavigate()
   const { mission: activeMission, initialized: missionInitialized } = useMissionProgress()
   const { missionId: requestedMissionId } = Route.useSearch()
   const resolvedMission = useMemo(() => {
@@ -157,6 +167,7 @@ function OpportunityPage() {
   const [dotPulsing, setDotPulsing] = useState(true)
   const [meterAnimated, setMeterAnimated] = useState(false)
   const [meterGlowing, setMeterGlowing] = useState(false)
+  const [contactSellerMessage, setContactSellerMessage] = useState<string | null>(null)
 
   // Derive mission-specific display values for the report
   const missionReport = useMemo(() => {
@@ -250,6 +261,46 @@ function OpportunityPage() {
          : `Review ${vehicleName} only after live vehicle history, service records and model-specific intelligence have been verified.`,
     }
   }, [resolvedMission])
+
+  const sellerContact = useMemo(() => {
+    const missionData = (resolvedMission ?? {}) as Record<string, unknown>
+    const sellerPhone = typeof missionData.sellerPhone === 'string'
+      ? missionData.sellerPhone
+      : typeof missionData.contactPhone === 'string'
+        ? missionData.contactPhone
+        : undefined
+    const sellerEmail = typeof missionData.sellerEmail === 'string'
+      ? missionData.sellerEmail
+      : typeof missionData.contactEmail === 'string'
+        ? missionData.contactEmail
+        : undefined
+
+    return {
+      phone: hasSellerContactValue(sellerPhone) ? sellerPhone!.trim() : null,
+      email: hasSellerContactValue(sellerEmail) ? sellerEmail!.trim() : null,
+    }
+  }, [resolvedMission])
+
+  const handleIgnoreOpportunity = useCallback(() => {
+    if (!resolvedMission) return
+    const confirmed = window.confirm('Ignore this opportunity?')
+    if (!confirmed) return
+    ignoreBuyingReportMission(resolvedMission.missionId)
+    void navigate({ to: '/dashboard' })
+  }, [navigate, resolvedMission])
+
+  const handleContactSeller = useCallback(() => {
+    setContactSellerMessage(null)
+    if (sellerContact.phone) {
+      window.location.href = `tel:${sellerContact.phone}`
+      return
+    }
+    if (sellerContact.email) {
+      window.location.href = `mailto:${sellerContact.email}`
+      return
+    }
+    setContactSellerMessage('Seller contact details are not yet available for this opportunity.')
+  }, [sellerContact])
   const reportVehicleIntelligence = useMemo<ReportVehicleIntelligence>(() => {
     const vehicleName = missionReport?.vehicleName || 'the active vehicle'
     const fuelType = resolvedMission?.vehicleRequirements?.fuelType
@@ -1831,6 +1882,7 @@ function OpportunityPage() {
             <button
               type="button"
               className="opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
+              onClick={handleContactSeller}
             >
               <span aria-hidden="true">📞</span>
               Contact Seller
@@ -1844,7 +1896,7 @@ function OpportunityPage() {
             </Link>
           </div>
           {/* Secondary actions */}
-          <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+          <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
             <Link
               to="/dashboard"
               className="opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
@@ -1855,17 +1907,17 @@ function OpportunityPage() {
             <button
               type="button"
               className="opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
+              onClick={handleIgnoreOpportunity}
             >
               <span aria-hidden="true">🚫</span>
               Ignore
             </button>
-            <button
-              type="button"
-              className="opp-btn-secondary inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant/70 italic"
-            >
-              Explain Why
-            </button>
           </div>
+          {contactSellerMessage && (
+            <p className="mt-3 rounded-lg border border-outline-variant/40 bg-surface-container-low px-3 py-2 text-body-sm font-body-sm text-on-surface-variant">
+              {contactSellerMessage}
+            </p>
+          )}
         </section>
       </div>
       <button
