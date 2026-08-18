@@ -826,7 +826,7 @@ function OpportunityPage() {
               </p>
             </div>
             <div className="self-end sm:self-auto">
-              <div className={`opp-badge-sweep rounded-2xl ${badgeSweep ? 'opp-badge-sweep-play' : ''}`}>
+              <div className={`opp-badge-sweep ${badgeSweep ? 'opp-badge-sweep-play' : ''}`}>
                 <TicaShield size="lg" />
               </div>
             </div>
@@ -1193,7 +1193,7 @@ function OpportunityPage() {
                 </p>
               </div>
             </div>
-            <div className="w-20 shrink-0 sm:w-24">
+            <div className="w-[6.5rem] shrink-0 sm:w-[7.75rem]">
               {/* Hero image with fade transition */}
               <div className="aspect-square overflow-hidden rounded-lg border border-outline-variant/30 bg-surface-container">
                 <div
