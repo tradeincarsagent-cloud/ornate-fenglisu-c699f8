@@ -88,15 +88,6 @@ function getFuelKind(fuelType?: string): FuelKind {
   return 'unknown'
 }
 
-function escapeHtml(value: string) {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#39;')
-}
-
 function ChevronRightIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -175,6 +166,7 @@ function OpportunityPage() {
   const [showIgnoreConfirm, setShowIgnoreConfirm] = useState(false)
   const [showContactMessage, setShowContactMessage] = useState(false)
   const [showUnsaveConfirm, setShowUnsaveConfirm] = useState(false)
+  const [isPrintMode, setIsPrintMode] = useState(false)
 
   // Derive mission-specific display values for the report
   const missionReport = useMemo(() => {
@@ -548,14 +540,6 @@ function OpportunityPage() {
   const executiveRetailValue = statValues !== null ? `£${statValues.retail.toLocaleString('en-GB')}` : '—'
   const executiveScoreValue = statValues !== null && statValues.score > 0 ? statValues.score : 'Awaiting live data'
   const executiveDaysValue = statValues !== null && statValues.days > 0 ? statValues.days : 'Awaiting live data'
-  const printOpportunityScore =
-    Number.isFinite(numericConfidence) && numericConfidence > 0
-      ? `${Math.max(Math.round(numericConfidence), 1)}`
-      : 'Awaiting live data'
-  const printVerificationStatus =
-    resolvedMission?.aiConfidence?.trim() === 'Pending'
-      ? 'Pending verification'
-      : formatMissionValue(resolvedMission?.aiConfidence, reportVehicleIntelligence.dealerVerdict.confidence)
   // Timeline animation
   const [timelineVisible, setTimelineVisible] = useState(0)
   // Badge sweep
@@ -714,316 +698,44 @@ function OpportunityPage() {
     return () => obs.disconnect()
   }, [pageReady])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const handleBeforePrint = () => setIsPrintMode(true)
+    const handleAfterPrint = () => setIsPrintMode(false)
+
+    window.addEventListener('beforeprint', handleBeforePrint)
+    window.addEventListener('afterprint', handleAfterPrint)
+
+    return () => {
+      window.removeEventListener('beforeprint', handleBeforePrint)
+      window.removeEventListener('afterprint', handleAfterPrint)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+
+    document.body.classList.toggle('opportunity-print-mode', isPrintMode)
+
+    return () => {
+      document.body.classList.remove('opportunity-print-mode')
+    }
+  }, [isPrintMode])
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const openPrintDealerReport = useCallback(() => {
     if (typeof window === 'undefined') return
-
-    const printWindow = window.open('', '_blank', 'noopener,noreferrer,width=1024,height=1440')
-    if (!printWindow) return
-
-    const missionId = missionReport?.missionId ?? 'Awaiting active mission'
-    const generatedAt = new Date().toLocaleString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    setIsPrintMode(true)
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        window.print()
+      })
     })
-    const finalAdvice = missionReport?.finalAdvice ?? reportVehicleIntelligence.dealerVerdict.finalAdvice
-    const recommendedSellerQuestions = reportVehicleIntelligence.sellerQuestions.questions.length > 0
-      ? reportVehicleIntelligence.sellerQuestions.questions
-      : [{ id: 0, text: 'Not available yet', priority: 'general' as const }]
-    const reportSections = [
-      {
-        title: 'Mission Overview',
-        items: [
-          { label: 'Mission ID', value: missionId },
-          { label: 'Vehicle', value: missionReport?.vehicleName || 'Awaiting active mission' },
-          { label: 'Vehicle Type', value: missionReport?.vehicleType || 'Awaiting live data' },
-          { label: 'Budget', value: missionReport?.budget || 'Awaiting live data' },
-          { label: 'Asking Price', value: missionReport?.askingPriceDisplay || 'Awaiting live data' },
-          { label: 'Estimated Retail Value', value: missionReport?.retailValueDisplay || 'Awaiting live data' },
-          { label: 'Estimated Gross Profit', value: missionReport?.projectedProfitDisplay || 'Awaiting live data' },
-          { label: 'Opportunity Score', value: printOpportunityScore },
-        ],
-      },
-      {
-        title: 'Decision Summary',
-        items: [
-          { label: 'TICA Recommendation', value: unifiedRecommendation },
-          { label: 'Confidence', value: unifiedConfidence },
-          { label: 'Verification Status', value: printVerificationStatus },
-          { label: 'Mission Status', value: resolvedMission?.status || 'Pending verification' },
-        ],
-      },
-      {
-        title: 'Vehicle Details',
-        items: vehicleInfo.map((item) => ({ label: item.label, value: item.value })),
-      },
-      {
-        title: 'Commercial Decision',
-        items: (missionReport?.commercialDecision ?? [
-          { label: 'Recommended Offer', value: 'Awaiting live data' },
-          { label: 'Expected Purchase Range', value: 'Awaiting live data' },
-          { label: 'Walk-Away Price', value: 'Awaiting live data' },
-          { label: 'Preparation Allowance', value: 'Awaiting live data' },
-          { label: 'Estimated Retail Value', value: 'Awaiting live data' },
-          { label: 'Projected Gross Profit', value: 'Awaiting live data' },
-        ]).map((item) => ({ label: item.label, value: item.value })),
-      },
-    ]
-
-    const html = `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TICA Dealer Buying Report — ${escapeHtml(missionId)}</title>
-    <style>
-      :root {
-        color-scheme: light;
-        --brand: #1f4ed8;
-        --ink: #0f172a;
-        --muted: #475569;
-        --line: #cbd5e1;
-        --panel: #f8fafc;
-        --panel-strong: #e2e8f0;
-      }
-      * { box-sizing: border-box; }
-      @page { size: A4; margin: 14mm; }
-      body {
-        margin: 0;
-        background: #ffffff;
-        color: var(--ink);
-        font-family: Inter, Arial, sans-serif;
-        line-height: 1.45;
-      }
-      main {
-        margin: 0 auto;
-        max-width: 780px;
-      }
-      .report-shell {
-        border: 1px solid var(--line);
-        padding: 24px;
-      }
-      .report-header {
-        display: flex;
-        justify-content: space-between;
-        gap: 24px;
-        border-bottom: 2px solid var(--brand);
-        padding-bottom: 18px;
-      }
-      .brand-kicker {
-        margin: 0 0 6px;
-        color: var(--brand);
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.24em;
-        text-transform: uppercase;
-      }
-      h1 {
-        margin: 0;
-        font-size: 28px;
-        line-height: 1.1;
-      }
-      .subtle {
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .brand-badge {
-        min-width: 180px;
-        border: 1px solid var(--brand);
-        padding: 14px 16px;
-        text-align: center;
-      }
-      .brand-badge strong {
-        display: block;
-        color: var(--brand);
-        font-size: 20px;
-        letter-spacing: 0.08em;
-      }
-      .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 18px;
-      }
-      .section-card {
-        border: 1px solid var(--line);
-        background: var(--panel);
-        padding: 14px;
-        break-inside: avoid;
-      }
-      .section-title {
-        margin: 0 0 12px;
-        color: var(--brand);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-      }
-      dl {
-        margin: 0;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 8px;
-      }
-      .row {
-        display: grid;
-        grid-template-columns: minmax(120px, 170px) minmax(0, 1fr);
-        gap: 10px;
-        padding-top: 8px;
-        border-top: 1px solid var(--panel-strong);
-      }
-      .row:first-child { border-top: 0; padding-top: 0; }
-      dt {
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-      dd {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .stack {
-        margin-top: 14px;
-        display: grid;
-        gap: 14px;
-      }
-      .two-col {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-      }
-      ul {
-        margin: 0;
-        padding-left: 18px;
-      }
-      li + li { margin-top: 7px; }
-      .note {
-        border: 1px solid var(--line);
-        background: #eff6ff;
-        padding: 14px;
-      }
-      .footer {
-        margin-top: 16px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-      @media print {
-        body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-        .report-shell { border: 0; padding: 0; }
-      }
-      @media (max-width: 720px) {
-        .report-header,
-        .summary-grid,
-        .two-col,
-        .row { grid-template-columns: 1fr; }
-        .brand-badge { min-width: 0; }
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <div class="report-shell">
-        <header class="report-header">
-          <div>
-            <p class="brand-kicker">Trade In Cars Agent</p>
-            <h1>TICA Dealer Buying Report</h1>
-            <p class="subtle">Generated from the current AI Buying Report for mission ${escapeHtml(missionId)}.</p>
-          </div>
-          <div class="brand-badge">
-            <strong>TICA</strong>
-            <span class="subtle">Dealer Buying Report</span>
-          </div>
-        </header>
-
-        <section class="summary-grid">
-          ${reportSections.map((section) => `
-            <article class="section-card">
-              <h2 class="section-title">${escapeHtml(section.title)}</h2>
-              <dl>
-                ${section.items.map((item) => `
-                  <div class="row">
-                    <dt>${escapeHtml(item.label)}</dt>
-                    <dd>${escapeHtml(item.value)}</dd>
-                  </div>
-                `).join('')}
-              </dl>
-            </article>
-          `).join('')}
-        </section>
-
-        <section class="stack">
-          <div class="two-col">
-            <article class="section-card">
-              <h2 class="section-title">Key Strengths</h2>
-              <ul>
-                ${reportVehicleIntelligence.dealerVerdict.strengths.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}
-              </ul>
-            </article>
-            <article class="section-card">
-              <h2 class="section-title">Items to Verify</h2>
-              <ul>
-                ${reportVehicleIntelligence.dealerVerdict.verificationItems.map((item) => `<li>${escapeHtml(item.label)}</li>`).join('')}
-              </ul>
-            </article>
-          </div>
-
-          <article class="section-card">
-            <h2 class="section-title">Inspection Advice</h2>
-            <p>${escapeHtml(reportVehicleIntelligence.inspectionAdvice)}</p>
-          </article>
-
-          <article class="section-card">
-            <h2 class="section-title">Recommended Seller Questions</h2>
-            <ul>
-              ${recommendedSellerQuestions.map((item) => `<li>${escapeHtml(item.text)}</li>`).join('')}
-            </ul>
-          </article>
-
-          <article class="section-card">
-            <h2 class="section-title">Final TICA Advice</h2>
-            <p>${escapeHtml(finalAdvice)}</p>
-          </article>
-
-          <article class="note">
-            <h2 class="section-title">Commercial Decision</h2>
-            <p>${escapeHtml(reportVehicleIntelligence.dealerVerdict.summary)}</p>
-          </article>
-        </section>
-
-        <p class="footer">Report created ${escapeHtml(generatedAt)} · Browser print supports paper output and Save as PDF.</p>
-      </div>
-    </main>
-    <script>
-      window.addEventListener('load', () => {
-        window.focus();
-        window.print();
-      });
-    </script>
-  </body>
-</html>`
-
-    printWindow.document.open()
-    printWindow.document.write(html)
-    printWindow.document.close()
-  }, [
-    missionReport,
-    printOpportunityScore,
-    printVerificationStatus,
-    reportVehicleIntelligence,
-    resolvedMission?.status,
-    unifiedConfidence,
-    unifiedRecommendation,
-    vehicleInfo,
-  ])
+  }, [])
 
   // Stagger delay helper
   const stagger = (i: number) => ({ animationDelay: `${i * 80}ms` })
@@ -1110,7 +822,7 @@ function OpportunityPage() {
       <PlatformShell
       navItems={platformNavItems}
     >
-      <div className={`mx-auto w-full max-w-container-max space-y-3 sm:space-y-4 ${pageReady ? 'opp-page-enter' : 'opacity-0'}`}>
+      <div className={`opportunity-print-root mx-auto w-full max-w-container-max space-y-3 sm:space-y-4 ${pageReady ? 'opp-page-enter' : 'opacity-0'}`}>
         <header
           className="opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6"
           style={stagger(0)}
@@ -1120,7 +832,7 @@ function OpportunityPage() {
             <div>
               <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Trade In Cars Agent</p>
             </div>
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <div className="opportunity-print-hide flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <Link
                 to="/dashboard"
                 className="opp-btn-secondary inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface sm:w-auto"
@@ -1138,7 +850,7 @@ function OpportunityPage() {
             </div>
           </div>
 
-          <nav aria-label="Breadcrumb" className="mt-4 flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant">
+          <nav aria-label="Breadcrumb" className="opportunity-print-hide mt-4 flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant">
             <Link to="/dashboard" className="transition-colors hover:text-primary">
               Dealer Command Centre
             </Link>
@@ -2150,7 +1862,7 @@ function OpportunityPage() {
           </div>
         </section>
 
-        <section className="opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(5)}>
+        <section className="opportunity-print-hide opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5" ref={setRevealRef(5)}>
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Actions</h2>
           {/* Primary actions */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
