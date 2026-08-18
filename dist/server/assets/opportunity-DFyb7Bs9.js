@@ -131,31 +131,6 @@ const ticaVehicleIntelligence = {
       label: "Outstanding finance check",
       tone: "high"
     }],
-    commercialDecision: [{
-      label: "Recommended Offer",
-      value: "£30,750",
-      tone: "review"
-    }, {
-      label: "Expected Purchase Range",
-      value: "£31,250–£31,750",
-      tone: "default"
-    }, {
-      label: "Walk-Away Price",
-      value: "£32,000",
-      tone: "pass"
-    }, {
-      label: "Preparation Allowance",
-      value: "£850",
-      tone: "default"
-    }, {
-      label: "Estimated Retail Value",
-      value: "£36,250",
-      tone: "buy"
-    }, {
-      label: "Projected Gross Profit",
-      value: "£3,650–£4,150",
-      tone: "buy"
-    }],
     finalAdvice: "Proceed only after confirming the wet-belt replacement history, service invoices and finance status. If satisfactory, contact the seller today and begin negotiations at £30,750."
   },
   runningCosts: [{
@@ -322,8 +297,15 @@ function OpportunityPage() {
     const targetProfitNum = parseFloat(activeMission.targetProfit) || 0;
     const askingPrice = budgetNum > 0 ? Math.round(budgetNum * 0.82) : 0;
     const retailValue = budgetNum > 0 ? Math.round(budgetNum * 1.28) : 0;
-    const projectedProfit = budgetNum > 0 ? Math.round(retailValue - askingPrice - Math.round(budgetNum * 0.05)) : 0;
-    const formatGBP = (n) => n > 0 ? `£${n.toLocaleString("en-GB")}` : "—";
+    const prepAllowance = budgetNum > 0 ? Math.round(budgetNum * 0.05) : 0;
+    const projectedProfit = budgetNum > 0 ? Math.round(retailValue - askingPrice - prepAllowance) : 0;
+    const recommendedOffer = askingPrice > 0 ? Math.round(askingPrice * 0.95) : 0;
+    const purchaseRangeLow = recommendedOffer;
+    const purchaseRangeHigh = askingPrice > 0 ? Math.round(askingPrice * 0.99) : 0;
+    const walkAway = askingPrice;
+    const projectedProfitHigh = projectedProfit > 0 ? projectedProfit + Math.round(targetProfitNum * 0.2) : 0;
+    const formatGBP = (n) => n > 0 ? `£${n.toLocaleString("en-GB")}` : "Awaiting live data";
+    const hasBudget = budgetNum > 0;
     return {
       vehicleName,
       make,
@@ -340,7 +322,34 @@ function OpportunityPage() {
       projectedProfit,
       askingPriceDisplay: formatGBP(askingPrice),
       retailValueDisplay: formatGBP(retailValue),
-      projectedProfitDisplay: projectedProfit > 0 ? `${formatGBP(projectedProfit)}–${formatGBP(projectedProfit + Math.round(targetProfitNum * 0.2))}` : "—"
+      projectedProfitDisplay: projectedProfit > 0 ? `${formatGBP(projectedProfit)}–${formatGBP(projectedProfitHigh)}` : "Awaiting live data",
+      // Commercial decision — all derived from the same mission budget; never borrows from another vehicle
+      commercialDecision: [{
+        label: "Recommended Offer",
+        value: hasBudget ? formatGBP(recommendedOffer) : "Awaiting live data",
+        tone: "review"
+      }, {
+        label: "Expected Purchase Range",
+        value: hasBudget ? `${formatGBP(purchaseRangeLow)}–${formatGBP(purchaseRangeHigh)}` : "Awaiting live data",
+        tone: "default"
+      }, {
+        label: "Walk-Away Price",
+        value: hasBudget ? formatGBP(walkAway) : "Awaiting live data",
+        tone: "pass"
+      }, {
+        label: "Preparation Allowance",
+        value: hasBudget ? formatGBP(prepAllowance) : "Awaiting live data",
+        tone: "default"
+      }, {
+        label: "Estimated Retail Value",
+        value: hasBudget ? formatGBP(retailValue) : "Awaiting live data",
+        tone: "buy"
+      }, {
+        label: "Projected Gross Profit",
+        value: projectedProfit > 0 ? `${formatGBP(projectedProfit)}–${formatGBP(projectedProfitHigh)}` : "Awaiting live data",
+        tone: "buy"
+      }],
+      finalAdvice: hasBudget ? `Proceed only after confirming the vehicle's service and maintenance history. If satisfactory, contact the seller today and begin negotiations at ${formatGBP(recommendedOffer)}.` : "Proceed only after confirming the vehicle's service and maintenance history. Contact the seller to begin negotiations."
     };
   }, [activeMission]);
   const [thinkingVisible, setThinkingVisible] = useState(true);
@@ -400,18 +409,15 @@ function OpportunityPage() {
       if (statAnimStarted.current) return;
       statAnimStarted.current = true;
       const mr = missionReportRef.current;
-      const targetValues = mr && mr.retailValue > 0 ? {
+      if (!mr || mr.retailValue <= 0) {
+        return;
+      }
+      const targetValues = {
         confidence: 92,
         profit: Math.max(mr.projectedProfit, 200),
         retail: mr.retailValue,
         score: 92,
         days: 8
-      } : {
-        confidence: 97,
-        profit: 4255,
-        retail: 36250,
-        score: 97,
-        days: 9
       };
       const duration = 1100;
       const fps = 60;
@@ -972,17 +978,41 @@ function OpportunityPage() {
                 ] }),
                 /* @__PURE__ */ jsxs("section", { className: "mt-3 rounded-xl border border-outline-variant/25 bg-surface-container p-3", children: [
                   /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Commercial Decision" }),
-                  /* @__PURE__ */ jsx("div", { className: "mt-2 grid grid-cols-2 gap-2.5", children: ticaVehicleIntelligence.dealerVerdict.commercialDecision.map((item) => {
+                  /* @__PURE__ */ jsx("div", { className: "mt-2 grid grid-cols-2 gap-2.5", children: (missionReport?.commercialDecision ?? [{
+                    label: "Recommended Offer",
+                    value: "Awaiting live data",
+                    tone: "review"
+                  }, {
+                    label: "Expected Purchase Range",
+                    value: "Awaiting live data",
+                    tone: "default"
+                  }, {
+                    label: "Walk-Away Price",
+                    value: "Awaiting live data",
+                    tone: "pass"
+                  }, {
+                    label: "Preparation Allowance",
+                    value: "Awaiting live data",
+                    tone: "default"
+                  }, {
+                    label: "Estimated Retail Value",
+                    value: "Awaiting live data",
+                    tone: "buy"
+                  }, {
+                    label: "Projected Gross Profit",
+                    value: "Awaiting live data",
+                    tone: "buy"
+                  }]).map((item) => {
                     const valueClassName = item.tone === "buy" ? "tica-decision-buy" : item.tone === "review" ? "tica-decision-review" : item.tone === "pass" ? "tica-decision-pass" : "text-on-surface";
                     return /* @__PURE__ */ jsxs("div", { className: "opp-tile-hover rounded-xl border border-outline-variant/20 bg-surface-container-high px-3 py-2.5", children: [
                       /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant", children: item.label }),
-                      /* @__PURE__ */ jsx("p", { className: `mt-1 text-body-sm font-semibold ${valueClassName}`, children: item.value })
+                      /* @__PURE__ */ jsx("p", { className: `mt-1 text-body-sm font-semibold ${item.value === "Awaiting live data" ? "text-on-surface-variant/60 italic" : valueClassName}`, children: item.value })
                     ] }, item.label);
                   }) })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-primary/20 bg-primary-container/10 px-3 py-3", children: [
                   /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Final TICA Advice" }),
-                  /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface", children: ticaVehicleIntelligence.dealerVerdict.finalAdvice })
+                  /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface", children: missionReport?.finalAdvice ?? ticaVehicleIntelligence.dealerVerdict.finalAdvice })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("section", { className: "hidden w-full self-start rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3 xl:block", children: [
