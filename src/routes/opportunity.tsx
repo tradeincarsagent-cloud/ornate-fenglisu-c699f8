@@ -10,6 +10,7 @@ import {
   ignoreMission,
 } from '../lib/mission'
 import { useMissionProgress } from '../lib/useMissionProgress'
+import { useSavedOpportunity } from '../lib/useSavedOpportunity'
 
 export const Route = createFileRoute('/opportunity')({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -108,6 +109,9 @@ function OpportunityPage() {
     if (!resolvedMission || !isBuyingReportReady(resolvedMission)) return
     saveSelectedBuyingReportMissionId(resolvedMission.missionId)
   }, [resolvedMission])
+
+  const savedOpportunityId = resolvedMission?.missionId
+  const { saved: isOpportunitySaved, save: doSaveOpportunity, remove: doRemoveOpportunity } = useSavedOpportunity(savedOpportunityId)
   const issueToneConfig: Record<'info' | 'warning' | 'high', { label: string; className: string; dotClassName: string }> = {
     info: {
       label: 'Information',
@@ -161,6 +165,7 @@ function OpportunityPage() {
   const [meterGlowing, setMeterGlowing] = useState(false)
   const [showIgnoreConfirm, setShowIgnoreConfirm] = useState(false)
   const [showContactMessage, setShowContactMessage] = useState(false)
+  const [showUnsaveConfirm, setShowUnsaveConfirm] = useState(false)
 
   // Derive mission-specific display values for the report
   const missionReport = useMemo(() => {
@@ -1825,13 +1830,47 @@ function OpportunityPage() {
           <h2 className="mb-4 text-headline-md font-headline-md text-on-surface">Actions</h2>
           {/* Primary actions */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <button
-              type="button"
-              className="opp-btn-primary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary"
-            >
-              <span aria-hidden="true">💾</span>
-              Save Opportunity
-            </button>
+            {isOpportunitySaved ? (
+              <button
+                type="button"
+                className="opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
+                onClick={() => setShowUnsaveConfirm(true)}
+              >
+                <span aria-hidden="true">✓</span>
+                Saved ✓
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="opp-btn-primary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 text-body-md font-semibold text-on-primary"
+                onClick={() => {
+                  if (!missionReport) return
+                  doSaveOpportunity({
+                    id: missionReport.missionId,
+                    missionId: missionReport.missionId,
+                    make: missionReport.make,
+                    model: missionReport.model,
+                    vehicleName: missionReport.vehicleName,
+                    vehicleType: missionReport.vehicleType,
+                    yearDisplay: missionReport.yearDisplay,
+                    maxMileageDisplay: missionReport.maxMileageDisplay,
+                    fuelType: missionReport.fuelType,
+                    transmission: missionReport.transmission,
+                    searchArea: missionReport.searchArea,
+                    askingPrice: missionReport.askingPriceDisplay,
+                    retailValue: missionReport.retailValueDisplay,
+                    projectedProfit: missionReport.projectedProfitDisplay,
+                    aiVerdict: unifiedRecommendation,
+                    confidence: unifiedConfidence,
+                    opportunityScore: typeof executiveScoreValue === 'number' ? executiveScoreValue : 0,
+                    dateSaved: new Date().toISOString(),
+                  })
+                }}
+              >
+                <span aria-hidden="true">💾</span>
+                Save Opportunity
+              </button>
+            )}
             <button
               type="button"
               className="opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
@@ -1909,6 +1948,36 @@ function OpportunityPage() {
                   type="button"
                   className="inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-sm font-body-sm text-on-surface-variant"
                   onClick={() => setShowIgnoreConfirm(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+          {/* Unsave confirmation */}
+          {showUnsaveConfirm && (
+            <div className="mt-3 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-4">
+              <p className="mb-3 text-body-sm font-semibold text-on-surface">
+                Remove from saved opportunities?
+              </p>
+              <p className="mb-4 text-body-sm text-on-surface-variant">
+                This opportunity will be removed from your saved list. The report will not be affected.
+              </p>
+              <div className="flex gap-2.5">
+                <button
+                  type="button"
+                  className="inline-flex min-h-10 items-center justify-center rounded-xl bg-error px-4 py-2 text-body-sm font-semibold text-on-error"
+                  onClick={() => {
+                    doRemoveOpportunity()
+                    setShowUnsaveConfirm(false)
+                  }}
+                >
+                  Yes, remove it
+                </button>
+                <button
+                  type="button"
+                  className="inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-sm font-body-sm text-on-surface-variant"
+                  onClick={() => setShowUnsaveConfirm(false)}
                 >
                   Cancel
                 </button>
