@@ -1,10 +1,10 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { useMemo, useEffect, useState, useRef, useCallback } from "react";
-import { Link } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES } from "./mission-DVKehJWq.js";
-import { u as useMissionProgress } from "./useMissionProgress-ChTaZnbb.js";
-import { R as Route } from "./router-BCrLm0Mh.js";
+import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES, d as ignoreMission } from "./mission-C3C9xkMh.js";
+import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
+import { R as Route } from "./router-AOgnQVlu.js";
 import "react-dom";
 function isSpecified(value) {
   const trimmed = value?.trim() ?? "";
@@ -41,6 +41,7 @@ function OpportunityPage() {
   const {
     missionId: requestedMissionId
   } = Route.useSearch();
+  const navigate = useNavigate();
   const resolvedMission = useMemo(() => {
     if (!missionInitialized || typeof window === "undefined") return activeMission;
     return resolveBuyingReportMission({
@@ -97,6 +98,8 @@ function OpportunityPage() {
   const [dotPulsing, setDotPulsing] = useState(true);
   const [meterAnimated, setMeterAnimated] = useState(false);
   const [meterGlowing, setMeterGlowing] = useState(false);
+  const [showIgnoreConfirm, setShowIgnoreConfirm] = useState(false);
+  const [showContactMessage, setShowContactMessage] = useState(false);
   const missionReport = useMemo(() => {
     if (!resolvedMission) return null;
     const make = resolvedMission.vehicleRequirements?.make || "";
@@ -838,7 +841,7 @@ function OpportunityPage() {
                 /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: "Awaiting active mission" })
               ] }) })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx("div", { className: `opp-badge-sweep rounded-2xl ${badgeSweep ? "opp-badge-sweep-play" : ""}`, children: /* @__PURE__ */ jsx(TicaShield, { size: "lg" }) }) })
+            /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx("div", { className: `opp-badge-sweep ${badgeSweep ? "opp-badge-sweep-play" : ""}`, children: /* @__PURE__ */ jsx(TicaShield, { size: "lg" }) }) })
           ] })
         ] }),
         (resolvedMission || missionInitialized && !resolvedMission) && /* @__PURE__ */ jsx("section", { className: "opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", "aria-label": "Mission status", style: stagger(1), children: resolvedMission ? /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -1081,7 +1084,7 @@ function OpportunityPage() {
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "w-20 shrink-0 sm:w-24", children: [
+            /* @__PURE__ */ jsxs("div", { className: "w-[6.5rem] shrink-0 sm:w-[7.75rem]", children: [
               /* @__PURE__ */ jsx("div", { className: "aspect-square overflow-hidden rounded-lg border border-outline-variant/30 bg-surface-container", children: /* @__PURE__ */ jsx("div", { className: "flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(49,64,99,0.28),rgba(11,19,31,0.94))]", style: {
                 animation: "opp-page-fadein 0.4s ease-out both"
               }, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-1 text-center", children: [
@@ -1563,7 +1566,7 @@ function OpportunityPage() {
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "💾" }),
               "Save Opportunity"
             ] }),
-            /* @__PURE__ */ jsxs("button", { type: "button", className: "opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface", children: [
+            /* @__PURE__ */ jsxs("button", { type: "button", className: "opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface", onClick: () => setShowContactMessage(true), children: [
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "📞" }),
               "Contact Seller"
             ] }),
@@ -1572,16 +1575,35 @@ function OpportunityPage() {
               "New AI Search"
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-3", children: [
+          showContactMessage && /* @__PURE__ */ jsxs("div", { className: "mt-3 flex items-start gap-3 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-3", children: [
+            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", className: "mt-0.5 shrink-0 text-base", children: "ℹ️" }),
+            /* @__PURE__ */ jsx("p", { className: "text-body-sm text-on-surface-variant", children: "Seller contact details are not yet available for this opportunity." }),
+            /* @__PURE__ */ jsx("button", { type: "button", "aria-label": "Dismiss", className: "ml-auto shrink-0 text-on-surface-variant/60 hover:text-on-surface-variant", onClick: () => setShowContactMessage(false), children: "✕" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-2", children: [
             /* @__PURE__ */ jsxs(Link, { to: "/dashboard", className: "opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant", children: [
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "🏠" }),
-              "Return Dashboard"
+              "Return to Dashboard"
             ] }),
-            /* @__PURE__ */ jsxs("button", { type: "button", className: "opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant", children: [
+            /* @__PURE__ */ jsxs("button", { type: "button", className: "opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant", onClick: () => setShowIgnoreConfirm(true), children: [
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "🚫" }),
-              "Ignore"
-            ] }),
-            /* @__PURE__ */ jsx("button", { type: "button", className: "opp-btn-secondary inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant/70 italic", children: "Explain Why" })
+              "Ignore Opportunity"
+            ] })
+          ] }),
+          showIgnoreConfirm && /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-3 text-body-sm font-semibold text-on-surface", children: "Ignore this opportunity?" }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4 text-body-sm text-on-surface-variant", children: "This opportunity will be dismissed and will no longer appear as an active recommendation. The report will be preserved." }),
+            /* @__PURE__ */ jsxs("div", { className: "flex gap-2.5", children: [
+              /* @__PURE__ */ jsx("button", { type: "button", className: "inline-flex min-h-10 items-center justify-center rounded-xl bg-error px-4 py-2 text-body-sm font-semibold text-on-error", onClick: () => {
+                if (resolvedMission) {
+                  ignoreMission(resolvedMission.missionId);
+                }
+                void navigate({
+                  to: "/dashboard"
+                });
+              }, children: "Yes, ignore it" }),
+              /* @__PURE__ */ jsx("button", { type: "button", className: "inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-sm font-body-sm text-on-surface-variant", onClick: () => setShowIgnoreConfirm(false), children: "Cancel" })
+            ] })
           ] })
         ] })
       ] }),

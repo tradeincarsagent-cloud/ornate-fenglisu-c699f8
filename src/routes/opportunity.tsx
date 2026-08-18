@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import {
@@ -7,6 +7,7 @@ import {
   isBuyingReportReady,
   resolveBuyingReportMission,
   saveSelectedBuyingReportMissionId,
+  ignoreMission,
 } from '../lib/mission'
 import { useMissionProgress } from '../lib/useMissionProgress'
 
@@ -97,6 +98,7 @@ function ChevronRightIcon() {
 function OpportunityPage() {
   const { mission: activeMission, initialized: missionInitialized } = useMissionProgress()
   const { missionId: requestedMissionId } = Route.useSearch()
+  const navigate = useNavigate()
   const resolvedMission = useMemo(() => {
     if (!missionInitialized || typeof window === 'undefined') return activeMission
     return resolveBuyingReportMission({ requestedMissionId, activeMission })
@@ -157,6 +159,8 @@ function OpportunityPage() {
   const [dotPulsing, setDotPulsing] = useState(true)
   const [meterAnimated, setMeterAnimated] = useState(false)
   const [meterGlowing, setMeterGlowing] = useState(false)
+  const [showIgnoreConfirm, setShowIgnoreConfirm] = useState(false)
+  const [showContactMessage, setShowContactMessage] = useState(false)
 
   // Derive mission-specific display values for the report
   const missionReport = useMemo(() => {
@@ -1831,6 +1835,7 @@ function OpportunityPage() {
             <button
               type="button"
               className="opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface"
+              onClick={() => setShowContactMessage(true)}
             >
               <span aria-hidden="true">📞</span>
               Contact Seller
@@ -1843,29 +1848,73 @@ function OpportunityPage() {
               New AI Search
             </Link>
           </div>
+          {/* Contact Seller message */}
+          {showContactMessage && (
+            <div className="mt-3 flex items-start gap-3 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-3">
+              <span aria-hidden="true" className="mt-0.5 shrink-0 text-base">ℹ️</span>
+              <p className="text-body-sm text-on-surface-variant">
+                Seller contact details are not yet available for this opportunity.
+              </p>
+              <button
+                type="button"
+                aria-label="Dismiss"
+                className="ml-auto shrink-0 text-on-surface-variant/60 hover:text-on-surface-variant"
+                onClick={() => setShowContactMessage(false)}
+              >
+                ✕
+              </button>
+            </div>
+          )}
           {/* Secondary actions */}
-          <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+          <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
             <Link
               to="/dashboard"
               className="opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
             >
               <span aria-hidden="true">🏠</span>
-              Return Dashboard
+              Return to Dashboard
             </Link>
             <button
               type="button"
               className="opp-btn-secondary inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant"
+              onClick={() => setShowIgnoreConfirm(true)}
             >
               <span aria-hidden="true">🚫</span>
-              Ignore
-            </button>
-            <button
-              type="button"
-              className="opp-btn-secondary inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2.5 text-body-sm font-body-sm text-on-surface-variant/70 italic"
-            >
-              Explain Why
+              Ignore Opportunity
             </button>
           </div>
+          {/* Ignore confirmation */}
+          {showIgnoreConfirm && (
+            <div className="mt-3 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-4">
+              <p className="mb-3 text-body-sm font-semibold text-on-surface">
+                Ignore this opportunity?
+              </p>
+              <p className="mb-4 text-body-sm text-on-surface-variant">
+                This opportunity will be dismissed and will no longer appear as an active recommendation. The report will be preserved.
+              </p>
+              <div className="flex gap-2.5">
+                <button
+                  type="button"
+                  className="inline-flex min-h-10 items-center justify-center rounded-xl bg-error px-4 py-2 text-body-sm font-semibold text-on-error"
+                  onClick={() => {
+                    if (resolvedMission) {
+                      ignoreMission(resolvedMission.missionId)
+                    }
+                    void navigate({ to: '/dashboard' })
+                  }}
+                >
+                  Yes, ignore it
+                </button>
+                <button
+                  type="button"
+                  className="inline-flex min-h-10 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container px-4 py-2 text-body-sm font-body-sm text-on-surface-variant"
+                  onClick={() => setShowIgnoreConfirm(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
         </section>
       </div>
       <button
