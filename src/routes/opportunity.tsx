@@ -66,9 +66,9 @@ function isSpecified(value?: string) {
 function getExecutiveSummaryValueClass(value: string | number) {
   const normalized = typeof value === 'number' ? `${value}` : value.trim()
   const isNumeric = typeof value === 'number' || /^£?\d[\d,]*(\.\d+)?%?$/.test(normalized)
-  if (isNumeric || normalized.length <= 8) return 'text-[28px] sm:text-[32px]'
-  if (normalized.length <= 16) return 'text-[21px] sm:text-[25px]'
-  return 'text-[17px] leading-tight sm:text-[21px]'
+  if (isNumeric || normalized.length <= 8) return 'text-[18px] sm:text-[22px]'
+  if (normalized.length <= 16) return 'text-[14px] sm:text-[16px]'
+  return 'text-[12px] leading-snug sm:text-[13px]'
 }
 
 function formatMissionValue(value?: string, fallback = 'Awaiting live data') {
@@ -910,7 +910,7 @@ function OpportunityPage() {
             {/* AI Verdict */}
             <div className={`opp-card-hover flex flex-col items-center justify-center rounded-xl border border-primary/25 bg-surface-container-high px-3 py-5 text-center ${isBuyVerdict ? 'opp-buy-glow' : ''}`}>
               <p className="text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant">TICA Recommendation™</p>
-              <p className={`opp-stat-animate mt-2 text-[28px] font-semibold leading-none sm:text-[32px] ${decisionVerdictClassName} ${decisionVerdictGlowClassName}`}>
+              <p className={`opp-stat-animate mt-2 text-[18px] font-semibold leading-none sm:text-[22px] ${decisionVerdictClassName} ${decisionVerdictGlowClassName}`}>
                 {normalizedDecisionAction}
               </p>
             </div>
@@ -1193,35 +1193,35 @@ function OpportunityPage() {
                 </p>
               </div>
             </div>
-            <div className="min-w-0 flex-1 sm:w-56 md:w-64">
+            <div className="w-20 shrink-0 sm:w-24">
               {/* Hero image with fade transition */}
-              <div className="aspect-square overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container">
+              <div className="aspect-square overflow-hidden rounded-lg border border-outline-variant/30 bg-surface-container">
                 <div
                   key={heroImageIdx}
                   className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(49,64,99,0.28),rgba(11,19,31,0.94))]"
                   style={{ animation: 'opp-page-fadein 0.4s ease-out both' }}
                 >
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <svg className="h-10 w-10 text-on-surface-variant/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <svg className="h-5 w-5 text-on-surface-variant/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" />
                     </svg>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant/75">Vehicle image pending</p>
+                    <p className="text-[8px] font-semibold uppercase tracking-[0.1em] text-on-surface-variant/75">Pending</p>
                   </div>
                 </div>
               </div>
               {/* Thumbnail strip with hover preview */}
-              <div className="mt-1.5 grid grid-cols-4 gap-1.5">
+              <div className="mt-1 grid grid-cols-4 gap-0.5">
                 {[1, 2, 3, 4].map((n) => (
                   <div
                     key={n}
-                    className="opp-thumb aspect-[4/3] rounded-lg border border-outline-variant/30 bg-surface-container-high flex items-center justify-center overflow-hidden"
+                    className="opp-thumb aspect-square rounded border border-outline-variant/30 bg-surface-container-high flex items-center justify-center overflow-hidden"
                     aria-label={`Vehicle photo ${n + 1}`}
                     onClick={() => setHeroImageIdx(n - 1)}
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => e.key === 'Enter' && setHeroImageIdx(n - 1)}
                   >
-                    <svg className="h-5 w-5 text-on-surface-variant/25" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg className="h-2.5 w-2.5 text-on-surface-variant/25" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" />
                     </svg>
                   </div>

@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES } from "./mission-DVKehJWq.js";
 import { u as useMissionProgress } from "./useMissionProgress-ChTaZnbb.js";
-import { R as Route } from "./router-IoMI__UQ.js";
+import { R as Route } from "./router-BCrLm0Mh.js";
 import "react-dom";
 function isSpecified(value) {
   const trimmed = value?.trim() ?? "";
@@ -13,9 +13,9 @@ function isSpecified(value) {
 function getExecutiveSummaryValueClass(value) {
   const normalized = typeof value === "number" ? `${value}` : value.trim();
   const isNumeric = typeof value === "number" || /^£?\d[\d,]*(\.\d+)?%?$/.test(normalized);
-  if (isNumeric || normalized.length <= 8) return "text-[28px] sm:text-[32px]";
-  if (normalized.length <= 16) return "text-[21px] sm:text-[25px]";
-  return "text-[17px] leading-tight sm:text-[21px]";
+  if (isNumeric || normalized.length <= 8) return "text-[18px] sm:text-[22px]";
+  if (normalized.length <= 16) return "text-[14px] sm:text-[16px]";
+  return "text-[12px] leading-snug sm:text-[13px]";
 }
 function formatMissionValue(value, fallback = "Awaiting live data") {
   return isSpecified(value) ? value.trim() : fallback;
@@ -593,16 +593,16 @@ function OpportunityPage() {
   const meterZone = isBuyVerdict ? "buy" : isReviewVerdict ? "review" : "pass";
   const meterLabel = unifiedRecommendation;
   const meterSentence = reportVehicleIntelligence.dealerVerdict.summary;
-  const executiveConfidenceValue = Number.isFinite(numericConfidence) && statValues !== null ? `${statValues.confidence}%` : unifiedConfidence;
-  const executiveProfitValue = statValues !== null ? `£${statValues.profit.toLocaleString("en-GB")}` : "—";
-  const executiveRetailValue = statValues !== null ? `£${statValues.retail.toLocaleString("en-GB")}` : "—";
-  const executiveScoreValue = statValues !== null && statValues.score > 0 ? statValues.score : "Awaiting live data";
-  const executiveDaysValue = statValues !== null && statValues.days > 0 ? statValues.days : "Awaiting live data";
   const [thinkingVisible, setThinkingVisible] = useState(true);
   const [thinkingExiting, setThinkingExiting] = useState(false);
   const [thinkingStep, setThinkingStep] = useState(0);
   const [pageReady, setPageReady] = useState(false);
   const [statValues, setStatValues] = useState(null);
+  const executiveConfidenceValue = Number.isFinite(numericConfidence) && statValues !== null ? `${statValues.confidence}%` : unifiedConfidence;
+  const executiveProfitValue = statValues !== null ? `£${statValues.profit.toLocaleString("en-GB")}` : "—";
+  const executiveRetailValue = statValues !== null ? `£${statValues.retail.toLocaleString("en-GB")}` : "—";
+  const executiveScoreValue = statValues !== null && statValues.score > 0 ? statValues.score : "Awaiting live data";
+  const executiveDaysValue = statValues !== null && statValues.days > 0 ? statValues.days : "Awaiting live data";
   const [timelineVisible, setTimelineVisible] = useState(0);
   const [badgeSweep, setBadgeSweep] = useState(false);
   const [heroImageIdx, setHeroImageIdx] = useState(0);
@@ -903,7 +903,7 @@ function OpportunityPage() {
           /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6", children: [
             /* @__PURE__ */ jsxs("div", { className: `opp-card-hover flex flex-col items-center justify-center rounded-xl border border-primary/25 bg-surface-container-high px-3 py-5 text-center ${isBuyVerdict ? "opp-buy-glow" : ""}`, children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "TICA Recommendation™" }),
-              /* @__PURE__ */ jsx("p", { className: `opp-stat-animate mt-2 text-[28px] font-semibold leading-none sm:text-[32px] ${decisionVerdictClassName} ${decisionVerdictGlowClassName}`, children: normalizedDecisionAction })
+              /* @__PURE__ */ jsx("p", { className: `opp-stat-animate mt-2 text-[18px] font-semibold leading-none sm:text-[22px] ${decisionVerdictClassName} ${decisionVerdictGlowClassName}`, children: normalizedDecisionAction })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Confidence" }),
@@ -1081,14 +1081,14 @@ function OpportunityPage() {
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1 sm:w-56 md:w-64", children: [
-              /* @__PURE__ */ jsx("div", { className: "aspect-square overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container", children: /* @__PURE__ */ jsx("div", { className: "flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(49,64,99,0.28),rgba(11,19,31,0.94))]", style: {
+            /* @__PURE__ */ jsxs("div", { className: "w-20 shrink-0 sm:w-24", children: [
+              /* @__PURE__ */ jsx("div", { className: "aspect-square overflow-hidden rounded-lg border border-outline-variant/30 bg-surface-container", children: /* @__PURE__ */ jsx("div", { className: "flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(49,64,99,0.28),rgba(11,19,31,0.94))]", style: {
                 animation: "opp-page-fadein 0.4s ease-out both"
-              }, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-2 text-center", children: [
-                /* @__PURE__ */ jsx("svg", { className: "h-10 w-10 text-on-surface-variant/40", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", d: "M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" }) }),
-                /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant/75", children: "Vehicle image pending" })
+              }, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-1 text-center", children: [
+                /* @__PURE__ */ jsx("svg", { className: "h-5 w-5 text-on-surface-variant/40", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", d: "M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" }) }),
+                /* @__PURE__ */ jsx("p", { className: "text-[8px] font-semibold uppercase tracking-[0.1em] text-on-surface-variant/75", children: "Pending" })
               ] }) }, heroImageIdx) }),
-              /* @__PURE__ */ jsx("div", { className: "mt-1.5 grid grid-cols-4 gap-1.5", children: [1, 2, 3, 4].map((n) => /* @__PURE__ */ jsx("div", { className: "opp-thumb aspect-[4/3] rounded-lg border border-outline-variant/30 bg-surface-container-high flex items-center justify-center overflow-hidden", "aria-label": `Vehicle photo ${n + 1}`, onClick: () => setHeroImageIdx(n - 1), role: "button", tabIndex: 0, onKeyDown: (e) => e.key === "Enter" && setHeroImageIdx(n - 1), children: /* @__PURE__ */ jsx("svg", { className: "h-5 w-5 text-on-surface-variant/25", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", d: "M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" }) }) }, n)) })
+              /* @__PURE__ */ jsx("div", { className: "mt-1 grid grid-cols-4 gap-0.5", children: [1, 2, 3, 4].map((n) => /* @__PURE__ */ jsx("div", { className: "opp-thumb aspect-square rounded border border-outline-variant/30 bg-surface-container-high flex items-center justify-center overflow-hidden", "aria-label": `Vehicle photo ${n + 1}`, onClick: () => setHeroImageIdx(n - 1), role: "button", tabIndex: 0, onKeyDown: (e) => e.key === "Enter" && setHeroImageIdx(n - 1), children: /* @__PURE__ */ jsx("svg", { className: "h-2.5 w-2.5 text-on-surface-variant/25", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", d: "M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" }) }) }, n)) })
             ] })
           ] })
         ] }),
