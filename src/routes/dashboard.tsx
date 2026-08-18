@@ -3,7 +3,12 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { PlatformShell } from '../components/PlatformShell'
 import { TicaShield } from '../components/TicaShield'
 import { opportunityIntelligencePlaceholder } from '../data/opportunity-intelligence'
-import { MISSION_STAGES, MISSION_PREFILL_KEY, type TicaMission } from '../lib/mission'
+import {
+  MISSION_STAGES,
+  MISSION_PREFILL_KEY,
+  saveSelectedBuyingReportMissionId,
+  type TicaMission,
+} from '../lib/mission'
 import { useMissionProgress } from '../lib/useMissionProgress'
 
 export const Route = createFileRoute('/dashboard')({
@@ -1340,6 +1345,8 @@ function DashboardPage() {
                             <div className="flex flex-wrap items-center gap-2 pt-1">
                               <Link
                                 to="/opportunity"
+                                search={{ missionId: storedMission.missionId }}
+                                onClick={() => saveSelectedBuyingReportMissionId(storedMission.missionId)}
                                 className="dcc-btn-primary inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary"
                               >
                                 <span aria-hidden="true">📄</span>

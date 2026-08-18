@@ -2,8 +2,8 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { a as MISSION_STAGES, M as MISSION_PREFILL_KEY } from "./mission-BWK2uK5a.js";
-import { u as useMissionProgress } from "./useMissionProgress-DPrHquuK.js";
+import { b as MISSION_STAGES, a as saveSelectedBuyingReportMissionId, M as MISSION_PREFILL_KEY } from "./mission-DVKehJWq.js";
+import { u as useMissionProgress } from "./useMissionProgress-ChTaZnbb.js";
 import "react-dom";
 const bmwM3CompetitionScoring = {
   // Estimated Profit Score: placeholder projection for gross margin after acquisition and prep assumptions.
@@ -1194,7 +1194,9 @@ function DashboardPage() {
               } }) })
             ] }),
             storedMission.status === "Completed" && storedMission.currentStage === "Report Ready" && storedMission.progress >= 100 && /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2 pt-1", children: [
-              /* @__PURE__ */ jsxs(Link, { to: "/opportunity", className: "dcc-btn-primary inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary", children: [
+              /* @__PURE__ */ jsxs(Link, { to: "/opportunity", search: {
+                missionId: storedMission.missionId
+              }, onClick: () => saveSelectedBuyingReportMissionId(storedMission.missionId), className: "dcc-btn-primary inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary", children: [
                 /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "📄" }),
                 "View Buying Report"
               ] }),

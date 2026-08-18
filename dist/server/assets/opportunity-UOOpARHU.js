@@ -1,9 +1,10 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
-import { useState, useMemo, useRef, useCallback, useEffect } from "react";
+import { useMemo, useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { a as MISSION_STAGES } from "./mission-BWK2uK5a.js";
-import { u as useMissionProgress } from "./useMissionProgress-DPrHquuK.js";
+import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES } from "./mission-DVKehJWq.js";
+import { u as useMissionProgress } from "./useMissionProgress-ChTaZnbb.js";
+import { R as Route } from "./router-IoMI__UQ.js";
 import "react-dom";
 function isSpecified(value) {
   const trimmed = value?.trim() ?? "";
@@ -37,6 +38,20 @@ function OpportunityPage() {
     mission: activeMission,
     initialized: missionInitialized
   } = useMissionProgress();
+  const {
+    missionId: requestedMissionId
+  } = Route.useSearch();
+  const resolvedMission = useMemo(() => {
+    if (!missionInitialized || typeof window === "undefined") return activeMission;
+    return resolveBuyingReportMission({
+      requestedMissionId,
+      activeMission
+    });
+  }, [activeMission, missionInitialized, requestedMissionId]);
+  useEffect(() => {
+    if (!resolvedMission || !isBuyingReportReady(resolvedMission)) return;
+    saveSelectedBuyingReportMissionId(resolvedMission.missionId);
+  }, [resolvedMission]);
   const issueToneConfig = {
     info: {
       label: "Information",
@@ -83,18 +98,18 @@ function OpportunityPage() {
   const [meterAnimated, setMeterAnimated] = useState(false);
   const [meterGlowing, setMeterGlowing] = useState(false);
   const missionReport = useMemo(() => {
-    if (!activeMission) return null;
-    const make = activeMission.vehicleRequirements?.make || "";
-    const model = activeMission.vehicleRequirements?.model || "";
-    const yearFrom = activeMission.vehicleRequirements?.yearFrom || "";
-    const yearTo = activeMission.vehicleRequirements?.yearTo || "";
-    const maxMileage = activeMission.vehicleRequirements?.maxMileage || "";
-    const fuelType = activeMission.vehicleRequirements?.fuelType || "";
-    const transmission = activeMission.vehicleRequirements?.transmission || "";
-    const serviceHistory = activeMission.vehicleRequirements?.serviceHistory || "";
-    const vehicleName = [make, model].filter(Boolean).join(" ") || activeMission.vehicleType || "Vehicle";
-    const budgetNum = parseFloat(activeMission.budget) || 0;
-    const targetProfitNum = parseFloat(activeMission.targetProfit) || 0;
+    if (!resolvedMission) return null;
+    const make = resolvedMission.vehicleRequirements?.make || "";
+    const model = resolvedMission.vehicleRequirements?.model || "";
+    const yearFrom = resolvedMission.vehicleRequirements?.yearFrom || "";
+    const yearTo = resolvedMission.vehicleRequirements?.yearTo || "";
+    const maxMileage = resolvedMission.vehicleRequirements?.maxMileage || "";
+    const fuelType = resolvedMission.vehicleRequirements?.fuelType || "";
+    const transmission = resolvedMission.vehicleRequirements?.transmission || "";
+    const serviceHistory = resolvedMission.vehicleRequirements?.serviceHistory || "";
+    const vehicleName = [make, model].filter(Boolean).join(" ") || resolvedMission.vehicleType || "Vehicle";
+    const budgetNum = parseFloat(resolvedMission.budget) || 0;
+    const targetProfitNum = parseFloat(resolvedMission.targetProfit) || 0;
     const askingPrice = budgetNum > 0 ? Math.round(budgetNum * 0.82) : 0;
     const retailValue = budgetNum > 0 ? Math.round(budgetNum * 1.28) : 0;
     const prepAllowance = budgetNum > 0 ? Math.round(budgetNum * 0.05) : 0;
@@ -112,17 +127,17 @@ function OpportunityPage() {
       vehicleName,
       make,
       model,
-      missionId: activeMission.missionId,
-      vehicleType: activeMission.vehicleType,
+      missionId: resolvedMission.missionId,
+      vehicleType: resolvedMission.vehicleType,
       yearDisplay,
       maxMileageDisplay,
       fuelType: formatMissionValue(fuelType),
       transmission: formatMissionValue(transmission),
       serviceHistory: formatMissionValue(serviceHistory, "Requires verification"),
-      budget: activeMission.budget ? `Up to £${parseFloat(activeMission.budget).toLocaleString("en-GB")}` : "—",
-      targetProfit: activeMission.targetProfit ? `£${parseFloat(activeMission.targetProfit).toLocaleString("en-GB")}+` : "—",
-      searchArea: activeMission.searchArea || "—",
-      buyingPriority: activeMission.buyingPriority || "—",
+      budget: resolvedMission.budget ? `Up to £${parseFloat(resolvedMission.budget).toLocaleString("en-GB")}` : "—",
+      targetProfit: resolvedMission.targetProfit ? `£${parseFloat(resolvedMission.targetProfit).toLocaleString("en-GB")}+` : "—",
+      searchArea: resolvedMission.searchArea || "—",
+      buyingPriority: resolvedMission.buyingPriority || "—",
       budgetNum,
       targetProfitNum,
       retailValue,
@@ -158,10 +173,10 @@ function OpportunityPage() {
       }],
       finalAdvice: hasBudget ? `Review ${vehicleName} against live vehicle history, service records and model-specific intelligence before negotiating. If those checks are satisfactory, begin negotiations at ${formatGBP(recommendedOffer)}.` : `Review ${vehicleName} only after live vehicle history, service records and model-specific intelligence have been verified.`
     };
-  }, [activeMission]);
+  }, [resolvedMission]);
   const reportVehicleIntelligence = useMemo(() => {
     const vehicleName = missionReport?.vehicleName || "the active vehicle";
-    const fuelType = activeMission?.vehicleRequirements?.fuelType;
+    const fuelType = resolvedMission?.vehicleRequirements?.fuelType;
     const fuelKind = getFuelKind(fuelType);
     const fuelLabel = formatMissionValue(fuelType, "Requires verification");
     const transmissionLabel = missionReport?.transmission || "Requires verification";
@@ -523,7 +538,7 @@ function OpportunityPage() {
         daysToSell: "Awaiting live data"
       }
     };
-  }, [activeMission, missionReport]);
+  }, [missionReport, resolvedMission]);
   const vehicleInfo = useMemo(() => {
     if (!missionReport) {
       return [{
@@ -759,7 +774,7 @@ function OpportunityPage() {
     label: "Subscription",
     disabled: true
   }];
-  if (missionInitialized && !activeMission) {
+  if (missionInitialized && !resolvedMission) {
     return /* @__PURE__ */ jsx(PlatformShell, { navItems: platformNavItems, children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-4", children: [
       /* @__PURE__ */ jsxs("header", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: [
         /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Trade In Cars Agent" }),
@@ -826,22 +841,22 @@ function OpportunityPage() {
             /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx("div", { className: `opp-badge-sweep rounded-2xl ${badgeSweep ? "opp-badge-sweep-play" : ""}`, children: /* @__PURE__ */ jsx(TicaShield, { size: "lg" }) }) })
           ] })
         ] }),
-        (activeMission || missionInitialized && !activeMission) && /* @__PURE__ */ jsx("section", { className: "opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", "aria-label": "Mission status", style: stagger(1), children: activeMission ? /* @__PURE__ */ jsxs(Fragment, { children: [
+        (resolvedMission || missionInitialized && !resolvedMission) && /* @__PURE__ */ jsx("section", { className: "opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", "aria-label": "Mission status", style: stagger(1), children: resolvedMission ? /* @__PURE__ */ jsxs(Fragment, { children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80", children: "Mission Status" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-sm font-semibold text-on-surface", children: activeMission.missionId })
+              /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-sm font-semibold text-on-surface", children: resolvedMission.missionId })
             ] }),
-            /* @__PURE__ */ jsx("span", { className: `rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-widest ${activeMission.status === "Completed" ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400" : "border-primary/25 bg-primary/10 text-primary"}`, children: activeMission.status === "Completed" ? "✅ Completed Successfully" : activeMission.status || "Mission Created" })
+            /* @__PURE__ */ jsx("span", { className: `rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-widest ${resolvedMission.status === "Completed" ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400" : "border-primary/25 bg-primary/10 text-primary"}`, children: resolvedMission.status === "Completed" ? "✅ Completed Successfully" : resolvedMission.status || "Mission Created" })
           ] }),
           /* @__PURE__ */ jsxs("dl", { className: "mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-3 lg:grid-cols-4", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Mission ID" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.missionId })
+              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: resolvedMission.missionId })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Vehicle Type" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.vehicleType || "—" })
+              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: resolvedMission.vehicleType || "—" })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Make & Model" }),
@@ -857,20 +872,20 @@ function OpportunityPage() {
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Search Area" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.searchArea || "—" })
+              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: resolvedMission.searchArea || "—" })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Buying Priority" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.buyingPriority || "—" })
+              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: resolvedMission.buyingPriority || "—" })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Current Stage" }),
-              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: activeMission.currentStage || MISSION_STAGES[0] })
+              /* @__PURE__ */ jsx("dd", { className: "mt-0.5 font-medium text-on-surface", children: resolvedMission.currentStage || MISSION_STAGES[0] })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("dt", { className: "text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/60", children: "Search Progress" }),
               /* @__PURE__ */ jsxs("dd", { className: "mt-0.5 font-medium text-on-surface", children: [
-                activeMission.progress ?? 0,
+                resolvedMission.progress ?? 0,
                 "%"
               ] })
             ] })

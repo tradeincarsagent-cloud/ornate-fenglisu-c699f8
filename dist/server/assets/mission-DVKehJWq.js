@@ -1,6 +1,8 @@
 const MISSION_STORAGE_KEY = "tica_active_mission";
 const MISSION_PREFILL_KEY = "tica_mission_prefill";
 const MISSION_COUNTER_KEY = "tica_mission_counter";
+const MISSION_HISTORY_STORAGE_KEY = "tica_mission_history";
+const SELECTED_REPORT_MISSION_ID_KEY = "tica_selected_report_mission_id";
 const MISSION_STAGES = [
   "Mission Created",
   "Searching",
@@ -138,25 +140,87 @@ function getMissionStageIndex(stageName) {
 function saveMission(mission) {
   try {
     localStorage.setItem(MISSION_STORAGE_KEY, JSON.stringify(mission));
+    const history = loadMissionHistory();
+    const existingIndex = history.findIndex((item) => item.missionId === mission.missionId);
+    if (existingIndex >= 0) {
+      history[existingIndex] = mission;
+    } else {
+      history.unshift(mission);
+    }
+    localStorage.setItem(MISSION_HISTORY_STORAGE_KEY, JSON.stringify(history));
   } catch {
   }
+}
+function normalizeMission(parsed) {
+  return {
+    lastUpdated: parsed.lastUpdated ?? parsed.createdAt ?? (/* @__PURE__ */ new Date()).toISOString(),
+    currentStageIndex: getMissionStageIndex(parsed.currentStage ?? ""),
+    currentAiActivity: "Mission accepted. Awaiting AI validation.",
+    estimatedTimeRemaining: "—",
+    searchFrequency: "Every 30 minutes",
+    ...parsed
+  };
 }
 function loadMission() {
   try {
     const raw = localStorage.getItem(MISSION_STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    return {
-      lastUpdated: parsed.createdAt ?? (/* @__PURE__ */ new Date()).toISOString(),
-      currentStageIndex: getMissionStageIndex(parsed.currentStage ?? ""),
-      currentAiActivity: "Mission accepted. Awaiting AI validation.",
-      estimatedTimeRemaining: "—",
-      searchFrequency: "Every 30 minutes",
-      ...parsed
-    };
+    return normalizeMission(parsed);
   } catch {
     return null;
   }
+}
+function loadMissionHistory() {
+  try {
+    const raw = localStorage.getItem(MISSION_HISTORY_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item) => typeof item?.missionId === "string" && item.missionId.length > 0).map((item) => normalizeMission(item));
+  } catch {
+    return [];
+  }
+}
+function saveSelectedBuyingReportMissionId(missionId) {
+  try {
+    localStorage.setItem(SELECTED_REPORT_MISSION_ID_KEY, missionId);
+  } catch {
+  }
+}
+function loadSelectedBuyingReportMissionId() {
+  try {
+    return localStorage.getItem(SELECTED_REPORT_MISSION_ID_KEY);
+  } catch {
+    return null;
+  }
+}
+function isBuyingReportReady(mission) {
+  return Boolean(
+    mission && (mission.status === "Completed" || mission.currentStage === "Report Ready" || (mission.progress ?? 0) >= 100)
+  );
+}
+function resolveBuyingReportMission({
+  requestedMissionId,
+  activeMission
+}) {
+  const missionsById = /* @__PURE__ */ new Map();
+  loadMissionHistory().forEach((mission) => missionsById.set(mission.missionId, mission));
+  if (activeMission) {
+    missionsById.set(activeMission.missionId, activeMission);
+  }
+  const findMission = (missionId) => {
+    if (!missionId) return null;
+    return missionsById.get(missionId.trim()) ?? null;
+  };
+  const requestedMission = findMission(requestedMissionId);
+  if (requestedMission) return requestedMission;
+  const selectedMission = findMission(loadSelectedBuyingReportMissionId());
+  if (selectedMission && isBuyingReportReady(selectedMission)) return selectedMission;
+  const mostRecentCompletedMission = [...missionsById.values()].filter((mission) => isBuyingReportReady(mission)).sort((a, b) => new Date(b.lastUpdated || b.createdAt).getTime() - new Date(a.lastUpdated || a.createdAt).getTime())[0] ?? null;
+  if (mostRecentCompletedMission) return mostRecentCompletedMission;
+  if (activeMission) return activeMission;
+  return null;
 }
 function computeMissionProgress(mission) {
   const elapsedSeconds = (Date.now() - new Date(mission.createdAt).getTime()) / 1e3;
@@ -193,10 +257,13 @@ function computeMissionProgress(mission) {
 }
 export {
   MISSION_PREFILL_KEY as M,
-  MISSION_STAGES as a,
-  computeMissionProgress as b,
+  saveSelectedBuyingReportMissionId as a,
+  MISSION_STAGES as b,
   createMission as c,
+  computeMissionProgress as d,
+  isBuyingReportReady as i,
   loadMission as l,
+  resolveBuyingReportMission as r,
   saveMission as s,
   validateMissionInput as v
 };
