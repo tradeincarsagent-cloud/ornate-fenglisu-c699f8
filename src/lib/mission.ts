@@ -129,6 +129,8 @@ export interface TicaMission {
   /** Human-readable time remaining, e.g. "~2 min", "Calculating…", "—". */
   estimatedTimeRemaining: string
   aiConfidence: string
+  /** When true, this opportunity has been dismissed by the dealer. */
+  ignored?: boolean
 }
 
 export type ValidationField = 'vehicleType' | 'budget' | 'buyingPriority'
@@ -372,13 +374,35 @@ export function resolveBuyingReportMission({
   if (selectedMission && isBuyingReportReady(selectedMission)) return selectedMission
 
   const mostRecentCompletedMission = [...missionsById.values()]
-    .filter((mission) => isBuyingReportReady(mission))
+    .filter((mission) => isBuyingReportReady(mission) && !mission.ignored)
     .sort((a, b) => new Date(b.lastUpdated || b.createdAt).getTime() - new Date(a.lastUpdated || a.createdAt).getTime())[0] ?? null
 
   if (mostRecentCompletedMission) return mostRecentCompletedMission
   if (activeMission) return activeMission
 
   return null
+}
+
+/**
+ * Mark a mission as ignored/dismissed and persist the change.
+ * The underlying mission data and report are preserved; the mission is only
+ * flagged so it no longer surfaces as an active recommendation.
+ */
+export function ignoreMission(missionId: string): void {
+  try {
+    const history = loadMissionHistory()
+    const updated = history.map((m) =>
+      m.missionId === missionId ? { ...m, ignored: true, lastUpdated: new Date().toISOString() } : m,
+    )
+    localStorage.setItem(MISSION_HISTORY_STORAGE_KEY, JSON.stringify(updated))
+    // If this is also the active mission, update it there too
+    const active = loadMission()
+    if (active && active.missionId === missionId) {
+      localStorage.setItem(MISSION_STORAGE_KEY, JSON.stringify({ ...active, ignored: true }))
+    }
+  } catch {
+    // localStorage unavailable
+  }
 }
 
 /**

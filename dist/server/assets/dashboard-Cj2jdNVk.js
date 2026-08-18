@@ -2,8 +2,8 @@ import { jsxs, jsx } from "react/jsx-runtime";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { b as MISSION_STAGES, a as saveSelectedBuyingReportMissionId, M as MISSION_PREFILL_KEY } from "./mission-DVKehJWq.js";
-import { u as useMissionProgress } from "./useMissionProgress-ChTaZnbb.js";
+import { b as MISSION_STAGES, a as saveSelectedBuyingReportMissionId, M as MISSION_PREFILL_KEY } from "./mission-C3C9xkMh.js";
+import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
 import "react-dom";
 const bmwM3CompetitionScoring = {
   // Estimated Profit Score: placeholder projection for gross margin after acquisition and prep assumptions.

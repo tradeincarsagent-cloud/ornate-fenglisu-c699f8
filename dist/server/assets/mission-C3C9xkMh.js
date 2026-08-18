@@ -217,10 +217,24 @@ function resolveBuyingReportMission({
   if (requestedMission) return requestedMission;
   const selectedMission = findMission(loadSelectedBuyingReportMissionId());
   if (selectedMission && isBuyingReportReady(selectedMission)) return selectedMission;
-  const mostRecentCompletedMission = [...missionsById.values()].filter((mission) => isBuyingReportReady(mission)).sort((a, b) => new Date(b.lastUpdated || b.createdAt).getTime() - new Date(a.lastUpdated || a.createdAt).getTime())[0] ?? null;
+  const mostRecentCompletedMission = [...missionsById.values()].filter((mission) => isBuyingReportReady(mission) && !mission.ignored).sort((a, b) => new Date(b.lastUpdated || b.createdAt).getTime() - new Date(a.lastUpdated || a.createdAt).getTime())[0] ?? null;
   if (mostRecentCompletedMission) return mostRecentCompletedMission;
   if (activeMission) return activeMission;
   return null;
+}
+function ignoreMission(missionId) {
+  try {
+    const history = loadMissionHistory();
+    const updated = history.map(
+      (m) => m.missionId === missionId ? { ...m, ignored: true, lastUpdated: (/* @__PURE__ */ new Date()).toISOString() } : m
+    );
+    localStorage.setItem(MISSION_HISTORY_STORAGE_KEY, JSON.stringify(updated));
+    const active = loadMission();
+    if (active && active.missionId === missionId) {
+      localStorage.setItem(MISSION_STORAGE_KEY, JSON.stringify({ ...active, ignored: true }));
+    }
+  } catch {
+  }
 }
 function computeMissionProgress(mission) {
   const elapsedSeconds = (Date.now() - new Date(mission.createdAt).getTime()) / 1e3;
@@ -260,7 +274,8 @@ export {
   saveSelectedBuyingReportMissionId as a,
   MISSION_STAGES as b,
   createMission as c,
-  computeMissionProgress as d,
+  ignoreMission as d,
+  computeMissionProgress as e,
   isBuyingReportReady as i,
   loadMission as l,
   resolveBuyingReportMission as r,
