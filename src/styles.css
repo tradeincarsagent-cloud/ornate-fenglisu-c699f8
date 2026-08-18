@@ -3035,3 +3035,109 @@ body > div {
     transform: none;
   }
 }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body.opportunity-print-mode {
+    background: #fff !important;
+    color: #0f172a !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  body.opportunity-print-mode .opp-thinking-overlay,
+  body.opportunity-print-mode .platform-shell > .fixed,
+  body.opportunity-print-mode .platform-shell-header,
+  body.opportunity-print-mode .platform-shell-footer,
+  body.opportunity-print-mode .platform-shell-layout > aside,
+  body.opportunity-print-mode .back-to-top-btn,
+  body.opportunity-print-mode .opportunity-print-hide {
+    display: none !important;
+  }
+
+  body.opportunity-print-mode .platform-shell,
+  body.opportunity-print-mode .platform-shell-layout,
+  body.opportunity-print-mode .platform-shell-main {
+    display: block !important;
+    max-width: none !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  body.opportunity-print-mode .opportunity-print-root {
+    max-width: none !important;
+    gap: 0.75rem !important;
+    color: #0f172a !important;
+  }
+
+  body.opportunity-print-mode .opportunity-print-root,
+  body.opportunity-print-mode .opportunity-print-root * {
+    visibility: visible !important;
+  }
+
+  body.opportunity-print-mode .opportunity-print-root :is(
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    span,
+    dt,
+    dd,
+    li,
+    a,
+    label,
+    textarea
+  ) {
+    color: #0f172a !important;
+    text-shadow: none !important;
+  }
+
+  body.opportunity-print-mode .opportunity-print-root :is(
+    header,
+    section,
+    article,
+    textarea,
+    .opp-tile-hover,
+    .verdict-card-premium,
+    .verdict-metrics-group
+  ) {
+    background: #fff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  body.opportunity-print-mode .opportunity-print-root .opp-card-stagger,
+  body.opportunity-print-mode .opportunity-print-root .opp-scroll-hidden,
+  body.opportunity-print-mode .opportunity-print-root .opp-scroll-visible,
+  body.opportunity-print-mode .opportunity-print-root .opp-stat-animate,
+  body.opportunity-print-mode .opportunity-print-root .opp-timeline-step,
+  body.opportunity-print-mode .opportunity-print-root .opp-timeline-dot-illuminate,
+  body.opportunity-print-mode .opportunity-print-root .opp-buy-signal-glow,
+  body.opportunity-print-mode .opportunity-print-root .opp-badge-sweep::after {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  body.opportunity-print-mode .opportunity-print-root .opp-card-hover:hover,
+  body.opportunity-print-mode .opportunity-print-root .opp-tile-hover:hover,
+  body.opportunity-print-mode .opportunity-print-root .opp-thumb:hover {
+    transform: none !important;
+  }
+
+  body.opportunity-print-mode .opportunity-print-root textarea {
+    min-height: 7rem;
+    resize: none !important;
+  }
+}
