@@ -2,239 +2,41 @@ import { jsxs, Fragment, jsx } from "react/jsx-runtime";
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
-import { o as opportunityIntelligencePlaceholder } from "./opportunity-intelligence-BHHtB8gB.js";
 import { a as MISSION_STAGES } from "./mission-BWK2uK5a.js";
 import { u as useMissionProgress } from "./useMissionProgress-DPrHquuK.js";
 import "react-dom";
-const {
-  featuredOpportunity
-} = opportunityIntelligencePlaceholder;
-const ticaVehicleIntelligence = {
-  modelIssues: [{
-    tone: "warning",
-    title: "Wet timing belt fitted on some engine variants.",
-    detail: "Inspect service invoices for evidence of the correct belt kit and oil-spec maintenance."
-  }, {
-    tone: "high",
-    title: "Check for evidence of timing belt replacement.",
-    detail: "High priority if mileage or age suggests the interval is due or recently exceeded."
-  }, {
-    tone: "warning",
-    title: "Water pump commonly replaced with timing belt.",
-    detail: "Confirm whether the pump, tensioners and coolant refresh were completed together."
-  }, {
-    tone: "info",
-    title: "Oil dilution can occur if used mainly for short journeys.",
-    detail: "Review service frequency and ask about repeated DPF regenerations or frequent top-ups."
-  }],
-  inspectionChecklist: [{
-    category: "Exterior",
-    items: [{
-      label: "Paint consistency",
-      status: "verified"
-    }, {
-      label: "Panel alignment",
-      status: "check"
-    }, {
-      label: "Corrosion / rust inspection",
-      status: "check"
-    }, {
-      label: "Glass and lighting",
-      status: "verified"
-    }, {
-      label: "Alloy wheel condition",
-      status: "check"
-    }, {
-      label: "Tyre wear pattern",
-      status: "high"
-    }]
-  }, {
-    category: "Mechanical",
-    items: [{
-      label: "Cold engine start",
-      status: "verified"
-    }, {
-      label: "Timing belt / chain evidence",
-      status: "high"
-    }, {
-      label: "Oil leaks",
-      status: "check"
-    }, {
-      label: "Coolant condition",
-      status: "check"
-    }, {
-      label: "Suspension noises",
-      status: "check"
-    }, {
-      label: "Gearbox operation",
-      status: "verified"
-    }]
-  }, {
-    category: "Interior",
-    items: [{
-      label: "Dashboard warning lights",
-      status: "verified"
-    }, {
-      label: "Air conditioning",
-      status: "check"
-    }, {
-      label: "Electrical equipment",
-      status: "check"
-    }, {
-      label: "Seat wear versus mileage",
-      status: "check"
-    }, {
-      label: "Spare key present",
-      status: "notAvailable"
-    }, {
-      label: "Service book available",
-      status: "verified"
-    }]
-  }, {
-    category: "Documentation",
-    items: [{
-      label: "VIN matches paperwork",
-      status: "verified"
-    }, {
-      label: "MOT history reviewed",
-      status: "verified"
-    }, {
-      label: "Service invoices checked",
-      status: "high"
-    }, {
-      label: "Outstanding finance check",
-      status: "notAvailable"
-    }, {
-      label: "Recall status",
-      status: "check"
-    }, {
-      label: "Number of owners confirmed",
-      status: "verified"
-    }]
-  }],
-  inspectionAdvice: "Pay particular attention to the timing belt replacement history and inspect for evidence of regular servicing. These checks are likely to have the greatest impact on long-term ownership costs.",
-  dealerVerdict: {
-    strengths: ["Strong retail demand", "ULEZ compliant", "Competitive running costs", "Good fuel economy", "Attractive projected margin", "Seller location is practical for collection"],
-    verificationItems: [{
-      label: "Wet timing belt replacement invoice",
-      tone: "high"
-    }, {
-      label: "Water-pump and tensioner history",
-      tone: "warning"
-    }, {
-      label: "Complete service invoices",
-      tone: "high"
-    }, {
-      label: "Recall status",
-      tone: "warning"
-    }, {
-      label: "Outstanding finance check",
-      tone: "high"
-    }],
-    finalAdvice: "Proceed only after confirming the wet-belt replacement history, service invoices and finance status. If satisfactory, contact the seller today and begin negotiations at £30,750."
-  },
-  runningCosts: [{
-    label: "Typical Annual Service Cost",
-    value: "£390–£540",
-    tone: "info"
-  }, {
-    label: "Timing Belt / Chain",
-    value: "Wet belt — invoice recommended",
-    tone: "warning"
-  }, {
-    label: "Insurance Group",
-    value: "Group 19",
-    tone: "info"
-  }, {
-    label: "Fuel Economy",
-    value: "52 MPG combined",
-    tone: "info"
-  }, {
-    label: "Road Tax Band",
-    value: "£190 standard rate",
-    tone: "info"
-  }, {
-    label: "ULEZ Status",
-    value: "Compliant",
-    tone: "info"
-  }, {
-    label: "Known High Cost Repairs",
-    value: "Turbo / belt-related work",
-    tone: "high"
-  }, {
-    label: "Dealer Demand Rating",
-    value: "Strong retail demand",
-    tone: "info"
-  }, {
-    label: "Typical Parts Availability",
-    value: "Good",
-    tone: "info"
-  }],
-  ownershipRisk: {
-    level: "Medium",
-    description: "Based on known reliability patterns and ownership trends."
-  },
-  sellerQuestions: {
-    questions: [{
-      id: 1,
-      text: "Has the wet timing belt been replaced, and is there an invoice?",
-      priority: "high"
-    }, {
-      id: 2,
-      text: "Was the water pump, tensioners and coolant replaced at the same time?",
-      priority: "high"
-    }, {
-      id: 3,
-      text: "Which engine oil specification has been used during servicing?",
-      priority: "important"
-    }, {
-      id: 4,
-      text: "Has the vehicle required frequent oil top-ups between services?",
-      priority: "important"
-    }, {
-      id: 5,
-      text: "Have there been any DPF, emissions or engine warning lights?",
-      priority: "important"
-    }, {
-      id: 6,
-      text: "Is the complete service history available with supporting invoices?",
-      priority: "high"
-    }, {
-      id: 7,
-      text: "Have all manufacturer recalls and service campaigns been completed?",
-      priority: "important"
-    }, {
-      id: 8,
-      text: "Are both keys, the handbook pack and the locking-wheel key present?",
-      priority: "general"
-    }],
-    dealerTip: "Ask for photographs of service invoices and supporting documents before travelling to inspect the vehicle."
-  }
-};
+function isSpecified(value) {
+  const trimmed = value?.trim() ?? "";
+  return trimmed !== "" && trimmed.toLowerCase() !== "any";
+}
+function getExecutiveSummaryValueClass(value) {
+  const normalized = typeof value === "number" ? `${value}` : value.trim();
+  const isNumeric = typeof value === "number" || /^£?\d[\d,]*(\.\d+)?%?$/.test(normalized);
+  if (isNumeric || normalized.length <= 8) return "text-[28px] sm:text-[32px]";
+  if (normalized.length <= 16) return "text-[21px] sm:text-[25px]";
+  return "text-[17px] leading-tight sm:text-[21px]";
+}
+function formatMissionValue(value, fallback = "Awaiting live data") {
+  return isSpecified(value) ? value.trim() : fallback;
+}
+function getFuelKind(fuelType) {
+  const normalized = fuelType?.trim().toLowerCase() ?? "";
+  if (normalized.includes("plug")) return "plugInHybrid";
+  if (normalized.includes("mild")) return "mildHybrid";
+  if (normalized.includes("hybrid")) return "hybrid";
+  if (normalized.includes("electric")) return "electric";
+  if (normalized.includes("diesel")) return "diesel";
+  if (normalized.includes("petrol")) return "petrol";
+  return "unknown";
+}
 function ChevronRightIcon() {
   return /* @__PURE__ */ jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "9 18 15 12 9 6" }) });
 }
 function OpportunityPage() {
-  const unifiedRecommendation = "BUY";
-  const unifiedConfidence = "97%";
-  const normalizedDecisionAction = unifiedRecommendation;
-  const decisionVerdictClassName = "tica-decision-buy";
-  const decisionVerdictGlowClassName = "tica-decision-buy-glow";
-  const investigationTimeline = [{
-    time: "09:02",
-    message: "✓ Price reduced by £850 (from £32,845 to £31,995)."
-  }, {
-    time: "09:04",
-    message: "↑ Dealer demand increased (+12% buyer interest in 24 hours)."
-  }, {
-    time: "09:06",
-    message: "✓ Opportunity Score increased from 91 to 94."
-  }, {
-    time: "09:08",
-    message: "🟢 BUY threshold reached (confidence steady at 97%)."
-  }];
-  const vehicleInfo = featuredOpportunity.vehicleInfo;
-  const ownershipRiskToneClass = "tica-decision-review";
+  const {
+    mission: activeMission,
+    initialized: missionInitialized
+  } = useMissionProgress();
   const issueToneConfig = {
     info: {
       label: "Information",
@@ -274,24 +76,22 @@ function OpportunityPage() {
       dotClassName: "bg-outline-variant"
     }
   };
-  const confidencePercent = parseFloat(featuredOpportunity.confidenceDisplay);
-  const meterZone = confidencePercent >= 67 ? "buy" : confidencePercent >= 34 ? "review" : "pass";
-  const meterLabel = unifiedRecommendation;
-  const meterSentence = meterZone === "buy" ? "TICA considers this one of today's strongest buying opportunities based on pricing, resale demand and projected profit." : meterZone === "review" ? "TICA flags this opportunity for further review — some indicators are positive but caution is advised before committing." : "TICA does not recommend this vehicle at current pricing — margins and demand indicators fall below buying thresholds.";
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [dotPulsing, setDotPulsing] = useState(true);
   const [meterAnimated, setMeterAnimated] = useState(false);
   const [meterGlowing, setMeterGlowing] = useState(false);
-  const {
-    mission: activeMission,
-    initialized: missionInitialized
-  } = useMissionProgress();
   const missionReport = useMemo(() => {
     if (!activeMission) return null;
     const make = activeMission.vehicleRequirements?.make || "";
     const model = activeMission.vehicleRequirements?.model || "";
+    const yearFrom = activeMission.vehicleRequirements?.yearFrom || "";
+    const yearTo = activeMission.vehicleRequirements?.yearTo || "";
+    const maxMileage = activeMission.vehicleRequirements?.maxMileage || "";
+    const fuelType = activeMission.vehicleRequirements?.fuelType || "";
+    const transmission = activeMission.vehicleRequirements?.transmission || "";
+    const serviceHistory = activeMission.vehicleRequirements?.serviceHistory || "";
     const vehicleName = [make, model].filter(Boolean).join(" ") || activeMission.vehicleType || "Vehicle";
     const budgetNum = parseFloat(activeMission.budget) || 0;
     const targetProfitNum = parseFloat(activeMission.targetProfit) || 0;
@@ -306,12 +106,19 @@ function OpportunityPage() {
     const projectedProfitHigh = projectedProfit > 0 ? projectedProfit + Math.round(targetProfitNum * 0.2) : 0;
     const formatGBP = (n) => n > 0 ? `£${n.toLocaleString("en-GB")}` : "Awaiting live data";
     const hasBudget = budgetNum > 0;
+    const yearDisplay = isSpecified(yearFrom) && isSpecified(yearTo) ? yearFrom === yearTo ? yearFrom : `${yearFrom}–${yearTo}` : formatMissionValue(yearFrom || yearTo);
+    const maxMileageDisplay = isSpecified(maxMileage) ? `Up to ${Number(maxMileage).toLocaleString("en-GB")} miles` : "Awaiting live data";
     return {
       vehicleName,
       make,
       model,
       missionId: activeMission.missionId,
       vehicleType: activeMission.vehicleType,
+      yearDisplay,
+      maxMileageDisplay,
+      fuelType: formatMissionValue(fuelType),
+      transmission: formatMissionValue(transmission),
+      serviceHistory: formatMissionValue(serviceHistory, "Requires verification"),
       budget: activeMission.budget ? `Up to £${parseFloat(activeMission.budget).toLocaleString("en-GB")}` : "—",
       targetProfit: activeMission.targetProfit ? `£${parseFloat(activeMission.targetProfit).toLocaleString("en-GB")}+` : "—",
       searchArea: activeMission.searchArea || "—",
@@ -349,9 +156,433 @@ function OpportunityPage() {
         value: projectedProfit > 0 ? `${formatGBP(projectedProfit)}–${formatGBP(projectedProfitHigh)}` : "Awaiting live data",
         tone: "buy"
       }],
-      finalAdvice: hasBudget ? `Proceed only after confirming the vehicle's service and maintenance history. If satisfactory, contact the seller today and begin negotiations at ${formatGBP(recommendedOffer)}.` : "Proceed only after confirming the vehicle's service and maintenance history. Contact the seller to begin negotiations."
+      finalAdvice: hasBudget ? `Review ${vehicleName} against live vehicle history, service records and model-specific intelligence before negotiating. If those checks are satisfactory, begin negotiations at ${formatGBP(recommendedOffer)}.` : `Review ${vehicleName} only after live vehicle history, service records and model-specific intelligence have been verified.`
     };
   }, [activeMission]);
+  const reportVehicleIntelligence = useMemo(() => {
+    const vehicleName = missionReport?.vehicleName || "the active vehicle";
+    const fuelType = activeMission?.vehicleRequirements?.fuelType;
+    const fuelKind = getFuelKind(fuelType);
+    const fuelLabel = formatMissionValue(fuelType, "Requires verification");
+    const transmissionLabel = missionReport?.transmission || "Requires verification";
+    const serviceHistoryLabel = missionReport?.serviceHistory || "Requires verification";
+    const hasCommercialData = Boolean(missionReport && missionReport.retailValue > 0 && missionReport.projectedProfit > 0);
+    const modelIssues = [{
+      tone: "warning",
+      title: `Awaiting live vehicle intelligence for ${vehicleName}.`,
+      detail: "Model-specific engine, timing belt, wet-belt, cam-chain, gearbox, battery, DPF, recall, reliability and weakness data is intentionally withheld until live integration confirms the active vehicle."
+    }, {
+      tone: "info",
+      title: "Model-specific faults require verification.",
+      detail: "No intelligence from previous or demonstration vehicles is reused in this report. Vehicle-specific issues will only appear when confirmed for the active make, model and variant."
+    }];
+    if (fuelKind === "diesel") {
+      modelIssues.push({
+        tone: "warning",
+        title: "Diesel emissions systems require verification.",
+        detail: "Diesel-specific checks such as DPF or emissions-system advice are not presented as active-vehicle facts until the exact engine is confirmed."
+      });
+    }
+    if (fuelKind === "hybrid" || fuelKind === "plugInHybrid" || fuelKind === "mildHybrid" || fuelKind === "electric") {
+      modelIssues.push({
+        tone: "warning",
+        title: "Electrified powertrain checks require verification.",
+        detail: "Battery, charging and hybrid-system intelligence is withheld until the active vehicle configuration is confirmed by live data."
+      });
+    }
+    const mechanicalItems = [{
+      label: fuelKind === "electric" ? "High-voltage system warning lights" : "Cold start / dashboard warning lights",
+      status: "check"
+    }, {
+      label: "Fluid leaks or cooling-system issues",
+      status: fuelKind === "electric" ? "notAvailable" : "check"
+    }, {
+      label: `${transmissionLabel === "Awaiting live data" ? "Transmission" : transmissionLabel} operation`,
+      status: "check"
+    }, {
+      label: "Suspension, steering and brake feel",
+      status: "check"
+    }];
+    if (fuelKind === "diesel") mechanicalItems.splice(1, 0, {
+      label: "DPF / emissions warning lights",
+      status: "check"
+    });
+    if (fuelKind === "hybrid" || fuelKind === "plugInHybrid" || fuelKind === "mildHybrid") {
+      mechanicalItems.splice(1, 0, {
+        label: "Hybrid system warning lights",
+        status: "check"
+      });
+    }
+    if (fuelKind === "electric") {
+      mechanicalItems.splice(1, 0, {
+        label: "Charging port and cable condition",
+        status: "check"
+      });
+    }
+    const inspectionAdviceByFuel = {
+      petrol: "Focus on a clean cold start, warning lights, service evidence and general mechanical condition.",
+      diesel: "Focus on a clean cold start, emissions warnings, service evidence and signs of DPF-related issues.",
+      hybrid: "Focus on warning lights, smooth changeover between power sources, service evidence and battery-system health checks.",
+      plugInHybrid: "Focus on warning lights, charging operation, service evidence and battery-system health checks.",
+      mildHybrid: "Focus on warning lights, service evidence and correct operation of the electrified assist systems.",
+      electric: "Focus on warning lights, charging equipment condition, battery-health evidence and brake / suspension condition.",
+      unknown: "Focus on general condition, warning lights, service evidence and a full mechanical inspection."
+    };
+    const generalQuestions = [{
+      id: 1,
+      text: "Is the full service history available with supporting invoices or digital records?",
+      priority: "high"
+    }, {
+      id: 2,
+      text: "Are there any current warning lights, faults or advisories that the seller is aware of?",
+      priority: "high"
+    }, {
+      id: 3,
+      text: "Have all recalls, service campaigns and software updates been completed?",
+      priority: "important"
+    }, {
+      id: 4,
+      text: "Can the seller confirm the condition of both keys, handbook pack and locking-wheel key?",
+      priority: "general"
+    }, {
+      id: 5,
+      text: "Has the vehicle had any recent maintenance, repairs or parts replaced?",
+      priority: "important"
+    }];
+    if (fuelKind === "diesel") {
+      generalQuestions.push({
+        id: 6,
+        text: "Has the vehicle had any DPF, emissions or regeneration-related warnings?",
+        priority: "important"
+      });
+    }
+    if (fuelKind === "hybrid" || fuelKind === "plugInHybrid" || fuelKind === "mildHybrid") {
+      generalQuestions.push({
+        id: 6,
+        text: "Have there been any hybrid-system warnings, battery repairs or charging issues?",
+        priority: "important"
+      });
+    }
+    if (fuelKind === "electric") {
+      generalQuestions.push({
+        id: 6,
+        text: "Can the seller provide recent battery-health, charging or range evidence?",
+        priority: "important"
+      });
+    }
+    const recommendation = hasCommercialData ? "REVIEW" : "REVIEW";
+    const confidence = hasCommercialData ? "Pending verification" : "Awaiting live data";
+    return {
+      modelIssues,
+      inspectionChecklist: [{
+        category: "Exterior",
+        items: [{
+          label: "Paint consistency",
+          status: "check"
+        }, {
+          label: "Panel alignment",
+          status: "check"
+        }, {
+          label: "Corrosion / rust inspection",
+          status: "check"
+        }, {
+          label: "Glass and lighting",
+          status: "check"
+        }, {
+          label: "Alloy wheel condition",
+          status: "check"
+        }, {
+          label: "Tyre wear pattern",
+          status: "high"
+        }]
+      }, {
+        category: "Mechanical",
+        items: mechanicalItems
+      }, {
+        category: "Interior",
+        items: [{
+          label: "Dashboard and infotainment operation",
+          status: "check"
+        }, {
+          label: "Air conditioning / cabin comfort features",
+          status: "check"
+        }, {
+          label: "Electrical equipment",
+          status: "check"
+        }, {
+          label: "Seat wear versus mileage",
+          status: "check"
+        }, {
+          label: "Spare key present",
+          status: "check"
+        }, {
+          label: "Service book or digital record access",
+          status: "check"
+        }]
+      }, {
+        category: "Documentation",
+        items: [{
+          label: "VIN matches paperwork",
+          status: "check"
+        }, {
+          label: "MOT history reviewed",
+          status: "check"
+        }, {
+          label: `Service history (${serviceHistoryLabel})`,
+          status: "high"
+        }, {
+          label: "Finance / write-off history check",
+          status: "notAvailable"
+        }, {
+          label: "Recall status",
+          status: "check"
+        }, {
+          label: "Owner history verification",
+          status: "notAvailable"
+        }]
+      }],
+      inspectionAdvice: `${inspectionAdviceByFuel[fuelKind]} Model-specific inspection advice for ${vehicleName} will appear only when live vehicle intelligence is available.`,
+      dealerVerdict: {
+        recommendation,
+        confidence,
+        strengths: [missionReport?.vehicleName ? `${missionReport.vehicleName} is the active vehicle for this report.` : "An active vehicle mission is required before vehicle-specific conclusions can be made.", hasCommercialData ? `Commercial figures are derived only from mission ${missionReport?.missionId}.` : "Commercial figures are waiting for active mission budget data.", `Fuel type on the active mission: ${fuelLabel}.`, "Hard-coded model-specific intelligence has been removed from this report."],
+        verificationItems: [{
+          label: "Live vehicle history provider check",
+          tone: "high"
+        }, {
+          label: "Model-specific engine / variant intelligence",
+          tone: "high"
+        }, {
+          label: "Service history and maintenance invoices",
+          tone: "warning"
+        }, {
+          label: "Recall and campaign status",
+          tone: "warning"
+        }, {
+          label: "Listing location and collection costs",
+          tone: "warning"
+        }],
+        reasoning: [hasCommercialData ? `Commercial figures are available for ${vehicleName}, but they remain separate from missing vehicle-intelligence integrations.` : "Commercial figures are incomplete because active mission pricing inputs are still missing.", "Vehicle history checks have not yet been run through a live provider.", "Model-specific reliability and ownership intelligence is intentionally labelled as unavailable rather than inferred from another vehicle.", "A cautious review decision is maintained until those outstanding checks are complete."],
+        recommendedActions: ["Run a live vehicle history check.", "Confirm service records before making an offer.", "Verify model-specific engine and recall intelligence."],
+        finalAdvice: hasCommercialData ? `Review ${vehicleName} using the active report's commercial figures, then complete live vehicle history, service-record and model-specific checks before negotiating.` : `Complete the active mission details for ${vehicleName}, then run live vehicle history and model-specific verification before making a buying decision.`,
+        summary: hasCommercialData ? `Commercial figures for ${vehicleName} are available, but live vehicle history and model-specific intelligence checks remain outstanding.` : `Vehicle-specific intelligence for ${vehicleName} is incomplete and still requires live data integration.`
+      },
+      runningCosts: [{
+        label: "Typical Annual Service Cost",
+        value: "Awaiting live data",
+        tone: "info"
+      }, {
+        label: "Timing Belt / Chain",
+        value: fuelKind === "electric" ? "Not applicable to current fuel type" : "Requires verification",
+        tone: "warning"
+      }, {
+        label: "Insurance Group",
+        value: "Awaiting live data",
+        tone: "info"
+      }, {
+        label: "Fuel Economy",
+        value: "Awaiting live data",
+        tone: "info"
+      }, {
+        label: "Road Tax Band",
+        value: "Awaiting live data",
+        tone: "info"
+      }, {
+        label: "ULEZ Status",
+        value: "Requires verification",
+        tone: "info"
+      }, {
+        label: "Known High Cost Repairs",
+        value: "Awaiting live vehicle intelligence",
+        tone: "high"
+      }, {
+        label: "Dealer Demand Rating",
+        value: "Awaiting live data",
+        tone: "info"
+      }, {
+        label: "Typical Parts Availability",
+        value: "Awaiting live data",
+        tone: "info"
+      }],
+      ownershipRisk: {
+        level: "Requires verification",
+        tone: "review",
+        description: "Live vehicle history, model-specific reliability data and confirmed listing details are still required before ownership risk can be rated confidently for this report."
+      },
+      sellerQuestions: {
+        questions: generalQuestions,
+        dealerTip: "Ask for photos or screenshots of supporting documents before travelling so the active report stays tied to verified evidence only."
+      },
+      vehicleHistory: [{
+        status: "attention",
+        icon: "💳",
+        label: "Finance Check",
+        value: "Live check required",
+        detail: "No provider-backed finance result has been returned for this active report."
+      }, {
+        status: "attention",
+        icon: "🚔",
+        label: "Police Stolen Check",
+        value: "Live check required",
+        detail: "Theft status must be confirmed by a connected vehicle-history provider."
+      }, {
+        status: "attention",
+        icon: "🛡",
+        label: "Insurance Write-Off",
+        value: "Live check required",
+        detail: "Write-off status is not shown as verified until provider data is available."
+      }, {
+        status: "attention",
+        icon: "📏",
+        label: "Mileage Verification",
+        value: "Requires verification",
+        detail: "Mileage should be checked against MOT and history records once live integrations are connected."
+      }, {
+        status: "attention",
+        icon: "🔎",
+        label: "VIN Verification",
+        value: "Requires verification",
+        detail: "VIN and registration data have not yet been verified by a live provider."
+      }, {
+        status: "attention",
+        icon: "⚠️",
+        label: "Outstanding Recalls",
+        value: "Manufacturer check required",
+        detail: "Recall status is intentionally left unverified until live data is supplied."
+      }, {
+        status: "attention",
+        icon: "👤",
+        label: "Previous Owners",
+        value: "Awaiting live data",
+        detail: "Keeper history must come from a connected history source, not a reused demo vehicle."
+      }, {
+        status: "attention",
+        icon: "🌍",
+        label: "Import / Export Status",
+        value: "Live check required",
+        detail: "Provenance and import/export status still require provider-backed confirmation."
+      }],
+      locationSummary: [{
+        icon: "📍",
+        label: "Vehicle Location",
+        value: "Awaiting live data"
+      }, {
+        icon: "🚗",
+        label: "Distance",
+        value: "Awaiting live data"
+      }, {
+        icon: "🕒",
+        label: "Estimated Drive",
+        value: "Awaiting live data"
+      }, {
+        icon: "⛽",
+        label: "Estimated Fuel Cost",
+        value: "Awaiting live data"
+      }, {
+        icon: "✈",
+        label: "Nearest Airport",
+        value: "Awaiting live data"
+      }, {
+        icon: "🚆",
+        label: "Nearest Railway",
+        value: "Awaiting live data"
+      }],
+      collectionSummary: [{
+        label: "Collection difficulty",
+        value: "Awaiting live data"
+      }, {
+        label: "Traffic risk",
+        value: "Awaiting live data"
+      }, {
+        label: "Estimated transport cost",
+        value: "Awaiting live data"
+      }, {
+        label: "Best collection day",
+        value: "Awaiting live data"
+      }],
+      timeline: [{
+        time: "09:02",
+        message: `✓ Active report context loaded for ${vehicleName}.`
+      }, {
+        time: "09:04",
+        message: "✓ Commercial decision recalculated from the active mission budget only."
+      }, {
+        time: "09:06",
+        message: "⚠ Live vehicle history and model-specific intelligence still await verification."
+      }, {
+        time: "09:08",
+        message: "🟡 REVIEW recommendation held until outstanding checks are completed."
+      }],
+      ranking: {
+        title: "Verification-led review",
+        detail: "Model-specific market demand and stock-turn ranking will appear once live vehicle intelligence is connected.",
+        confidence,
+        profitPotential: hasCommercialData ? "Mission-based estimate" : "Awaiting live data",
+        marketDemand: "Awaiting live data",
+        riskRating: "Verification required",
+        daysToSell: "Awaiting live data"
+      }
+    };
+  }, [activeMission, missionReport]);
+  const vehicleInfo = useMemo(() => {
+    if (!missionReport) {
+      return [{
+        label: "Make",
+        value: "Awaiting active mission"
+      }, {
+        label: "Model",
+        value: "Awaiting active mission"
+      }, {
+        label: "Fuel",
+        value: "Awaiting active mission"
+      }];
+    }
+    return [{
+      label: "Make",
+      value: formatMissionValue(missionReport.make)
+    }, {
+      label: "Model",
+      value: formatMissionValue(missionReport.model)
+    }, {
+      label: "Year Target",
+      value: missionReport.yearDisplay
+    }, {
+      label: "Fuel",
+      value: missionReport.fuelType
+    }, {
+      label: "Transmission",
+      value: missionReport.transmission
+    }, {
+      label: "Mileage Target",
+      value: missionReport.maxMileageDisplay
+    }, {
+      label: "Service History",
+      value: missionReport.serviceHistory
+    }, {
+      label: "Search Area",
+      value: missionReport.searchArea || "Awaiting live data"
+    }];
+  }, [missionReport]);
+  const unifiedRecommendation = reportVehicleIntelligence.dealerVerdict.recommendation;
+  const unifiedConfidence = reportVehicleIntelligence.dealerVerdict.confidence;
+  const normalizedDecisionAction = unifiedRecommendation;
+  const isBuyVerdict = normalizedDecisionAction === "BUY";
+  const isReviewVerdict = normalizedDecisionAction === "REVIEW";
+  const isPassVerdict = normalizedDecisionAction === "PASS";
+  const decisionVerdictClassName = isBuyVerdict ? "tica-decision-buy" : isReviewVerdict ? "tica-decision-review" : "tica-decision-pass";
+  const decisionVerdictGlowClassName = isBuyVerdict ? "tica-decision-buy-glow" : "";
+  const investigationTimeline = reportVehicleIntelligence.timeline;
+  const ownershipRiskToneClass = reportVehicleIntelligence.ownershipRisk.tone === "buy" ? "tica-decision-buy" : reportVehicleIntelligence.ownershipRisk.tone === "review" ? "tica-decision-review" : "tica-decision-pass";
+  const numericConfidence = Number.parseFloat(unifiedConfidence);
+  const confidencePercent = Number.isFinite(numericConfidence) ? numericConfidence : unifiedRecommendation === "BUY" ? 75 : unifiedRecommendation === "REVIEW" ? 50 : 20;
+  const meterZone = isBuyVerdict ? "buy" : isReviewVerdict ? "review" : "pass";
+  const meterLabel = unifiedRecommendation;
+  const meterSentence = reportVehicleIntelligence.dealerVerdict.summary;
+  const executiveConfidenceValue = Number.isFinite(numericConfidence) && statValues !== null ? `${statValues.confidence}%` : unifiedConfidence;
+  const executiveProfitValue = statValues !== null ? `£${statValues.profit.toLocaleString("en-GB")}` : "—";
+  const executiveRetailValue = statValues !== null ? `£${statValues.retail.toLocaleString("en-GB")}` : "—";
+  const executiveScoreValue = statValues !== null && statValues.score > 0 ? statValues.score : "Awaiting live data";
+  const executiveDaysValue = statValues !== null && statValues.days > 0 ? statValues.days : "Awaiting live data";
   const [thinkingVisible, setThinkingVisible] = useState(true);
   const [thinkingExiting, setThinkingExiting] = useState(false);
   const [thinkingStep, setThinkingStep] = useState(0);
@@ -405,6 +636,11 @@ function OpportunityPage() {
   }, [missionReport]);
   const statAnimStarted = useRef(false);
   useEffect(() => {
+    statAnimStarted.current = false;
+    setStatValues(null);
+    setTimelineVisible(0);
+  }, [missionReport?.missionId]);
+  useEffect(() => {
     const runAnimation = () => {
       if (statAnimStarted.current) return;
       statAnimStarted.current = true;
@@ -412,12 +648,13 @@ function OpportunityPage() {
       if (!mr || mr.retailValue <= 0) {
         return;
       }
+      const confidenceTarget = Number.isFinite(numericConfidence) ? numericConfidence : 0;
       const targetValues = {
-        confidence: 92,
-        profit: Math.max(mr.projectedProfit, 200),
+        confidence: confidenceTarget,
+        profit: mr.projectedProfit,
         retail: mr.retailValue,
-        score: 92,
-        days: 8
+        score: confidenceTarget > 0 ? Math.max(Math.round(confidenceTarget), 1) : 0,
+        days: 0
       };
       const duration = 1100;
       const fps = 60;
@@ -439,14 +676,14 @@ function OpportunityPage() {
     };
     const t = setTimeout(runAnimation, 350);
     return () => clearTimeout(t);
-  }, []);
+  }, [numericConfidence, missionReport?.missionId]);
   useEffect(() => {
     const timers = [];
     investigationTimeline.forEach((_, i) => {
       timers.push(setTimeout(() => setTimelineVisible(i + 1), 3400 + i * 280));
     });
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [investigationTimeline, missionReport?.missionId]);
   useEffect(() => {
     const run = () => {
       setBadgeSweep(false);
@@ -566,7 +803,7 @@ function OpportunityPage() {
                 /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: missionReport.missionId })
               ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
                 "Vehicle Opportunity ID: ",
-                /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: featuredOpportunity.id })
+                /* @__PURE__ */ jsx("span", { className: "font-semibold text-on-surface", children: "Awaiting active mission" })
               ] }) })
             ] }),
             /* @__PURE__ */ jsx("div", { className: "self-end sm:self-auto", children: /* @__PURE__ */ jsx("div", { className: `opp-badge-sweep rounded-2xl ${badgeSweep ? "opp-badge-sweep-play" : ""}`, children: /* @__PURE__ */ jsx(TicaShield, { size: "lg" }) }) })
@@ -632,29 +869,29 @@ function OpportunityPage() {
         /* @__PURE__ */ jsxs("section", { className: "opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-5", style: stagger(2), children: [
           /* @__PURE__ */ jsx("p", { className: "mb-4 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Executive Summary" }),
           /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6", children: [
-            /* @__PURE__ */ jsxs("div", { className: `opp-card-hover flex flex-col items-center justify-center rounded-xl border border-primary/25 bg-surface-container-high px-3 py-5 text-center ${"opp-buy-glow"}`, children: [
+            /* @__PURE__ */ jsxs("div", { className: `opp-card-hover flex flex-col items-center justify-center rounded-xl border border-primary/25 bg-surface-container-high px-3 py-5 text-center ${isBuyVerdict ? "opp-buy-glow" : ""}`, children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "TICA Recommendation™" }),
               /* @__PURE__ */ jsx("p", { className: `opp-stat-animate mt-2 text-[28px] font-semibold leading-none sm:text-[32px] ${decisionVerdictClassName} ${decisionVerdictGlowClassName}`, children: normalizedDecisionAction })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Confidence" }),
-              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]", children: statValues !== null ? `${statValues.confidence}%` : "—" })
+              /* @__PURE__ */ jsx("p", { className: `opp-stat-animate mt-2 font-semibold leading-tight text-primary text-balance ${getExecutiveSummaryValueClass(executiveConfidenceValue)}`, children: executiveConfidenceValue })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Gross Profit" }),
-              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: statValues !== null ? `£${statValues.profit.toLocaleString("en-GB")}` : "—" })
+              /* @__PURE__ */ jsx("p", { className: `opp-stat-animate mt-2 font-semibold leading-tight text-on-surface text-balance ${getExecutiveSummaryValueClass(executiveProfitValue)}`, children: executiveProfitValue })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Retail Value" }),
-              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: statValues !== null ? `£${statValues.retail.toLocaleString("en-GB")}` : "—" })
+              /* @__PURE__ */ jsx("p", { className: `opp-stat-animate mt-2 font-semibold leading-tight text-on-surface text-balance ${getExecutiveSummaryValueClass(executiveRetailValue)}`, children: executiveRetailValue })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Opportunity Score" }),
-              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-primary sm:text-[32px]", children: statValues !== null ? statValues.score : "—" })
+              /* @__PURE__ */ jsx("p", { className: `opp-stat-animate mt-2 font-semibold leading-tight text-primary text-balance ${getExecutiveSummaryValueClass(executiveScoreValue)}`, children: executiveScoreValue })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "opp-card-hover flex flex-col items-center justify-center rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Days to Sell" }),
-              /* @__PURE__ */ jsx("p", { className: "opp-stat-animate mt-2 text-[28px] font-semibold leading-none text-on-surface sm:text-[32px]", children: statValues !== null ? statValues.days : "—" })
+              /* @__PURE__ */ jsx("p", { className: `opp-stat-animate mt-2 font-semibold leading-tight text-on-surface text-balance ${getExecutiveSummaryValueClass(executiveDaysValue)}`, children: executiveDaysValue })
             ] })
           ] })
         ] }),
@@ -663,45 +900,42 @@ function OpportunityPage() {
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "TICA Opportunity Ranking™" }),
               /* @__PURE__ */ jsxs("div", { className: "mt-1 flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-[22px] leading-none", "aria-label": "5 stars", children: "★★★★★" }),
-                /* @__PURE__ */ jsx("span", { className: "text-body-md font-semibold text-on-surface", children: "Gold Opportunity" })
+                /* @__PURE__ */ jsx("span", { className: "text-[22px] leading-none", "aria-label": "ranking status", children: "🟡" }),
+                /* @__PURE__ */ jsx("span", { className: "text-body-md font-semibold text-on-surface", children: reportVehicleIntelligence.ranking.title })
               ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary/25 bg-primary/10 px-4 py-2 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.16em] text-primary", children: "Today's Ranking" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-body-lg font-semibold text-on-surface", children: "#3 Best Opportunity Found Today" })
+              /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-body-lg font-semibold text-on-surface", children: reportVehicleIntelligence.ranking.detail })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-5", children: [
             /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant", children: "Dealer Confidence" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[22px] font-semibold leading-none text-primary", children: "97%" })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[22px] font-semibold leading-none text-primary", children: reportVehicleIntelligence.ranking.confidence })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant", children: "Profit Potential" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[18px] leading-none tica-decision-buy", "aria-label": "5 stars", children: "★★★★★" })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[18px] leading-none text-on-surface", children: reportVehicleIntelligence.ranking.profitPotential })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant", children: "Market Demand" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[18px] leading-none tica-decision-buy", "aria-label": "5 stars", children: "★★★★★" })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[18px] leading-none text-on-surface", children: reportVehicleIntelligence.ranking.marketDemand })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center", children: [
               /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant", children: "Risk Rating" }),
-              /* @__PURE__ */ jsxs("p", { className: "mt-1 text-[18px] leading-none", "aria-label": "2 out of 5 stars", children: [
-                /* @__PURE__ */ jsx("span", { className: "tica-decision-pass", children: "★★" }),
-                /* @__PURE__ */ jsx("span", { className: "text-on-surface-variant/30", children: "☆☆☆" })
-              ] })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[18px] leading-none text-on-surface", children: reportVehicleIntelligence.ranking.riskRating })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "col-span-2 rounded-xl border border-outline-variant/25 bg-surface-container-high px-3 py-2.5 text-center sm:col-span-1", children: [
               /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant", children: "Est. Days To Sell" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[22px] font-semibold leading-none text-on-surface", children: "9 Days" })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-[22px] font-semibold leading-none text-on-surface", children: reportVehicleIntelligence.ranking.daysToSell })
             ] })
           ] })
         ] }),
         /* @__PURE__ */ jsx("section", { className: "opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low px-4 py-3 sm:px-5", "aria-label": "TICA analysis status", style: stagger(4), children: /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2.5", children: [
             /* @__PURE__ */ jsx("span", { className: "opp-status-dot-breathe inline-block h-2 w-2 shrink-0 rounded-full bg-[var(--tica-decision-buy)]", "aria-hidden": "true" }),
-            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps font-semibold uppercase tracking-widest text-on-surface", children: "AI Analysis Complete" })
+            /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps font-semibold uppercase tracking-widest text-on-surface", children: "AVAILABLE DATA ANALYSIS COMPLETE" })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "flex flex-wrap items-center gap-x-4 gap-y-1", children: ["Market Analysis", "Pricing Validation", "Demand Analysis", "Profit Projection", "Risk Assessment"].map((step, index) => /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1 text-[11px] font-semibold text-on-surface-variant", style: {
             opacity: analysisStep > index ? 1 : 0,
@@ -751,14 +985,14 @@ function OpportunityPage() {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "mt-2 text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant/50", children: "Updated using current market intelligence." })
         ] }),
-        /* @__PURE__ */ jsxs("section", { className: `opp-card-stagger dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-5 ${"opp-buy-glow"}`, style: stagger(6), children: [
+        /* @__PURE__ */ jsxs("section", { className: `opp-card-stagger dashboard-border rounded-2xl border border-primary/30 bg-surface-container p-4 sm:p-5 ${isBuyVerdict ? "opp-buy-glow" : ""}`, style: stagger(6), children: [
           /* @__PURE__ */ jsx("h2", { className: "mb-3 text-headline-md font-headline-md text-on-surface", children: "AI Buying Verdict" }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-4", children: [
             /* @__PURE__ */ jsxs("div", { className: "verdict-card-premium flex flex-col items-center justify-center gap-2 rounded-2xl px-4 py-3.5 text-center sm:px-4.5 sm:py-4 lg:min-w-[250px]", children: [
               /* @__PURE__ */ jsxs("div", { className: "traffic-light-shell", "aria-label": "AI buying verdict traffic light", children: [
-                /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${"traffic-light-lens-buy-active"}`, "aria-hidden": "true" }),
-                /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${""}`, "aria-hidden": "true" }),
-                /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${""}`, "aria-hidden": "true" })
+                /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${isBuyVerdict ? "traffic-light-lens-buy-active" : ""}`, "aria-hidden": "true" }),
+                /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${isReviewVerdict ? "traffic-light-lens-review-active" : ""}`, "aria-hidden": "true" }),
+                /* @__PURE__ */ jsx("div", { className: `traffic-light-lens ${isPassVerdict ? "traffic-light-lens-pass-active" : ""}`, "aria-hidden": "true" })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "space-y-0.5", children: [
                 /* @__PURE__ */ jsx("p", { className: "text-[0.64rem] font-label-caps uppercase tracking-[0.18em] text-primary/80", children: "AI Buying Verdict" }),
@@ -783,54 +1017,13 @@ function OpportunityPage() {
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 flex-1 flex-col justify-center rounded-2xl border border-outline-variant/30 bg-surface-container-high px-4 py-3.5 sm:px-5 sm:py-4", children: [
               /* @__PURE__ */ jsx("p", { className: "mb-2 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Why TICA Recommends This" }),
-              /* @__PURE__ */ jsxs("ul", { className: "flex-1 space-y-1.5", children: [
-                /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
-                  /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    "Asking price ",
-                    missionReport?.askingPriceDisplay || featuredOpportunity.listPriceDisplay,
-                    " below estimated retail value (",
-                    missionReport?.retailValueDisplay || featuredOpportunity.estimatedRetailValueDisplay,
-                    ")"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
-                  /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    "Estimated profit ",
-                    missionReport?.projectedProfitDisplay || featuredOpportunity.estimatedGrossProfitDisplay,
-                    " exceeds target"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
-                  /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    "Strong current market demand — ",
-                    featuredOpportunity.demandRatingDisplay
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
-                  /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    "Low overall buying risk — ",
-                    featuredOpportunity.riskLevel
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
-                  /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-px shrink-0 font-semibold", children: "✓" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    "Estimated retail margin is excellent — ",
-                    featuredOpportunity.scoring.estimatedProfitScore.status
-                  ] })
-                ] })
-              ] }),
+              /* @__PURE__ */ jsx("ul", { className: "flex-1 space-y-1.5", children: reportVehicleIntelligence.dealerVerdict.reasoning.map((reason) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-body-sm font-body-sm text-on-surface", children: [
+                /* @__PURE__ */ jsx("span", { className: "tica-decision-review mt-px shrink-0 font-semibold", children: "✓" }),
+                /* @__PURE__ */ jsx("span", { children: reason })
+              ] }, reason)) }),
               /* @__PURE__ */ jsxs("div", { className: "mt-3 border-t border-outline-variant/25 pt-3", children: [
                 /* @__PURE__ */ jsx("p", { className: "mb-1.5 text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Recommended Action" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-1.5 text-body-sm font-body-sm leading-6 text-on-surface", children: [
-                  /* @__PURE__ */ jsx("li", { children: "Contact the seller today." }),
-                  /* @__PURE__ */ jsx("li", { children: "Request MOT history." }),
-                  /* @__PURE__ */ jsx("li", { children: "Confirm service records before placing an offer." })
-                ] })
+                /* @__PURE__ */ jsx("ul", { className: "space-y-1.5 text-body-sm font-body-sm leading-6 text-on-surface", children: reportVehicleIntelligence.dealerVerdict.recommendedActions.map((action) => /* @__PURE__ */ jsx("li", { children: action }, action)) })
               ] })
             ] })
           ] })
@@ -844,22 +1037,25 @@ function OpportunityPage() {
           /* @__PURE__ */ jsx("p", { className: "mb-3 text-label-caps font-label-caps uppercase tracking-[0.18em] text-on-surface-variant", children: "Target Vehicle" }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5", children: [
             /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-headline-lg font-headline-lg text-on-surface", children: missionReport?.vehicleName || featuredOpportunity.vehicle }),
+              /* @__PURE__ */ jsx("h2", { className: "text-headline-lg font-headline-lg text-on-surface", children: missionReport?.vehicleName || "Awaiting active mission" }),
               /* @__PURE__ */ jsxs("div", { className: "mt-3 grid grid-cols-2 gap-3", children: [
                 /* @__PURE__ */ jsxs("p", { children: [
                   /* @__PURE__ */ jsx("span", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Year" }),
-                  /* @__PURE__ */ jsx("span", { className: "mt-1 block text-body-lg font-body-lg text-on-surface", children: featuredOpportunity.year })
+                  /* @__PURE__ */ jsx("span", { className: "mt-1 block text-body-lg font-body-lg text-on-surface", children: missionReport?.yearDisplay || "Awaiting live data" })
                 ] }),
                 /* @__PURE__ */ jsxs("p", { children: [
                   /* @__PURE__ */ jsx("span", { className: "text-label-caps font-label-caps uppercase tracking-[0.12em] text-on-surface-variant", children: "Asking Price" }),
-                  /* @__PURE__ */ jsx("span", { className: "mt-1 block text-body-lg font-body-lg text-primary", children: missionReport?.askingPriceDisplay || featuredOpportunity.listPriceDisplay })
+                  /* @__PURE__ */ jsx("span", { className: "mt-1 block text-body-lg font-body-lg text-primary", children: missionReport?.askingPriceDisplay || "Awaiting live data" })
                 ] })
               ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1 sm:w-56 md:w-64", children: [
-              /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container", children: /* @__PURE__ */ jsx("img", { src: featuredOpportunity.heroImageSrc, alt: missionReport ? `${missionReport.vehicleName} opportunity vehicle` : featuredOpportunity.heroImageAlt, className: "h-[160px] w-full object-cover sm:h-[140px]", style: {
+              /* @__PURE__ */ jsx("div", { className: "aspect-square overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container", children: /* @__PURE__ */ jsx("div", { className: "flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(49,64,99,0.28),rgba(11,19,31,0.94))]", style: {
                 animation: "opp-page-fadein 0.4s ease-out both"
-              } }, heroImageIdx) }),
+              }, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-2 text-center", children: [
+                /* @__PURE__ */ jsx("svg", { className: "h-10 w-10 text-on-surface-variant/40", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", d: "M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" }) }),
+                /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant/75", children: "Vehicle image pending" })
+              ] }) }, heroImageIdx) }),
               /* @__PURE__ */ jsx("div", { className: "mt-1.5 grid grid-cols-4 gap-1.5", children: [1, 2, 3, 4].map((n) => /* @__PURE__ */ jsx("div", { className: "opp-thumb aspect-[4/3] rounded-lg border border-outline-variant/30 bg-surface-container-high flex items-center justify-center overflow-hidden", "aria-label": `Vehicle photo ${n + 1}`, onClick: () => setHeroImageIdx(n - 1), role: "button", tabIndex: 0, onKeyDown: (e) => e.key === "Enter" && setHeroImageIdx(n - 1), children: /* @__PURE__ */ jsx("svg", { className: "h-5 w-5 text-on-surface-variant/25", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", d: "M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" }) }) }, n)) })
             ] })
           ] })
@@ -889,7 +1085,7 @@ function OpportunityPage() {
                   ] }),
                   /* @__PURE__ */ jsx("div", { className: "rounded-full border border-outline-variant/30 bg-surface-container px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant", children: "AI model knowledge" })
                 ] }),
-                /* @__PURE__ */ jsx("div", { className: "mt-3 space-y-2", children: ticaVehicleIntelligence.modelIssues.map((issue) => {
+                /* @__PURE__ */ jsx("div", { className: "mt-3 space-y-2", children: reportVehicleIntelligence.modelIssues.map((issue) => {
                   const tone = issueToneConfig[issue.tone];
                   return /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5", children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
                     /* @__PURE__ */ jsx("span", { className: `mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${tone.dotClassName}`, "aria-hidden": "true" }),
@@ -914,7 +1110,7 @@ function OpportunityPage() {
                     /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "Key areas TICA recommends inspecting before purchase." })
                   ] })
                 ] }),
-                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-1 gap-3 xl:grid-cols-2", children: ticaVehicleIntelligence.inspectionChecklist.map((section) => /* @__PURE__ */ jsxs("section", { className: "rounded-xl border border-outline-variant/25 bg-surface-container p-3", children: [
+                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-1 gap-3 xl:grid-cols-2", children: reportVehicleIntelligence.inspectionChecklist.map((section) => /* @__PURE__ */ jsxs("section", { className: "rounded-xl border border-outline-variant/25 bg-surface-container p-3", children: [
                   /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3", children: [
                     /* @__PURE__ */ jsx("h4", { className: "text-body-md font-semibold text-on-surface", children: section.category }),
                     /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant", children: "Inspection Area" })
@@ -935,7 +1131,7 @@ function OpportunityPage() {
                 /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2.5", children: /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "TICA Inspection Advice" }) }),
                 /* @__PURE__ */ jsxs("div", { className: "mt-2 flex items-start gap-2.5 rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5", children: [
                   /* @__PURE__ */ jsx("span", { className: "mt-0.5 shrink-0 text-base leading-none", children: "💡" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-relaxed text-on-surface", children: ticaVehicleIntelligence.inspectionAdvice })
+                  /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-relaxed text-on-surface", children: reportVehicleIntelligence.inspectionAdvice })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("article", { className: "hidden rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5 xl:block", children: [
@@ -944,29 +1140,29 @@ function OpportunityPage() {
                     /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "TICA Dealer Verdict™" }),
                     /* @__PURE__ */ jsx("h3", { className: "mt-1 text-title-lg font-semibold text-on-surface", children: "TICA Recommendation™" })
                   ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "rounded-full border border-[rgba(var(--tica-decision-buy-rgb),0.28)] bg-[rgba(var(--tica-decision-buy-rgb),0.14)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] tica-decision-buy", children: [
+                  /* @__PURE__ */ jsxs("div", { className: `rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${isBuyVerdict ? "border-[rgba(var(--tica-decision-buy-rgb),0.28)] bg-[rgba(var(--tica-decision-buy-rgb),0.14)] tica-decision-buy" : isReviewVerdict ? "border-[rgba(var(--tica-decision-review-rgb),0.28)] bg-[rgba(var(--tica-decision-review-rgb),0.14)] tica-decision-review" : "border-[rgba(var(--tica-decision-pass-rgb),0.28)] bg-[rgba(var(--tica-decision-pass-rgb),0.14)] tica-decision-pass"}`, children: [
                     "Confidence ",
                     unifiedConfidence
                   ] })
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-[rgba(var(--tica-decision-buy-rgb),0.24)] bg-[rgba(var(--tica-decision-buy-rgb),0.08)] px-3 py-3", children: [
+                /* @__PURE__ */ jsxs("div", { className: `mt-3 rounded-xl border px-3 py-3 ${isBuyVerdict ? "border-[rgba(var(--tica-decision-buy-rgb),0.24)] bg-[rgba(var(--tica-decision-buy-rgb),0.08)]" : isReviewVerdict ? "border-[rgba(var(--tica-decision-review-rgb),0.24)] bg-[rgba(var(--tica-decision-review-rgb),0.08)]" : "border-[rgba(var(--tica-decision-pass-rgb),0.24)] bg-[rgba(var(--tica-decision-pass-rgb),0.08)]"}`, children: [
                   /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant", children: "Main Recommendation" }),
                   /* @__PURE__ */ jsxs("div", { className: "mt-2 flex items-center justify-between gap-3", children: [
-                    /* @__PURE__ */ jsx("p", { className: "text-body-lg font-semibold tracking-[0.01em] tica-decision-buy", children: unifiedRecommendation }),
-                    /* @__PURE__ */ jsx("div", { className: "h-3 w-3 shrink-0 rounded-full bg-[var(--tica-decision-buy)] shadow-[0_0_12px_rgba(var(--tica-decision-buy-rgb),0.5)]", "aria-hidden": "true" })
+                    /* @__PURE__ */ jsx("p", { className: `text-body-lg font-semibold tracking-[0.01em] ${decisionVerdictClassName}`, children: unifiedRecommendation }),
+                    /* @__PURE__ */ jsx("div", { className: `h-3 w-3 shrink-0 rounded-full ${isBuyVerdict ? "bg-[var(--tica-decision-buy)] shadow-[0_0_12px_rgba(var(--tica-decision-buy-rgb),0.5)]" : isReviewVerdict ? "bg-[var(--tica-decision-review)] shadow-[0_0_12px_rgba(var(--tica-decision-review-rgb),0.5)]" : "bg-[var(--tica-decision-pass)] shadow-[0_0_12px_rgba(var(--tica-decision-pass-rgb),0.5)]"}`, "aria-hidden": "true" })
                   ] })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "mt-3 grid grid-cols-2 gap-3", children: [
                   /* @__PURE__ */ jsxs("section", { className: "rounded-xl border border-outline-variant/25 bg-surface-container p-3", children: [
                     /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Strengths" }),
-                    /* @__PURE__ */ jsx("div", { className: "mt-2 grid grid-cols-2 gap-x-3 gap-y-2", children: ticaVehicleIntelligence.dealerVerdict.strengths.map((strength) => /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-2", children: [
+                    /* @__PURE__ */ jsx("div", { className: "mt-2 grid grid-cols-2 gap-x-3 gap-y-2", children: reportVehicleIntelligence.dealerVerdict.strengths.map((strength) => /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-2", children: [
                       /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mt-0.5 text-[11px] font-semibold", children: "●" }),
                       /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-snug text-on-surface", children: strength })
                     ] }, strength)) })
                   ] }),
                   /* @__PURE__ */ jsxs("section", { className: "rounded-xl border border-outline-variant/25 bg-surface-container p-3", children: [
                     /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Items to Verify" }),
-                    /* @__PURE__ */ jsx("div", { className: "mt-2 space-y-2", children: ticaVehicleIntelligence.dealerVerdict.verificationItems.map((item) => {
+                    /* @__PURE__ */ jsx("div", { className: "mt-2 space-y-2", children: reportVehicleIntelligence.dealerVerdict.verificationItems.map((item) => {
                       const toneClass = item.tone === "high" ? "tica-decision-pass" : "tica-decision-review";
                       const toneDotClass = item.tone === "high" ? "bg-[var(--tica-decision-pass)]" : "bg-[var(--tica-decision-review)]";
                       return /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-2.5 rounded-lg border border-outline-variant/20 bg-surface-container-high px-2.5 py-2", children: [
@@ -1012,7 +1208,7 @@ function OpportunityPage() {
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "mt-3 rounded-xl border border-primary/20 bg-primary-container/10 px-3 py-3", children: [
                   /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-primary", children: "Final TICA Advice" }),
-                  /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface", children: missionReport?.finalAdvice ?? ticaVehicleIntelligence.dealerVerdict.finalAdvice })
+                  /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface", children: missionReport?.finalAdvice ?? reportVehicleIntelligence.dealerVerdict.finalAdvice })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("section", { className: "hidden w-full self-start rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3 xl:block", children: [
@@ -1024,10 +1220,11 @@ function OpportunityPage() {
                   /* @__PURE__ */ jsxs("div", { className: "w-full rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5 lg:max-w-[220px]", children: [
                     /* @__PURE__ */ jsx("p", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Reasoning" }),
                     /* @__PURE__ */ jsxs("p", { className: "mt-1.5 text-body-sm font-body-sm text-on-surface", children: [
-                      /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mr-2", children: "🟢" }),
-                      "BUY signal confirmed"
+                      /* @__PURE__ */ jsx("span", { className: `${decisionVerdictClassName} mr-2`, children: isBuyVerdict ? "🟢" : isReviewVerdict ? "🟡" : "🔴" }),
+                      unifiedRecommendation,
+                      " signal confirmed"
                     ] }),
-                    /* @__PURE__ */ jsx("p", { className: "mt-1 text-[11px] leading-relaxed text-on-surface-variant", children: "Placeholder investigation checkpoints shown in decision order." })
+                    /* @__PURE__ */ jsx("p", { className: "mt-1 text-[11px] leading-relaxed text-on-surface-variant", children: "Investigation checkpoints shown for the active report only." })
                   ] })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "timeline-list mt-3", "aria-label": "AI investigation timeline", children: [
@@ -1054,8 +1251,11 @@ function OpportunityPage() {
                       animationDelay: `${investigationTimeline.length * 60 + 160}ms`
                     } : void 0, "aria-hidden": "true" }),
                     /* @__PURE__ */ jsxs("p", { className: "timeline-entry-message text-body-sm font-body-sm", children: [
-                      /* @__PURE__ */ jsx("span", { className: "opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[var(--tica-decision-buy)] align-middle", "aria-hidden": "true" }),
-                      /* @__PURE__ */ jsx("span", { className: `tica-decision-buy font-semibold${timelineVisible >= investigationTimeline.length ? " opp-buy-signal-glow" : ""}`, children: "BUY Signal Confirmed" })
+                      /* @__PURE__ */ jsx("span", { className: `opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full ${isBuyVerdict ? "bg-[var(--tica-decision-buy)]" : isReviewVerdict ? "bg-[var(--tica-decision-review)]" : "bg-[var(--tica-decision-pass)]"} align-middle`, "aria-hidden": "true" }),
+                      /* @__PURE__ */ jsxs("span", { className: `${decisionVerdictClassName} font-semibold${timelineVisible >= investigationTimeline.length && isBuyVerdict ? " opp-buy-signal-glow" : ""}`, children: [
+                        unifiedRecommendation,
+                        " Signal Confirmed"
+                      ] })
                     ] })
                   ] })
                 ] })
@@ -1115,18 +1315,19 @@ function OpportunityPage() {
                     /* @__PURE__ */ jsxs("div", { children: [
                       /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.14em] text-on-surface-variant", children: "Current signal" }),
                       /* @__PURE__ */ jsxs("p", { className: `mt-0.5 text-body-md font-semibold ${ownershipRiskToneClass}`, children: [
-                        "🟡 ",
-                        ticaVehicleIntelligence.ownershipRisk.level
+                        isBuyVerdict ? "🟢" : isReviewVerdict ? "🟡" : "🔴",
+                        " ",
+                        reportVehicleIntelligence.ownershipRisk.level
                       ] })
                     ] }),
                     /* @__PURE__ */ jsx("div", { className: "h-3.5 w-3.5 rounded-full bg-[var(--tica-decision-review)] shadow-[0_0_10px_rgba(212,165,55,0.45)]", "aria-hidden": "true" })
                   ] }),
-                  /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: ticaVehicleIntelligence.ownershipRisk.description })
+                  /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: reportVehicleIntelligence.ownershipRisk.description })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("article", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-high p-3.5", children: [
                 /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-[0.16em] text-primary", children: "Running Cost Intelligence" }),
-                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2", children: ticaVehicleIntelligence.runningCosts.map((item) => {
+                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2", children: reportVehicleIntelligence.runningCosts.map((item) => {
                   const tone = issueToneConfig[item.tone];
                   return /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-outline-variant/25 bg-surface-container px-3 py-2.5", children: [
                     /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-3", children: [
@@ -1147,23 +1348,23 @@ function OpportunityPage() {
                 ] }),
                 /* @__PURE__ */ jsx("div", { className: "mt-3 overflow-hidden rounded-xl border border-outline-variant/25", style: {
                   height: "200px"
-                }, children: /* @__PURE__ */ jsxs("div", { className: "relative h-full w-full bg-[#e8eaed]", "aria-label": "Map placeholder – Google Maps will load here", children: [
+                }, children: /* @__PURE__ */ jsxs("div", { className: "relative h-full w-full bg-[radial-gradient(circle_at_20%_20%,rgba(44,56,88,0.4),rgba(11,19,31,0.96))]", "aria-label": "Map placeholder – Google Maps will load here", children: [
                   /* @__PURE__ */ jsxs("svg", { className: "absolute inset-0 h-full w-full", xmlns: "http://www.w3.org/2000/svg", children: [
-                    /* @__PURE__ */ jsx("line", { x1: "0", y1: "100", x2: "100%", y2: "100", stroke: "#fff", strokeWidth: "8", opacity: "0.9" }),
-                    /* @__PURE__ */ jsx("line", { x1: "0", y1: "140", x2: "100%", y2: "140", stroke: "#fff", strokeWidth: "5", opacity: "0.7" }),
-                    /* @__PURE__ */ jsx("line", { x1: "0", y1: "60", x2: "100%", y2: "60", stroke: "#fff", strokeWidth: "4", opacity: "0.6" }),
-                    /* @__PURE__ */ jsx("line", { x1: "120", y1: "0", x2: "120", y2: "100%", stroke: "#fff", strokeWidth: "7", opacity: "0.9" }),
-                    /* @__PURE__ */ jsx("line", { x1: "220", y1: "0", x2: "220", y2: "100%", stroke: "#fff", strokeWidth: "4", opacity: "0.6" }),
-                    /* @__PURE__ */ jsx("line", { x1: "60", y1: "0", x2: "60", y2: "100%", stroke: "#fff", strokeWidth: "3", opacity: "0.5" }),
-                    /* @__PURE__ */ jsx("line", { x1: "0", y1: "200", x2: "180", y2: "0", stroke: "#fff", strokeWidth: "5", opacity: "0.65" }),
-                    /* @__PURE__ */ jsx("rect", { x: "0", y: "0", width: "55", height: "55", fill: "#d4d8d0", opacity: "0.5" }),
-                    /* @__PURE__ */ jsx("rect", { x: "125", y: "0", width: "90", height: "55", fill: "#d4d8d0", opacity: "0.5" }),
-                    /* @__PURE__ */ jsx("rect", { x: "225", y: "0", width: "120", height: "95", fill: "#d4d8d0", opacity: "0.4" }),
-                    /* @__PURE__ */ jsx("rect", { x: "0", y: "105", width: "115", height: "30", fill: "#c8e6c9", opacity: "0.4" }),
-                    /* @__PURE__ */ jsx("rect", { x: "125", y: "105", width: "90", height: "30", fill: "#d4d8d0", opacity: "0.4" }),
-                    /* @__PURE__ */ jsx("rect", { x: "0", y: "145", width: "55", height: "55", fill: "#d4d8d0", opacity: "0.5" }),
-                    /* @__PURE__ */ jsx("rect", { x: "125", y: "145", width: "90", height: "55", fill: "#d4d8d0", opacity: "0.4" }),
-                    /* @__PURE__ */ jsx("rect", { x: "225", y: "105", width: "120", height: "95", fill: "#c8e6c9", opacity: "0.35" })
+                    /* @__PURE__ */ jsx("line", { x1: "0", y1: "100", x2: "100%", y2: "100", stroke: "#6a7690", strokeWidth: "8", opacity: "0.26" }),
+                    /* @__PURE__ */ jsx("line", { x1: "0", y1: "140", x2: "100%", y2: "140", stroke: "#5e6a83", strokeWidth: "5", opacity: "0.22" }),
+                    /* @__PURE__ */ jsx("line", { x1: "0", y1: "60", x2: "100%", y2: "60", stroke: "#5e6a83", strokeWidth: "4", opacity: "0.2" }),
+                    /* @__PURE__ */ jsx("line", { x1: "120", y1: "0", x2: "120", y2: "100%", stroke: "#6a7690", strokeWidth: "7", opacity: "0.24" }),
+                    /* @__PURE__ */ jsx("line", { x1: "220", y1: "0", x2: "220", y2: "100%", stroke: "#5e6a83", strokeWidth: "4", opacity: "0.2" }),
+                    /* @__PURE__ */ jsx("line", { x1: "60", y1: "0", x2: "60", y2: "100%", stroke: "#5e6a83", strokeWidth: "3", opacity: "0.18" }),
+                    /* @__PURE__ */ jsx("line", { x1: "0", y1: "200", x2: "180", y2: "0", stroke: "#64708a", strokeWidth: "5", opacity: "0.24" }),
+                    /* @__PURE__ */ jsx("rect", { x: "0", y: "0", width: "55", height: "55", fill: "#202c45", opacity: "0.36" }),
+                    /* @__PURE__ */ jsx("rect", { x: "125", y: "0", width: "90", height: "55", fill: "#202c45", opacity: "0.36" }),
+                    /* @__PURE__ */ jsx("rect", { x: "225", y: "0", width: "120", height: "95", fill: "#182338", opacity: "0.4" }),
+                    /* @__PURE__ */ jsx("rect", { x: "0", y: "105", width: "115", height: "30", fill: "#1c3242", opacity: "0.36" }),
+                    /* @__PURE__ */ jsx("rect", { x: "125", y: "105", width: "90", height: "30", fill: "#202c45", opacity: "0.34" }),
+                    /* @__PURE__ */ jsx("rect", { x: "0", y: "145", width: "55", height: "55", fill: "#202c45", opacity: "0.36" }),
+                    /* @__PURE__ */ jsx("rect", { x: "125", y: "145", width: "90", height: "55", fill: "#202c45", opacity: "0.34" }),
+                    /* @__PURE__ */ jsx("rect", { x: "225", y: "105", width: "120", height: "95", fill: "#1c3242", opacity: "0.32" })
                   ] }),
                   /* @__PURE__ */ jsx("div", { className: "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full", style: {
                     marginTop: "-8px"
@@ -1172,39 +1373,15 @@ function OpportunityPage() {
                     /* @__PURE__ */ jsx("div", { className: "mt-0.5 h-2 w-0.5 bg-primary opacity-80" }),
                     /* @__PURE__ */ jsx("div", { className: "h-1 w-1 rounded-full bg-primary opacity-50" })
                   ] }) }),
-                  /* @__PURE__ */ jsx("div", { className: "absolute left-1/2 top-[58%] -translate-x-1/2", children: /* @__PURE__ */ jsx("div", { className: "rounded-md bg-white px-2 py-0.5 shadow-md", children: /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold text-gray-800", children: "Manchester" }) }) }),
-                  /* @__PURE__ */ jsx("div", { className: "absolute bottom-2 right-2 flex items-center gap-1 rounded bg-white px-1.5 py-0.5 shadow-sm opacity-80", children: /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold tracking-tight text-gray-500", children: "Map · Google Maps" }) }),
-                  /* @__PURE__ */ jsxs("div", { className: "absolute right-2 top-2 flex flex-col overflow-hidden rounded border border-outline-variant/30 bg-white shadow-sm", children: [
-                    /* @__PURE__ */ jsx("button", { className: "flex h-6 w-6 items-center justify-center text-sm font-bold text-gray-600 hover:bg-gray-100", "aria-label": "Zoom in", children: "+" }),
+                  /* @__PURE__ */ jsx("div", { className: "absolute left-1/2 top-[58%] -translate-x-1/2", children: /* @__PURE__ */ jsx("div", { className: "rounded-md border border-outline-variant/35 bg-surface-container-high/90 px-2 py-0.5 shadow-md backdrop-blur-sm", children: /* @__PURE__ */ jsx("p", { className: "text-[11px] font-semibold text-on-surface-variant", children: "Live location required" }) }) }),
+                  /* @__PURE__ */ jsx("div", { className: "absolute bottom-2 right-2 flex items-center gap-1 rounded border border-outline-variant/35 bg-surface-container/90 px-1.5 py-0.5 shadow-sm", children: /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold tracking-tight text-on-surface-variant/90", children: "Map · Google Maps" }) }),
+                  /* @__PURE__ */ jsxs("div", { className: "absolute right-2 top-2 flex flex-col overflow-hidden rounded border border-outline-variant/35 bg-surface-container shadow-sm", children: [
+                    /* @__PURE__ */ jsx("button", { className: "flex h-6 w-6 items-center justify-center text-sm font-bold text-on-surface-variant hover:bg-surface-container-high", "aria-label": "Zoom in", children: "+" }),
                     /* @__PURE__ */ jsx("div", { className: "h-px bg-outline-variant/30" }),
-                    /* @__PURE__ */ jsx("button", { className: "flex h-6 w-6 items-center justify-center text-sm font-bold text-gray-600 hover:bg-gray-100", "aria-label": "Zoom out", children: "−" })
+                    /* @__PURE__ */ jsx("button", { className: "flex h-6 w-6 items-center justify-center text-sm font-bold text-on-surface-variant hover:bg-surface-container-high", "aria-label": "Zoom out", children: "−" })
                   ] })
                 ] }) }),
-                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-2 gap-1.5", children: [{
-                  icon: "📍",
-                  label: "Vehicle Location",
-                  value: "Manchester"
-                }, {
-                  icon: "🚗",
-                  label: "Distance",
-                  value: "184 miles"
-                }, {
-                  icon: "🕒",
-                  label: "Estimated Drive",
-                  value: "3 hr 20 min"
-                }, {
-                  icon: "⛽",
-                  label: "Estimated Fuel Cost",
-                  value: "£68"
-                }, {
-                  icon: "✈",
-                  label: "Nearest Airport",
-                  value: "Manchester Airport"
-                }, {
-                  icon: "🚆",
-                  label: "Nearest Railway",
-                  value: "Manchester Piccadilly"
-                }].map((item) => /* @__PURE__ */ jsxs("div", { className: "rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-2", children: [
+                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-2 gap-1.5", children: reportVehicleIntelligence.locationSummary.map((item) => /* @__PURE__ */ jsxs("div", { className: "rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-2", children: [
                   /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5", children: [
                     /* @__PURE__ */ jsx("span", { className: "text-sm leading-none", "aria-hidden": "true", children: item.icon }),
                     /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.1em] text-on-surface-variant", children: item.label })
@@ -1215,20 +1392,8 @@ function OpportunityPage() {
                   /* @__PURE__ */ jsx("p", { className: "text-[10px] font-semibold uppercase tracking-[0.14em] text-primary", children: "Collection Intelligence™" }),
                   /* @__PURE__ */ jsx("div", { className: "mt-2 space-y-1.5", children: [{
                     label: "Suggested route",
-                    value: "M6 North"
-                  }, {
-                    label: "Collection difficulty",
-                    value: "Easy"
-                  }, {
-                    label: "Traffic risk",
-                    value: "Low"
-                  }, {
-                    label: "Estimated transport cost",
-                    value: "£165"
-                  }, {
-                    label: "Best collection day",
-                    value: "Tuesday"
-                  }].map((row) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3", children: [
+                    value: "Awaiting live data"
+                  }, ...reportVehicleIntelligence.collectionSummary].map((row) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-3", children: [
                     /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm text-on-surface-variant", children: row.label }),
                     /* @__PURE__ */ jsx("p", { className: "text-body-sm font-semibold text-on-surface", children: row.value })
                   ] }, row.label)) })
@@ -1247,55 +1412,7 @@ function OpportunityPage() {
                     /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "Premium vehicle verification — every check in one place." })
                   ] })
                 ] }),
-                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-1 gap-2", children: [{
-                  status: "clear",
-                  icon: "💳",
-                  label: "Finance Check",
-                  value: "Clear",
-                  detail: "No outstanding finance recorded"
-                }, {
-                  status: "clear",
-                  icon: "🚔",
-                  label: "Police Stolen Check",
-                  value: "No Record Found",
-                  detail: "Not listed as stolen on PNC"
-                }, {
-                  status: "clear",
-                  icon: "🛡",
-                  label: "Insurance Write-Off",
-                  value: "None Recorded",
-                  detail: "No Cat A, B, S or N markers"
-                }, {
-                  status: "clear",
-                  icon: "📏",
-                  label: "Mileage Verification",
-                  value: "Consistent",
-                  detail: "Mileage aligns with MOT and service history"
-                }, {
-                  status: "clear",
-                  icon: "🔎",
-                  label: "VIN Verification",
-                  value: "Matches DVLA Records",
-                  detail: "VIN matches official DVLA registration"
-                }, {
-                  status: "attention",
-                  icon: "⚠️",
-                  label: "Outstanding Recalls",
-                  value: "1 Recall Outstanding",
-                  detail: "Contact manufacturer before purchase"
-                }, {
-                  status: "attention",
-                  icon: "👤",
-                  label: "Previous Owners",
-                  value: "3 Registered Keepers",
-                  detail: "Within expected range for age and mileage"
-                }, {
-                  status: "clear",
-                  icon: "🌍",
-                  label: "Import / Export Status",
-                  value: "UK Supplied",
-                  detail: "No import or export flags recorded"
-                }].map((item) => {
+                /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-1 gap-2", children: reportVehicleIntelligence.vehicleHistory.map((item) => {
                   const isAttention = item.status === "attention";
                   const borderClass = isAttention ? "border-[rgba(var(--tica-decision-review-rgb),0.3)]" : "border-[rgba(var(--tica-decision-buy-rgb),0.2)]";
                   const bgClass = isAttention ? "bg-[rgba(var(--tica-decision-review-rgb),0.06)]" : "bg-surface-container";
@@ -1327,7 +1444,7 @@ function OpportunityPage() {
                     /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-body-sm font-body-sm leading-relaxed text-on-surface-variant", children: "Vehicle-specific questions recommended before purchase." })
                   ] })
                 ] }),
-                /* @__PURE__ */ jsx("div", { className: "mt-2.5 space-y-1.5", children: ticaVehicleIntelligence.sellerQuestions.questions.map((q) => {
+                /* @__PURE__ */ jsx("div", { className: "mt-2.5 space-y-1.5", children: reportVehicleIntelligence.sellerQuestions.questions.map((q) => {
                   const priorityConfig = q.priority === "high" ? {
                     label: "High Priority",
                     className: "text-[var(--tica-decision-pass)]",
@@ -1352,7 +1469,7 @@ function OpportunityPage() {
                 }) }),
                 /* @__PURE__ */ jsxs("div", { className: "mt-2.5 flex items-start gap-2 rounded-lg border border-outline-variant/20 bg-surface-container px-2.5 py-2", children: [
                   /* @__PURE__ */ jsx("span", { className: "mt-0.5 shrink-0 text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant", children: "Dealer Tip:" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-snug text-on-surface-variant", children: ticaVehicleIntelligence.sellerQuestions.dealerTip })
+                  /* @__PURE__ */ jsx("p", { className: "text-body-sm font-body-sm leading-snug text-on-surface-variant", children: reportVehicleIntelligence.sellerQuestions.dealerTip })
                 ] })
               ] })
             ] })
@@ -1367,10 +1484,11 @@ function OpportunityPage() {
             /* @__PURE__ */ jsxs("div", { className: "timeline-status-panel", children: [
               /* @__PURE__ */ jsx("p", { className: "font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant", children: "AI Reasoning" }),
               /* @__PURE__ */ jsxs("p", { className: "mt-2 text-body-md font-body-md text-on-surface", children: [
-                /* @__PURE__ */ jsx("span", { className: "tica-decision-buy mr-2", children: "🟢" }),
-                "BUY signal confirmed"
+                /* @__PURE__ */ jsx("span", { className: `${decisionVerdictClassName} mr-2`, children: isBuyVerdict ? "🟢" : isReviewVerdict ? "🟡" : "🔴" }),
+                unifiedRecommendation,
+                " signal confirmed"
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Placeholder investigation checkpoints shown in decision order." })
+              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-on-surface-variant", children: "Investigation checkpoints shown for the active report only." })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "timeline-list mt-4", "aria-label": "AI investigation timeline", children: [
@@ -1397,8 +1515,11 @@ function OpportunityPage() {
                 animationDelay: `${investigationTimeline.length * 60 + 160}ms`
               } : void 0, "aria-hidden": "true" }),
               /* @__PURE__ */ jsxs("p", { className: "timeline-entry-message", children: [
-                /* @__PURE__ */ jsx("span", { className: "opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[var(--tica-decision-buy)] align-middle", "aria-hidden": "true" }),
-                /* @__PURE__ */ jsx("span", { className: `tica-decision-buy font-semibold${timelineVisible >= investigationTimeline.length ? " opp-buy-signal-glow" : ""}`, children: "BUY Signal Confirmed" })
+                /* @__PURE__ */ jsx("span", { className: `opp-status-dot-breathe mr-2 inline-block h-2.5 w-2.5 rounded-full ${isBuyVerdict ? "bg-[var(--tica-decision-buy)]" : isReviewVerdict ? "bg-[var(--tica-decision-review)]" : "bg-[var(--tica-decision-pass)]"} align-middle`, "aria-hidden": "true" }),
+                /* @__PURE__ */ jsxs("span", { className: `${decisionVerdictClassName} font-semibold${timelineVisible >= investigationTimeline.length && isBuyVerdict ? " opp-buy-signal-glow" : ""}`, children: [
+                  unifiedRecommendation,
+                  " Signal Confirmed"
+                ] })
               ] })
             ] })
           ] })
