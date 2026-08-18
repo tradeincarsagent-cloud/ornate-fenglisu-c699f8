@@ -49,7 +49,6 @@ type ReportVehicleIntelligence = {
   }
 }
 
-const REPORT_PLACEHOLDER_IMAGE_SRC = '/placeholder.png'
 
 function isSpecified(value?: string) {
   const trimmed = value?.trim() ?? ''
@@ -1143,13 +1142,18 @@ function OpportunityPage() {
             <div className="min-w-0 flex-1 sm:w-56 md:w-64">
               {/* Hero image with fade transition */}
               <div className="aspect-square overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container">
-                <img
+                <div
                   key={heroImageIdx}
-                  src={REPORT_PLACEHOLDER_IMAGE_SRC}
-                  alt={missionReport ? `${missionReport.vehicleName} opportunity vehicle placeholder` : 'Vehicle opportunity placeholder'}
-                  className="h-full w-full object-cover"
+                  className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(49,64,99,0.28),rgba(11,19,31,0.94))]"
                   style={{ animation: 'opp-page-fadein 0.4s ease-out both' }}
-                />
+                >
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <svg className="h-10 w-10 text-on-surface-variant/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 18.75h16.5a1.5 1.5 0 001.5-1.5V6.75a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5z" />
+                    </svg>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant/75">Vehicle image pending</p>
+                  </div>
+                </div>
               </div>
               {/* Thumbnail strip with hover preview */}
               <div className="mt-1.5 grid grid-cols-4 gap-1.5">
@@ -1516,27 +1520,27 @@ function OpportunityPage() {
 
                 {/* Google Maps placeholder */}
                 <div className="mt-3 overflow-hidden rounded-xl border border-outline-variant/25" style={{ height: '200px' }}>
-                  <div className="relative h-full w-full bg-[#e8eaed]" aria-label="Map placeholder – Google Maps will load here">
+                  <div className="relative h-full w-full bg-[radial-gradient(circle_at_20%_20%,rgba(44,56,88,0.4),rgba(11,19,31,0.96))]" aria-label="Map placeholder – Google Maps will load here">
                     {/* Grid lines simulating map tiles */}
                     <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
                       {/* Road network */}
-                      <line x1="0" y1="100" x2="100%" y2="100" stroke="#fff" strokeWidth="8" opacity="0.9" />
-                      <line x1="0" y1="140" x2="100%" y2="140" stroke="#fff" strokeWidth="5" opacity="0.7" />
-                      <line x1="0" y1="60" x2="100%" y2="60" stroke="#fff" strokeWidth="4" opacity="0.6" />
-                      <line x1="120" y1="0" x2="120" y2="100%" stroke="#fff" strokeWidth="7" opacity="0.9" />
-                      <line x1="220" y1="0" x2="220" y2="100%" stroke="#fff" strokeWidth="4" opacity="0.6" />
-                      <line x1="60" y1="0" x2="60" y2="100%" stroke="#fff" strokeWidth="3" opacity="0.5" />
+                      <line x1="0" y1="100" x2="100%" y2="100" stroke="#6a7690" strokeWidth="8" opacity="0.26" />
+                      <line x1="0" y1="140" x2="100%" y2="140" stroke="#5e6a83" strokeWidth="5" opacity="0.22" />
+                      <line x1="0" y1="60" x2="100%" y2="60" stroke="#5e6a83" strokeWidth="4" opacity="0.2" />
+                      <line x1="120" y1="0" x2="120" y2="100%" stroke="#6a7690" strokeWidth="7" opacity="0.24" />
+                      <line x1="220" y1="0" x2="220" y2="100%" stroke="#5e6a83" strokeWidth="4" opacity="0.2" />
+                      <line x1="60" y1="0" x2="60" y2="100%" stroke="#5e6a83" strokeWidth="3" opacity="0.18" />
                       {/* A diagonal road */}
-                      <line x1="0" y1="200" x2="180" y2="0" stroke="#fff" strokeWidth="5" opacity="0.65" />
+                      <line x1="0" y1="200" x2="180" y2="0" stroke="#64708a" strokeWidth="5" opacity="0.24" />
                       {/* Block fills */}
-                      <rect x="0" y="0" width="55" height="55" fill="#d4d8d0" opacity="0.5" />
-                      <rect x="125" y="0" width="90" height="55" fill="#d4d8d0" opacity="0.5" />
-                      <rect x="225" y="0" width="120" height="95" fill="#d4d8d0" opacity="0.4" />
-                      <rect x="0" y="105" width="115" height="30" fill="#c8e6c9" opacity="0.4" />
-                      <rect x="125" y="105" width="90" height="30" fill="#d4d8d0" opacity="0.4" />
-                      <rect x="0" y="145" width="55" height="55" fill="#d4d8d0" opacity="0.5" />
-                      <rect x="125" y="145" width="90" height="55" fill="#d4d8d0" opacity="0.4" />
-                      <rect x="225" y="105" width="120" height="95" fill="#c8e6c9" opacity="0.35" />
+                      <rect x="0" y="0" width="55" height="55" fill="#202c45" opacity="0.36" />
+                      <rect x="125" y="0" width="90" height="55" fill="#202c45" opacity="0.36" />
+                      <rect x="225" y="0" width="120" height="95" fill="#182338" opacity="0.4" />
+                      <rect x="0" y="105" width="115" height="30" fill="#1c3242" opacity="0.36" />
+                      <rect x="125" y="105" width="90" height="30" fill="#202c45" opacity="0.34" />
+                      <rect x="0" y="145" width="55" height="55" fill="#202c45" opacity="0.36" />
+                      <rect x="125" y="145" width="90" height="55" fill="#202c45" opacity="0.34" />
+                      <rect x="225" y="105" width="120" height="95" fill="#1c3242" opacity="0.32" />
                     </svg>
                     {/* Location pin */}
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full" style={{ marginTop: '-8px' }}>
@@ -1552,19 +1556,19 @@ function OpportunityPage() {
                     </div>
                     {/* Location label */}
                     <div className="absolute left-1/2 top-[58%] -translate-x-1/2">
-                      <div className="rounded-md bg-white px-2 py-0.5 shadow-md">
-                        <p className="text-[11px] font-semibold text-gray-800">Live location required</p>
+                      <div className="rounded-md border border-outline-variant/35 bg-surface-container-high/90 px-2 py-0.5 shadow-md backdrop-blur-sm">
+                        <p className="text-[11px] font-semibold text-on-surface-variant">Live location required</p>
                       </div>
                     </div>
                     {/* Google Maps badge placeholder */}
-                    <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded bg-white px-1.5 py-0.5 shadow-sm opacity-80">
-                      <span className="text-[10px] font-semibold tracking-tight text-gray-500">Map · Google Maps</span>
+                    <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded border border-outline-variant/35 bg-surface-container/90 px-1.5 py-0.5 shadow-sm">
+                      <span className="text-[10px] font-semibold tracking-tight text-on-surface-variant/90">Map · Google Maps</span>
                     </div>
                     {/* Zoom controls */}
-                    <div className="absolute right-2 top-2 flex flex-col overflow-hidden rounded border border-outline-variant/30 bg-white shadow-sm">
-                      <button className="flex h-6 w-6 items-center justify-center text-sm font-bold text-gray-600 hover:bg-gray-100" aria-label="Zoom in">+</button>
+                    <div className="absolute right-2 top-2 flex flex-col overflow-hidden rounded border border-outline-variant/35 bg-surface-container shadow-sm">
+                      <button className="flex h-6 w-6 items-center justify-center text-sm font-bold text-on-surface-variant hover:bg-surface-container-high" aria-label="Zoom in">+</button>
                       <div className="h-px bg-outline-variant/30" />
-                      <button className="flex h-6 w-6 items-center justify-center text-sm font-bold text-gray-600 hover:bg-gray-100" aria-label="Zoom out">−</button>
+                      <button className="flex h-6 w-6 items-center justify-center text-sm font-bold text-on-surface-variant hover:bg-surface-container-high" aria-label="Zoom out">−</button>
                     </div>
                   </div>
                 </div>
