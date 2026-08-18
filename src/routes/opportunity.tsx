@@ -677,6 +677,55 @@ function OpportunityPage() {
   // Stagger delay helper
   const stagger = (i: number) => ({ animationDelay: `${i * 80}ms` })
 
+  const platformNavItems = [
+    { label: 'Dealer Command Centre', href: '/dashboard' },
+    { label: 'AI Search Missions', href: '/search-builder' },
+    { label: 'AI Buying Report', href: '/opportunity', active: true },
+    { label: 'Settings', isSectionLabel: true },
+    { label: 'TICA Preferences', href: '/settings' },
+    { label: 'Owner', isSectionLabel: true },
+    { label: 'TICA Operations Centre', href: '/owner' },
+    { label: '🧠 TICA Intelligence', href: '/owner/intelligence' },
+    { label: 'Future Features', isSectionLabel: true },
+    { label: 'Vehicle History & MOT', disabled: true },
+    { label: 'Watchlist', disabled: true },
+    { label: 'Subscription', disabled: true },
+  ]
+
+  if (missionInitialized && !activeMission) {
+    return (
+      <PlatformShell navItems={platformNavItems}>
+        <div className="mx-auto w-full max-w-container-max space-y-4">
+          <header className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
+            <p className="text-label-caps font-label-caps uppercase tracking-widest text-primary">Trade In Cars Agent</p>
+            <h1 className="mt-3 text-headline-lg font-headline-lg text-primary">AI Buying Report</h1>
+            <p className="mt-1 text-body-sm font-body-sm text-on-surface-variant">No Buying Report selected.</p>
+          </header>
+
+          <section className="rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6">
+            <p className="text-sm text-on-surface-variant">
+              Complete an AI Search Mission and open its Buying Report to load mission-specific intelligence.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Link
+                to="/dashboard"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface"
+              >
+                Return to Dealer Command Centre
+              </Link>
+              <Link
+                to="/search-builder"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-body-md font-body-md text-on-primary"
+              >
+                Create AI Search Mission
+              </Link>
+            </div>
+          </section>
+        </div>
+      </PlatformShell>
+    )
+  }
+
   return (
     <>
       {/* AI Thinking Overlay */}
@@ -708,20 +757,7 @@ function OpportunityPage() {
       )}
 
       <PlatformShell
-      navItems={[
-        { label: 'Dealer Command Centre', href: '/dashboard' },
-        { label: 'AI Search Missions', href: '/search-builder' },
-        { label: 'AI Buying Report', href: '/opportunity', active: true },
-        { label: 'Settings', isSectionLabel: true },
-        { label: 'TICA Preferences', href: '/settings' },
-        { label: 'Owner', isSectionLabel: true },
-        { label: 'TICA Operations Centre', href: '/owner' },
-        { label: '🧠 TICA Intelligence', href: '/owner/intelligence' },
-        { label: 'Future Features', isSectionLabel: true },
-        { label: 'Vehicle History & MOT', disabled: true },
-        { label: 'Watchlist', disabled: true },
-        { label: 'Subscription', disabled: true },
-      ]}
+      navItems={platformNavItems}
     >
       <div className={`mx-auto w-full max-w-container-max space-y-3 sm:space-y-4 ${pageReady ? 'opp-page-enter' : 'opacity-0'}`}>
         <header

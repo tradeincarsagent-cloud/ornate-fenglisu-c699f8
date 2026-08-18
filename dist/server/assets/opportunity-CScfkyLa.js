@@ -1,4 +1,4 @@
-import { jsxs, Fragment, jsx } from "react/jsx-runtime";
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
@@ -721,6 +721,60 @@ function OpportunityPage() {
   const stagger = (i) => ({
     animationDelay: `${i * 80}ms`
   });
+  const platformNavItems = [{
+    label: "Dealer Command Centre",
+    href: "/dashboard"
+  }, {
+    label: "AI Search Missions",
+    href: "/search-builder"
+  }, {
+    label: "AI Buying Report",
+    href: "/opportunity",
+    active: true
+  }, {
+    label: "Settings",
+    isSectionLabel: true
+  }, {
+    label: "TICA Preferences",
+    href: "/settings"
+  }, {
+    label: "Owner",
+    isSectionLabel: true
+  }, {
+    label: "TICA Operations Centre",
+    href: "/owner"
+  }, {
+    label: "🧠 TICA Intelligence",
+    href: "/owner/intelligence"
+  }, {
+    label: "Future Features",
+    isSectionLabel: true
+  }, {
+    label: "Vehicle History & MOT",
+    disabled: true
+  }, {
+    label: "Watchlist",
+    disabled: true
+  }, {
+    label: "Subscription",
+    disabled: true
+  }];
+  if (missionInitialized && !activeMission) {
+    return /* @__PURE__ */ jsx(PlatformShell, { navItems: platformNavItems, children: /* @__PURE__ */ jsxs("div", { className: "mx-auto w-full max-w-container-max space-y-4", children: [
+      /* @__PURE__ */ jsxs("header", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Trade In Cars Agent" }),
+        /* @__PURE__ */ jsx("h1", { className: "mt-3 text-headline-lg font-headline-lg text-primary", children: "AI Buying Report" }),
+        /* @__PURE__ */ jsx("p", { className: "mt-1 text-body-sm font-body-sm text-on-surface-variant", children: "No Buying Report selected." })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-sm text-on-surface-variant", children: "Complete an AI Search Mission and open its Buying Report to load mission-specific intelligence." }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-4 flex flex-wrap gap-3", children: [
+          /* @__PURE__ */ jsx(Link, { to: "/dashboard", className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface", children: "Return to Dealer Command Centre" }),
+          /* @__PURE__ */ jsx(Link, { to: "/search-builder", className: "inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-body-md font-body-md text-on-primary", children: "Create AI Search Mission" })
+        ] })
+      ] })
+    ] }) });
+  }
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     thinkingVisible && /* @__PURE__ */ jsx("div", { className: `opp-thinking-overlay ${thinkingExiting ? "opp-thinking-overlay--exit" : "opp-thinking-overlay--enter"}`, "aria-live": "polite", "aria-label": "TICA AI analysing", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-6 px-6 text-center", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-2", children: [
@@ -737,44 +791,7 @@ function OpportunityPage() {
         step
       ] }, step)) })
     ] }) }),
-    /* @__PURE__ */ jsxs(PlatformShell, { navItems: [{
-      label: "Dealer Command Centre",
-      href: "/dashboard"
-    }, {
-      label: "AI Search Missions",
-      href: "/search-builder"
-    }, {
-      label: "AI Buying Report",
-      href: "/opportunity",
-      active: true
-    }, {
-      label: "Settings",
-      isSectionLabel: true
-    }, {
-      label: "TICA Preferences",
-      href: "/settings"
-    }, {
-      label: "Owner",
-      isSectionLabel: true
-    }, {
-      label: "TICA Operations Centre",
-      href: "/owner"
-    }, {
-      label: "🧠 TICA Intelligence",
-      href: "/owner/intelligence"
-    }, {
-      label: "Future Features",
-      isSectionLabel: true
-    }, {
-      label: "Vehicle History & MOT",
-      disabled: true
-    }, {
-      label: "Watchlist",
-      disabled: true
-    }, {
-      label: "Subscription",
-      disabled: true
-    }], children: [
+    /* @__PURE__ */ jsxs(PlatformShell, { navItems: platformNavItems, children: [
       /* @__PURE__ */ jsxs("div", { className: `mx-auto w-full max-w-container-max space-y-3 sm:space-y-4 ${pageReady ? "opp-page-enter" : "opacity-0"}`, children: [
         /* @__PURE__ */ jsxs("header", { className: "opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", style: stagger(0), children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center", children: [
