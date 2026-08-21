@@ -4,7 +4,7 @@ import { useNavigate, Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES, d as ignoreMission } from "./mission-C3C9xkMh.js";
 import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
-import { R as Route } from "./router-D2aanPH4.js";
+import { R as Route } from "./router-Dohqr-fH.js";
 import "react-dom";
 const SAVED_OPPORTUNITIES_KEY = "tica_saved_opportunities";
 function load() {
@@ -1884,10 +1884,7 @@ function OpportunityPage() {
               /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "INSPECTION ADVICE" }),
               /* @__PURE__ */ jsx("p", { className: "tdp-advice-text tdp-mb", children: reportVehicleIntelligence.inspectionAdvice }),
               /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "KNOWN MODEL ISSUES" }),
-              /* @__PURE__ */ jsx("div", { className: "tdp-issues-list tdp-mb", children: reportVehicleIntelligence.modelIssues.map((issue) => /* @__PURE__ */ jsxs("div", { className: `tdp-issue-row tdp-issue-${issue.tone}`, children: [
-                /* @__PURE__ */ jsx("span", { className: "tdp-issue-title", children: issue.title }),
-                /* @__PURE__ */ jsx("p", { className: "tdp-issue-detail", children: issue.detail })
-              ] }, issue.title)) })
+              /* @__PURE__ */ jsx("div", { className: "tdp-issues-list tdp-mb", children: /* @__PURE__ */ jsx("div", { className: "tdp-issue-row tdp-issue-warning", children: /* @__PURE__ */ jsx("span", { className: "tdp-issue-title", children: "Awaiting live vehicle intelligence. Model-specific faults will appear when verified." }) }) })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "tdp-p2-right", children: [
               /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "AI INSPECTION CHECKLIST" }),
@@ -2042,7 +2039,7 @@ function OpportunityPage() {
             /* @__PURE__ */ jsxs("div", { className: "tdp-note-field tdp-note-field-full", children: [
               /* @__PURE__ */ jsx("div", { className: "tdp-note-label", children: "Other notes" }),
               /* @__PURE__ */ jsx("div", { className: "tdp-note-lines", children: Array.from({
-                length: 7
+                length: 6
               }).map((_, i) => /* @__PURE__ */ jsx("div", { className: "tdp-note-line" }, i)) })
             ] })
           ] }),
