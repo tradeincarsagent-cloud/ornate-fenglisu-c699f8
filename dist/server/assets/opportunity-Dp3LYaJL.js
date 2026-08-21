@@ -4,7 +4,7 @@ import { useNavigate, Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES, d as ignoreMission } from "./mission-C3C9xkMh.js";
 import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
-import { R as Route } from "./router-Db0z-Scl.js";
+import { R as Route } from "./router-D5fuQvh1.js";
 import "react-dom";
 const SAVED_OPPORTUNITIES_KEY = "tica_saved_opportunities";
 function load() {
@@ -81,9 +81,6 @@ function getFuelKind(fuelType) {
   if (normalized.includes("diesel")) return "diesel";
   if (normalized.includes("petrol")) return "petrol";
   return "unknown";
-}
-function escapeHtml(value) {
-  return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
 }
 function ChevronRightIcon() {
   return /* @__PURE__ */ jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("polyline", { points: "9 18 15 12 9 6" }) });
@@ -162,6 +159,7 @@ function OpportunityPage() {
   const [showIgnoreConfirm, setShowIgnoreConfirm] = useState(false);
   const [showContactMessage, setShowContactMessage] = useState(false);
   const [showUnsaveConfirm, setShowUnsaveConfirm] = useState(false);
+  const [isPrintMode, setIsPrintMode] = useState(false);
   const missionReport = useMemo(() => {
     if (!resolvedMission) return null;
     const make = resolvedMission.vehicleRequirements?.make || "";
@@ -668,8 +666,6 @@ function OpportunityPage() {
   const executiveRetailValue = statValues !== null ? `£${statValues.retail.toLocaleString("en-GB")}` : "—";
   const executiveScoreValue = statValues !== null && statValues.score > 0 ? statValues.score : "Awaiting live data";
   const executiveDaysValue = statValues !== null && statValues.days > 0 ? statValues.days : "Awaiting live data";
-  const printOpportunityScore = Number.isFinite(numericConfidence) && numericConfidence > 0 ? `${Math.max(Math.round(numericConfidence), 1)}` : "Awaiting live data";
-  const printVerificationStatus = resolvedMission?.aiConfidence?.trim() === "Pending" ? "Pending verification" : formatMissionValue(resolvedMission?.aiConfidence, reportVehicleIntelligence.dealerVerdict.confidence);
   const [timelineVisible, setTimelineVisible] = useState(0);
   const [badgeSweep, setBadgeSweep] = useState(false);
   const [heroImageIdx, setHeroImageIdx] = useState(0);
@@ -794,6 +790,24 @@ function OpportunityPage() {
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, [pageReady]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleBeforePrint = () => setIsPrintMode(true);
+    const handleAfterPrint = () => setIsPrintMode(false);
+    window.addEventListener("beforeprint", handleBeforePrint);
+    window.addEventListener("afterprint", handleAfterPrint);
+    return () => {
+      window.removeEventListener("beforeprint", handleBeforePrint);
+      window.removeEventListener("afterprint", handleAfterPrint);
+    };
+  }, []);
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.body.classList.toggle("opportunity-print-mode", isPrintMode);
+    return () => {
+      document.body.classList.remove("opportunity-print-mode");
+    };
+  }, [isPrintMode]);
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -802,333 +816,13 @@ function OpportunityPage() {
   };
   const openPrintDealerReport = useCallback(() => {
     if (typeof window === "undefined") return;
-    const printWindow = window.open("", "_blank", "noopener,noreferrer,width=1024,height=1440");
-    if (!printWindow) return;
-    const missionId = missionReport?.missionId ?? "Awaiting active mission";
-    const generatedAt = (/* @__PURE__ */ new Date()).toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    });
-    const finalAdvice = missionReport?.finalAdvice ?? reportVehicleIntelligence.dealerVerdict.finalAdvice;
-    const recommendedSellerQuestions = reportVehicleIntelligence.sellerQuestions.questions.length > 0 ? reportVehicleIntelligence.sellerQuestions.questions : [{
-      id: 0,
-      text: "Not available yet",
-      priority: "general"
-    }];
-    const reportSections = [{
-      title: "Mission Overview",
-      items: [{
-        label: "Mission ID",
-        value: missionId
-      }, {
-        label: "Vehicle",
-        value: missionReport?.vehicleName || "Awaiting active mission"
-      }, {
-        label: "Vehicle Type",
-        value: missionReport?.vehicleType || "Awaiting live data"
-      }, {
-        label: "Budget",
-        value: missionReport?.budget || "Awaiting live data"
-      }, {
-        label: "Asking Price",
-        value: missionReport?.askingPriceDisplay || "Awaiting live data"
-      }, {
-        label: "Estimated Retail Value",
-        value: missionReport?.retailValueDisplay || "Awaiting live data"
-      }, {
-        label: "Estimated Gross Profit",
-        value: missionReport?.projectedProfitDisplay || "Awaiting live data"
-      }, {
-        label: "Opportunity Score",
-        value: printOpportunityScore
-      }]
-    }, {
-      title: "Decision Summary",
-      items: [{
-        label: "TICA Recommendation",
-        value: unifiedRecommendation
-      }, {
-        label: "Confidence",
-        value: unifiedConfidence
-      }, {
-        label: "Verification Status",
-        value: printVerificationStatus
-      }, {
-        label: "Mission Status",
-        value: resolvedMission?.status || "Pending verification"
-      }]
-    }, {
-      title: "Vehicle Details",
-      items: vehicleInfo.map((item) => ({
-        label: item.label,
-        value: item.value
-      }))
-    }, {
-      title: "Commercial Decision",
-      items: (missionReport?.commercialDecision ?? [{
-        label: "Recommended Offer",
-        value: "Awaiting live data"
-      }, {
-        label: "Expected Purchase Range",
-        value: "Awaiting live data"
-      }, {
-        label: "Walk-Away Price",
-        value: "Awaiting live data"
-      }, {
-        label: "Preparation Allowance",
-        value: "Awaiting live data"
-      }, {
-        label: "Estimated Retail Value",
-        value: "Awaiting live data"
-      }, {
-        label: "Projected Gross Profit",
-        value: "Awaiting live data"
-      }]).map((item) => ({
-        label: item.label,
-        value: item.value
-      }))
-    }];
-    const html = `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TICA Dealer Buying Report — ${escapeHtml(missionId)}</title>
-    <style>
-      :root {
-        color-scheme: light;
-        --brand: #1f4ed8;
-        --ink: #0f172a;
-        --muted: #475569;
-        --line: #cbd5e1;
-        --panel: #f8fafc;
-        --panel-strong: #e2e8f0;
-      }
-      * { box-sizing: border-box; }
-      @page { size: A4; margin: 14mm; }
-      body {
-        margin: 0;
-        background: #ffffff;
-        color: var(--ink);
-        font-family: Inter, Arial, sans-serif;
-        line-height: 1.45;
-      }
-      main {
-        margin: 0 auto;
-        max-width: 780px;
-      }
-      .report-shell {
-        border: 1px solid var(--line);
-        padding: 24px;
-      }
-      .report-header {
-        display: flex;
-        justify-content: space-between;
-        gap: 24px;
-        border-bottom: 2px solid var(--brand);
-        padding-bottom: 18px;
-      }
-      .brand-kicker {
-        margin: 0 0 6px;
-        color: var(--brand);
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.24em;
-        text-transform: uppercase;
-      }
-      h1 {
-        margin: 0;
-        font-size: 28px;
-        line-height: 1.1;
-      }
-      .subtle {
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .brand-badge {
-        min-width: 180px;
-        border: 1px solid var(--brand);
-        padding: 14px 16px;
-        text-align: center;
-      }
-      .brand-badge strong {
-        display: block;
-        color: var(--brand);
-        font-size: 20px;
-        letter-spacing: 0.08em;
-      }
-      .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 18px;
-      }
-      .section-card {
-        border: 1px solid var(--line);
-        background: var(--panel);
-        padding: 14px;
-        break-inside: avoid;
-      }
-      .section-title {
-        margin: 0 0 12px;
-        color: var(--brand);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-      }
-      dl {
-        margin: 0;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 8px;
-      }
-      .row {
-        display: grid;
-        grid-template-columns: minmax(120px, 170px) minmax(0, 1fr);
-        gap: 10px;
-        padding-top: 8px;
-        border-top: 1px solid var(--panel-strong);
-      }
-      .row:first-child { border-top: 0; padding-top: 0; }
-      dt {
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-      dd {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .stack {
-        margin-top: 14px;
-        display: grid;
-        gap: 14px;
-      }
-      .two-col {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-      }
-      ul {
-        margin: 0;
-        padding-left: 18px;
-      }
-      li + li { margin-top: 7px; }
-      .note {
-        border: 1px solid var(--line);
-        background: #eff6ff;
-        padding: 14px;
-      }
-      .footer {
-        margin-top: 16px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-      @media print {
-        body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-        .report-shell { border: 0; padding: 0; }
-      }
-      @media (max-width: 720px) {
-        .report-header,
-        .summary-grid,
-        .two-col,
-        .row { grid-template-columns: 1fr; }
-        .brand-badge { min-width: 0; }
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <div class="report-shell">
-        <header class="report-header">
-          <div>
-            <p class="brand-kicker">Trade In Cars Agent</p>
-            <h1>TICA Dealer Buying Report</h1>
-            <p class="subtle">Generated from the current AI Buying Report for mission ${escapeHtml(missionId)}.</p>
-          </div>
-          <div class="brand-badge">
-            <strong>TICA</strong>
-            <span class="subtle">Dealer Buying Report</span>
-          </div>
-        </header>
-
-        <section class="summary-grid">
-          ${reportSections.map((section) => `
-            <article class="section-card">
-              <h2 class="section-title">${escapeHtml(section.title)}</h2>
-              <dl>
-                ${section.items.map((item) => `
-                  <div class="row">
-                    <dt>${escapeHtml(item.label)}</dt>
-                    <dd>${escapeHtml(item.value)}</dd>
-                  </div>
-                `).join("")}
-              </dl>
-            </article>
-          `).join("")}
-        </section>
-
-        <section class="stack">
-          <div class="two-col">
-            <article class="section-card">
-              <h2 class="section-title">Key Strengths</h2>
-              <ul>
-                ${reportVehicleIntelligence.dealerVerdict.strengths.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-              </ul>
-            </article>
-            <article class="section-card">
-              <h2 class="section-title">Items to Verify</h2>
-              <ul>
-                ${reportVehicleIntelligence.dealerVerdict.verificationItems.map((item) => `<li>${escapeHtml(item.label)}</li>`).join("")}
-              </ul>
-            </article>
-          </div>
-
-          <article class="section-card">
-            <h2 class="section-title">Inspection Advice</h2>
-            <p>${escapeHtml(reportVehicleIntelligence.inspectionAdvice)}</p>
-          </article>
-
-          <article class="section-card">
-            <h2 class="section-title">Recommended Seller Questions</h2>
-            <ul>
-              ${recommendedSellerQuestions.map((item) => `<li>${escapeHtml(item.text)}</li>`).join("")}
-            </ul>
-          </article>
-
-          <article class="section-card">
-            <h2 class="section-title">Final TICA Advice</h2>
-            <p>${escapeHtml(finalAdvice)}</p>
-          </article>
-
-          <article class="note">
-            <h2 class="section-title">Commercial Decision</h2>
-            <p>${escapeHtml(reportVehicleIntelligence.dealerVerdict.summary)}</p>
-          </article>
-        </section>
-
-        <p class="footer">Report created ${escapeHtml(generatedAt)} · Browser print supports paper output and Save as PDF.</p>
-      </div>
-    </main>
-    <script>
-      window.addEventListener('load', () => {
-        window.focus();
+    setIsPrintMode(true);
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
         window.print();
       });
-    <\/script>
-  </body>
-</html>`;
-    printWindow.document.open();
-    printWindow.document.write(html);
-    printWindow.document.close();
-  }, [missionReport, printOpportunityScore, printVerificationStatus, reportVehicleIntelligence, resolvedMission?.status, unifiedConfidence, unifiedRecommendation, vehicleInfo]);
+    });
+  }, []);
   const stagger = (i) => ({
     animationDelay: `${i * 80}ms`
   });
@@ -1203,11 +897,11 @@ function OpportunityPage() {
       ] }, step)) })
     ] }) }),
     /* @__PURE__ */ jsxs(PlatformShell, { navItems: platformNavItems, children: [
-      /* @__PURE__ */ jsxs("div", { className: `mx-auto w-full max-w-container-max space-y-3 sm:space-y-4 ${pageReady ? "opp-page-enter" : "opacity-0"}`, children: [
+      /* @__PURE__ */ jsxs("div", { className: `opportunity-print-root mx-auto w-full max-w-container-max space-y-3 sm:space-y-4 ${pageReady ? "opp-page-enter" : "opacity-0"}`, children: [
         /* @__PURE__ */ jsxs("header", { className: "opp-card-stagger opp-card-hover rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 sm:p-6", style: stagger(0), children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start justify-between gap-4 sm:flex-row sm:flex-wrap sm:items-center", children: [
             /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("p", { className: "text-label-caps font-label-caps uppercase tracking-widest text-primary", children: "Trade In Cars Agent" }) }),
-            /* @__PURE__ */ jsxs("div", { className: "flex w-full flex-col gap-3 sm:w-auto sm:flex-row", children: [
+            /* @__PURE__ */ jsxs("div", { className: "opportunity-print-hide flex w-full flex-col gap-3 sm:w-auto sm:flex-row", children: [
               /* @__PURE__ */ jsxs(Link, { to: "/dashboard", className: "opp-btn-secondary inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-2.5 text-body-md font-body-md text-on-surface sm:w-auto", children: [
                 /* @__PURE__ */ jsx("span", { "aria-hidden": "true", children: "🏠" }),
                 "Return to Dashboard"
@@ -1218,7 +912,7 @@ function OpportunityPage() {
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("nav", { "aria-label": "Breadcrumb", className: "mt-4 flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant", children: [
+          /* @__PURE__ */ jsxs("nav", { "aria-label": "Breadcrumb", className: "opportunity-print-hide mt-4 flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant", children: [
             /* @__PURE__ */ jsx(Link, { to: "/dashboard", className: "transition-colors hover:text-primary", children: "Dealer Command Centre" }),
             /* @__PURE__ */ jsx(ChevronRightIcon, {}),
             /* @__PURE__ */ jsx("span", { className: "text-on-surface", children: "AI Buying Report" })
@@ -1952,7 +1646,7 @@ function OpportunityPage() {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("section", { className: "opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5", ref: setRevealRef(5), children: [
+        /* @__PURE__ */ jsxs("section", { className: "opportunity-print-hide opp-scroll-hidden dashboard-border rounded-2xl bg-surface-container p-4 sm:p-5", ref: setRevealRef(5), children: [
           /* @__PURE__ */ jsx("h2", { className: "mb-4 text-headline-md font-headline-md text-on-surface", children: "Actions" }),
           /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4", children: [
             isOpportunitySaved2 ? /* @__PURE__ */ jsxs("button", { type: "button", className: "opp-btn-secondary inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl border border-primary/40 bg-surface-container-high px-5 py-3 text-body-md font-semibold text-on-surface", onClick: () => setShowUnsaveConfirm(true), children: [
@@ -2043,7 +1737,320 @@ function OpportunityPage() {
       /* @__PURE__ */ jsx("button", { "aria-label": "Back to top", className: "back-to-top-btn", onClick: scrollToTop, style: {
         opacity: showBackToTop ? 1 : 0,
         pointerEvents: showBackToTop ? "auto" : "none"
-      }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "26", viewBox: "0 0 24 24", width: "26", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M5 15l7-7 7 7", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5" }) }) })
+      }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "26", viewBox: "0 0 24 24", width: "26", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M5 15l7-7 7 7", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5" }) }) }),
+      /* @__PURE__ */ jsxs("div", { className: "tica-dealer-print-doc", "aria-hidden": "true", children: [
+        /* @__PURE__ */ jsxs("div", { className: "tdp-page tdp-page-1", children: [
+          /* @__PURE__ */ jsxs("div", { className: "tdp-header-bar", children: [
+            /* @__PURE__ */ jsxs("div", { className: "tdp-header-left", children: [
+              /* @__PURE__ */ jsx("span", { className: "tdp-brand-name", children: "Trade In Cars Agent" }),
+              /* @__PURE__ */ jsx("span", { className: "tdp-brand-sub", children: "TICA AI Buying Report — Dealer Copy" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "tdp-header-right", children: [
+              /* @__PURE__ */ jsx(TicaShield, { size: "sm" }),
+              /* @__PURE__ */ jsx("span", { className: "tdp-certified-label", children: "TICA Certified™" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "tdp-mission-strip", children: [
+            /* @__PURE__ */ jsx("span", { className: "tdp-mission-label", children: "Mission ID:" }),
+            /* @__PURE__ */ jsx("span", { className: "tdp-mission-value", children: missionReport?.missionId ?? "Awaiting active mission" }),
+            /* @__PURE__ */ jsxs("span", { className: "tdp-mission-date", children: [
+              "Printed: ",
+              (/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+              })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "tdp-p1-body", children: [
+            /* @__PURE__ */ jsxs("div", { className: "tdp-p1-vehicle", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "VEHICLE" }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-vehicle-name", children: missionReport?.vehicleName ?? "Awaiting active mission" }),
+              /* @__PURE__ */ jsxs("dl", { className: "tdp-kv-grid tdp-kv-grid-2", children: [
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Year" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.yearDisplay ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Fuel" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.fuelType ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Transmission" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.transmission ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Mileage Target" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.maxMileageDisplay ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Registration" }),
+                  /* @__PURE__ */ jsx("dd", { children: "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Service History" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.serviceHistory ?? "Requires verification" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: `tdp-verdict-block tdp-verdict-${unifiedRecommendation.toLowerCase()}`, children: [
+                /* @__PURE__ */ jsx("div", { className: "tdp-verdict-label", children: "TICA Recommendation™" }),
+                /* @__PURE__ */ jsx("div", { className: "tdp-verdict-value", children: unifiedRecommendation }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-verdict-confidence", children: [
+                  "Confidence: ",
+                  unifiedConfidence
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "tdp-verdict-summary", children: reportVehicleIntelligence.dealerVerdict.summary })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "tdp-p1-deal", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "DEAL" }),
+              /* @__PURE__ */ jsxs("dl", { className: "tdp-kv-grid tdp-kv-grid-1 tdp-deal-grid", children: [
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv tdp-kv-highlight", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Asking Price" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.askingPriceDisplay ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Estimated Retail Value" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.retailValueDisplay ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Estimated Gross Profit" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.projectedProfitDisplay ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Recommended Offer" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.commercialDecision?.[0]?.value ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Walk-Away Price" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.commercialDecision?.[2]?.value ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Preparation Allowance" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.commercialDecision?.[3]?.value ?? "Awaiting live data" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading tdp-mt", children: "SELLER / LOCATION" }),
+              /* @__PURE__ */ jsxs("dl", { className: "tdp-kv-grid tdp-kv-grid-1", children: [
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Seller / Dealer" }),
+                  /* @__PURE__ */ jsx("dd", { children: "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Telephone / Contact" }),
+                  /* @__PURE__ */ jsx("dd", { children: "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Vehicle Location" }),
+                  /* @__PURE__ */ jsx("dd", { children: reportVehicleIntelligence.locationSummary[0]?.value ?? "Awaiting live data" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "tdp-postcode-box", children: [
+                /* @__PURE__ */ jsx("div", { className: "tdp-postcode-label", children: "Postcode (Sat-Nav)" }),
+                /* @__PURE__ */ jsx("div", { className: "tdp-postcode-value", children: "Awaiting live data" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "tdp-final-advice", children: [
+                /* @__PURE__ */ jsx("span", { className: "tdp-final-advice-label", children: "TICA Advice: " }),
+                missionReport?.finalAdvice ?? reportVehicleIntelligence.dealerVerdict.finalAdvice
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "tdp-footer-bar", children: [
+            /* @__PURE__ */ jsx("span", { children: "Trade In Cars Agent · TICA Certified™ · AI Buying Report · Dealer Copy" }),
+            /* @__PURE__ */ jsx("span", { children: "Page 1 of 3" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "tdp-page tdp-page-2", children: [
+          /* @__PURE__ */ jsxs("div", { className: "tdp-page-title-bar", children: [
+            /* @__PURE__ */ jsx("span", { className: "tdp-page-title", children: "Buying & Inspection Information" }),
+            /* @__PURE__ */ jsxs("span", { className: "tdp-page-vehicle", children: [
+              missionReport?.vehicleName ?? "Vehicle",
+              " · ",
+              missionReport?.missionId ?? ""
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "tdp-p2-body", children: [
+            /* @__PURE__ */ jsxs("div", { className: "tdp-p2-left", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "VEHICLE SPECIFICATION" }),
+              /* @__PURE__ */ jsx("dl", { className: "tdp-kv-grid tdp-kv-grid-2 tdp-mb", children: vehicleInfo.map((item) => /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                /* @__PURE__ */ jsx("dt", { children: item.label }),
+                /* @__PURE__ */ jsx("dd", { children: item.value })
+              ] }, item.label)) }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "HISTORY & CHECKS STATUS" }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-history-list tdp-mb", children: reportVehicleIntelligence.vehicleHistory.map((item) => /* @__PURE__ */ jsxs("div", { className: "tdp-history-row", children: [
+                /* @__PURE__ */ jsx("span", { className: "tdp-history-label", children: item.label }),
+                /* @__PURE__ */ jsx("span", { className: "tdp-history-value tdp-status-check", children: item.value })
+              ] }, item.label)) }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "INSPECTION ADVICE" }),
+              /* @__PURE__ */ jsx("p", { className: "tdp-advice-text tdp-mb", children: reportVehicleIntelligence.inspectionAdvice }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "KNOWN MODEL ISSUES" }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-issues-list tdp-mb", children: reportVehicleIntelligence.modelIssues.map((issue) => /* @__PURE__ */ jsxs("div", { className: `tdp-issue-row tdp-issue-${issue.tone}`, children: [
+                /* @__PURE__ */ jsx("span", { className: "tdp-issue-title", children: issue.title }),
+                /* @__PURE__ */ jsx("p", { className: "tdp-issue-detail", children: issue.detail })
+              ] }, issue.title)) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "tdp-p2-right", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "AI INSPECTION CHECKLIST" }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-checklist tdp-mb", children: reportVehicleIntelligence.inspectionChecklist.map((cat) => /* @__PURE__ */ jsxs("div", { className: "tdp-checklist-cat", children: [
+                /* @__PURE__ */ jsx("div", { className: "tdp-checklist-cat-name", children: cat.category }),
+                cat.items.map((it) => /* @__PURE__ */ jsxs("div", { className: "tdp-checklist-item", children: [
+                  /* @__PURE__ */ jsx("span", { className: `tdp-checklist-dot tdp-dot-${it.status}` }),
+                  /* @__PURE__ */ jsx("span", { className: "tdp-checklist-label", children: it.label }),
+                  /* @__PURE__ */ jsx("span", { className: `tdp-checklist-status tdp-status-${it.status}`, children: checklistStatusConfig[it.status].label })
+                ] }, it.label))
+              ] }, cat.category)) }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "QUESTIONS TO ASK THE SELLER" }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-questions tdp-mb", children: reportVehicleIntelligence.sellerQuestions.questions.map((q) => /* @__PURE__ */ jsxs("div", { className: "tdp-question-row", children: [
+                /* @__PURE__ */ jsxs("span", { className: "tdp-question-num", children: [
+                  q.id,
+                  "."
+                ] }),
+                /* @__PURE__ */ jsx("span", { className: "tdp-question-text", children: q.text }),
+                /* @__PURE__ */ jsx("span", { className: `tdp-question-priority tdp-qp-${q.priority}`, children: q.priority === "high" ? "HIGH" : q.priority === "important" ? "IMP" : "GEN" })
+              ] }, q.id)) }),
+              /* @__PURE__ */ jsxs("p", { className: "tdp-dealer-tip", children: [
+                /* @__PURE__ */ jsx("strong", { children: "Dealer Tip:" }),
+                " ",
+                reportVehicleIntelligence.sellerQuestions.dealerTip
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading tdp-mt", children: "TICA DEALER VERDICT" }),
+              /* @__PURE__ */ jsxs("div", { className: `tdp-verdict-block-sm tdp-verdict-${unifiedRecommendation.toLowerCase()}`, children: [
+                /* @__PURE__ */ jsxs("div", { className: "tdp-vbs-row", children: [
+                  /* @__PURE__ */ jsx("span", { className: "tdp-vbs-label", children: "Recommendation" }),
+                  /* @__PURE__ */ jsx("span", { className: "tdp-vbs-value", children: unifiedRecommendation })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-vbs-row", children: [
+                  /* @__PURE__ */ jsx("span", { className: "tdp-vbs-label", children: "Confidence" }),
+                  /* @__PURE__ */ jsx("span", { className: "tdp-vbs-value", children: unifiedConfidence })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "tdp-actions-list tdp-mt-sm", children: [
+                /* @__PURE__ */ jsx("div", { className: "tdp-actions-heading", children: "Recommended Actions:" }),
+                reportVehicleIntelligence.dealerVerdict.recommendedActions.map((a) => /* @__PURE__ */ jsxs("div", { className: "tdp-action-row", children: [
+                  "✓ ",
+                  a
+                ] }, a))
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "tdp-footer-bar", children: [
+            /* @__PURE__ */ jsx("span", { children: "Trade In Cars Agent · TICA Certified™ · AI Buying Report · Dealer Copy" }),
+            /* @__PURE__ */ jsx("span", { children: "Page 2 of 3" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "tdp-page tdp-page-3", children: [
+          /* @__PURE__ */ jsxs("div", { className: "tdp-page-title-bar", children: [
+            /* @__PURE__ */ jsx("span", { className: "tdp-page-title", children: "Viewing & Collection Sheet" }),
+            /* @__PURE__ */ jsxs("span", { className: "tdp-page-vehicle", children: [
+              missionReport?.vehicleName ?? "Vehicle",
+              " · ",
+              missionReport?.missionId ?? ""
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "tdp-p3-top", children: [
+            /* @__PURE__ */ jsxs("div", { className: "tdp-p3-block", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "SELLER / VEHICLE" }),
+              /* @__PURE__ */ jsxs("dl", { className: "tdp-kv-grid tdp-kv-grid-2", children: [
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Seller / Dealer" }),
+                  /* @__PURE__ */ jsx("dd", { children: "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Telephone / Contact" }),
+                  /* @__PURE__ */ jsx("dd", { children: "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Vehicle Address" }),
+                  /* @__PURE__ */ jsx("dd", { children: reportVehicleIntelligence.locationSummary[0]?.value ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Registration" }),
+                  /* @__PURE__ */ jsx("dd", { children: "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Asking Price" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.askingPriceDisplay ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Vehicle" }),
+                  /* @__PURE__ */ jsxs("dd", { children: [
+                    missionReport?.vehicleName ?? "Awaiting live data",
+                    " · ",
+                    missionReport?.yearDisplay ?? ""
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "tdp-postcode-box", children: [
+                /* @__PURE__ */ jsx("div", { className: "tdp-postcode-label", children: "Postcode (Sat-Nav)" }),
+                /* @__PURE__ */ jsx("div", { className: "tdp-postcode-value", children: "Awaiting live data" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "tdp-p3-block", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "DEAL INFORMATION" }),
+              /* @__PURE__ */ jsxs("dl", { className: "tdp-kv-grid tdp-kv-grid-1", children: [
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv tdp-kv-highlight", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Target Buying Price" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.commercialDecision?.[0]?.value ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Estimated Retail Value" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.retailValueDisplay ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Estimated Gross Profit" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.projectedProfitDisplay ?? "Awaiting live data" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Walk-Away Price" }),
+                  /* @__PURE__ */ jsx("dd", { children: missionReport?.commercialDecision?.[2]?.value ?? "Awaiting live data" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: `tdp-verdict-block-sm tdp-verdict-${unifiedRecommendation.toLowerCase()} tdp-mt`, children: /* @__PURE__ */ jsxs("div", { className: "tdp-vbs-row", children: [
+                /* @__PURE__ */ jsx("span", { className: "tdp-vbs-label", children: "TICA Recommendation" }),
+                /* @__PURE__ */ jsx("span", { className: "tdp-vbs-value", children: unifiedRecommendation })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "tdp-p3-block", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "COLLECTION" }),
+              /* @__PURE__ */ jsxs("dl", { className: "tdp-kv-grid tdp-kv-grid-1", children: [
+                /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: "Vehicle Location" }),
+                  /* @__PURE__ */ jsx("dd", { children: reportVehicleIntelligence.locationSummary[0]?.value ?? "Awaiting live data" })
+                ] }),
+                reportVehicleIntelligence.locationSummary.slice(1).map((item) => /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: item.label }),
+                  /* @__PURE__ */ jsx("dd", { children: item.value })
+                ] }, item.label)),
+                reportVehicleIntelligence.collectionSummary.map((item) => /* @__PURE__ */ jsxs("div", { className: "tdp-kv", children: [
+                  /* @__PURE__ */ jsx("dt", { children: item.label }),
+                  /* @__PURE__ */ jsx("dd", { children: item.value })
+                ] }, item.label))
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "tdp-notes-section", children: [
+            /* @__PURE__ */ jsx("div", { className: "tdp-section-heading", children: "DEALER NOTES" }),
+            /* @__PURE__ */ jsx("div", { className: "tdp-notes-grid", children: ["Vehicle condition", "Faults found", "Service / history notes", "Seller comments", "Negotiated price", "Final offer"].map((label) => /* @__PURE__ */ jsxs("div", { className: "tdp-note-field", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-note-label", children: label }),
+              /* @__PURE__ */ jsxs("div", { className: "tdp-note-lines", children: [
+                /* @__PURE__ */ jsx("div", { className: "tdp-note-line" }),
+                /* @__PURE__ */ jsx("div", { className: "tdp-note-line" }),
+                /* @__PURE__ */ jsx("div", { className: "tdp-note-line" })
+              ] })
+            ] }, label)) }),
+            /* @__PURE__ */ jsxs("div", { className: "tdp-note-field tdp-note-field-full", children: [
+              /* @__PURE__ */ jsx("div", { className: "tdp-note-label", children: "Other notes" }),
+              /* @__PURE__ */ jsx("div", { className: "tdp-note-lines", children: Array.from({
+                length: 5
+              }).map((_, i) => /* @__PURE__ */ jsx("div", { className: "tdp-note-line" }, i)) })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "tdp-footer-bar", children: [
+            /* @__PURE__ */ jsx("span", { children: "Trade In Cars Agent · TICA Certified™ · AI Buying Report · Dealer Copy" }),
+            /* @__PURE__ */ jsx("span", { children: "Page 3 of 3" })
+          ] })
+        ] })
+      ] })
     ] })
   ] });
 }

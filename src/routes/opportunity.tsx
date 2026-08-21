@@ -2041,6 +2041,398 @@ function OpportunityPage() {
           <path d="M5 15l7-7 7 7" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
         </svg>
       </button>
+
+      {/* ── Compact Dealer Print Document ─────────────────────────────────
+          Hidden on screen. Shown only in @media print.
+          This replaces the 12-page full-report printout with a practical
+          3-page dealer document. The existing on-screen report is untouched.
+      ─────────────────────────────────────────────────────────────────── */}
+      <div className="tica-dealer-print-doc" aria-hidden="true">
+
+        {/* ══════════════════════════════════════════════════════════════
+            PAGE 1 — VEHICLE & DEAL SUMMARY
+        ══════════════════════════════════════════════════════════════ */}
+        <div className="tdp-page tdp-page-1">
+
+          {/* Header bar */}
+          <div className="tdp-header-bar">
+            <div className="tdp-header-left">
+              <span className="tdp-brand-name">Trade In Cars Agent</span>
+              <span className="tdp-brand-sub">TICA AI Buying Report — Dealer Copy</span>
+            </div>
+            <div className="tdp-header-right">
+              <TicaShield size="sm" />
+              <span className="tdp-certified-label">TICA Certified™</span>
+            </div>
+          </div>
+
+          {/* Mission ID strip */}
+          <div className="tdp-mission-strip">
+            <span className="tdp-mission-label">Mission ID:</span>
+            <span className="tdp-mission-value">{missionReport?.missionId ?? 'Awaiting active mission'}</span>
+            <span className="tdp-mission-date">Printed: {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+          </div>
+
+          <div className="tdp-p1-body">
+
+            {/* Left: vehicle card */}
+            <div className="tdp-p1-vehicle">
+              <div className="tdp-section-heading">VEHICLE</div>
+
+              <div className="tdp-vehicle-name">
+                {missionReport?.vehicleName ?? 'Awaiting active mission'}
+              </div>
+
+              <dl className="tdp-kv-grid tdp-kv-grid-2">
+                <div className="tdp-kv">
+                  <dt>Year</dt>
+                  <dd>{missionReport?.yearDisplay ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Fuel</dt>
+                  <dd>{missionReport?.fuelType ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Transmission</dt>
+                  <dd>{missionReport?.transmission ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Mileage Target</dt>
+                  <dd>{missionReport?.maxMileageDisplay ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Registration</dt>
+                  <dd>Awaiting live data</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Service History</dt>
+                  <dd>{missionReport?.serviceHistory ?? 'Requires verification'}</dd>
+                </div>
+              </dl>
+
+              {/* TICA Verdict block */}
+              <div className={`tdp-verdict-block tdp-verdict-${unifiedRecommendation.toLowerCase()}`}>
+                <div className="tdp-verdict-label">TICA Recommendation™</div>
+                <div className="tdp-verdict-value">{unifiedRecommendation}</div>
+                <div className="tdp-verdict-confidence">Confidence: {unifiedConfidence}</div>
+                <p className="tdp-verdict-summary">{reportVehicleIntelligence.dealerVerdict.summary}</p>
+              </div>
+            </div>
+
+            {/* Right: deal & location */}
+            <div className="tdp-p1-deal">
+
+              <div className="tdp-section-heading">DEAL</div>
+              <dl className="tdp-kv-grid tdp-kv-grid-1 tdp-deal-grid">
+                <div className="tdp-kv tdp-kv-highlight">
+                  <dt>Asking Price</dt>
+                  <dd>{missionReport?.askingPriceDisplay ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Estimated Retail Value</dt>
+                  <dd>{missionReport?.retailValueDisplay ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Estimated Gross Profit</dt>
+                  <dd>{missionReport?.projectedProfitDisplay ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Recommended Offer</dt>
+                  <dd>{missionReport?.commercialDecision?.[0]?.value ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Walk-Away Price</dt>
+                  <dd>{missionReport?.commercialDecision?.[2]?.value ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Preparation Allowance</dt>
+                  <dd>{missionReport?.commercialDecision?.[3]?.value ?? 'Awaiting live data'}</dd>
+                </div>
+              </dl>
+
+              <div className="tdp-section-heading tdp-mt">SELLER / LOCATION</div>
+              <dl className="tdp-kv-grid tdp-kv-grid-1">
+                <div className="tdp-kv">
+                  <dt>Seller / Dealer</dt>
+                  <dd>Awaiting live data</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Telephone / Contact</dt>
+                  <dd>Awaiting live data</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Vehicle Location</dt>
+                  <dd>{reportVehicleIntelligence.locationSummary[0]?.value ?? 'Awaiting live data'}</dd>
+                </div>
+              </dl>
+
+              <div className="tdp-postcode-box">
+                <div className="tdp-postcode-label">Postcode (Sat-Nav)</div>
+                <div className="tdp-postcode-value">Awaiting live data</div>
+              </div>
+
+              <div className="tdp-final-advice">
+                <span className="tdp-final-advice-label">TICA Advice: </span>
+                {missionReport?.finalAdvice ?? reportVehicleIntelligence.dealerVerdict.finalAdvice}
+              </div>
+            </div>
+          </div>
+
+          <div className="tdp-footer-bar">
+            <span>Trade In Cars Agent · TICA Certified™ · AI Buying Report · Dealer Copy</span>
+            <span>Page 1 of 3</span>
+          </div>
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════════
+            PAGE 2 — BUYING & INSPECTION INFORMATION
+        ══════════════════════════════════════════════════════════════ */}
+        <div className="tdp-page tdp-page-2">
+
+          <div className="tdp-page-title-bar">
+            <span className="tdp-page-title">Buying &amp; Inspection Information</span>
+            <span className="tdp-page-vehicle">{missionReport?.vehicleName ?? 'Vehicle'} · {missionReport?.missionId ?? ''}</span>
+          </div>
+
+          <div className="tdp-p2-body">
+
+            {/* Left column */}
+            <div className="tdp-p2-left">
+
+              <div className="tdp-section-heading">VEHICLE SPECIFICATION</div>
+              <dl className="tdp-kv-grid tdp-kv-grid-2 tdp-mb">
+                {vehicleInfo.map((item) => (
+                  <div key={item.label} className="tdp-kv">
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <div className="tdp-section-heading">HISTORY &amp; CHECKS STATUS</div>
+              <div className="tdp-history-list tdp-mb">
+                {reportVehicleIntelligence.vehicleHistory.map((item) => (
+                  <div key={item.label} className="tdp-history-row">
+                    <span className="tdp-history-label">{item.label}</span>
+                    <span className="tdp-history-value tdp-status-check">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="tdp-section-heading">INSPECTION ADVICE</div>
+              <p className="tdp-advice-text tdp-mb">{reportVehicleIntelligence.inspectionAdvice}</p>
+
+              <div className="tdp-section-heading">KNOWN MODEL ISSUES</div>
+              <div className="tdp-issues-list tdp-mb">
+                {reportVehicleIntelligence.modelIssues.map((issue) => (
+                  <div key={issue.title} className={`tdp-issue-row tdp-issue-${issue.tone}`}>
+                    <span className="tdp-issue-title">{issue.title}</span>
+                    <p className="tdp-issue-detail">{issue.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right column */}
+            <div className="tdp-p2-right">
+
+              <div className="tdp-section-heading">AI INSPECTION CHECKLIST</div>
+              <div className="tdp-checklist tdp-mb">
+                {reportVehicleIntelligence.inspectionChecklist.map((cat) => (
+                  <div key={cat.category} className="tdp-checklist-cat">
+                    <div className="tdp-checklist-cat-name">{cat.category}</div>
+                    {cat.items.map((it) => (
+                      <div key={it.label} className="tdp-checklist-item">
+                        <span className={`tdp-checklist-dot tdp-dot-${it.status}`} />
+                        <span className="tdp-checklist-label">{it.label}</span>
+                        <span className={`tdp-checklist-status tdp-status-${it.status}`}>{checklistStatusConfig[it.status].label}</span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              <div className="tdp-section-heading">QUESTIONS TO ASK THE SELLER</div>
+              <div className="tdp-questions tdp-mb">
+                {reportVehicleIntelligence.sellerQuestions.questions.map((q) => (
+                  <div key={q.id} className="tdp-question-row">
+                    <span className="tdp-question-num">{q.id}.</span>
+                    <span className="tdp-question-text">{q.text}</span>
+                    <span className={`tdp-question-priority tdp-qp-${q.priority}`}>
+                      {q.priority === 'high' ? 'HIGH' : q.priority === 'important' ? 'IMP' : 'GEN'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="tdp-dealer-tip"><strong>Dealer Tip:</strong> {reportVehicleIntelligence.sellerQuestions.dealerTip}</p>
+
+              <div className="tdp-section-heading tdp-mt">TICA DEALER VERDICT</div>
+              <div className={`tdp-verdict-block-sm tdp-verdict-${unifiedRecommendation.toLowerCase()}`}>
+                <div className="tdp-vbs-row">
+                  <span className="tdp-vbs-label">Recommendation</span>
+                  <span className="tdp-vbs-value">{unifiedRecommendation}</span>
+                </div>
+                <div className="tdp-vbs-row">
+                  <span className="tdp-vbs-label">Confidence</span>
+                  <span className="tdp-vbs-value">{unifiedConfidence}</span>
+                </div>
+              </div>
+              <div className="tdp-actions-list tdp-mt-sm">
+                <div className="tdp-actions-heading">Recommended Actions:</div>
+                {reportVehicleIntelligence.dealerVerdict.recommendedActions.map((a) => (
+                  <div key={a} className="tdp-action-row">✓ {a}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="tdp-footer-bar">
+            <span>Trade In Cars Agent · TICA Certified™ · AI Buying Report · Dealer Copy</span>
+            <span>Page 2 of 3</span>
+          </div>
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════════
+            PAGE 3 — VIEWING / COLLECTION SHEET
+        ══════════════════════════════════════════════════════════════ */}
+        <div className="tdp-page tdp-page-3">
+
+          <div className="tdp-page-title-bar">
+            <span className="tdp-page-title">Viewing &amp; Collection Sheet</span>
+            <span className="tdp-page-vehicle">{missionReport?.vehicleName ?? 'Vehicle'} · {missionReport?.missionId ?? ''}</span>
+          </div>
+
+          <div className="tdp-p3-top">
+
+            {/* Seller / Vehicle */}
+            <div className="tdp-p3-block">
+              <div className="tdp-section-heading">SELLER / VEHICLE</div>
+              <dl className="tdp-kv-grid tdp-kv-grid-2">
+                <div className="tdp-kv">
+                  <dt>Seller / Dealer</dt>
+                  <dd>Awaiting live data</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Telephone / Contact</dt>
+                  <dd>Awaiting live data</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Vehicle Address</dt>
+                  <dd>{reportVehicleIntelligence.locationSummary[0]?.value ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Registration</dt>
+                  <dd>Awaiting live data</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Asking Price</dt>
+                  <dd>{missionReport?.askingPriceDisplay ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Vehicle</dt>
+                  <dd>{missionReport?.vehicleName ?? 'Awaiting live data'} · {missionReport?.yearDisplay ?? ''}</dd>
+                </div>
+              </dl>
+              <div className="tdp-postcode-box">
+                <div className="tdp-postcode-label">Postcode (Sat-Nav)</div>
+                <div className="tdp-postcode-value">Awaiting live data</div>
+              </div>
+            </div>
+
+            {/* Deal Information */}
+            <div className="tdp-p3-block">
+              <div className="tdp-section-heading">DEAL INFORMATION</div>
+              <dl className="tdp-kv-grid tdp-kv-grid-1">
+                <div className="tdp-kv tdp-kv-highlight">
+                  <dt>Target Buying Price</dt>
+                  <dd>{missionReport?.commercialDecision?.[0]?.value ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Estimated Retail Value</dt>
+                  <dd>{missionReport?.retailValueDisplay ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Estimated Gross Profit</dt>
+                  <dd>{missionReport?.projectedProfitDisplay ?? 'Awaiting live data'}</dd>
+                </div>
+                <div className="tdp-kv">
+                  <dt>Walk-Away Price</dt>
+                  <dd>{missionReport?.commercialDecision?.[2]?.value ?? 'Awaiting live data'}</dd>
+                </div>
+              </dl>
+              <div className={`tdp-verdict-block-sm tdp-verdict-${unifiedRecommendation.toLowerCase()} tdp-mt`}>
+                <div className="tdp-vbs-row">
+                  <span className="tdp-vbs-label">TICA Recommendation</span>
+                  <span className="tdp-vbs-value">{unifiedRecommendation}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Collection */}
+            <div className="tdp-p3-block">
+              <div className="tdp-section-heading">COLLECTION</div>
+              <dl className="tdp-kv-grid tdp-kv-grid-1">
+                <div className="tdp-kv">
+                  <dt>Vehicle Location</dt>
+                  <dd>{reportVehicleIntelligence.locationSummary[0]?.value ?? 'Awaiting live data'}</dd>
+                </div>
+                {reportVehicleIntelligence.locationSummary.slice(1).map((item) => (
+                  <div key={item.label} className="tdp-kv">
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
+                  </div>
+                ))}
+                {reportVehicleIntelligence.collectionSummary.map((item) => (
+                  <div key={item.label} className="tdp-kv">
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+
+          {/* Dealer Notes */}
+          <div className="tdp-notes-section">
+            <div className="tdp-section-heading">DEALER NOTES</div>
+            <div className="tdp-notes-grid">
+              {[
+                'Vehicle condition',
+                'Faults found',
+                'Service / history notes',
+                'Seller comments',
+                'Negotiated price',
+                'Final offer',
+              ].map((label) => (
+                <div key={label} className="tdp-note-field">
+                  <div className="tdp-note-label">{label}</div>
+                  <div className="tdp-note-lines">
+                    <div className="tdp-note-line" />
+                    <div className="tdp-note-line" />
+                    <div className="tdp-note-line" />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="tdp-note-field tdp-note-field-full">
+              <div className="tdp-note-label">Other notes</div>
+              <div className="tdp-note-lines">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="tdp-note-line" />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="tdp-footer-bar">
+            <span>Trade In Cars Agent · TICA Certified™ · AI Buying Report · Dealer Copy</span>
+            <span>Page 3 of 3</span>
+          </div>
+        </div>
+
+      </div>
+      {/* ── End Compact Dealer Print Document ────────────────────────── */}
+
     </PlatformShell>
     </>
   )
