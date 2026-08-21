@@ -2061,7 +2061,7 @@ function OpportunityPage() {
               <span className="tdp-brand-sub">TICA AI Buying Report — Dealer Copy</span>
             </div>
             <div className="tdp-header-right">
-              <TicaShield size="sm" />
+              <TicaShield size="sm" mode="print" />
               <span className="tdp-certified-label">TICA Certified™</span>
             </div>
           </div>

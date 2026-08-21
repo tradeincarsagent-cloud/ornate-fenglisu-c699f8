@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f'
+export const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f'
 
 /**
  * TicaShield — TICA Certified™ official trust mark.
@@ -17,12 +17,41 @@ const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c7
  *   • Hover / tap: glow brightens smoothly, certification popup fades in.
  *   • On close: returns to ambient (or steady, if already opened) glow.
  */
-export function TicaShield({ size = 'md' }: { size?: 'md' | 'lg' }) {
+type TicaShieldSize = 'sm' | 'md' | 'lg'
+type TicaShieldMode = 'interactive' | 'print'
+
+const TICA_SHIELD_SIZE_CLASS: Record<TicaShieldSize, string> = {
+  sm: 'block h-auto w-12 sm:w-[4.5rem] md:w-24',
+  md: 'block h-auto w-12 sm:w-[4.5rem] md:w-24',
+  lg: 'block h-auto w-14 sm:w-[5.25rem] md:w-28',
+}
+
+export function TicaShield({
+  size = 'md',
+  mode = 'interactive',
+}: {
+  size?: TicaShieldSize
+  mode?: TicaShieldMode
+}) {
   const [open, setOpen] = useState(false)
   const [popupPos, setPopupPos] = useState<{ top: number; right: number; left?: number } | null>(null)
   const [isHovered, setIsHovered] = useState(false)
   const [hasOpened, setHasOpened] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const shieldSizeClass = TICA_SHIELD_SIZE_CLASS[size]
+
+  if (mode === 'print') {
+    return (
+      <div className="relative flex-shrink-0">
+        <img
+          src={TICA_SHIELD_SRC}
+          alt="TICA Certified shield"
+          className={shieldSizeClass}
+          decoding="async"
+        />
+      </div>
+    )
+  }
 
   // Compute fixed popup position from button bounding rect
   const updatePopupPos = () => {
@@ -111,7 +140,7 @@ export function TicaShield({ size = 'md' }: { size?: 'md' | 'lg' }) {
           <img
             src={TICA_SHIELD_SRC}
             alt="TICA Certified shield"
-            className={size === 'lg' ? 'block h-auto w-14 sm:w-[5.25rem] md:w-28' : 'block h-auto w-12 sm:w-[4.5rem] md:w-24'}
+            className={shieldSizeClass}
             decoding="async"
           />
         </div>

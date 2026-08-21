@@ -3085,6 +3085,15 @@ body > div {
     display: block !important;
   }
 
+  body.opportunity-print-mode .tica-shield-glow,
+  body.opportunity-print-mode .tica-certified-shield,
+  body.opportunity-print-mode .tica-certified-text {
+    animation: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+  }
+
   /* ── Compact Dealer Report — Base ─────────────────────────────────── */
   .tica-dealer-print-doc {
     font-family: 'Helvetica Neue', Arial, sans-serif;
