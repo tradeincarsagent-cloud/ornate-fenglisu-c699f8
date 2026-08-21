@@ -3,6 +3,11 @@ import { createPortal } from 'react-dom'
 
 const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f'
 
+type TicaShieldProps = {
+  size?: 'md' | 'lg'
+  variant?: 'default' | 'print'
+}
+
 /**
  * TicaShield — TICA Certified™ official trust mark.
  *
@@ -17,7 +22,7 @@ const TICA_SHIELD_SRC = 'https://github.com/user-attachments/assets/84997f44-2c7
  *   • Hover / tap: glow brightens smoothly, certification popup fades in.
  *   • On close: returns to ambient (or steady, if already opened) glow.
  */
-export function TicaShield({ size = 'md' }: { size?: 'md' | 'lg' }) {
+export function TicaShield({ size = 'md', variant = 'default' }: TicaShieldProps) {
   const [open, setOpen] = useState(false)
   const [popupPos, setPopupPos] = useState<{ top: number; right: number; left?: number } | null>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -80,6 +85,19 @@ export function TicaShield({ size = 'md' }: { size?: 'md' | 'lg' }) {
       document.removeEventListener('touchstart', handleOutside)
     }
   }, [open])
+
+  if (variant === 'print') {
+    return (
+      <div className="relative flex min-h-11 min-w-11 flex-shrink-0 items-center justify-center p-1">
+        <img
+          src={TICA_SHIELD_SRC}
+          alt="TICA Certified shield"
+          className={size === 'lg' ? 'block h-auto w-14' : 'block h-auto w-12'}
+          decoding="async"
+        />
+      </div>
+    )
+  }
 
   return (
     <div
