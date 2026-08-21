@@ -4,7 +4,7 @@ import { useNavigate, Link } from "@tanstack/react-router";
 import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
 import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES, d as ignoreMission } from "./mission-C3C9xkMh.js";
 import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
-import { R as Route } from "./router-D5fuQvh1.js";
+import { R as Route } from "./router-D2aanPH4.js";
 import "react-dom";
 const SAVED_OPPORTUNITIES_KEY = "tica_saved_opportunities";
 function load() {
@@ -248,24 +248,24 @@ function OpportunityPage() {
     const modelIssues = [{
       tone: "warning",
       title: `Awaiting live vehicle intelligence for ${vehicleName}.`,
-      detail: "Model-specific engine, timing belt, wet-belt, cam-chain, gearbox, battery, DPF, recall, reliability and weakness data is intentionally withheld until live integration confirms the active vehicle."
+      detail: "Awaiting live vehicle intelligence. Model-specific faults will appear when verified."
     }, {
       tone: "info",
       title: "Model-specific faults require verification.",
-      detail: "No intelligence from previous or demonstration vehicles is reused in this report. Vehicle-specific issues will only appear when confirmed for the active make, model and variant."
+      detail: "Awaiting live vehicle intelligence. Model-specific faults will appear when verified."
     }];
     if (fuelKind === "diesel") {
       modelIssues.push({
         tone: "warning",
         title: "Diesel emissions systems require verification.",
-        detail: "Diesel-specific checks such as DPF or emissions-system advice are not presented as active-vehicle facts until the exact engine is confirmed."
+        detail: "Awaiting live vehicle intelligence. Model-specific faults will appear when verified."
       });
     }
     if (fuelKind === "hybrid" || fuelKind === "plugInHybrid" || fuelKind === "mildHybrid" || fuelKind === "electric") {
       modelIssues.push({
         tone: "warning",
         title: "Electrified powertrain checks require verification.",
-        detail: "Battery, charging and hybrid-system intelligence is withheld until the active vehicle configuration is confirmed by live data."
+        detail: "Awaiting live vehicle intelligence. Model-specific faults will appear when verified."
       });
     }
     const mechanicalItems = [{
@@ -2035,13 +2035,14 @@ function OpportunityPage() {
               /* @__PURE__ */ jsxs("div", { className: "tdp-note-lines", children: [
                 /* @__PURE__ */ jsx("div", { className: "tdp-note-line" }),
                 /* @__PURE__ */ jsx("div", { className: "tdp-note-line" }),
+                /* @__PURE__ */ jsx("div", { className: "tdp-note-line" }),
                 /* @__PURE__ */ jsx("div", { className: "tdp-note-line" })
               ] })
             ] }, label)) }),
             /* @__PURE__ */ jsxs("div", { className: "tdp-note-field tdp-note-field-full", children: [
               /* @__PURE__ */ jsx("div", { className: "tdp-note-label", children: "Other notes" }),
               /* @__PURE__ */ jsx("div", { className: "tdp-note-lines", children: Array.from({
-                length: 5
+                length: 7
               }).map((_, i) => /* @__PURE__ */ jsx("div", { className: "tdp-note-line" }, i)) })
             ] })
           ] }),

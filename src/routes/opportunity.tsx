@@ -272,26 +272,26 @@ function OpportunityPage() {
       {
          tone: 'warning',
          title: `Awaiting live vehicle intelligence for ${vehicleName}.`,
-         detail: 'Model-specific engine, timing belt, wet-belt, cam-chain, gearbox, battery, DPF, recall, reliability and weakness data is intentionally withheld until live integration confirms the active vehicle.',
+         detail: 'Awaiting live vehicle intelligence. Model-specific faults will appear when verified.',
       },
       {
          tone: 'info',
          title: 'Model-specific faults require verification.',
-         detail: 'No intelligence from previous or demonstration vehicles is reused in this report. Vehicle-specific issues will only appear when confirmed for the active make, model and variant.',
+         detail: 'Awaiting live vehicle intelligence. Model-specific faults will appear when verified.',
       },
     ]
     if (fuelKind === 'diesel') {
       modelIssues.push({
          tone: 'warning',
          title: 'Diesel emissions systems require verification.',
-         detail: 'Diesel-specific checks such as DPF or emissions-system advice are not presented as active-vehicle facts until the exact engine is confirmed.',
+         detail: 'Awaiting live vehicle intelligence. Model-specific faults will appear when verified.',
       })
     }
     if (fuelKind === 'hybrid' || fuelKind === 'plugInHybrid' || fuelKind === 'mildHybrid' || fuelKind === 'electric') {
       modelIssues.push({
          tone: 'warning',
          title: 'Electrified powertrain checks require verification.',
-         detail: 'Battery, charging and hybrid-system intelligence is withheld until the active vehicle configuration is confirmed by live data.',
+         detail: 'Awaiting live vehicle intelligence. Model-specific faults will appear when verified.',
       })
     }
 
@@ -2410,6 +2410,7 @@ function OpportunityPage() {
                     <div className="tdp-note-line" />
                     <div className="tdp-note-line" />
                     <div className="tdp-note-line" />
+                    <div className="tdp-note-line" />
                   </div>
                 </div>
               ))}
@@ -2417,7 +2418,7 @@ function OpportunityPage() {
             <div className="tdp-note-field tdp-note-field-full">
               <div className="tdp-note-label">Other notes</div>
               <div className="tdp-note-lines">
-                {Array.from({ length: 5 }).map((_, i) => (
+                {Array.from({ length: 7 }).map((_, i) => (
                   <div key={i} className="tdp-note-line" />
                 ))}
               </div>

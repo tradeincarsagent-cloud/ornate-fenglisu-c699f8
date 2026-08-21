@@ -3361,7 +3361,7 @@ body > div {
     font-size: 14pt;
     font-weight: 800;
     color: #0f172a;
-    margin-bottom: 7pt;
+    margin-bottom: 5pt;
     line-height: 1.2;
   }
 
@@ -3369,9 +3369,9 @@ body > div {
   .tdp-p1-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10pt;
+    gap: 8pt;
     flex: 1;
-    margin-bottom: 6pt;
+    margin-bottom: 5pt;
   }
 
   /* ── History list ────────────────────────────────────────────── */
@@ -3414,7 +3414,7 @@ body > div {
   .tdp-issue-detail  { font-size: 7.5pt; color: #475569; margin-top: 1pt; line-height: 1.35; }
 
   /* ── Inspection checklist ────────────────────────────────────── */
-  .tdp-checklist { display: flex; flex-direction: column; gap: 5pt; }
+  .tdp-checklist { display: flex; flex-direction: column; gap: 3pt; }
   .tdp-checklist-cat { break-inside: avoid; }
   .tdp-checklist-cat-name {
     font-size: 7.5pt;
@@ -3428,8 +3428,8 @@ body > div {
     display: flex;
     align-items: center;
     gap: 4pt;
-    font-size: 8pt;
-    padding: 1.5pt 0;
+    font-size: 7.5pt;
+    padding: 1pt 0;
     border-bottom: 0.5pt solid #f8fafc;
   }
   .tdp-checklist-dot {
@@ -3450,14 +3450,14 @@ body > div {
   .tdp-status-notAvailable { color: #94a3b8; }
 
   /* ── Questions ───────────────────────────────────────────────── */
-  .tdp-questions { display: flex; flex-direction: column; gap: 2pt; }
+  .tdp-questions { display: flex; flex-direction: column; gap: 1pt; }
   .tdp-question-row {
     display: flex;
     align-items: baseline;
     gap: 4pt;
-    font-size: 8pt;
+    font-size: 7.5pt;
     border-bottom: 0.5pt solid #f1f5f9;
-    padding: 2pt 0;
+    padding: 1.5pt 0;
   }
   .tdp-question-num { color: #94a3b8; font-size: 7.5pt; flex-shrink: 0; width: 10pt; }
   .tdp-question-text { flex: 1; color: #1e293b; }
@@ -3494,7 +3494,7 @@ body > div {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 8pt;
-    margin-bottom: 8pt;
+    margin-bottom: 5pt;
     break-inside: avoid;
   }
   .tdp-p3-block { break-inside: avoid; }
@@ -3521,7 +3521,7 @@ body > div {
   .tdp-note-line {
     height: 0;
     border-bottom: 0.75pt solid #94a3b8;
-    padding-bottom: 12pt;
+    padding-bottom: 15pt;
   }
 
   /* ── Deal grid tweak ─────────────────────────────────────────── */
