@@ -3524,6 +3524,57 @@ body > div {
     padding-bottom: 15pt;
   }
 
+  /* ── Page 3 compact spacing to keep one physical sheet ─────────── */
+  .tdp-page-3 .tdp-page-title-bar {
+    padding-bottom: 3pt;
+    margin-bottom: 5pt;
+  }
+  .tdp-page-3 .tdp-section-heading {
+    margin-bottom: 3pt;
+  }
+  .tdp-page-3 .tdp-p3-top {
+    gap: 6pt;
+    margin-bottom: 4pt;
+  }
+  .tdp-page-3 .tdp-kv-grid {
+    gap: 2pt 4pt;
+    margin-bottom: 3pt;
+  }
+  .tdp-page-3 .tdp-kv {
+    padding: 2pt 4pt;
+  }
+  .tdp-page-3 .tdp-kv dt {
+    margin-bottom: 0.5pt;
+  }
+  .tdp-page-3 .tdp-kv dd {
+    font-size: 8.5pt;
+    line-height: 1.2;
+  }
+  .tdp-page-3 .tdp-postcode-box {
+    padding: 4pt 6pt;
+    margin-top: 4pt;
+  }
+  .tdp-page-3 .tdp-postcode-value {
+    font-size: 12pt;
+    margin-top: 1pt;
+  }
+  .tdp-page-3 .tdp-verdict-block-sm {
+    padding: 3pt 5pt;
+  }
+  .tdp-page-3 .tdp-notes-grid {
+    gap: 4pt 8pt;
+    margin-bottom: 4pt;
+  }
+  .tdp-page-3 .tdp-note-label {
+    margin-bottom: 2pt;
+  }
+  .tdp-page-3 .tdp-note-lines {
+    gap: 1.5pt;
+  }
+  .tdp-page-3 .tdp-note-line {
+    padding-bottom: 11pt;
+  }
+
   /* ── Deal grid tweak ─────────────────────────────────────────── */
   .tdp-deal-grid { grid-template-columns: 1fr; }
 }

@@ -2224,12 +2224,11 @@ function OpportunityPage() {
 
               <div className="tdp-section-heading">KNOWN MODEL ISSUES</div>
               <div className="tdp-issues-list tdp-mb">
-                {reportVehicleIntelligence.modelIssues.map((issue) => (
-                  <div key={issue.title} className={`tdp-issue-row tdp-issue-${issue.tone}`}>
-                    <span className="tdp-issue-title">{issue.title}</span>
-                    <p className="tdp-issue-detail">{issue.detail}</p>
-                  </div>
-                ))}
+                <div className="tdp-issue-row tdp-issue-warning">
+                  <span className="tdp-issue-title">
+                    Awaiting live vehicle intelligence. Model-specific faults will appear when verified.
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -2418,7 +2417,7 @@ function OpportunityPage() {
             <div className="tdp-note-field tdp-note-field-full">
               <div className="tdp-note-label">Other notes</div>
               <div className="tdp-note-lines">
-                {Array.from({ length: 7 }).map((_, i) => (
+                {Array.from({ length: 6 }).map((_, i) => (
                   <div key={i} className="tdp-note-line" />
                 ))}
               </div>
