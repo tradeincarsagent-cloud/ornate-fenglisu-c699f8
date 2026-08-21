@@ -3138,6 +3138,15 @@ body > div {
     align-items: center;
     gap: 5pt;
   }
+  .tica-dealer-print-doc .tica-shield-glow,
+  .tica-dealer-print-doc .tica-certified-shield,
+  .tica-dealer-print-doc .tica-certified-text {
+    box-shadow: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    backdrop-filter: none !important;
+  }
   .tdp-certified-label {
     font-size: 7.5pt;
     font-weight: 700;
