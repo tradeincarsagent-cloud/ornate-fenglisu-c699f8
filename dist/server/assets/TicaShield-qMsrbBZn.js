@@ -221,7 +221,7 @@ function TicaShield({ size = "md", variant = "default" }) {
     };
   }, [open]);
   if (variant === "print") {
-    return /* @__PURE__ */ jsx("div", { className: "relative flex-shrink-0", children: /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsx("div", { className: "relative flex min-h-11 min-w-11 flex-shrink-0 items-center justify-center p-1", children: /* @__PURE__ */ jsx(
       "img",
       {
         src: TICA_SHIELD_SRC,
