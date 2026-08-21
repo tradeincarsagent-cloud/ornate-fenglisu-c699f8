@@ -1,6 +1,6 @@
 import { jsxs, jsx, Fragment } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-B2rWFchm.js";
 import "@tanstack/react-router";
 import "react-dom";
 const CHANNELS = [{

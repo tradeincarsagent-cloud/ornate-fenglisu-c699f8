@@ -45,6 +45,21 @@ function PlatformNav({ items, onNavigate }) {
     if (item.active) {
       return /* @__PURE__ */ jsx("div", { className: "rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary", children: item.label }, item.href);
     }
+    if (item.onClick) {
+      return /* @__PURE__ */ jsx(
+        "button",
+        {
+          type: "button",
+          onClick: () => {
+            item.onClick?.();
+            onNavigate?.();
+          },
+          className: "block w-full rounded-lg border border-transparent px-4 py-3 text-left text-body-md font-body-md text-on-surface-variant transition-colors hover:border-primary/20 hover:bg-surface-container-high hover:text-on-surface",
+          children: item.label
+        },
+        item.label
+      );
+    }
     return /* @__PURE__ */ jsx(
       Link,
       {
@@ -149,12 +164,32 @@ function PlatformShell({ children, navItems }) {
   ] });
 }
 const TICA_SHIELD_SRC = "https://github.com/user-attachments/assets/84997f44-2c75-406f-a7f5-c85bbe35a01f";
-function TicaShield({ size = "md" }) {
+const TICA_SHIELD_SIZE_CLASS = {
+  sm: "block h-auto w-12 sm:w-[4.5rem] md:w-24",
+  md: "block h-auto w-12 sm:w-[4.5rem] md:w-24",
+  lg: "block h-auto w-14 sm:w-[5.25rem] md:w-28"
+};
+function TicaShield({
+  size = "md",
+  mode = "interactive"
+}) {
   const [open, setOpen] = useState(false);
   const [popupPos, setPopupPos] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [hasOpened, setHasOpened] = useState(false);
   const containerRef = useRef(null);
+  const shieldSizeClass = TICA_SHIELD_SIZE_CLASS[size];
+  if (mode === "print") {
+    return /* @__PURE__ */ jsx("div", { className: "relative flex-shrink-0", children: /* @__PURE__ */ jsx(
+      "img",
+      {
+        src: TICA_SHIELD_SRC,
+        alt: "TICA Certified shield",
+        className: shieldSizeClass,
+        decoding: "async"
+      }
+    ) });
+  }
   const updatePopupPos = () => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -237,7 +272,7 @@ function TicaShield({ size = "md" }) {
                 {
                   src: TICA_SHIELD_SRC,
                   alt: "TICA Certified shield",
-                  className: size === "lg" ? "block h-auto w-14 sm:w-[5.25rem] md:w-28" : "block h-auto w-12 sm:w-[4.5rem] md:w-24",
+                  className: shieldSizeClass,
                   decoding: "async"
                 }
               ) }),
