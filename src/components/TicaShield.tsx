@@ -88,7 +88,7 @@ export function TicaShield({ size = 'md', variant = 'default' }: TicaShieldProps
 
   if (variant === 'print') {
     return (
-      <div className="relative flex-shrink-0">
+      <div className="relative flex min-h-11 min-w-11 flex-shrink-0 items-center justify-center p-1">
         <img
           src={TICA_SHIELD_SRC}
           alt="TICA Certified shield"

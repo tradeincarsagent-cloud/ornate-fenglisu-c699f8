@@ -1,10 +1,10 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useNavigate, Link } from "@tanstack/react-router";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-CldOWyc9.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-Dagn24sh.js";
 import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES, d as ignoreMission } from "./mission-C3C9xkMh.js";
 import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
-import { R as Route } from "./router-LYUZ1lcF.js";
+import { R as Route } from "./router-DzLe_B1n.js";
 import "react-dom";
 const SAVED_OPPORTUNITIES_KEY = "tica_saved_opportunities";
 function load() {
@@ -1746,7 +1746,7 @@ function OpportunityPage() {
               /* @__PURE__ */ jsx("span", { className: "tdp-brand-sub", children: "TICA AI Buying Report — Dealer Copy" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "tdp-header-right", children: [
-              /* @__PURE__ */ jsx(TicaShield, { size: "sm" }),
+              /* @__PURE__ */ jsx(TicaShield, { variant: "print" }),
               /* @__PURE__ */ jsx("span", { className: "tdp-certified-label", children: "TICA Certified™" })
             ] })
           ] }),
