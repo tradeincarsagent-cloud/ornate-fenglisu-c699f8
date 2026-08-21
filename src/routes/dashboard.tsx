@@ -60,6 +60,9 @@ const radarOpportunities = [
   { vehicle: 'Volkswagen Golf R 2023', margin: '£1,420', confidence: '78%', timerStart: 11 },
 ] as const
 
+const DASHBOARD_WELCOME_STORAGE_KEY = 'tica-dashboard-welcome-seen-v1'
+const WELCOME_OVERLAY_FADE_MS = 260
+
 function getSweepIntensity(sweepAngle: number, angleDeg: number) {
   const circularDifference = Math.abs(((sweepAngle - angleDeg + 540) % 360) - 180)
   const trailingDifference = (sweepAngle - angleDeg + 360) % 360
@@ -299,14 +302,55 @@ function DashboardPage() {
   const [radarOpportunityTimer, setRadarOpportunityTimer] = useState(0)
   const { mission: storedMission, initialized: missionInitialized } = useMissionProgress()
   const [storedMissionExpanded, setStoredMissionExpanded] = useState(true)
+  const [welcomeOverlayOpen, setWelcomeOverlayOpen] = useState(false)
+  const [welcomeOverlayVisible, setWelcomeOverlayVisible] = useState(false)
 
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length)
   const radarOpportunityCursorRef = useRef(0)
   const radarContactRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const welcomeCloseTimerRef = useRef<number | null>(null)
+
+  const openWelcomeOverlay = () => {
+    if (welcomeCloseTimerRef.current !== null) {
+      window.clearTimeout(welcomeCloseTimerRef.current)
+      welcomeCloseTimerRef.current = null
+    }
+    setWelcomeOverlayOpen(true)
+    window.requestAnimationFrame(() => setWelcomeOverlayVisible(true))
+  }
+
+  const closeWelcomeOverlay = (onClosed?: () => void) => {
+    if (welcomeCloseTimerRef.current !== null) {
+      window.clearTimeout(welcomeCloseTimerRef.current)
+    }
+    setWelcomeOverlayVisible(false)
+    welcomeCloseTimerRef.current = window.setTimeout(() => {
+      setWelcomeOverlayOpen(false)
+      welcomeCloseTimerRef.current = null
+      onClosed?.()
+    }, WELCOME_OVERLAY_FADE_MS)
+  }
 
   useEffect(() => {
     soundOnRef.current = soundOn
   }, [soundOn])
+
+  useEffect(() => {
+    let hasSeenWelcome = false
+    try {
+      hasSeenWelcome = localStorage.getItem(DASHBOARD_WELCOME_STORAGE_KEY) === '1'
+      if (!hasSeenWelcome) {
+        localStorage.setItem(DASHBOARD_WELCOME_STORAGE_KEY, '1')
+      }
+    } catch {
+      hasSeenWelcome = false
+    }
+
+    if (!hasSeenWelcome) {
+      openWelcomeOverlay()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const sweepDurationMs = 5400
@@ -500,6 +544,25 @@ function DashboardPage() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    if (!welcomeOverlayOpen) {
+      return
+    }
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [welcomeOverlayOpen])
+
+  useEffect(() => {
+    return () => {
+      if (welcomeCloseTimerRef.current !== null) {
+        window.clearTimeout(welcomeCloseTimerRef.current)
+      }
+    }
+  }, [])
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -519,6 +582,7 @@ function DashboardPage() {
         { label: 'Dealer Command Centre', href: '/dashboard', active: true },
         { label: 'AI Search Missions', href: '/search-builder' },
         { label: 'AI Buying Report', href: '/opportunity' },
+        { label: '👋 Getting Started', onClick: openWelcomeOverlay },
         { label: 'Settings', isSectionLabel: true },
         { label: 'TICA Preferences', href: '/settings' },
         { label: 'Owner', isSectionLabel: true },
@@ -1398,6 +1462,50 @@ function DashboardPage() {
           <path d="M5 15l7-7 7 7" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
         </svg>
       </button>
+      {welcomeOverlayOpen ? (
+      <div
+        className={`fixed inset-0 z-[70] flex items-center justify-center bg-black/55 p-4 backdrop-blur-[2px] transition-opacity duration-300 ${welcomeOverlayVisible ? 'opacity-100' : 'opacity-0'}`}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tica-welcome-title"
+      >
+        <div className="relative w-full max-w-[42rem] overflow-y-auto rounded-2xl border border-outline-variant/35 bg-surface-container p-5 shadow-[0_24px_60px_rgba(2,6,23,0.55)] sm:max-h-[calc(100vh-4rem)] sm:p-7">
+          <button
+            type="button"
+            onClick={() => closeWelcomeOverlay()}
+            className="absolute right-3 top-3 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-outline-variant/40 bg-surface-container-high text-on-surface-variant transition-colors hover:text-on-surface"
+            aria-label="Close welcome message"
+          >
+            ✕
+          </button>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary/90">WELCOME TO TRADE IN CARS AGENT</p>
+          <h2 id="tica-welcome-title" className="mb-5 pr-10 text-2xl font-semibold text-on-surface sm:text-[1.95rem] sm:leading-[1.15]">
+            Imagine having another buyer working for your dealership 24 hours a day.
+          </h2>
+          <div className="space-y-4 text-sm leading-relaxed text-on-surface-variant sm:text-base">
+            <p>An employee who never takes a day off, continually searching for vehicles that match exactly what you want to buy.</p>
+            <p>TICA is your AI buying employee — searching, analysing and filtering opportunities while you concentrate on running your business.</p>
+            <p className="text-on-surface">Tell TICA what you want. Your AI employee gets to work.</p>
+          </div>
+          <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center">
+            <button
+              type="button"
+              onClick={() => closeWelcomeOverlay(() => navigate({ to: '/search-builder' }))}
+              className="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-on-primary transition-colors hover:bg-primary/90"
+            >
+              ⚡ PUT MY AI EMPLOYEE TO WORK
+            </button>
+            <button
+              type="button"
+              onClick={() => closeWelcomeOverlay()}
+              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-sm font-medium text-on-surface-variant transition-colors hover:text-on-surface"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+      ) : null}
     </PlatformShell>
   )
 }

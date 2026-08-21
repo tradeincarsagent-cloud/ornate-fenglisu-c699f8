@@ -7,6 +7,7 @@ const LOGO_SRC =
 type PlatformNavItem = {
   label: string
   href?: string
+  onClick?: () => void
   active?: boolean
   disabled?: boolean
   isSectionLabel?: boolean
@@ -66,6 +67,22 @@ function PlatformNav({ items, onNavigate }: { items: PlatformNavItem[]; onNaviga
             <div key={item.href} className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary">
               {item.label}
             </div>
+          )
+        }
+
+        if (item.onClick) {
+          return (
+            <button
+              key={item.label}
+              type="button"
+              onClick={() => {
+                item.onClick?.()
+                onNavigate?.()
+              }}
+              className="block w-full rounded-lg border border-transparent px-4 py-3 text-left text-body-md font-body-md text-on-surface-variant transition-colors hover:border-primary/20 hover:bg-surface-container-high hover:text-on-surface"
+            >
+              {item.label}
+            </button>
           )
         }
 
