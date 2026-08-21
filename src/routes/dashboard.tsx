@@ -1463,13 +1463,13 @@ function DashboardPage() {
         </svg>
       </button>
       {welcomeOverlayOpen ? (
-      <div
-        className={`fixed inset-0 z-[70] flex items-center justify-center bg-black/55 p-4 backdrop-blur-[2px] transition-opacity duration-300 ${welcomeOverlayVisible ? 'opacity-100' : 'opacity-0'}`}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="tica-welcome-title"
-      >
-        <div className="relative w-full max-w-[42rem] overflow-y-auto rounded-2xl border border-outline-variant/35 bg-surface-container p-5 shadow-[0_24px_60px_rgba(2,6,23,0.55)] sm:max-h-[calc(100vh-4rem)] sm:p-7">
+        <div
+          className={`fixed inset-0 z-[70] flex items-start justify-center overflow-y-auto bg-black/55 p-4 pt-6 backdrop-blur-[2px] transition-opacity duration-300 sm:items-center sm:pt-4 ${welcomeOverlayVisible ? 'opacity-100' : 'opacity-0'}`}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="tica-welcome-title"
+        >
+          <div className="relative max-h-[calc(100vh-3rem)] w-full max-w-[42rem] overflow-y-auto rounded-2xl border border-outline-variant/35 bg-surface-container p-5 shadow-[0_24px_60px_rgba(2,6,23,0.55)] sm:max-h-[calc(100vh-4rem)] sm:p-7">
           <button
             type="button"
             onClick={() => closeWelcomeOverlay()}
