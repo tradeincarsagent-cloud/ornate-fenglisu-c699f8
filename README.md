@@ -23,6 +23,17 @@ npm run dev
 
 The app starts on [http://localhost:3000](http://localhost:3000).
 
+## Supabase foundation
+
+Create a `.env` file from `.env.example` and set:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+Supabase SQL setup for dealer accounts, AI search missions, saved opportunities, subscriptions, roles, and RLS is in:
+
+- `supabase/migrations/20260821070000_tica_foundation.sql`
+
 To run with Netlify platform features (edge functions, etc.):
 
 ```bash
