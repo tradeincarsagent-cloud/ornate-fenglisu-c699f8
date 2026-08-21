@@ -3036,6 +3036,13 @@ body > div {
   }
 }
 
+/* ── Screen-only: hide the compact print doc ──────────────────────────── */
+@media screen {
+  .tica-dealer-print-doc {
+    display: none !important;
+  }
+}
+
 @media print {
   @page {
     size: A4;
@@ -3049,13 +3056,15 @@ body > div {
     -webkit-print-color-adjust: exact;
   }
 
+  /* Hide the full on-screen report and all chrome */
   body.opportunity-print-mode .opp-thinking-overlay,
   body.opportunity-print-mode .platform-shell > .fixed,
   body.opportunity-print-mode .platform-shell-header,
   body.opportunity-print-mode .platform-shell-footer,
   body.opportunity-print-mode .platform-shell-layout > aside,
   body.opportunity-print-mode .back-to-top-btn,
-  body.opportunity-print-mode .opportunity-print-hide {
+  body.opportunity-print-mode .opportunity-print-hide,
+  body.opportunity-print-mode .opportunity-print-root {
     display: none !important;
   }
 
@@ -3071,73 +3080,450 @@ body > div {
     background: #fff !important;
   }
 
-  body.opportunity-print-mode .opportunity-print-root {
-    max-width: none !important;
-    gap: 0.75rem !important;
-    color: #0f172a !important;
+  /* Show the compact dealer print doc */
+  body.opportunity-print-mode .tica-dealer-print-doc {
+    display: block !important;
   }
 
-  body.opportunity-print-mode .opportunity-print-root,
-  body.opportunity-print-mode .opportunity-print-root * {
-    visibility: visible !important;
+  /* ── Compact Dealer Report — Base ─────────────────────────────────── */
+  .tica-dealer-print-doc {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9pt;
+    color: #0f172a;
+    background: #fff;
+    line-height: 1.35;
   }
 
-  body.opportunity-print-mode .opportunity-print-root :is(
-    h1,
-    h2,
-    h3,
-    h4,
-    p,
-    span,
-    dt,
-    dd,
-    li,
-    a,
-    label,
-    textarea
-  ) {
-    color: #0f172a !important;
-    text-shadow: none !important;
+  .tdp-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
-  body.opportunity-print-mode .opportunity-print-root :is(
-    header,
-    section,
-    article,
-    textarea,
-    .opp-tile-hover,
-    .verdict-card-premium,
-    .verdict-metrics-group
-  ) {
-    background: #fff !important;
-    border-color: #cbd5e1 !important;
-    box-shadow: none !important;
+  .tdp-page-1 { page-break-after: always; }
+  .tdp-page-2 { page-break-after: always; }
+  .tdp-page-3 { page-break-after: avoid; }
+
+  /* ── Header bar ──────────────────────────────────────────────────── */
+  .tdp-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #1e3a5f;
+    padding-bottom: 5pt;
+    margin-bottom: 6pt;
+  }
+  .tdp-header-left {
+    display: flex;
+    flex-direction: column;
+  }
+  .tdp-brand-name {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #1e3a5f;
+    letter-spacing: 0.02em;
+  }
+  .tdp-brand-sub {
+    font-size: 7.5pt;
+    color: #475569;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 1pt;
+  }
+  .tdp-header-right {
+    display: flex;
+    align-items: center;
+    gap: 5pt;
+  }
+  .tdp-certified-label {
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: #1e3a5f;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Mission strip ─────────────────────────────────────────────── */
+  .tdp-mission-strip {
+    display: flex;
+    align-items: center;
+    gap: 8pt;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 3pt;
+    padding: 3pt 6pt;
+    margin-bottom: 8pt;
+    font-size: 7.5pt;
+  }
+  .tdp-mission-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+  }
+  .tdp-mission-value {
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+  .tdp-mission-date {
+    margin-left: auto;
+    color: #64748b;
+  }
+
+  /* ── Page title bar (pages 2-3) ────────────────────────────────── */
+  .tdp-page-title-bar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1.5pt solid #1e3a5f;
+    padding-bottom: 4pt;
+    margin-bottom: 7pt;
+  }
+  .tdp-page-title {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+  .tdp-page-vehicle {
+    font-size: 7.5pt;
+    color: #64748b;
+  }
+
+  /* ── Footer bar ────────────────────────────────────────────────── */
+  .tdp-footer-bar {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1pt solid #cbd5e1;
+    padding-top: 4pt;
+    margin-top: auto;
+    font-size: 7pt;
+    color: #94a3b8;
+    padding-bottom: 2pt;
+  }
+
+  /* ── Section heading ─────────────────────────────────────────── */
+  .tdp-section-heading {
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #1e3a5f;
+    border-bottom: 1pt solid #e2e8f0;
+    padding-bottom: 2pt;
+    margin-bottom: 5pt;
+  }
+  .tdp-mt { margin-top: 8pt; }
+  .tdp-mt-sm { margin-top: 5pt; }
+  .tdp-mb { margin-bottom: 8pt; }
+
+  /* ── Key-value grid ──────────────────────────────────────────── */
+  .tdp-kv-grid {
+    display: grid;
+    gap: 3pt 6pt;
+    margin-bottom: 4pt;
+  }
+  .tdp-kv-grid-1 { grid-template-columns: 1fr; }
+  .tdp-kv-grid-2 { grid-template-columns: 1fr 1fr; }
+  .tdp-kv {
+    display: flex;
+    flex-direction: column;
+    border: 1pt solid #e2e8f0;
+    border-radius: 2pt;
+    padding: 3pt 5pt;
+    background: #f8fafc;
+  }
+  .tdp-kv dt {
+    font-size: 6.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #64748b;
+    margin-bottom: 1pt;
+  }
+  .tdp-kv dd {
+    font-size: 9pt;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0;
+  }
+  .tdp-kv-highlight dd {
+    font-size: 10pt;
+    color: #1e3a5f;
+  }
+
+  /* ── Verdict block ───────────────────────────────────────────── */
+  .tdp-verdict-block {
+    border: 1.5pt solid #1e3a5f;
+    border-radius: 3pt;
+    padding: 6pt 8pt;
+    margin-top: 7pt;
     break-inside: avoid;
-    page-break-inside: avoid;
+  }
+  .tdp-verdict-buy   { border-color: #16a34a; background: #f0fdf4; }
+  .tdp-verdict-review { border-color: #d97706; background: #fffbeb; }
+  .tdp-verdict-pass  { border-color: #dc2626; background: #fef2f2; }
+  .tdp-verdict-label {
+    font-size: 6.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    margin-bottom: 2pt;
+  }
+  .tdp-verdict-value {
+    font-size: 16pt;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+  .tdp-verdict-buy .tdp-verdict-value   { color: #16a34a; }
+  .tdp-verdict-review .tdp-verdict-value { color: #d97706; }
+  .tdp-verdict-pass .tdp-verdict-value  { color: #dc2626; }
+  .tdp-verdict-confidence {
+    font-size: 7.5pt;
+    color: #475569;
+    margin-top: 2pt;
+  }
+  .tdp-verdict-summary {
+    font-size: 8pt;
+    color: #334155;
+    margin-top: 4pt;
+    line-height: 1.4;
   }
 
-  body.opportunity-print-mode .opportunity-print-root .opp-card-stagger,
-  body.opportunity-print-mode .opportunity-print-root .opp-scroll-hidden,
-  body.opportunity-print-mode .opportunity-print-root .opp-scroll-visible,
-  body.opportunity-print-mode .opportunity-print-root .opp-stat-animate,
-  body.opportunity-print-mode .opportunity-print-root .opp-timeline-step,
-  body.opportunity-print-mode .opportunity-print-root .opp-timeline-dot-illuminate,
-  body.opportunity-print-mode .opportunity-print-root .opp-buy-signal-glow,
-  body.opportunity-print-mode .opportunity-print-root .opp-badge-sweep::after {
-    animation: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    transform: none !important;
+  /* ── Compact verdict block (pages 2-3) ──────────────────────── */
+  .tdp-verdict-block-sm {
+    border: 1pt solid #1e3a5f;
+    border-radius: 2pt;
+    padding: 4pt 6pt;
+    break-inside: avoid;
+  }
+  .tdp-verdict-block-sm.tdp-verdict-buy    { border-color: #16a34a; background: #f0fdf4; }
+  .tdp-verdict-block-sm.tdp-verdict-review { border-color: #d97706; background: #fffbeb; }
+  .tdp-verdict-block-sm.tdp-verdict-pass   { border-color: #dc2626; background: #fef2f2; }
+  .tdp-vbs-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8.5pt;
+  }
+  .tdp-vbs-label { color: #475569; }
+  .tdp-vbs-value {
+    font-weight: 700;
+    font-size: 9pt;
+  }
+  .tdp-verdict-buy   .tdp-vbs-value { color: #16a34a; }
+  .tdp-verdict-review .tdp-vbs-value { color: #d97706; }
+  .tdp-verdict-pass  .tdp-vbs-value { color: #dc2626; }
+
+  /* ── Postcode box ────────────────────────────────────────────── */
+  .tdp-postcode-box {
+    border: 2pt solid #1e3a5f;
+    border-radius: 3pt;
+    padding: 5pt 8pt;
+    margin-top: 6pt;
+    break-inside: avoid;
+  }
+  .tdp-postcode-label {
+    font-size: 6.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+  }
+  .tdp-postcode-value {
+    font-size: 14pt;
+    font-weight: 800;
+    color: #1e3a5f;
+    letter-spacing: 0.12em;
+    margin-top: 2pt;
   }
 
-  body.opportunity-print-mode .opportunity-print-root .opp-card-hover:hover,
-  body.opportunity-print-mode .opportunity-print-root .opp-tile-hover:hover,
-  body.opportunity-print-mode .opportunity-print-root .opp-thumb:hover {
-    transform: none !important;
+  /* ── Final advice ────────────────────────────────────────────── */
+  .tdp-final-advice {
+    font-size: 8pt;
+    color: #334155;
+    border-left: 2pt solid #1e3a5f;
+    padding-left: 5pt;
+    margin-top: 6pt;
+    line-height: 1.45;
+  }
+  .tdp-final-advice-label {
+    font-weight: 700;
+    color: #1e3a5f;
   }
 
-  body.opportunity-print-mode .opportunity-print-root textarea {
-    min-height: 7rem;
-    resize: none !important;
+  /* ── Vehicle name ────────────────────────────────────────────── */
+  .tdp-vehicle-name {
+    font-size: 14pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 7pt;
+    line-height: 1.2;
   }
+
+  /* ── Page 1 body layout ──────────────────────────────────────── */
+  .tdp-p1-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10pt;
+    flex: 1;
+    margin-bottom: 6pt;
+  }
+
+  /* ── History list ────────────────────────────────────────────── */
+  .tdp-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2pt;
+  }
+  .tdp-history-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8pt;
+    border-bottom: 0.5pt solid #f1f5f9;
+    padding: 2pt 0;
+  }
+  .tdp-history-label { color: #334155; }
+  .tdp-history-value { font-weight: 600; color: #d97706; font-size: 7.5pt; }
+  .tdp-status-check  { color: #d97706; }
+
+  /* ── Advice text ─────────────────────────────────────────────── */
+  .tdp-advice-text {
+    font-size: 8pt;
+    color: #334155;
+    line-height: 1.45;
+  }
+
+  /* ── Model issues ────────────────────────────────────────────── */
+  .tdp-issues-list { display: flex; flex-direction: column; gap: 3pt; }
+  .tdp-issue-row {
+    border-radius: 2pt;
+    border: 1pt solid #e2e8f0;
+    padding: 3pt 5pt;
+    break-inside: avoid;
+  }
+  .tdp-issue-warning { border-color: #fcd34d; background: #fffbeb; }
+  .tdp-issue-high    { border-color: #fca5a5; background: #fef2f2; }
+  .tdp-issue-info    { border-color: #bfdbfe; background: #eff6ff; }
+  .tdp-issue-title   { font-size: 8pt; font-weight: 700; color: #1e293b; display: block; }
+  .tdp-issue-detail  { font-size: 7.5pt; color: #475569; margin-top: 1pt; line-height: 1.35; }
+
+  /* ── Inspection checklist ────────────────────────────────────── */
+  .tdp-checklist { display: flex; flex-direction: column; gap: 5pt; }
+  .tdp-checklist-cat { break-inside: avoid; }
+  .tdp-checklist-cat-name {
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: #1e3a5f;
+    border-bottom: 0.5pt solid #e2e8f0;
+    padding-bottom: 1.5pt;
+    margin-bottom: 2pt;
+  }
+  .tdp-checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 4pt;
+    font-size: 8pt;
+    padding: 1.5pt 0;
+    border-bottom: 0.5pt solid #f8fafc;
+  }
+  .tdp-checklist-dot {
+    width: 6pt;
+    height: 6pt;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tdp-dot-verified    { background: #16a34a; }
+  .tdp-dot-check       { background: #d97706; }
+  .tdp-dot-high        { background: #dc2626; }
+  .tdp-dot-notAvailable { background: #94a3b8; }
+  .tdp-checklist-label { flex: 1; color: #1e293b; }
+  .tdp-checklist-status { font-size: 6.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+  .tdp-status-verified    { color: #16a34a; }
+  .tdp-status-check       { color: #d97706; }
+  .tdp-status-high        { color: #dc2626; }
+  .tdp-status-notAvailable { color: #94a3b8; }
+
+  /* ── Questions ───────────────────────────────────────────────── */
+  .tdp-questions { display: flex; flex-direction: column; gap: 2pt; }
+  .tdp-question-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4pt;
+    font-size: 8pt;
+    border-bottom: 0.5pt solid #f1f5f9;
+    padding: 2pt 0;
+  }
+  .tdp-question-num { color: #94a3b8; font-size: 7.5pt; flex-shrink: 0; width: 10pt; }
+  .tdp-question-text { flex: 1; color: #1e293b; }
+  .tdp-question-priority { font-size: 6pt; font-weight: 700; letter-spacing: 0.07em; flex-shrink: 0; }
+  .tdp-qp-high { color: #dc2626; }
+  .tdp-qp-important { color: #d97706; }
+  .tdp-qp-general { color: #2563eb; }
+
+  .tdp-dealer-tip {
+    font-size: 7.5pt;
+    color: #475569;
+    border-left: 1.5pt solid #cbd5e1;
+    padding-left: 5pt;
+    margin-top: 4pt;
+    line-height: 1.4;
+  }
+
+  /* ── Actions list ────────────────────────────────────────────── */
+  .tdp-actions-heading { font-size: 7pt; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 2pt; }
+  .tdp-action-row { font-size: 8pt; color: #1e293b; padding: 1pt 0; }
+
+  /* ── Page 2 body layout ──────────────────────────────────────── */
+  .tdp-p2-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10pt;
+    flex: 1;
+    margin-bottom: 6pt;
+  }
+  .tdp-p2-left, .tdp-p2-right { display: flex; flex-direction: column; }
+
+  /* ── Page 3 top layout ───────────────────────────────────────── */
+  .tdp-p3-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8pt;
+    margin-bottom: 8pt;
+    break-inside: avoid;
+  }
+  .tdp-p3-block { break-inside: avoid; }
+
+  /* ── Dealer notes ────────────────────────────────────────────── */
+  .tdp-notes-section { flex: 1; break-inside: avoid; }
+  .tdp-notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6pt 10pt;
+    margin-bottom: 6pt;
+  }
+  .tdp-note-field { break-inside: avoid; }
+  .tdp-note-field-full { grid-column: 1 / -1; }
+  .tdp-note-label {
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin-bottom: 3pt;
+  }
+  .tdp-note-lines { display: flex; flex-direction: column; gap: 2pt; }
+  .tdp-note-line {
+    height: 0;
+    border-bottom: 0.75pt solid #94a3b8;
+    padding-bottom: 12pt;
+  }
+
+  /* ── Deal grid tweak ─────────────────────────────────────────── */
+  .tdp-deal-grid { grid-template-columns: 1fr; }
 }
