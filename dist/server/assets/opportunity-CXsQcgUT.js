@@ -1,10 +1,10 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useNavigate, Link } from "@tanstack/react-router";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-CldOWyc9.js";
 import { r as resolveBuyingReportMission, i as isBuyingReportReady, a as saveSelectedBuyingReportMissionId, b as MISSION_STAGES, d as ignoreMission } from "./mission-C3C9xkMh.js";
 import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
-import { R as Route } from "./router-Dohqr-fH.js";
+import { R as Route } from "./router-LYUZ1lcF.js";
 import "react-dom";
 const SAVED_OPPORTUNITIES_KEY = "tica_saved_opportunities";
 function load() {

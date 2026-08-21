@@ -45,6 +45,21 @@ function PlatformNav({ items, onNavigate }) {
     if (item.active) {
       return /* @__PURE__ */ jsx("div", { className: "rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-body-md font-body-md text-primary", children: item.label }, item.href);
     }
+    if (item.onClick) {
+      return /* @__PURE__ */ jsx(
+        "button",
+        {
+          type: "button",
+          onClick: () => {
+            item.onClick?.();
+            onNavigate?.();
+          },
+          className: "block w-full rounded-lg border border-transparent px-4 py-3 text-left text-body-md font-body-md text-on-surface-variant transition-colors hover:border-primary/20 hover:bg-surface-container-high hover:text-on-surface",
+          children: item.label
+        },
+        item.label
+      );
+    }
     return /* @__PURE__ */ jsx(
       Link,
       {

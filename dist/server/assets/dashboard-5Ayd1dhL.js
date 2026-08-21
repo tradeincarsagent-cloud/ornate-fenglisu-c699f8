@@ -1,7 +1,7 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect, useMemo } from "react";
-import { P as PlatformShell, T as TicaShield } from "./TicaShield-3vM7jPjM.js";
+import { P as PlatformShell, T as TicaShield } from "./TicaShield-CldOWyc9.js";
 import { b as MISSION_STAGES, a as saveSelectedBuyingReportMissionId, M as MISSION_PREFILL_KEY } from "./mission-C3C9xkMh.js";
 import { u as useMissionProgress } from "./useMissionProgress-B2nWtvA6.js";
 import "react-dom";
@@ -174,6 +174,8 @@ const radarOpportunities = [{
   confidence: "78%",
   timerStart: 11
 }];
+const DASHBOARD_WELCOME_STORAGE_KEY = "tica-dashboard-welcome-seen-v1";
+const WELCOME_OVERLAY_FADE_MS = 260;
 function getSweepIntensity(sweepAngle, angleDeg) {
   const circularDifference = Math.abs((sweepAngle - angleDeg + 540) % 360 - 180);
   const trailingDifference = (sweepAngle - angleDeg + 360) % 360;
@@ -406,12 +408,48 @@ function DashboardPage() {
     initialized: missionInitialized
   } = useMissionProgress();
   const [storedMissionExpanded, setStoredMissionExpanded] = useState(true);
+  const [welcomeOverlayOpen, setWelcomeOverlayOpen] = useState(false);
+  const [welcomeOverlayVisible, setWelcomeOverlayVisible] = useState(false);
   const timelineCursorRef = useRef(initialTimelineEvents.length % timelineTemplates.length);
   const radarOpportunityCursorRef = useRef(0);
   const radarContactRefs = useRef({});
+  const welcomeCloseTimerRef = useRef(null);
+  const openWelcomeOverlay = () => {
+    if (welcomeCloseTimerRef.current !== null) {
+      window.clearTimeout(welcomeCloseTimerRef.current);
+      welcomeCloseTimerRef.current = null;
+    }
+    setWelcomeOverlayOpen(true);
+    window.requestAnimationFrame(() => setWelcomeOverlayVisible(true));
+  };
+  const closeWelcomeOverlay = (onClosed) => {
+    if (welcomeCloseTimerRef.current !== null) {
+      window.clearTimeout(welcomeCloseTimerRef.current);
+    }
+    setWelcomeOverlayVisible(false);
+    welcomeCloseTimerRef.current = window.setTimeout(() => {
+      setWelcomeOverlayOpen(false);
+      welcomeCloseTimerRef.current = null;
+      onClosed?.();
+    }, WELCOME_OVERLAY_FADE_MS);
+  };
   useEffect(() => {
     soundOnRef.current = soundOn;
   }, [soundOn]);
+  useEffect(() => {
+    let hasSeenWelcome = false;
+    try {
+      hasSeenWelcome = localStorage.getItem(DASHBOARD_WELCOME_STORAGE_KEY) === "1";
+      if (!hasSeenWelcome) {
+        localStorage.setItem(DASHBOARD_WELCOME_STORAGE_KEY, "1");
+      }
+    } catch {
+      hasSeenWelcome = false;
+    }
+    if (!hasSeenWelcome) {
+      openWelcomeOverlay();
+    }
+  }, []);
   useEffect(() => {
     const sweepDurationMs = 5400;
     const startedAt = performance.now();
@@ -585,6 +623,23 @@ function DashboardPage() {
     });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => {
+    if (!welcomeOverlayOpen) {
+      return;
+    }
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [welcomeOverlayOpen]);
+  useEffect(() => {
+    return () => {
+      if (welcomeCloseTimerRef.current !== null) {
+        window.clearTimeout(welcomeCloseTimerRef.current);
+      }
+    };
+  }, []);
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -622,6 +677,9 @@ function DashboardPage() {
   }, {
     label: "AI Buying Report",
     href: "/opportunity"
+  }, {
+    label: "👋 Getting Started",
+    onClick: openWelcomeOverlay
   }, {
     label: "Settings",
     isSectionLabel: true
@@ -1223,7 +1281,23 @@ function DashboardPage() {
     /* @__PURE__ */ jsx("button", { "aria-label": "Back to top", className: "back-to-top-btn", onClick: scrollToTop, style: {
       opacity: showBackToTop ? 1 : 0,
       pointerEvents: showBackToTop ? "auto" : "none"
-    }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "26", viewBox: "0 0 24 24", width: "26", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M5 15l7-7 7 7", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5" }) }) })
+    }, type: "button", children: /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", fill: "none", height: "26", viewBox: "0 0 24 24", width: "26", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M5 15l7-7 7 7", stroke: "white", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5" }) }) }),
+    welcomeOverlayOpen ? /* @__PURE__ */ jsx("div", { className: `fixed inset-0 z-[70] flex items-start justify-center overflow-y-auto bg-black/55 p-4 pt-6 backdrop-blur-[2px] transition-opacity duration-300 sm:items-center sm:pt-4 ${welcomeOverlayVisible ? "opacity-100" : "opacity-0"}`, role: "dialog", "aria-modal": "true", "aria-labelledby": "tica-welcome-title", children: /* @__PURE__ */ jsxs("div", { className: "relative max-h-[calc(100vh-3rem)] w-full max-w-[42rem] overflow-y-auto rounded-2xl border border-outline-variant/35 bg-surface-container p-5 shadow-[0_24px_60px_rgba(2,6,23,0.55)] sm:max-h-[calc(100vh-4rem)] sm:p-7", children: [
+      /* @__PURE__ */ jsx("button", { type: "button", onClick: () => closeWelcomeOverlay(), className: "absolute right-3 top-3 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-outline-variant/40 bg-surface-container-high text-on-surface-variant transition-colors hover:text-on-surface", "aria-label": "Close welcome message", children: "✕" }),
+      /* @__PURE__ */ jsx("p", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary/90", children: "WELCOME TO TRADE IN CARS AGENT" }),
+      /* @__PURE__ */ jsx("h2", { id: "tica-welcome-title", className: "mb-5 pr-10 text-2xl font-semibold text-on-surface sm:text-[1.95rem] sm:leading-[1.15]", children: "Imagine having another buyer working for your dealership 24 hours a day." }),
+      /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-sm leading-relaxed text-on-surface-variant sm:text-base", children: [
+        /* @__PURE__ */ jsx("p", { children: "An employee who never takes a day off, continually searching for vehicles that match exactly what you want to buy." }),
+        /* @__PURE__ */ jsx("p", { children: "TICA is your AI buying employee — searching, analysing and filtering opportunities while you concentrate on running your business." }),
+        /* @__PURE__ */ jsx("p", { className: "text-on-surface", children: "Tell TICA what you want. Your AI employee gets to work." })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center", children: [
+        /* @__PURE__ */ jsx("button", { type: "button", onClick: () => closeWelcomeOverlay(() => navigate({
+          to: "/search-builder"
+        })), className: "inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-on-primary transition-colors hover:bg-primary/90", children: "⚡ PUT MY AI EMPLOYEE TO WORK" }),
+        /* @__PURE__ */ jsx("button", { type: "button", onClick: () => closeWelcomeOverlay(), className: "inline-flex min-h-11 items-center justify-center rounded-xl border border-outline-variant/40 bg-surface-container-high px-4 py-3 text-sm font-medium text-on-surface-variant transition-colors hover:text-on-surface", children: "Close" })
+      ] })
+    ] }) }) : null
   ] });
 }
 export {
