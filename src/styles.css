@@ -3146,6 +3146,20 @@ body > div {
     letter-spacing: 0.06em;
   }
 
+  /* Print Page 1 shield must render crisp with no glow/blur/shadow */
+  body.opportunity-print-mode .tdp-page-1 .tica-shield-glow,
+  body.opportunity-print-mode .tdp-page-1 .tica-shield-glow.tica-shield-pulsing,
+  body.opportunity-print-mode .tdp-page-1 .tica-shield-glow.tica-shield-hovered {
+    box-shadow: none !important;
+    animation: none !important;
+    filter: none !important;
+  }
+
+  body.opportunity-print-mode .tdp-page-1 .tica-shield-glow img {
+    filter: none !important;
+    box-shadow: none !important;
+  }
+
   /* ── Mission strip ─────────────────────────────────────────────── */
   .tdp-mission-strip {
     display: flex;
